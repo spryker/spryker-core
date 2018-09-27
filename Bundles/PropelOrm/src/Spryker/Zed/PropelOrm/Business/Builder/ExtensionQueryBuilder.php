@@ -15,8 +15,8 @@ use Propel\Generator\Builder\Om\ExtensionQueryBuilder as PropelExtensionQueryObj
 
 class ExtensionQueryBuilder extends PropelExtensionQueryObjectBuilder
 {
-    const POSITION_OF_ORM = 0;
-    const POSITION_OF_BASE = 4;
+    public const POSITION_OF_ORM = 0;
+    public const POSITION_OF_BASE = 4;
 
     /**
      * @param string|null $ignoredNamespace the ignored namespace

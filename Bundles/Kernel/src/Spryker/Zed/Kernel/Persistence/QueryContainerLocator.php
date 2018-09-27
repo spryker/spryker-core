@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 
 class QueryContainerLocator extends AbstractLocator
 {
-    const PROPEL_CONNECTION = 'propel connection';
+    public const PROPEL_CONNECTION = 'propel connection';
 
     /**
      * @var string

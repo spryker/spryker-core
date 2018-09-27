@@ -14,8 +14,8 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 
 interface PriceProductQueryContainerInterface
 {
-    const COL_GROSS_PRICE = 'gross_price';
-    const COL_NET_PRICE = 'net_price';
+    public const COL_GROSS_PRICE = 'gross_price';
+    public const COL_NET_PRICE = 'net_price';
 
     /**
      * @api

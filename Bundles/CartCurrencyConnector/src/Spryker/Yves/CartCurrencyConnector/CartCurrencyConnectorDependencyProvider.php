@@ -14,8 +14,8 @@ use Spryker\Yves\Kernel\Container;
 
 class CartCurrencyConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_CART = 'CLIENT_CART';
-    const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

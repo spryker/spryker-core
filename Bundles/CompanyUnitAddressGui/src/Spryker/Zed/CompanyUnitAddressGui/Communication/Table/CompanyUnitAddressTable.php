@@ -16,22 +16,22 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CompanyUnitAddressTable extends AbstractTable
 {
-    const COL_ID_COMPANY_UNIT_ADDRESS = SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS;
-    const COL_ADDRESS1 = SpyCompanyUnitAddressTableMap::COL_ADDRESS1;
-    const COL_ADDRESS2 = SpyCompanyUnitAddressTableMap::COL_ADDRESS2;
-    const COL_ADDRESS3 = SpyCompanyUnitAddressTableMap::COL_ADDRESS3;
-    const COL_CITY = SpyCompanyUnitAddressTableMap::COL_CITY;
-    const COL_ZIPCODE = SpyCompanyUnitAddressTableMap::COL_ZIP_CODE;
+    public const COL_ID_COMPANY_UNIT_ADDRESS = SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS;
+    public const COL_ADDRESS1 = SpyCompanyUnitAddressTableMap::COL_ADDRESS1;
+    public const COL_ADDRESS2 = SpyCompanyUnitAddressTableMap::COL_ADDRESS2;
+    public const COL_ADDRESS3 = SpyCompanyUnitAddressTableMap::COL_ADDRESS3;
+    public const COL_CITY = SpyCompanyUnitAddressTableMap::COL_CITY;
+    public const COL_ZIPCODE = SpyCompanyUnitAddressTableMap::COL_ZIP_CODE;
 
-    const COL_COUNTRY_RELATION = 'Country';
-    const COL_REGION_RELATION = 'Region';
-    const COL_COMPANY_RELATION = 'Company';
+    public const COL_COUNTRY_RELATION = 'Country';
+    public const COL_REGION_RELATION = 'Region';
+    public const COL_COMPANY_RELATION = 'Company';
 
-    const COL_ACTIONS = 'Actions';
+    public const COL_ACTIONS = 'Actions';
 
-    const REQUEST_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
+    public const REQUEST_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
 
-    const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';
+    public const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';
 
     /**
      * @var \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface

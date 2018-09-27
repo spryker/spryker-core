@@ -21,13 +21,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductAttributeQueryContainer extends AbstractQueryContainer implements ProductAttributeQueryContainerInterface
 {
-    const KEY = 'product_attribute_key';
-    const IS_SUPER = 'is_super';
-    const ATTRIBUTE_ID = 'attribute_id';
-    const ALLOW_INPUT = 'allow_input';
-    const INPUT_TYPE = 'input_type';
-    const ID_PRODUCT_ATTRIBUTE_KEY = 'id_product_attribute_key';
-    const LOCALE_CODE = 'locale_code';
+    public const KEY = 'product_attribute_key';
+    public const IS_SUPER = 'is_super';
+    public const ATTRIBUTE_ID = 'attribute_id';
+    public const ALLOW_INPUT = 'allow_input';
+    public const INPUT_TYPE = 'input_type';
+    public const ID_PRODUCT_ATTRIBUTE_KEY = 'id_product_attribute_key';
+    public const LOCALE_CODE = 'locale_code';
 
     /**
      * @api

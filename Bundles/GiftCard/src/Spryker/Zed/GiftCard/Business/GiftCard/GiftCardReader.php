@@ -19,7 +19,7 @@ use Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface;
 
 class GiftCardReader implements GiftCardReaderInterface
 {
-    const ATTRIBUTES = 'attributes';
+    public const ATTRIBUTES = 'attributes';
 
     /**
      * @var \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface

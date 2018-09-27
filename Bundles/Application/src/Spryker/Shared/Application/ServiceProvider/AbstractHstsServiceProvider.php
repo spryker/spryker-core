@@ -22,10 +22,10 @@ abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
     /**
      * @const string
      */
-    const HEADER_HSTS = 'Strict-Transport-Security';
-    const HSTS_CONFIG_MAXAGE = 'max_age';
-    const HSTS_CONFIG_INCLUDE_SUBDOMAINS = 'include_sub_domains';
-    const HSTS_CONFIG_PRELOAD = 'preload';
+    public const HEADER_HSTS = 'Strict-Transport-Security';
+    public const HSTS_CONFIG_MAXAGE = 'max_age';
+    public const HSTS_CONFIG_INCLUDE_SUBDOMAINS = 'include_sub_domains';
+    public const HSTS_CONFIG_PRELOAD = 'preload';
 
     /**
      * @return bool
