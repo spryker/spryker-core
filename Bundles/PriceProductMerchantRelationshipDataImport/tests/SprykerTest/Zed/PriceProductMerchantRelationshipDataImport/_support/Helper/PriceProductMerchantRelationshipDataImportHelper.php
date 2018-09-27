@@ -40,8 +40,6 @@ class PriceProductMerchantRelationshipDataImportHelper extends Module
             $relationType = $relationMap->getType();
             $fullyQualifiedQueryModel = $relationMap->getLocalTable()->getClassname() . 'Query';
             if ($relationType == RelationMap::ONE_TO_MANY && !in_array($fullyQualifiedQueryModel, $processedEntities)) {
-                $processedEntities[] = $fullyQualifiedQueryModel;
-
                 if ($relationMap->getLocalTable() === $relationMap->getForeignTable()) {
                     foreach ($relationMap->getLocalColumns() as $localColumn) {
                         $query->update([$localColumn->getPhpName() => null]);
@@ -50,6 +48,7 @@ class PriceProductMerchantRelationshipDataImportHelper extends Module
                     continue;
                 }
 
+                $processedEntities[] = $fullyQualifiedQueryModel;
                 $fullyQualifiedQueryModelObject = $fullyQualifiedQueryModel::create();
                 $this->cleanTableRelations($fullyQualifiedQueryModelObject, $processedEntities);
             }
