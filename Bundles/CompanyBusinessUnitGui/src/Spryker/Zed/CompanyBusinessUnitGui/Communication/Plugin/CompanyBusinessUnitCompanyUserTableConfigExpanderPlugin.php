@@ -22,7 +22,7 @@ class CompanyBusinessUnitCompanyUserTableConfigExpanderPlugin extends AbstractPl
 
     /**
      * {@inheritdoc}
-     * - This plugin allows you to expand config options of company user table with company business unit column.
+     * - Expands config options of company user table with company business unit column.
      *
      * @api
      *

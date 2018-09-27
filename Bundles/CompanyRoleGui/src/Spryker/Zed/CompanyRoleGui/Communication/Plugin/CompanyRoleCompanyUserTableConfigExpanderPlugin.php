@@ -22,7 +22,7 @@ class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin imp
 
     /**
      * {@inheritdoc}
-     * - This plugin allows you to expand company user table with company role column.
+     * - Expands company user table with company role column.
      *
      * @api
      *

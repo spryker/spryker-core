@@ -11,7 +11,7 @@ interface CompanyUserTablePrepareDataExpanderPluginInterface
 {
     /**
      * Specification:
-     * - This plugin interface allows you to extend existing data rows of company user table in Zed.
+     * - Expands table data rows of company user table in Zed.
      *
      * @api
      *

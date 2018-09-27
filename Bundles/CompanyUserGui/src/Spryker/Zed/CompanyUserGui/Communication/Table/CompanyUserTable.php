@@ -57,7 +57,6 @@ class CompanyUserTable extends AbstractTable
             static::COL_ID_COMPANY_USER => 'User ID',
             static::COL_COMPANY_NAME => 'Company Name',
             static::COL_COMPANY_USER_NAME => 'User Name',
-            static::COL_IS_ACTIVE => 'Status',
         ]);
 
         $config->setSearchable([
@@ -81,7 +80,24 @@ class CompanyUserTable extends AbstractTable
 
         $config = $this->companyUserTableExpanderPluginExecutor->executeConfigExpanderPlugins($config);
 
+        $config = $this->addStatusConfigHeader($config);
         $config = $this->addActionsConfigHeader($config);
+
+        return $config;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function addStatusConfigHeader(TableConfiguration $config): TableConfiguration
+    {
+        $configHeader = $config->getHeader();
+        $configHeader += [
+            static::COL_IS_ACTIVE => 'Status',
+        ];
+        $config->setHeader($configHeader);
 
         return $config;
     }

@@ -20,7 +20,7 @@ class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends Abstr
 
     /**
      * {@inheritdoc}
-     * - This plugin allows you to extend data rows of company user table with company business unit data.
+     * - Extends table data rows of company user table with company business unit names.
      *
      * @api
      *

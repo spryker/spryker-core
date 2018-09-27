@@ -20,7 +20,7 @@ class CompanyRoleCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugi
 
     /**
      * {@inheritdoc}
-     * - This plugin allows you to extend data rows of company user table with company role names.
+     * - Expands table data rows of company user table with company role names.
      *
      * @api
      *
