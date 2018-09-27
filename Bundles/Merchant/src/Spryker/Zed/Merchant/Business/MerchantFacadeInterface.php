@@ -63,15 +63,14 @@ interface MerchantFacadeInterface
     /**
      * Specification:
      * - Returns a MerchantTransfer by merchant id in provided transfer.
-     * - Throws an exception in case a record is not found.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function getMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
 
     /**
      * Specification:

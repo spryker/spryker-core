@@ -63,9 +63,9 @@ class MerchantRelationshipFormDataProvider
     /**
      * @param int|null $idMerchantRelationship
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
-    public function getData(?int $idMerchantRelationship = null): MerchantRelationshipTransfer
+    public function getData(?int $idMerchantRelationship = null): ?MerchantRelationshipTransfer
     {
         $merchantRelationshipTransfer = new MerchantRelationshipTransfer();
         if (!$idMerchantRelationship) {
