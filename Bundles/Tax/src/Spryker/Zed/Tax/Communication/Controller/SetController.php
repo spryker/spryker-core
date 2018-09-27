@@ -105,6 +105,8 @@ class SetController extends AbstractController
     }
 
     /**
+     * @deprecated
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse

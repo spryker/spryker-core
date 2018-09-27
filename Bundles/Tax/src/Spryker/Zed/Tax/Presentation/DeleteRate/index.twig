@@ -16,7 +16,7 @@
         {% block widget_content %}
 
             <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans}}</a>
-            <a href="{{ url('/tax/rate/delete', {'id-tax-rate': idTaxRate}) }}" class="btn btn-danger safe-submit">{{ 'Delete Tax Rate' | trans}}</a>
+            <a href="{{ url('/tax/delete-rate/confirm', {'id-tax-rate': idTaxRate}) }}" class="btn btn-danger safe-submit">{{ 'Delete Tax Rate' | trans}}</a>
 
         {% endblock %}
 

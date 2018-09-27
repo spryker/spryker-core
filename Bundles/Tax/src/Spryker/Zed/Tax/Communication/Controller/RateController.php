@@ -118,6 +118,8 @@ class RateController extends AbstractController
     }
 
     /**
+     * @deprecated
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
