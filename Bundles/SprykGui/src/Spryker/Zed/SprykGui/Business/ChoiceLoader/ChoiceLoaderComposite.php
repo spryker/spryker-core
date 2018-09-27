@@ -44,7 +44,7 @@ class ChoiceLoaderComposite implements ChoiceLoaderCompositeInterface
         throw new Exception(sprintf(
             'Could not find a matching ChoiceLoader by name "%s". Available ChoiceLoader: "%s"',
             $choiceLoaderName,
-            $this->getChoiceLoaderNames()
+            implode(', ', $this->getChoiceLoaderNames())
         ));
     }
 
