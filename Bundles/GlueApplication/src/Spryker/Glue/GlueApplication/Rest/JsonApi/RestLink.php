@@ -53,10 +53,6 @@ class RestLink implements RestLinkInterface
             return [$this->name => $this->href];
         }
 
-        return [
-        $this->name => [
-            static::KEY_HREF => $this->href,
-            static::KEY_META => $this->meta,
-        ]];
+        return [$this->name => [static::KEY_HREF => $this->href, static::KEY_META => $this->meta]];
     }
 }
