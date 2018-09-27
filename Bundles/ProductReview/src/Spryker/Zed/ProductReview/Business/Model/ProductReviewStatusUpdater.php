@@ -80,9 +80,9 @@ class ProductReviewStatusUpdater implements ProductReviewStatusUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
-     * @param \Orm\Zed\ProductReview\Persistence\Base\SpyProductReview $productReviewEntity
+     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
-     * @return \Orm\Zed\ProductReview\Persistence\Base\SpyProductReview
+     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReview
      */
     protected function mapTransferToEntity(ProductReviewTransfer $productReviewTransfer, SpyProductReview $productReviewEntity)
     {
@@ -96,7 +96,7 @@ class ProductReviewStatusUpdater implements ProductReviewStatusUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
-     * @param \Orm\Zed\ProductReview\Persistence\Base\SpyProductReview $productReviewEntity
+     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */

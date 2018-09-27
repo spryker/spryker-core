@@ -39,4 +39,12 @@ class ProductPageSearchToProductImageQueryContainerBridge implements ProductPage
     {
         return $this->productImageQueryContainer->queryProductImageSetToProductImage();
     }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryProductImageSet()
+    {
+        return $this->productImageQueryContainer->queryProductImageSet();
+    }
 }

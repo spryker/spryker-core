@@ -15,9 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SaveController extends AbstractController
 {
-    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    const PARAM_ID_PRODUCT = 'id-product';
-    const PARAM_JSON = 'json';
+    public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const PARAM_ID_PRODUCT = 'id-product';
+    public const PARAM_JSON = 'json';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

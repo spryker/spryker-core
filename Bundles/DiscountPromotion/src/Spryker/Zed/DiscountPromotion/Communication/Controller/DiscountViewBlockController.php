@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DiscountViewBlockController extends AbstractController
 {
-    const URL_PARAM_ID_DISCOUNT = 'id-discount';
+    public const URL_PARAM_ID_DISCOUNT = 'id-discount';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

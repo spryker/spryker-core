@@ -22,7 +22,7 @@ class QueueQueryContainer extends AbstractQueryContainer implements QueueQueryCo
      * @param string $serverId
      * @param string $queueName
      *
-     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
+     * @return \Orm\Zed\Queue\Persistence\SpyQueueProcessQuery
      */
     public function queryProcessesByServerIdAndQueueName($serverId, $queueName)
     {
@@ -38,7 +38,7 @@ class QueueQueryContainer extends AbstractQueryContainer implements QueueQueryCo
      *
      * @param array $processIds
      *
-     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
+     * @return \Orm\Zed\Queue\Persistence\SpyQueueProcessQuery
      */
     public function queryProcessesByProcessIds(array $processIds)
     {
@@ -52,7 +52,7 @@ class QueueQueryContainer extends AbstractQueryContainer implements QueueQueryCo
      *
      * @param string $serverId
      *
-     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
+     * @return \Orm\Zed\Queue\Persistence\SpyQueueProcessQuery
      */
     public function queryProcessesByServerId($serverId)
     {
@@ -65,7 +65,7 @@ class QueueQueryContainer extends AbstractQueryContainer implements QueueQueryCo
     /**
      * @api
      *
-     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
+     * @return \Orm\Zed\Queue\Persistence\SpyQueueProcessQuery
      */
     public function queryProcesses()
     {

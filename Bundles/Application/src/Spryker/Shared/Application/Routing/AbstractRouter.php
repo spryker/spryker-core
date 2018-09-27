@@ -17,19 +17,19 @@ use Symfony\Component\Routing\RouterInterface;
 abstract class AbstractRouter implements RouterInterface
 {
     /**
-     * @var \Symfony\Component\Routing\RequestContext
-     */
-    protected $context;
-
-    /**
      * @var \Silex\Application
      */
     protected $app;
 
     /**
-     * @var bool
+     * @var bool|null
      */
-    private $sslEnabled;
+    protected $sslEnabled;
+
+    /**
+     * @var \Symfony\Component\Routing\RequestContext|null
+     */
+    protected $context;
 
     /**
      * Set the sslEnabledFlag to
@@ -105,7 +105,7 @@ abstract class AbstractRouter implements RouterInterface
 
     /**
      * @param string $pathInfo
-     * @param bool|string $referenceType
+     * @param int|string $referenceType
      *
      * @return string
      */
@@ -137,7 +137,7 @@ abstract class AbstractRouter implements RouterInterface
 
     /**
      * @param string $pathInfo
-     * @param bool|string $referenceType
+     * @param int|string $referenceType
      *
      * @return string
      */

@@ -354,7 +354,7 @@ class CustomerGroupFacadeTest extends Unit
      * @param int $idCustomer
      * @param int $idCustomerGroup
      *
-     * @return $this|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer
+     * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer
      */
     protected function createCustomerToGroup($idCustomer, $idCustomerGroup)
     {

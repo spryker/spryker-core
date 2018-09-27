@@ -18,7 +18,7 @@ use Spryker\Shared\Search\SearchConfig;
  */
 class PriceFacetConfigTransferBuilderPlugin extends AbstractPlugin implements FacetConfigTransferBuilderPluginInterface
 {
-    const PARAMETER_NAME = 'price';
+    public const PARAMETER_NAME = 'price';
 
     /**
      * @return \Generated\Shared\Transfer\FacetConfigTransfer

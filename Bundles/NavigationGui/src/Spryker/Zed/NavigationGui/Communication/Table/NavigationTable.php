@@ -19,9 +19,9 @@ use Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface;
 
 class NavigationTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'navigation-table';
+    public const TABLE_IDENTIFIER = 'navigation-table';
 
-    const COL_ACTIONS = 'actions';
+    public const COL_ACTIONS = 'actions';
 
     /**
      * @var \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface

@@ -64,7 +64,7 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPriceProductAbstractTransfers($idProductAbstract): array
+    public function findPriceProductAbstractTransfers(int $idProductAbstract): array
     {
         $priceProductTransfers = [];
 

@@ -21,37 +21,37 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DataImportConsole extends Console
 {
-    const DEFAULT_IMPORTER_TYPE = 'full';
+    public const DEFAULT_IMPORTER_TYPE = 'full';
 
-    const DEFAULT_NAME = 'data:import';
-    const DEFAULT_DESCRIPTION = 'This command executes your importers (full-import). Add this command with another name e.g. "new DataImportConsole(\'data:import:category\')" to your ConsoleDependencyProvider and you can run a single DataImporter which is mapped to the latter part of the command name.';
+    public const DEFAULT_NAME = 'data:import';
+    public const DEFAULT_DESCRIPTION = 'This command executes your importers (full-import). Add this command with another name e.g. "new DataImportConsole(\'data:import:category\')" to your ConsoleDependencyProvider and you can run a single DataImporter which is mapped to the latter part of the command name.';
 
-    const IMPORTER_TYPE_DESCRIPTION = 'This command executes your "%s" importer.';
+    public const IMPORTER_TYPE_DESCRIPTION = 'This command executes your "%s" importer.';
 
-    const OPTION_FILE_NAME = 'file-name';
-    const OPTION_FILE_NAME_SHORT = 'f';
+    public const OPTION_FILE_NAME = 'file-name';
+    public const OPTION_FILE_NAME_SHORT = 'f';
 
-    const OPTION_OFFSET = 'offset';
-    const OPTION_OFFSET_SHORT = 'o';
+    public const OPTION_OFFSET = 'offset';
+    public const OPTION_OFFSET_SHORT = 'o';
 
-    const OPTION_LIMIT = 'limit';
-    const OPTION_LIMIT_SHORT = 'l';
+    public const OPTION_LIMIT = 'limit';
+    public const OPTION_LIMIT_SHORT = 'l';
 
-    const OPTION_CSV_DELIMITER = 'delimiter';
-    const OPTION_CSV_DELIMITER_SHORT = 'd';
+    public const OPTION_CSV_DELIMITER = 'delimiter';
+    public const OPTION_CSV_DELIMITER_SHORT = 'd';
 
-    const OPTION_CSV_ENCLOSURE = 'enclosure';
-    const OPTION_CSV_ENCLOSURE_SHORT = 'e';
+    public const OPTION_CSV_ENCLOSURE = 'enclosure';
+    public const OPTION_CSV_ENCLOSURE_SHORT = 'e';
 
-    const OPTION_CSV_ESCAPE = 'escape';
-    const OPTION_CSV_ESCAPE_SHORT = 's';
+    public const OPTION_CSV_ESCAPE = 'escape';
+    public const OPTION_CSV_ESCAPE_SHORT = 's';
 
-    const OPTION_CSV_HAS_HEADER = 'has-header';
-    const OPTION_CSV_HAS_HEADER_SHORT = 'r';
+    public const OPTION_CSV_HAS_HEADER = 'has-header';
+    public const OPTION_CSV_HAS_HEADER_SHORT = 'r';
 
-    const OPTION_THROW_EXCEPTION = 'throw-exception';
-    const OPTION_THROW_EXCEPTION_SHORT = 't';
-    const ARGUMENT_IMPORTER = 'importer';
+    public const OPTION_THROW_EXCEPTION = 'throw-exception';
+    public const OPTION_THROW_EXCEPTION_SHORT = 't';
+    public const ARGUMENT_IMPORTER = 'importer';
 
     /**
      * @var \Symfony\Component\Console\Input\InputInterface

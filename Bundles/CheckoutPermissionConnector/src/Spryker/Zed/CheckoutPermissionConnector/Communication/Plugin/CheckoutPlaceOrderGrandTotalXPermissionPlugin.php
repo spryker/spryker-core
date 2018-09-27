@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CheckoutPlaceOrderGrandTotalXPermissionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface, ExecutablePermissionPluginInterface
 {
-    const CONFIG_FIELD_AMOUNT = 'CONFIG_FIELD_AMOUNT';
+    public const CONFIG_FIELD_AMOUNT = 'CONFIG_FIELD_AMOUNT';
 
     /**
      * @api
