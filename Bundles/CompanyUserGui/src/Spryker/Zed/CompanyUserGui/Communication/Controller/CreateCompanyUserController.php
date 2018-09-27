@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyUserGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,45 +32,53 @@ class CreateCompanyUserController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::URL_USER_LIST);
-
         $dataProvider = $this->getFactory()->createCompanyUserFormDataProvider();
-        $form = $this->getFactory()
+        $companyUserForm = $this->getFactory()
             ->getCompanyUserForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer */
-            $companyUserTransfer = $form->getData();
-            $companyResponseTransfer = $this->getFactory()
-                ->getCompanyUserFacade()
-                ->create($companyUserTransfer);
-
-            if (!$companyResponseTransfer->getIsSuccessful()) {
-                $this->addErrorMessage(sprintf(
-                    static::MESSAGE_ERROR_COMPANY_USER_CREATE,
-                    $companyUserTransfer->getCustomer()->getFirstName() . ' ' . $companyUserTransfer->getCustomer()->getLastName()
-                ));
-
-                return $this->viewResponse([
-                    'form' => $form->createView(),
-                ]);
-            }
-
-            $this->addSuccessMessage(sprintf(
-                static::MESSAGE_SUCCESS_COMPANY_USER_CREATE,
-                $companyUserTransfer->getCustomer()->getFirstName() . ' ' . $companyUserTransfer->getCustomer()->getLastName()
-            ));
-
-            return $this->redirectResponse($redirectUrl);
+        if ($companyUserForm->isSubmitted() && $companyUserForm->isValid()) {
+            return $this->crateCompanyUser(
+                $companyUserForm,
+                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_USER_LIST)
+            );
         }
 
         return $this->viewResponse([
-            'form' => $form->createView(),
+            'form' => $companyUserForm->createView(),
             'backButton' => static::URL_USER_LIST,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $companyUserForm
+     * @param string $redirectUrl
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function crateCompanyUser(FormInterface $companyUserForm, string $redirectUrl)
+    {
+        /** @var \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer */
+        $companyUserTransfer = $companyUserForm->getData();
+        $companyResponseTransfer = $this->getFactory()
+            ->getCompanyUserFacade()
+            ->create($companyUserTransfer);
+
+        $customerFullName = $companyUserTransfer->getCustomer()->getFirstName() . ' ' . $companyUserTransfer->getCustomer()->getLastName();
+
+        if (!$companyResponseTransfer->getIsSuccessful()) {
+            $this->addErrorMessage(sprintf(static::MESSAGE_ERROR_COMPANY_USER_CREATE, $customerFullName));
+
+            return $this->viewResponse([
+                'form' => $companyUserForm->createView(),
+            ]);
+        }
+
+        $this->addSuccessMessage(sprintf(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE, $customerFullName));
+
+        return $this->redirectResponse($redirectUrl);
     }
 }
