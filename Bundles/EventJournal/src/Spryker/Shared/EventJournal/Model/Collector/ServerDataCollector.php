@@ -14,21 +14,21 @@ use Spryker\Service\UtilNetwork\Model\Host;
  */
 class ServerDataCollector extends AbstractDataCollector
 {
-    const TYPE = 'server';
+    public const TYPE = 'server';
 
-    const FIELD_URL = 'url';
+    public const FIELD_URL = 'url';
 
-    const FIELD_IS_HTTPS = 'is_https';
+    public const FIELD_IS_HTTPS = 'is_https';
 
-    const FIELD_HOST_NAME = 'host_name';
+    public const FIELD_HOST_NAME = 'host_name';
 
-    const FIELD_USER_AGENT = 'user_agent';
+    public const FIELD_USER_AGENT = 'user_agent';
 
-    const FIELD_USER_IP = 'user_ip';
+    public const FIELD_USER_IP = 'user_ip';
 
-    const FIELD_REQUEST_METHOD = 'request_method';
+    public const FIELD_REQUEST_METHOD = 'request_method';
 
-    const FIELD_REFERRER = 'referrer';
+    public const FIELD_REFERRER = 'referrer';
 
     /**
      * @return array

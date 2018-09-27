@@ -17,7 +17,7 @@ class Confirm extends Base
     /**
      * Deliver confirmation operation.
      */
-    const OPERATION = Constants::REQUEST_MODEL_DELIVER_CONFIRM;
+    public const OPERATION = Constants::REQUEST_MODEL_DELIVER_CONFIRM;
 
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Builder\ShoppingBasket

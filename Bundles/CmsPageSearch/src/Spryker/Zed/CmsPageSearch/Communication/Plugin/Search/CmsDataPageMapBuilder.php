@@ -20,16 +20,16 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
  */
 class CmsDataPageMapBuilder implements NamedPageMapInterface
 {
-    const COL_URL = 'url';
-    const COL_IS_ACTIVE = 'is_active';
-    const COL_DATA = 'data';
-    const COL_VALID_FROM = 'valid_from';
-    const COL_VALID_TO = 'valid_to';
-    const COL_IS_SEARCHABLE = 'is_searchable';
-    const TYPE_CMS_PAGE = 'cms_page';
-    const TYPE = 'type';
-    const ID_CMS_PAGE = 'id_cms_page';
-    const NAME = 'name';
+    public const COL_URL = 'url';
+    public const COL_IS_ACTIVE = 'is_active';
+    public const COL_DATA = 'data';
+    public const COL_VALID_FROM = 'valid_from';
+    public const COL_VALID_TO = 'valid_to';
+    public const COL_IS_SEARCHABLE = 'is_searchable';
+    public const TYPE_CMS_PAGE = 'cms_page';
+    public const TYPE = 'type';
+    public const ID_CMS_PAGE = 'id_cms_page';
+    public const NAME = 'name';
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder

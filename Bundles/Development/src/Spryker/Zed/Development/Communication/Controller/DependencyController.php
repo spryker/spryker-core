@@ -19,9 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DependencyController extends AbstractController
 {
-    const APPLICATION_ZED = 'Zed';
-    const QUERY_KEY_BUILD_TREE = 'build-tree';
-    const QUERY_KEY_MODULE = 'bundle';
+    public const APPLICATION_ZED = 'Zed';
+    public const QUERY_KEY_BUILD_TREE = 'build-tree';
+    public const QUERY_KEY_MODULE = 'bundle';
 
     /**
      * @return array

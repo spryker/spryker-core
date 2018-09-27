@@ -13,9 +13,9 @@ use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
 class SessionHandlerCouchbase implements SessionHandlerInterface
 {
-    const METRIC_SESSION_DELETE_TIME = 'Couchbase/Session_delete_time';
-    const METRIC_SESSION_WRITE_TIME = 'Couchbase/Session_write_time';
-    const METRIC_SESSION_READ_TIME = 'Couchbase/Session_read_time';
+    public const METRIC_SESSION_DELETE_TIME = 'Couchbase/Session_delete_time';
+    public const METRIC_SESSION_WRITE_TIME = 'Couchbase/Session_write_time';
+    public const METRIC_SESSION_READ_TIME = 'Couchbase/Session_read_time';
 
     /**
      * @var \Couchbase

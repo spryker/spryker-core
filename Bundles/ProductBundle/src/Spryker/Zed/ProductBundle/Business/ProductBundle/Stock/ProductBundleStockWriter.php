@@ -21,8 +21,8 @@ use Throwable;
 
 class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 {
-    const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
-    const QUANTITY = 'quantity';
+    public const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+    public const QUANTITY = 'quantity';
 
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
@@ -134,7 +134,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $bundleItems
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
      *
      * @return array
      */

@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class ControllerListener extends AbstractPlugin implements EventSubscriberInterface
 {
-    const PRIORITY = -255;
+    public const PRIORITY = -255;
 
     /**
      * @var \Spryker\Shared\NewRelicApi\NewRelicApiInterface

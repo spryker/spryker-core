@@ -20,6 +20,13 @@ interface PriceProductEntityManagerInterface
     public function deleteOrphanPriceProductStoreEntities(): void;
 
     /**
+     * @param int $idPriceProductStore
+     *
+     * @return void
+     */
+    public function deletePriceProductStore(int $idPriceProductStore): void;
+
+    /**
      * @param \Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer $spyPriceProductDefaultEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer

@@ -16,7 +16,7 @@ use Spryker\Shared\Storage\StorageConstants;
 
 class StorageFactory extends AbstractFactory
 {
-    const DEFAULT_REDIS_DATABASE = 0;
+    public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
      * @var \Spryker\Client\Storage\Redis\ServiceInterface

@@ -12,7 +12,7 @@ use Spryker\Client\Session\SessionClientInterface;
 
 class CustomerSession implements CustomerSessionInterface
 {
-    const SESSION_KEY = 'customer data';
+    public const SESSION_KEY = 'customer data';
 
     /**
      * @var \Spryker\Client\Session\SessionClientInterface
