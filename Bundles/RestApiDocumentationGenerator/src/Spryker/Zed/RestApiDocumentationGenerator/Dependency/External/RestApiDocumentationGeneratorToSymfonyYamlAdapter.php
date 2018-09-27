@@ -21,7 +21,7 @@ class RestApiDocumentationGeneratorToSymfonyYamlAdapter implements RestApiDocume
      *
      * @return string
      */
-    public function dump($input, int $inline = 2, int $indent = 4, int $flags = 0): string
+    public function dump($input, int $inline = self::YAML_DEFAULT_INLINE, int $indent = self::YAML_DEFAULT_INDENT, int $flags = self::YAML_DEFAULT_FLAG): string
     {
         return Yaml::dump($input, $inline, $indent, $flags);
     }

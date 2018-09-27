@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
-class PathMethodComponent implements ComponentInterface
+class PathMethodSpecificationComponent implements SpecificationComponentInterface
 {
     protected const KEY_PARAMETERS = 'parameters';
     protected const KEY_REQUEST_BODY = 'requestBody';
@@ -32,12 +32,12 @@ class PathMethodComponent implements ComponentInterface
     protected $tags;
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\ComponentInterface[]
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SpecificationComponentInterface[]
      */
     protected $parameters;
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\ComponentInterface|null
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SpecificationComponentInterface|null
      */
     protected $request;
 
@@ -47,7 +47,7 @@ class PathMethodComponent implements ComponentInterface
     protected $security;
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\ComponentInterface[]
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SpecificationComponentInterface[]
      */
     protected $responses;
 
@@ -59,7 +59,7 @@ class PathMethodComponent implements ComponentInterface
         $pathData[static::KEY_SUMMARY] = $this->summary;
         $pathData[static::KEY_TAGS] = $this->tags;
         if ($this->parameters) {
-            $pathData[static::KEY_PARAMETERS] = array_map(function (ComponentInterface $parameter) {
+            $pathData[static::KEY_PARAMETERS] = array_map(function (SpecificationComponentInterface $parameter) {
                 return $parameter->toArray();
             }, $this->parameters);
         }
@@ -123,7 +123,7 @@ class PathMethodComponent implements ComponentInterface
     }
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathParameterComponent[] $parameters
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathParameterSpecificationComponent[] $parameters
      *
      * @return void
      */
@@ -133,11 +133,11 @@ class PathMethodComponent implements ComponentInterface
     }
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathRequestComponent $request
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathRequestSpecificationComponent $request
      *
      * @return void
      */
-    public function setRequest(PathRequestComponent $request): void
+    public function setRequest(PathRequestSpecificationComponent $request): void
     {
         $this->request = $request;
     }
@@ -153,7 +153,7 @@ class PathMethodComponent implements ComponentInterface
     }
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathResponseComponent[] $responses
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathResponseSpecificationComponent[] $responses
      *
      * @return void
      */
@@ -183,21 +183,21 @@ class PathMethodComponent implements ComponentInterface
     }
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathParameterComponent $parameterPathComponent
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathParameterSpecificationComponent $parameterPathComponent
      *
      * @return void
      */
-    public function addParameter(PathParameterComponent $parameterPathComponent): void
+    public function addParameter(PathParameterSpecificationComponent $parameterPathComponent): void
     {
         $this->parameters[] = $parameterPathComponent;
     }
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathResponseComponent $responsePathComponent
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathResponseSpecificationComponent $responsePathComponent
      *
      * @return void
      */
-    public function addResponse(PathResponseComponent $responsePathComponent): void
+    public function addResponse(PathResponseSpecificationComponent $responsePathComponent): void
     {
         $this->responses[] = $responsePathComponent;
     }

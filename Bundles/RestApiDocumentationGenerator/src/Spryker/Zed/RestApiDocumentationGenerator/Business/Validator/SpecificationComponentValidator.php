@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Validator;
 
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\ComponentInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SpecificationComponentInterface;
 
-class ComponentValidator implements ComponentValidatorInterface
+class SpecificationComponentValidator implements SpecificationComponentValidatorInterface
 {
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\ComponentInterface $component
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SpecificationComponentInterface $component
      *
      * @return bool
      */
-    public function isValid(ComponentInterface $component): bool
+    public function isValid(SpecificationComponentInterface $component): bool
     {
         foreach ($component->getRequiredProperties() as $property) {
             if ($property === null) {

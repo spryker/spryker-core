@@ -8,22 +8,22 @@
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer;
 
 use Generated\Shared\Transfer\RestApiDocumentationSecuritySchemeTransfer;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SecuritySchemeComponent;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\ComponentValidatorInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SecuritySchemeSpecificationComponent;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface;
 
 class SecuritySchemeRenderer implements SecuritySchemeRendererInterface
 {
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\ComponentValidatorInterface
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface
      */
-    protected $validator;
+    protected $specificationComponentValidator;
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\ComponentValidatorInterface $validator
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface $specificationComponentValidator
      */
-    public function __construct(ComponentValidatorInterface $validator)
+    public function __construct(SpecificationComponentValidatorInterface $specificationComponentValidator)
     {
-        $this->validator = $validator;
+        $this->specificationComponentValidator = $specificationComponentValidator;
     }
 
     /**
@@ -33,12 +33,12 @@ class SecuritySchemeRenderer implements SecuritySchemeRendererInterface
      */
     public function render(RestApiDocumentationSecuritySchemeTransfer $securitySchemeTransfer): array
     {
-        $securitySchemeComponent = new SecuritySchemeComponent();
+        $securitySchemeComponent = new SecuritySchemeSpecificationComponent();
         $securitySchemeComponent->setName($securitySchemeTransfer->getName());
         $securitySchemeComponent->setType($securitySchemeTransfer->getType());
         $securitySchemeComponent->setScheme($securitySchemeTransfer->getScheme());
 
-        if ($this->validator->isValid($securitySchemeComponent)) {
+        if ($this->specificationComponentValidator->isValid($securitySchemeComponent)) {
             return $securitySchemeComponent->toArray();
         }
 

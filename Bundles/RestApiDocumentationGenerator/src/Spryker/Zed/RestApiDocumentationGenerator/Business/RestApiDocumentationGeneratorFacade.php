@@ -24,7 +24,7 @@ class RestApiDocumentationGeneratorFacade extends AbstractFacade implements Rest
     public function generateOpenApiSpecification(): void
     {
         $this->getFactory()
-            ->createGenerator()
+            ->createRestApiDocumentationGenerator()
             ->generateOpenApiSpecification();
     }
 }

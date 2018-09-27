@@ -9,7 +9,7 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer;
 
 use Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer;
 
-interface PathRendererInterface
+interface PathMethodRendererInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer

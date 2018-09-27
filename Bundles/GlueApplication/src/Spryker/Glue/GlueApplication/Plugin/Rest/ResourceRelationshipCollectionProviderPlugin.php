@@ -18,6 +18,7 @@ class ResourceRelationshipCollectionProviderPlugin extends AbstractPlugin implem
 {
     /**
      * {@inheritdoc}
+     *  - Returns collection of plugins that are defined for GlueApplication on project level
      *
      * @api
      *

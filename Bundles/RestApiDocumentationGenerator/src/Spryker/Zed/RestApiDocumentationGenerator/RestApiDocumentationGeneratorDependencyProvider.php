@@ -143,7 +143,7 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
     protected function addResourceRelationshipsCollectionProviderPlugin(Container $container): Container
     {
         $container[static::PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER] = function () {
-            return $this->getResourceRelationshipsCollectionProviderPlugin();
+            return $this->getResourceRelationshipsCollectionProviderPlugins();
         };
 
         return $container;
@@ -152,7 +152,7 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
     /**
      * @return \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[]
      */
-    protected function getResourceRelationshipsCollectionProviderPlugin(): array
+    protected function getResourceRelationshipsCollectionProviderPlugins(): array
     {
         return [];
     }

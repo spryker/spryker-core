@@ -13,22 +13,13 @@ use Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSecuritySchemeGeneratorInterface;
 
 class PluginHandler implements PluginHandlerInterface
 {
-    protected const KEY_IS_PROTECTED = 'is_protected';
-    protected const KEY_NAME = 'name';
-    protected const KEY_ID = 'id';
-    protected const KEY_PARENT = 'parent';
-    protected const KEY_PATHS = 'paths';
-    protected const KEY_SCHEMAS = 'schemas';
-
-    protected const PATTERN_PATH_WITH_PARENT = '/%s/%s%s';
-    protected const PATTERN_PATH_ID = '{%sId}';
-
     protected const PATTERN_SUMMARY_GET_RESOURCE = 'Get %s';
     protected const PATTERN_SUMMARY_GET_COLLECTION = 'Get collection of %s';
-    protected const PATTERN_SUMMARY_POST_RESOURCE = 'Add %s';
+    protected const PATTERN_SUMMARY_POST_RESOURCE = 'Create %s';
     protected const PATTERN_SUMMARY_PATCH_RESOURCE = 'Update %s';
     protected const PATTERN_SUMMARY_DELETE_RESOURCE = 'Delete %s';
 
@@ -43,15 +34,23 @@ class PluginHandler implements PluginHandlerInterface
     protected $schemaGenerator;
 
     /**
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSecuritySchemeGeneratorInterface
+     */
+    protected $securitySchemeGenerator;
+
+    /**
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface $pathGenerator
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface $schemaGenerator
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSecuritySchemeGeneratorInterface $securitySchemeGenerator
      */
     public function __construct(
         RestApiDocumentationPathGeneratorInterface $pathGenerator,
-        RestApiDocumentationSchemaGeneratorInterface $schemaGenerator
+        RestApiDocumentationSchemaGeneratorInterface $schemaGenerator,
+        RestApiDocumentationSecuritySchemeGeneratorInterface $securitySchemeGenerator
     ) {
         $this->pathGenerator = $pathGenerator;
         $this->schemaGenerator = $schemaGenerator;
+        $this->securitySchemeGenerator = $securitySchemeGenerator;
     }
 
     /**
@@ -75,7 +74,7 @@ class PluginHandler implements PluginHandlerInterface
      */
     public function getGeneratedSecuritySchemes(): array
     {
-        return $this->schemaGenerator->getSecuritySchemes();
+        return $this->securitySchemeGenerator->getSecuritySchemes();
     }
 
     /**
@@ -89,7 +88,7 @@ class PluginHandler implements PluginHandlerInterface
      */
     public function addGetResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, string $idResource, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
     {
-        $errorSchema = $this->schemaGenerator->getRestErrorSchemaData();
+        $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $pathDataTransfer = $this->createPathDataTransfer(
             $plugin->getResourceType(),
             $resourcePath,
@@ -123,9 +122,9 @@ class PluginHandler implements PluginHandlerInterface
      */
     public function addPostResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
     {
-        $errorSchema = $this->schemaGenerator->getRestErrorSchemaData();
-        $responseSchema = $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin);
-        $requestSchema = $this->schemaGenerator->addRequestSchemaForPlugin($plugin);
+        $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
+        $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
+        $requestSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addRequestSchemaForPlugin($plugin));
 
         $pathDataTransfer = $this->createPathDataTransfer(
             $plugin->getResourceType(),
@@ -152,9 +151,9 @@ class PluginHandler implements PluginHandlerInterface
      */
     public function addPatchResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
     {
-        $errorSchema = $this->schemaGenerator->getRestErrorSchemaData();
-        $responseSchema = $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin);
-        $requestSchema = $this->schemaGenerator->addRequestSchemaForPlugin($plugin);
+        $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
+        $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
+        $requestSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addRequestSchemaForPlugin($plugin));
 
         $pathDataTransfer = $this->createPathDataTransfer(
             $plugin->getResourceType(),
@@ -181,7 +180,7 @@ class PluginHandler implements PluginHandlerInterface
      */
     public function addDeleteResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
     {
-        $errorSchema = $this->schemaGenerator->getRestErrorSchemaData();
+        $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
 
         $pathDataTransfer = $this->createPathDataTransfer(
             $plugin->getResourceType(),
@@ -206,8 +205,8 @@ class PluginHandler implements PluginHandlerInterface
      */
     protected function addGetCollectionPath(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer): void
     {
-        $errorSchema = $this->schemaGenerator->getRestErrorSchemaData();
-        $responseSchema = $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin);
+        $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
+        $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin));
 
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_COLLECTION, $pathMethodDataTransfer->getResource()));
@@ -224,8 +223,8 @@ class PluginHandler implements PluginHandlerInterface
      */
     protected function addGetResourcePathWithoutId(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer): void
     {
-        $errorSchema = $this->schemaGenerator->getRestErrorSchemaData();
-        $responseSchema = $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin);
+        $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
+        $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
 
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource()));
@@ -243,8 +242,8 @@ class PluginHandler implements PluginHandlerInterface
      */
     protected function addGetResourceWithId(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer, string $idResource): void
     {
-        $errorSchema = $this->schemaGenerator->getRestErrorSchemaData();
-        $responseSchema = $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin);
+        $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
+        $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin));
 
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource()));
@@ -281,6 +280,19 @@ class PluginHandler implements PluginHandlerInterface
         }
 
         return $pathDataTransfer;
+    }
+
+    /**
+     * @param string $schemaRef
+     *
+     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
+     */
+    protected function createPathSchemaDataTransfer(string $schemaRef): RestApiDocumentationPathSchemaDataTransfer
+    {
+        $schemaDataTransfer = new RestApiDocumentationPathSchemaDataTransfer();
+        $schemaDataTransfer->setSchemaReference($schemaRef);
+
+        return $schemaDataTransfer;
     }
 
     /**

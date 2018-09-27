@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\PluginAnalyzerInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\ResourcePluginAnalyzerInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface;
 
 class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInterface
 {
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\PluginAnalyzerInterface
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\ResourcePluginAnalyzerInterface
      */
-    protected $pluginAnalyzer;
+    protected $resourcePluginAnalyzer;
 
     /**
      * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface
@@ -23,12 +23,12 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
     protected $restApiDocumentationWriter;
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\PluginAnalyzerInterface $pluginAnalyzer
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\ResourcePluginAnalyzerInterface $resourcePluginAnalyzer
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface $restApiDocumentationWriter
      */
-    public function __construct(PluginAnalyzerInterface $pluginAnalyzer, RestApiDocumentationWriterInterface $restApiDocumentationWriter)
+    public function __construct(ResourcePluginAnalyzerInterface $resourcePluginAnalyzer, RestApiDocumentationWriterInterface $restApiDocumentationWriter)
     {
-        $this->pluginAnalyzer = $pluginAnalyzer;
+        $this->resourcePluginAnalyzer = $resourcePluginAnalyzer;
         $this->restApiDocumentationWriter = $restApiDocumentationWriter;
     }
 
@@ -37,9 +37,8 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
      */
     public function generateOpenApiSpecification(): void
     {
-        $this->pluginAnalyzer->createRestApiDocumentationFromPlugins();
         $this->restApiDocumentationWriter->write(
-            $this->pluginAnalyzer->getRestApiDocumentationData()
+            $this->resourcePluginAnalyzer->createRestApiDocumentationFromPlugins()
         );
     }
 }

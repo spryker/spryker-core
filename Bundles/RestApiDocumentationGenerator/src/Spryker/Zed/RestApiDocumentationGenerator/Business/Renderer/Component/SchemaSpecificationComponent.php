@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
-class SchemaComponent implements ComponentInterface
+class SchemaSpecificationComponent implements SpecificationComponentInterface
 {
     protected const KEY_PROPERTIES = 'properties';
     protected const KEY_REQUIRED = 'required';
@@ -18,7 +18,7 @@ class SchemaComponent implements ComponentInterface
     protected $name;
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaPropertyComponent[]
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaPropertySpecificationComponent[]
      */
     protected $properties;
 
@@ -66,7 +66,7 @@ class SchemaComponent implements ComponentInterface
     }
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaPropertyComponent[] $properties
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaPropertySpecificationComponent[] $properties
      *
      * @return void
      */
@@ -76,11 +76,11 @@ class SchemaComponent implements ComponentInterface
     }
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaPropertyComponent $schemaPropertyComponent
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaPropertySpecificationComponent $schemaPropertyComponent
      *
      * @return void
      */
-    public function addProperty(SchemaPropertyComponent $schemaPropertyComponent): void
+    public function addProperty(SchemaPropertySpecificationComponent $schemaPropertyComponent): void
     {
         $this->properties[] = $schemaPropertyComponent;
     }

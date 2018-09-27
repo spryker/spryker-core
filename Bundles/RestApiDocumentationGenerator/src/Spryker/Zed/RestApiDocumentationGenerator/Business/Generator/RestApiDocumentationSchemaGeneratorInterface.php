@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
-use Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 
 interface RestApiDocumentationSchemaGeneratorInterface
@@ -15,36 +14,31 @@ interface RestApiDocumentationSchemaGeneratorInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
+     * @return string
      */
-    public function addRequestSchemaForPlugin(ResourceRoutePluginInterface $plugin): RestApiDocumentationPathSchemaDataTransfer;
+    public function addRequestSchemaForPlugin(ResourceRoutePluginInterface $plugin): string;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
+     * @return string
      */
-    public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin): RestApiDocumentationPathSchemaDataTransfer;
+    public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin): string;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
+     * @return string
      */
-    public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin): RestApiDocumentationPathSchemaDataTransfer;
+    public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin): string;
 
     /**
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
+     * @return string
      */
-    public function getRestErrorSchemaData(): RestApiDocumentationPathSchemaDataTransfer;
+    public function getRestErrorSchemaData(): string;
 
     /**
      * @return array
      */
     public function getSchemas(): array;
-
-    /**
-     * @return array
-     */
-    public function getSecuritySchemes(): array;
 }

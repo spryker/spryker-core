@@ -9,6 +9,7 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Finder;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface;
 
 class GlueControllerFinder implements GlueControllerFinderInterface
 {
@@ -24,17 +25,27 @@ class GlueControllerFinder implements GlueControllerFinderInterface
     protected $finder;
 
     /**
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface
+     */
+    protected $inflector;
+
+    /**
      * @var array
      */
     protected $sourceDirectories;
 
     /**
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface $finder
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface $inflector
      * @param array $sourceDirectories
      */
-    public function __construct(RestApiDocumentationGeneratorToFinderInterface $finder, array $sourceDirectories)
-    {
+    public function __construct(
+        RestApiDocumentationGeneratorToFinderInterface $finder,
+        RestApiDocumentationGeneratorToTextInflectorInterface $inflector,
+        array $sourceDirectories
+    ) {
         $this->finder = $finder;
+        $this->inflector = $inflector;
         $this->sourceDirectories = $sourceDirectories;
     }
 
@@ -66,7 +77,7 @@ class GlueControllerFinder implements GlueControllerFinderInterface
      */
     protected function getPluginControllerClass(ResourceRoutePluginInterface $plugin): string
     {
-        $controllerClass = implode('', array_map('ucfirst', explode('-', $plugin->getController()))) . static::CONTROLLER_SUFFIX;
+        $controllerClass = $this->inflector->classify($plugin->getController()) . static::CONTROLLER_SUFFIX;
         $pluginClass = get_class($plugin);
         $moduleNamespace = substr($pluginClass, 0, strpos($pluginClass, static::PATTERN_PLUGIN));
 

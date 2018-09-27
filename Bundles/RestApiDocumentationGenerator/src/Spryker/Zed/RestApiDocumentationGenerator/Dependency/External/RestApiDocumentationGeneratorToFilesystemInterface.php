@@ -9,6 +9,8 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Dependency\External;
 
 interface RestApiDocumentationGeneratorToFilesystemInterface
 {
+    public const PERMISSION_ALL = 0777;
+
     /**
      * @param string $filename
      * @param string $content
@@ -20,12 +22,12 @@ interface RestApiDocumentationGeneratorToFilesystemInterface
     public function dumpFile(string $filename, string $content): void;
 
     /**
-     * @param string|\iterable $dirs
+     * @param string|iterable<array,\Traversable> $dirs
      * @param int $mode
      *
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      *
      * @return void
      */
-    public function mkdir($dirs, int $mode = 0777): void;
+    public function mkdir($dirs, int $mode = self::PERMISSION_ALL): void;
 }

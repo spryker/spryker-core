@@ -17,6 +17,7 @@ class ResourceRoutePluginsProviderPlugin extends AbstractPlugin implements Resou
 {
     /**
      * {@inheritdoc}
+     *  - Returns plugins that are defined for GlueApplication on project level
      *
      * @api
      *

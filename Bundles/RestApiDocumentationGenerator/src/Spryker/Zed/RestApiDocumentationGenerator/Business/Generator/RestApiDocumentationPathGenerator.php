@@ -9,7 +9,7 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
 use Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer;
 use Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathRendererInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathMethodRendererInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,14 +27,14 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
     protected $paths = [];
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathRendererInterface
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathMethodRendererInterface
      */
     protected $pathMethodRenderer;
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathRendererInterface $pathMethodRenderer
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathMethodRendererInterface $pathMethodRenderer
      */
-    public function __construct(PathRendererInterface $pathMethodRenderer)
+    public function __construct(PathMethodRendererInterface $pathMethodRenderer)
     {
         $this->pathMethodRenderer = $pathMethodRenderer;
     }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
-interface ComponentInterface
+interface SpecificationComponentInterface
 {
     /**
      * @return array

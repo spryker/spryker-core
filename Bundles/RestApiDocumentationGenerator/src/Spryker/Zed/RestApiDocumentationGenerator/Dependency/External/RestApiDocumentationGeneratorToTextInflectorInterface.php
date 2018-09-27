@@ -14,7 +14,7 @@ interface RestApiDocumentationGeneratorToTextInflectorInterface
      *
      * @return string
      */
-    public function pluralize(string $word): string;
+    public function classify(string $word): string;
 
     /**
      * @param string $word

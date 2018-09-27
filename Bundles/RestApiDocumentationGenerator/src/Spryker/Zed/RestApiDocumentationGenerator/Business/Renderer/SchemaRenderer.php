@@ -9,23 +9,23 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer;
 
 use Generated\Shared\Transfer\RestApiDocumentationSchemaDataTransfer;
 use Generated\Shared\Transfer\RestApiDocumentationSchemaPropertyTransfer;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaComponent;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaPropertyComponent;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\ComponentValidatorInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaPropertySpecificationComponent;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaSpecificationComponent;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface;
 
 class SchemaRenderer implements SchemaRendererInterface
 {
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\ComponentValidatorInterface
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface
      */
-    protected $validator;
+    protected $specificationComponentValidator;
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\ComponentValidatorInterface $validator
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface $specificationComponentValidator
      */
-    public function __construct(ComponentValidatorInterface $validator)
+    public function __construct(SpecificationComponentValidatorInterface $specificationComponentValidator)
     {
-        $this->validator = $validator;
+        $this->specificationComponentValidator = $specificationComponentValidator;
     }
 
     /**
@@ -35,7 +35,7 @@ class SchemaRenderer implements SchemaRendererInterface
      */
     public function render(RestApiDocumentationSchemaDataTransfer $schemaDataTransfer): array
     {
-        $schemaComponent = new SchemaComponent();
+        $schemaComponent = new SchemaSpecificationComponent();
         $schemaComponent->setName($schemaDataTransfer->getName());
         foreach ($schemaDataTransfer->getProperties() as $property) {
             $this->addSchemaProperty($property, $schemaComponent);
@@ -44,7 +44,7 @@ class SchemaRenderer implements SchemaRendererInterface
             $schemaComponent->setRequired($schemaDataTransfer->getRequired());
         }
 
-        if ($this->validator->isValid($schemaComponent)) {
+        if ($this->specificationComponentValidator->isValid($schemaComponent)) {
             return $schemaComponent->toArray();
         }
 
@@ -53,13 +53,13 @@ class SchemaRenderer implements SchemaRendererInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestApiDocumentationSchemaPropertyTransfer $property
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaComponent $schemaComponent
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaSpecificationComponent $schemaComponent
      *
      * @return void
      */
-    protected function addSchemaProperty(RestApiDocumentationSchemaPropertyTransfer $property, SchemaComponent $schemaComponent): void
+    protected function addSchemaProperty(RestApiDocumentationSchemaPropertyTransfer $property, SchemaSpecificationComponent $schemaComponent): void
     {
-        $propertyComponent = new SchemaPropertyComponent();
+        $propertyComponent = new SchemaPropertySpecificationComponent();
         $propertyComponent->setName($property->getName());
         if ($property->getType()) {
             $propertyComponent->setType($property->getType());
@@ -71,7 +71,7 @@ class SchemaRenderer implements SchemaRendererInterface
             $propertyComponent->setItemsSchemaReference($property->getItemsReference());
         }
 
-        if ($this->validator->isValid($propertyComponent)) {
+        if ($this->specificationComponentValidator->isValid($propertyComponent)) {
             $schemaComponent->addProperty($propertyComponent);
         }
     }

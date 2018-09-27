@@ -9,6 +9,10 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Dependency\External;
 
 interface RestApiDocumentationGeneratorToYamlDumperInterface
 {
+    public const YAML_DEFAULT_INLINE = 2;
+    public const YAML_DEFAULT_INDENT = 4;
+    public const YAML_DEFAULT_FLAG = 0;
+
     /**
      * @param mixed $input
      * @param int $inline
@@ -17,5 +21,5 @@ interface RestApiDocumentationGeneratorToYamlDumperInterface
      *
      * @return string
      */
-    public function dump($input, int $inline = 2, int $indent = 4, int $flags = 0): string;
+    public function dump($input, int $inline = self::YAML_DEFAULT_INLINE, int $indent = self::YAML_DEFAULT_INDENT, int $flags = self::YAML_DEFAULT_FLAG): string;
 }

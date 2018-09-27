@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer;
 
-use Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 
-interface GlueAnnotationAnalyzerInterface
+interface ResourceRelationshipsPluginAnalyzerInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer
+     * @return array
      */
-    public function getResourceParametersFromPlugin(ResourceRoutePluginInterface $plugin): RestApiDocumentationPathAnnotationsTransfer;
+    public function getResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $plugin): array;
 }

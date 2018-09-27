@@ -78,15 +78,15 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
     public function getAnnotationsSourceDirectories(): array
     {
         return array_merge(
-            $this->getCoreAnnotationsSourceDirectoryGlobPatterns(),
-            $this->getApplicationAnnotationsSourceDirectoryGlobPattern()
+            $this->getCoreAnnotationsSourceDirectoryPatterns(),
+            $this->getApplicationAnnotationsSourceDirectoryPattern()
         );
     }
 
     /**
      * @return array
      */
-    protected function getCoreAnnotationsSourceDirectoryGlobPatterns(): array
+    protected function getCoreAnnotationsSourceDirectoryPatterns(): array
     {
         return [];
     }
@@ -94,7 +94,7 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    protected function getApplicationAnnotationsSourceDirectoryGlobPattern(): array
+    protected function getApplicationAnnotationsSourceDirectoryPattern(): array
     {
         return [];
     }

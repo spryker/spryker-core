@@ -16,9 +16,9 @@ class RestApiDocumentationGeneratorToDoctrineInflectorAdapter implements RestApi
      *
      * @return string
      */
-    public function pluralize(string $word): string
+    public function classify(string $word): string
     {
-        return Inflector::pluralize($word);
+        return Inflector::classify($word);
     }
 
     /**

@@ -33,12 +33,12 @@ class RestApiDocumentationGeneratorToSymfonyFilesystemAdapter implements RestApi
     }
 
     /**
-     * @param string|\iterable $dirs
+     * @param string|iterable<array,\Traversable> $dirs
      * @param int $mode
      *
      * @return void
      */
-    public function mkdir($dirs, int $mode = 0777): void
+    public function mkdir($dirs, int $mode = self::PERMISSION_ALL): void
     {
         $this->filesystem->mkdir($dirs, $mode);
     }

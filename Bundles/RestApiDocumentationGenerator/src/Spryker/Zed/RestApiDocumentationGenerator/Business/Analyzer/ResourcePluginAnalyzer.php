@@ -15,7 +15,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\Business\Handler\PluginHandlerInte
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class PluginAnalyzer implements PluginAnalyzerInterface
+class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
 {
     protected const KEY_IS_PROTECTED = 'is_protected';
     protected const KEY_NAME = 'name';
@@ -46,7 +46,7 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     /**
      * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzerInterface
      */
-    protected $annotationsAnalyser;
+    protected $glueAnnotationsAnalyser;
 
     /**
      * @var \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface
@@ -56,29 +56,29 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     /**
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Handler\PluginHandlerInterface $pluginHandler
      * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzerInterface $annotationsAnalyser
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface $textInflector
      */
     public function __construct(
         PluginHandlerInterface $pluginHandler,
         array $resourceRoutesPluginsProviderPlugins,
-        GlueAnnotationAnalyzerInterface $annotationsAnalyser,
+        GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser,
         RestApiDocumentationGeneratorToTextInflectorInterface $textInflector
     ) {
         $this->pluginHandler = $pluginHandler;
         $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
-        $this->annotationsAnalyser = $annotationsAnalyser;
+        $this->glueAnnotationsAnalyser = $glueAnnotationsAnalyser;
         $this->textInflector = $textInflector;
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function createRestApiDocumentationFromPlugins(): void
+    public function createRestApiDocumentationFromPlugins(): array
     {
         foreach ($this->resourceRoutesPluginsProviderPlugins as $resourceRoutesPluginsProviderPlugin) {
             foreach ($resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins() as $plugin) {
-                $annotationParameters = $this->annotationsAnalyser->getParametersFromPlugin($plugin);
+                $annotationParameters = $this->glueAnnotationsAnalyser->getResourceParametersFromPlugin($plugin);
                 $this->resourceRouteCollection = new ResourceRouteCollection();
                 $this->resourceRouteCollection = $plugin->configure($this->resourceRouteCollection);
                 $resourcePath = $this->parseParentToPath(
@@ -92,13 +92,7 @@ class PluginAnalyzer implements PluginAnalyzerInterface
                 $this->processDeleteResourcePath($plugin, $resourcePath, $annotationParameters->getDelete());
             }
         }
-    }
 
-    /**
-     * @return array
-     */
-    public function getRestApiDocumentationData(): array
-    {
         return [
             static::KEY_PATHS => $this->pluginHandler->getGeneratedPaths(),
             static::KEY_SCHEMAS => $this->pluginHandler->getGeneratedSchemas(),
