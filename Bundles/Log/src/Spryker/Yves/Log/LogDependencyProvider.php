@@ -12,10 +12,10 @@ use Spryker\Yves\Kernel\Container;
 
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_QUEUE = 'queue client';
+    public const CLIENT_QUEUE = 'queue client';
 
-    const LOG_PROCESSORS = 'LOG_PROCESSORS';
-    const LOG_HANDLERS = 'LOG_HANDLERS';
+    public const LOG_PROCESSORS = 'LOG_PROCESSORS';
+    public const LOG_HANDLERS = 'LOG_HANDLERS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

@@ -22,14 +22,14 @@ use Symfony\Component\Validator\Constraint;
  */
 class CmsBlockGlossaryPlaceholderForm extends AbstractType
 {
-    const FIELD_FK_CMS_BLOCK = 'fkCmsBlock';
-    const FIELD_PLACEHOLDER = 'placeholder';
-    const FIELD_ID_GLOSSARY_KEY_MAPPING = 'idCmsBlockGlossaryKeyMapping';
-    const FIELD_TEMPLATE_NAME = 'templateName';
-    const FIELD_TRANSLATIONS = 'translations';
-    const FIELD_TRANSLATION_KEY = 'translationKey';
+    public const FIELD_FK_CMS_BLOCK = 'fkCmsBlock';
+    public const FIELD_PLACEHOLDER = 'placeholder';
+    public const FIELD_ID_GLOSSARY_KEY_MAPPING = 'idCmsBlockGlossaryKeyMapping';
+    public const FIELD_TEMPLATE_NAME = 'templateName';
+    public const FIELD_TRANSLATIONS = 'translations';
+    public const FIELD_TRANSLATION_KEY = 'translationKey';
 
-    const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
+    public const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
 
     use ArrayObjectTransformerTrait;
 

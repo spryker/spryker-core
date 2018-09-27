@@ -18,16 +18,16 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CustomerTable extends AbstractTable
 {
-    const ACTIONS = 'Actions';
+    public const ACTIONS = 'Actions';
 
-    const COL_ZIP_CODE = 'zip_code';
-    const COL_CITY = 'city';
-    const COL_FK_COUNTRY = 'country';
-    const COL_CREATED_AT = 'created_at';
-    const COL_ID_CUSTOMER = 'id_customer';
-    const COL_EMAIL = 'email';
-    const COL_FIRST_NAME = 'first_name';
-    const COL_LAST_NAME = 'last_name';
+    public const COL_ZIP_CODE = 'zip_code';
+    public const COL_CITY = 'city';
+    public const COL_FK_COUNTRY = 'country';
+    public const COL_CREATED_AT = 'created_at';
+    public const COL_ID_CUSTOMER = 'id_customer';
+    public const COL_EMAIL = 'email';
+    public const COL_FIRST_NAME = 'first_name';
+    public const COL_LAST_NAME = 'last_name';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface

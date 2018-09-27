@@ -19,6 +19,13 @@ interface SynchronizationToStorageClientInterface
     public function set($key, $value, $ttl = null);
 
     /**
+     * @param array $items
+     *
+     * @return void
+     */
+    public function setMulti(array $items);
+
+    /**
      * @param string $key
      *
      * @return array|null
@@ -31,4 +38,11 @@ interface SynchronizationToStorageClientInterface
      * @return void
      */
     public function delete($key);
+
+    /**
+     * @param array $keys
+     *
+     * @return void
+     */
+    public function deleteMulti(array $keys);
 }
