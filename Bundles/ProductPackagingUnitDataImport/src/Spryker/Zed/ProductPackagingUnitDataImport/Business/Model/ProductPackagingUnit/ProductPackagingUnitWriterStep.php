@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\ProductPackagingUnit;
 
-use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery;
@@ -19,7 +18,6 @@ use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader;
 use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPackagingUnitDataSetInterface;
 
@@ -28,6 +26,11 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     protected const PRODUCT_HEAP_LIMIT = 500;
     protected const PRODUCT_CONCRETE_ID = 'PRODUCT_CONCRETE_ID';
     protected const PRODUCT_ABSTRACT_ID = 'PRODUCT_ABSTRACT_ID';
+
+    /**
+     * @see \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES
+     */
+    protected const DEFAULT_AMOUNT_DEFAULT_VALUE = 1;
 
     /**
      * @var int[] Keys are product packaging unit type names.
@@ -196,21 +199,13 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
         if (!$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE] &&
             (
                 $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] === 0 ||
-                $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] === $this->getProductPackagingUnitDefaultAmountValue()
+                $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] === static::DEFAULT_AMOUNT_DEFAULT_VALUE
             )
         ) {
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * @return int
-     */
-    protected function getProductPackagingUnitDefaultAmountValue(): int
-    {
-        return ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES[ProductPackagingUnitAmountTransfer::DEFAULT_AMOUNT];
     }
 
     /**

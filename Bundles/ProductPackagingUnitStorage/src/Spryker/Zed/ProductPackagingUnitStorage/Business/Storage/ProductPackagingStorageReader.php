@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitAmountEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface;
 
@@ -30,6 +29,16 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
      * @var \Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface
      */
     protected $productPackagingUnitFacade;
+
+    /**
+     * @see \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES.
+     *
+     * default values for packaging unit storage values.
+     */
+    protected const PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES = [
+        ProductPackagingUnitAmountTransfer::DEFAULT_AMOUNT => 1,
+        ProductPackagingUnitAmountTransfer::IS_VARIABLE => false,
+    ];
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface $productPackagingUnitStorageRepository
@@ -200,7 +209,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     {
         return (new ProductPackagingUnitAmountTransfer())
             ->fromArray(
-                ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES
+                static::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES
             );
     }
 
