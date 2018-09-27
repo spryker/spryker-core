@@ -20,22 +20,22 @@ use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface;
 
 class MethodTable extends AbstractTable
 {
-    const CARRIER = 'Carrier';
-    const METHOD = 'Method';
-    const DESCRIPTION = 'Description';
-    const GROSS_PRICE = 'Gross Price';
-    const NET_PRICE = 'Net Price';
-    const ACTIVE = 'Active';
-    const ACTIONS = 'Actions';
-    const PLUGINS = 'Plugins';
+    public const CARRIER = 'Carrier';
+    public const METHOD = 'Method';
+    public const DESCRIPTION = 'Description';
+    public const GROSS_PRICE = 'Gross Price';
+    public const NET_PRICE = 'Net Price';
+    public const ACTIVE = 'Active';
+    public const ACTIONS = 'Actions';
+    public const PLUGINS = 'Plugins';
 
-    const AVAILABILITY_PLUGIN = 'Availability plugin';
-    const PRICE_PLUGIN = 'Price plugin';
-    const DELIVERY_TIME_PLUGIN = 'Delivery time plugin';
+    public const AVAILABILITY_PLUGIN = 'Availability plugin';
+    public const PRICE_PLUGIN = 'Price plugin';
+    public const DELIVERY_TIME_PLUGIN = 'Delivery time plugin';
 
-    const ID_METHOD_PARAMETER = 'id-method';
+    public const ID_METHOD_PARAMETER = 'id-method';
 
-    const PRICE_TAG = '<span class="label label-info">%s</span>';
+    public const PRICE_TAG = '<span class="label label-info">%s</span>';
 
     /**
      * @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery

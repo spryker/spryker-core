@@ -16,7 +16,7 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Base;
 
 class Request extends Base
 {
-    const OPERATION = Constants::REQUEST_MODEL_PAYMENT_REQUEST;
+    public const OPERATION = Constants::REQUEST_MODEL_PAYMENT_REQUEST;
 
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Builder\Customer

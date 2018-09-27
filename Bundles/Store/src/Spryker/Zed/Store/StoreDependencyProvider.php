@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Container;
 
 class StoreDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const STORE = 'STORE';
+    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

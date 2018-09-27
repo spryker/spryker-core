@@ -14,8 +14,8 @@ use Twig_SimpleFunction;
 
 class ProductLabelTwigExtension extends TwigExtension
 {
-    const FUNCTION_PRODUCT_ABSTRACT_LABELS = 'spyProductAbstractLabels';
-    const FUNCTION_PRODUCT_LABELS = 'spyProductLabels';
+    public const FUNCTION_PRODUCT_ABSTRACT_LABELS = 'spyProductAbstractLabels';
+    public const FUNCTION_PRODUCT_LABELS = 'spyProductLabels';
 
     /**
      * @var \Spryker\Client\ProductLabel\ProductLabelClientInterface

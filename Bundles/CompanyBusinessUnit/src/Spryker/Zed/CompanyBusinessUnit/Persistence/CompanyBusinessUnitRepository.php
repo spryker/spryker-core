@@ -24,6 +24,11 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     protected const TABLE_JOIN_PARENT_BUSINESS_UNIT = 'parentCompanyBusinessUnit';
 
     /**
+     * @see \Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap::COL_CUSTOMER_REFERENCE
+     */
+    protected const COL_CUSTOMER_REFERENCE = 'spy_customer.customer_reference';
+
+    /**
      * @param int $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
@@ -117,6 +122,27 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         return $this->getFactory()
             ->createCompanyBusinessUnitMapper()
             ->mapEntityTransferToBusinessUnitTransfer($entityTransfer, new CompanyBusinessUnitTransfer());
+    }
+
+    /**
+     * @module CompanyUser
+     * @module Customer
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitQuery()
+            ->useCompanyUserQuery()
+                ->joinCustomer()
+            ->endUse()
+            ->filterByIdCompanyBusinessUnit_In($companyBusinessUnitIds)
+            ->select(static::COL_CUSTOMER_REFERENCE)
+            ->find()
+            ->toArray();
     }
 
     /**

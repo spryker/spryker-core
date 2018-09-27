@@ -16,7 +16,7 @@ use Symfony\Component\Finder\Finder;
 
 class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
 {
-    const TEMPLATE_FILE_SUFFIX = '.twig';
+    public const TEMPLATE_FILE_SUFFIX = '.twig';
 
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
@@ -125,7 +125,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     /**
      * @param int $idCmsBlockTemplate
      *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate|null
      */
     public function getTemplateById($idCmsBlockTemplate)
     {

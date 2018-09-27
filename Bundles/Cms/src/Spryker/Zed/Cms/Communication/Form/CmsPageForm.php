@@ -30,19 +30,19 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsPageForm extends AbstractType
 {
-    const FIELD_ID_CMS_PAGE = 'idCmsPage';
-    const FIELD_FK_TEMPLATE = 'fkTemplate';
-    const FIELD_URL = 'url';
-    const FIELD_CURRENT_TEMPLATE = 'cur_temp';
-    const FIELD_IS_ACTIVE = 'is_active';
-    const FIELD_ID_URL = 'id_url';
+    public const FIELD_ID_CMS_PAGE = 'idCmsPage';
+    public const FIELD_FK_TEMPLATE = 'fkTemplate';
+    public const FIELD_URL = 'url';
+    public const FIELD_CURRENT_TEMPLATE = 'cur_temp';
+    public const FIELD_IS_ACTIVE = 'is_active';
+    public const FIELD_ID_URL = 'id_url';
 
-    const OPTION_TEMPLATE_CHOICES = 'template_choices';
-    const OPTION_LOCALES_CHOICES = 'locale_choices';
-    const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
-    const FIELD_FK_LOCALE = 'fk_locale';
-    const FIELD_IS_SEARCHABLE = 'is_searchable';
-    const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
+    public const OPTION_TEMPLATE_CHOICES = 'template_choices';
+    public const OPTION_LOCALES_CHOICES = 'locale_choices';
+    public const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
+    public const FIELD_FK_LOCALE = 'fk_locale';
+    public const FIELD_IS_SEARCHABLE = 'is_searchable';
+    public const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

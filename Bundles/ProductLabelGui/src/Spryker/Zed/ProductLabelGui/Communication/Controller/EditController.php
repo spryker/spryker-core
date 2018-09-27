@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-    const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
+    public const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

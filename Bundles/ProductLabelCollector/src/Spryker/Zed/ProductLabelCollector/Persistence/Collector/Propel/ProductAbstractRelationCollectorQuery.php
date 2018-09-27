@@ -15,9 +15,9 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
 {
-    const RESULT_FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const RESULT_FIELD_ID_PRODUCT_LABELS_CSV = 'id_product_labels_csv';
-    const LABEL_DELIMITER = ":#:";
+    public const RESULT_FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const RESULT_FIELD_ID_PRODUCT_LABELS_CSV = 'id_product_labels_csv';
+    public const LABEL_DELIMITER = ":#:";
 
     /**
      * @return void

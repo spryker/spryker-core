@@ -25,9 +25,11 @@ class TaxSetMapper implements TaxSetMapperInterface
         $taxSetTransfer->fromArray($taxSetEntity->toArray(), true);
         foreach ($taxSetEntity->getSpyTaxRates() as $taxRate) {
             $taxRateTransfer = (new TaxRateTransfer())->fromArray($taxRate->toArray(), true);
-            if ($taxRate->getCountry()) {
+            /** @var \Orm\Zed\Country\Persistence\SpyCountry|null $countryEntity */
+            $countryEntity = $taxRate->getCountry();
+            if ($countryEntity) {
                 $countryTransfer = (new CountryTransfer())->fromArray(
-                    $taxRate->getCountry()->toArray(),
+                    $countryEntity->toArray(),
                     true
                 );
                 $taxRateTransfer->setCountry($countryTransfer);

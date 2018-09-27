@@ -21,13 +21,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContainerInterface
 {
-    const VERSION = 'version';
-    const ID_OMS_PRODUCT_RESERVATION = 'idOmsProductReservation';
-    const RESERVATION_QUANTITY = 'reservationQuantity';
-    const SKU = 'sku';
-    const STORE = 'store';
-    const ID_OMS_PRODUCT_RESERVATION_STORE = 'idOmsProductReservationStore';
-    const LAST_UPDATE = 'lastUpdate';
+    public const VERSION = 'version';
+    public const ID_OMS_PRODUCT_RESERVATION = 'idOmsProductReservation';
+    public const RESERVATION_QUANTITY = 'reservationQuantity';
+    public const SKU = 'sku';
+    public const STORE = 'store';
+    public const ID_OMS_PRODUCT_RESERVATION_STORE = 'idOmsProductReservationStore';
+    public const LAST_UPDATE = 'lastUpdate';
 
     /**
      * @api
