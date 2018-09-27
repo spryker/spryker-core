@@ -19,7 +19,7 @@ interface TwigConstants
      * @api
      * @see http://twig.sensiolabs.org/doc/api.html#environment-options
      */
-    const YVES_TWIG_OPTIONS = 'YVES_TWIG_OPTIONS';
+    public const YVES_TWIG_OPTIONS = 'YVES_TWIG_OPTIONS';
 
     /**
      * Specification:
@@ -28,7 +28,7 @@ interface TwigConstants
      *
      * @api
      */
-    const YVES_THEME = 'YVES_THEME';
+    public const YVES_THEME = 'YVES_THEME';
 
     /**
      * Specification:
@@ -36,7 +36,7 @@ interface TwigConstants
      *
      * @api
      */
-    const YVES_PATH_CACHE_FILE = 'YVES_PATH_CACHE_FILE';
+    public const YVES_PATH_CACHE_FILE = 'YVES_PATH_CACHE_FILE';
 
     /**
      * Specification:
@@ -44,7 +44,7 @@ interface TwigConstants
      *
      * @api
      */
-    const YVES_PATH_CACHE_ENABLED = 'YVES_PATH_CACHE_ENABLED';
+    public const YVES_PATH_CACHE_ENABLED = 'YVES_PATH_CACHE_ENABLED';
 
     /**
      * Specification:
@@ -53,7 +53,7 @@ interface TwigConstants
      * @api
      * @see http://twig.sensiolabs.org/doc/api.html#environment-options
      */
-    const ZED_TWIG_OPTIONS = 'ZED_TWIG_OPTIONS';
+    public const ZED_TWIG_OPTIONS = 'ZED_TWIG_OPTIONS';
 
     /**
      * Specification:
@@ -61,7 +61,7 @@ interface TwigConstants
      *
      * @api
      */
-    const ZED_PATH_CACHE_FILE = 'ZED_PATH_CACHE_FILE';
+    public const ZED_PATH_CACHE_FILE = 'ZED_PATH_CACHE_FILE';
 
     /**
      * Specification:
@@ -69,7 +69,7 @@ interface TwigConstants
      *
      * @api
      */
-    const ZED_PATH_CACHE_ENABLED = 'ZED_PATH_CACHE_ENABLED';
+    public const ZED_PATH_CACHE_ENABLED = 'ZED_PATH_CACHE_ENABLED';
 
     /**
      * Specification:
@@ -77,5 +77,5 @@ interface TwigConstants
      *
      * @api
      */
-    const DIRECTORY_PERMISSION = 'TWIG:DIRECTORY_PERMISSION';
+    public const DIRECTORY_PERMISSION = 'TWIG:DIRECTORY_PERMISSION';
 }

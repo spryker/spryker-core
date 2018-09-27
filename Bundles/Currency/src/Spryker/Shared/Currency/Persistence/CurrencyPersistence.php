@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\Store;
 
 class CurrencyPersistence implements CurrencyPersistenceInterface
 {
-    const CURRENT_CURRENCY_ISO_CODE = 'current-currency-iso-code';
+    public const CURRENT_CURRENCY_ISO_CODE = 'current-currency-iso-code';
 
     /**
      * @var \Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface

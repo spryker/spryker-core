@@ -11,12 +11,12 @@ use SprykerTest\Zed\Sales\PageObject\SalesDetailPage as BaseSalesDetailPage;
 
 class SalesDetailPage extends BaseSalesDetailPage
 {
-    const SELECTOR_REFUND_ROW = '//table[@data-qa="refund-list"]/tbody/tr[@data-qa="refund-row"]';
-    const REFUND_TOTAL_AMOUNT_SELECTOR = self::SELECTOR_REFUND_ROW . '/td[@data-qa="refund-amount-raw"]';
+    public const SELECTOR_REFUND_ROW = '//table[@data-qa="refund-list"]/tbody/tr[@data-qa="refund-row"]';
+    public const REFUND_TOTAL_AMOUNT_SELECTOR = self::SELECTOR_REFUND_ROW . '/td[@data-qa="refund-amount-raw"]';
 
-    const BUTTON_REFUND = 'refund';
-    const STATE_RETURNED = 'returned';
-    const STATE_REFUNDED = 'refunded';
+    public const BUTTON_REFUND = 'refund';
+    public const STATE_RETURNED = 'returned';
+    public const STATE_REFUNDED = 'refunded';
 
-    const ATTRIBUTE_REFUND_TOTAL_RAW = 'data-qa-raw';
+    public const ATTRIBUTE_REFUND_TOTAL_RAW = 'data-qa-raw';
 }

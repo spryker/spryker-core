@@ -12,12 +12,12 @@ namespace Spryker\Shared\Auth;
  */
 interface AuthConstants
 {
-    const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
-    const AUTH_ZED_ENABLED = 'AUTH_ZED_ENABLED';
+    public const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
+    public const AUTH_ZED_ENABLED = 'AUTH_ZED_ENABLED';
 
-    const AUTH_SESSION_KEY = 'auth';
-    const AUTH_CURRENT_USER_KEY = '%s:currentUser:%s';
-    const AUTHORIZATION_WILDCARD = '*';
-    const DAY_IN_SECONDS = 86400;
-    const AUTH_TOKEN = 'Auth-Token';
+    public const AUTH_SESSION_KEY = 'auth';
+    public const AUTH_CURRENT_USER_KEY = '%s:currentUser:%s';
+    public const AUTHORIZATION_WILDCARD = '*';
+    public const DAY_IN_SECONDS = 86400;
+    public const AUTH_TOKEN = 'Auth-Token';
 }

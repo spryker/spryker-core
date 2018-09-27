@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SearchPreferencesController extends AbstractController
 {
-    const PARAM_ID = 'id';
+    public const PARAM_ID = 'id';
 
     /**
      * @return array

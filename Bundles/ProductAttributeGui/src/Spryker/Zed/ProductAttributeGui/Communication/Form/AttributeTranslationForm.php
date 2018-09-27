@@ -23,11 +23,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class AttributeTranslationForm extends AbstractType
 {
-    const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
-    const FIELD_KEY = 'key';
-    const FIELD_KEY_TRANSLATION = 'key_translation';
-    const FIELD_TRANSLATE_VALUES = 'translate_values';
-    const FIELD_VALUE_TRANSLATIONS = 'value_translations';
+    public const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
+    public const FIELD_KEY = 'key';
+    public const FIELD_KEY_TRANSLATION = 'key_translation';
+    public const FIELD_TRANSLATE_VALUES = 'translate_values';
+    public const FIELD_VALUE_TRANSLATIONS = 'value_translations';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

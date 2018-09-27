@@ -15,9 +15,9 @@ use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConn
 
 class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
-    const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
-    const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+    public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+    public const FACADE_MONEY = 'FACADE_MONEY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

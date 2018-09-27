@@ -19,9 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AddController
 {
-    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    const PARAM_ID_PRODUCT = 'id-product';
-    const PARAM_PRODUCT_TYPE = 'type';
+    public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const PARAM_ID_PRODUCT = 'id-product';
+    public const PARAM_PRODUCT_TYPE = 'type';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

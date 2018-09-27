@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CheckoutConfig extends AbstractBundleConfig
 {
-    const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
-    const ERROR_CODE_PRODUCT_UNAVAILABLE = 4002;
-    const ERROR_CODE_CART_AMOUNT_DIFFERENT = '4003';
+    public const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
+    public const ERROR_CODE_PRODUCT_UNAVAILABLE = 4002;
+    public const ERROR_CODE_CART_AMOUNT_DIFFERENT = '4003';
 }

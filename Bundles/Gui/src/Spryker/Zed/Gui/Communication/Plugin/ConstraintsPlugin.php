@@ -61,7 +61,7 @@ use Symfony\Component\Validator\Constraints\Valid;
  */
 class ConstraintsPlugin extends AbstractPlugin
 {
-    const MAXIMUM_LENGTH_CONSTRAINT = 255;
+    public const MAXIMUM_LENGTH_CONSTRAINT = 255;
 
     /**
      * @api

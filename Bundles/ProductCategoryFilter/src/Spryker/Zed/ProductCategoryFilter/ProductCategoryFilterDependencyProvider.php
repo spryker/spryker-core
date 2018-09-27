@@ -14,8 +14,8 @@ use Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterTo
 
 class ProductCategoryFilterDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'FACADE_TOUCH';
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

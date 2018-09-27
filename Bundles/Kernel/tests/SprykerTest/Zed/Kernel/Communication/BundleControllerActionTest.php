@@ -22,9 +22,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BundleControllerActionTest extends Unit
 {
-    const BUNDLE = 'foo';
-    const CONTROLLER = 'bar';
-    const ACTION = 'baz';
+    public const BUNDLE = 'foo';
+    public const CONTROLLER = 'bar';
+    public const ACTION = 'baz';
 
     /**
      * @return void
