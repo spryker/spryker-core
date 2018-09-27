@@ -117,7 +117,7 @@ class CategoryLocalizedAttributeType extends AbstractType
                             $categoryTransfer = $context->getRoot()->getData();
 
                             if ($categoryTransfer instanceof CategoryTransfer && $nameKey) {
-                                if ($this->getFacade()->hasFirstLevelChildrenByName($nameKey, $categoryTransfer)) {
+                                if ($this->getFacade()->checkSameLevelCategoryByNameExists($nameKey, $categoryTransfer)) {
                                     $context->addViolation(sprintf('Category with name "%s" already in use in this category level, please choose another one.', $nameKey));
                                 }
                             }
