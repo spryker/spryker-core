@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Container;
 class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
-    public const PROPEL_COMPANY_USER_QUERY = 'PROPEL_COMPANY_USER_QUERY';
+    public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
 
     public const PLUGINS_COMPANY_USER_TABLE_CONFIG_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_CONFIG_EXPANDER';
     public const PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER';
@@ -29,7 +29,7 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCompanyUserFacade($container);
-        $container = $this->addPropelCompanyUserQuery($container);
+        $container = $this->addCompanyUserPropelQuery($container);
         $container = $this->addCompanyUserTableConfigExpanderPlugins($container);
         $container = $this->addCompanyUserTablePrepareDataExpanderPlugins($container);
 
@@ -57,9 +57,9 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPropelCompanyUserQuery(Container $container): Container
+    protected function addCompanyUserPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_COMPANY_USER_QUERY] = function (Container $container) {
+        $container[static::PROPEL_QUERY_COMPANY_USER] = function (Container $container) {
             return SpyCompanyUserQuery::create();
         };
 

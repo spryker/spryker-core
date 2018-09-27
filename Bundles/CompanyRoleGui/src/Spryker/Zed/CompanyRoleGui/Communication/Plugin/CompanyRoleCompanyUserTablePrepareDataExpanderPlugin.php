@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyRoleCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugin implements CompanyUserTablePrepareDataExpanderPluginInterface
 {
-    protected const COL_ID_COMPANY_USER = 'spy_company_user.id_company_user';
+    protected const COL_ID_COMPANY_USER = 'id_company_user';
 
     /**
      * {@inheritdoc}
@@ -32,20 +32,23 @@ class CompanyRoleCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugi
     {
         $idCompanyUser = $companyUserDataItem[static::COL_ID_COMPANY_USER];
 
-        $companyRoles = (array)$this->getFactory()->getCompanyRoleFacade()->getCompanyRoleCollection(
+        $companyRoles = $this->getFactory()->getCompanyRoleFacade()->getCompanyRoleCollection(
             (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser)
         )
         ->getRoles();
 
         $companyUserRoleNames = [];
-        if (count($companyRoles) > 0) {
+        if ($companyRoles->count() > 0) {
             foreach ($companyRoles as $companyRole) {
                 $companyUserRoleNames[] = '<p>' . $companyRole->getName() . '</p>';
             }
         }
 
-        return [
-            CompanyRoleCompanyUserTableConfigExpanderPlugin::COL_COMPANY_ROLE_NAMES => $companyUserRoleNames,
-        ];
+        return array_merge(
+            $companyUserDataItem,
+            [
+                CompanyRoleCompanyUserTableConfigExpanderPlugin::COL_COMPANY_ROLE_NAMES => $companyUserRoleNames,
+            ]
+        );
     }
 }

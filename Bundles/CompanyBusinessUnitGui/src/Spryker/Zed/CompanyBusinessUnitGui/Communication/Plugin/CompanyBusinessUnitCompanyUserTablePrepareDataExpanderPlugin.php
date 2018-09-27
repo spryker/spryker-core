@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugin implements CompanyUserTablePrepareDataExpanderPluginInterface
 {
-    protected const COL_ID_COMPANY_USER = 'spy_company_user.id_company_user';
+    protected const COL_ID_COMPANY_USER = 'id_company_user';
 
     /**
      * {@inheritdoc}
@@ -32,7 +32,7 @@ class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends Abstr
     {
         $idCompanyUser = $companyUserDataItem[static::COL_ID_COMPANY_USER];
 
-        $companyBusinessUnits = (array)$this->getFactory()
+        $companyBusinessUnits = $this->getFactory()
             ->getCompanyBusinessUnitFacade()
             ->getCompanyBusinessUnitCollection(
                 (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser)
@@ -40,15 +40,15 @@ class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends Abstr
             ->getCompanyBusinessUnits();
 
         $companyBusinessUnitName = null;
-        if (count($companyBusinessUnits) > 0) {
-            $companyBusinessUnit = reset($companyBusinessUnits);
-            if ($companyBusinessUnit) {
-                $companyBusinessUnitName = $companyBusinessUnit->getName();
-            }
+        if ($companyBusinessUnits->count() > 0) {
+            $companyBusinessUnitName = $companyBusinessUnits->offsetGet(0)->getName();
         }
 
-        return [
-            CompanyBusinessUnitCompanyUserTableConfigExpanderPlugin::COL_COMPANY_BUSINESS_UNIT_NAME => $companyBusinessUnitName,
-        ];
+        return array_merge(
+            $companyUserDataItem,
+            [
+                CompanyBusinessUnitCompanyUserTableConfigExpanderPlugin::COL_COMPANY_BUSINESS_UNIT_NAME => $companyBusinessUnitName,
+            ]
+        );
     }
 }

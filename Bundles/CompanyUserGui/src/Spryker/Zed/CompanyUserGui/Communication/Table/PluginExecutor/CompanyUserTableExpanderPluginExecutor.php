@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor;
 
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class CompanyUserTableConfigExpanderPluginExecutor implements CompanyUserTableConfigExpanderPluginExecutorInterface
+class CompanyUserTableExpanderPluginExecutor implements CompanyUserTableExpanderPluginExecutorInterface
 {
     /**
      * @var \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTableConfigExpanderPluginInterface[]
@@ -17,11 +17,20 @@ class CompanyUserTableConfigExpanderPluginExecutor implements CompanyUserTableCo
     protected $companyUserTableConfigExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTableConfigExpanderPluginInterface[] $companyUserTableConfigExpanderPlugins
+     * @var \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTablePrepareDataExpanderPluginInterface[]
      */
-    public function __construct(array $companyUserTableConfigExpanderPlugins)
-    {
+    protected $companyUserTablePrepareDataExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTableConfigExpanderPluginInterface[] $companyUserTableConfigExpanderPlugins
+     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTablePrepareDataExpanderPluginInterface[] $companyUserTablePrepareDataExpanderPlugins
+     */
+    public function __construct(
+        array $companyUserTableConfigExpanderPlugins,
+        array $companyUserTablePrepareDataExpanderPlugins
+    ) {
         $this->companyUserTableConfigExpanderPlugins = $companyUserTableConfigExpanderPlugins;
+        $this->companyUserTablePrepareDataExpanderPlugins = $companyUserTablePrepareDataExpanderPlugins;
     }
 
     /**
@@ -36,5 +45,19 @@ class CompanyUserTableConfigExpanderPluginExecutor implements CompanyUserTableCo
         }
 
         return $config;
+    }
+
+    /**
+     * @param array $companyUserDataItem
+     *
+     * @return array
+     */
+    public function executePrepareDataExpanderPlugins(array $companyUserDataItem): array
+    {
+        foreach ($this->companyUserTablePrepareDataExpanderPlugins as $companyUserTablePrepareDataExpanderPlugin) {
+            $companyUserDataItem = $companyUserTablePrepareDataExpanderPlugin->expandDataItem($companyUserDataItem);
+        }
+
+        return $companyUserDataItem;
     }
 }

@@ -19,7 +19,6 @@ class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin imp
     public const COL_COMPANY_ROLE_NAMES = 'company_role_names';
 
     protected const TITLE_COMPANY_ROLE_NAMES = 'Roles';
-    protected const TABLE_POSITION_COL_COMPANY_ROLE_NAMES = 3;
 
     /**
      * {@inheritdoc}
@@ -33,35 +32,11 @@ class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin imp
      */
     public function expandConfig(TableConfiguration $config): TableConfiguration
     {
-        $configHeader = $config->getHeader();
-        $configHeader = $this->addArrayItemToArrayPosition(
-            $configHeader,
-            [
-                static::COL_COMPANY_ROLE_NAMES => static::TITLE_COMPANY_ROLE_NAMES,
-            ],
-            static::TABLE_POSITION_COL_COMPANY_ROLE_NAMES
-        );
+        $configHeader = $config->getHeader() + [
+            static::COL_COMPANY_ROLE_NAMES => static::TITLE_COMPANY_ROLE_NAMES,
+        ];
         $config->setHeader($configHeader);
 
-        $configSearchable = $config->getSearchable();
-        $configSearchable[] = static::COL_COMPANY_ROLE_NAMES;
-
         return $config;
-    }
-
-    /**
-     * @param array $data
-     * @param array $item
-     * @param int $position
-     *
-     * @return array
-     */
-    protected function addArrayItemToArrayPosition(array $data, array $item, int $position): array
-    {
-        return array_merge(
-            array_slice($data, 0, $position, true),
-            $item,
-            array_slice($data, $position, null, true)
-        );
     }
 }

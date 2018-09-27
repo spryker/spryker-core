@@ -9,17 +9,12 @@ namespace Spryker\Zed\CompanyUserGui\Communication;
 
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\CompanyUserGui\Communication\Table\CompanyUserTable;
-use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableConfigExpanderPluginExecutor;
-use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableConfigExpanderPluginExecutorInterface;
-use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTablePrepareDataExpanderPluginExecutor;
-use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTablePrepareDataExpanderPluginExecutorInterface;
+use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutor;
+use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
 use Spryker\Zed\CompanyUserGui\CompanyUserGuiDependencyProvider;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
-/**
- * @method \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig getConfig()
- */
 class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -33,27 +28,18 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      */
-    public function getPropelCompanyUserQuery(): SpyCompanyUserQuery
+    public function getCompanyUserPropelQuery(): SpyCompanyUserQuery
     {
-        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PROPEL_COMPANY_USER_QUERY);
+        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PROPEL_QUERY_COMPANY_USER);
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableConfigExpanderPluginExecutorInterface
+     * @return \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface
      */
-    public function createCompanyUserTableConfigExpanderPluginExecutor(): CompanyUserTableConfigExpanderPluginExecutorInterface
+    public function createCompanyUserTableExpanderPluginExecutor(): CompanyUserTableExpanderPluginExecutorInterface
     {
-        return new CompanyUserTableConfigExpanderPluginExecutor(
-            $this->getCompanyUserTableConfigExpanderPlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTablePrepareDataExpanderPluginExecutorInterface
-     */
-    public function createCompanyUserTablePrepareDataExpanderPluginExecutor(): CompanyUserTablePrepareDataExpanderPluginExecutorInterface
-    {
-        return new CompanyUserTablePrepareDataExpanderPluginExecutor(
+        return new CompanyUserTableExpanderPluginExecutor(
+            $this->getCompanyUserTableConfigExpanderPlugins(),
             $this->getCompanyUserTablePrepareDataExpanderPlugins()
         );
     }
@@ -64,9 +50,8 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCompanyUserTable(): CompanyUserTable
     {
         return new CompanyUserTable(
-            $this->getPropelCompanyUserQuery(),
-            $this->createCompanyUserTableConfigExpanderPluginExecutor(),
-            $this->createCompanyUserTablePrepareDataExpanderPluginExecutor()
+            $this->getCompanyUserPropelQuery(),
+            $this->createCompanyUserTableExpanderPluginExecutor()
         );
     }
 

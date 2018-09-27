@@ -12,9 +12,7 @@ use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableConfigExpanderPluginExecutorInterface;
-use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTablePrepareDataExpanderPluginExecutorInterface;
-use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
+use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -23,10 +21,8 @@ class CompanyUserTable extends AbstractTable
     protected const COL_ID_COMPANY_USER = 'id_company_user';
     protected const COL_COMPANY_NAME = 'company_name';
     protected const COL_COMPANY_USER_NAME = 'company_user_name';
-    protected const COL_COMPANY_USER_STATUS = 'company_user_status';
+    protected const COL_IS_ACTIVE = 'is_active';
     protected const COL_COMPANY_USER_ACTIONS = 'actions';
-
-    protected const REQUEST_ID_COMPANY_USER = 'id-company-user';
 
     /**
      * @var \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
@@ -34,28 +30,20 @@ class CompanyUserTable extends AbstractTable
     protected $companyUserQuery;
 
     /**
-     * @var \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableConfigExpanderPluginExecutorInterface
+     * @var \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface
      */
-    protected $companyUserTableConfigExpanderPluginExecutor;
-
-    /**
-     * @var \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTablePrepareDataExpanderPluginExecutorInterface
-     */
-    protected $companyUserTablePrepareDataExpanderPluginExecutor;
+    protected $companyUserTableExpanderPluginExecutor;
 
     /**
      * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $companyUserQuery
-     * @param \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableConfigExpanderPluginExecutorInterface $companyUserTableConfigExpanderPluginExecutor
-     * @param \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTablePrepareDataExpanderPluginExecutorInterface $companyUserTablePrepareDataExpanderPluginExecutor
+     * @param \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface $companyUserTableExpanderPluginExecutor
      */
     public function __construct(
         SpyCompanyUserQuery $companyUserQuery,
-        CompanyUserTableConfigExpanderPluginExecutorInterface $companyUserTableConfigExpanderPluginExecutor,
-        CompanyUserTablePrepareDataExpanderPluginExecutorInterface $companyUserTablePrepareDataExpanderPluginExecutor
+        CompanyUserTableExpanderPluginExecutorInterface $companyUserTableExpanderPluginExecutor
     ) {
         $this->companyUserQuery = $companyUserQuery;
-        $this->companyUserTableConfigExpanderPluginExecutor = $companyUserTableConfigExpanderPluginExecutor;
-        $this->companyUserTablePrepareDataExpanderPluginExecutor = $companyUserTablePrepareDataExpanderPluginExecutor;
+        $this->companyUserTableExpanderPluginExecutor = $companyUserTableExpanderPluginExecutor;
     }
 
     /**
@@ -69,28 +57,47 @@ class CompanyUserTable extends AbstractTable
             static::COL_ID_COMPANY_USER => 'User ID',
             static::COL_COMPANY_NAME => 'Company Name',
             static::COL_COMPANY_USER_NAME => 'User Name',
-            static::COL_COMPANY_USER_STATUS => 'Status',
-            static::COL_COMPANY_USER_ACTIONS => 'Actions',
+            static::COL_IS_ACTIVE => 'Status',
         ]);
 
         $config->setSearchable([
-            static::COL_COMPANY_NAME,
-            static::COL_COMPANY_USER_NAME,
+            SpyCompanyUserTableMap::COL_ID_COMPANY_USER,
+            SpyCompanyTableMap::COL_NAME,
+            SpyCustomerTableMap::COL_FIRST_NAME,
+            SpyCustomerTableMap::COL_LAST_NAME,
         ]);
 
         $config->setSortable([
             static::COL_ID_COMPANY_USER,
             static::COL_COMPANY_NAME,
             static::COL_COMPANY_USER_NAME,
-            static::COL_COMPANY_USER_STATUS,
+            static::COL_IS_ACTIVE,
         ]);
 
         $config->setRawColumns([
-            static::COL_COMPANY_USER_STATUS,
+            static::COL_IS_ACTIVE,
             static::COL_COMPANY_USER_ACTIONS,
         ]);
 
-        $config = $this->companyUserTableConfigExpanderPluginExecutor->executeConfigExpanderPlugins($config);
+        $config = $this->companyUserTableExpanderPluginExecutor->executeConfigExpanderPlugins($config);
+
+        $config = $this->addActionsConfigHeader($config);
+
+        return $config;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function addActionsConfigHeader(TableConfiguration $config): TableConfiguration
+    {
+        $configHeader = $config->getHeader();
+        $configHeader += [
+            static::COL_COMPANY_USER_ACTIONS => 'Actions',
+        ];
+        $config->setHeader($configHeader);
 
         return $config;
     }
@@ -109,10 +116,8 @@ class CompanyUserTable extends AbstractTable
 
         $companyUserDataTableRows = [];
         foreach ($companyUserDataItems as $companyUserDataItem) {
-            $companyUserDataTableRow = $this->mapCompanyUserDataItemToCompanyUserTableDataRow($companyUserDataItem);
-
-            $companyUserDataTableRow += $this->companyUserTablePrepareDataExpanderPluginExecutor->executePrepareDataExpanderPlugins(
-                $companyUserDataItem
+            $companyUserDataTableRow = $this->companyUserTableExpanderPluginExecutor->executePrepareDataExpanderPlugins(
+                $this->mapCompanyUserDataItemToCompanyUserTableDataRow($companyUserDataItem)
             );
 
             $companyUserDataTableRows[] = $companyUserDataTableRow;
@@ -132,7 +137,7 @@ class CompanyUserTable extends AbstractTable
             static::COL_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             static::COL_COMPANY_USER_NAME => $companyUserDataItem[static::COL_COMPANY_USER_NAME],
             static::COL_COMPANY_NAME => $companyUserDataItem[static::COL_COMPANY_NAME],
-            static::COL_COMPANY_USER_STATUS => $this->generateCompanyUserStatusLabel($companyUserDataItem),
+            static::COL_IS_ACTIVE => $this->generateCompanyUserStatusLabel($companyUserDataItem),
             static::COL_COMPANY_USER_ACTIONS => $this->buildLinks($companyUserDataItem),
         ];
     }
@@ -144,18 +149,13 @@ class CompanyUserTable extends AbstractTable
      */
     protected function prepareQuery(SpyCompanyUserQuery $companyUserQuery): SpyCompanyUserQuery
     {
-        /** @var \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $query */
-        $query = $companyUserQuery->joinCustomer()
+        return $companyUserQuery->joinCustomer()
             ->withColumn(
                 'CONCAT(' . SpyCustomerTableMap::COL_FIRST_NAME . ', \' \', ' . SpyCustomerTableMap::COL_LAST_NAME . ')',
                 static::COL_COMPANY_USER_NAME
-            );
-
-        /** @var \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $query */
-        $query = $query->joinCompany()
+            )
+            ->joinCompany()
             ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY_NAME);
-
-        return $query;
     }
 
     /**
@@ -196,8 +196,8 @@ class CompanyUserTable extends AbstractTable
     protected function generateCompanyUserEditButton(array $companyUserDataItem): string
     {
         return $this->generateEditButton(
-            Url::generate(CompanyUserGuiConfig::URL_EDIT_COMPANY_USER, [
-                static::REQUEST_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            Url::generate(CompanyUserTableConstants::URL_EDIT_COMPANY_USER, [
+                CompanyUserTableConstants::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
             'Edit'
         );
@@ -212,16 +212,16 @@ class CompanyUserTable extends AbstractTable
     {
         if ($companyUserDataItem[SpyCompanyUserTableMap::COL_IS_ACTIVE]) {
             return $this->generateRemoveButton(
-                Url::generate(CompanyUserGuiConfig::URL_DISABLE_COMPANY_USER, [
-                    static::REQUEST_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+                Url::generate(CompanyUserTableConstants::URL_DISABLE_COMPANY_USER, [
+                    CompanyUserTableConstants::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
                 ]),
                 'Disable'
             );
         }
 
         return $this->generateViewButton(
-            Url::generate(CompanyUserGuiConfig::URL_ENABLE_COMPANY_USER, [
-                static::REQUEST_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            Url::generate(CompanyUserTableConstants::URL_ENABLE_COMPANY_USER, [
+                CompanyUserTableConstants::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
             'Enable'
         );
@@ -235,8 +235,8 @@ class CompanyUserTable extends AbstractTable
     protected function generateCompanyUserDeleteButton(array $companyUserDataItem): string
     {
         return $this->generateRemoveButton(
-            Url::generate(CompanyUserGuiConfig::URL_DELETE_COMPANY_USER, [
-                static::REQUEST_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            Url::generate(CompanyUserTableConstants::URL_DELETE_COMPANY_USER, [
+                CompanyUserTableConstants::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
             'Delete'
         );

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyUserGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\CompanyUserGui\Communication\CompanyUserGuiCommunicationFactory getFactory()
@@ -17,7 +18,7 @@ class ListCompanyUserController extends AbstractController
     /**
      * @return array
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         $companyUserTable = $this->getFactory()
             ->createCompanyUserTable();
@@ -30,7 +31,7 @@ class ListCompanyUserController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction()
+    public function tableAction(): JsonResponse
     {
         $companyUserTable = $this->getFactory()
             ->createCompanyUserTable();

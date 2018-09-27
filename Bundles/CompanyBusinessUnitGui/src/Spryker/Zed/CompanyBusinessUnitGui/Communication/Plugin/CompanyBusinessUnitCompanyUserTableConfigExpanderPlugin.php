@@ -19,7 +19,6 @@ class CompanyBusinessUnitCompanyUserTableConfigExpanderPlugin extends AbstractPl
     public const COL_COMPANY_BUSINESS_UNIT_NAME = 'company_business_unit_name';
 
     protected const TITLE_COMPANY_BUSINESS_UNIT_NAME = 'Company Business Unit';
-    protected const TABLE_POSITION_COMPANY_BUSINESS_UNIT_NAME = 2;
 
     /**
      * {@inheritdoc}
@@ -33,35 +32,11 @@ class CompanyBusinessUnitCompanyUserTableConfigExpanderPlugin extends AbstractPl
      */
     public function expandConfig(TableConfiguration $config): TableConfiguration
     {
-        $configHeader = $config->getHeader();
-        $configHeader = $this->addArrayItemToArrayPosition(
-            $configHeader,
-            [
-                static::COL_COMPANY_BUSINESS_UNIT_NAME => static::TITLE_COMPANY_BUSINESS_UNIT_NAME,
-            ],
-            static::TABLE_POSITION_COMPANY_BUSINESS_UNIT_NAME
-        );
+        $configHeader = $config->getHeader() + [
+            static::COL_COMPANY_BUSINESS_UNIT_NAME => static::TITLE_COMPANY_BUSINESS_UNIT_NAME,
+        ];
         $config->setHeader($configHeader);
 
-        $configSearchable = $config->getSearchable();
-        $configSearchable[] = static::COL_COMPANY_BUSINESS_UNIT_NAME;
-
         return $config;
-    }
-
-    /**
-     * @param array $data
-     * @param array $item
-     * @param int $position
-     *
-     * @return array
-     */
-    protected function addArrayItemToArrayPosition(array $data, array $item, int $position): array
-    {
-        return array_merge(
-            array_slice($data, 0, $position, true),
-            $item,
-            array_slice($data, $position, null, true)
-        );
     }
 }
