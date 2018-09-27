@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\RestRequestValidator\Business\Exception\ClassNotFound;
 use Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapter;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapter;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToValidationAdapter;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapter;
+use Spryker\Glue\RestRequestValidator\Processor\Exception\ClassNotFoundException;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReader;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolver;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface;
@@ -99,7 +99,7 @@ class RestRequestValidatorPluginsTest extends Unit
      */
     public function testValidateWillPassByGetRequest(): void
     {
-        $this->expectException(ClassNotFound::class);
+        $this->expectException(ClassNotFoundException::class);
 
         $mockRestRequestValidator = $this->createMockRestRequestValidatorWithWrongConstraint();
         $mockRestRequest = $this->createMockRestRequestWithData(static::CORRECT_ENDPOINT_DATA);
@@ -132,7 +132,7 @@ class RestRequestValidatorPluginsTest extends Unit
      *
      * @return string
      */
-    protected function getFixtureDirectory($level = null): string
+    protected function getFixtureDirectory(?string $level = null): string
     {
         $pathParts = [
             __DIR__,

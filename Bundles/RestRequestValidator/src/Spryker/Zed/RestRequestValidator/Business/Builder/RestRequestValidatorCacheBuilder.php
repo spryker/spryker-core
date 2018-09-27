@@ -7,25 +7,25 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Builder;
 
-use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollectorInterface;
-use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMergerInterface;
-use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface;
+use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollectorInterface;
+use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaMergerInterface;
+use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface;
 
-class RestRequestValidatorBuilder implements RestRequestValidatorBuilderInterface
+class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuilderInterface
 {
     /**
-     * @var \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollectorInterface
+     * @var \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollectorInterface
      */
     protected $validatorCollector;
 
     /**
-     * @var \Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMergerInterface
+     * @var \Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaMergerInterface
      */
     protected $validatorMerger;
 
     /**
-     * @var \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface
+     * @var \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface
      */
     protected $validatorSaver;
 
@@ -35,15 +35,15 @@ class RestRequestValidatorBuilder implements RestRequestValidatorBuilderInterfac
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollectorInterface $validatorCollector
-     * @param \Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMergerInterface $validatorMerger
-     * @param \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface $validatorSaver
+     * @param \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollectorInterface $validatorCollector
+     * @param \Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaMergerInterface $validatorMerger
+     * @param \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface $validatorSaver
      * @param \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        RestRequestValidatorCollectorInterface $validatorCollector,
-        RestRequestValidatorMergerInterface $validatorMerger,
-        RestRequestValidatorSaverInterface $validatorSaver,
+        RestRequestValidatorCacheCollectorInterface $validatorCollector,
+        RestRequestValidatorSchemaMergerInterface $validatorMerger,
+        RestRequestValidatorCacheSaverInterface $validatorSaver,
         RestRequestValidatorToStoreFacadeInterface $storeFacade
     ) {
         $this->validatorCollector = $validatorCollector;
@@ -60,7 +60,7 @@ class RestRequestValidatorBuilder implements RestRequestValidatorBuilderInterfac
         foreach ($this->storeFacade->getAllStores() as $store) {
             $config = $this->validatorCollector->collect($store);
             $config = $this->validatorMerger->merge($config);
-            $this->validatorSaver->store($config, $store);
+            $this->validatorSaver->save($config, $store);
         }
     }
 }

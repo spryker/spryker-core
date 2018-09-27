@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Merger;
 
-class RestRequestValidatorMerger implements RestRequestValidatorMergerInterface
+class RestRequestValidatorSchemaMerger implements RestRequestValidatorSchemaMergerInterface
 {
     /**
      * @param array $validatorSchema

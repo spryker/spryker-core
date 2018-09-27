@@ -5,12 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\RestRequestValidator\Business\Builder;
+namespace Spryker\Glue\RestRequestValidator\Processor\Exception;
 
-interface RestRequestValidatorBuilderInterface
+use Exception;
+
+class CacheFileNotFound extends Exception
 {
-    /**
-     * @return void
-     */
-    public function build(): void;
 }

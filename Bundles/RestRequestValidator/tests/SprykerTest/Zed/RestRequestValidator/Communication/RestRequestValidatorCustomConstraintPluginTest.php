@@ -21,7 +21,6 @@ use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequest
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\RestRequestValidator;
 use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
-use Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException;
 use SprykerTest\Zed\RestRequestValidator\Communication\Stub\CustomEndpointTransfer;
 use SprykerTest\Zed\RestRequestValidator\Communication\Stub\RestRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,14 +92,14 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
      */
     public function testValidateWillPassOnIncorrectRequest(): void
     {
-        $this->expectException(CurrencyNotFoundException::class);
-
         $mockRestRequest = $this->createMockRestRequestWithData(static::INCORRECT_ENDPOINT_DATA);
 
-        $this->restRequestValidatorPlugin->validate(
+        $errorTransfer = $this->restRequestValidatorPlugin->validate(
             new Request(),
             $mockRestRequest
         );
+
+        $this->assertCount(1, $errorTransfer->getRestErrors());
     }
 
     /**
@@ -108,7 +107,7 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
      *
      * @return string
      */
-    protected function getFixtureDirectory($level = null): string
+    protected function getFixtureDirectory(?string $level = null): string
     {
         $pathParts = [
             __DIR__,

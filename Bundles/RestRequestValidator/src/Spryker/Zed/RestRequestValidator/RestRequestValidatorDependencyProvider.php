@@ -16,9 +16,9 @@ use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToSto
 
 class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FINDER = 'FINDER';
-    public const FILESYSTEM = 'FILESYSTEM';
-    public const YAML = 'YAML';
+    public const ADAPTER_FINDER = 'ADAPTER_FINDER';
+    public const ADAPTER_FILESYSTEM = 'ADAPTER_FILESYSTEM';
+    public const ADAPTER_YAML = 'ADAPTER_YAML';
     public const FACADE_STORE = 'FACADE_STORE';
 
     /**
@@ -26,13 +26,12 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
-
-        $container = $this->addFinderDependency($container);
-        $container = $this->addFilesystemDependency($container);
-        $container = $this->addYamlDependency($container);
+        $container = $this->addFinderAdapterDependency($container);
+        $container = $this->addFilesystemAdapterDependency($container);
+        $container = $this->addYamlAdapterDependency($container);
         $container = $this->addStoreFacade($container);
 
         return $container;
@@ -43,9 +42,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFinderDependency(Container $container): Container
+    protected function addFinderAdapterDependency(Container $container): Container
     {
-        $container[self::FINDER] = function () {
+        $container[static::ADAPTER_FINDER] = function () {
             return new RestRequestValidatorToFinderAdapter();
         };
 
@@ -57,9 +56,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFilesystemDependency(Container $container): Container
+    protected function addFilesystemAdapterDependency(Container $container): Container
     {
-        $container[self::FILESYSTEM] = function () {
+        $container[static::ADAPTER_FILESYSTEM] = function () {
             return new RestRequestValidatorToFilesystemAdapter();
         };
 
@@ -71,9 +70,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addYamlDependency(Container $container)
+    protected function addYamlAdapterDependency(Container $container): Container
     {
-        $container[self::YAML] = function () {
+        $container[static::ADAPTER_YAML] = function () {
             return new RestRequestValidatorToYamlAdapter();
         };
 

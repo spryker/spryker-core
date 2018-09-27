@@ -30,15 +30,4 @@ class RestRequestValidatorToFilesystemAdapter implements RestRequestValidatorToF
     {
         return $this->filesystem->exists($file);
     }
-
-    /**
-     * @param string $filename
-     * @param string $content
-     *
-     * @return void
-     */
-    public function dumpFile(string $filename, string $content): void
-    {
-        $this->filesystem->dumpFile($filename, $content);
-    }
 }

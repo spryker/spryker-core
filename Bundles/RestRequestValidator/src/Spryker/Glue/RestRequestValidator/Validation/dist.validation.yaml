@@ -1,12 +1,12 @@
 access-tokens:
   post:
     username:
-      - NotBlank
-      - EmailConstraint
-      - Regex:
+    - NotBlank
+    - EmailConstraint
+    - Regex:
         pattern: '/^\w+/'
     password:
-      - NotBlank
+    - NotBlank
 
 refresh-tokens:
   post:

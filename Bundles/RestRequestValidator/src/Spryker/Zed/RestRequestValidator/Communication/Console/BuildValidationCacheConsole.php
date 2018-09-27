@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class BuildValidationCacheConsole extends Console
 {
-    protected const COMMAND_NAME = 'rest-api:build-validation-cache';
+    protected const COMMAND_NAME = 'glue:rest:build-request-validation-cache';
     protected const DESCRIPTION = 'Collect rest request validation rules and save them into cache.';
 
     /**
@@ -39,6 +39,6 @@ class BuildValidationCacheConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->getMessenger()->info(static::DESCRIPTION);
-        $this->getFacade()->buildCache();
+        $this->getFacade()->buildValidationCache();
     }
 }

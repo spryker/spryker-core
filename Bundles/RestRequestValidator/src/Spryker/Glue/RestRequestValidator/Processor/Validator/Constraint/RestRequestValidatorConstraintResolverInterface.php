@@ -17,5 +17,5 @@ interface RestRequestValidatorConstraintResolverInterface
      *
      * @return \Symfony\Component\Validator\Constraints\Collection|null
      */
-    public function initializeConstraintCollection(RestRequestInterface $restRequest): ?Collection;
+    public function getConstraintCollection(RestRequestInterface $restRequest): ?Collection;
 }

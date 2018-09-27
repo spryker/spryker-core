@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\RestRequestValidator\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class RestRequestValidatorToStoreFacadeBridge implements RestRequestValidatorToStoreFacadeInterface
 {
     /**
@@ -22,14 +20,6 @@ class RestRequestValidatorToStoreFacadeBridge implements RestRequestValidatorToS
     public function __construct($storeFacade)
     {
         $this->storeFacade = $storeFacade;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore(): StoreTransfer
-    {
-        return $this->storeFacade->getCurrentStore();
     }
 
     /**

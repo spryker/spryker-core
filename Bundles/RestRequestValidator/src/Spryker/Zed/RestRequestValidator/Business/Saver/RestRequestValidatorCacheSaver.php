@@ -12,7 +12,7 @@ use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToF
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
 
-class RestRequestValidatorSaver implements RestRequestValidatorSaverInterface
+class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverInterface
 {
     /**
      * @var \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig
@@ -50,7 +50,7 @@ class RestRequestValidatorSaver implements RestRequestValidatorSaverInterface
      *
      * @return void
      */
-    public function store(array $validatorConfig, StoreTransfer $storeTransfer): void
+    public function save(array $validatorConfig, StoreTransfer $storeTransfer): void
     {
         $this->filesystem->remove($this->getOutdatedConfig($storeTransfer));
 

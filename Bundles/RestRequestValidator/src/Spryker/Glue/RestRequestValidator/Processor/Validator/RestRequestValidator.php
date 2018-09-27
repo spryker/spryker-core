@@ -27,14 +27,14 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected $constraintResolver;
 
     /**
-     * @var \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig
-     */
-    protected $config;
-
-    /**
      * @var \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToValidationAdapterInterface
      */
     protected $validationAdapter;
+
+    /**
+     * @var \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig
+     */
+    protected $config;
 
     /**
      * @param \Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface $constraintResolver
@@ -59,38 +59,39 @@ class RestRequestValidator implements RestRequestValidatorInterface
      */
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
-        if (!$restRequest->getResource()->getAttributes() || !$this->isSubjectByMethod($restRequest)) {
+        if (!$this->isRequestRequireValidation($restRequest) || !$restRequest->getResource()->getAttributes()) {
             return null;
         }
 
-        $validationConfig = $this->constraintResolver->initializeConstraintCollection($restRequest);
-        $validationResult = $this->applyValidationToRequest($restRequest, $validationConfig);
-        if (!$validationResult->getRestErrors()->count()) {
+        $constraintCollection = $this->constraintResolver->getConstraintCollection($restRequest);
+        if (!$constraintCollection) {
             return null;
         }
 
-        return $validationResult;
+        return $this->validateRequest($restRequest, $constraintCollection);
     }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Symfony\Component\Validator\Constraints\Collection|null $constraintCollection
+     * @param \Symfony\Component\Validator\Constraints\Collection $constraintCollection
      *
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    protected function applyValidationToRequest(RestRequestInterface $restRequest, ?Collection $constraintCollection): RestErrorCollectionTransfer
+    protected function validateRequest(RestRequestInterface $restRequest, Collection $constraintCollection): ?RestErrorCollectionTransfer
     {
-        if ($constraintCollection === null) {
-            return $this->handleNoCacheFileError((new RestErrorCollectionTransfer()));
+        $validator = $this->validationAdapter->createValidator();
+        if (!$restRequest->getAttributesDataFromRequest()) {
+            return null;
         }
 
-        $validator = $this->validationAdapter->createValidator();
-        $fieldsToValidate = $this->getFieldsForValidation($restRequest);
-
         $violations = $validator->validate(
-            $fieldsToValidate,
+            $restRequest->getAttributesDataFromRequest(),
             $constraintCollection
         );
+
+        if (!$violations->count()) {
+            return null;
+        }
 
         return $this->formatResult($violations);
     }
@@ -116,37 +117,12 @@ class RestRequestValidator implements RestRequestValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollection
-     *
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer RestErrorCollectionTransfer
-     */
-    protected function handleNoCacheFileError(RestErrorCollectionTransfer $restErrorCollection): RestErrorCollectionTransfer
-    {
-        return $restErrorCollection->addRestError(
-            (new RestErrorMessageTransfer())
-                ->setCode(RestRequestValidatorConfig::RESPONSE_CODE_CACHE_FILE_NOT_FOUND)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(RestRequestValidatorConfig::EXCEPTION_MESSAGE_CACHE_FILE_NOT_FOUND)
-        );
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return array
-     */
-    protected function getFieldsForValidation(RestRequestInterface $restRequest): array
-    {
-        return $restRequest->getRawPostData();
-    }
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return bool
      */
-    protected function isSubjectByMethod(RestRequestInterface $restRequest): bool
+    protected function isRequestRequireValidation(RestRequestInterface $restRequest): bool
     {
-        return in_array($restRequest->getMetadata()->getMethod(), $this->config->getAvailableMethods());
+        return in_array($restRequest->getMetadata()->getMethod(), $this->config->getHttpMethodsThatRequireValidation());
     }
 }

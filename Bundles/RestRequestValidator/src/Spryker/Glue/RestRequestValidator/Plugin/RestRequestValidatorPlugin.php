@@ -20,6 +20,9 @@ class RestRequestValidatorPlugin extends AbstractPlugin implements ValidateRestR
 {
     /**
      * {@inheritdoc}
+     * - Validates the `attributes` section of the api request against the defined rules.
+     * - Requires validation cache being collected.
+     * - Returns null on successful validation and a collection of error messages on validation failure.
      *
      * @api
      *

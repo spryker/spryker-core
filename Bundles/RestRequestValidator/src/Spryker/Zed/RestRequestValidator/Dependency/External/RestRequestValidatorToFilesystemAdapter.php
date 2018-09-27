@@ -22,16 +22,6 @@ class RestRequestValidatorToFilesystemAdapter implements RestRequestValidatorToF
     }
 
     /**
-     * @param string $file
-     *
-     * @return bool
-     */
-    public function exists(string $file): bool
-    {
-        return $this->filesystem->exists($file);
-    }
-
-    /**
      * @param string $filename
      * @param string $content
      *

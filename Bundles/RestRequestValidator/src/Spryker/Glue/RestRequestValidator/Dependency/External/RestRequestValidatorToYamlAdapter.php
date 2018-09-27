@@ -17,7 +17,7 @@ class RestRequestValidatorToYamlAdapter implements RestRequestValidatorToYamlAda
      *
      * @return array
      */
-    public function parseFile(string $filename, $flags = 0): array
+    public function parseFile(string $filename, int $flags = 0): array
     {
         return Yaml::parseFile($filename, $flags);
     }

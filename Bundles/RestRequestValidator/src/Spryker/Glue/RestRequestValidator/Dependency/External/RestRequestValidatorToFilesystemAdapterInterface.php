@@ -15,12 +15,4 @@ interface RestRequestValidatorToFilesystemAdapterInterface
      * @return bool
      */
     public function exists(string $file): bool;
-
-    /**
-     * @param string $filename
-     * @param string $content
-     *
-     * @return void
-     */
-    public function dumpFile(string $filename, string $content): void;
 }

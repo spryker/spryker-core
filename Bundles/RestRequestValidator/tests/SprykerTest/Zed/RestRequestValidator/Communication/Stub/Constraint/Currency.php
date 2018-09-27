@@ -7,35 +7,13 @@
 
 namespace SprykerTest\Zed\RestRequestValidator\Communication\Stub\Constraint;
 
-use Spryker\Zed\Currency\Business\CurrencyFacade;
-use SprykerTest\Zed\RestRequestValidator\Communication\Stub\RestRequestValidatorToCurrencyFacadeBridge;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class Currency extends SymfonyConstraint
 {
-    /**
-     * @var \SprykerTest\Zed\RestRequestValidator\Communication\Stub\RestRequestValidatorToCurrencyFacadeInterface
-     */
-    protected $currencyFacade;
-
-    /**
-     * @param array|null $options
-     */
-    public function __construct($options = null)
-    {
-        parent::__construct($options);
-
-        $this->currencyFacade =
-            new RestRequestValidatorToCurrencyFacadeBridge(new CurrencyFacade());
-    }
-
-    /**
-     * @return \SprykerTest\Zed\RestRequestValidator\Communication\Stub\RestRequestValidatorToCurrencyFacadeInterface
-     */
-    public function getCurrencyFacade()
-    {
-        return $this->currencyFacade;
-    }
+    protected const VALID_CURRENCIES = [
+        'FJD',
+    ];
 
     /**
      * @return string
@@ -43,5 +21,15 @@ class Currency extends SymfonyConstraint
     public function getTargets()
     {
         return static::CLASS_CONSTRAINT;
+    }
+
+    /**
+     * @param string $isoCode
+     *
+     * @return bool
+     */
+    public function isValidCurrencyIsoCode(string $isoCode): bool
+    {
+        return in_array($isoCode, static::VALID_CURRENCIES);
     }
 }

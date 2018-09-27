@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\RestRequestValidator\Business\Collector;
+namespace Spryker\Zed\RestRequestValidator\Business\Saver;
 
 use Generated\Shared\Transfer\StoreTransfer;
 
-interface RestRequestValidatorCollectorInterface
+interface RestRequestValidatorCacheSaverInterface
 {
     /**
+     * @param array $validatorConfig
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array
+     * @return void
      */
-    public function collect(StoreTransfer $storeTransfer): array;
+    public function save(array $validatorConfig, StoreTransfer $storeTransfer): void;
 }

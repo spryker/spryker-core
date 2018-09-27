@@ -56,7 +56,7 @@ class RestRequestValidatorFacadeTest extends Unit
         $mockFactory = $this->createMockFactory();
         $restRequestValidatorFacade->setFactory($mockFactory);
 
-        $restRequestValidatorFacade->buildCache();
+        $restRequestValidatorFacade->buildValidationCache();
 
         $storeTransferDe = (new StoreTransfer())->setName(static::STORE_DE);
         $expectedYamlDe = $this->getExpectedResult($storeTransferDe);
@@ -81,17 +81,17 @@ class RestRequestValidatorFacadeTest extends Unit
             [
                 'getConfig',
                 'getStoreFacade',
-                'getFinder',
-                'getFilesystem',
-                'getYaml',
+                'getFinderAdapter',
+                'getFilesystemAdapter',
+                'getYamlAdapter',
             ]
         );
 
         $mockFactory = $this->addMockConfig($mockFactory);
         $mockFactory = $this->addMockStoreFacade($mockFactory);
-        $mockFactory = $this->addMockFinder($mockFactory);
-        $mockFactory = $this->addMockFilesystem($mockFactory);
-        $mockFactory = $this->addMockYaml($mockFactory);
+        $mockFactory = $this->addMockFinderAdapter($mockFactory);
+        $mockFactory = $this->addMockFilesystemAdapter($mockFactory);
+        $mockFactory = $this->addMockYamlAdapter($mockFactory);
 
         return $mockFactory;
     }
@@ -175,7 +175,7 @@ class RestRequestValidatorFacadeTest extends Unit
      *
      * @return string
      */
-    protected function getFixtureDirectory($level = null): string
+    protected function getFixtureDirectory(?string $level = null): string
     {
         $pathParts = [
             __DIR__,
@@ -195,10 +195,10 @@ class RestRequestValidatorFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockFinder(MockObject $mockFactory): MockObject
+    protected function addMockFinderAdapter(MockObject $mockFactory): MockObject
     {
         $mockFactory
-            ->method('getFinder')
+            ->method('getFinderAdapter')
             ->willReturn(
                 new RestRequestValidatorToFinderAdapter()
             );
@@ -211,10 +211,10 @@ class RestRequestValidatorFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockFilesystem(MockObject $mockFactory): MockObject
+    protected function addMockFilesystemAdapter(MockObject $mockFactory): MockObject
     {
         $mockFactory
-            ->method('getFilesystem')
+            ->method('getFilesystemAdapter')
             ->willReturn(
                 new RestRequestValidatorToFilesystemAdapter()
             );
@@ -227,10 +227,10 @@ class RestRequestValidatorFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockYaml(MockObject $mockFactory): MockObject
+    protected function addMockYamlAdapter(MockObject $mockFactory): MockObject
     {
         $mockFactory
-            ->method('getYaml')
+            ->method('getYamlAdapter')
             ->willReturn(
                 new RestRequestValidatorToYamlAdapter()
             );

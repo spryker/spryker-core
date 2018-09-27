@@ -19,5 +19,5 @@ interface RestRequestValidatorFacadeInterface
      *
      * @return void
      */
-    public function buildCache(): void;
+    public function buildValidationCache(): void;
 }

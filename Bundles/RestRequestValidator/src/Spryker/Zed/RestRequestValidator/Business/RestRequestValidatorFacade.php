@@ -21,8 +21,8 @@ class RestRequestValidatorFacade extends AbstractFacade implements RestRequestVa
      *
      * @return void
      */
-    public function buildCache(): void
+    public function buildValidationCache(): void
     {
-        $this->getFactory()->createRestRequestValidatorBuilder()->build();
+        $this->getFactory()->createRestRequestValidatorCacheBuilder()->build();
     }
 }

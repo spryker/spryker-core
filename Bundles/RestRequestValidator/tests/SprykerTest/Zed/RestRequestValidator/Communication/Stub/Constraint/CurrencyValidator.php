@@ -47,9 +47,6 @@ class CurrencyValidator extends ConstraintValidator
      */
     protected function hasCurrencyCode(string $isoCode, Currency $constraint): bool
     {
-        $currencyTransfer = $constraint->getCurrencyFacade()
-            ->fromIsoCode($isoCode);
-
-        return $currencyTransfer->getIdCurrency() !== null;
+        return $constraint->isValidCurrencyIsoCode($isoCode);
     }
 }

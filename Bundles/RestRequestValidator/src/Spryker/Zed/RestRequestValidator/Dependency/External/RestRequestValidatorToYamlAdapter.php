@@ -19,7 +19,7 @@ class RestRequestValidatorToYamlAdapter implements RestRequestValidatorToYamlAda
      *
      * @return string
      */
-    public function dump(array $input, $inline = 2, $indent = 4, $flags = 0): string
+    public function dump(array $input, int $inline = 2, int $indent = 4, int $flags = 0): string
     {
         return Yaml::dump($input, $inline, $indent, $flags);
     }
@@ -30,7 +30,7 @@ class RestRequestValidatorToYamlAdapter implements RestRequestValidatorToYamlAda
      *
      * @return array
      */
-    public function parseFile(string $filename, $flags = 0): array
+    public function parseFile(string $filename, int $flags = 0): array
     {
         return Yaml::parseFile($filename, $flags);
     }

@@ -24,21 +24,25 @@ class RestRequestValidatorToFinderAdapter implements RestRequestValidatorToFinde
     /**
      * @param array $dirs
      *
-     * @return \Symfony\Component\Finder\Finder
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
-    public function in(array $dirs): Finder
+    public function in(array $dirs): RestRequestValidatorToFinderAdapterInterface
     {
-        return $this->finder->in($dirs);
+        $this->finder->in($dirs);
+
+        return $this;
     }
 
     /**
      * @param string $pattern
      *
-     * @return \Symfony\Component\Finder\Finder
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
-    public function name(string $pattern): Finder
+    public function name(string $pattern): RestRequestValidatorToFinderAdapterInterface
     {
-        return $this->finder->name($pattern);
+        $this->finder->name($pattern);
+
+        return $this;
     }
 
     /**

@@ -15,5 +15,5 @@ interface RestRequestValidatorToYamlAdapterInterface
      *
      * @return array
      */
-    public function parseFile(string $filename, $flags = 0): array;
+    public function parseFile(string $filename, int $flags = 0): array;
 }

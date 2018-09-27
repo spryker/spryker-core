@@ -9,21 +9,20 @@ namespace Spryker\Zed\RestRequestValidator\Dependency\External;
 
 use Countable;
 use IteratorAggregate;
-use Symfony\Component\Finder\Finder;
 
 interface RestRequestValidatorToFinderAdapterInterface extends IteratorAggregate, Countable
 {
     /**
      * @param array $dirs
      *
-     * @return \Symfony\Component\Finder\Finder
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
-    public function in(array $dirs): Finder;
+    public function in(array $dirs): self;
 
     /**
      * @param string $pattern
      *
-     * @return \Symfony\Component\Finder\Finder
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
-    public function name(string $pattern): Finder;
+    public function name(string $pattern): self;
 }
