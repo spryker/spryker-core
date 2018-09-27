@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface;
 
 class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
@@ -28,15 +29,20 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     * @throws \Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function getMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer
+    public function getMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
         $merchantRelationshipTransfer->requireIdMerchantRelationship();
 
         $merchantRelationshipTransfer = $this->repository->getMerchantRelationshipById(
             $merchantRelationshipTransfer->getIdMerchantRelationship()
         );
+        if (!$merchantRelationshipTransfer) {
+            throw new MerchantRelationshipNotFoundException();
+        }
 
         return $merchantRelationshipTransfer;
     }

@@ -34,13 +34,13 @@ class EditMerchantRelationshipController extends AbstractController
         $idMerchantRelationship = $this->castId($request->get(MerchantRelationshipTableConstants::REQUEST_ID_MERCHANT_RELATIONSHIP));
 
         $dataProvider = $this->getFactory()->createMerchantRelationshipFormDataProvider();
-        $merchantRelationshipTransfer = $dataProvider->getData($idMerchantRelationship);
-
-        if ($merchantRelationshipTransfer === null) {
+        try {
+            $merchantRelationshipTransfer = $dataProvider->getData($idMerchantRelationship);
+        } catch (MerchantRelationshipNotFoundException $exception) {
             $this->addErrorMessage(sprintf('Merchant Relationship with id %s doesn\'t exists.', $idMerchantRelationship));
-            return $this->redirectResponse(MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_LIST);
-        }
 
+            return $this->redirectResponse('/merchant-relationship-gui/list-merchant-relationship');
+        }
         $idCompany = $this->getIdCompanyFromTransfer($merchantRelationshipTransfer);
         $merchantRelationshipForm = $this->getFactory()
             ->getMerchantRelationshipEditForm(

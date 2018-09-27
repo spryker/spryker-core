@@ -61,14 +61,15 @@ interface MerchantRelationshipFacadeInterface
     /**
      * Specification:
      * - Returns a merchant relationship by merchant relationship id in provided transfer.
+     * - Throws an exception in case a record is not found.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function getMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer;
+    public function getMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
 
     /**
      * Specification:

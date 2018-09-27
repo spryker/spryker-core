@@ -28,9 +28,9 @@ class MerchantFormDataProvider
     /**
      * @param int|null $idMerchant
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function getData(?int $idMerchant = null): ?MerchantTransfer
+    public function getData(?int $idMerchant = null): MerchantTransfer
     {
         $merchantTransfer = new MerchantTransfer();
         if (!$idMerchant) {

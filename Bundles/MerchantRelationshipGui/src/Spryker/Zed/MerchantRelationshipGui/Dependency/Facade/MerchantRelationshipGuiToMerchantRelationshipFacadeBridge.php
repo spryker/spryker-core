@@ -57,9 +57,9 @@ class MerchantRelationshipGuiToMerchantRelationshipFacadeBridge implements Merch
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function getMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer
+    public function getMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
         return $this->merchantRelationshipFacade->getMerchantRelationshipById($merchantRelationshipTransfer);
     }
