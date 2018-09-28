@@ -102,7 +102,7 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
     protected function addToSession($key, $value)
     {
         $this->session->getFlashBag()->add($key, $value);
-        $this->session->save();
+        $this->session->migrate();
     }
 
     /**
