@@ -64,4 +64,14 @@ interface PermissionFacadeInterface
      * @return \Generated\Shared\Transfer\PermissionTransfer|null
      */
     public function findPermissionByKey(string $key): ?PermissionTransfer;
+
+    /**
+     * Specification:
+     * - Finds permissions registered either in Zed or Client dependency provider and removes non-infrastructural ones.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
 }
