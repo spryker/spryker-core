@@ -19,7 +19,9 @@ class WishlistRelationshipByResourceIdPlugin extends AbstractPlugin implements R
 {
     /**
      * {@inheritdoc}
+     *
      * - Identifier of passed resources should contain customer reference.
+     *
      * @api
      *
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
