@@ -9,6 +9,7 @@ namespace Spryker\Client\PriceProduct;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -80,5 +81,26 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
         return $this->getFactory()
             ->createProductPriceResolver()
             ->resolveProductPriceTransferByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
+     */
+    public function calculateQuickOrderProductPrice(
+        QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer,
+        PriceProductFilterTransfer $priceProductFilterTransfer,
+        array $priceProductTransfers
+    ): QuickOrderProductPriceTransfer {
+        return $this->getFactory()
+            ->createQuickOrderProductPriceCalculator()
+            ->calculateQuickOrderProductPrice($quickOrderProductPriceTransfer, $priceProductFilterTransfer, $priceProductTransfers);
     }
 }

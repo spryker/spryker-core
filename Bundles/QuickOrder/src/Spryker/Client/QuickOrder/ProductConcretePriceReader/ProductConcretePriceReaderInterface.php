@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorage\QuickOrderProductPrice;
+namespace Spryker\Client\QuickOrder\ProductConcretePriceReader;
 
 use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 
-interface QuickOrderProductPriceTransferPriceExpanderInterface
+interface ProductConcretePriceReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
      */
-    public function expandQuickOrderProductPriceTransferWithPrice(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer;
+    public function getQuickOrderProductPrice(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer;
 }

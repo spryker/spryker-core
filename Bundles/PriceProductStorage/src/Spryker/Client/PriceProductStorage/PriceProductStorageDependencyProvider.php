@@ -9,7 +9,6 @@ namespace Spryker\Client\PriceProductStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToCurrencyClientBridge;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductBridge;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageBridge;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientBridge;
@@ -20,7 +19,6 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const CLIENT_STORE = 'CLIENT_STORE';
-    public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
 
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
@@ -36,7 +34,6 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addStorageClient($container);
         $container = $this->addPriceProductClient($container);
-        $container = $this->addCurrencyClient($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addStoreClient($container);
         $container = $this->addPriceDimensionPlugins($container);
@@ -96,22 +93,6 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_STORE] = function (Container $container) {
             return new PriceProductStorageToStoreClientBridge($container->getLocator()->store()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addCurrencyClient(Container $container): Container
-    {
-        $container[static::CLIENT_CURRENCY] = function (Container $container) {
-            return new PriceProductStorageToCurrencyClientBridge(
-                $container->getLocator()->currency()->client()
-            );
         };
 
         return $container;
