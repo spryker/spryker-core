@@ -61,6 +61,10 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
 
         $request = $event->getRequest();
         $transactionName = $request->attributes->get('_route');
+        if (!$transactionName) {
+            return;
+        }
+
         $requestUri = $request->server->get('REQUEST_URI', 'n/a');
         $host = $request->server->get('COMPUTERNAME', $this->utilNetworkService->getHostName());
 
