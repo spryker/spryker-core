@@ -11,4 +11,27 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductAlternativeStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @return bool
+     */
+    public function isSendingToQueue(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductAlternativeSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductReplacementForSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }

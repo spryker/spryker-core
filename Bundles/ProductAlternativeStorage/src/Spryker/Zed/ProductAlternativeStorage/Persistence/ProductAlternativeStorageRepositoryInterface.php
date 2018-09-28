@@ -87,4 +87,28 @@ interface ProductAlternativeStorageRepositoryInterface
      * @return int[]
      */
     public function getReplacementsByConcreteProductId(int $idProductConcrete): array;
+
+    /**
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     */
+    public function findAllProductAlternativeStorageEntities(): array;
+
+    /**
+     * @param int[] $productAlternativeStorageIds
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     */
+    public function findProductAlternativeStorageEntitiesByIds(array $productAlternativeStorageIds): array;
+
+    /**
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    public function findProductReplacementForStorageEntities(): array;
+
+    /**
+     * @param int[] $productReplacementForStorageIds
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    public function findProductReplacementForStorageEntitiesByIds(array $productReplacementForStorageIds): array;
 }

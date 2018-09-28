@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductDiscontinuedStorage;
+namespace SprykerTest\Zed\ProductAlternativeStorage;
 
 use Codeception\Actor;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
+use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageBusinessFactory;
+use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacade;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface;
-use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageBusinessFactory;
-use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacade;
 
 /**
  * Inherited Methods
@@ -25,13 +25,13 @@ use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFa
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
- * @method \Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacade getFacade()
+ * @method \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacade getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
-class ProductDiscontinuedStorageBusinessTester extends Actor
+class ProductAlternativeStorageBusinessTester extends Actor
 {
-    use _generated\ProductDiscontinuedStorageBusinessTesterActions;
+    use _generated\ProductAlternativeStorageBusinessTesterActions;
 
     /**
      * Define custom actions here
@@ -46,12 +46,12 @@ class ProductDiscontinuedStorageBusinessTester extends Actor
     }
 
     /**
-     * @return \Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacade
+     * @return \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacade
      */
-    public function getMockedFacade(): ProductDiscontinuedStorageFacade
+    public function getMockedFacade(): ProductAlternativeStorageFacade
     {
-        $factory = new ProductDiscontinuedStorageBusinessFactory();
-        $factory->setConfig(new ProductDiscontinuedStorageConfigMock());
+        $factory = new ProductAlternativeStorageBusinessFactory();
+        $factory->setConfig(new ProductAlternativeStorageConfigMock());
 
         $facade = $this->getFacade();
         $facade->setFactory($factory);

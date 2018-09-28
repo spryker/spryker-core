@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductReplacementStorageTransfer;
 use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface;
+use Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig;
 
 class ProductReplacementPublisher implements ProductReplacementPublisherInterface
 {
@@ -27,15 +28,23 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
     protected $productAlternativeStorageEntityManager;
 
     /**
+     * @var \Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig
+     */
+    protected $productAlternativeStorageConfig;
+
+    /**
      * @param \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface $productAlternativeStorageRepository
      * @param \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager
+     * @param \Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig $productAlternativeStorageConfig
      */
     public function __construct(
         ProductAlternativeStorageRepositoryInterface $productAlternativeStorageRepository,
-        ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager
+        ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager,
+        ProductAlternativeStorageConfig $productAlternativeStorageConfig
     ) {
         $this->productAlternativeStorageRepository = $productAlternativeStorageRepository;
         $this->productAlternativeStorageEntityManager = $productAlternativeStorageEntityManager;
+        $this->productAlternativeStorageConfig = $productAlternativeStorageConfig;
     }
 
     /**
@@ -121,6 +130,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
                 $productReplacementStorage->toArray()
             );
 
+        $productReplacementStorageEntity->setIsSendingToQueue($this->productAlternativeStorageConfig->isSendingToQueue());
         $this->productAlternativeStorageEntityManager->saveProductReplacementForStorage($productReplacementStorageEntity);
     }
 }

@@ -26,4 +26,20 @@ class ProductAlternativeStorageConfig extends AbstractBundleConfig
      * @api
      */
     public const PRODUCT_REPLACEMENT_RESOURCE_NAME = 'product_replacement_for';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing product alternative messages.
+     *
+     * @api
+     */
+    public const PRODUCT_ALTERNATIVE_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing product alternative messages.
+     *
+     * @api
+     */
+    public const PRODUCT_ALTERNATIVE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 }

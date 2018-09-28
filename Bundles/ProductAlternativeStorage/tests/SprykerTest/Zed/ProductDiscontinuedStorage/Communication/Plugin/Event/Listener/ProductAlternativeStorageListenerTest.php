@@ -13,9 +13,10 @@ use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
+use Spryker\Zed\ProductAlternative\Dependency\ProductAlternativeEvents;
+use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\ProductAlternativeStorageListener;
+use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository;
 use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
-use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStorageListener;
-use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepository;
 
 /**
  * Auto-generated group annotations
@@ -26,25 +27,25 @@ use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorag
  * @group Plugin
  * @group Event
  * @group Listener
- * @group ProductDiscontinuedStorageListenerTest
+ * @group ProductAlternativeStorageListenerTest
  * Add your own group annotations below this line
  */
-class ProductDiscontinuedStorageListenerTest extends Unit
+class ProductAlternativeStorageListenerTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\ProductDiscontinuedStorage\ProductAlternativeStorageBusinessTester
+     * @var \SprykerTest\Zed\ProductAlternativeStorage\ProductAlternativeStorageBusinessTester
      */
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepository
+     * @var \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository
      */
-    protected $productDiscontinuedStorageRepository;
+    protected $productAlternativeStorageRepository;
 
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStorageListener
+     * @var \Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\ProductAlternativeStorageListener
      */
-    protected $productDiscontinuedStorageListener;
+    protected $productAlternativeStorageListener;
 
     /**
      * @var \Generated\Shared\Transfer\ProductDiscontinuedTransfer
@@ -56,7 +57,7 @@ class ProductDiscontinuedStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
         if ($dbEngine !== 'pgsql') {
@@ -64,10 +65,10 @@ class ProductDiscontinuedStorageListenerTest extends Unit
         }
         parent::setUp();
 
-        $this->productDiscontinuedStorageRepository = new ProductDiscontinuedStorageRepository();
+        $this->productAlternativeStorageRepository = new ProductAlternativeStorageRepository();
 
-        $this->productDiscontinuedStorageListener = new ProductDiscontinuedStorageListener();
-        $this->productDiscontinuedStorageListener->setFacade($this->tester->getMockedFacade());
+        $this->productAlternativeStorageListener = new ProductAlternativeStorageListener();
+        $this->productAlternativeStorageListener->setFacade($this->tester->getMockedFacade());
 
         $productConcrete = $this->tester->haveProduct();
         $productDiscontinuedRequestTransfer = (new ProductDiscontinueRequestTransfer())
@@ -81,7 +82,7 @@ class ProductDiscontinuedStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductDiscontinuedStorageEntityCanBePublished(): void
+    public function testProductAlternativeStorageEntityCanBePublished(): void
     {
         // Arrange
         $eventTransfers = [
@@ -89,12 +90,12 @@ class ProductDiscontinuedStorageListenerTest extends Unit
         ];
 
         // Act
-        $this->productDiscontinuedStorageListener->handleBulk(
+        $this->productAlternativeStorageListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH
         );
-        $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository
-            ->findProductDiscontinuedStorageEntitiesByIds(
+        $productDiscontinuedEntityTransfers = $this->productAlternativeStorageRepository
+            ->findProductAlternativeStorageEntitiesByIds(
                 [$this->productDiscontinuedTransfer->getIdProductDiscontinued()]
             );
 
@@ -105,7 +106,7 @@ class ProductDiscontinuedStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductDiscontinuedStorageEntityCanBeUnpublished(): void
+    public function testProductAlternativeStorageEntityCanBeUnpublished(): void
     {
         // Arrange
         $eventTransfers = [
@@ -113,16 +114,16 @@ class ProductDiscontinuedStorageListenerTest extends Unit
         ];
 
         // Act
-        $this->productDiscontinuedStorageListener->handleBulk(
+        $this->productAlternativeStorageListener->handleBulk(
             $eventTransfers,
             ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH
         );
-        $this->productDiscontinuedStorageListener->handleBulk(
+        $this->productAlternativeStorageListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH
+            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH
         );
-        $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository
-            ->findProductDiscontinuedStorageEntitiesByIds(
+        $productDiscontinuedEntityTransfers = $this->productAlternativeStorageRepository
+            ->findProductAlternativeStorageEntitiesByIds(
                 [$this->productDiscontinuedTransfer->getIdProductDiscontinued()]
             );
 

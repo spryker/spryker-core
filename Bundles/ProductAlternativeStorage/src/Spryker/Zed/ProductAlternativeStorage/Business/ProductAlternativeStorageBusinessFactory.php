@@ -27,7 +27,8 @@ class ProductAlternativeStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAlternativePublisher(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 
@@ -38,7 +39,8 @@ class ProductAlternativeStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductReplacementPublisher(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 }

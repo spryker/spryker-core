@@ -32,9 +32,6 @@ class ProductDiscontinuedStorageEntityManager extends AbstractEntityManager impl
      */
     public function deleteProductDiscontinuedStorageEntity(SpyProductDiscontinuedStorage $productDiscontinuedStorageEntity): void
     {
-        $this->getFactory()
-            ->createProductDiscontinuedStoragePropelQuery()
-            ->findOneByIdProductDiscontinuedStorage($productDiscontinuedStorageEntity->getIdProductDiscontinuedStorage())
-            ->delete();
+        $productDiscontinuedStorageEntity->delete();
     }
 }

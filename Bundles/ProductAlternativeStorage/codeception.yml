@@ -1,4 +1,6 @@
 namespace: ProductAlternativeStorage
+include:
+    - tests/SprykerTest/Zed/ProductAlternativeStorage
 actor: Tester
 paths:
     tests: tests
