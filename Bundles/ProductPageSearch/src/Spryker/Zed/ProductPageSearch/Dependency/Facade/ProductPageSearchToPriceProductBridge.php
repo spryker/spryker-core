@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceProductInterface
@@ -62,5 +63,25 @@ class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceP
     public function findProductAbstractPricesWithoutPriceExtraction($idProductAbstract)
     {
         return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $productAbstractIds): array
+    {
+        return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn($productAbstractIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
+     */
+    public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductCriteriaTransfer
+    {
+        return $this->priceProductFacade->buildCriteriaFromFilter($priceProductFilterTransfer);
     }
 }

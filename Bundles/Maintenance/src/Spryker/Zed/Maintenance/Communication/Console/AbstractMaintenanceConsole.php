@@ -16,11 +16,11 @@ use Symfony\Component\Console\Input\InputInterface;
  */
 abstract class AbstractMaintenanceConsole extends Console
 {
-    const ARGUMENT_APPLICATION = 'application';
+    public const ARGUMENT_APPLICATION = 'application';
 
-    const APPLICATION_ALL = 'all';
-    const APPLICATION_YVES = 'yves';
-    const APPLICATION_ZED = 'zed';
+    public const APPLICATION_ALL = 'all';
+    public const APPLICATION_YVES = 'yves';
+    public const APPLICATION_ZED = 'zed';
 
     /**
      * @var array

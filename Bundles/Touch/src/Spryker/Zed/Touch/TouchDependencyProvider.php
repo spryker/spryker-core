@@ -13,8 +13,8 @@ use Spryker\Zed\Kernel\Container;
 
 class TouchDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
-    const SERVICE_DATA = 'util data service';
+    public const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+    public const SERVICE_DATA = 'util data service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

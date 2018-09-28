@@ -26,14 +26,14 @@ class SilexRouter implements RouterInterface
     protected $app;
 
     /**
-     * @var \Symfony\Component\Routing\RequestContext
-     */
-    protected $context;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
+     * @var \Psr\Log\LoggerInterface|null
      */
     protected $logger;
+
+    /**
+     * @var \Symfony\Component\Routing\RequestContext|null
+     */
+    protected $context;
 
     /**
      * @param \Pimple $app

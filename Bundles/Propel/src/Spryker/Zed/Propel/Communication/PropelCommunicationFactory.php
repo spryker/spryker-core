@@ -17,7 +17,7 @@ use Spryker\Zed\Propel\PropelDependencyProvider;
  */
 class PropelCommunicationFactory extends AbstractCommunicationFactory
 {
-    const LOGGER_NAME = 'defaultLogger';
+    public const LOGGER_NAME = 'defaultLogger';
 
     /**
      * @return \Monolog\Logger[]

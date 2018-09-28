@@ -20,6 +20,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceBrid
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreBridge;
@@ -32,35 +33,36 @@ use Spryker\Zed\ProductManagement\Exception\MissingStoreRelationFormTypePluginEx
 
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const STORE = 'STORE';
+    public const STORE = 'STORE';
 
-    const FACADE_CATEGORY = 'FACADE_LOCALE';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
-    const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
-    const FACADE_TOUCH = 'FACADE_TOUCH';
-    const FACADE_TAX = 'FACADE_TAX';
-    const FACADE_PRICE = 'FACADE_PRICE';
-    const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
-    const FACADE_STOCK = 'FACADE_STOCK';
-    const FACADE_MONEY = 'FACADE_MONEY';
-    const FACADE_CURRENCY = 'FACADE_CURRENCY';
-    const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+    public const FACADE_CATEGORY = 'FACADE_LOCALE';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
+    public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+    public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const FACADE_TAX = 'FACADE_TAX';
+    public const FACADE_PRICE = 'FACADE_PRICE';
+    public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    public const FACADE_STOCK = 'FACADE_STOCK';
+    public const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
 
-    const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
-    const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
-    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
-    const QUERY_CONTAINER_STOCK = 'QUERY_CONTAINER_STOCK';
-    const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
-    const QUERY_CONTAINER_PRODUCT_GROUP = 'QUERY_CONTAINER_PRODUCT_GROUP';
+    public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    public const QUERY_CONTAINER_STOCK = 'QUERY_CONTAINER_STOCK';
+    public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+    public const QUERY_CONTAINER_PRODUCT_GROUP = 'QUERY_CONTAINER_PRODUCT_GROUP';
 
-    const PLUGINS_PRODUCT_ABSTRACT_VIEW = 'PRODUCT_MANAGEMENT:PLUGINS_PRODUCT_ABSTRACT_VIEW';
-    const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+    public const PLUGINS_PRODUCT_ABSTRACT_VIEW = 'PRODUCT_MANAGEMENT:PLUGINS_PRODUCT_ABSTRACT_VIEW';
+    public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
-    const PLUGIN_MONEY_FORM_TYPE = 'MONEY_FORM_TYPE_PLUGIN';
+    public const PLUGIN_MONEY_FORM_TYPE = 'MONEY_FORM_TYPE_PLUGIN';
 
     public const PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS = 'PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS';
     public const PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS = 'PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS';
@@ -145,6 +147,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
         };
+
+        $container = $this->addProductBundleFacade($container);
 
         $container[static::FACADE_CATEGORY] = function (Container $container) {
             return new ProductManagementToCategoryBridge($container->getLocator()->category()->facade());
@@ -331,6 +335,20 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
                 FormTypeInterface::class
             )
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductBundleFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
+            return new ProductManagementToProductBundleBridge($container->getLocator()->productBundle()->facade());
+        };
+
+        return $container;
     }
 
     /**

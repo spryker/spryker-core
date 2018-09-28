@@ -29,20 +29,20 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ProductOptionGroupForm extends AbstractType
 {
-    const FIELD_TAX_SET_FIELD = 'fkTaxSet';
-    const FIELD_VALUES = 'productOptionValues';
-    const FIELD_ID_PRODUCT_OPTION_GROUP = 'idProductOptionGroup';
-    const FIELD_NAME = 'name';
-    const FIELD_VALUE_TRANSLATIONS = 'productOptionValueTranslations';
-    const FIELD_GROUP_NAME_TRANSLATIONS = 'groupNameTranslations';
+    public const FIELD_TAX_SET_FIELD = 'fkTaxSet';
+    public const FIELD_VALUES = 'productOptionValues';
+    public const FIELD_ID_PRODUCT_OPTION_GROUP = 'idProductOptionGroup';
+    public const FIELD_NAME = 'name';
+    public const FIELD_VALUE_TRANSLATIONS = 'productOptionValueTranslations';
+    public const FIELD_GROUP_NAME_TRANSLATIONS = 'groupNameTranslations';
 
-    const OPTION_TAX_SETS = 'optionTaxSets';
+    public const OPTION_TAX_SETS = 'optionTaxSets';
 
-    const PRODUCTS_TO_BE_ASSIGNED = 'products_to_be_assigned';
-    const PRODUCTS_TO_BE_DE_ASSIGNED = 'products_to_be_de_assigned';
-    const PRODUCT_OPTION_VALUES_TO_BE_REMOVED = 'product_option_values_to_be_removed';
+    public const PRODUCTS_TO_BE_ASSIGNED = 'products_to_be_assigned';
+    public const PRODUCTS_TO_BE_DE_ASSIGNED = 'products_to_be_de_assigned';
+    public const PRODUCT_OPTION_VALUES_TO_BE_REMOVED = 'product_option_values_to_be_removed';
 
-    const ALPHA_NUMERIC_PATTERN = '/^[a-z0-9\.\_]+$/';
+    public const ALPHA_NUMERIC_PATTERN = '/^[a-z0-9\.\_]+$/';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
