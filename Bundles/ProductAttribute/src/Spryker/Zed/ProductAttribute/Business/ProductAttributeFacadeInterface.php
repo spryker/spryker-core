@@ -311,7 +311,7 @@ interface ProductAttributeFacadeInterface
 
     /**
      * Specification:
-     * - Returns list of unique super attributes from give concrete products
+     * - Retrieve a list of unique super attributes from concrete product transfers.
      *
      * @api
      *
