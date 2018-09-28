@@ -37,10 +37,10 @@ class CompanyRoleCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugi
         )
         ->getRoles();
 
-        $companyUserRoleNames = [];
+        $companyUserRoleNames = '';
         if ($companyRoles->count() > 0) {
             foreach ($companyRoles as $companyRole) {
-                $companyUserRoleNames[] = '<p>' . $companyRole->getName() . '</p>';
+                $companyUserRoleNames .= '<p>' . $companyRole->getName() . '</p>';
             }
         }
 

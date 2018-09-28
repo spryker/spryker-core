@@ -37,6 +37,8 @@ class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin imp
         ];
         $config->setHeader($configHeader);
 
+        $config->addRawColumn(static::COL_COMPANY_ROLE_NAMES);
+
         return $config;
     }
 }
