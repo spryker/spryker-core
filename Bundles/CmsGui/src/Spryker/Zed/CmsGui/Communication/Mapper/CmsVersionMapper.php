@@ -53,7 +53,7 @@ class CmsVersionMapper implements CmsVersionMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
-    protected function mapCmsPageTransferWithUrl(CmsVersionDataTransfer $cmsVersionDataTransfer)
+    public function mapCmsPageTransferWithUrl(CmsVersionDataTransfer $cmsVersionDataTransfer)
     {
         foreach ($cmsVersionDataTransfer->getCmsPage()->getPageAttributes() as $cmsPageAttributesTransfer) {
             $urlEntity = $this->cmsQueryContainer->queryPageWithUrlByIdCmsPageAndLocaleName(

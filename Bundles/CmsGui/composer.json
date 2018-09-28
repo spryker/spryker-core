@@ -10,6 +10,7 @@
     "spryker/gui": "^3.10.0",
     "spryker/kernel": "^3.4.0",
     "spryker/locale": "^3.0.0",
+    "spryker/propel-orm": "^1.6.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
     "spryker/url": "^3.0.0",

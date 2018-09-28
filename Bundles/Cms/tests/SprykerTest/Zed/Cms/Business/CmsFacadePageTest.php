@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Cms\Business\CmsFacade;
 
 /**
@@ -191,12 +192,12 @@ class CmsFacadePageTest extends Unit
      */
     public function testGetPageUrlPrefixShouldBuildUrlPrefixFromGivenLocalName()
     {
-         $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
-         $cmsPageAttributeTransfer->setLocaleName('en_US');
+        $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
+        $cmsPageAttributeTransfer->setLocaleName('en_US');
 
-         $urlPrefix = $this->cmsFacade->getPageUrlPrefix($cmsPageAttributeTransfer);
+        $urlPrefix = $this->cmsFacade->getPageUrlPrefix($cmsPageAttributeTransfer);
 
-         $this->assertSame('', $urlPrefix);
+        $this->assertSame('', $urlPrefix);
     }
 
     /**
@@ -415,6 +416,67 @@ class CmsFacadePageTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCreateCmsPageSavesStoreRelation()
+    {
+        $expectedIdStores = [1, 3];
+
+        $storeRelationSeed = [
+            CmsPageTransfer::STORE_RELATION => [
+                StoreRelationTransfer::ID_STORES => $expectedIdStores,
+            ],
+        ];
+
+        $fixtures = $this->createCmsPageTransferFixtures();
+        $fixtures += $storeRelationSeed;
+
+        $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
+        $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
+
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+        $resultIdStores = $persistedCmsPageTransfer->getStoreRelation()->getIdStores();
+
+        sort($resultIdStores);
+        $this->assertEquals($expectedIdStores, $resultIdStores);
+    }
+
+    /**
+     * @dataProvider relationUpdateFixtures
+     *
+     * @param int[] $originalRelation
+     * @param int[] $modifiedRelation
+     *
+     * @return void
+     */
+    public function testUpdateCmsPageUpdatesStoreRelation(array $originalRelation, array $modifiedRelation): void
+    {
+        $storeRelationSeed = [
+            CmsPageTransfer::STORE_RELATION => [
+                StoreRelationTransfer::ID_STORES => $originalRelation,
+            ],
+        ];
+
+        $fixtures = $this->createCmsPageTransferFixtures();
+        $fixtures += $storeRelationSeed;
+
+        $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
+        $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
+
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+        $persistedCmsPageTransfer->getStoreRelation()->setIdStores($modifiedRelation);
+
+        $this->cmsFacade->updatePage($persistedCmsPageTransfer);
+
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($persistedCmsPageTransfer->getFkPage());
+        $resultIdStores = $persistedCmsPageTransfer->getStoreRelation()->getIdStores();
+
+        // Assert
+        sort($resultIdStores);
+        $this->assertEquals($modifiedRelation, $resultIdStores);
+    }
+
+    /**
      * @param array $fixtures
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
@@ -524,5 +586,23 @@ class CmsFacadePageTest extends Unit
         ];
 
         return $translationFixtures;
+    }
+
+    /**
+     * @return array
+     */
+    public function relationUpdateFixtures(): array
+    {
+        return [
+            [
+                [1, 2, 3], [2],
+            ],
+            [
+                [1], [1, 2],
+            ],
+            [
+                [2], [1, 3],
+            ],
+        ];
     }
 }

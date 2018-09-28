@@ -21,6 +21,7 @@ use Orm\Zed\Cms\Persistence\Base\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface;
 use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface;
 
 class VersionDataMapper implements VersionDataMapperInterface
@@ -31,11 +32,18 @@ class VersionDataMapper implements VersionDataMapperInterface
     protected $utilEncoding;
 
     /**
-     * @param \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface $utilEncoding
+     * @var \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface
      */
-    public function __construct(CmsToUtilEncodingInterface $utilEncoding)
+    protected $cmsPageStoreRelationMapper;
+
+    /**
+     * @param \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface $utilEncoding
+     * @param \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface $cmsPageStoreRelationMapper
+     */
+    public function __construct(CmsToUtilEncodingInterface $utilEncoding, CmsPageStoreRelationMapperInterface $cmsPageStoreRelationMapper)
     {
         $this->utilEncoding = $utilEncoding;
+        $this->cmsPageStoreRelationMapper = $cmsPageStoreRelationMapper;
     }
 
     /**
@@ -61,6 +69,7 @@ class VersionDataMapper implements VersionDataMapperInterface
         $cmsVersionDataTransfer->setCmsTemplate($cmsTemplateTransfer);
 
         $cmsPageTransfer = $this->mapToCmsPageLocalizedAttributesData($cmsPageEntity);
+        $cmsPageTransfer = $this->mapToCmsPageStoreRelationData($cmsPageTransfer, $cmsPageEntity);
         $cmsVersionDataTransfer->setCmsPage($cmsPageTransfer);
 
         $cmsGlossaryTransfer = $this->mapToCmsGlossaryKeyMappingsData($cmsPageEntity);
@@ -139,6 +148,21 @@ class VersionDataMapper implements VersionDataMapperInterface
         }
 
         return $cmsGlossaryTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    protected function mapToCmsPageStoreRelationData(CmsPageTransfer $cmsPageTransfer, SpyCmsPage $cmsPageEntity): CmsPageTransfer
+    {
+        $cmsPageTransfer->setStoreRelation(
+            $this->cmsPageStoreRelationMapper->mapStoreRelationToTransfer($cmsPageEntity)
+        );
+
+        return $cmsPageTransfer;
     }
 
     /**

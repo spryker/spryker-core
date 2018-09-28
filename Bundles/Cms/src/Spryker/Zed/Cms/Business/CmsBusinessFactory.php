@@ -314,7 +314,8 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     public function createVersionDataMapper(): VersionDataMapperInterface
     {
         return new VersionDataMapper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->createCmsPageStoreRelationMapper()
         );
     }
 

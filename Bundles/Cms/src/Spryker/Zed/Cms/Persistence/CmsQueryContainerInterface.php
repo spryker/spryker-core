@@ -353,4 +353,13 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryCmsPageWithStoreRelationByFkCmsPage(int $idCmsPage): SpyCmsPageQuery;
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageStoreQuery
+     */
+    public function queryCmsPageStoreWithStoreByFkCmsPage(int $idCmsPage): SpyCmsPageStoreQuery;
 }

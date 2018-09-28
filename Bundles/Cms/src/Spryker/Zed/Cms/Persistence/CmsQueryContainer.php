@@ -62,6 +62,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public const ALIAS_TRANSLATION = 'aliasTranslation';
     public const ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE = 'aliasLocaleForLocalizedAttribute';
     public const ALIAS_LOCALE_FOR_TRANSLATION = 'aliasLocaleForTranslation';
+    public const ALIAS_CMS_PAGE_STORE_RELATION = 'aliasCmsPageStoreRelation';
+    public const ALIAS_STORE_FOR_STORE_RELATION = 'aliasStoreForStoreRelation';
 
     /**
      * @api
@@ -609,6 +611,12 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 ->useLocaleQuery(self::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE)
                 ->endUse()
             ->endUse()
+            ->useSpyCmsPageStoreQuery(self::ALIAS_CMS_PAGE_STORE_RELATION, Criteria::LEFT_JOIN)
+                ->useSpyStoreQuery(self::ALIAS_STORE_FOR_STORE_RELATION, Criteria::LEFT_JOIN)
+                ->endUse()
+            ->endUse()
+            ->with(self::ALIAS_CMS_PAGE_STORE_RELATION)
+            ->with(self::ALIAS_STORE_FOR_STORE_RELATION)
             ->with(self::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE)
             ->with(self::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE)
             ->with(self::ALIAS_CMS_PAGE_TEMPLATE)
@@ -733,5 +741,20 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 ->useSpyCmsPageStoreQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithSpyStore()
             ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageStoreQuery
+     */
+    public function queryCmsPageStoreWithStoreByFkCmsPage(int $idCmsPage): SpyCmsPageStoreQuery
+    {
+        return $this->getFactory()
+            ->createCmsPageStoreQuery()
+            ->filterByFkCmsPage($idCmsPage)
+            ->joinWithSpyStore();
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsGui\Communication\Table;
 
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
@@ -431,6 +432,7 @@ class CmsPageTable extends AbstractTable
             CmsPageTableConstants::COL_URL => 'Url',
             CmsPageTableConstants::COL_TEMPLATE => 'Template',
             CmsPageTableConstants::COL_STATUS => 'Status',
+            CmsPageTableConstants::COL_STORE_RELATION => 'Stores',
             CmsPageTableConstants::ACTIONS => CmsPageTableConstants::ACTIONS,
         ]);
     }
@@ -446,6 +448,7 @@ class CmsPageTable extends AbstractTable
             CmsPageTableConstants::ACTIONS,
             CmsPageTableConstants::COL_URL,
             CmsPageTableConstants::COL_STATUS,
+            CmsPageTableConstants::COL_STORE_RELATION,
         ]);
     }
 
@@ -502,6 +505,7 @@ class CmsPageTable extends AbstractTable
             CmsPageTableConstants::COL_URL => $this->buildUrlList($item),
             CmsPageTableConstants::COL_TEMPLATE => $item[CmsPageTableConstants::COL_TEMPLATE],
             CmsPageTableConstants::COL_STATUS => $this->getStatusLabel($item),
+            CmsPageTableConstants::COL_STORE_RELATION => $this->getStoreNames($item[CmsPageTableConstants::COL_ID_CMS_PAGE]),
             CmsPageTableConstants::ACTIONS => $actions,
         ];
     }
@@ -524,5 +528,38 @@ class CmsPageTable extends AbstractTable
     protected function hasMultipleVersions(array $item)
     {
         return $item[CmsPageTableConstants::COL_CMS_VERSION_COUNT] > 1;
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return string
+     */
+    protected function getStoreNames(int $idCmsPage): string
+    {
+        $cmsPageStoreCollection = $this
+            ->cmsQueryContainer
+            ->queryCmsPageStoreWithStoreByFkCmsPage($idCmsPage)
+            ->find();
+
+        return $this->formatStoreNames($cmsPageStoreCollection);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $cmsPageStoreEntityCollection
+     *
+     * @return string
+     */
+    protected function formatStoreNames(ObjectCollection $cmsPageStoreEntityCollection): string
+    {
+        $storeNames = [];
+        foreach ($cmsPageStoreEntityCollection as $cmsPageStoreEntity) {
+            $storeNames[] = sprintf(
+                '<span class="label label-info">%s</span>',
+                $cmsPageStoreEntity->getSpyStore()->getName()
+            );
+        }
+
+        return implode(" ", $storeNames);
     }
 }
