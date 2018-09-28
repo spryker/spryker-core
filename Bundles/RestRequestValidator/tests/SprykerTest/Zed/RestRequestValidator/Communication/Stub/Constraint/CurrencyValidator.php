@@ -21,7 +21,7 @@ class CurrencyValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($value, SymfonyConstraint $constraint)
+    public function validate($value, SymfonyConstraint $constraint): void
     {
         if (!$value) {
             return;

@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Glue\RestRequestValidator\RestRequestValidatorFactory getFactory()
  */
-class RestRequestValidatorPlugin extends AbstractPlugin implements ValidateRestRequestPluginInterface
+class ValidateRestRequestAttributesPlugin extends AbstractPlugin implements ValidateRestRequestPluginInterface
 {
     /**
      * {@inheritdoc}

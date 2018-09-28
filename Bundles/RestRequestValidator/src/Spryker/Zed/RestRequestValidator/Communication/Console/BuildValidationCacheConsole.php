@@ -34,11 +34,13 @@ class BuildValidationCacheConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int|null
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $this->getMessenger()->info(static::DESCRIPTION);
         $this->getFacade()->buildValidationCache();
+
+        return null;
     }
 }

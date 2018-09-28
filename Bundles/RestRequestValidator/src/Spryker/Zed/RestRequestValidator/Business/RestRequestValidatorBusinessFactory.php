@@ -35,9 +35,9 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     public function createRestRequestValidatorCacheBuilder(): RestRequestValidatorCacheBuilderInterface
     {
         return new RestRequestValidatorCacheBuilder(
-            $this->createValidatorCacheCollector(),
-            $this->createValidatorSchemaMerger(),
-            $this->createValidatorCacheSaver(),
+            $this->createRestRequestValidatorCacheCollector(),
+            $this->createRestRequestValidatorSchemaMerger(),
+            $this->createRestRequestValidatorCacheSaver(),
             $this->getStoreFacade()
         );
     }
@@ -45,10 +45,10 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollectorInterface
      */
-    public function createValidatorCacheCollector(): RestRequestValidatorCacheCollectorInterface
+    public function createRestRequestValidatorCacheCollector(): RestRequestValidatorCacheCollectorInterface
     {
         return new RestRequestValidatorCacheCollector(
-            $this->createSchemaFinder(),
+            $this->createRestRequestValidatorSchemaFinder(),
             $this->getFilesystemAdapter(),
             $this->getYamlAdapter()
         );
@@ -57,7 +57,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaMergerInterface
      */
-    public function createValidatorSchemaMerger(): RestRequestValidatorSchemaMergerInterface
+    public function createRestRequestValidatorSchemaMerger(): RestRequestValidatorSchemaMergerInterface
     {
         return new RestRequestValidatorSchemaMerger();
     }
@@ -65,7 +65,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface
      */
-    public function createValidatorCacheSaver(): RestRequestValidatorCacheSaverInterface
+    public function createRestRequestValidatorCacheSaver(): RestRequestValidatorCacheSaverInterface
     {
         return new RestRequestValidatorCacheSaver(
             $this->getFilesystemAdapter(),
@@ -77,7 +77,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface
      */
-    public function createSchemaFinder(): RestRequestValidatorSchemaFinderInterface
+    public function createRestRequestValidatorSchemaFinder(): RestRequestValidatorSchemaFinderInterface
     {
         return new RestRequestValidatorSchemaFinder(
             $this->getFinderAdapter(),

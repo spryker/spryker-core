@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint;
 
-use Closure;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface;
 use Spryker\Glue\RestRequestValidator\Processor\Exception\ClassNotFoundException;
@@ -22,7 +21,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     /**
      * @var \Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface
      */
-    protected $configReader;
+    protected $restRequestValidatorConfigReader;
 
     /**
      * @var \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface
@@ -36,16 +35,16 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
 
     /**
      * @param \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface $constraintCollectionAdapter
-     * @param \Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface $configReader
+     * @param \Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface $restRequestValidatorConfigReader
      * @param \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig $config
      */
     public function __construct(
         RestRequestValidatorToConstraintCollectionAdapterInterface $constraintCollectionAdapter,
-        RestRequestValidatorConfigReaderInterface $configReader,
+        RestRequestValidatorConfigReaderInterface $restRequestValidatorConfigReader,
         RestRequestValidatorConfig $config
     ) {
         $this->constraintCollectionAdapter = $constraintCollectionAdapter;
-        $this->configReader = $configReader;
+        $this->restRequestValidatorConfigReader = $restRequestValidatorConfigReader;
         $this->config = $config;
     }
 
@@ -76,7 +75,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
      */
     protected function getConstraintFromConfig(RestRequestInterface $restRequest): ?array
     {
-        $validationConfig = $this->configReader->findValidationConfiguration($restRequest);
+        $validationConfig = $this->restRequestValidatorConfigReader->findValidationConfiguration($restRequest);
 
         if (!$validationConfig) {
             return null;
@@ -112,9 +111,9 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     }
 
     /**
-     * @return \Closure
+     * @return callable
      */
-    protected function instantiateConstraintFromConfig(): Closure
+    protected function instantiateConstraintFromConfig(): callable
     {
         return function (array $validatorConfig): Constraint {
             $shortClassName = key($validatorConfig);

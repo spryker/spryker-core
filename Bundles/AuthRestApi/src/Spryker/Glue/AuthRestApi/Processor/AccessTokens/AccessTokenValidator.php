@@ -50,7 +50,7 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
             return (new RestErrorCollectionTransfer())
                 ->addRestError(
                     $this->createErrorMessageTransfer(
-                        'Missing access token.',
+                        AuthRestApiConfig::EXCEPTION_MESSAGE_FORBIDDEN,
                         Response::HTTP_FORBIDDEN,
                         AuthRestApiConfig::RESPONSE_CODE_FORBIDDEN
                     )
@@ -63,7 +63,7 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
             return (new RestErrorCollectionTransfer())
                 ->addRestError(
                     $this->createErrorMessageTransfer(
-                        'Invalid access token.',
+                        AuthRestApiConfig::EXCEPTION_MESSAGE_INVALID_TOKEN,
                         Response::HTTP_UNAUTHORIZED,
                         AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
                     )

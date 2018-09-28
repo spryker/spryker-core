@@ -9,6 +9,6 @@ namespace Spryker\Glue\RestRequestValidator\Processor\Exception;
 
 use Exception;
 
-class CacheFileNotFound extends Exception
+class CacheFileNotFoundException extends Exception
 {
 }

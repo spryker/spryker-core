@@ -25,6 +25,9 @@ class AuthRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_INVALID_LOGIN = '003';
     public const RESPONSE_INVALID_REFRESH_TOKEN = '004';
 
+    public const EXCEPTION_MESSAGE_FORBIDDEN = 'Missing access token.';
+    public const EXCEPTION_MESSAGE_INVALID_TOKEN = 'Invalid access token.';
+
     /**
      * @return string
      */

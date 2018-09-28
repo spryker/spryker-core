@@ -24,7 +24,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
     /**
      * @var \Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface
      */
-    protected $constraintResolver;
+    protected $restRequestValidatorConstraintResolver;
 
     /**
      * @var \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToValidationAdapterInterface
@@ -37,16 +37,16 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected $config;
 
     /**
-     * @param \Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface $constraintResolver
+     * @param \Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface $restRequestValidatorConstraintResolver
      * @param \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToValidationAdapterInterface $validationAdapter
      * @param \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig $config
      */
     public function __construct(
-        RestRequestValidatorConstraintResolverInterface $constraintResolver,
+        RestRequestValidatorConstraintResolverInterface $restRequestValidatorConstraintResolver,
         RestRequestValidatorToValidationAdapterInterface $validationAdapter,
         RestRequestValidatorConfig $config
     ) {
-        $this->constraintResolver = $constraintResolver;
+        $this->restRequestValidatorConstraintResolver = $restRequestValidatorConstraintResolver;
         $this->validationAdapter = $validationAdapter;
         $this->config = $config;
     }
@@ -63,7 +63,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
             return null;
         }
 
-        $constraintCollection = $this->constraintResolver->getConstraintCollection($restRequest);
+        $constraintCollection = $this->restRequestValidatorConstraintResolver->getConstraintCollection($restRequest);
         if (!$constraintCollection) {
             return null;
         }

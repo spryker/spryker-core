@@ -12,7 +12,7 @@ use Exception;
 class ClassNotFoundException extends Exception
 {
     protected const EXCEPTION_MESSAGE_CLASS_NOT_FOUND = 'Class "%s" not found. Have you forgotten to add your custom validator namespace in %s?';
-    protected const NAMESPACE_CONFIG_SOURCE = '\Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig::getAvailableConstraintNamespaces()';
+    protected const NAMESPACE_CONFIG_SOURCE = 'Pyz\Glue\RestRequestValidator\RestRequestValidatorConfig::getAvailableConstraintNamespaces()';
 
     /**
      * @param string $className

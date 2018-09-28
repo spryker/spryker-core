@@ -17,7 +17,7 @@ class RestRequestValidatorCacheCollector implements RestRequestValidatorCacheCol
     /**
      * @var \Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface
      */
-    protected $validationSchemaFinder;
+    protected $restRequestValidatorSchemaFinder;
 
     /**
      * @var \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface
@@ -30,16 +30,16 @@ class RestRequestValidatorCacheCollector implements RestRequestValidatorCacheCol
     protected $filesystem;
 
     /**
-     * @param \Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface $validationSchemaFinder
+     * @param \Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface $restRequestValidatorSchemaFinder
      * @param \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface $filesystem
      * @param \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface $yaml
      */
     public function __construct(
-        RestRequestValidatorSchemaFinderInterface $validationSchemaFinder,
+        RestRequestValidatorSchemaFinderInterface $restRequestValidatorSchemaFinder,
         RestRequestValidatorToFilesystemAdapterInterface $filesystem,
         RestRequestValidatorToYamlAdapterInterface $yaml
     ) {
-        $this->validationSchemaFinder = $validationSchemaFinder;
+        $this->restRequestValidatorSchemaFinder = $restRequestValidatorSchemaFinder;
         $this->filesystem = $filesystem;
         $this->yaml = $yaml;
     }
@@ -53,11 +53,11 @@ class RestRequestValidatorCacheCollector implements RestRequestValidatorCacheCol
     {
         $resultingConfig = [];
 
-        if (!$this->validationSchemaFinder->getPaths($storeTransfer)) {
+        if (!$this->restRequestValidatorSchemaFinder->getPaths($storeTransfer)) {
             return $resultingConfig;
         }
 
-        foreach ($this->validationSchemaFinder->findSchemas($storeTransfer) as $moduleValidationSchema) {
+        foreach ($this->restRequestValidatorSchemaFinder->findSchemas($storeTransfer) as $moduleValidationSchema) {
             $parsedConfiguration = $this->yaml->parseFile($moduleValidationSchema->getPathname());
             foreach ($parsedConfiguration as $resourceName => $resourceValidatorConfiguration) {
                 $resultingConfig[$resourceName][] = $resourceValidatorConfiguration;
