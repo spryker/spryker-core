@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUserGui;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeBridge;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeBridge;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeBridge;
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -19,6 +20,10 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_COMPANY = 'FACADE_COMPANY';
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
+
+    public const PLUGINS_COMPANY_USER_TABLE_CONFIG_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_CONFIG_EXPANDER';
+    public const PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER';
     public const COMPANY_USER_FORM_EXPANDER_PLUGINS = 'COMPANY_USER_FORM_EXPANDER_PLUGINS';
     public const COMPANY_USER_EDIT_FORM_EXPANDER_PLUGINS = 'COMPANY_USER_EDIT_FORM_EXPANDER_PLUGINS';
 
@@ -33,6 +38,9 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addCompanyFacade($container);
         $container = $this->addCustomerFacade($container);
+        $container = $this->addCompanyUserPropelQuery($container);
+        $container = $this->addCompanyUserTableConfigExpanderPlugins($container);
+        $container = $this->addCompanyUserTablePrepareDataExpanderPlugins($container);
         $container = $this->addCompanyUserFormExpanderPlugins($container);
         $container = $this->addCompanyUserEditFormExpanderPlugins($container);
 
@@ -113,6 +121,64 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserPropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_COMPANY_USER] = function (Container $container) {
+            return SpyCompanyUserQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserTableConfigExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USER_TABLE_CONFIG_EXPANDER] = function (Container $container) {
+            return $this->getCompanyUserTableConfigExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserTablePrepareDataExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER] = function (Container $container) {
+            return $this->getCompanyUserTablePrepareDataExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTableConfigExpanderPluginInterface[]
+     */
+    protected function getCompanyUserTableConfigExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTablePrepareDataExpanderPluginInterface[]
+     */
+    protected function getCompanyUserTablePrepareDataExpanderPlugins(): array
+    {
+        return [];
     }
 
     /**

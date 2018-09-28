@@ -7,10 +7,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/gui": "*",
     "spryker/symfony": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/gui": "If you want to use CompanyUserGuiExtension module plugin interfaces: ^3.13.1",
     "spryker/symfony": "If you want to use Step handler plugin."
   },
   "autoload": {

@@ -15,13 +15,11 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 interface CompanyUserGuiToCompanyUserFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function getCompanyUserById(
-        CompanyUserTransfer $companyUserTransfer
-    ): CompanyUserTransfer;
+    public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
@@ -58,4 +56,18 @@ interface CompanyUserGuiToCompanyUserFacadeInterface
     public function delete(
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }

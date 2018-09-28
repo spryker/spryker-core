@@ -26,12 +26,13 @@ class CompanyRoleGuiToCompanyRoleFacadeBridge implements CompanyRoleGuiToCompany
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
-    public function getCompanyRoleCollection(CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer): CompanyRoleCollectionTransfer
-    {
-        return $this->companyRoleFacade->getCompanyRoleCollection($companyRoleCriteriaFilterTransfer);
+    public function getCompanyRoleCollection(
+        CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyRoleCollectionTransfer {
+        return $this->companyRoleFacade->getCompanyRoleCollection($criteriaFilterTransfer);
     }
 }
