@@ -34,6 +34,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig;
 
 /**
@@ -118,6 +119,33 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $this->assertNotNull($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType());
         // Assert translations persisted
         $this->assertCount($productPackagingUnitTypeTransfer->getTranslations()->count(), $nameTranslations);
+    }
+
+    /**
+     * @dataProvider getProductPackagingUnitTypeData
+     *
+     * @param string $name
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer ...$nameTranslations
+     *
+     * @return void
+     */
+    public function testCreateProductPackagingUnitTypeShouldThrowExceptionIfDuplicateUnitTypeIsTryingToBeAdded(string $name, ProductPackagingUnitTypeTranslationTransfer ... $nameTranslations): void
+    {
+        // Arrange
+        $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())
+            ->build()
+            ->setName($name);
+
+        foreach ($nameTranslations as $nameTranslation) {
+            $productPackagingUnitTypeTransfer->addProductPackagingUnitTypeTranslation($nameTranslation);
+        }
+        $this->getFacade()->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
+
+        // Assert
+        $this->expectException(ProductPackagingUnitTypeUniqueViolationException::class);
+
+        // Act
+        $this->getFacade()->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
     }
 
     /**

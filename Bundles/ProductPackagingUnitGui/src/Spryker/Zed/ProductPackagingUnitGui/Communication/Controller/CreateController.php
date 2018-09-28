@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Controller;
 
+use Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Throwable;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitGui\Communication\ProductPackagingUnitGuiCommunicationFactory getFactory()
@@ -53,19 +55,31 @@ class CreateController extends AbstractProductPackagingUnitGuiController
     {
         $redirectUrl = $this->getRequestRedirectUrl($request);
         $productPackagingUnitTypeTransfer = $productPackagingUnitTypeForm->getData();
-        $productPackagingUnitTypeTransfer = $this->getFactory()
-            ->getProductPackagingUnitFacade()
-            ->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
 
-        if (!$productPackagingUnitTypeTransfer->getIdProductPackagingUnitType()) {
+        try {
+            $productPackagingUnitTypeTransfer = $this->getFactory()
+                ->getProductPackagingUnitFacade()
+                ->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
+
+            if (!$productPackagingUnitTypeTransfer->getIdProductPackagingUnitType()) {
+                $this->addErrorMessage(sprintf(
+                    static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_CREATE,
+                    $productPackagingUnitTypeTransfer->getName()
+                ));
+
+                return $this->redirectResponse($redirectUrl);
+            }
+        } catch (ProductPackagingUnitTypeUniqueViolationException $exception) {
+            $this->addErrorMessage($exception->getMessage());
+
+            return $this->redirectResponse($redirectUrl);
+        } catch (Throwable $exception) {
             $this->addErrorMessage(sprintf(
                 static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_CREATE,
                 $productPackagingUnitTypeTransfer->getName()
             ));
 
-            return $this->viewResponse([
-                'form' => $productPackagingUnitTypeForm->createView(),
-            ]);
+            return $this->redirectResponse($redirectUrl);
         }
 
         $this->addSuccessMessage(sprintf(
