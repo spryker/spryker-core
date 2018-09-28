@@ -23,6 +23,8 @@ class EditCompanyUserController extends AbstractController
      */
     protected const URL_USER_LIST = '/company-user-gui/list-company-user';
 
+    protected const MESSAGE_SUCCESS_COMPANY_USER_UPDATE = 'Company User "%s" has been updated.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -81,6 +83,11 @@ class EditCompanyUserController extends AbstractController
         foreach ($companyResponseTransfer->getMessages() as $message) {
             $this->addSuccessMessage($message->getText());
         }
+
+        $this->addSuccessMessage(sprintf(
+            static::MESSAGE_SUCCESS_COMPANY_USER_UPDATE,
+            $companyUserTransfer->getCustomer()->getFirstName() . ' ' . $companyUserTransfer->getCustomer()->getLastName()
+        ));
 
         return $this->redirectResponse($redirectUrl);
     }
