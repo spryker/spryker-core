@@ -77,7 +77,14 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
         return array_filter($productListIds, function (array $item) use ($productConcreteCountByProductAbstractIds) {
             $idProductAbstract = $item[ProductListSearchRepository::COL_ID_PRODUCT_ABSTRACT];
 
-            return $this->isAllConcreteProductsInList($item, $productConcreteCountByProductAbstractIds[$idProductAbstract][ProductListSearchRepository::COL_CONCRETE_PRODUCT_COUNT]);
+            if ($item[ProductListSearchRepository::COL_TYPE] === $this->getRepository()->getValueForTheBlacklistType()) {
+                return $this->isAllConcreteProductsInList(
+                    $item,
+                    $productConcreteCountByProductAbstractIds[$idProductAbstract][ProductListSearchRepository::COL_CONCRETE_PRODUCT_COUNT]
+                );
+            }
+
+            return true;
         });
     }
 

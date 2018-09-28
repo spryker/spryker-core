@@ -138,7 +138,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
 
         $whitelistIds = array_merge(
             $this->productListFacade->getProductAbstractWhitelistIdsByIdProductConcrete($idProductConcrete),
-            $this->productListFacade->getProductAbstractWhitelistIdsByIdProductAbstract(reset($productAbstractIds))
+            $this->productListFacade->getCategoryWhitelistIdsByIdProductAbstract(reset($productAbstractIds))
         );
 
         return array_unique($whitelistIds);

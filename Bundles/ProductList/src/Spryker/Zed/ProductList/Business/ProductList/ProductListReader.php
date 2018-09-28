@@ -67,6 +67,16 @@ class ProductListReader implements ProductListReaderInterface
     }
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
+    {
+        return $this->productListRepository->getCategoryWhitelistIdsByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
      * @param int $idProductConcrete
      *
      * @return int[]

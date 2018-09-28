@@ -85,6 +85,22 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getCategoryWhitelistIdsByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idProductConcrete
      *
      * @return int[]

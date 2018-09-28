@@ -33,6 +33,9 @@ use Spryker\Zed\ProductListStorage\ProductListStorageConfig;
  */
 class ProductListStorageListenerTest extends Unit
 {
+    protected const PRODUCT_ABSTRACT_ID = 53;
+    protected const PRODUCT_CONCRETE_ID = 57;
+
     /**
      * @var \SprykerTest\Zed\ProductListStorage\ProductListStorageCommunicationTester
      */
@@ -43,20 +46,20 @@ class ProductListStorageListenerTest extends Unit
      */
     public function testProductAbstractStorageListenerStoreData()
     {
-        SpyProductAbstractProductListStorageQuery::create()->filterByFkProductAbstract(42)->delete();
+        SpyProductAbstractProductListStorageQuery::create()->filterByFkProductAbstract(self::PRODUCT_ABSTRACT_ID)->delete();
         $beforeCount = SpyProductAbstractProductListStorageQuery::create()->count();
 
         $productAbstractStorageListener = new ProductAbstractStorageListener();
         $productAbstractStorageListener->setFacade($this->getFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(42),
+            (new EventEntityTransfer())->setId(self::PRODUCT_CONCRETE_ID),
         ];
         $productAbstractStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_PUBLISH);
 
         // Assert
         $afterCount = SpyProductAbstractProductListStorageQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
+        $this->assertEquals(++$beforeCount, $afterCount);
     }
 
     /**
@@ -64,20 +67,20 @@ class ProductListStorageListenerTest extends Unit
      */
     public function testProductConcreteStorageListenerStoreData()
     {
-        SpyProductConcreteProductListStorageQuery::create()->filterByFkProduct(42)->delete();
+        SpyProductConcreteProductListStorageQuery::create()->filterByFkProduct(self::PRODUCT_CONCRETE_ID)->delete();
         $beforeCount = SpyProductConcreteProductListStorageQuery::create()->count();
 
         $productConcreteStorageListener = new ProductConcreteStorageListener();
         $productConcreteStorageListener->setFacade($this->getFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(42),
+            (new EventEntityTransfer())->setId(self::PRODUCT_CONCRETE_ID),
         ];
         $productConcreteStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_PUBLISH);
 
         // Assert
         $afterCount = SpyProductConcreteProductListStorageQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
     }
 
     /**

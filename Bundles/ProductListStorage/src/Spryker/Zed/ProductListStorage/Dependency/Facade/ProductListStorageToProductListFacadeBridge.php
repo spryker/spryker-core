@@ -43,6 +43,16 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
     }
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
+    {
+        return $this->productListFacade->getCategoryWhitelistIdsByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
      * @param int $idProductConcrete
      *
      * @return int[]

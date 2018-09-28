@@ -23,6 +23,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductListRepository extends AbstractRepository implements ProductListRepositoryInterface
 {
+    protected const CONCRETE_PRODUCT_COUNT_TO_WHITELIST_ABSTRACT = 1;
+
     /**
      * @param int $idProductList
      *
@@ -89,6 +91,16 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
         );
 
         return array_unique($whitelistIds);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
+    {
+        return array_unique($this->getCategoryWhitelistIdsByIdAbstractProduct($idProductAbstract));
     }
 
     /**
@@ -201,22 +213,19 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      */
     protected function getProductWhitelistIdsByIdAbstractProduct(int $idProductAbstract): array
     {
-        $countConcreteProduct = SpyProductQuery::create()->filterByFkProductAbstract($idProductAbstract)->count();
-
         /** @var \Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery $productListProductConcreteQuery */
         $productListProductConcreteQuery = $this->getFactory()
             ->createProductListProductConcreteQuery()
             ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST);
 
         return $productListProductConcreteQuery
-            ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
+            ->useSpyProductQuery(null, Criteria::INNER_JOIN)
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
-            ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
+            ->useSpyProductListQuery(null, Criteria::INNER_JOIN)
                 ->filterByType(SpyProductListTableMap::COL_TYPE_WHITELIST)
             ->endUse()
             ->groupByFkProductList()
-            ->having('COUNT(' . SpyProductListProductConcreteTableMap::COL_FK_PRODUCT . ') = ?', $countConcreteProduct)
             ->find()
             ->toArray();
     }
