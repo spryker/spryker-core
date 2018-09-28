@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\QuickOrder\Dependency\Client;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 
 class QuickOrderToPriceProductClientBridge implements QuickOrderToPriceProductClientInterface
 {
@@ -26,17 +26,17 @@ class QuickOrderToPriceProductClientBridge implements QuickOrderToPriceProductCl
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
+     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function calculateQuickOrderProductPrice(
-        QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer,
+    public function calculateProductSumPrice(
+        CurrentProductPriceTransfer $currentProductPriceTransfer,
         PriceProductFilterTransfer $priceProductFilterTransfer,
         array $priceProductTransfers
-    ): QuickOrderProductPriceTransfer {
-        return $this->priceProductClient->calculateQuickOrderProductPrice($quickOrderProductPriceTransfer, $priceProductFilterTransfer, $priceProductTransfers);
+    ): CurrentProductPriceTransfer {
+        return $this->priceProductClient->calculateProductSumPrice($currentProductPriceTransfer, $priceProductFilterTransfer, $priceProductTransfers);
     }
 }

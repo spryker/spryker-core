@@ -8,4 +8,9 @@
         <property name="productQuantity" type="ProductQuantityStorage" />
     </transfer>
 
+    <transfer name="CurrentProductConcretePrice">
+        <property name="idProductConcrete" type="int" />
+        <property name="currentProductPrice" type="CurrentProductPrice"/>
+    </transfer>
+
 </transfers>

@@ -8,7 +8,6 @@
 namespace Spryker\Client\PriceProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToCurrencyClientInterface;
 use Spryker\Client\PriceProductStorage\Expander\ProductViewPriceExpander;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolver;

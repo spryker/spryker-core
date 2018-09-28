@@ -9,7 +9,6 @@ namespace Spryker\Client\PriceProduct;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 
 /**
  * @method \Spryker\Client\PriceProduct\PriceProductFactory getFactory()
@@ -98,20 +97,20 @@ interface PriceProductClientInterface
 
     /**
      * Specification:
-     * - Returns QuickOrderProductPriceTransfer with total price and currency data.
+     * - Returns CurrentProductPriceTransfer with sumPrice and currency data.
      * - Uses volume prices if configured and applicable.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
+     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function calculateQuickOrderProductPrice(
-        QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer,
+    public function calculateProductSumPrice(
+        CurrentProductPriceTransfer $currentProductPriceTransfer,
         PriceProductFilterTransfer $priceProductFilterTransfer,
         array $priceProductTransfers
-    ): QuickOrderProductPriceTransfer;
+    ): CurrentProductPriceTransfer;
 }

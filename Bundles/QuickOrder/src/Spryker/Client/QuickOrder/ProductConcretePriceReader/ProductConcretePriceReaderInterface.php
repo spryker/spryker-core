@@ -7,14 +7,14 @@
 
 namespace Spryker\Client\QuickOrder\ProductConcretePriceReader;
 
-use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
+use Generated\Shared\Transfer\CurrentProductConcretePriceTransfer;
 
 interface ProductConcretePriceReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
+     * @param \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer $currentProductConcretePriceTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
+     * @return \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer
      */
-    public function getQuickOrderProductPrice(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer;
+    public function getProductConcreteSumPrice(CurrentProductConcretePriceTransfer $currentProductConcretePriceTransfer): CurrentProductConcretePriceTransfer;
 }

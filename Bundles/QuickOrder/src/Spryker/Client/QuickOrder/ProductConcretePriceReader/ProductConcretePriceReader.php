@@ -7,8 +7,9 @@
 
 namespace Spryker\Client\QuickOrder\ProductConcretePriceReader;
 
+use Generated\Shared\Transfer\CurrentProductConcretePriceTransfer;
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductStorageClientInterface;
 
@@ -37,38 +38,42 @@ class ProductConcretePriceReader implements ProductConcretePriceReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
+     * @param \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer $currentProductConcretePriceTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
+     * @return \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer
      */
-    public function getQuickOrderProductPrice(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer
+    public function getProductConcreteSumPrice(CurrentProductConcretePriceTransfer $currentProductConcretePriceTransfer): CurrentProductConcretePriceTransfer
     {
-        if ($quickOrderProductPriceTransfer->getIdProductConcrete() === null) {
-            return $quickOrderProductPriceTransfer;
+        if ($currentProductConcretePriceTransfer->getIdProductConcrete() === null) {
+            return $currentProductConcretePriceTransfer;
         }
 
+        $currentProductPriceTransfer = $currentProductConcretePriceTransfer->getCurrentProductPrice();
+
         $priceProductTransfers = $this->priceProductStorageClient->getPriceProductConcreteTransfers(
-            $quickOrderProductPriceTransfer->getIdProductConcrete()
+            $currentProductConcretePriceTransfer->getIdProductConcrete()
         );
 
-        $priceProductFilterTransfer = $this->createPriceProductFilterTransfer($quickOrderProductPriceTransfer);
+        $priceProductFilterTransfer = $this->createPriceProductFilterTransferFromCurrentProductPriceTransfer($currentProductPriceTransfer);
 
-        return $this->priceProductClient->calculateQuickOrderProductPrice(
-            $quickOrderProductPriceTransfer,
+        $currentProductPriceTransfer = $this->priceProductClient->calculateProductSumPrice(
+            $currentProductPriceTransfer,
             $priceProductFilterTransfer,
             $priceProductTransfers
         );
+
+        return $currentProductConcretePriceTransfer->setCurrentProductPrice($currentProductPriceTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
+     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    protected function createPriceProductFilterTransfer(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): PriceProductFilterTransfer
+    protected function createPriceProductFilterTransferFromCurrentProductPriceTransfer(CurrentProductPriceTransfer $currentProductPriceTransfer): PriceProductFilterTransfer
     {
         return (new PriceProductFilterTransfer())->setQuantity(
-            $quickOrderProductPriceTransfer->getQuantity()
+            $currentProductPriceTransfer->getQuantity()
         );
     }
 }

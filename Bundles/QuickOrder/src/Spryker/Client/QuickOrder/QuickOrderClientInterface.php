@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\QuickOrder;
 
+use Generated\Shared\Transfer\CurrentProductConcretePriceTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 
 interface QuickOrderClientInterface
 {
@@ -26,14 +26,14 @@ interface QuickOrderClientInterface
 
     /**
      * Specification:
-     * - Returns QuickOrderProductPriceTransfer with total price and currency data.
+     * - Returns CurrentProductConcretePriceTransfer with sum price and currency data.
      * - Volume prices will be used if configured and applicable.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
+     * @param \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer $currentProductConcretePriceTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
+     * @return \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer
      */
-    public function getQuickOrderProductPrice(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer;
+    public function getProductConcreteSumPrice(CurrentProductConcretePriceTransfer $currentProductConcretePriceTransfer): CurrentProductConcretePriceTransfer;
 }

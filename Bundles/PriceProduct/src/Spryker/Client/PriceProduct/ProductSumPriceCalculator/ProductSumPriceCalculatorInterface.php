@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProduct\QuickOrderProductPriceCalculator;
+namespace Spryker\Client\PriceProduct\ProductSumPriceCalculator;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 
-interface QuickOrderProductPriceCalculatorInterface
+interface ProductSumPriceCalculatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
+     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function calculateQuickOrderProductPrice(
-        QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer,
+    public function calculateProductSumPrice(
+        CurrentProductPriceTransfer $currentProductPriceTransfer,
         PriceProductFilterTransfer $priceProductFilterTransfer,
         array $priceProductTransfers
-    ): QuickOrderProductPriceTransfer;
+    ): CurrentProductPriceTransfer;
 }
