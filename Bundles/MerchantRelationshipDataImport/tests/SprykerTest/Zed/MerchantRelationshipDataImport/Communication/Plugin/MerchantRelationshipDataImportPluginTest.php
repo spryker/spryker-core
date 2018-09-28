@@ -12,6 +12,9 @@ use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use ReflectionClass;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 use Spryker\Zed\MerchantRelationshipDataImport\Business\MerchantRelationshipDataImportBusinessFactory;
@@ -41,10 +44,11 @@ class MerchantRelationshipDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->cleanTableRelations($this->getMerchantRelationshipQuery());
         $this->tester->assertDatabaseTableIsEmpty();
 
-        $this->tester->ensureRelatedDataIsNotExists();
+        $this->tester->cleanTableRelations($this->getMerchantQuery());
+        $this->tester->cleanTableRelations($this->getCompanyBusinessUnitQuery());
         $this->createRelatedData();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -140,5 +144,29 @@ class MerchantRelationshipDataImportPluginTest extends Unit
         $facade->setFactory($factoryMock);
 
         return $facade;
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
+     */
+    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
+    {
+        return SpyCompanyBusinessUnitQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     */
+    protected function getMerchantQuery(): SpyMerchantQuery
+    {
+        return SpyMerchantQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
+     */
+    protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
+    {
+        return SpyMerchantRelationshipQuery::create();
     }
 }

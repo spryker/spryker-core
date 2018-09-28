@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use ReflectionClass;
 use Spryker\Zed\CompanyDataImport\Business\CompanyDataImportBusinessFactory;
 use Spryker\Zed\CompanyDataImport\Business\CompanyDataImportFacade;
@@ -40,7 +41,7 @@ class CompanyDataImportPluginTest extends Unit
      */
     public function testImportImportsCompany(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->cleanTableRelations($this->getCompanyQuery());
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/company.csv');
@@ -98,5 +99,13 @@ class CompanyDataImportPluginTest extends Unit
         $facade->setFactory($factoryMock);
 
         return $facade;
+    }
+
+    /**
+     * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     */
+    protected function getCompanyQuery(): SpyCompanyQuery
+    {
+        return SpyCompanyQuery::create();
     }
 }

@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Merchant;
 use Codeception\Test\Unit;
 use Exception;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Merchant\Business\MerchantFacade;
 
@@ -195,12 +196,20 @@ class MerchantFacadeTest extends Unit
      */
     public function testGetMerchantsReturnNotEmptyCollection(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->cleanTableRelations($this->getMerchantQuery());
 
         $this->tester->haveMerchant();
         $this->tester->haveMerchant();
 
         $merchantTransferCollection = (new MerchantFacade())->getMerchants();
         $this->assertCount(2, $merchantTransferCollection->getMerchants());
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     */
+    protected function getMerchantQuery(): SpyMerchantQuery
+    {
+        return SpyMerchantQuery::create();
     }
 }

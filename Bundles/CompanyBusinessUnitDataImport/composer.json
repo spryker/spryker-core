@@ -16,7 +16,6 @@
     "spryker/country": "*",
     "spryker/customer": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "autoload": {

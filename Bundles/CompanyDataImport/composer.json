@@ -12,7 +12,6 @@
     "spryker/code-sniffer": "*",
     "spryker/company-business-unit": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "autoload": {
