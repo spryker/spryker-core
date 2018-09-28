@@ -63,7 +63,7 @@ class ModuleOverview implements ModuleOverviewInterface
                 $this->getModuleNameFromModuleKey($moduleKey)
             );
 
-            $moduleOverviewTransfer->setIsProjectModule(true);
+            $moduleOverviewTransfer->setExistsProjectModule(true);
 
             $moduleOverviewTransferCollection[$moduleName] = $moduleOverviewTransfer;
         }
@@ -87,7 +87,7 @@ class ModuleOverview implements ModuleOverviewInterface
                 $this->getModuleNameFromModuleKey($moduleKey)
             );
 
-            $moduleOverviewTransfer->setIsOperatingSystemModule(true);
+            $moduleOverviewTransfer->setExistsCoreModule(true);
 
             $moduleOverviewTransferCollection[$moduleName] = $moduleOverviewTransfer;
         }

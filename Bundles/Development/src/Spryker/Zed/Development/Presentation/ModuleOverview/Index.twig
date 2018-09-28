@@ -8,14 +8,14 @@
                 <table class="table-condensed table-hover table-striped">
                     <tr>
                         <th>Module name</th>
-                        <th>OS module</th>
+                        <th>Core module</th>
                         <th>Project module</th>
                     </tr>
                     {% for moduleName, moduleOverviewTransfer in moduleOverviewTransferCollection %}
                     <tr>
                         <td>{{ moduleName }}</td>
-                        <td><span class="glyphicon glyphicon-{% if moduleOverviewTransfer.isOperatingSystemModule %}ok{% else %}remove{% endif %}"></span></td>
-                        <td><span class="glyphicon glyphicon-{% if moduleOverviewTransfer.isProjectModule %}ok{% else %}remove{% endif %}"></span></td>
+                        <td><span class="glyphicon glyphicon-{% if moduleOverviewTransfer.existsCoreModule %}ok{% else %}remove{% endif %}"></span></td>
+                        <td><span class="glyphicon glyphicon-{% if moduleOverviewTransfer.existsProjectModule %}ok{% else %}remove{% endif %}"></span></td>
                     </tr>
                     {% endfor %}
                 </table>

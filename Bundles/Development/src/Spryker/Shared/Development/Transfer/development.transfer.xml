@@ -161,8 +161,8 @@
 
     <transfer name="ModuleOverview">
         <property name="moduleName" type="string"/>
-        <property name="isOperatingSystemModule" type="bool"/>
-        <property name="isProjectModule" type="bool"/>
+        <property name="existsCoreModule" type="bool"/>
+        <property name="existsProjectModule" type="bool"/>
     </transfer>
 
 </transfers>
