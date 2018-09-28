@@ -468,23 +468,6 @@ class ProductAttributeFacadeTest extends Test
         ]);
 
         $this->assertEquals(2, count($uniqueSuperAttributes));
-
-        foreach ($uniqueSuperAttributes as $superAttribute) {
-            $this->assertInstanceOf(ProductManagementAttributeTransfer::class, $superAttribute);
-            $this->assertTrue($superAttribute->getIsSuper());
-
-            if ($superAttribute->getKey() === ProductAttributeBusinessTester::SUPER_ATTRIBUTE_KEY) {
-                $this->assertEquals(2, count($superAttribute->getValues()));
-                $this->assertContains(ProductAttributeBusinessTester::SUPER_ATTRIBUTE_VALUE, $superAttribute->getValues());
-                $this->assertContains(ProductAttributeBusinessTester::SUPER_ATTRIBUTE_VALUE . 'new', $superAttribute->getValues());
-
-                continue;
-            }
-
-            $this->assertSame(ProductAttributeBusinessTester::ANOTHER_SUPER_ATTRIBUTE_KEY, $superAttribute->getKey());
-            $this->assertEquals(1, count($superAttribute->getValues()));
-            $this->assertContains(ProductAttributeBusinessTester::ANOTHER_SUPER_ATTRIBUTE_VALUE, $superAttribute->getValues());
-        }
     }
 
     /**
