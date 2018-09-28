@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Auto-generated group annotations
@@ -420,7 +421,15 @@ class CmsFacadePageTest extends Unit
      */
     public function testCreateCmsPageSavesStoreRelation()
     {
-        $expectedIdStores = [1, 3];
+        $storeFacade = $this->createStoreFacade();
+
+        $stores = $storeFacade->getAllStores();
+
+        $expectedIdStores = [];
+
+        foreach ($stores as $storeTransfer) {
+            $expectedIdStores[] = $storeTransfer->getIdStore();
+        }
 
         $storeRelationSeed = [
             CmsPageTransfer::STORE_RELATION => [
@@ -604,5 +613,13 @@ class CmsFacadePageTest extends Unit
                 [2], [1, 3],
             ],
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\StoreFacade
+     */
+    protected function createStoreFacade()
+    {
+        return new StoreFacade();
     }
 }

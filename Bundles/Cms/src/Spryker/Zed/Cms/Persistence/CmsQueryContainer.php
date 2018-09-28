@@ -324,9 +324,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::KEY)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::TRANS)
             ->filterByFkPage($idCmsPage)
-                ->useGlossaryKeyQuery()
-                    ->useSpyGlossaryTranslationQuery()
-                        ->filterByFkLocale($fkLocale)
+            ->useGlossaryKeyQuery()
+                ->useSpyGlossaryTranslationQuery()
+                    ->filterByFkLocale($fkLocale)
                 ->endUse()
             ->endUse();
 
@@ -599,11 +599,11 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         return $this->getFactory()->createCmsPageQuery()
             ->filterByIdCmsPage($idPage)
             ->innerJoinCmsTemplate(self::ALIAS_CMS_PAGE_TEMPLATE)
-                ->useSpyCmsGlossaryKeyMappingQuery(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING, Criteria::LEFT_JOIN)
-                    ->useGlossaryKeyQuery(self::ALIAS_GLOSSARY_KEY)
-                        ->useSpyGlossaryTranslationQuery(self::ALIAS_TRANSLATION)
-                            ->useLocaleQuery(self::ALIAS_LOCALE_FOR_TRANSLATION)
-                            ->endUse()
+            ->useSpyCmsGlossaryKeyMappingQuery(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING, Criteria::LEFT_JOIN)
+                ->useGlossaryKeyQuery(self::ALIAS_GLOSSARY_KEY)
+                    ->useSpyGlossaryTranslationQuery(self::ALIAS_TRANSLATION)
+                        ->useLocaleQuery(self::ALIAS_LOCALE_FOR_TRANSLATION)
+                        ->endUse()
                     ->endUse()
                 ->endUse()
             ->endUse()
@@ -738,7 +738,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->queryPages()
             ->filterByIdCmsPage($idCmsPage)
             ->leftJoinWithSpyCmsPageStore()
-                ->useSpyCmsPageStoreQuery(null, Criteria::LEFT_JOIN)
+            ->useSpyCmsPageStoreQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithSpyStore()
             ->endUse();
     }

@@ -43,13 +43,13 @@ class CmsPageStoreRelationWriter implements CmsPageStoreRelationWriterInterface
         $storeRelationTransfer->requireIdEntity();
 
         $currentIdStores = $this->getIdStoresByIdCmsPage($storeRelationTransfer->getIdEntity());
-        $requestedIdStores = $this->findStoreRelationIdStores($storeRelationTransfer);
+        $requestedIdStores = $storeRelationTransfer->getIdStores() ?? [];
 
         $saveIdStores = array_diff($requestedIdStores, $currentIdStores);
         $deleteIdStores = array_diff($currentIdStores, $requestedIdStores);
 
-        $this->addStores($saveIdStores, $storeRelationTransfer->getIdEntity());
-        $this->removeStores($deleteIdStores, $storeRelationTransfer->getIdEntity());
+        $this->addStoreRelations($saveIdStores, $storeRelationTransfer->getIdEntity());
+        $this->removeStoreRelations($deleteIdStores, $storeRelationTransfer->getIdEntity());
     }
 
     /**
@@ -58,7 +58,7 @@ class CmsPageStoreRelationWriter implements CmsPageStoreRelationWriterInterface
      *
      * @return void
      */
-    protected function addStores(array $idStores, int $idCmsPage): void
+    protected function addStoreRelations(array $idStores, int $idCmsPage): void
     {
         foreach ($idStores as $idStore) {
             (new SpyCmsPageStore())
@@ -74,7 +74,7 @@ class CmsPageStoreRelationWriter implements CmsPageStoreRelationWriterInterface
      *
      * @return void
      */
-    protected function removeStores(array $idStores, int $idCmsPage): void
+    protected function removeStoreRelations(array $idStores, int $idCmsPage): void
     {
         if (empty($idStores)) {
             return;
@@ -101,19 +101,5 @@ class CmsPageStoreRelationWriter implements CmsPageStoreRelationWriterInterface
         );
 
         return $storeRelation->getIdStores();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
-     *
-     * @return array
-     */
-    protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer): array
-    {
-        if (!$storeRelationTransfer->getIdStores()) {
-            return [];
-        }
-
-        return $storeRelationTransfer->getIdStores();
     }
 }

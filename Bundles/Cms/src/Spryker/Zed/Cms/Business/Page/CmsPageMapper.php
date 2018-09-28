@@ -102,7 +102,7 @@ class CmsPageMapper implements CmsPageMapperInterface
         $cmsPageTransfer->setFkPage($cmsPageEntity->getIdCmsPage());
         $cmsPageTransfer->fromArray($cmsPageEntity->toArray(), true);
         $cmsPageTransfer->setStoreRelation(
-            $this->cmsPageStoreRelationMapper->mapStoreRelationToTransfer($cmsPageEntity)
+            $this->cmsPageStoreRelationMapper->mapCmsPageStoreEntityCollectionToStoreRelationTransfer($cmsPageEntity)
         );
 
         return $cmsPageTransfer;

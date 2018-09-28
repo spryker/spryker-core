@@ -19,7 +19,7 @@ class CmsPageStoreRelationMapper implements CmsPageStoreRelationMapperInterface
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapStoreRelationToTransfer(SpyCmsPage $cmsPageEntity): StoreRelationTransfer
+    public function mapCmsPageStoreEntityCollectionToStoreRelationTransfer(SpyCmsPage $cmsPageEntity): StoreRelationTransfer
     {
         $storeTransferCollection = $this->mapStoreTransfers($cmsPageEntity);
         $idStores = $this->selectIdStores($storeTransferCollection);

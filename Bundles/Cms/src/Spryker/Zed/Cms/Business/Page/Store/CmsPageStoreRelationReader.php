@@ -48,7 +48,7 @@ class CmsPageStoreRelationReader implements CmsPageStoreRelationReaderInterface
             ->find()
             ->getFirst();
 
-        $storeRelationTransfer = $this->cmsPageStoreRelationMapper->mapStoreRelationToTransfer($cmsPageEntity);
+        $storeRelationTransfer = $this->cmsPageStoreRelationMapper->mapCmsPageStoreEntityCollectionToStoreRelationTransfer($cmsPageEntity);
 
         return $storeRelationTransfer;
     }

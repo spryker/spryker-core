@@ -17,5 +17,5 @@ interface CmsPageStoreRelationMapperInterface
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapStoreRelationToTransfer(SpyCmsPage $cmsPageEntity): StoreRelationTransfer;
+    public function mapCmsPageStoreEntityCollectionToStoreRelationTransfer(SpyCmsPage $cmsPageEntity): StoreRelationTransfer;
 }
