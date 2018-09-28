@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use ReflectionClass;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductMerchantRelationshipDataImportBusinessFactory;
@@ -54,7 +53,7 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->cleanTableRelations($this->getMerchantRelationshipQuery());
+        $this->tester->truncateMerchantRelationshipRelations();
         $this->tester->assertDatabaseTableIsEmpty();
 
         $this->createRelatedData();
@@ -134,13 +133,5 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
         $facade->setFactory($factoryMock);
 
         return $facade;
-    }
-
-    /**
-     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
-     */
-    protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
-    {
-        return SpyMerchantRelationshipQuery::create();
     }
 }

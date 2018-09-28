@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\CompanyDataImport\Helper;
 
 use Codeception\Module;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
-use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 
 class CompanyDataImportHelper extends Module
 {
@@ -28,13 +27,5 @@ class CompanyDataImportHelper extends Module
     protected function getCompanyQuery(): SpyCompanyQuery
     {
         return SpyCompanyQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
-     */
-    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
-    {
-        return SpyCompanyBusinessUnitQuery::create();
     }
 }

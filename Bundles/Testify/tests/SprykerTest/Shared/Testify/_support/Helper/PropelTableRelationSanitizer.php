@@ -11,7 +11,7 @@ use Codeception\Module;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\RelationMap;
 
-class PropelTableRelationCleaner extends Module
+class PropelTableRelationSanitizer extends Module
 {
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
@@ -19,7 +19,7 @@ class PropelTableRelationCleaner extends Module
      *
      * @return void
      */
-    public function cleanTableRelations(ModelCriteria $query, array $processedEntities = []): void
+    public function truncateTableRelations(ModelCriteria $query, array $processedEntities = []): void
     {
         $relations = $query->getTableMap()->getRelations();
 
@@ -38,7 +38,7 @@ class PropelTableRelationCleaner extends Module
             if ($relationType == RelationMap::ONE_TO_MANY && !in_array($fullyQualifiedQueryModel, $processedEntities)) {
                 $processedEntities[] = $fullyQualifiedQueryModel;
                 $fullyQualifiedQueryModelObject = $fullyQualifiedQueryModel::create();
-                $this->cleanTableRelations($fullyQualifiedQueryModelObject, $processedEntities);
+                $this->truncateTableRelations($fullyQualifiedQueryModelObject, $processedEntities);
             }
         }
 

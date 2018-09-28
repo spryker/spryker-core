@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\CompanyBusinessUnitDataImport\Communication\Plugin;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Communication\Plugin\CompanyBusinessUnitDataImportPlugin;
 
 /**
@@ -45,7 +44,8 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
      */
     public function testImportImportsCompanyBusinessUnit(): void
     {
-        $this->tester->cleanTableRelations($this->getCompanyBusinessUnitQuery());
+        $this->tester->truncateCompanyBusinessUnitRelations();
+
         $this->tester->haveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
         $this->tester->haveCompanyBusinessUnit([
             CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
@@ -74,7 +74,7 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
      */
     public function testImportThrowsExceptionWhenCompanyNotFound(): void
     {
-        $this->tester->cleanTableRelations($this->getCompanyBusinessUnitQuery());
+        $this->tester->truncateCompanyBusinessUnitRelations();
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
             static::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_COMPANY_CSV
@@ -93,7 +93,8 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
      */
     public function testImportThrowsExceptionWhenParentBusinessUnitNotFound(): void
     {
-        $this->tester->cleanTableRelations($this->getCompanyBusinessUnitQuery());
+        $this->tester->truncateCompanyBusinessUnitRelations();
+
         $this->tester->haveActiveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
         $this->tester->haveCompanyBusinessUnit([
             CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
@@ -107,13 +108,5 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
         $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
-     */
-    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
-    {
-        return SpyCompanyBusinessUnitQuery::create();
     }
 }
