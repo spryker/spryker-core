@@ -126,7 +126,11 @@ class RateController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        return $this->redirectResponse('/delete-rate', 301);
+        $idTaxSet = $this->castId($request->query->get(static::PARAM_URL_ID_TAX_RATE));
+        $url = Url::generate('/tax/delete-rate', [
+            static::PARAM_URL_ID_TAX_RATE => $idTaxSet,
+        ])->build();
+        return $this->redirectResponse($url, 301);
     }
 
     /**

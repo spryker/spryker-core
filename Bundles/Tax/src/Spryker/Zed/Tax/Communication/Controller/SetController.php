@@ -112,7 +112,12 @@ class SetController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        return $this->redirectResponse('/tax/delete-set', 301);
+        $idTaxSet = $this->castId($request->query->get(static::PARAM_URL_ID_TAX_SET));
+        $url = Url::generate('/tax/delete-set', [
+            static::PARAM_URL_ID_TAX_SET => $idTaxSet,
+        ])->build();
+
+        return $this->redirectResponse($url, 301);
     }
 
     /**
