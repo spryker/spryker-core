@@ -18,6 +18,9 @@ use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPl
 class CartQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Returns quote collection transfer with single quote for customer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
@@ -26,10 +29,9 @@ class CartQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCol
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        $quote = $this->getClient()->getQuote();
-        $quoteCollection = new QuoteCollectionTransfer();
-        $quoteCollection->addQuote($quote);
-
-        return $quoteCollection;
+        return (new QuoteCollectionTransfer())
+            ->addQuote(
+                $this->getClient()->getQuote()
+            );
     }
 }

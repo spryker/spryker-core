@@ -11,18 +11,18 @@ use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterfac
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
-use Spryker\Glue\CartsRestApi\Processor\CartItems\CartItemAdder;
-use Spryker\Glue\CartsRestApi\Processor\CartItems\CartItemAdderInterface;
-use Spryker\Glue\CartsRestApi\Processor\CartItems\CartItemDeleter;
-use Spryker\Glue\CartsRestApi\Processor\CartItems\CartItemDeleterInterface;
-use Spryker\Glue\CartsRestApi\Processor\CartItems\CartItemUpdater;
-use Spryker\Glue\CartsRestApi\Processor\CartItems\CartItemUpdaterInterface;
-use Spryker\Glue\CartsRestApi\Processor\Carts\CartCreator;
-use Spryker\Glue\CartsRestApi\Processor\Carts\CartCreatorInterface;
-use Spryker\Glue\CartsRestApi\Processor\Carts\CartDeleter;
-use Spryker\Glue\CartsRestApi\Processor\Carts\CartDeleterInterface;
-use Spryker\Glue\CartsRestApi\Processor\Carts\CartReader;
-use Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreator;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreatorInterface;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleter;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleterInterface;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartReader;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdder;
+use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdderInterface;
+use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleter;
+use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleterInterface;
+use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdater;
+use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapper;
@@ -33,9 +33,9 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CartsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
      */
-    public function createCartsReader(): CartReaderInterface
+    public function createCartReader(): CartReaderInterface
     {
         return new CartReader(
             $this->getResourceBuilder(),
@@ -45,7 +45,7 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Carts\CartCreatorInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\Cart\CartCreatorInterface
      */
     public function createCartCreator(): CartCreatorInterface
     {
@@ -57,19 +57,19 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Carts\CartDeleterInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleterInterface
      */
     public function createCartDeleter(): CartDeleterInterface
     {
         return new CartDeleter(
             $this->getResourceBuilder(),
             $this->getPersistentCartClient(),
-            $this->createCartsReader()
+            $this->createCartReader()
         );
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\CartItems\CartItemAdderInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdderInterface
      */
     public function createCartItemAdder(): CartItemAdderInterface
     {
@@ -78,12 +78,12 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getZedRequestClient(),
             $this->getQuoteClient(),
-            $this->createCartsReader()
+            $this->createCartReader()
         );
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\CartItems\CartItemDeleterInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleterInterface
      */
     public function createCartItemDeleter(): CartItemDeleterInterface
     {
@@ -91,12 +91,12 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getCartClient(),
             $this->getResourceBuilder(),
             $this->getQuoteClient(),
-            $this->createCartsReader()
+            $this->createCartReader()
         );
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\CartItems\CartItemUpdaterInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdaterInterface
      */
     public function createCartItemUpdater(): CartItemUpdaterInterface
     {
@@ -105,7 +105,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getZedRequestClient(),
             $this->getQuoteClient(),
-            $this->createCartsReader()
+            $this->createCartReader()
         );
     }
 

@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Processor\CartItems;
+namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
-use Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class CartItemUpdater implements CartItemUpdaterInterface
+class CartItemDeleter implements CartItemDeleterInterface
 {
     /**
      * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface
@@ -32,51 +32,40 @@ class CartItemUpdater implements CartItemUpdaterInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface
-     */
-    protected $zedRequestClient;
-
-    /**
      * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
      */
     protected $quoteClient;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
      */
-    protected $cartsReader;
+    protected $cartReader;
 
     /**
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface $cartClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface $quoteClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface $cartsReader
+     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
      */
     public function __construct(
         CartsRestApiToCartClientInterface $cartClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        CartsRestApiToZedRequestClientInterface $zedRequestClient,
         CartsRestApiToQuoteClientInterface $quoteClient,
-        CartReaderInterface $cartsReader
+        CartReaderInterface $cartReader
     ) {
         $this->cartClient = $cartClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->zedRequestClient = $zedRequestClient;
         $this->quoteClient = $quoteClient;
-        $this->cartsReader = $cartsReader;
+        $this->cartReader = $cartReader;
     }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function updateItemQuantity(
-        RestRequestInterface $restRequest,
-        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-    ): RestResponseInterface {
+    public function deleteItem(RestRequestInterface $restRequest): RestResponseInterface
+    {
         $sku = '';
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -86,7 +75,8 @@ class CartItemUpdater implements CartItemUpdaterInterface
             return $this->createMissingRequiredParameterError();
         }
 
-        $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
+        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idQuote, $restRequest);
+
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createQuoteNotFoundError($idQuote);
         }
@@ -96,18 +86,26 @@ class CartItemUpdater implements CartItemUpdaterInterface
         }
 
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
-        $quoteTransfer = $this->cartClient->changeItemQuantity(
-            $sku,
-            $itemIdentifier,
-            $restCartItemsAttributesTransfer->getQuantity()
-        );
-
-        $errors = $this->zedRequestClient->getLastResponseErrorMessages();
-        if (count($errors) > 0) {
-            return $this->returnWithError($errors, $restResponse);
+        $this->cartClient->removeItem($sku, $itemIdentifier);
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->createFailedDeletingQuoteItemError($restResponse);
         }
 
-        return $this->cartsReader->readByIdentifier($quoteTransfer->getUuid(), $restRequest);
+        return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function prepareItemTransfer(RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer): ItemTransfer
+    {
+        $itemTransfer = (new ItemTransfer())->fromArray(
+            $restCartItemsAttributesRequestTransfer->toArray(),
+            true
+        );
+        return $itemTransfer;
     }
 
     /**
@@ -143,6 +141,34 @@ class CartItemUpdater implements CartItemUpdaterInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createFailedDeletingQuoteItemError(RestResponseInterface $response): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_QUOTE_ITEM)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_QUOTE_ITEM);
+
+        return $response->addError($restErrorTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createQuoteIdMissingError(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_ID_MISSING)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ID_MISSING);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
 
     /**

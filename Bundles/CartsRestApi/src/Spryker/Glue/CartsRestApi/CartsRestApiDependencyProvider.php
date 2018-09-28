@@ -11,7 +11,7 @@ use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientBridge;
-use Spryker\Glue\CartsRestApi\Exception\CartsRestApiNotImplementedException;
+use Spryker\Glue\CartsRestApi\Exception\CartRestApiNotImplementedException;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
@@ -23,6 +23,8 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const PLUGIN_QUOTE_COLLECTION_READER = 'PLUGIN_QUOTE_COLLECTION_READER';
+
+    protected const EXCEPTION_MESSAGE_READER_NOT_IMPLEMENTED = 'Reader not implemented on project level';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -106,21 +108,21 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addQuoteCollectionReaderPlugin(Container $container): Container
     {
         $container[static::PLUGIN_QUOTE_COLLECTION_READER] = function (Container $container) {
-            return $this->getQuoteCollectionReaderPlugin();
+            return $this->createQuoteCollectionReaderPlugin();
         };
 
         return $container;
     }
 
     /**
-     * Quote collection reader plugin
+     * Quote collection reader plugin.
      *
-     * @throws \Spryker\Glue\CartsRestApi\Exception\CartsRestApiNotImplementedException
+     * @throws \Spryker\Glue\CartsRestApi\Exception\CartRestApiNotImplementedException
      *
      * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
      */
-    protected function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
+    protected function createQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
     {
-        throw new CartsRestApiNotImplementedException('Reader not implemented on project level');
+        throw new CartRestApiNotImplementedException(static::EXCEPTION_MESSAGE_READER_NOT_IMPLEMENTED);
     }
 }

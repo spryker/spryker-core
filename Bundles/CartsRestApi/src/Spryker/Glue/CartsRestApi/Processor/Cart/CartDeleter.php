@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Processor\Carts;
+namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -18,9 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 class CartDeleter implements CartDeleterInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
      */
-    protected $cartsReader;
+    protected $cartReader;
 
     /**
      * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface
@@ -35,16 +35,16 @@ class CartDeleter implements CartDeleterInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface $cartsReader
+     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CartsRestApiToPersistentCartClientInterface $persistentCartClient,
-        CartReaderInterface $cartsReader
+        CartReaderInterface $cartReader
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->persistentCartClient = $persistentCartClient;
-        $this->cartsReader = $cartsReader;
+        $this->cartReader = $cartReader;
     }
 
     /**
@@ -60,7 +60,7 @@ class CartDeleter implements CartDeleterInterface
             return $this->createQuoteIdMissingError($restResponse);
         }
 
-        $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
+        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idQuote, $restRequest);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createQuoteNotFoundError($idQuote, $restResponse);

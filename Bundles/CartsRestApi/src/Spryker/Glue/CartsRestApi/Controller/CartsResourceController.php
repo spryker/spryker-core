@@ -27,10 +27,10 @@ class CartsResourceController extends AbstractController
         $idQuote = $restRequest->getResource()->getId();
 
         if ($idQuote !== null) {
-            return $this->getFactory()->createCartsReader()->readByIdentifier($idQuote, $restRequest);
+            return $this->getFactory()->createCartReader()->readByIdentifier($idQuote, $restRequest);
         }
 
-        return $this->getFactory()->createCartsReader()->readCurrentCustomerCarts($restRequest);
+        return $this->getFactory()->createCartReader()->readCurrentCustomerCarts($restRequest);
     }
 
     /**

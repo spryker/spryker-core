@@ -8,6 +8,10 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 interface QuoteCollectionReaderPluginInterface
 {
     /**
+     * Specification:
+     * - This plugin interface is used for extend cart reader in cart module.
+     * - Method provides quote collection.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer

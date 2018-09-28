@@ -9,6 +9,6 @@ namespace Spryker\Glue\CartsRestApi\Exception;
 
 use Exception;
 
-class CartsRestApiNotImplementedException extends Exception
+class CartRestApiNotImplementedException extends Exception
 {
 }
