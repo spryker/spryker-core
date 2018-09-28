@@ -11,6 +11,14 @@
         <property name="options" type="Options"/>
     </transfer>
 
+    <transfer name="DependentModule">
+        <property name="name" type="string" />
+        <property name="organization" type="Organization"/>
+        <property name="application" type="Application"/>
+        <property name="layer" type="Layer"/>
+        <property name="options" type="Options"/>
+    </transfer>
+
     <transfer name="ModuleCollection">
         <property name="modules" type="Module[]" singular="module" />
     </transfer>

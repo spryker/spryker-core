@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\SprykGui\Communication\Form;
 
+use Generated\Shared\Transfer\DependentModuleTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\SprykGui\Communication\Form\Type\ModuleChoiceType;
 use Spryker\Zed\SprykGui\Communication\Form\Type\NewModuleType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -59,20 +60,16 @@ class SprykMainForm extends AbstractType
 
         $moduleTransferCollection = $this->getFacade()->getModules();
 
-        $builder->add(static::MODULE, ChoiceType::class, [
-            'choices' => $moduleTransferCollection,
-            'choice_label' => function (ModuleTransfer $moduleTransfer) {
-                return $moduleTransfer->getName();
-            },
-            'choice_value' => function (ModuleTransfer $moduleTransfer) {
-                return $moduleTransfer->getName();
-            },
-            'group_by' => function (ModuleTransfer $moduleTransfer) {
-                return $moduleTransfer->getOrganization()->getName();
-            },
-            'data_class' => ModuleTransfer::class,
-            'placeholder' => '',
+        $builder->add(static::MODULE, ModuleChoiceType::class, [
+            ModuleChoiceType::MODULE_TRANSFER_COLLECTION => $moduleTransferCollection,
         ]);
+
+        if (array_key_exists('dependentModule', $sprykDefinition['arguments'])) {
+            $builder->add('dependentModule', ModuleChoiceType::class, [
+                ModuleChoiceType::MODULE_TRANSFER_COLLECTION => $moduleTransferCollection,
+                'data_class' => DependentModuleTransfer::class,
+            ]);
+        }
 
         $this->addNextButton($builder);
 

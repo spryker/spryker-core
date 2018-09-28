@@ -10,6 +10,7 @@ namespace Spryker\Zed\SprykGui\Business\Spryk\Form;
 use Generated\Shared\Transfer\ArgumentCollectionTransfer;
 use Generated\Shared\Transfer\ArgumentTransfer;
 use Generated\Shared\Transfer\ClassInformationTransfer;
+use Generated\Shared\Transfer\DependentModuleTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\ReturnTypeTransfer;
 
@@ -48,6 +49,12 @@ class FormDataNormalizer implements FormDataNormalizerInterface
                 $normalizedData['module'] = $value->getName();
                 $normalizedData['organization'] = $value->getOrganization()->getName();
                 $normalizedData['rootPath'] = $value->getOrganization()->getRootPath();
+
+                continue;
+            }
+
+            if ($value instanceof DependentModuleTransfer) {
+                $normalizedData['dependentModule'] = $value->getName();
 
                 continue;
             }
