@@ -9,6 +9,7 @@ namespace Spryker\Glue\ProductPricesRestApi\Processor\AbstractProductPrices;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -145,7 +146,7 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
             $sku,
             ProductPricesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_PRICES
         );
-        $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
+        $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
 
         return $restResource;
     }
