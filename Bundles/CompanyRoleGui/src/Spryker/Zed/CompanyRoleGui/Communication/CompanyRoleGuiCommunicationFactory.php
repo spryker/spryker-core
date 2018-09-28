@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication;
 
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleCreateForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleChoiceFormType;
@@ -63,15 +64,17 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCompanyRoleEditForm(): FormInterface
+    public function createCompanyRoleEditForm(CompanyRoleTransfer $companyRoleTransfer): FormInterface
     {
         $dataProvider = $this->createCompanyRoleCreateFormDataProvider();
 
         return $this->getFormFactory()->create(
             CompanyRoleEditForm::class,
-            $dataProvider->getData(),
+            $dataProvider->getData($companyRoleTransfer),
             $dataProvider->getOptions()
         );
     }

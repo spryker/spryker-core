@@ -32,7 +32,7 @@ class CreateCompanyRoleController extends AbstractController
             ->handleRequest($request);
 
         $viewData = [
-            'companyRoleCreateForm' => $companyRoleForm->createView(),
+            'form' => $companyRoleForm->createView(),
         ];
 
         if ($companyRoleForm->isSubmitted() && $companyRoleForm->isValid()) {
@@ -53,8 +53,6 @@ class CreateCompanyRoleController extends AbstractController
 
             $this->viewResponse($viewData);
         }
-
-        $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_ROLE_CREATE);
 
         return $this->viewResponse($viewData);
     }

@@ -31,6 +31,8 @@ class CompanyRoleCreateForm extends AbstractType
     protected const FIELD_PERMISSION_COLLECTION = 'permissionCollection';
     protected const FIELD_COMPANY_USER_COLLECTION = 'companyUserCollection';
 
+    protected const TEMPLATE_PATH = '@CompanyRoleGui/_partials/company_role_manage_permissions.twig';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -135,6 +137,9 @@ class CompanyRoleCreateForm extends AbstractType
             'expanded' => true,
             'required' => true,
             'multiple' => true,
+            'attr' => [
+                'template_path' => $this->getTemplatePath(),
+            ],
         ]);
 
         $callbackTransformer = new CallbackTransformer(
@@ -192,5 +197,13 @@ class CompanyRoleCreateForm extends AbstractType
 
             return $permissionCollectionTransfer;
         };
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTemplatePath(): string
+    {
+        return static::TEMPLATE_PATH;
     }
 }

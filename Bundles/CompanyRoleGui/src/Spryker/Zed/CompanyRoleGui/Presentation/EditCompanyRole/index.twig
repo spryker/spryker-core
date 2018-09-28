@@ -9,20 +9,7 @@
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_content %}
-            {{ form_start(companyRoleUpdateForm) }}
-
-            {% block formTextFields %}
-                {{ form_row(companyRoleUpdateForm.fkCompany) }}
-                {{ form_row(companyRoleUpdateForm.name) }}
-            {% endblock %}
-
-            {% set permissionCollection = companyRoleUpdateForm.vars.data.permissionCollection %}
-            {% set permissions = permissionCollection is not empty ? permissionCollection.permissions : null %}
-
-            {% include '@CompanyRoleGui/_partials/company_role_manage_permissions.twig' with {'form': companyRoleUpdateForm, 'permissions': permissions} %}
-
-            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Create' | trans }}" />
-            {{ form_end(companyRoleUpdateForm) }}
+            {% include '@CompanyRoleGui/_partials/company_role_edit_form.twig' with {form: form} %}
         {% endblock %}
     {% endembed %}
 {% endblock %}

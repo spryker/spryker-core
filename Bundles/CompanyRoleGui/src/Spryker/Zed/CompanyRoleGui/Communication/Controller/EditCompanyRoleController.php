@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,6 +21,8 @@ class EditCompanyRoleController extends AbstractController
     protected const MESSAGE_SUCCESS_COMPANY_ROLE_UPDATE = 'Company role has been successfully updated';
     protected const MESSAGE_ERROR_COMPANY_ROLE_UPDATE = 'Company role cannot be updated';
 
+    protected const REQUEST_ID_COMPANY_ROLE = 'id-company-role';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -27,13 +30,16 @@ class EditCompanyRoleController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $companyRoleForm = $this->getFactory()
-            ->createCompanyRoleCreateForm()
-            ->handleRequest($request);
+        $idCompanyRole = $request->query->getInt(static::REQUEST_ID_COMPANY_ROLE);
+        $companyRoleTransfer = $this->getFactory()
+            ->getCompanyRoleFacade()
+            ->getCompanyRoleById(
+                (new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole)
+            );
 
-        $viewData = [
-            'companyRoleEditForm' => $companyRoleForm->createView(),
-        ];
+        $companyRoleForm = $this->getFactory()
+            ->createCompanyRoleEditForm($companyRoleTransfer)
+            ->handleRequest($request);
 
         if ($companyRoleForm->isSubmitted() && $companyRoleForm->isValid()) {
             $companyRoleFormData = $companyRoleForm->getData();
@@ -47,8 +53,8 @@ class EditCompanyRoleController extends AbstractController
             $this->redirectResponse(static::URL_REDIRECT_LIST_COMPANY_ROLE);
         }
 
-        $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_ROLE_UPDATE);
-
-        return $this->viewResponse($viewData);
+        return $this->viewResponse([
+            'form' => $companyRoleForm->createView(),
+        ]);
     }
 }

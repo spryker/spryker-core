@@ -68,7 +68,10 @@ class CompanyRoleCreateDataProvider implements CompanyRoleCreateDataProviderInte
     public function getData(?CompanyRoleTransfer $companyRoleTransfer = null): CompanyRoleTransfer
     {
         if ($companyRoleTransfer !== null) {
-            return $this->companyRoleFacade->getCompanyRoleById($companyRoleTransfer);
+            $companyRoleTransfer = $this->companyRoleFacade->getCompanyRoleById($companyRoleTransfer);
+            $companyRoleTransfer->setCompanyUserCollection(null);
+
+            return $companyRoleTransfer;
         }
 
         return new CompanyRoleTransfer();
