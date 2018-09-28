@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Shared\MerchantRelationshipSalesOrderThreshold\MerchantRelationshipSalesOrderThresholdConfig;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdTranslationReaderInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepositoryInterface;
 
@@ -46,7 +45,6 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
-        $this->assertRequiredAttributes($quoteTransfer);
         $customerMerchantRelationships = $this->getCustomerMerchantRelationships($quoteTransfer);
 
         if (empty($customerMerchantRelationships)) {
@@ -61,6 +59,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
 
         $cartMerchantRelationshipIds = $this->getCartMerchantRelationshipIds($customerMerchantRelationships, $itemMerchantRelationshipSubTotals);
 
+        $this->assertRequiredAttributes($quoteTransfer);
         $merchantRelationshipSalesOrderThresholdTransfers = $this->merchantRelationshipSalesOrderThresholdRepository
             ->getMerchantRelationshipSalesOrderThresholds(
                 $quoteTransfer->getStore(),
@@ -78,7 +77,9 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
      */
     protected function assertRequiredAttributes(QuoteTransfer $quoteTransfer): void
     {
-        $quoteTransfer->requireStore()->requireCurrency();
+        $quoteTransfer
+            ->requireStore()
+            ->requireCurrency();
     }
 
     /**
@@ -93,11 +94,12 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
         CurrencyTransfer $currencyTransfer,
         array $merchantRelationshipIds
     ): array {
-        $merchantRelationshipSalesOrderThresholdTransfers = $this->merchantRelationshipSalesOrderThresholdRepository->getMerchantRelationshipSalesOrderThresholds(
-            $storeTransfer,
-            $currencyTransfer,
-            $merchantRelationshipIds
-        );
+        $merchantRelationshipSalesOrderThresholdTransfers = $this->merchantRelationshipSalesOrderThresholdRepository
+            ->getMerchantRelationshipSalesOrderThresholds(
+                $storeTransfer,
+                $currencyTransfer,
+                $merchantRelationshipIds
+            );
 
         foreach ($merchantRelationshipSalesOrderThresholdTransfers as $merchantRelationshipSalesOrderThresholdTransfer) {
             $this->translationReader->hydrateLocalizedMessages($merchantRelationshipSalesOrderThresholdTransfer);
@@ -146,39 +148,13 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
                 continue;
             }
 
+            $itemTransfer->requireSumSubtotalAggregation();
             $itemIdMerchantRelationship = $itemTransfer->getPriceProduct()->getPriceDimension()->getIdMerchantRelationship();
             $itemMerchantRelationshipSubTotals[$itemIdMerchantRelationship] = $itemMerchantRelationshipSubTotals[$itemIdMerchantRelationship] ?? 0;
-            $itemMerchantRelationshipSubTotals[$itemIdMerchantRelationship] += $this->getItemSumSubtotalAggregation($itemTransfer, $quoteTransfer);
+            $itemMerchantRelationshipSubTotals[$itemIdMerchantRelationship] += $itemTransfer->getSumSubtotalAggregation();
         }
 
         return $itemMerchantRelationshipSubTotals;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return int
-     */
-    protected function getItemSumSubtotalAggregation(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): int
-    {
-        $itemSubTotal = 0;
-        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            if ($quoteTransfer->getPriceMode() === MerchantRelationshipSalesOrderThresholdConfig::PRICE_MODE_NET) {
-                $itemSubTotal += $productOptionTransfer->getUnitNetPrice() * $productOptionTransfer->getQuantity();
-                continue;
-            }
-
-            $itemSubTotal += $productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity();
-        }
-
-        if ($quoteTransfer->getPriceMode() === MerchantRelationshipSalesOrderThresholdConfig::PRICE_MODE_NET) {
-            $itemSubTotal += $itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity();
-        }
-
-        $itemSubTotal += $itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity();
-
-        return $itemSubTotal;
     }
 
     /**

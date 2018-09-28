@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesOrderThreshold\Business\ExpenseCalculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 use Spryker\Zed\SalesOrderThreshold\Business\DataSource\SalesOrderThresholdDataSourceStrategyResolverInterface;
@@ -56,14 +57,32 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
      */
     public function addSalesOrderThresholdExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
     {
+        $salesOrderThresholdValueTransfers = $this->salesOrderThresholdDataSourceStrategyResolver
+            ->findApplicableThresholds(
+                $this->prepareCalculatedQuoteTransfer($calculableObjectTransfer)
+            );
+
         $salesOrderThresholdValueTransfers = $this->filterSalesOrderThresholdsByThresholdGroup(
-            $this->salesOrderThresholdDataSourceStrategyResolver->findApplicableThresholds($calculableObjectTransfer->getOriginalQuote()),
+            $salesOrderThresholdValueTransfers,
             SalesOrderThresholdConfig::GROUP_SOFT
         );
 
         foreach ($salesOrderThresholdValueTransfers as $salesOrderThresholdValueTransfer) {
             $this->addExpense($calculableObjectTransfer, $salesOrderThresholdValueTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function prepareCalculatedQuoteTransfer(CalculableObjectTransfer $calculableObjectTransfer): QuoteTransfer
+    {
+        return (new QuoteTransfer())
+            ->fromArray($calculableObjectTransfer->getOriginalQuote()->toArray(), true)
+            ->setItems(clone $calculableObjectTransfer->getItems())
+            ->setTotals(clone $calculableObjectTransfer->getTotals());
     }
 
     /**
