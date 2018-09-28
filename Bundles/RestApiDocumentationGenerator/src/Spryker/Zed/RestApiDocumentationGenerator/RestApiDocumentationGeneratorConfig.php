@@ -8,6 +8,7 @@
 namespace Spryker\Zed\RestApiDocumentationGenerator;
 
 use Spryker\Shared\GlueApplication\GlueApplicationConstants;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
@@ -23,6 +24,9 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
     public const ANNOTATION_KEY_HEADERS = 'headers';
     public const ANNOTATION_KEY_RESPONSES = 'responses';
     public const ANNOTATION_KEY_SUMMARY = 'summary';
+
+    protected const APPLICATION_SOURCE_ANNOTATIONS_SOURCE_DIRECTORY_PATTERN = '/Glue/%1$s/Controller/';
+    protected const APPLICATION_VENDOR_SOURCE_ANNOTATIONS_SOURCE_DIRECTORY_PATTERN = '/*/*/src/*/Glue/%$1s/Controller/';
 
     /**
      * @return string
@@ -88,7 +92,9 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
      */
     protected function getCoreAnnotationsSourceDirectoryPatterns(): array
     {
-        return [];
+        return [
+            APPLICATION_VENDOR_DIR . static::APPLICATION_VENDOR_SOURCE_ANNOTATIONS_SOURCE_DIRECTORY_PATTERN,
+        ];
     }
 
     /**
@@ -96,6 +102,8 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
      */
     protected function getApplicationAnnotationsSourceDirectoryPattern(): array
     {
-        return [];
+        return [
+            APPLICATION_SOURCE_DIR . '/' . $this->get(KernelConstants::PROJECT_NAMESPACE) . static::APPLICATION_SOURCE_ANNOTATIONS_SOURCE_DIRECTORY_PATTERN,
+        ];
     }
 }
