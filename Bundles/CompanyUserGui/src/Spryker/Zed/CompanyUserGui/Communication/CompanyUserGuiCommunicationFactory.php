@@ -8,17 +8,17 @@
 namespace Spryker\Zed\CompanyUserGui\Communication;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserEditForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider\CompanyUserFormDataProvider;
+use Spryker\Zed\CompanyUserGui\Communication\Table\CompanyUserTable;
+use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutor;
+use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
 use Spryker\Zed\CompanyUserGui\CompanyUserGuiDependencyProvider;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeInterface;
-use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
-use Spryker\Zed\CompanyUserGui\Communication\Table\CompanyUserTable;
-use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutor;
-use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
