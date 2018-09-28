@@ -120,7 +120,7 @@ class ItemLockTest extends StateMachineMocks
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineLockQuery
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
     protected function createStateMachineQueryMock()
     {

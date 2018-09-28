@@ -11,15 +11,15 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductAttributeGuiConfig extends AbstractBundleConfig
 {
-    const DEFAULT_LOCALE = '_';
+    public const DEFAULT_LOCALE = '_';
 
-    const KEY = 'key';
-    const IS_SUPER = 'is_super';
-    const ATTRIBUTE_ID = 'attribute_id';
-    const ALLOW_INPUT = 'allow_input';
-    const INPUT_TYPE = 'input_type';
-    const ID_PRODUCT_ATTRIBUTE_KEY = 'id_product_attribute_key';
-    const LOCALE_CODE = 'locale_code';
+    public const KEY = 'key';
+    public const IS_SUPER = 'is_super';
+    public const ATTRIBUTE_ID = 'attribute_id';
+    public const ALLOW_INPUT = 'allow_input';
+    public const INPUT_TYPE = 'input_type';
+    public const ID_PRODUCT_ATTRIBUTE_KEY = 'id_product_attribute_key';
+    public const LOCALE_CODE = 'locale_code';
 
     /**
      * @return string

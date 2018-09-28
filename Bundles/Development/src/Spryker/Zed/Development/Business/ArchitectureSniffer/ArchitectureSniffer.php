@@ -16,9 +16,9 @@ use Zend\Config\Reader\ReaderInterface;
 
 class ArchitectureSniffer implements ArchitectureSnifferInterface
 {
-    const OPTION_PRIORITY = 'priority';
-    const OPTION_STRICT = 'strict';
-    const OPTION_DRY_RUN = 'dry-run';
+    public const OPTION_PRIORITY = 'priority';
+    public const OPTION_STRICT = 'strict';
+    public const OPTION_DRY_RUN = 'dry-run';
 
     /**
      * @var string

@@ -27,15 +27,15 @@ use Spryker\Zed\Touch\Business\TouchFacade;
  */
 class TouchFacadeTest extends Unit
 {
-    const ITEM_TYPE = 'test.item';
-    const ITEM_ID_1 = 1;
-    const ITEM_ID_2 = 2;
-    const ITEM_ID_3 = 3;
-    const ITEM_ID_FOR_INSERT = 4;
+    public const ITEM_TYPE = 'test.item';
+    public const ITEM_ID_1 = 1;
+    public const ITEM_ID_2 = 2;
+    public const ITEM_ID_3 = 3;
+    public const ITEM_ID_FOR_INSERT = 4;
 
-    const ITEM_EVENT_ACTIVE = 'active';
-    const ITEM_EVENT_INACTIVE = 'inactive';
-    const ITEM_EVENT_DELETED = 'deleted';
+    public const ITEM_EVENT_ACTIVE = 'active';
+    public const ITEM_EVENT_INACTIVE = 'inactive';
+    public const ITEM_EVENT_DELETED = 'deleted';
 
     /**
      * @return void
@@ -137,7 +137,7 @@ class TouchFacadeTest extends Unit
     /**
      * @param int $itemId
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouch
+     * @return \Orm\Zed\Touch\Persistence\SpyTouch|null
      */
     protected function getTouchEntityByItemId($itemId)
     {

@@ -16,12 +16,12 @@ use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductF
 
 abstract class AbstractRelatedProductTable extends AbstractTable
 {
-    const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
-    const COL_PRODUCT_ABSTRACT_NAME = SpyProductAbstractLocalizedAttributesTableMap::COL_NAME;
-    const COL_PRODUCT_ABSTRACT_CATEGORIES = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV;
-    const COL_PRODUCT_ABSTRACT_PRICE = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE;
-    const COL_PRODUCT_ABSTRACT_STATUS = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV;
-    const COL_SELECT_CHECKBOX = 'select-checkbox';
+    public const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
+    public const COL_PRODUCT_ABSTRACT_NAME = SpyProductAbstractLocalizedAttributesTableMap::COL_NAME;
+    public const COL_PRODUCT_ABSTRACT_CATEGORIES = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV;
+    public const COL_PRODUCT_ABSTRACT_PRICE = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE;
+    public const COL_PRODUCT_ABSTRACT_STATUS = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV;
+    public const COL_SELECT_CHECKBOX = 'select-checkbox';
 
     /**
      * @var \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilderInterface

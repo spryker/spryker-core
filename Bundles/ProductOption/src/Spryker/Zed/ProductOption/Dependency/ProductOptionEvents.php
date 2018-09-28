@@ -15,7 +15,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_PRODUCT_OPTION_PUBLISH = 'ProductOption.product_abstract_option.publish';
+    public const PRODUCT_ABSTRACT_PRODUCT_OPTION_PUBLISH = 'ProductOption.product_abstract_option.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_PRODUCT_OPTION_UNPUBLISH = 'ProductOption.product_abstract_option.unpublish';
+    public const PRODUCT_ABSTRACT_PRODUCT_OPTION_UNPUBLISH = 'ProductOption.product_abstract_option.unpublish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_CREATE = 'Entity.spy_product_abstract_product_option_group.create';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_CREATE = 'Entity.spy_product_abstract_product_option_group.create';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_UPDATE = 'Entity.spy_product_abstract_product_option_group.update';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_UPDATE = 'Entity.spy_product_abstract_product_option_group.update';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_DELETE = 'Entity.spy_product_abstract_product_option_group.delete';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_DELETE = 'Entity.spy_product_abstract_product_option_group.delete';
 
     /**
      * Specification
@@ -55,7 +55,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_OPTION_GROUP_CREATE = 'Entity.spy_product_option_group.create';
+    public const ENTITY_SPY_PRODUCT_OPTION_GROUP_CREATE = 'Entity.spy_product_option_group.create';
 
     /**
      * Specification
@@ -63,7 +63,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_OPTION_GROUP_UPDATE = 'Entity.spy_product_option_group.update';
+    public const ENTITY_SPY_PRODUCT_OPTION_GROUP_UPDATE = 'Entity.spy_product_option_group.update';
 
     /**
      * Specification
@@ -71,7 +71,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_OPTION_GROUP_DELETE = 'Entity.spy_product_option_group.delete';
+    public const ENTITY_SPY_PRODUCT_OPTION_GROUP_DELETE = 'Entity.spy_product_option_group.delete';
 
     /**
      * Specification
@@ -79,7 +79,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_OPTION_VALUE_CREATE = 'Entity.spy_product_option_value.create';
+    public const ENTITY_SPY_PRODUCT_OPTION_VALUE_CREATE = 'Entity.spy_product_option_value.create';
 
     /**
      * Specification
@@ -87,7 +87,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_OPTION_VALUE_UPDATE = 'Entity.spy_product_option_value.update';
+    public const ENTITY_SPY_PRODUCT_OPTION_VALUE_UPDATE = 'Entity.spy_product_option_value.update';
 
     /**
      * Specification
@@ -95,7 +95,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE = 'Entity.spy_product_option_value.delete';
+    public const ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE = 'Entity.spy_product_option_value.delete';
 
     /**
      * Specification
@@ -103,7 +103,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_CREATE = 'Entity.spy_product_option_value_price.create';
+    public const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_CREATE = 'Entity.spy_product_option_value_price.create';
 
     /**
      * Specification
@@ -111,7 +111,7 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_UPDATE = 'Entity.spy_product_option_value_price.update';
+    public const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_UPDATE = 'Entity.spy_product_option_value_price.update';
 
     /**
      * Specification
@@ -119,5 +119,5 @@ interface ProductOptionEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_DELETE = 'Entity.spy_product_option_value_price.delete';
+    public const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_DELETE = 'Entity.spy_product_option_value_price.delete';
 }

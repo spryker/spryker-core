@@ -14,8 +14,8 @@ use Spryker\Client\Kernel\AbstractPlugin;
 
 class DescendingNameSortConfigTransferBuilderPlugin extends AbstractPlugin implements SortConfigTransferBuilderPluginInterface
 {
-    const NAME = 'name';
-    const PARAMETER_NAME = 'name_desc';
+    public const NAME = 'name';
+    public const PARAMETER_NAME = 'name_desc';
 
     /**
      * @return \Generated\Shared\Transfer\SortConfigTransfer

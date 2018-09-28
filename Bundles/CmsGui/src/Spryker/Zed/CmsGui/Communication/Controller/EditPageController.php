@@ -20,13 +20,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditPageController extends AbstractController
 {
-    const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
-    const URL_PARAM_REDIRECT_URL = 'redirect-url';
-    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
-    const MESSAGE_TEMPLATE_SELECT_ERROR = 'Selected template doesn\'t exist anymore.';
-    const MESSAGE_PAGE_UPDATE_SUCCESS = 'Page was updated successfully.';
-    const MESSAGE_PAGE_ACTIVATION_SUCCESS = 'Page was activated successfully.';
-    const MESSAGE_PAGE_DEACTIVATION_SUCCESS = 'Page was deactivated successfully.';
+    public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
+    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    public const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+    public const MESSAGE_TEMPLATE_SELECT_ERROR = 'Selected template doesn\'t exist anymore.';
+    public const MESSAGE_PAGE_UPDATE_SUCCESS = 'Page was updated successfully.';
+    public const MESSAGE_PAGE_ACTIVATION_SUCCESS = 'Page was activated successfully.';
+    public const MESSAGE_PAGE_DEACTIVATION_SUCCESS = 'Page was deactivated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

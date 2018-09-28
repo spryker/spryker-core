@@ -37,7 +37,7 @@ use Spryker\Zed\Kernel\Container;
  */
 class EventFacadeTest extends Unit
 {
-    const TEST_EVENT_NAME = 'test.event';
+    public const TEST_EVENT_NAME = 'test.event';
 
     /**
      * @return void

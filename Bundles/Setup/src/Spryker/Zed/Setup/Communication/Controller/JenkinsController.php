@@ -18,12 +18,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class JenkinsController extends AbstractController
 {
-    const LOGFILE = 'jenkins.log';
-    const ROLE_ADMIN = 'admin';
-    const ROLE_REPORTING = 'reporting';
-    const ROLE_EMPTY = 'empty';
-    const DEFAULT_ROLE = self::ROLE_ADMIN;
-    const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
+    public const LOGFILE = 'jenkins.log';
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_REPORTING = 'reporting';
+    public const ROLE_EMPTY = 'empty';
+    public const DEFAULT_ROLE = self::ROLE_ADMIN;
+    public const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
 
     /**
      * @var array

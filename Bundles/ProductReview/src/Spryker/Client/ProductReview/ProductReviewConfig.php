@@ -13,8 +13,8 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 
 class ProductReviewConfig extends AbstractBundleConfig
 {
-    const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 10;
-    const PAGINATION_VALID_ITEMS_PER_PAGE = [
+    public const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 10;
+    public const PAGINATION_VALID_ITEMS_PER_PAGE = [
         10,
     ];
 

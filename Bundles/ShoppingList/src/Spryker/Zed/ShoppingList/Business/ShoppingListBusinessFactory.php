@@ -23,6 +23,7 @@ use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharerInterface;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriter;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriterInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface;
@@ -60,6 +61,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getConfig(),
             $this->getMessengerFacade(),
+            $this->getEventFacade(),
             $this->createShoppingListItemOperation()
         );
     }
@@ -171,6 +173,14 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getMessengerFacade(): ShoppingListToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface
+     */
+    public function getEventFacade(): ShoppingListToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::FACADE_EVENT);
     }
 
     /**

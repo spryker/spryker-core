@@ -25,7 +25,7 @@ class Writer implements WriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
-    const TOUCH_PRODUCT = 'product';
+    public const TOUCH_PRODUCT = 'product';
 
     /**
      * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
