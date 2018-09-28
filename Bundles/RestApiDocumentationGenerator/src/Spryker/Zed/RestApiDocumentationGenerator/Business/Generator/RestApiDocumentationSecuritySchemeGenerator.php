@@ -77,7 +77,7 @@ class RestApiDocumentationSecuritySchemeGenerator implements RestApiDocumentatio
      */
     protected function createSecurityScheme(string $name, string $type, string $scheme): RestApiDocumentationSecuritySchemeTransfer
     {
-        $securityScheme = new RestApiDocumentationSecuritySchemeTransfer;
+        $securityScheme = new RestApiDocumentationSecuritySchemeTransfer();
         $securityScheme->setName($name);
         $securityScheme->setType($type);
         $securityScheme->setScheme($scheme);

@@ -129,7 +129,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
 
         $this->addRequestBaseSchema($requestSchemaName, $requestDataSchemaName);
         $this->addRequestDataSchema($requestDataSchemaName, $requestAttributesSchemaName);
-        $this->addRequestDataAttributesSchemaFromTransfer(new $transferClassName, $requestAttributesSchemaName);
+        $this->addRequestDataAttributesSchemaFromTransfer(new $transferClassName(), $requestAttributesSchemaName);
 
         return sprintf(static::PATTERN_SCHEMA_REFERENCE, $requestSchemaName);
     }
@@ -154,7 +154,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($transferClassName);
         $responseAttributesSchemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($transferClassName);
 
-        $this->addResponseSchemas($responseSchemaName, $responseDataSchemaName, $responseAttributesSchemaName, new $transferClassName);
+        $this->addResponseSchemas($responseSchemaName, $responseDataSchemaName, $responseAttributesSchemaName, new $transferClassName());
         if ($resourceRelationships) {
             $this->addRelationshipSchemas($responseDataSchemaName, $resourceRelationships, $transferClassName);
         }
@@ -182,7 +182,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionDataSchemaNameFromTransferClassName($transferClassName);
         $responseAttributesSchemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($transferClassName);
 
-        $this->addCollectionResponseSchemas($responseSchemaName, $responseDataSchemaName, $responseAttributesSchemaName, new $transferClassName);
+        $this->addCollectionResponseSchemas($responseSchemaName, $responseDataSchemaName, $responseAttributesSchemaName, new $transferClassName());
         if ($resourceRelationships) {
             $this->addRelationshipSchemas($responseDataSchemaName, $resourceRelationships, $transferClassName);
         }
@@ -475,7 +475,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected function createObjectSchemaTypeTransfer(string $key, array $objectMetadata): RestApiDocumentationSchemaPropertyTransfer
     {
         $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($objectMetadata[static::KEY_TYPE]);
-        $this->addResponseDataAttributesSchemaFromTransfer(new $objectMetadata[static::KEY_TYPE], $schemaName);
+        $this->addResponseDataAttributesSchemaFromTransfer(new $objectMetadata[static::KEY_TYPE](), $schemaName);
 
         if ($objectMetadata['is_collection']) {
             return $this->createArrayOfObjectsPropertyTransfer($key, $schemaName);
