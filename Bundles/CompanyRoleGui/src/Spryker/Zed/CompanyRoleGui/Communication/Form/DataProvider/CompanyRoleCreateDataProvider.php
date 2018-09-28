@@ -11,15 +11,16 @@ use Generated\Shared\Transfer\CompanyCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleCreateForm;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToGlossaryFacadeInterface;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToPermissionFacadeInterface;
 
-class CompanyRoleEditFormDataProvider implements CompanyRoleEditFormDataProviderInterface
+class CompanyRoleCreateDataProvider implements CompanyRoleCreateDataProviderInterface
 {
     protected const GLOSSARY_KEY_PREFIX_PERMISSION_NAME = 'permission.name.';
+    protected const OPTION_ATTRIBUTE_DATA = 'data-id_company_role';
 
     /**
      * @var \Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyFacadeInterface
@@ -87,8 +88,8 @@ class CompanyRoleEditFormDataProvider implements CompanyRoleEditFormDataProvider
         );
 
         return [
-            CompanyRoleEditForm::OPTION_COMPANIES => $availableCompanies,
-            CompanyRoleEditForm::OPTION_COMPANY_ROLE_PERMISSIONS => $availablePermissions,
+            CompanyRoleCreateForm::OPTION_COMPANY_CHOICES => $availableCompanies,
+            CompanyRoleCreateForm::OPTION_PERMISSION_CHOICES => $availablePermissions,
         ];
     }
 
@@ -104,7 +105,7 @@ class CompanyRoleEditFormDataProvider implements CompanyRoleEditFormDataProvider
         $preparedCompanies = [];
         foreach ($companyTransfers as $companyTransfer) {
             $preparedCompanies += [
-                $companyTransfer->getIdCompany() => $companyTransfer->getName(),
+                $companyTransfer->getName() => $companyTransfer->getIdCompany(),
             ];
         }
 
@@ -125,7 +126,7 @@ class CompanyRoleEditFormDataProvider implements CompanyRoleEditFormDataProvider
             $permissionName = $this->getPermissionVerboseName($permissionTransfer);
 
             $preparedPermissions += [
-                $permissionTransfer->getIdPermission() => $permissionName,
+                $permissionName => $permissionTransfer->getIdPermission(),
             ];
         }
 
