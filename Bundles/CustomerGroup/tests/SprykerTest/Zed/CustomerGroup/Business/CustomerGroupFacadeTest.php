@@ -88,9 +88,9 @@ class CustomerGroupFacadeTest extends Unit
      * @param int $idCustomer
      * @param int $idGroup
      *
-     * @return array
+     * @return int
      */
-    protected function assignCustomerToGroup(int $idCustomer, int $idGroup): array
+    protected function assignCustomerToGroup(int $idCustomer, int $idGroup): int
     {
         return (new SpyCustomerGroupToCustomer())
             ->setFkCustomer($idCustomer)
