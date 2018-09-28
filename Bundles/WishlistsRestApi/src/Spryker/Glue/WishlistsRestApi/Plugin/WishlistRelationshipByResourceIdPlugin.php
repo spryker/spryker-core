@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CustomersWishlistsResourceRelationship\Plugin;
+namespace Spryker\Glue\WishlistsRestApi\Plugin;
 
-use Spryker\Glue\CustomersWishlistsResourceRelationship\CustomersWishlistsResourceRelationshipConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 
 /**
- * @method \Spryker\Glue\CustomersWishlistsResourceRelationship\CustomersWishlistsResourceRelationshipFactory getFactory()
+ * @method \Spryker\Glue\WishlistsRestApi\WishlistsRestApiFactory getFactory()
  */
-class CustomersWishlistsResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class WishlistRelationshipByResourceIdPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritdoc}
-     *
+     * - Identifier of passed resources should contain customer reference.
      * @api
      *
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
@@ -30,8 +30,8 @@ class CustomersWishlistsResourceRelationshipPlugin extends AbstractPlugin implem
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCustomersWishlistsResourceRelationshipExpander()
-            ->addResourceRelationships($resources, $restRequest);
+            ->createWishlistRelationshipExpanderByResourceId()
+            ->addResourceRelationshipsByResourceId($resources, $restRequest);
     }
 
     /**
@@ -43,6 +43,6 @@ class CustomersWishlistsResourceRelationshipPlugin extends AbstractPlugin implem
      */
     public function getRelationshipResourceType(): string
     {
-        return CustomersWishlistsResourceRelationshipConfig::RESOURCE_WISHLISTS;
+        return WishlistsRestApiConfig::RESOURCE_WISHLISTS;
     }
 }

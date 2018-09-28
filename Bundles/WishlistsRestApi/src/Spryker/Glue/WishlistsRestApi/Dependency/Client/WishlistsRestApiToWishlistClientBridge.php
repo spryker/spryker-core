@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\WishlistsRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -42,6 +44,16 @@ class WishlistsRestApiToWishlistClientBridge implements WishlistsRestApiToWishli
     public function getCustomerWishlistCollection()
     {
         return $this->wishlistClient->getCustomerWishlistCollection();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     */
+    public function getWishlistCollection(CustomerTransfer $customerTransfer): WishlistCollectionTransfer
+    {
+        return $this->wishlistClient->getWishlistCollection($customerTransfer);
     }
 
     /**

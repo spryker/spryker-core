@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\WishlistsRestApi\Processor\Wishlists;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
@@ -102,7 +103,13 @@ class WishlistsReader implements WishlistsReaderInterface
     {
         $response = [];
 
-        $customerWishlistCollectionTransfer = $this->wishlistClient->getCustomerWishlistCollection();
+        if (!$restRequest->getUser()) {
+            return $response;
+        }
+
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer($restRequest->getUser()->getSurrogateIdentifier());
+        $customerWishlistCollectionTransfer = $this->wishlistClient->getWishlistCollection($customerTransfer);
+
         $customerWishlists = $customerWishlistCollectionTransfer->getWishlists();
 
         foreach ($customerWishlists as $wishlistTransfer) {
