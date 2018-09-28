@@ -10,13 +10,16 @@ namespace Spryker\Zed\CompanyBusinessUnitGui\Communication;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitEditForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitChoiceFormType;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyUserBusinessUnitFormDataProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Table\CompanyBusinessUnitTable;
 use Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiDependencyProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -61,6 +64,22 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
             $this->getCompanyBusinessUnitFacade(),
             $this->getCompanyFacade()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    public function createCompanyUserBusinessUnitChoiceFormType(): FormTypeInterface
+    {
+        return new CompanyUserBusinessUnitChoiceFormType();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyUserBusinessUnitFormDataProvider
+     */
+    public function createCompanyUserBusinessUnitChoiceFormDataProvider(): CompanyUserBusinessUnitFormDataProvider
+    {
+        return new CompanyUserBusinessUnitFormDataProvider($this->getCompanyBusinessUnitFacade());
     }
 
     /**
