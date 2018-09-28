@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 
@@ -53,5 +55,16 @@ class CompanyRoleGuiToCompanyRoleFacadeBridge implements CompanyRoleGuiToCompany
     public function update(CompanyRoleTransfer $companyRoleTransfer): void
     {
         $this->companyRoleFacade->update($companyRoleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function getCompanyRoleCollection(
+        CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyRoleCollectionTransfer {
+        return $this->companyRoleFacade->getCompanyRoleCollection($criteriaFilterTransfer);
     }
 }

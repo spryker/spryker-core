@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication;
 
+use Spryker\Zed\CompanyRoleGui\CompanyRoleGuiDependencyProvider;
+use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleEditFormDataProvider;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleEditFormDataProviderInterface;
@@ -20,6 +22,13 @@ use Symfony\Component\Form\FormInterface;
 
 class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface
+     */
+    public function getCompanyRoleFacade(): CompanyRoleGuiToCompanyRoleFacadeInterface
+    {
+        return $this->getProvidedDependency(CompanyRoleGuiDependencyProvider::FACADE_COMPANY_ROLE);
+    }
     /**
      * @return \Symfony\Component\Form\FormInterface
      */

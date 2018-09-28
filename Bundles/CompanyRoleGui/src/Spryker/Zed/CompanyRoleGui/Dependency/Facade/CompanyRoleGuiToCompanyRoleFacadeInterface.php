@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 
@@ -32,4 +34,13 @@ interface CompanyRoleGuiToCompanyRoleFacadeInterface
      * @return void
      */
     public function update(CompanyRoleTransfer $companyRoleTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function getCompanyRoleCollection(
+        CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyRoleCollectionTransfer;
 }
