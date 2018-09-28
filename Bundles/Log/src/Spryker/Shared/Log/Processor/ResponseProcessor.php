@@ -9,10 +9,10 @@ namespace Spryker\Shared\Log\Processor;
 
 class ResponseProcessor implements ProcessorInterface
 {
-    const EXTRA = 'response';
-    const CONTEXT_KEY = 'response';
+    public const EXTRA = 'response';
+    public const CONTEXT_KEY = 'response';
 
-    const RECORD_CONTEXT = 'context';
+    public const RECORD_CONTEXT = 'context';
 
     /**
      * @param array $record

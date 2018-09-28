@@ -15,9 +15,9 @@ use Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade\ProductSearchConfig
 
 class ProductSearchConfigStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const CONFIG_PRODUCT_SEARCH = 'CONFIG_PRODUCT_SEARCH';
+    public const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const CONFIG_PRODUCT_SEARCH = 'CONFIG_PRODUCT_SEARCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

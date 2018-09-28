@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
-    const BUNDLE_ITEMS = 'bundleItems';
-    const BUNDLE_PRODUCT = 'bundleProduct';
+    public const BUNDLE_ITEMS = 'bundleItems';
+    public const BUNDLE_PRODUCT = 'bundleProduct';
     protected const GROUP_KEY_FORMAT = '%s_%s';
 
     /**
@@ -277,7 +277,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     {
         foreach ($items as $cartItemTransfer) {
             if ($itemTransfer->getBundleItemIdentifier() === $cartItemTransfer->getRelatedBundleItemIdentifier()
-                && $cartItemTransfer->getProductOptions() && count($cartItemTransfer->getProductOptions()) > 0) {
+                && count($cartItemTransfer->getProductOptions()) > 0) {
                 return (array)$cartItemTransfer->getProductOptions();
             }
         }

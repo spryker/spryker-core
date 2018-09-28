@@ -5,7 +5,7 @@
      * @deprecated {{ constant.deprecationDescription }}
      */
     {% endif -%}
-    const {{ constant.name }} = '{{ constant.value }}';
+    public const {{ constant.name }} = '{{ constant.value }}';
 
 {% endmacro %}
 
@@ -32,7 +32,7 @@
     /**
      * @var {{ property.type }}
      */
-    protected ${{ property.name }}{% if property.type == 'array' %} = []{% endif %};
+    protected ${{ property.name }}{% if property.type == 'array' or property.is_typed_array %} = []{% endif %};
 {% endmacro %}
 
 {# propertyNamesMap #}

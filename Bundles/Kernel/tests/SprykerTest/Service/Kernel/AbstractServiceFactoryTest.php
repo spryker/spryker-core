@@ -22,8 +22,8 @@ use SprykerTest\Service\Kernel\Fixtures\ServiceFactory;
  */
 class AbstractServiceFactoryTest extends Unit
 {
-    const CONTAINER_KEY = 'key';
-    const CONTAINER_VALUE = 'value';
+    public const CONTAINER_KEY = 'key';
+    public const CONTAINER_VALUE = 'value';
 
     /**
      * @return void

@@ -12,8 +12,8 @@ use Spryker\Zed\Mail\MailConfig;
 
 class MailProviderCollection implements MailProviderCollectionAddInterface, MailProviderCollectionGetInterface
 {
-    const ACCEPTED_MAIL_TYPES = 'accepted mail types';
-    const PROVIDER = 'provider';
+    public const ACCEPTED_MAIL_TYPES = 'accepted mail types';
+    public const PROVIDER = 'provider';
 
     /**
      * @var array

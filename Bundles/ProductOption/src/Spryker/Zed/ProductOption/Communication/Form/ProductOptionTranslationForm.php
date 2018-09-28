@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -21,10 +22,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductOptionTranslationForm extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_LOCALE_CODE = 'localeCode';
-    const FIELD_KEY = 'key';
-    const FIELD_RELATED_OPTION_HASH = 'relatedOptionHash';
+    public const FIELD_NAME = 'name';
+    public const FIELD_LOCALE_CODE = 'localeCode';
+    public const FIELD_KEY = 'key';
+    public const FIELD_RELATED_OPTION_HASH = 'relatedOptionHash';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

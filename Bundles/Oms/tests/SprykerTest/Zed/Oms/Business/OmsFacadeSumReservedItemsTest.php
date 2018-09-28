@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -31,10 +32,10 @@ use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
  */
 class OmsFacadeSumReservedItemsTest extends Unit
 {
-    const ORDER_REFERENCE = '123';
-    const ORDER_ITEM_SKU = 'oms-reserverd-sku-test';
-    const RESERVER_ITEM_STATE = 'paid';
-    const DE_STORE_NAME = 'DE';
+    public const ORDER_REFERENCE = '123';
+    public const ORDER_ITEM_SKU = 'oms-reserverd-sku-test';
+    public const RESERVER_ITEM_STATE = 'paid';
+    public const DE_STORE_NAME = 'DE';
 
     /**
      * @var \SprykerTest\Zed\Oms\OmsBusinessTester
