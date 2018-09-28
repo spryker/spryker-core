@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication;
 
-use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleChoiceFormType;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyUserRoleFormDataProvider;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleCreateForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleChoiceFormType;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProvider;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProviderInterface;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyUserRoleFormDataProvider;
 use Spryker\Zed\CompanyRoleGui\CompanyRoleGuiDependencyProvider;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
