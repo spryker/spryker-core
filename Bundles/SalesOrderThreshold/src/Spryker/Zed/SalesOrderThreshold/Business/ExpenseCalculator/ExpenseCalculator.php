@@ -17,6 +17,8 @@ use Spryker\Zed\SalesOrderThreshold\Business\TaxRateReader\TaxRateReaderInterfac
 
 class ExpenseCalculator implements ExpenseCalculatorInterface
 {
+    protected const GLOSSARY_KEY_TEMPLATE = 'sales-order-threshold.strategy.%s';
+
     /**
      * @var \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Resolver\SalesOrderThresholdStrategyResolverInterface
      */
@@ -148,8 +150,10 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
         string $priceMode
     ): ExpenseTransfer {
         $expenseTransfer = (new ExpenseTransfer())
-            ->setName($salesOrderThresholdValueTransfer->getSalesOrderThresholdType()->getKey())
-            ->setType(SalesOrderThresholdConfig::THRESHOLD_EXPENSE_TYPE)
+            ->setName(sprintf(
+                static::GLOSSARY_KEY_TEMPLATE,
+                $salesOrderThresholdValueTransfer->getSalesOrderThresholdType()->getKey()
+            ))->setType(SalesOrderThresholdConfig::THRESHOLD_EXPENSE_TYPE)
             ->setUnitPrice($expensePrice)
             ->setSumPrice($expensePrice)
             ->setUnitPriceToPayAggregation($expensePrice)
