@@ -126,12 +126,7 @@ class RateController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
-
-        $this->getFacade()->deleteTaxRate($idTaxRate);
-        $this->addSuccessMessage(sprintf('Tax rate %d was deleted successfully.', $idTaxRate));
-
-        return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
+        return $this->redirectResponse('/delete-rate', 301);
     }
 
     /**
