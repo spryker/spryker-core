@@ -14,7 +14,7 @@ use Spryker\Shared\Kernel\ContainerGlobals;
 
 class StorageClientServiceProvider implements ServiceProviderInterface
 {
-    const CLIENT_STORAGE = 'storage client';
+    public const CLIENT_STORAGE = 'storage client';
 
     /**
      * @param \Silex\Application $app

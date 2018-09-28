@@ -286,7 +286,12 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceProductStoreWriter(): PriceProductStoreWriterInterface
     {
-        return new PriceProductStoreWriter($this->getQueryContainer(), $this->getEntityManager());
+        return new PriceProductStoreWriter(
+            $this->getQueryContainer(),
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getPriceProductStorePreDeletePlugins()
+        );
     }
 
     /**
@@ -390,5 +395,13 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductPricesExtractorPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface[]
+     */
+    public function getPriceProductStorePreDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE);
     }
 }

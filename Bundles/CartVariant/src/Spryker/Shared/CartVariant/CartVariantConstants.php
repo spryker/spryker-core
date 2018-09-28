@@ -12,6 +12,6 @@ namespace Spryker\Shared\CartVariant;
  */
 interface CartVariantConstants
 {
-    const AVAILABLE = 'available';
-    const SELECTED = 'selected';
+    public const AVAILABLE = 'available';
+    public const SELECTED = 'selected';
 }

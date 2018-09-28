@@ -15,9 +15,9 @@ use Spryker\Zed\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryF
 
 class ProductCategoryFilterStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    const QUERY_CONTAINER_PRODUCT_CATEGORY_FILTER = 'QUERY_CONTAINER_PRODUCT_CATEGORY_FILTER';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const QUERY_CONTAINER_PRODUCT_CATEGORY_FILTER = 'QUERY_CONTAINER_PRODUCT_CATEGORY_FILTER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

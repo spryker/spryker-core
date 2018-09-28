@@ -29,4 +29,11 @@ interface MerchantRelationshipPriceWriterInterface
      * @return void
      */
     public function deleteAll(): void;
+
+    /**
+     * @param int $idPriceProductStore
+     *
+     * @return void
+     */
+    public function deleteByIdPriceProductStore(int $idPriceProductStore): void;
 }

@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class DeleteController extends AbstractController
 {
-    const PARAM_ID_NAVIGATION = 'id-navigation';
+    public const PARAM_ID_NAVIGATION = 'id-navigation';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

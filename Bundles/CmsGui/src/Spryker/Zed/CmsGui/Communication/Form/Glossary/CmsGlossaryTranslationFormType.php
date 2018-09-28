@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -18,9 +19,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsGlossaryTranslationFormType extends AbstractType
 {
-    const FIELD_FK_LOCALE = 'fkLocale';
-    const FIELD_TRANSLATION = 'translation';
-    const FIELD_LOCALE_NAME = 'localeName';
+    public const FIELD_FK_LOCALE = 'fkLocale';
+    public const FIELD_TRANSLATION = 'translation';
+    public const FIELD_LOCALE_NAME = 'localeName';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

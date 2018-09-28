@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -34,13 +35,18 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         $companyUnitAddressTransfer->requireIdCompanyUnitAddress();
         $query = $this->getFactory()
             ->createCompanyUnitAddressQuery()
-            ->filterByIdCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+            ->filterByIdCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress())
+            ->innerJoinWithCountry()
+            ->leftJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
+            ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithCompanyBusinessUnit()
+            ->endUse();
 
-        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+        $entityTransfer = $this->buildQueryFromCriteria($query)->find();
 
         return $this->getFactory()
             ->createCompanyUniAddressMapper()
-            ->mapEntityTransferToCompanyUnitAddressTransfer($entityTransfer, $companyUnitAddressTransfer);
+            ->mapEntityTransferToCompanyUnitAddressTransfer($entityTransfer[0], $companyUnitAddressTransfer);
     }
 
     /**
@@ -57,7 +63,12 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     ): CompanyUnitAddressCollectionTransfer {
 
         $query = $this->getFactory()
-            ->createCompanyUnitAddressQuery();
+            ->createCompanyUnitAddressQuery()
+            ->innerJoinWithCountry()
+            ->leftJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
+            ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithCompanyBusinessUnit()
+            ->endUse();
 
         if ($criteriaFilterTransfer->getIdCompany() !== null) {
             $query->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
@@ -70,14 +81,15 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         }
 
         $collection = $this->buildQueryFromCriteria($query, $criteriaFilterTransfer->getFilter());
-        $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
+        /** @var \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer[] $companyUnitAddressEntityTransfers */
+        $companyUnitAddressEntityTransfers = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
 
         $collectionTransfer = new CompanyUnitAddressCollectionTransfer();
-        foreach ($collection as $companyRoleEntity) {
+        foreach ($companyUnitAddressEntityTransfers as $companyUnitAddressEntityTransfer) {
             $unitAddressTransfer = $this->getFactory()
                 ->createCompanyUniAddressMapper()
                 ->mapEntityTransferToCompanyUnitAddressTransfer(
-                    $companyRoleEntity,
+                    $companyUnitAddressEntityTransfer,
                     new CompanyUnitAddressTransfer()
                 );
 
@@ -93,7 +105,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return mixed|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

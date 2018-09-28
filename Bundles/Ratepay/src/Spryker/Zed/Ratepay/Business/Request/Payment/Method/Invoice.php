@@ -16,7 +16,7 @@ class Invoice extends AbstractMethod
     /**
      * @const Payment method code.
      */
-    const METHOD = RatepayConstants::INVOICE;
+    public const METHOD = RatepayConstants::INVOICE;
 
     /**
      * @return string

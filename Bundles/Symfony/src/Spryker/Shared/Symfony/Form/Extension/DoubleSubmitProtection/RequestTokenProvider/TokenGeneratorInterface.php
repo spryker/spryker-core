@@ -9,7 +9,7 @@ namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTo
 
 interface TokenGeneratorInterface
 {
-    const DEFAULT_ALGORITHM = 'sha256';
+    public const DEFAULT_ALGORITHM = 'sha256';
 
     /**
      * @return string
@@ -20,7 +20,7 @@ interface TokenGeneratorInterface
      * @param mixed $expected
      * @param mixed $actual
      *
-     * @return boolean
+     * @return bool
      */
     public function checkTokenEquals($expected, $actual);
 }

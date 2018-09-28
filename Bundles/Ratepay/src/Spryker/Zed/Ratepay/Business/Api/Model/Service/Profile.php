@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -14,5 +15,5 @@ class Profile extends Base
     /**
      * Profile operation.
      */
-    const OPERATION = Constants::REQUEST_MODEL_PROFILE;
+    public const OPERATION = Constants::REQUEST_MODEL_PROFILE;
 }

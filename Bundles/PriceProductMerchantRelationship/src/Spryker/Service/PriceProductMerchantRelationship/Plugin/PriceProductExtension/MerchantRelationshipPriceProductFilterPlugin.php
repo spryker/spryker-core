@@ -32,7 +32,6 @@ class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implem
         $priceProductFilterTransfer->requirePriceMode();
 
         $resultPriceProductTransfers = [];
-        /** @var \Generated\Shared\Transfer\PriceProductTransfer $minPriceProductTransfer */
         $minPriceProductTransfer = null;
 
         foreach ($priceProductTransfers as $priceProductTransfer) {

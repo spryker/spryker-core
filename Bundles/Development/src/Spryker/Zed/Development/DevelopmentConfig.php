@@ -15,11 +15,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DevelopmentConfig extends AbstractBundleConfig
 {
-    const BUNDLE_PLACEHOLDER = '[BUNDLE]';
-    const APPLICATION_NAMESPACES = [
+    public const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+
+    public const APPLICATION_NAMESPACES = [
         'Orm',
     ];
-    const APPLICATION_LAYERS = [
+
+    public const APPLICATIONS = [
         'Client',
         'Service',
         'Shared',
@@ -29,11 +31,31 @@ class DevelopmentConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @return int
+     */
+    public function getPermissionMode(): int
+    {
+        return $this->get(DevelopmentConstants::DIRECTORY_PERMISSION, 0777);
+    }
+
+    /**
      * @return string[]
      */
     public function getInternalNamespaces(): array
     {
         return ['Spryker', 'SprykerEco', 'SprykerSdk', 'SprykerShop', 'Orm'];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getTwigPathPatterns(): array
+    {
+        return [
+            $this->getPathToCore() . '%1$s/src/Spryker/Zed/%1$s/Presentation/',
+            $this->getPathToCore() . '%1$s/src/Spryker/Yves/%1$s/Theme/',
+            $this->getPathToShop() . '%1$s/src/SprykerShop/Yves/%1$s/Theme/',
+        ];
     }
 
     /**
@@ -53,7 +75,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getApplications()
     {
-        return static::APPLICATION_LAYERS;
+        return static::APPLICATIONS;
     }
 
     /**
@@ -310,6 +332,7 @@ class DevelopmentConfig extends AbstractBundleConfig
                 'Generated\%s\Ide',
                 IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
             ),
+            IdeAutoCompletionConstants::DIRECTORY_PERMISSION => $this->getPermissionMode(),
         ];
     }
 

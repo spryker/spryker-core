@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -12,8 +13,8 @@ use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 
 class CustomerMapper extends BaseMapper
 {
-    const ALLOW_CREDIT_INQUIRY_YES = 'yes';
-    const ALLOW_CREDIT_INQUIRY_NO = 'no';
+    public const ALLOW_CREDIT_INQUIRY_YES = 'yes';
+    public const ALLOW_CREDIT_INQUIRY_NO = 'no';
 
     /**
      * @var \Generated\Shared\Transfer\RatepayPaymentRequestTransfer

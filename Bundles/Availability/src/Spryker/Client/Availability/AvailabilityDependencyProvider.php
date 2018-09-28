@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -14,10 +15,10 @@ use Spryker\Client\Kernel\Container;
 
 class AvailabilityDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_LOCALE = 'CLIENT_LOCALE';
-    const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
-    const KV_STORAGE = 'KV_STORAGE';
+    public const KV_STORAGE = 'KV_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

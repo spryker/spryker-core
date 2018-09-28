@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -15,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateZedIdeAutoCompletionConsole extends Console
 {
-    const COMMAND_NAME = 'dev:ide:generate-zed-auto-completion';
+    public const COMMAND_NAME = 'dev:ide:generate-zed-auto-completion';
 
     /**
      * @return void

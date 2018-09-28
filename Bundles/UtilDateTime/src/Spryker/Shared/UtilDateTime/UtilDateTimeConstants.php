@@ -19,7 +19,7 @@ interface UtilDateTimeConstants
      *
      * @api
      */
-    const DATE_TIME_ZONE = 'DATE_TIME_ZONE';
+    public const DATE_TIME_ZONE = 'DATE_TIME_ZONE';
 
     /**
      * Specification:
@@ -28,7 +28,7 @@ interface UtilDateTimeConstants
      *
      * @api
      */
-    const DATE_TIME_FORMAT_DATE = 'DATE_TIME_FORMAT_DATE';
+    public const DATE_TIME_FORMAT_DATE = 'DATE_TIME_FORMAT_DATE';
 
     /**
      * Specification:
@@ -37,7 +37,7 @@ interface UtilDateTimeConstants
      *
      * @api
      */
-    const DATE_TIME_FORMAT_DATE_TIME = 'DATE_TIME_FORMAT_DATE_TIME';
+    public const DATE_TIME_FORMAT_DATE_TIME = 'DATE_TIME_FORMAT_DATE_TIME';
 
     /**
      * Specification:
@@ -46,5 +46,5 @@ interface UtilDateTimeConstants
      *
      * @api
      */
-    const DATE_TIME_FORMAT_TIME = 'DATE_TIME_FORMAT_TIME';
+    public const DATE_TIME_FORMAT_TIME = 'DATE_TIME_FORMAT_TIME';
 }

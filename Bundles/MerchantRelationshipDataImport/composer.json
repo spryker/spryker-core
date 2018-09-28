@@ -12,6 +12,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "autoload": {

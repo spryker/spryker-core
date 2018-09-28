@@ -24,14 +24,19 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
+     * @deprecated Invalid collection method. Use convertLocale() directly.
+     *
      * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntityList
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function convertLocaleCollection(SpyLocale $localeEntityList)
     {
+        /** @var \Orm\Zed\Locale\Persistence\SpyLocale[] $localeEntities */
+        $localeEntities = $localeEntityList;
+
         $transferList = [];
-        foreach ($localeEntityList as $localeEntity) {
+        foreach ($localeEntities as $localeEntity) {
             $transferList[] = $this->convertLocale($localeEntity);
         }
 

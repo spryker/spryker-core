@@ -22,15 +22,15 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class BundledProductAvailabilityTable extends AbstractTable
 {
-    const URL_PARAM_ID_PRODUCT_BUNDLE = 'id-product';
-    const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
-    const URL_PARAM_SKU = 'sku';
-    const URL_PARAM_ID_PRODUCT = 'id-product';
-    const URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT = 'id-product-bundle-abstract';
-    const URL_PARAM_ID_STORE = 'id-store';
+    public const URL_PARAM_ID_PRODUCT_BUNDLE = 'id-product';
+    public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
+    public const URL_PARAM_SKU = 'sku';
+    public const URL_PARAM_ID_PRODUCT = 'id-product';
+    public const URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT = 'id-product-bundle-abstract';
+    public const URL_PARAM_ID_STORE = 'id-store';
 
-    const COL_BUNDLED_ITEMS = 'bundledItems';
-    const TABLE_COL_ACTION = 'Actions';
+    public const COL_BUNDLED_ITEMS = 'bundledItems';
+    public const TABLE_COL_ACTION = 'Actions';
 
     /**
      * @var int
@@ -72,8 +72,8 @@ class BundledProductAvailabilityTable extends AbstractTable
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface $omsFacade
-     * @param null|int $idProductBundle
-     * @param null|int $idBundleProductAbstract
+     * @param int|null $idProductBundle
+     * @param int|null $idBundleProductAbstract
      */
     public function __construct(
         SpyProductAbstractQuery $productAbstractQuery,

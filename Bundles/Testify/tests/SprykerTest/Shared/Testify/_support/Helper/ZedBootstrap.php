@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Client;
 
 class ZedBootstrap extends Framework implements DependsOnModule
 {
-    const CONFIG_KEY_SERVICE_PROVIDER = 'serviceProvider';
+    public const CONFIG_KEY_SERVICE_PROVIDER = 'serviceProvider';
 
     /**
      * @var \Spryker\Zed\Testify\Bootstrap\ZedBootstrap

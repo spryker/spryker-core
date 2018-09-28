@@ -19,8 +19,8 @@ use Codeception\Test\Unit;
  */
 class UtilValidateServiceTest extends Unit
 {
-    const VALID_EMAIL = 'some.one@example.com';
-    const INVALID_EMAIL = "te'<i>sting@twelvebeaufort.com";
+    public const VALID_EMAIL = 'some.one@example.com';
+    public const INVALID_EMAIL = "te'<i>sting@twelvebeaufort.com";
 
     /**
      * @var \SprykerTest\Service\UtilValidate\UtilValidateServiceTester

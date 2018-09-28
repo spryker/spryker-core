@@ -20,15 +20,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer implements CmsBlockCategoryStorageQueryContainerInterface
 {
-    const POSITION = 'position';
-    const NAME = 'name';
+    public const POSITION = 'position';
+    public const NAME = 'name';
 
     /**
      * @api
      *
      * @param array $categoryIds
      *
-     * @return $this|\Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorageQuery
+     * @return \Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorageQuery
      */
     public function queryCmsBlockCategoryStorageByIds(array $categoryIds)
     {
@@ -42,7 +42,7 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
      *
      * @param array $categoryIds
      *
-     * @return $this|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
     public function queryCmsBlockCategories(array $categoryIds)
     {
