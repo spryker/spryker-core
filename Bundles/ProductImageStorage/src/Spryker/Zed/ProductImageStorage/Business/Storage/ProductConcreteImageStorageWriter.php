@@ -148,7 +148,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      */
     protected function generateProductConcreteImageSets(array $productIds)
     {
-        $imageSetEntitiesByIdProduct = $this->getCombinedImageSets($productIds);
+        $imageSetEntitiesByIdProduct = $this->getImageSets($productIds);
 
         $imageSets = [];
         foreach ($imageSetEntitiesByIdProduct as $idProduct => $imageLocalizedAttributes) {
@@ -194,7 +194,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      *
      * @return array
      */
-    protected function getCombinedImageSets(array $productIds): array
+    protected function getImageSets(array $productIds): array
     {
         $productLocalizedAttributes = $this->repository->getProductLocalizedAttributesWithProductByIdProductIn($productIds);
         $productFks = array_column($productLocalizedAttributes, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);
@@ -206,7 +206,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
             $idProduct = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT];
             $colIdProductAttributes = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_ID_PRODUCT_ATTRIBUTES];
 
-            $combinedImageSets[$idProduct][$colIdProductAttributes] = $this->getCombinedImageSetForLocalizedAttribute(
+            $combinedImageSets[$idProduct][$colIdProductAttributes] = $this->getImageSetForLocalizedAttribute(
                 $productLocalizedAttribute,
                 $productImageSetsIndexedByFkProduct
             );
@@ -221,7 +221,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
      */
-    protected function getCombinedImageSetForLocalizedAttribute(
+    protected function getImageSetForLocalizedAttribute(
         array $productLocalizedAttribute,
         array &$productImageSetsIndexedByFkProduct
     ): ArrayObject {

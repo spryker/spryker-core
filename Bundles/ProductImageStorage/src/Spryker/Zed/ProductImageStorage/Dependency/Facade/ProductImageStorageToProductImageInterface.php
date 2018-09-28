@@ -10,14 +10,6 @@ namespace Spryker\Zed\ProductImageStorage\Dependency\Facade;
 interface ProductImageStorageToProductImageInterface
 {
     /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    public function getCombinedAbstractImageSets($idProductAbstract, $idLocale);
-
-    /**
      * @param int $idProductConcrete
      * @param int $idProductAbstract
      * @param int $idLocale
