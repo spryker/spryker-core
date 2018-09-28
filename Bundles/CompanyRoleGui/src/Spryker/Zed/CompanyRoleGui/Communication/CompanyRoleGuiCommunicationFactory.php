@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication;
 
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleChoiceFormType;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyUserRoleFormDataProvider;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleCreateForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProvider;
@@ -18,9 +20,26 @@ use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToGlossaryFacadeI
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToPermissionFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    public function createCompanyUserRoleChoiceFormType(): FormTypeInterface
+    {
+        return new CompanyUserRoleChoiceFormType();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyUserRoleFormDataProvider
+     */
+    public function createCompanyUserRoleChoiceFormDataProvider(): CompanyUserRoleFormDataProvider
+    {
+        return new CompanyUserRoleFormDataProvider($this->getCompanyRoleFacade());
+    }
+
     /**
      * @return \Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface
      */
