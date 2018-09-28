@@ -171,14 +171,18 @@ class EditController extends AbstractController
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
-        if (!$this->isCurrentUser($idUser)) {
-            $updateStatus = $this->getFacade()->deactivateUser($idUser);
+        if ($this->isCurrentUser($idUser)) {
+            $this->addErrorMessage(static::MESSAGE_USER_DEACTIVATE_ERROR);
 
-            if ($updateStatus) {
-                $this->addSuccessMessage(static::MESSAGE_USER_DEACTIVATE_SUCCESS);
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
 
-                return $this->redirectResponse(static::USER_LISTING_URL);
-            }
+        $updateStatus = $this->getFacade()->deactivateUser($idUser);
+
+        if ($updateStatus) {
+            $this->addSuccessMessage(static::MESSAGE_USER_DEACTIVATE_SUCCESS);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
         $this->addErrorMessage(static::MESSAGE_USER_DEACTIVATE_ERROR);
@@ -207,14 +211,18 @@ class EditController extends AbstractController
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
-        if (!$this->isCurrentUser($idUser)) {
-            $userTransfer = $this->getFacade()->removeUser($idUser);
+        if ($this->isCurrentUser($idUser)) {
+            $this->addErrorMessage(static::MESSAGE_USER_DELETE_ERROR);
 
-            if ($userTransfer->getStatus() === SpyUserTableMap::COL_STATUS_DELETED) {
-                $this->addSuccessMessage(static::MESSAGE_USER_DELETE_SUCCESS);
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
 
-                return $this->redirectResponse(static::USER_LISTING_URL);
-            }
+        $userTransfer = $this->getFacade()->removeUser($idUser);
+
+        if ($userTransfer->getStatus() === SpyUserTableMap::COL_STATUS_DELETED) {
+            $this->addSuccessMessage(static::MESSAGE_USER_DELETE_SUCCESS);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
         $this->addErrorMessage(static::MESSAGE_USER_DELETE_ERROR);
