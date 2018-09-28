@@ -23,6 +23,17 @@ class ProductImageStorageToProductImageBridge implements ProductImageStorageToPr
     }
 
     /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getCombinedAbstractImageSets($idProductAbstract, $idLocale)
+    {
+        return $this->productImageFacade->getCombinedAbstractImageSets($idProductAbstract, $idLocale);
+    }
+
+    /**
      * @param int $idProductConcrete
      * @param int $idProductAbstract
      * @param int $idLocale
