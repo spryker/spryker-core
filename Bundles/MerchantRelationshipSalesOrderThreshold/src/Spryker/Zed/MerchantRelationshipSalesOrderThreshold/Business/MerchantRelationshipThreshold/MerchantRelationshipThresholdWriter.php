@@ -103,7 +103,7 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
         }
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($merchantRelationshipSalesOrderThresholdTransfer) {
-            $this->executeDeleteMerchantRelationshipSalesOrderThresholdTransaction($merchantRelationshipSalesOrderThresholdTransfer);
+            return $this->executeDeleteMerchantRelationshipSalesOrderThresholdTransaction($merchantRelationshipSalesOrderThresholdTransfer);
         });
     }
 
