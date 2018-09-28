@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication;
 
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleCreateForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleEditFormDataProvider;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleEditFormDataProviderInterface;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProvider;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProviderInterface;
 use Spryker\Zed\CompanyRoleGui\CompanyRoleGuiDependencyProvider;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
@@ -31,9 +32,23 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
+    public function createCompanyRoleCreateForm(): FormInterface
+    {
+        $dataProvider = $this->createCompanyRoleCreateFormDataProvider();
+
+        return $this->getFormFactory()->create(
+            CompanyRoleCreateForm::class,
+            $dataProvider->getData(),
+            $dataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createCompanyRoleEditForm(): FormInterface
     {
-        $dataProvider = $this->createCompanyRoleEditFormDataProvider();
+        $dataProvider = $this->createCompanyRoleCreateFormDataProvider();
 
         return $this->getFormFactory()->create(
             CompanyRoleEditForm::class,
@@ -43,11 +58,11 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleEditFormDataProviderInterface
+     * @return \Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProviderInterface
      */
-    public function createCompanyRoleEditFormDataProvider(): CompanyRoleEditFormDataProviderInterface
+    public function createCompanyRoleCreateFormDataProvider(): CompanyRoleCreateDataProviderInterface
     {
-        return new CompanyRoleEditFormDataProvider(
+        return new CompanyRoleCreateDataProvider(
             $this->getCompanyFacade(),
             $this->getCompanyRoleFacade(),
             $this->getGlossaryFacade(),
