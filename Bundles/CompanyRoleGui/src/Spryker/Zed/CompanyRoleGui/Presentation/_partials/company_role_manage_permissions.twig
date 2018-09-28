@@ -1,0 +1,24 @@
+<div class="form-group">
+    <label>Assign Permissions</label>
+    {% for child in form %}
+        {{ dump(permissions|keys) }}
+        {% if permissions is empty or permissions[loop.index0].idCompanyRole is null %}
+            <div class="form-group">
+                {{ form_widget(child) }}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% if permissions is not empty %}
+    <div class="form-group">
+        <label>Unassign Permissions</label>
+        {% for child in form %}
+            {% if permissions[loop.index0].idCompanyRole is not null %}
+                <div class="form-group">
+                    {{ form_widget(child) }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

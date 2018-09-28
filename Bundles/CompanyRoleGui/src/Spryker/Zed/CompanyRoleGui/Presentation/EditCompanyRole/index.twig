@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Create role' | trans %}
+{% set widget_title = 'Update role' | trans %}
 
 {% block action %}
     {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
@@ -9,20 +9,20 @@
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_content %}
-            {{ form_start(companyRoleCreateForm) }}
+            {{ form_start(companyRoleUpdateForm) }}
 
             {% block formTextFields %}
-                {{ form_row(companyRoleCreateForm.fkCompany) }}
-                {{ form_row(companyRoleCreateForm.name) }}
+                {{ form_row(companyRoleUpdateForm.fkCompany) }}
+                {{ form_row(companyRoleUpdateForm.name) }}
             {% endblock %}
 
-            {% set permissionCollection = companyRoleCreateForm.vars.data.permissionCollection %}
+            {% set permissionCollection = companyRoleUpdateForm.vars.data.permissionCollection %}
             {% set permissions = permissionCollection is not empty ? permissionCollection.permissions : null %}
 
-            {% include '@CompanyRoleGui/_partials/company_role_manage_permissions.twig' with {'form': companyRoleCreateForm, 'permissions': permissions} %}
+            {% include '@CompanyRoleGui/_partials/company_role_manage_permissions.twig' with {'form': companyRoleUpdateForm, 'permissions': permissions} %}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Create' | trans }}" />
-            {{ form_end(companyRoleCreateForm) }}
+            {{ form_end(companyRoleUpdateForm) }}
         {% endblock %}
     {% endembed %}
 {% endblock %}
