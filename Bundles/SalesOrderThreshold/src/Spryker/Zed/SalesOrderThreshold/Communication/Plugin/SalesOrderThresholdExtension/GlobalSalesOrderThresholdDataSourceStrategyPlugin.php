@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesOrderThreshold\Communication\Plugin\SalesOrderThresholdExtension;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
@@ -71,6 +72,8 @@ class GlobalSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin i
     {
         $cartSubTotal = 0;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $cartSubTotal += $this->getItemProductOptionsSubtotal($itemTransfer, $quoteTransfer->getPriceMode());
+
             if ($quoteTransfer->getPriceMode() === SalesOrderThresholdConfig::PRICE_MODE_NET) {
                 $cartSubTotal += ($itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity());
                 continue;
@@ -80,5 +83,26 @@ class GlobalSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin i
         }
 
         return $cartSubTotal;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $priceMode
+     *
+     * @return int
+     */
+    protected function getItemProductOptionsSubtotal(ItemTransfer $itemTransfer, string $priceMode): int
+    {
+        $itemProductOptionsSubTotal = 0;
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            if ($priceMode === SalesOrderThresholdConfig::PRICE_MODE_NET) {
+                $itemProductOptionsSubTotal += $productOptionTransfer->getUnitNetPrice() * $productOptionTransfer->getQuantity();
+                continue;
+            }
+
+            $itemProductOptionsSubTotal += $productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity();
+        }
+
+        return $itemProductOptionsSubTotal;
     }
 }

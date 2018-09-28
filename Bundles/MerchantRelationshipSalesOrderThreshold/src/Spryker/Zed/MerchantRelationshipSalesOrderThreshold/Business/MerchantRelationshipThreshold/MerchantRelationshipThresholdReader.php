@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\MerchantRelationshipSalesOrderThreshold\MerchantRelationshipSalesOrderThresholdConfig;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdTranslationReaderInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepositoryInterface;
 
@@ -147,10 +148,37 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
 
             $itemIdMerchantRelationship = $itemTransfer->getPriceProduct()->getPriceDimension()->getIdMerchantRelationship();
             $itemMerchantRelationshipSubTotals[$itemIdMerchantRelationship] = $itemMerchantRelationshipSubTotals[$itemIdMerchantRelationship] ?? 0;
-            $itemMerchantRelationshipSubTotals[$itemIdMerchantRelationship] += $itemTransfer->getSumSubtotalAggregation();
+            $itemMerchantRelationshipSubTotals[$itemIdMerchantRelationship] += $this->getItemSumSubtotalAggregation($itemTransfer, $quoteTransfer);
         }
 
         return $itemMerchantRelationshipSubTotals;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    protected function getItemSumSubtotalAggregation(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): int
+    {
+        $itemSubTotal = 0;
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            if ($quoteTransfer->getPriceMode() === MerchantRelationshipSalesOrderThresholdConfig::PRICE_MODE_NET) {
+                $itemSubTotal += $productOptionTransfer->getUnitNetPrice() * $productOptionTransfer->getQuantity();
+                continue;
+            }
+
+            $itemSubTotal += $productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity();
+        }
+
+        if ($quoteTransfer->getPriceMode() === MerchantRelationshipSalesOrderThresholdConfig::PRICE_MODE_NET) {
+            $itemSubTotal += $itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity();
+        }
+
+        $itemSubTotal += $itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity();
+
+        return $itemSubTotal;
     }
 
     /**
