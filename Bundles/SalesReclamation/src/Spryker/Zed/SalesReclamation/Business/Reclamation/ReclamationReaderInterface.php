@@ -8,11 +8,27 @@
 namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ReclamationItemTransfer;
+use Generated\Shared\Transfer\ReclamationTransfer;
 
 interface ReclamationReaderInterface
 {
     /**
-     * @return \ArrayObject|null
+     * @return \ArrayObject
      */
-    public function findReclamations(): ?ArrayObject;
+    public function getReclamations(): ArrayObject;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
+     */
+    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ReclamationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
+     */
+    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer;
 }

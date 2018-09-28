@@ -48,11 +48,12 @@ class Hydrator implements HydratorInterface
     {
         $reclamationTransfer = $this->salesReclamationRepository->findReclamationById($reclamationTransfer);
 
-        if (!$reclamationTransfer) {
+        if (!$reclamationTransfer->getIdSalesReclamation()) {
             return null;
         }
 
         $createdOrderCollection = $this->salesReclamationRepository->findCreatedOrdersByReclamationId($reclamationTransfer);
+
         if ($createdOrderCollection) {
             $reclamationTransfer->setCreatedOrders($createdOrderCollection->getOrders());
         }

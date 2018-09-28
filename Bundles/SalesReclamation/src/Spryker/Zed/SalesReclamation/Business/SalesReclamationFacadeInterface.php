@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 
 interface SalesReclamationFacadeInterface
@@ -53,7 +52,7 @@ interface SalesReclamationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */
-    public function updateReclamationItem(ReclamationTransfer $reclamationItemTransfer): ReclamationItemTransfer;
+    public function updateReclamationItem(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer;
 
     /**
      * Specification:
@@ -84,7 +83,7 @@ interface SalesReclamationFacadeInterface
 
     /**
      * Specification:
-     * - TODO
+     * - Expands SpySalesOrderEntityTransfer with reclamation id before order created.
      *
      * @api
      *
@@ -104,7 +103,7 @@ interface SalesReclamationFacadeInterface
      *
      * @api
      *
-     * @return \ArrayObject|null
+     * @return \ArrayObject
      */
     public function getReclamations(): ?ArrayObject;
 
@@ -115,9 +114,9 @@ interface SalesReclamationFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationItemTransfer|null
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */
-    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ?ReclamationItemTransfer;
+    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer;
 
     /**
      * {@inheritdoc}
@@ -126,7 +125,7 @@ interface SalesReclamationFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
+    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ReclamationTransfer;
 }

@@ -11,8 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\OrderCollectionTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper\SalesReclamationMapperInterface;
 
@@ -30,22 +28,21 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
     {
         $reclamationTransfer->requireIdSalesReclamation();
 
-        $salesReclamationQuery = $this->getFactory()
+        $reclamationEntities = $this->getFactory()
             ->createSalesReclamationQuery()
+            ->leftJoinWithOrder()
             ->leftJoinWithSpySalesReclamationItem()
                 ->useSpySalesReclamationItemQuery()
                 ->leftJoinWithOrderItem()
             ->endUse()
-            ->leftJoinWithOrder()
-            ->filterByIdSalesReclamation($reclamationTransfer->getIdSalesReclamation());
+            ->filterByIdSalesReclamation($reclamationTransfer->getIdSalesReclamation())
+            ->find();
 
-        $spyReclamations = $salesReclamationQuery->find();
-
-        if (!$spyReclamations->count()) {
+        if (!$reclamationEntities->count()) {
             return null;
         }
 
-        return $this->getMapper()->mapEntityToReclamationTransfer($spyReclamations[0]);
+        return $this->getMapper()->mapEntityToReclamationTransfer($reclamationEntities[0], new ReclamationTransfer());
     }
 
     /**
@@ -55,41 +52,40 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
      */
     public function findReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ?ReclamationItemTransfer
     {
-        $reclamationItemTransfer->requireIdSalesReclamation();
+        $reclamationItemTransfer->requireIdSalesReclamationItem();
 
-        $salesReclamationQuery = $this->getFactory()
+        $reclamationItemEntities = $this->getFactory()
             ->createSalesReclamationItemQuery()
             ->leftJoinWithOrderItem()
-            ->filterByIdSalesReclamationItem($reclamationItemTransfer->getIdSalesReclamationItem());
+            ->filterByIdSalesReclamationItem($reclamationItemTransfer->getIdSalesReclamationItem())
+            ->find();
 
-        $spyReclamationItems = $salesReclamationQuery->find();
-
-        if (!$spyReclamationItems->count()) {
+        if (!$reclamationItemEntities->count()) {
             return null;
         }
 
-        return $this->getMapper()->mapEntityToReclamationItemTransfer($spyReclamationItems[0]);
+        return $this->getMapper()->mapEntityToReclamationItemTransfer($reclamationItemEntities[0], new ReclamationItemTransfer());
     }
 
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderCollectionTransfer
+     * @return \Generated\Shared\Transfer\OrderCollectionTransfer|null
      */
     public function findCreatedOrdersByReclamationId(ReclamationTransfer $reclamationTransfer): ?OrderCollectionTransfer
     {
         $reclamationTransfer->requireIdSalesReclamation();
 
-        $salesOrderQuery = $this->getFactory()
+        $createdSalesOrderEntities = $this->getFactory()
             ->createSalesOrderQuery()
-            ->filterByFkSalesReclamation($reclamationTransfer->getIdSalesReclamation());
-        $spyCreatedSalesOrders = $salesOrderQuery->find();
+            ->filterByFkSalesReclamation($reclamationTransfer->getIdSalesReclamation())
+            ->find();
 
-        if (!$spyCreatedSalesOrders->count()) {
+        if (!$createdSalesOrderEntities->count()) {
             return null;
         }
 
-        return $this->getMapper()->mapSalesOrdersToOrderCollectionTransfer($spyCreatedSalesOrders);
+        return $this->getMapper()->mapSalesOrdersToOrderCollectionTransfer($createdSalesOrderEntities, new OrderCollectionTransfer());
     }
 
     /**
@@ -97,24 +93,23 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
      */
     public function findReclamations(): ?ArrayObject
     {
-        $salesReclamationQuery = $this->getFactory()
+        $salesReclamationEntities = $this->getFactory()
             ->createSalesReclamationQuery()
             ->leftJoinWithSpySalesReclamationItem()
                 ->useSpySalesReclamationItemQuery()
                 ->leftJoinWithOrderItem()
             ->endUse()
-            ->leftJoinWithOrder();
+            ->leftJoinWithOrder()
+            ->find();
 
-        $spyReclamations = $salesReclamationQuery->find();
-
-        if (!$spyReclamations->count()) {
+        if (!$salesReclamationEntities->count()) {
             return null;
         }
 
         $reclamationTransfers = new ArrayObject();
 
-        foreach ($spyReclamations as $spySalesReclamation) {
-            $reclamationTransfers->append($this->getMapper()->mapEntityToReclamationTransfer($spySalesReclamation));
+        foreach ($salesReclamationEntities as $salesReclamationEntity) {
+            $reclamationTransfers->append($this->getMapper()->mapEntityToReclamationTransfer($salesReclamationEntity, new ReclamationTransfer()));
         }
 
         return $reclamationTransfers;

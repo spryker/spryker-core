@@ -10,12 +10,8 @@ namespace Spryker\Zed\SalesReclamation\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesReclamation\Business\Order\OrderExpander;
 use Spryker\Zed\SalesReclamation\Business\Order\OrderExpanderInterface;
-use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaver;
-use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaverInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\Hydrator;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\HydratorInterface;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationItemWriter;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationItemWriterInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationReader;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationReaderInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationWriter;
@@ -47,16 +43,6 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
     {
         return new ReclamationReader(
             $this->getRepository()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationItemWriterInterface
-     */
-    public function createReclamationItemWriter(): ReclamationItemWriterInterface
-    {
-        return new ReclamationItemWriter(
-            $this->getEntityManager()
         );
     }
 

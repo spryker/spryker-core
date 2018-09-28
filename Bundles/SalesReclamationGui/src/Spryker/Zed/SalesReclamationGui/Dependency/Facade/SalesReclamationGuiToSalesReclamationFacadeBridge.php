@@ -9,11 +9,9 @@ namespace Spryker\Zed\SalesReclamationGui\Dependency\Facade;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
 
 class SalesReclamationGuiToSalesReclamationFacadeBridge implements SalesReclamationGuiToSalesReclamationFacadeInterface
 {
@@ -81,9 +79,9 @@ class SalesReclamationGuiToSalesReclamationFacadeBridge implements SalesReclamat
     }
 
     /**
-     * @return \ArrayObject|null
+     * @return \ArrayObject
      */
-    public function getReclamations(): ?ArrayObject
+    public function getReclamations(): ArrayObject
     {
         return $this->salesReclamationFacade->getReclamations();
     }
@@ -91,9 +89,9 @@ class SalesReclamationGuiToSalesReclamationFacadeBridge implements SalesReclamat
     /**
      * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationItemTransfer|null
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */
-    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ?ReclamationItemTransfer
+    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer
     {
         return $this->salesReclamationFacade->getReclamationItemById($reclamationItemTransfer);
     }
@@ -101,9 +99,9 @@ class SalesReclamationGuiToSalesReclamationFacadeBridge implements SalesReclamat
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationItemTransfer|null
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
+    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
         return $this->salesReclamationFacade->getReclamationById($reclamationTransfer);
     }

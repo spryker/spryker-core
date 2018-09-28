@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesReclamation\Communication\Plugin;
+namespace Spryker\Zed\SalesReclamation\Communication\Plugin\Sales;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
@@ -19,9 +19,8 @@ class SalesReclamationOrderExpanderPreSavePlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritdoc}
-     *
      * Specification:
-     *   - This plugin expand sales order entity with reclamation it.
+     *   - This plugin expand sales order entity with reclamation id.
      *
      * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

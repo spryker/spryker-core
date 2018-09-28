@@ -110,4 +110,14 @@ class ReclamationWriter implements ReclamationWriterInterface
 
         return $reclamationItemTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
+     */
+    public function updateReclamationItem(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer
+    {
+        return $this->salesReclamationEntityManager->saveReclamationItem($reclamationItemTransfer);
+    }
 }

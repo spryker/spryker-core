@@ -8,13 +8,14 @@
 namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface;
 
 class ReclamationReader implements ReclamationReaderInterface
 {
     /**
-     * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface
+     * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface
      */
     protected $salesReclamationRepository;
 
@@ -28,20 +29,48 @@ class ReclamationReader implements ReclamationReaderInterface
     }
 
     /**
-     * @return \ArrayObject|null
+     * @return \ArrayObject
      */
-    public function findReclamations(): ?ArrayObject
+    public function getReclamations(): ArrayObject
     {
-        return $this->salesReclamationRepository->findReclamations();
+        $salesReclamations = $this->salesReclamationRepository->findReclamations();
+
+        if (!$salesReclamations) {
+            new ArrayObject();
+        }
+
+        return $salesReclamations;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function findReclamationById(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
+    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
-        return $this->salesReclamationRepository->findReclamationById($reclamationTransfer);
+        $reclamationTransfer = $this->salesReclamationRepository->findReclamationById($reclamationTransfer);
+
+        if (!$reclamationTransfer) {
+            new ReclamationTransfer();
+        }
+
+        return $reclamationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
+     */
+    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer
+    {
+        $reclamationItemTransfer = $this->salesReclamationRepository->findReclamationItemById($reclamationItemTransfer);
+
+        if (!$reclamationItemTransfer) {
+            return new ReclamationItemTransfer();
+        }
+
+        return $reclamationItemTransfer;
     }
 }

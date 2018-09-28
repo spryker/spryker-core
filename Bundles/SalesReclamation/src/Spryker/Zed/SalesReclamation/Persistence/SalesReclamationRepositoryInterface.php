@@ -37,7 +37,7 @@ interface SalesReclamationRepositoryInterface
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
-     * @return \Generated\Shared\Transfer\OrderCollectionTransfer
+     * @return \Generated\Shared\Transfer\OrderCollectionTransfer|null
      */
     public function findCreatedOrdersByReclamationId(ReclamationTransfer $reclamationTransfer): ?OrderCollectionTransfer;
 

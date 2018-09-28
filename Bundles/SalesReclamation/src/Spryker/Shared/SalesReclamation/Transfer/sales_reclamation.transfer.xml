@@ -18,7 +18,7 @@
         <property name="idSalesReclamationItem" type="int" />
         <property name="orderItem" type="Item"/>
         <property name="state" type="string"/>
-        <property name="fkSalesReclamation" type="string"/>
+        <property name="fkSalesReclamation" type="int"/>
     </transfer>
 
     <transfer name="ReclamationCreateRequest">

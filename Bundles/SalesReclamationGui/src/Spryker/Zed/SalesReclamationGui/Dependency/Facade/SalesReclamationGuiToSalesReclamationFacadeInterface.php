@@ -9,11 +9,9 @@ namespace Spryker\Zed\SalesReclamationGui\Dependency\Facade;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
 
 interface SalesReclamationGuiToSalesReclamationFacadeInterface
 {
@@ -53,21 +51,21 @@ interface SalesReclamationGuiToSalesReclamationFacadeInterface
     public function hydrateReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
 
     /**
-     * @return \ArrayObject|null
+     * @return \ArrayObject
      */
-    public function getReclamations(): ?ArrayObject;
+    public function getReclamations(): ArrayObject;
 
     /**
      * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationItemTransfer|null
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */
-    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ?ReclamationItemTransfer;
+    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationItemTransfer|null
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */
-    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
+    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ReclamationTransfer;
 }

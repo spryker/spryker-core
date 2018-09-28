@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesReclamationGui\Communication\Plugin;
+namespace Spryker\Zed\SalesReclamationGui\Communication\Plugin\Sales;
 
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;

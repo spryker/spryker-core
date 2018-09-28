@@ -20,43 +20,64 @@ interface SalesReclamationMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     * @param \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation $salesReclamationEntity
      *
      * @return \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation
      */
-    public function mapReclamationTransferToEntity(ReclamationTransfer $reclamationTransfer): SpySalesReclamation;
+    public function mapReclamationTransferToEntity(
+        ReclamationTransfer $reclamationTransfer,
+        SpySalesReclamation $salesReclamationEntity
+    ): SpySalesReclamation;
 
     /**
-     * @param \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation $reclamationEntityTransfer
+     * @param \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation $reclamationEntity
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function mapEntityToReclamationTransfer(SpySalesReclamation $reclamationEntityTransfer): ReclamationTransfer;
+    public function mapEntityToReclamationTransfer(
+        SpySalesReclamation $reclamationEntity,
+        ReclamationTransfer $reclamationTransfer
+    ): ReclamationTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     * @param \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationItem $salesReclamationItemEntity
      *
      * @return \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationItem
      */
-    public function mapReclamationItemTransferToEntity(ReclamationItemTransfer $reclamationItemTransfer): SpySalesReclamationItem;
+    public function mapReclamationItemTransferToEntity(
+        ReclamationItemTransfer $reclamationItemTransfer,
+        SpySalesReclamationItem $salesReclamationItemEntity
+    ): SpySalesReclamationItem;
 
     /**
-     * @param \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationItem $reclamationItemEntityTransfer
+     * @param \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationItem $reclamationItemEntity
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */
-    public function mapEntityToReclamationItemTransfer(SpySalesReclamationItem $reclamationItemEntityTransfer): ReclamationItemTransfer;
+    public function mapEntityToReclamationItemTransfer(
+        SpySalesReclamationItem $reclamationItemEntity,
+        ReclamationItemTransfer $reclamationItemTransfer
+    ): ReclamationItemTransfer;
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntityTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function mapEntityToOrderTransfer(SpySalesOrder $orderEntityTransfer): OrderTransfer;
+    public function mapEntityToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): OrderTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $spySalesOrders
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderEntities
+     * @param \Generated\Shared\Transfer\OrderCollectionTransfer $orderCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\OrderCollectionTransfer
      */
-    public function mapSalesOrdersToOrderCollectionTransfer(ObjectCollection $spySalesOrders): OrderCollectionTransfer;
+    public function mapSalesOrdersToOrderCollectionTransfer(
+        ObjectCollection $salesOrderEntities,
+        OrderCollectionTransfer $orderCollectionTransfer
+    ): OrderCollectionTransfer;
 }
