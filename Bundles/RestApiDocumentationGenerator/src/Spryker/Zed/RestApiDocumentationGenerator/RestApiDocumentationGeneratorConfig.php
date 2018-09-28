@@ -26,7 +26,7 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
     public const ANNOTATION_KEY_SUMMARY = 'summary';
 
     protected const APPLICATION_SOURCE_ANNOTATIONS_SOURCE_DIRECTORY_PATTERN = '/Glue/%1$s/Controller/';
-    protected const APPLICATION_VENDOR_SOURCE_ANNOTATIONS_SOURCE_DIRECTORY_PATTERN = '/*/*/src/*/Glue/%$1s/Controller/';
+    protected const APPLICATION_VENDOR_SOURCE_ANNOTATIONS_SOURCE_DIRECTORY_PATTERN = '/*/*/src/*/Glue/%1$s/Controller/';
 
     /**
      * @return string
