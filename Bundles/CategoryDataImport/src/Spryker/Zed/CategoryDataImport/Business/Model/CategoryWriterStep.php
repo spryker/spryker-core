@@ -32,15 +32,15 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class CategoryWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    const BULK_SIZE = 100;
+    public const BULK_SIZE = 100;
 
-    const KEY_NAME = 'name';
-    const KEY_META_TITLE = 'meta_title';
-    const KEY_META_DESCRIPTION = 'meta_description';
-    const KEY_META_KEYWORDS = 'meta_keywords';
-    const KEY_CATEGORY_KEY = 'category_key';
-    const KEY_PARENT_CATEGORY_KEY = 'parent_category_key';
-    const KEY_TEMPLATE_NAME = 'template_name';
+    public const KEY_NAME = 'name';
+    public const KEY_META_TITLE = 'meta_title';
+    public const KEY_META_DESCRIPTION = 'meta_description';
+    public const KEY_META_KEYWORDS = 'meta_keywords';
+    public const KEY_CATEGORY_KEY = 'category_key';
+    public const KEY_PARENT_CATEGORY_KEY = 'parent_category_key';
+    public const KEY_TEMPLATE_NAME = 'template_name';
 
     /**
      * @var \Spryker\Zed\CategoryDataImport\Business\Model\Reader\CategoryReaderInterface

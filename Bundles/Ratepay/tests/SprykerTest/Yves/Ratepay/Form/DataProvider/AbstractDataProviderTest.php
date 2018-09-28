@@ -23,7 +23,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 class AbstractDataProviderTest extends Unit
 {
-    const PHONE_NUMBER = 1234567890;
+    public const PHONE_NUMBER = 1234567890;
 
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer

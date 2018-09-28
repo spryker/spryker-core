@@ -24,7 +24,7 @@ use Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException;
  */
 class AvailabilityClientTest extends Unit
 {
-    const ID_PRODUCT_ABSTRACT = 5;
+    public const ID_PRODUCT_ABSTRACT = 5;
 
     /**
      * @var \SprykerTest\Client\Availability\AvailabilityClientTester

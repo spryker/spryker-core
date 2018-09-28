@@ -26,8 +26,8 @@ use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBui
  */
 class FlysystemLocalFileSystemTest extends Unit
 {
-    const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
-    const PATH_DOCUMENT = 'documents/';
+    public const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
+    public const PATH_DOCUMENT = 'documents/';
 
     /**
      * @var string

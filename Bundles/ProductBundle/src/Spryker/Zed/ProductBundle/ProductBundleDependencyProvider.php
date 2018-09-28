@@ -24,19 +24,19 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQuer
 
 class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRODUCT = 'product facade';
-    const FACADE_PRICE_PRODUCT = 'price product facade';
-    const FACADE_LOCALE = 'locale facade';
-    const FACADE_AVAILABILITY = 'facade availability';
-    const FACADE_PRODUCT_IMAGE = 'product image facade';
-    const FACADE_STORE = 'store facade';
-    const FACADE_PRICE = 'price facade';
+    public const FACADE_PRODUCT = 'product facade';
+    public const FACADE_PRICE_PRODUCT = 'price product facade';
+    public const FACADE_LOCALE = 'locale facade';
+    public const FACADE_AVAILABILITY = 'facade availability';
+    public const FACADE_PRODUCT_IMAGE = 'product image facade';
+    public const FACADE_STORE = 'store facade';
+    public const FACADE_PRICE = 'price facade';
 
-    const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
-    const QUERY_CONTAINER_SALES = 'sales query container';
-    const QUERY_CONTAINER_STOCK = 'stock query container';
-    const QUERY_CONTAINER_PRODUCT = 'product query container';
-    const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    public const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
+    public const QUERY_CONTAINER_SALES = 'sales query container';
+    public const QUERY_CONTAINER_STOCK = 'stock query container';
+    public const QUERY_CONTAINER_PRODUCT = 'product query container';
+    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

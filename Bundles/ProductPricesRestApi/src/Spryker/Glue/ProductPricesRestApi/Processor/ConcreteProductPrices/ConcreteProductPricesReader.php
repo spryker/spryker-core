@@ -25,6 +25,7 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
 {
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     protected const SELF_LINK_TEMPLATE = '%s/%s/%s';
 
     /**
@@ -115,8 +116,12 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
             return null;
         }
 
-        $priceProductTransfers = $this->priceProductStorageClient
-            ->getPriceProductConcreteTransfers($concreteProductData[static::KEY_ID_PRODUCT_CONCRETE]);
+        $priceProductTransfers = $this
+            ->priceProductStorageClient
+            ->resolvePriceProductConcrete(
+                $concreteProductData[static::KEY_ID_PRODUCT_CONCRETE],
+                $concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT]
+            );
 
         $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransfer($priceProductTransfers);
 

@@ -19,10 +19,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsBlockProductAbstractType extends AbstractType
 {
-    const FIELD_ID_CMS_BLOCK = 'id_cms_block';
-    const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
+    public const FIELD_ID_CMS_BLOCK = 'id_cms_block';
+    public const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
 
-    const OPTION_PRODUCT_ABSTRACT_ARRAY = 'option-product-abstracts';
+    public const OPTION_PRODUCT_ABSTRACT_ARRAY = 'option-product-abstracts';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

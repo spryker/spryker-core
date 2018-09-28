@@ -21,7 +21,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
  */
 class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {
-    const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
+    public const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
 
     /**
      * @var array

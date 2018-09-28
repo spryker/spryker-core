@@ -22,13 +22,13 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterfa
 
 class ProductRuleTable extends AbstractProductTable
 {
-    const COL_ACTION = 'action';
-    const COL_NAME = 'name';
-    const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const COL_SKU = 'sku';
-    const COL_CATEGORY_NAME = 'category_name';
-    const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    const COL_STATUS = 'status';
+    public const COL_ACTION = 'action';
+    public const COL_NAME = 'name';
+    public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const COL_SKU = 'sku';
+    public const COL_CATEGORY_NAME = 'category_name';
+    public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const COL_STATUS = 'status';
 
     /**
      * @var \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToProductInterface
@@ -126,7 +126,7 @@ class ProductRuleTable extends AbstractProductTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        if (!$this->showResultsWithoutCriteria && !count((array)$this->productRelationTransfer->getQuerySet()->getRules())) {
+        if (!$this->showResultsWithoutCriteria && !$this->productRelationTransfer->getQuerySet()->getRules()->getArrayCopy()) {
             return [];
         }
 

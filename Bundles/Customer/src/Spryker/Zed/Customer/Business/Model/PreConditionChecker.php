@@ -16,8 +16,8 @@ use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterfa
 
 class PreConditionChecker implements PreConditionCheckerInterface
 {
-    const ERROR_EMAIL_INVALID = 'customer.email.invalid';
-    const ERROR_EMAIL_UNIQUE = 'customer.email.already.used';
+    public const ERROR_EMAIL_INVALID = 'customer.email.invalid';
+    public const ERROR_EMAIL_UNIQUE = 'customer.email.already.used';
 
     /**
      * @var \Spryker\Zed\Customer\Business\Customer\CustomerInterface

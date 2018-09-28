@@ -14,10 +14,10 @@ use Spryker\Shared\EventJournal\Model\EventInterface;
  */
 class RecursiveFieldFilter extends AbstractFilter
 {
-    const OPTION_FILTER_PATTERN = 'filter_pattern';
-    const OPTION_FILTERED_STR = 'filtered_string';
+    public const OPTION_FILTER_PATTERN = 'filter_pattern';
+    public const OPTION_FILTERED_STR = 'filtered_string';
 
-    const TYPE = 'recursive';
+    public const TYPE = 'recursive';
 
     /**
      * @param \Spryker\Shared\EventJournal\Model\EventInterface $event

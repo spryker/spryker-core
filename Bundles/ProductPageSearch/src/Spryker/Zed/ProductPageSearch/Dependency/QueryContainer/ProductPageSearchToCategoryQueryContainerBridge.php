@@ -54,6 +54,14 @@ class ProductPageSearchToCategoryQueryContainerBridge implements ProductPageSear
     }
 
     /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoryNodes()
+    {
+        return $this->categoryQueryContainer->queryAllCategoryNodes();
+    }
+
+    /**
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
