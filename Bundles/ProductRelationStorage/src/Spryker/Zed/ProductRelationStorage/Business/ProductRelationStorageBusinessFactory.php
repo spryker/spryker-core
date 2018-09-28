@@ -13,6 +13,7 @@ use Spryker\Zed\ProductRelationStorage\Business\Storage\ProductRelationStorageWr
 /**
  * @method \Spryker\Zed\ProductRelationStorage\ProductRelationStorageConfig getConfig()
  * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface getRepository()
  */
 class ProductRelationStorageBusinessFactory extends AbstractBusinessFactory
 {
@@ -23,6 +24,7 @@ class ProductRelationStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductRelationStorageWriter(
             $this->getQueryContainer(),
+            $this->getRepository(),
             $this->getConfig()->isSendingToQueue()
         );
     }

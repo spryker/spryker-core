@@ -395,7 +395,7 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
-     * @param int|null $customerReference
+     * @param string|null $customerReference
      *
      * @return int
      */

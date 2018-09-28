@@ -14,7 +14,7 @@ use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServ
 
 class UrlStorageReader implements UrlStorageReaderInterface
 {
-    const URL = 'url';
+    public const URL = 'url';
 
     /**
      * @var \Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface
@@ -52,7 +52,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
     public function matchUrl($url, $localeName)
     {
         $urlDetails = $this->getUrlFromStorage($url);
-        if ($urlDetails === null) {
+        if (!$urlDetails) {
             return [];
         }
 
@@ -83,8 +83,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
     public function findUrlStorageTransferByUrl($url)
     {
         $urlDetails = $this->getUrlFromStorage($url);
-
-        if ($urlDetails === null) {
+        if (!$urlDetails) {
             return null;
         }
 

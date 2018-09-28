@@ -15,9 +15,9 @@ use Twig_SimpleFunction;
 
 class NavigationTwigExtension extends TwigExtension
 {
-    const EXTENSION_NAME = 'NavigationTwigExtension';
+    public const EXTENSION_NAME = 'NavigationTwigExtension';
 
-    const FUNCTION_NAME_NAVIGATION = 'spyNavigation';
+    public const FUNCTION_NAME_NAVIGATION = 'spyNavigation';
 
     /**
      * @var \Spryker\Client\Navigation\NavigationClientInterface

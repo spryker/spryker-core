@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Communication\Controller;
 
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
 use Spryker\Zed\Development\Communication\Form\BundlesFormType;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,9 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DependencyController extends AbstractController
 {
-    const APPLICATION_ZED = 'Zed';
-    const QUERY_KEY_BUILD_TREE = 'build-tree';
-    const QUERY_KEY_MODULE = 'bundle';
+    public const APPLICATION_ZED = 'Zed';
+    public const QUERY_KEY_BUILD_TREE = 'build-tree';
+    public const QUERY_KEY_MODULE = 'bundle';
 
     /**
      * @return array
@@ -40,13 +42,20 @@ class DependencyController extends AbstractController
      */
     public function outgoingAction(Request $request)
     {
-        $bundleName = $request->query->getAlnum(static::QUERY_KEY_MODULE);
+        $moduleName = $request->query->getAlnum(static::QUERY_KEY_MODULE);
 
-        $bundleDependencyCollectionTransfer = $this->getFacade()->showOutgoingDependenciesForModule($bundleName);
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer->setName('Spryker');
+        $moduleTransfer = new ModuleTransfer();
+        $moduleTransfer
+            ->setName($moduleName)
+            ->setOrganization($organizationTransfer);
+
+        $bundleDependencyCollectionTransfer = $this->getFacade()->showOutgoingDependenciesForModule($moduleTransfer);
         $composerDependencies = $this->getFacade()->getComposerDependencyComparison($bundleDependencyCollectionTransfer);
 
         return $this->viewResponse([
-            static::QUERY_KEY_MODULE => $bundleName,
+            static::QUERY_KEY_MODULE => $moduleName,
             'dependencies' => $bundleDependencyCollectionTransfer,
             'composerDependencies' => $composerDependencies,
         ]);
@@ -59,8 +68,16 @@ class DependencyController extends AbstractController
      */
     public function outgoingGraphAction(Request $request)
     {
-        $bundleName = $request->query->getAlnum(self::QUERY_KEY_MODULE);
-        $dataProvider = $this->getFactory()->createBundleFormDataProvider($request, $bundleName);
+        $moduleName = $request->query->getAlnum(self::QUERY_KEY_MODULE);
+
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer->setName('Spryker');
+        $moduleTransfer = new ModuleTransfer();
+        $moduleTransfer
+            ->setName($moduleName)
+            ->setOrganization($organizationTransfer);
+
+        $dataProvider = $this->getFactory()->createBundleFormDataProvider($request, $moduleTransfer);
 
         $form = $this->getFactory()
             ->createBundlesForm(
@@ -82,7 +99,7 @@ class DependencyController extends AbstractController
             }
         }
 
-        $graph = $this->getFacade()->drawOutgoingDependencyTreeGraph($bundleName, $excludedBundles, $showIncoming);
+        $graph = $this->getFacade()->drawOutgoingDependencyTreeGraph($moduleName, $excludedBundles, $showIncoming);
 
         return $this->viewResponse([
             'form' => $form->createView(),

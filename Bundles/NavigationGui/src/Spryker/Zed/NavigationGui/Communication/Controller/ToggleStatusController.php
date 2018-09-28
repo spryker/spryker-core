@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ToggleStatusController extends AbstractController
 {
-    const PARAM_ID_NAVIGATION = 'id-navigation';
+    public const PARAM_ID_NAVIGATION = 'id-navigation';
 
-    const MESSAGE_MAP_UPDATE_SUCCESS = [
+    public const MESSAGE_MAP_UPDATE_SUCCESS = [
         true => 'Navigation element %d was activated successfully.',
         false => 'Navigation element %d was deactivated successfully.',
     ];

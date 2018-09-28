@@ -21,17 +21,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CategoryType extends AbstractType
 {
-    const FIELD_CMS_BLOCKS = 'id_cms_blocks';
+    public const FIELD_CMS_BLOCKS = 'id_cms_blocks';
 
-    const OPTION_CMS_BLOCK_LIST = 'option-cms-block-list';
-    const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
-    const OPTION_WRONG_CMS_BLOCK_LIST = 'option-wrong-cms-block-list';
-    const OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST = 'option-assigned-cms-block-template-list';
+    public const OPTION_CMS_BLOCK_LIST = 'option-cms-block-list';
+    public const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
+    public const OPTION_WRONG_CMS_BLOCK_LIST = 'option-wrong-cms-block-list';
+    public const OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST = 'option-assigned-cms-block-template-list';
 
     /**
      * @var array
      */
-    const SUPPORTED_CATEGORY_TEMPLATE_LIST = [
+    public const SUPPORTED_CATEGORY_TEMPLATE_LIST = [
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_WITH_CMS_BLOCK,
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_ONLY_CMS_BLOCK,
     ];

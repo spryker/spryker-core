@@ -42,13 +42,13 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabil
  */
 class ProductBundleFacadeTest extends Unit
 {
-    const SKU_BUNDLED_1 = 'sku-1-test-tester';
-    const SKU_BUNDLED_2 = 'sku-2-test-tester';
-    const BUNDLE_SKU_3 = 'sku-3-test-tester';
+    public const SKU_BUNDLED_1 = 'sku-1-test-tester';
+    public const SKU_BUNDLED_2 = 'sku-2-test-tester';
+    public const BUNDLE_SKU_3 = 'sku-3-test-tester';
 
-    const BUNDLED_PRODUCT_PRICE_1 = 50;
-    const BUNDLED_PRODUCT_PRICE_2 = 100;
-    const ID_STORE = 1;
+    public const BUNDLED_PRODUCT_PRICE_1 = 50;
+    public const BUNDLED_PRODUCT_PRICE_2 = 100;
+    public const ID_STORE = 1;
 
     /**
      * @return void

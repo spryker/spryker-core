@@ -12,5 +12,5 @@ namespace Spryker\Shared\PropelQueryBuilder;
  */
 interface PropelQueryBuilderConstants
 {
-    const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
+    public const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
 }

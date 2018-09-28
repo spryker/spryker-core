@@ -21,9 +21,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CheckoutPlaceOrderGrandTotalXPermissionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface, ExecutablePermissionPluginInterface
 {
-    const CONFIG_FIELD_AMOUNT = 'CONFIG_FIELD_AMOUNT';
+    public const CONFIG_FIELD_AMOUNT = 'CONFIG_FIELD_AMOUNT';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -61,6 +63,8 @@ class CheckoutPlaceOrderGrandTotalXPermissionPlugin extends AbstractPlugin imple
     }
 
     /**
+     * @api
+     *
      * @param array $configuration
      * @param int|null $centAmount
      *
@@ -80,6 +84,8 @@ class CheckoutPlaceOrderGrandTotalXPermissionPlugin extends AbstractPlugin imple
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getConfigurationSignature()
@@ -90,6 +96,8 @@ class CheckoutPlaceOrderGrandTotalXPermissionPlugin extends AbstractPlugin imple
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getKey(): string

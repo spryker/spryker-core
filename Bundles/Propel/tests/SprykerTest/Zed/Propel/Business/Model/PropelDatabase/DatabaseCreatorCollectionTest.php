@@ -24,7 +24,7 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface;
  */
 class DatabaseCreatorCollectionTest extends Unit
 {
-    const TEST_ENGINE = 'testEngine';
+    public const TEST_ENGINE = 'testEngine';
 
     /**
      * @return void

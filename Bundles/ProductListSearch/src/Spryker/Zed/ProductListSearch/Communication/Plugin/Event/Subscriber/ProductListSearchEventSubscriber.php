@@ -13,14 +13,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 use Spryker\Zed\ProductList\Dependency\ProductListEvents;
-use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListCategoryPublishSearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListCategorySearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductCategoryPublishSearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductCategorySearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductConcretePublishSearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductConcreteSearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListSearchListener;
-use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductPublishSearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductSearchListener;
 
 /**
@@ -48,12 +46,10 @@ class ProductListSearchEventSubscriber extends AbstractPlugin implements EventSu
         $this->addProductListProductCategoryUpdateSearchListener($eventCollection);
         $this->addProductListProductCategoryDeleteSearchListener($eventCollection);
 
-        $this->addProductListCategoryPublishSearchListener($eventCollection);
         $this->addProductListCategoryCreateSearchListener($eventCollection);
         $this->addProductListCategoryUpdateSearchListener($eventCollection);
         $this->addProductListCategoryDeleteSearchListener($eventCollection);
 
-        $this->addProductPublishSearchListener($eventCollection);
         $this->addProductCreateSearchListener($eventCollection);
         $this->addProductUpdateSearchListener($eventCollection);
         $this->addProductDeleteSearchListener($eventCollection);
@@ -61,16 +57,6 @@ class ProductListSearchEventSubscriber extends AbstractPlugin implements EventSu
         $this->addProductListUpdateSearchListener($eventCollection);
 
         return $eventCollection;
-    }
-
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return void
-     */
-    protected function addProductPublishSearchListener(EventCollectionInterface $eventCollection): void
-    {
-        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_PUBLISH, new ProductPublishSearchListener());
     }
 
     /**
@@ -101,16 +87,6 @@ class ProductListSearchEventSubscriber extends AbstractPlugin implements EventSu
     protected function addProductDeleteSearchListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductSearchListener());
-    }
-
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return void
-     */
-    protected function addProductListCategoryPublishSearchListener(EventCollectionInterface $eventCollection): void
-    {
-        $eventCollection->addListenerQueued(ProductCategoryEvents::PRODUCT_CATEGORY_PUBLISH, new ProductListCategoryPublishSearchListener());
     }
 
     /**

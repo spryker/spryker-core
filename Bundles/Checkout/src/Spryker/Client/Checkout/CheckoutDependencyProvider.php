@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\Container;
 
 class CheckoutDependencyProvider extends AbstractDependencyProvider
 {
-    const SERVICE_ZED = 'zed service';
+    public const SERVICE_ZED = 'zed service';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
