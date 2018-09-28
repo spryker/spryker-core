@@ -21,16 +21,16 @@ class ModuleOverview implements ModuleOverviewInterface
     /**
      * @var \Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface
      */
-    protected $operatingSystemModuleFinder;
+    protected $moduleFinder;
 
     /**
      * @param \Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinderInterface $projectModuleFinder
-     * @param \Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface $operatingSystemModuleFinder
+     * @param \Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface $moduleFinder
      */
-    public function __construct(ProjectModuleFinderInterface $projectModuleFinder, ModuleFinderInterface $operatingSystemModuleFinder)
+    public function __construct(ProjectModuleFinderInterface $projectModuleFinder, ModuleFinderInterface $moduleFinder)
     {
         $this->projectModuleFinder = $projectModuleFinder;
-        $this->operatingSystemModuleFinder = $operatingSystemModuleFinder;
+        $this->moduleFinder = $moduleFinder;
     }
 
     /**
@@ -40,7 +40,7 @@ class ModuleOverview implements ModuleOverviewInterface
     {
         $moduleOverviewTransferCollection = [];
         $moduleOverviewTransferCollection = $this->addProjectModules($moduleOverviewTransferCollection);
-        $moduleOverviewTransferCollection = $this->addOperatingSystemModules($moduleOverviewTransferCollection);
+        $moduleOverviewTransferCollection = $this->addCoreModules($moduleOverviewTransferCollection);
 
         ksort($moduleOverviewTransferCollection);
 
@@ -76,11 +76,11 @@ class ModuleOverview implements ModuleOverviewInterface
      *
      * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
      */
-    protected function addOperatingSystemModules(array $moduleOverviewTransferCollection): array
+    protected function addCoreModules(array $moduleOverviewTransferCollection): array
     {
-        $operatingSystemModules = $this->operatingSystemModuleFinder->getModules();
+        $coreModules = $this->moduleFinder->getModules();
 
-        foreach (array_keys($operatingSystemModules) as $moduleKey) {
+        foreach (array_keys($coreModules) as $moduleKey) {
             $moduleName = $this->getModuleNameFromModuleKey($moduleKey);
             $moduleOverviewTransfer = $this->getModuleOverviewTransfer(
                 $moduleOverviewTransferCollection,
