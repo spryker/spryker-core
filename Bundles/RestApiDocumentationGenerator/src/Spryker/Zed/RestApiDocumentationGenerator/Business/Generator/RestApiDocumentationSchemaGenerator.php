@@ -102,7 +102,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
+     * @return string
      */
     public function getRestErrorSchemaData(): string
     {

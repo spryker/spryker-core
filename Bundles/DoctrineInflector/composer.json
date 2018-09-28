@@ -3,8 +3,8 @@
   "description": "DoctrineInflector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "doctrine/inflector": "~1.3.0"
+    "doctrine/inflector": "~1.3.0",
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
