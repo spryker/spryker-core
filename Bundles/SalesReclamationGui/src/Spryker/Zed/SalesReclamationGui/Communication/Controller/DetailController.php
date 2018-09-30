@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesReclamationGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
+use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap;
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -103,6 +104,7 @@ class DetailController extends AbstractController
         $reclamationItemTransfer = $this->getFactory()
             ->getSalesReclamationFacade()
             ->getReclamationItemById($reclamationItemTransfer);
+        $reclamationItemTransfer->setState(SpySalesReclamationItemTableMap::COL_STATE_REFUNDED);
 
         if (!$reclamationItemTransfer->getIdSalesReclamationItem()) {
             $this->addErrorMessage(sprintf('Reclamation item with id %s not exists', $idReclamationItem));

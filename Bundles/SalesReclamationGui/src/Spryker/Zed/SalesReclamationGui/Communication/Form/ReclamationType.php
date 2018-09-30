@@ -25,7 +25,7 @@ class ReclamationType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addReclamationField($builder, $options[static::OPTION_VALUE]);
     }
@@ -35,7 +35,7 @@ class ReclamationType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefault(static::OPTION_VALUE, null);
@@ -47,7 +47,7 @@ class ReclamationType extends AbstractType
      *
      * @return $this
      */
-    protected function addReclamationField(FormBuilderInterface $builder, ?string $value = null)
+    protected function addReclamationField(FormBuilderInterface $builder, ?string $value = null): self
     {
         $builder->add(static::FIELD_RECLAMATION, TextType::class, [
             'label' => 'Reclamation Id',
@@ -67,7 +67,7 @@ class ReclamationType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return static::TYPE_NAME;
     }
