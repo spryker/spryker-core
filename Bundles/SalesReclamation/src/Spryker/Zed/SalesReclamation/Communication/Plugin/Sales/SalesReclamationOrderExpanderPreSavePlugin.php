@@ -22,13 +22,13 @@ class SalesReclamationOrderExpanderPreSavePlugin extends AbstractPlugin implemen
      * Specification:
      *   - This plugin expand sales order entity with reclamation id.
      *
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function expand(SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer
+    public function expand(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer
     {
-        return $this->getFacade()->expandSalesOrderEntity($spySalesOrderEntityTransfer, $quoteTransfer);
+        return $this->getFacade()->expandSalesOrderEntity($salesOrderEntityTransfer, $quoteTransfer);
     }
 }

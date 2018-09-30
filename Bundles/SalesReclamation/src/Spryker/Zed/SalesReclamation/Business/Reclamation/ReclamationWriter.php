@@ -34,11 +34,11 @@ class ReclamationWriter implements ReclamationWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
     public function createReclamation(
         ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
-    ): ?ReclamationTransfer {
+    ): ReclamationTransfer {
         $reclamationCreateRequestTransfer
             ->requireOrder()
             ->requireOrderItems();
@@ -54,7 +54,7 @@ class ReclamationWriter implements ReclamationWriterInterface
 
         $salutation = $orderTransfer->getSalutation();
 
-        $customer = sprintf(
+        $customerName = sprintf(
             '%s%s %s',
             $salutation ? $salutation . ' ' : '',
             $orderTransfer->getFirstName(),
@@ -63,7 +63,7 @@ class ReclamationWriter implements ReclamationWriterInterface
 
         $reclamationTransfer = new ReclamationTransfer();
         $reclamationTransfer->setOrder($orderTransfer);
-        $reclamationTransfer->setCustomerName($customer);
+        $reclamationTransfer->setCustomerName($customerName);
         $reclamationTransfer->setCustomerReference($orderTransfer->getCustomerReference());
         $reclamationTransfer->setCustomerEmail($orderTransfer->getEmail());
         $reclamationTransfer->setState(SalesReclamationEntityManager::RECLAMATION_STATE_OPEN);

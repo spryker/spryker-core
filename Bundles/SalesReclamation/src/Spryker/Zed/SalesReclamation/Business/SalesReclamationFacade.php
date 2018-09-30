@@ -82,7 +82,7 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
     {
         return $this->getFactory()
             ->createReclamationHydrator()
-            ->hydrateByIdReclamation($reclamationTransfer);
+            ->hydrateByReclamation($reclamationTransfer);
     }
 
     /**
@@ -106,18 +106,18 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
     public function expandSalesOrderEntity(
-        SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer,
+        SpySalesOrderEntityTransfer $salesOrderEntityTransfer,
         QuoteTransfer $quoteTransfer
     ): SpySalesOrderEntityTransfer {
         return $this->getFactory()
             ->createReclamationOrderExpander()
-            ->expandSalesOrderEntity($spySalesOrderEntityTransfer, $quoteTransfer);
+            ->expandSalesOrderEntity($salesOrderEntityTransfer, $quoteTransfer);
     }
 
     /**

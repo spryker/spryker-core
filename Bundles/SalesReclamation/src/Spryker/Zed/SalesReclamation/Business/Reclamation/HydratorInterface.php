@@ -17,7 +17,7 @@ interface HydratorInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
-    public function hydrateByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
+    public function hydrateByReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

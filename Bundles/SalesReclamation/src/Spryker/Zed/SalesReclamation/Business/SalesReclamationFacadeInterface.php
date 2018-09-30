@@ -87,13 +87,13 @@ interface SalesReclamationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
     public function expandSalesOrderEntity(
-        SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer,
+        SpySalesOrderEntityTransfer $salesOrderEntityTransfer,
         QuoteTransfer $quoteTransfer
     ): SpySalesOrderEntityTransfer;
 
@@ -108,7 +108,8 @@ interface SalesReclamationFacadeInterface
     public function getReclamations(): ?ArrayObject;
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Returns reclamation item entity by id.
      *
      * @api
      *
@@ -119,7 +120,8 @@ interface SalesReclamationFacadeInterface
     public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer;
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Returns reclamation entity by id.
      *
      * @api
      *

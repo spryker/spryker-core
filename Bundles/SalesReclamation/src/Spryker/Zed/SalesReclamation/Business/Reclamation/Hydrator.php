@@ -44,11 +44,11 @@ class Hydrator implements HydratorInterface
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
-    public function hydrateByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
+    public function hydrateByReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
     {
         $reclamationTransfer = $this->salesReclamationRepository->findReclamationById($reclamationTransfer);
 
-        if (!$reclamationTransfer->getIdSalesReclamation()) {
+        if (!$reclamationTransfer) {
             return null;
         }
 

@@ -150,7 +150,7 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
     protected function addReclamationItemsToReclamationTransfer(
         SpySalesReclamation $salesReclamationEntity,
         ReclamationTransfer $reclamationTransfer
-    ) {
+    ): ReclamationTransfer {
         $salesReclamationItemEntities = $salesReclamationEntity->getSpySalesReclamationItems();
 
         if ($salesReclamationItemEntities->count()) {
@@ -172,7 +172,7 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
     protected function addCreatedOrdersToReclamationTransfer(
         SpySalesReclamation $salesReclamationEntity,
         ReclamationTransfer $reclamationTransfer
-    ) {
+    ): ReclamationTransfer {
         $createdOrders = $salesReclamationEntity->getCreatedOrders();
 
         if ($createdOrders->count()) {
