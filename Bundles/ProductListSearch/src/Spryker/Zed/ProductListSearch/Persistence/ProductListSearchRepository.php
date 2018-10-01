@@ -27,17 +27,17 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
     /**
      * @return int
      */
-    public function getValueForTheWhitelistType(): int
+    public function getValueForWhitelistType(): int
     {
-        return $this->getEnumValueForTheListType(SpyProductListTableMap::COL_TYPE_WHITELIST);
+        return $this->getEnumValueForListType(SpyProductListTableMap::COL_TYPE_WHITELIST);
     }
 
     /**
      * @return int
      */
-    public function getValueForTheBlacklistType(): int
+    public function getValueForBlacklistType(): int
     {
-        return $this->getEnumValueForTheListType(SpyProductListTableMap::COL_TYPE_BLACKLIST);
+        return $this->getEnumValueForListType(SpyProductListTableMap::COL_TYPE_BLACKLIST);
     }
 
     /**
@@ -45,7 +45,7 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
      *
      * @return int
      */
-    protected function getEnumValueForTheListType(string $listType): int
+    protected function getEnumValueForListType(string $listType): int
     {
         return array_search(
             $listType,

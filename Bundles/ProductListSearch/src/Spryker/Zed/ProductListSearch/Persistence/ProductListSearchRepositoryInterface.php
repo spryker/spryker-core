@@ -12,12 +12,12 @@ interface ProductListSearchRepositoryInterface
     /**
      * @return int
      */
-    public function getValueForTheWhitelistType(): int;
+    public function getValueForWhitelistType(): int;
 
     /**
      * @return int
      */
-    public function getValueForTheBlacklistType(): int;
+    public function getValueForBlacklistType(): int;
 
     /**
      * @param int[] $concreteIds
