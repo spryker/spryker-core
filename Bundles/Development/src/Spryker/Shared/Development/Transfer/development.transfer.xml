@@ -159,4 +159,10 @@
         <property name="module" type="Module"/>
     </transfer>
 
+    <transfer name="ModuleOverview">
+        <property name="moduleName" type="string"/>
+        <property name="existsCoreModule" type="bool"/>
+        <property name="existsProjectModule" type="bool"/>
+    </transfer>
+
 </transfers>

@@ -132,6 +132,8 @@ use Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinder;
 use Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinderInterface;
 use Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinder;
 use Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface;
+use Spryker\Zed\Development\Business\Module\ModuleOverview;
+use Spryker\Zed\Development\Business\Module\ModuleOverviewInterface;
 use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderComposite;
 use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuilder;
@@ -730,6 +732,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createProjectModuleFinder(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Module\ModuleOverviewInterface
+     */
+    public function createModuleOverview(): ModuleOverviewInterface
+    {
+        return new ModuleOverview($this->createProjectModuleFinder(), $this->createModuleFinder());
     }
 
     /**
