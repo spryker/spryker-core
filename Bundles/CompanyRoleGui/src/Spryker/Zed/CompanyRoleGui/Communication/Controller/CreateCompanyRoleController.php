@@ -44,8 +44,6 @@ class CreateCompanyRoleController extends AbstractController
             if ($companyRoleResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_ROLE_CREATE);
 
-                $this->viewResponse($viewData);
-
                 return $this->redirectResponse(static::URL_REDIRECT_LIST_COMPANY_ROLE);
             }
 

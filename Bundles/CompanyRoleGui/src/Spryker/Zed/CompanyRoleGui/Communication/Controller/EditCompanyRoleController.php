@@ -19,7 +19,6 @@ class EditCompanyRoleController extends AbstractController
     protected const URL_REDIRECT_LIST_COMPANY_ROLE = '/company-role-gui/list-company-role';
 
     protected const MESSAGE_SUCCESS_COMPANY_ROLE_UPDATE = 'Company role has been successfully updated';
-    protected const MESSAGE_ERROR_COMPANY_ROLE_UPDATE = 'Company role cannot be updated';
 
     protected const REQUEST_ID_COMPANY_ROLE = 'id-company-role';
 
