@@ -225,6 +225,18 @@ interface ProductFacadeInterface
      */
     public function findProductConcreteIdBySku($sku);
 
+   /**
+    * Specification:
+    * - Returns concrete products transfers filtered by skus.
+    *
+    * @api
+    *
+    * @param string[] $skus
+    *
+    * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+    */
+    public function findProductConcretesBySkus(array $skus): array;
+
     /**
      * Specification:
      * - Returns the abstract product ID by given concrete product ID.

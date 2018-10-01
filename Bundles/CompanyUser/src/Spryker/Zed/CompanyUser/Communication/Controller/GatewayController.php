@@ -68,4 +68,24 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->getCompanyUserById($companyUserTransfer->getIdCompanyUser());
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function enableCompanyUserAction(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->getFacade()->enableCompanyUser($companyUserTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function disableCompanyUserAction(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->getFacade()->disableCompanyUser($companyUserTransfer);
+    }
 }

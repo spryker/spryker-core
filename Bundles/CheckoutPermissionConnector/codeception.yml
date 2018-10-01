@@ -17,3 +17,4 @@ coverage:
     whitelist:
         include:
             - 'src/*.php'
+
