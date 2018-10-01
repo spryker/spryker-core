@@ -24,11 +24,9 @@ interface ShoppingListToProductFacadeInterface
     public function findProductConcreteIdBySku($sku): ?int;
 
     /**
-     * @param string $concreteSku
+     * @param string[] $skus
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductAbstractIdByConcreteSku($concreteSku);
+    public function findProductConcretesBySkus(array $skus): array;
 }

@@ -126,18 +126,18 @@ class ShoppingListFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemExpanderPluginInterface[]
-     */
-    public function getAddItemShoppingListItemExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_EXPANDER);
-    }
-
-    /**
      * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
      */
     public function getShoppingListItemToItemMapperPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemExpanderPluginInterface[]
+     */
+    public function getAddItemShoppingListItemExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_EXPANDER);
     }
 }

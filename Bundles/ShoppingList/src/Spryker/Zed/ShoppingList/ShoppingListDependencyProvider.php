@@ -28,9 +28,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ITEM_EXPANDER = 'PLUGINS_ITEM_EXPANDER';
     public const PLUGINS_QUOTE_ITEM_EXPANDER = 'PLUGINS_QUOTE_ITEM_EXPANDER';
     public const PLUGINS_ADD_ITEM_PRE_CHECK = 'PLUGINS_ADD_ITEM_PRE_CHECK';
-    public const PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER = 'PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER';
     public const PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE = 'PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE';
     public const PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE = 'PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE';
+    public const PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER = 'PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -49,9 +49,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addItemExpanderPlugins($container);
         $container = $this->addQuoteItemExpanderPlugins($container);
         $container = $this->addAddItemPreCheckPlugins($container);
-        $container = $this->addItemToShoppingListItemMapperPlugins($container);
         $container = $this->addShoppingListItemPostSavePlugins($container);
         $container = $this->addBeforeDeleteShoppingListItemPlugins($container);
+        $container = $this->addItemToShoppingListItemMapperPlugins($container);
 
         return $container;
     }
@@ -183,47 +183,6 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addShoppingListItemPostSavePlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE] = function () {
-            return $this->getShoppingListItemPostSavePlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addBeforeDeleteShoppingListItemPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE] = function () {
-            return $this->getBeforeDeleteShoppingListItemPlugins();
-        };
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addItemToShoppingListItemMapperPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER] = function () {
-            return $this->getItemToShoppingListItemMapperPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
     protected function getItemExpanderPlugins(): array
@@ -248,11 +207,17 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface[]
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getItemToShoppingListItemMapperPlugins(): array
+    protected function addShoppingListItemPostSavePlugins(Container $container): Container
     {
-        return [];
+        $container[static::PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE] = function () {
+            return $this->getShoppingListItemPostSavePlugins();
+        };
+
+        return $container;
     }
 
     /**
@@ -264,9 +229,45 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBeforeDeleteShoppingListItemPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE] = function () {
+            return $this->getBeforeDeleteShoppingListItemPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface[]
      */
     protected function getBeforeDeleteShoppingListItemPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addItemToShoppingListItemMapperPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER] = function () {
+            return $this->getItemToShoppingListItemMapperPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface[]
+     */
+    protected function getItemToShoppingListItemMapperPlugins(): array
     {
         return [];
     }

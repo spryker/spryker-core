@@ -9,10 +9,12 @@ namespace Spryker\Zed\ShoppingList\Business\Model;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
@@ -71,12 +73,12 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     /**
      * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListReaderInterface
      */
-    private $shoppingListReader;
+    protected $shoppingListReader;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutorInterface
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface
      */
-    private $pluginExecutor;
+    protected $pluginExecutor;
 
     /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
@@ -87,7 +89,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface $eventFacade
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface $shoppingListItemOperation
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListReaderInterface $shoppingListReader
-     * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutorInterface $pluginExecutor
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
      */
     public function __construct(
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
@@ -325,9 +327,20 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     protected function executeDeleteShoppingListItemsTransaction(ShoppingListTransfer $shoppingListTransfer): void
     {
         foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
-            $this->pluginExecutor->executeBeforeDeletePlugins($shoppingListItemTransfer);
+            $this->deleteShoppingListItem($shoppingListItemTransfer);
         }
+    }
 
-        $this->shoppingListEntityManager->deleteShoppingListItems($shoppingListTransfer);
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return void
+     */
+    protected function deleteShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    {
+        $shoppingListItemTransfer->requireIdShoppingListItem();
+
+        $shoppingListItemTransfer = $this->pluginExecutor->executeBeforeDeletePlugins($shoppingListItemTransfer);
+        $this->shoppingListEntityManager->deleteShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
     }
 }

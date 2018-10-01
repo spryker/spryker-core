@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface;
@@ -54,7 +55,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     protected $messengerFacade;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutorInterface
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface
      */
     protected $pluginExecutor;
 
@@ -64,7 +65,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
-     * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutorInterface $pluginExecutor
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
      */
     public function __construct(
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
@@ -150,7 +151,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             return $shoppingListItemTransfer;
         }
 
-        return $this->createOrUpdateShoppingListItem($shoppingListItemTransfer);
+        return $this->saveShoppingListItemTransfer($shoppingListItemTransfer);
     }
 
     /**
@@ -160,7 +161,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      */
     public function saveShoppingListItemWithoutPermissionsCheck(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->createOrUpdateShoppingListItem($shoppingListItemTransfer);
+        return $this->saveShoppingListItemTransfer($shoppingListItemTransfer);
     }
 
     /**
@@ -170,7 +171,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      */
     protected function deleteShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
-        $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItemTransfer);
+        $shoppingListItemTransfer = $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItemTransfer);
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
             return $this->deleteShoppingListItemTransaction($shoppingListItemTransfer);
@@ -182,10 +183,10 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    protected function createOrUpdateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    protected function saveShoppingListItemTransfer(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
-            return $this->createOrUpdateShoppingListItemTransaction($shoppingListItemTransfer);
+            return $this->saveShoppingListItemTransaction($shoppingListItemTransfer);
         });
     }
 
@@ -194,7 +195,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    protected function createOrUpdateShoppingListItemTransaction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    protected function saveShoppingListItemTransaction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         $shoppingListItemTransfer = $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
         $this->pluginExecutor->executePostSavePlugins($shoppingListItemTransfer);

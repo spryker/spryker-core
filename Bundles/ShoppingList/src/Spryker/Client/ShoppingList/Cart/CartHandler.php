@@ -36,7 +36,7 @@ class CartHandler implements CartHandlerInterface
     /**
      * @var \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
      */
-    private $shoppingListItemToItemMapperPlugins;
+    protected $shoppingListItemToItemMapperPlugins;
 
     /**
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface $cartClient
