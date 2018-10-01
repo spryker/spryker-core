@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Tax\Persistence;
 
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
+
 interface TaxRepositoryInterface
 {
     /**
@@ -23,4 +26,18 @@ interface TaxRepositoryInterface
      * @return bool
      */
     public function isTaxSetNameAndIdUnique(string $name, int $idTaxSet): bool;
+
+    /**
+     * @param int $idTaxRate
+     *
+     * @return \Generated\Shared\Transfer\TaxRateTransfer|null
+     */
+    public function findTaxRate(int $idTaxRate): ?TaxRateTransfer;
+
+    /**
+     * @param int $idTaxSet
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    public function findTaxSet(int $idTaxSet): ?TaxSetTransfer;
 }

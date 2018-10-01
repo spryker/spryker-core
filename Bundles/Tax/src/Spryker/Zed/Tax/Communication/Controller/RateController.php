@@ -9,8 +9,8 @@ namespace Spryker\Zed\Tax\Communication\Controller;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -68,12 +68,12 @@ class RateController extends AbstractController
     {
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
 
-        try {
-            $taxRateTransfer = $this->getFacade()->getTaxRate($idTaxRate);
-        } catch (ResourceNotFoundException $exception) {
+        $taxRateTransfer = $this->getFacade()->findTaxRate($idTaxRate);
+
+        if ($taxRateTransfer === null) {
             $this->addErrorMessage(sprintf('Tax rate with id %s doesn\'t exist', $idTaxRate));
 
-            return $this->redirectResponse('/tax/rate/list');
+            return $this->redirectResponse(TaxConstants::URL_LIST_TAX_RATE);
         }
 
         $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider($taxRateTransfer);
@@ -118,12 +118,12 @@ class RateController extends AbstractController
     {
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
 
-        try {
-            $taxRateTransfer = $this->getFacade()->getTaxRate($idTaxRate);
-        } catch (ResourceNotFoundException $exception) {
+        $taxRateTransfer = $this->getFacade()->findTaxRate($idTaxRate);
+
+        if ($taxRateTransfer === null) {
             $this->addErrorMessage(sprintf('Tax rate with id %s doesn\'t exist', $idTaxRate));
 
-            return $this->redirectResponse('/tax/rate/list');
+            return $this->redirectResponse(TaxConstants::URL_LIST_TAX_RATE);
         }
 
         return [

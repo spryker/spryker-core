@@ -9,8 +9,8 @@ namespace Spryker\Zed\Tax\Communication\Controller;
 
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -63,12 +63,12 @@ class SetController extends AbstractController
     {
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
-        try {
-            $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
-        } catch (ResourceNotFoundException $exception) {
+        $taxSetTransfer = $this->getFacade()->findTaxSet($idTaxSet);
+
+        if ($taxSetTransfer === null) {
             $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
 
-            return $this->redirectResponse('/tax/rate/list');
+            return $this->redirectResponse(TaxConstants::URL_LIST_TAX_SET);
         }
 
         $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider($taxSetTransfer);
@@ -105,12 +105,12 @@ class SetController extends AbstractController
     {
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
-        try {
-            $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
-        } catch (ResourceNotFoundException $exception) {
+        $taxSetTransfer = $this->getFacade()->findTaxSet($idTaxSet);
+
+        if ($taxSetTransfer === null) {
             $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
 
-            return $this->redirectResponse('/tax/set/list');
+            return $this->redirectResponse(TaxConstants::URL_LIST_TAX_SET);
         }
 
         return [
