@@ -1,5 +1,6 @@
 {
   "name": "spryker/synchronization-extension",
+  "type": "library",
   "description": "SynchronizationExtension module",
   "license": "proprietary",
   "require": {

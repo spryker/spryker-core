@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-navigation-connector",
+  "type": "library",
   "description": "CmsNavigationConnector module",
   "license": "proprietary",
   "require": {

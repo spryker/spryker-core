@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-user-connector-gui",
+  "type": "library",
   "description": "CustomerUserConnectorGui module",
   "license": "proprietary",
   "require": {

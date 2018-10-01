@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-group-storage",
+  "type": "library",
   "description": "ProductGroupStorage module",
   "license": "proprietary",
   "require": {
