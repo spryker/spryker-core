@@ -1,5 +1,6 @@
 {
   "name": "spryker/cart-variant",
+  "type": "library",
   "description": "CartVariant module",
   "license": "proprietary",
   "require": {

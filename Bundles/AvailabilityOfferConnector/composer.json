@@ -1,5 +1,6 @@
 {
   "name": "spryker/availability-offer-connector",
+  "type": "library",
   "description": "AvailabilityOfferConnector module",
   "license": "proprietary",
   "require": {

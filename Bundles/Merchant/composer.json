@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant",
+  "type": "library",
   "description": "Merchant module",
   "license": "proprietary",
   "require": {

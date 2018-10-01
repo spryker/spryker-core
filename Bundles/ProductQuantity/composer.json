@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-quantity",
+  "type": "library",
   "description": "ProductQuantity module",
   "license": "proprietary",
   "require": {

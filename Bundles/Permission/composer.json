@@ -1,5 +1,6 @@
 {
   "name": "spryker/permission",
+  "type": "library",
   "description": "Permission module",
   "license": "proprietary",
   "require": {

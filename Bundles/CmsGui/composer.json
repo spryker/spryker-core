@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-gui",
+  "type": "library",
   "description": "CmsGui module",
   "license": "proprietary",
   "require": {

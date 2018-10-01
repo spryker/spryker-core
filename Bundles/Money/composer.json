@@ -1,5 +1,6 @@
 {
   "name": "spryker/money",
+  "type": "library",
   "description": "Money module",
   "license": "proprietary",
   "require": {

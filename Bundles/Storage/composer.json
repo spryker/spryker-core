@@ -1,5 +1,6 @@
 {
   "name": "spryker/storage",
+  "type": "library",
   "description": "Storage module",
   "license": "proprietary",
   "require": {

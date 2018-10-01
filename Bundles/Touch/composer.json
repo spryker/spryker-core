@@ -1,5 +1,6 @@
 {
   "name": "spryker/touch",
+  "type": "library",
   "description": "Touch module",
   "license": "proprietary",
   "require": {

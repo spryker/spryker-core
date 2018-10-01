@@ -1,5 +1,6 @@
 {
   "name": "spryker/user-extension",
+  "type": "library",
   "description": "UserExtension module",
   "license": "proprietary",
   "require": {

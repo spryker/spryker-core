@@ -1,5 +1,6 @@
 {
   "name": "spryker/shipment-cart-connector",
+  "type": "library",
   "description": "ShipmentCartConnector module",
   "license": "proprietary",
   "require": {
