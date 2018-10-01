@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
@@ -93,5 +94,26 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $nodeQuery->setFormatter(new PropelArraySetFormatter());
 
         return $nodeQuery;
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategoryById(int $idCategory): ?CategoryTransfer
+    {
+        $categoryEntityTransfer = $this->getFactory()
+            ->createCategoryQuery()
+            ->findOneByIdCategory($idCategory);
+
+        if ($categoryEntityTransfer === null) {
+            return $categoryEntityTransfer;
+        }
+
+        return $this->getFactory()->createCategoryMapper()->mapCategory(
+            $categoryEntityTransfer,
+            new CategoryTransfer()
+        );
     }
 }

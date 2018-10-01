@@ -10,7 +10,6 @@ namespace Spryker\Zed\Category\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
-use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,15 +29,19 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $this->getFacade()->syncCategoryTemplate();
+        $idCategory = $request->query->getInt(CategoryConstants::PARAM_ID_CATEGORY);
 
-        try {
-            $form = $this->getFactory()->createCategoryEditForm();
-        } catch (MissingCategoryException $exception) {
+        $categoryTransfer = $this->getFacade()->findCategoryById($idCategory);
+
+        if ($categoryTransfer === null) {
             $this->addErrorMessage(sprintf('Category with id %s doesn\'t exist', $request->get('id-category')));
 
-            return $this->redirectResponse('/category/root');
+            return $this->redirectResponse(CategoryConstants::URL_ROOT_CATEGORY);
         }
-        $form->handleRequest($request);
+
+        $form = $this->getFactory()
+            ->createCategoryEditForm($categoryTransfer)
+            ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryTransfer = $this->getCategoryTransferFromForm($form);
