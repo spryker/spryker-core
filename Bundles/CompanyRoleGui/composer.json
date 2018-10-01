@@ -14,11 +14,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/gui": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/gui": "If you want to use CompanyRoleGui plugins for CompanyUserTable: ^3.13.1"
   },
   "autoload": {
     "psr-4": {

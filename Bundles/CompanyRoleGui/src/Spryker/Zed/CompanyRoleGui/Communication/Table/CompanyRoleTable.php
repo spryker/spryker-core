@@ -28,7 +28,7 @@ class CompanyRoleTable extends AbstractTable
 
     protected const PARAM_ID_COMPANY_ROLE = 'id-company-role';
 
-    protected const UPDATE_ROLE_URL = '/company-role-gui/update-company-role';
+    protected const UPDATE_ROLE_URL = '/company-role-gui/edit-company-role';
     protected const DELETE_ROLE_URL = '/company-role-gui/delete-company-role/confirm-delete';
 
     protected const BUTTON_TITLE_DELETE = 'Delete';

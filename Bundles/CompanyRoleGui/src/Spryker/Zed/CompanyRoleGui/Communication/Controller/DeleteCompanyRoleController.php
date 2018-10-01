@@ -23,6 +23,7 @@ class DeleteCompanyRoleController extends AbstractController
     protected const MESSAGE_DEFAULT_COMPANY_ROLE_DELETE_ERROR = 'You can not delete a default role, please set another default role before delete action';
     protected const MESSAGE_COMPANY_ROLE_DELETE_SUCCESS = 'Company role has been successfully removed';
     protected const MESSAGE_COMPANY_ROLE_DELETE_ERROR = 'Company role can not be removed';
+    protected const MESSAGE_COMPANY_ROLE_WITHOUT_ID_ERROR = 'No company role ID provided';
 
     protected const PARAM_REFERER = 'referer';
     protected const REDIRECT_URL_DEFAULT = '/company-role-gui/list-company-role';
@@ -39,15 +40,12 @@ class DeleteCompanyRoleController extends AbstractController
         $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
 
         if (!$idCompanyRole) {
-            throw new NotFoundHttpException('company role id not found in params');
+            throw new NotFoundHttpException(static::MESSAGE_COMPANY_ROLE_WITHOUT_ID_ERROR);
         }
-
-        $companyRoleTransfer = (new CompanyRoleTransfer())
-            ->setIdCompanyRole($idCompanyRole);
 
         $companyRoleResponseTransfer = $this->getFactory()
             ->getCompanyRoleFacade()
-            ->delete($companyRoleTransfer);
+            ->delete((new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole));
 
         if ($companyRoleResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_COMPANY_ROLE_DELETE_SUCCESS);
@@ -70,15 +68,12 @@ class DeleteCompanyRoleController extends AbstractController
         $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
 
         if (!$idCompanyRole) {
-            throw new NotFoundHttpException('company role id not found in params');
+            throw new NotFoundHttpException(static::MESSAGE_COMPANY_ROLE_WITHOUT_ID_ERROR);
         }
-
-        $companyRoleTransfer = (new CompanyRoleTransfer())
-            ->setIdCompanyRole($idCompanyRole);
 
         $companyRoleTransfer = $this->getFactory()
             ->getCompanyRoleFacade()
-            ->getCompanyRoleById($companyRoleTransfer);
+            ->getCompanyRoleById((new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole));
 
         if ($companyRoleTransfer->getIsDefault()) {
             $this->addErrorMessage(static::MESSAGE_DEFAULT_COMPANY_ROLE_DELETE_ERROR);

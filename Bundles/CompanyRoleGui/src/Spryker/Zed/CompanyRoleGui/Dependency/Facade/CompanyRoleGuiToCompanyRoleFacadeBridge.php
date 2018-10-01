@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
-use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 
 class CompanyRoleGuiToCompanyRoleFacadeBridge implements CompanyRoleGuiToCompanyRoleFacadeInterface
 {
