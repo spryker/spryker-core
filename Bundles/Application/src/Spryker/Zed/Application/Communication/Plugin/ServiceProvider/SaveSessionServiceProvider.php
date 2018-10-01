@@ -20,14 +20,18 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class SaveSessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {
