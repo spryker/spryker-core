@@ -92,10 +92,6 @@ class AddressReader implements AddressReaderInterface
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
 
-        if (!count($addressesTransfer->getAddresses())) {
-            return $this->restApiError->addCustomerAddressesNotFoundError($restResponse);
-        }
-
         if (!$restRequest->getResource()->getId()) {
             $this->getAllAddresses($addressesTransfer, $customerResponseTransfer->getCustomerTransfer(), $restResponse);
 
@@ -147,7 +143,7 @@ class AddressReader implements AddressReaderInterface
      */
     public function findAddressByUuid(RestRequestInterface $restRequest, string $uuid): ?AddressTransfer
     {
-        $customerTransfer = (new CustomerTransfer())->setIdCustomer($restRequest->getUser()->getSurrogateIdentifier());
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
         $addressesTransfer = $this->customerClient->getAddresses($customerTransfer);
 
         foreach ($addressesTransfer->getAddresses() as $address) {
