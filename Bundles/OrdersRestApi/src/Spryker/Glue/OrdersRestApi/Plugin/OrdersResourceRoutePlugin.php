@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\OrdersRestApi\Plugin;
 
-use Generated\Shared\Transfer\OrderRestAttributesTransfer;
+use Generated\Shared\Transfer\RestOrdersAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -65,6 +65,6 @@ class OrdersResourceRoutePlugin extends AbstractPlugin implements ResourceRouteP
      */
     public function getResourceAttributesClassName(): string
     {
-        return OrderRestAttributesTransfer::class;
+        return RestOrdersAttributesTransfer::class;
     }
 }

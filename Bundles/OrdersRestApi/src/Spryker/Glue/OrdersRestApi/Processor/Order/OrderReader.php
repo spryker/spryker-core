@@ -93,8 +93,8 @@ class OrderReader implements OrderReaderInterface
             );
 
         foreach ($orderListTransfer->getOrders() as $orderTransfer) {
-            $orderRestAttributesTransfer = $this->orderResourceMapper->mapOrderTransferToOrderRestAttributesTransfer($orderTransfer);
-            $response = $this->createRestResource($response, $orderTransfer->getOrderReference(), $orderRestAttributesTransfer);
+            $restOrdersAttributesTransfer = $this->orderResourceMapper->mapOrderTransferToRestOrdersAttributesTransfer($orderTransfer);
+            $response = $this->createRestResource($response, $orderTransfer->getOrderReference(), $restOrdersAttributesTransfer);
         }
 
         return $response;
@@ -120,9 +120,9 @@ class OrderReader implements OrderReaderInterface
             return $this->createOrderNotFoundErrorResponse($response);
         }
 
-        $orderDetailsRestAttributesTransfer = $this->orderResourceMapper->mapOrderTransferToOrderDetailsRestAttributesTransfer($orderTransfer);
+        $restOrderDetailsAttributesTransfer = $this->orderResourceMapper->mapOrderTransferToRestOrderDetailsAttributesTransfer($orderTransfer);
 
-        return $this->createRestResource($response, $orderTransfer->getOrderReference(), $orderDetailsRestAttributesTransfer);
+        return $this->createRestResource($response, $orderTransfer->getOrderReference(), $restOrderDetailsAttributesTransfer);
     }
 
     /**
@@ -143,16 +143,16 @@ class OrderReader implements OrderReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
      * @param string $orderReference
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $orderRestAttributesTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $restOrdersAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createRestResource(RestResponseInterface $response, string $orderReference, AbstractTransfer $orderRestAttributesTransfer): RestResponseInterface
+    protected function createRestResource(RestResponseInterface $response, string $orderReference, AbstractTransfer $restOrdersAttributesTransfer): RestResponseInterface
     {
         $restResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDERS,
             $orderReference,
-            $orderRestAttributesTransfer
+            $restOrdersAttributesTransfer
         );
 
         return $response->addResource($restResource);

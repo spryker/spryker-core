@@ -3,21 +3,21 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="OrderRestAttributes">
+    <transfer name="RestOrdersAttributes">
         <property name="createdAt" type="string"/>
-        <property name="totals" type="OrderRestTotalsAttributes"/>
+        <property name="totals" type="RestOrderTotalsAttributes"/>
         <property name="currencyIsoCode" type="string"/>
     </transfer>
 
-    <transfer name="OrderDetailsRestAttributes">
+    <transfer name="RestOrderDetailsAttributes">
         <property name="createdAt" type="string"/>
-        <property name="totals" type="OrderRestTotalsAttributes"/>
+        <property name="totals" type="RestOrderTotalsAttributes"/>
         <property name="currencyIsoCode" type="string"/>
-        <property name="items" type="OrderItemsRestAttributes[]" singular="item"/>
-        <property name="expenses" type="OrderRestExpensesAttributes[]" singular="expense"/>
+        <property name="items" type="RestOrderItemsAttributes[]" singular="item"/>
+        <property name="expenses" type="RestOrderExpensesAttributes[]" singular="expense"/>
     </transfer>
 
-    <transfer name="OrderItemsRestAttributes">
+    <transfer name="RestOrderItemsAttributes">
         <property name="name" type="string"/>
         <property name="sku" type="string"/>
         <property name="sumPrice" type="int"/>
@@ -25,7 +25,7 @@
         <property name="quantity" type="int"/>
     </transfer>
 
-    <transfer name="OrderRestTotalsAttributes">
+    <transfer name="RestOrderTotalsAttributes">
         <property name="expenseTotal" type="int"/>
         <property name="discountTotal" type="int"/>
         <property name="taxTotal" type="int"/>
@@ -34,7 +34,7 @@
         <property name="canceledTotal" type="int"/>
     </transfer>
 
-    <transfer name="OrderRestExpensesAttributes">
+    <transfer name="RestOrderExpensesAttributes">
         <property name="name" type="string"/>
         <property name="sumPrice" type="int"/>
     </transfer>

@@ -7,41 +7,41 @@
 
 namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\OrderDetailsRestAttributesTransfer;
-use Generated\Shared\Transfer\OrderRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
+use Generated\Shared\Transfer\RestOrdersAttributesTransfer;
 
 class OrderResourceMapper implements OrderResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderRestAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestOrdersAttributesTransfer
      */
-    public function mapOrderTransferToOrderRestAttributesTransfer(OrderTransfer $orderTransfer): OrderRestAttributesTransfer
+    public function mapOrderTransferToRestOrdersAttributesTransfer(OrderTransfer $orderTransfer): RestOrdersAttributesTransfer
     {
         $orderTransfer->requireTotals();
         $orderTransfer->getTotals()->requireTaxTotal();
 
-        $orderRestAttributesTransfer = (new OrderRestAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
-        $orderRestAttributesTransfer->getTotals()->setTaxTotal($orderTransfer->getTotals()->getTaxTotal()->getAmount());
+        $restOrdersAttributesTransfer = (new RestOrdersAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
+        $restOrdersAttributesTransfer->getTotals()->setTaxTotal($orderTransfer->getTotals()->getTaxTotal()->getAmount());
 
-        return $orderRestAttributesTransfer;
+        return $restOrdersAttributesTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderDetailsRestAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer
      */
-    public function mapOrderTransferToOrderDetailsRestAttributesTransfer(OrderTransfer $orderTransfer): OrderDetailsRestAttributesTransfer
+    public function mapOrderTransferToRestOrderDetailsAttributesTransfer(OrderTransfer $orderTransfer): RestOrderDetailsAttributesTransfer
     {
         $orderTransfer->requireTotals();
         $orderTransfer->getTotals()->requireTaxTotal();
 
-        $orderDetailsRestAttributesTransfer = (new OrderDetailsRestAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
-        $orderDetailsRestAttributesTransfer->getTotals()->setTaxTotal($orderTransfer->getTotals()->getTaxTotal()->getAmount());
+        $restOrderDetailsAttributesTransfer = (new RestOrderDetailsAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
+        $restOrderDetailsAttributesTransfer->getTotals()->setTaxTotal($orderTransfer->getTotals()->getTaxTotal()->getAmount());
 
-        return $orderDetailsRestAttributesTransfer;
+        return $restOrderDetailsAttributesTransfer;
     }
 }
