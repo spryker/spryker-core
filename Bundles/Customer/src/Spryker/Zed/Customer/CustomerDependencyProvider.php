@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer;
 
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\CompanyUserGui\Communication\Plugin\AttachUserToCompanyPlugin;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
@@ -41,6 +42,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
     const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
     const PLUGINS_POST_CUSTOMER_REGISTRATION = 'PLUGINS_POST_CUSTOMER_REGISTRATION';
+    const PLUGINS_CUSTOMER_TABLE = 'PLUGINS_CUSTOMER_TABLE';
 
     public const SUB_REQUEST_HANDLER = 'SUB_REQUEST_HANDLER';
 
@@ -79,6 +81,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addSubRequestHandler($container);
+        $container = $this->provideCustomerTableActionPlugins($container);
 
         return $container;
     }
@@ -302,5 +305,29 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     protected function getPostCustomerRegistrationPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function provideCustomerTableActionPlugins($container): Container
+    {
+        $container[static::PLUGINS_CUSTOMER_TABLE] = function () {
+            return $this->getCustomerTableActionPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionPluginInterface[]
+     */
+    protected function getCustomerTableActionPlugins(): array
+    {
+        return [
+            new AttachUserToCompanyPlugin(),
+        ];
     }
 }
