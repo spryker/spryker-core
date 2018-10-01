@@ -27,19 +27,45 @@ class MerchantRelationshipHelper extends Module
      */
     public function haveMerchantRelationship(array $seedData): MerchantRelationshipTransfer
     {
-        $merchantRelationship = (new MerchantRelationshipBuilder($seedData))->build();
-        $merchantRelationship->setIdMerchantRelationship(null);
+        $merchantRelationshipTransfer = (new MerchantRelationshipBuilder($seedData))->build();
+        $merchantRelationshipTransfer->setIdMerchantRelationship(null);
 
-        $merchantRelationshipTransfer = $this->getLocator()
-            ->merchantRelationship()
-            ->facade()
-            ->createMerchantRelationship($merchantRelationship);
+        $merchantRelationshipTransfer = $this->createOrUpdateMerchantRelationship($merchantRelationshipTransfer);
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantRelationshipTransfer) {
             $this->cleanupMerchantRelationship($merchantRelationshipTransfer);
         });
 
         return $merchantRelationshipTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    protected function createOrUpdateMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    {
+        $foundMerchantRelationshipTransfer = $this->getLocator()
+            ->merchantRelationship()
+            ->facade()
+            ->findMerchantRelationshipByKey($merchantRelationshipTransfer);
+
+        if ($foundMerchantRelationshipTransfer) {
+            $merchantRelationshipTransfer->setIdMerchantRelationship(
+                $foundMerchantRelationshipTransfer->getIdMerchantRelationship()
+            );
+
+            return $this->getLocator()
+                ->merchantRelationship()
+                ->facade()
+                ->updateMerchantRelationship($merchantRelationshipTransfer);
+        }
+
+        return $this->getLocator()
+            ->merchantRelationship()
+            ->facade()
+            ->createMerchantRelationship($merchantRelationshipTransfer);
     }
 
     /**

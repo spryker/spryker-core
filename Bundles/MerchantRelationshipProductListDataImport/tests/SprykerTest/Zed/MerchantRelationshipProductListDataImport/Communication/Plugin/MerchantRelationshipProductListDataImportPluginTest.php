@@ -39,7 +39,7 @@ class MerchantRelationshipProductListDataImportPluginTest extends Unit
     public function testImportImportsData(): void
     {
         // Assign
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->ensureProductListTableIsEmpty();
         $this->tester->haveProductLists();
         $this->tester->createMerchantRelationship('mr-008');
 
@@ -61,6 +61,7 @@ class MerchantRelationshipProductListDataImportPluginTest extends Unit
     public function testImportThrowsExceptionWhenProductListKeyIsNotDefined(): void
     {
         // Assign
+        $this->tester->createMerchantRelationship('mr-008');
         $dataImportConfigurationTransfer = $this->getDataImporterReaderConfigurationTransfer('import/merchant_relation_to_product_list_without_product_list_key.csv');
         $dataImportConfigurationTransfer->setThrowException(true);
 
