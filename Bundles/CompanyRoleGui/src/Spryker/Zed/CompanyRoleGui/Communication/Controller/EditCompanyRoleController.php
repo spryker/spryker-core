@@ -25,16 +25,13 @@ class EditCompanyRoleController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
         $idCompanyRole = $request->query->getInt(static::REQUEST_ID_COMPANY_ROLE);
-        $companyRoleTransfer = $this->getFactory()
-            ->getCompanyRoleFacade()
-            ->getCompanyRoleById(
-                (new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole)
-            );
+        $companyRoleTransfer = (new CompanyRoleTransfer())
+            ->setIdCompanyRole($idCompanyRole);
 
         $companyRoleForm = $this->getFactory()
             ->createCompanyRoleEditForm($companyRoleTransfer)
@@ -49,7 +46,7 @@ class EditCompanyRoleController extends AbstractController
 
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_ROLE_UPDATE);
 
-            $this->redirectResponse(static::URL_REDIRECT_LIST_COMPANY_ROLE);
+            return $this->redirectResponse(static::URL_REDIRECT_LIST_COMPANY_ROLE);
         }
 
         return $this->viewResponse([
