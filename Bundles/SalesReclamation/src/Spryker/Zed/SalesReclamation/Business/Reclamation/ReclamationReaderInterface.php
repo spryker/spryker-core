@@ -14,11 +14,6 @@ use Generated\Shared\Transfer\ReclamationTransfer;
 interface ReclamationReaderInterface
 {
     /**
-     * @return \ArrayObject
-     */
-    public function getReclamations(): ArrayObject;
-
-    /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer

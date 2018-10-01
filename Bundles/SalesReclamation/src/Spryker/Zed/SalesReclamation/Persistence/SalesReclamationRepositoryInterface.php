@@ -40,9 +40,4 @@ interface SalesReclamationRepositoryInterface
      * @return \Generated\Shared\Transfer\OrderCollectionTransfer|null
      */
     public function findCreatedOrdersByReclamationId(ReclamationTransfer $reclamationTransfer): ?OrderCollectionTransfer;
-
-    /**
-     * @return \ArrayObject|null
-     */
-    public function findReclamations(): ?ArrayObject;
 }

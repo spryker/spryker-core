@@ -79,14 +79,6 @@ class SalesReclamationGuiToSalesReclamationFacadeBridge implements SalesReclamat
     }
 
     /**
-     * @return \ArrayObject
-     */
-    public function getReclamations(): ArrayObject
-    {
-        return $this->salesReclamationFacade->getReclamations();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer

@@ -29,20 +29,6 @@ class ReclamationReader implements ReclamationReaderInterface
     }
 
     /**
-     * @return \ArrayObject
-     */
-    public function getReclamations(): ArrayObject
-    {
-        $salesReclamations = $this->salesReclamationRepository->findReclamations();
-
-        if (!$salesReclamations) {
-            new ArrayObject();
-        }
-
-        return $salesReclamations;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer

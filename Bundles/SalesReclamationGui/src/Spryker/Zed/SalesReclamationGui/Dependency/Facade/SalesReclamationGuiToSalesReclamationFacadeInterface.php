@@ -51,11 +51,6 @@ interface SalesReclamationGuiToSalesReclamationFacadeInterface
     public function hydrateReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
 
     /**
-     * @return \ArrayObject
-     */
-    public function getReclamations(): ArrayObject;
-
-    /**
      * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer

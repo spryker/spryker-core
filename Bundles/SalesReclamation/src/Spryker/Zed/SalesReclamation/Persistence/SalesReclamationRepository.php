@@ -89,33 +89,6 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
     }
 
     /**
-     * @return \ArrayObject|null
-     */
-    public function findReclamations(): ?ArrayObject
-    {
-        $salesReclamationEntities = $this->getFactory()
-            ->createSalesReclamationQuery()
-            ->leftJoinWithSpySalesReclamationItem()
-                ->useSpySalesReclamationItemQuery()
-                ->leftJoinWithOrderItem()
-            ->endUse()
-            ->leftJoinWithOrder()
-            ->find();
-
-        if (!$salesReclamationEntities->count()) {
-            return null;
-        }
-
-        $reclamationTransfers = new ArrayObject();
-
-        foreach ($salesReclamationEntities as $salesReclamationEntity) {
-            $reclamationTransfers->append($this->getMapper()->mapEntityToReclamationTransfer($salesReclamationEntity, new ReclamationTransfer()));
-        }
-
-        return $reclamationTransfers;
-    }
-
-    /**
      * @return \Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper\SalesReclamationMapperInterface
      */
     protected function getMapper(): SalesReclamationMapperInterface

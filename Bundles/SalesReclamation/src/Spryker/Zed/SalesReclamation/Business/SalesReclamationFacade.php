@@ -125,18 +125,6 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
      *
      * @api
      *
-     * @return \ArrayObject
-     */
-    public function getReclamations(): ArrayObject
-    {
-        return $this->getFactory()->createReclamationReader()->getReclamations();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer

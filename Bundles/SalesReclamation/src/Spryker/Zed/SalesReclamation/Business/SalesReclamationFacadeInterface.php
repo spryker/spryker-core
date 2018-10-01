@@ -99,16 +99,6 @@ interface SalesReclamationFacadeInterface
 
     /**
      * Specification:
-     * - Fetch all reclamations which contain at least one reclamation item.
-     *
-     * @api
-     *
-     * @return \ArrayObject
-     */
-    public function getReclamations(): ?ArrayObject;
-
-    /**
-     * Specification:
      * - Returns reclamation item entity by id.
      *
      * @api
