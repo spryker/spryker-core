@@ -1,5 +1,6 @@
 {
   "name": "spryker/event-journal",
+  "type": "library",
   "description": "EventJournal module",
   "license": "proprietary",
   "require": {

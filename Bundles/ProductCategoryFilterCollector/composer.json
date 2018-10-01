@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-category-filter-collector",
+  "type": "library",
   "description": "ProductCategoryFilterCollector module",
   "license": "proprietary",
   "require": {

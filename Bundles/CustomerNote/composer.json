@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-note",
+  "type": "library",
   "description": "CustomerNote module",
   "license": "proprietary",
   "require": {

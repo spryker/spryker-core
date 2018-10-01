@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant",
+  "type": "library",
   "description": "Merchant module",
   "license": "proprietary",
   "require": {
@@ -10,7 +11,6 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "autoload": {

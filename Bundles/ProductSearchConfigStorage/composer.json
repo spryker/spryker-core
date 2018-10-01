@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-search-config-storage",
+  "type": "library",
   "description": "ProductSearchConfigStorage module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-discontinued-storage",
+  "type": "library",
   "description": "ProductDiscontinuedStorage module",
   "license": "proprietary",
   "require": {

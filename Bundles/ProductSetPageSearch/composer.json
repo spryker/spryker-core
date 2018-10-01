@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-set-page-search",
+  "type": "library",
   "description": "ProductSetPageSearch module",
   "license": "proprietary",
   "require": {

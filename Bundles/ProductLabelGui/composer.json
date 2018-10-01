@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-label-gui",
+  "type": "library",
   "description": "ProductLabelGui module",
   "license": "proprietary",
   "require": {

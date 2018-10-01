@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-measurement-unit-storage",
+  "type": "library",
   "description": "ProductMeasurementUnitStorage module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-api",
+  "type": "library",
   "description": "CustomerApi module",
   "license": "proprietary",
   "require": {

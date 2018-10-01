@@ -1,5 +1,6 @@
 {
   "name": "spryker/shopping-list-session-extension",
+  "type": "library",
   "description": "ShoppingListSessionExtension module",
   "license": "proprietary",
   "require": {

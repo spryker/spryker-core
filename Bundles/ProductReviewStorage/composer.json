@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-review-storage",
+  "type": "library",
   "description": "ProductReviewStorage module",
   "license": "proprietary",
   "require": {

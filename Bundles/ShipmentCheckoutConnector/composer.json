@@ -1,5 +1,6 @@
 {
   "name": "spryker/shipment-checkout-connector",
+  "type": "library",
   "description": "ShipmentCheckoutConnector module",
   "license": "proprietary",
   "require": {
