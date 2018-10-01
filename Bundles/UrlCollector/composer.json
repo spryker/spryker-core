@@ -1,5 +1,6 @@
 {
   "name": "spryker/url-collector",
+  "type": "library",
   "description": "UrlCollector module",
   "license": "proprietary",
   "require": {

@@ -21,9 +21,9 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class StockSubForm extends AbstractType
 {
-    const FIELD_QUANTITY = 'quantity';
-    const FIELD_STOCK_TYPE = 'stockType';
-    const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+    public const FIELD_QUANTITY = 'quantity';
+    public const FIELD_STOCK_TYPE = 'stockType';
+    public const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

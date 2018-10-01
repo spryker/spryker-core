@@ -18,7 +18,7 @@ use Spryker\Yves\Ratepay\Form\InstallmentSubForm;
 
 class InstallmentDataProvider extends DataProviderAbstract
 {
-    const INSTALLMENT_CONFIGURATION = 'installment_configuration';
+    public const INSTALLMENT_CONFIGURATION = 'installment_configuration';
 
     /**
      * @var \Spryker\Client\Ratepay\RatepayClientInterface $ratepayClient

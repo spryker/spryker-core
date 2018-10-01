@@ -24,4 +24,11 @@ interface MultiCartRepositoryInterface
      * @return bool
      */
     public function checkQuoteNameAvailability(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * @param string $customerReference
+     *
+     * @return array
+     */
+    public function findCustomerQuoteData(string $customerReference): array;
 }

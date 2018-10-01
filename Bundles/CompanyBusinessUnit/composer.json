@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-business-unit",
+  "type": "library",
   "description": "CompanyBusinessUnit module",
   "license": "proprietary",
   "require": {
@@ -13,11 +14,12 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/company-user": "^1.0.0"
+    "spryker/company-user": "If you want to have company users management functionality: ^2.0.0"
   },
   "autoload": {
     "psr-4": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-abstract-data-feed",
+  "type": "library",
   "description": "ProductAbstractDataFeed module",
   "license": "proprietary",
   "require": {

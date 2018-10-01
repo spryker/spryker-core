@@ -1,5 +1,6 @@
 {
   "name": "spryker/checkout",
+  "type": "library",
   "description": "Checkout module",
   "license": "proprietary",
   "require": {

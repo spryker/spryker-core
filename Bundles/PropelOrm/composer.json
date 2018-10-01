@@ -1,5 +1,6 @@
 {
   "name": "spryker/propel-orm",
+  "type": "library",
   "description": "PropelOrm module",
   "license": "proprietary",
   "require": {

@@ -160,6 +160,37 @@ class ConcreteManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
+    public function testGetProductConcretesBySkusShouldReturnProductConcretesTransfers()
+    {
+        $this->setupDefaultProducts();
+
+        $productConcretesTransfers = $this->productFacade->findProductConcretesBySkus(
+            [$this->productConcreteTransfer->getSku()]
+        );
+
+        $this->assertCreateProductConcrete($productConcretesTransfers[0]);
+        $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcretesTransfers[0]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcretesBySkusShouldReturnEmptyArray()
+    {
+        $fakeNonExistSku = '101001101001';
+
+        $this->setupDefaultProducts();
+
+        $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus([
+            $fakeNonExistSku,
+        ]);
+
+        $this->assertEmpty($productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetProductConcreteByIdShouldReturnConcreteTransfer()
     {
         $this->setupDefaultProducts();
@@ -378,7 +409,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
     /**
      * @param int $idProductConcrete
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     * @return \Orm\Zed\Product\Persistence\SpyProduct|null
      */
     protected function getProductConcreteEntityById($idProductConcrete)
     {
@@ -392,7 +423,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
      * @param string $touchType
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouch
+     * @return \Orm\Zed\Touch\Persistence\SpyTouch|null
      */
     protected function getProductTouchEntity($touchType, $idProductAbstract)
     {

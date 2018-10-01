@@ -1,5 +1,6 @@
 {
   "name": "spryker/glossary-storage",
+  "type": "library",
   "description": "GlossaryStorage module",
   "license": "proprietary",
   "require": {
@@ -19,6 +20,7 @@
     "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/propel-query-builder": "*",
+    "spryker/queue": "*",
     "spryker/testify": "*"
   },
   "suggest": {

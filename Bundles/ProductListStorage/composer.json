@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-list-storage",
+  "type": "library",
   "description": "ProductListStorage module",
   "license": "proprietary",
   "require": {

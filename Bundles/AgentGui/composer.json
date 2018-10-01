@@ -1,5 +1,6 @@
 {
   "name": "spryker/agent-gui",
+  "type": "library",
   "description": "AgentGui module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-bundle",
+  "type": "library",
   "description": "ProductBundle module",
   "license": "proprietary",
   "require": {

@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class LocatorWithMatcherMatcher implements LocatorMatcherInterface
 {
-    const NAME = 'locator';
+    public const NAME = 'locator';
 
     /**
      * @param string $method

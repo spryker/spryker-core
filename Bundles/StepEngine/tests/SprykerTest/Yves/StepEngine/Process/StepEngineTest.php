@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class StepEngineTest extends AbstractStepEngineTest
 {
-    const FORM_NAME = 'formName';
+    public const FORM_NAME = 'formName';
 
     /**
      * @return void
@@ -170,7 +170,7 @@ class StepEngineTest extends AbstractStepEngineTest
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */

@@ -1,5 +1,6 @@
 {
   "name": "spryker/catalog-search-products-resource-relationship",
+  "type": "library",
   "description": "CatalogSearchProductsResourceRelationship module",
   "license": "proprietary",
   "require": {

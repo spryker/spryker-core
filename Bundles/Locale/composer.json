@@ -1,5 +1,6 @@
 {
   "name": "spryker/locale",
+  "type": "library",
   "description": "Locale module",
   "license": "proprietary",
   "require": {

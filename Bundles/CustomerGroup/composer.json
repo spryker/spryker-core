@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-group",
+  "type": "library",
   "description": "CustomerGroup module",
   "license": "proprietary",
   "require": {

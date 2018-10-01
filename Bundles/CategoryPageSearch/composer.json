@@ -1,5 +1,6 @@
 {
   "name": "spryker/category-page-search",
+  "type": "library",
   "description": "CategoryPageSearch module",
   "license": "proprietary",
   "require": {

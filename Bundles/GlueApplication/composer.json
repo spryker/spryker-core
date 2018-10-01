@@ -1,5 +1,6 @@
 {
   "name": "spryker/glue-application",
+  "type": "library",
   "description": "GlueApplication module",
   "license": "proprietary",
   "require": {
@@ -8,6 +9,7 @@
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.22.0",
     "spryker/log": "^3.0.0",
+    "spryker/rest-api-documentation-generator-extension": "^0.1.0",
     "spryker/session": "^3.0.0",
     "spryker/store": "^1.7.0",
     "spryker/symfony": "^3.0.0",

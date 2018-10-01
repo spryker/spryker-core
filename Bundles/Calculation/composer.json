@@ -1,5 +1,6 @@
 {
   "name": "spryker/calculation",
+  "type": "library",
   "description": "Calculation module",
   "license": "proprietary",
   "require": {

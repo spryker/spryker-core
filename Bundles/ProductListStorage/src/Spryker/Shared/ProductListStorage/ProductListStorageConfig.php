@@ -17,7 +17,7 @@ class ProductListStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_LIST_ABSTRACT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_LIST_ABSTRACT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -25,7 +25,7 @@ class ProductListStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_LIST_CONCRETE_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_LIST_CONCRETE_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:

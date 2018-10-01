@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-category-storage",
+  "type": "library",
   "description": "ProductCategoryStorage module",
   "license": "proprietary",
   "require": {
@@ -12,7 +13,8 @@
     "spryker/propel-orm": "^1.5.0",
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^0.2.0 || ^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0"
+    "spryker/synchronization-extension": "^1.0.0",
+    "spryker/url": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -20,12 +22,10 @@
     "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/propel-query-builder": "*",
-    "spryker/testify": "*",
-    "spryker/url": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
-    "spryker/url": "If you want to use Url plugins, minimum required version: 3.3.0"
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
   },
   "autoload": {
     "psr-4": {

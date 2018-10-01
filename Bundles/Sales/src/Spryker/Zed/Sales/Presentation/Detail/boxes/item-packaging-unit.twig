@@ -2,7 +2,7 @@
     x {{ (orderItem.amount / orderItem.quantity) }}
     {{ orderItem.amountSalesUnit.productMeasurementBaseUnit.productMeasurementUnit.name | trans }}
     ( =
-        {{ orderItem.amount / orderItem.amountSalesUnit.conversion }}
+        {{ (orderItem.amount / orderItem.quantity) / orderItem.amountSalesUnit.conversion }}
         {{ orderItem.amountSalesUnit.productMeasurementUnit.name | trans }}
     )
     = {{ orderItem.amount }}
