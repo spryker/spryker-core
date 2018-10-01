@@ -22,6 +22,7 @@ use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
 use Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductInterface;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
+use Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface;
 
 class Reader implements ReaderInterface
 {
@@ -41,18 +42,26 @@ class Reader implements ReaderInterface
     protected $transferMapper;
 
     /**
+     * @var \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface
+     */
+    protected $wishlistRepository;
+
+    /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductInterface $productQueryContainer
      * @param \Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface $transferMapper
+     * @param \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface $wishlistRepository
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
         WishlistToProductInterface $productQueryContainer,
-        WishlistTransferMapperInterface $transferMapper
+        WishlistTransferMapperInterface $transferMapper,
+        WishlistRepositoryInterface $wishlistRepository
     ) {
         $this->queryContainer = $queryContainer;
         $this->productQueryContainer = $productQueryContainer;
         $this->transferMapper = $transferMapper;
+        $this->wishlistRepository = $wishlistRepository;
     }
 
     /**
@@ -389,6 +398,10 @@ class Reader implements ReaderInterface
      */
     public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer)
     {
+        if ($customerTransfer->getCustomerReference()) {
+            return $this->getCollectionByCustomerReference($customerTransfer->getCustomerReference());
+        }
+
         $idCustomer = $customerTransfer
             ->requireIdCustomer()
             ->getIdCustomer();
@@ -428,6 +441,28 @@ class Reader implements ReaderInterface
 
         foreach ($wishlistEntities as $wishlistEntity) {
             $wishlistCollection->addWishlist($this->transferMapper->convertWishlist($wishlistEntity));
+        }
+
+        return $wishlistCollection;
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     */
+    protected function getCollectionByCustomerReference(string $customerReference): WishlistCollectionTransfer
+    {
+        $wishlistCollection = new WishlistCollectionTransfer();
+        $wishlists = $this->wishlistRepository
+            ->findByCustomerReference($customerReference);
+
+        if (!$wishlists->count()) {
+            return $wishlistCollection;
+        }
+
+        foreach ($wishlists as $wishlist) {
+            $wishlistCollection->addWishlist($wishlist);
         }
 
         return $wishlistCollection;

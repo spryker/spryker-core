@@ -95,19 +95,15 @@ class WishlistsReader implements WishlistsReaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getCustomerWishlists(RestRequestInterface $restRequest): array
+    public function getCustomerWishlists(RestResourceInterface $restResource): array
     {
         $response = [];
 
-        if (!$restRequest->getUser()) {
-            return $response;
-        }
-
-        $customerTransfer = (new CustomerTransfer())->setIdCustomer($restRequest->getUser()->getSurrogateIdentifier());
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restResource->getId());
         $customerWishlistCollectionTransfer = $this->wishlistClient->getWishlistCollection($customerTransfer);
 
         $customerWishlists = $customerWishlistCollectionTransfer->getWishlists();

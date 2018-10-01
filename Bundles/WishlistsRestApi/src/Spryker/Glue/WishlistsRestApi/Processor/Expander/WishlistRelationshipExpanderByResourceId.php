@@ -35,7 +35,7 @@ class WishlistRelationshipExpanderByResourceId implements WishlistRelationshipEx
     {
         foreach ($resources as $resource) {
             $wishlistsResources = $this->wishlistsReader
-                ->getCustomerWishlists($restRequest);
+                ->getCustomerWishlists($resource);
             foreach ($wishlistsResources as $wishlistsResource) {
                 $resource->addRelationship($wishlistsResource);
             }
