@@ -18,9 +18,9 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CompanyBusinessUnitCreator implements CompanyBusinessUnitCreatorInterface
 {
-    protected const MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS = 'message.business_unit.create';
-
     use TransactionTrait;
+
+    protected const MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS = 'message.business_unit.create';
 
     /**
      * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface
