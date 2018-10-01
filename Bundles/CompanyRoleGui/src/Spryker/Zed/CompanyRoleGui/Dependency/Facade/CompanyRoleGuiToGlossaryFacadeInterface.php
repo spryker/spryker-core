@@ -15,7 +15,6 @@ interface CompanyRoleGuiToGlossaryFacadeInterface
      * @param string $keyName
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     * *
      *
      * @return string
      */
