@@ -22,7 +22,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCompanyRoleFacade($container);
@@ -36,7 +36,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function addCompanyRoleFacade(Container $container): Container
+    protected function addCompanyRoleFacade(Container $container): Container
     {
         $container[static::FACADE_COMPANY_ROLE] = function (Container $container) {
             return new CompanyRoleGuiToCompanyRoleFacadeBridge(

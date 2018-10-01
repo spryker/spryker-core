@@ -106,7 +106,7 @@ class CompanyRoleTable extends AbstractTable
      *
      * @return array
      */
-    protected function createTableActions(array $companyRole)
+    protected function createTableActions(array $companyRole): array
     {
         $buttons = [];
 
@@ -126,7 +126,7 @@ class CompanyRoleTable extends AbstractTable
     /**
      * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery
      */
-    protected function prepareQuery()
+    protected function prepareQuery(): SpyCompanyRoleQuery
     {
         /** @var \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery $query */
         $query = $this->spyCompanyRoleQuery
