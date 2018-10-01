@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\NavigationGui\Communication\Controller;
 
+use Spryker\Shared\NavigationGui\NavigationGuiConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -26,18 +27,21 @@ class UpdateController extends AbstractController
     {
         $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
         $navigationFormDataProvider = $this->getFactory()->createNavigationFormDataProvider();
+
+        $navigationFormData = $navigationFormDataProvider->getData($idNavigation);
+
+        if ($navigationFormData === null) {
+            $this->addErrorMessage(sprintf('Navigation with id %s doesn\'t exist', $idNavigation));
+
+            return $this->redirectResponse(NavigationGuiConstants::URL_NAVIGATION_GUI);
+        }
+
         $navigationForm = $this->getFactory()
             ->getUpdateNavigationForm(
-                $navigationFormDataProvider->getData($idNavigation),
+                $navigationFormData,
                 $navigationFormDataProvider->getOptions()
             )
             ->handleRequest($request);
-
-        if ($navigationForm->getData() === null) {
-            $this->addErrorMessage(sprintf('Navigation with id %s doesn\'t exist', $idNavigation));
-
-            return $this->redirectResponse('/navigation-gui');
-        }
 
         if ($navigationForm->isSubmitted() && $navigationForm->isValid()) {
             $navigationTransfer = $navigationForm->getData();
