@@ -10,4 +10,8 @@
         <property name="quantityInterval" type="int" />
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="productQuantity" type="ProductQuantityStorage" />
+    </transfer>
+
 </transfers>

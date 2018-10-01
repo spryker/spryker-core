@@ -35,4 +35,9 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="ProductQuantityValidationResponse">
+        <property name="isValid" type="bool"/>
+        <property name="messages" type="string[]" singular="message"/>
+    </transfer>
+
 </transfers>

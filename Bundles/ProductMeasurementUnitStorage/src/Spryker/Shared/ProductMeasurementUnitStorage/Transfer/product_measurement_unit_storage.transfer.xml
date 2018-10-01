@@ -32,7 +32,7 @@
         <property name="key" type="string" />
     </transfer>
 
-    <transfer name="QuickOrderProductAdditionalData">
+    <transfer name="ProductConcrete">
         <property name="baseMeasurementUnit" type="ProductMeasurementUnit" />
     </transfer>
 
