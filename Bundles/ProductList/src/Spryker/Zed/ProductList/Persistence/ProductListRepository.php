@@ -23,8 +23,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductListRepository extends AbstractRepository implements ProductListRepositoryInterface
 {
-    protected const CONCRETE_PRODUCT_COUNT_TO_WHITELIST_ABSTRACT = 1;
-
     /**
      * @param int $idProductList
      *
