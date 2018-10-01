@@ -26,9 +26,7 @@ class CompanyUserMapper implements CompanyUserMapperInterface
         CompanyUserTransfer $companyUserTransfer
     ): SpyCompanyUserEntityTransfer {
         $companyUserEntityTransfer = new SpyCompanyUserEntityTransfer();
-        $data = $companyUserTransfer->modifiedToArray();
-        unset($data['customer']);
-        $companyUserEntityTransfer->fromArray($data, true);
+        $companyUserEntityTransfer->fromArray($companyUserTransfer->modifiedToArray(false), true);
 
         return $companyUserEntityTransfer;
     }
