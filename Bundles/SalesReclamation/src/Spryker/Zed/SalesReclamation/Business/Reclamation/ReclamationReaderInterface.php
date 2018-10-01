@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 

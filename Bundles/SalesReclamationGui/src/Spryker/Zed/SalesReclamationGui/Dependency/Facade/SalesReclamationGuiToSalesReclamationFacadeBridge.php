@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesReclamationGui\Dependency\Facade;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;

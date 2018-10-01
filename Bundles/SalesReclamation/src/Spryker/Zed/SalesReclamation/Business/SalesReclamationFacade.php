@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesReclamation\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
