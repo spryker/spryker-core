@@ -10,6 +10,7 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -35,22 +36,18 @@ class SaveSessionServiceProvider extends AbstractPlugin implements ServiceProvid
      */
     public function boot(Application $app)
     {
-        $app['dispatcher']->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], 0);
+        $this->getDispatcher($app)->addSubscriber(
+            $this->getFactory()->createSaveSessionEventSubscriber()
+        );
     }
 
     /**
-     * Store session.
+     * @param Application $app
      *
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event A FilterResponseEvent instance
-     *
-     * @return void
+     * @return EventDispatcherInterface
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    protected function getDispatcher(Application $app) : EventDispatcherInterface
     {
-        if (!$event->isMasterRequest()) {
-            return;
-        }
-
-        $event->getRequest()->getSession()->save();
+        return $app['dispatcher'];
     }
 }
