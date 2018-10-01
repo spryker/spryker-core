@@ -20,140 +20,182 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function addItem(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/add-item', $persistentCartChangeTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/add-item', $persistentCartChangeTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function addValidItems(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/add-valid-items', $persistentCartChangeTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/add-valid-items', $persistentCartChangeTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function removeItem(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/remove-item', $persistentCartChangeTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/remove-item', $persistentCartChangeTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function reloadItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/reload-items', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/reload-items', $quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function changeItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/change-item-quantity', $persistentCartChangeQuantityTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/change-item-quantity', $persistentCartChangeQuantityTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function decreaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/decrease-item-quantity', $persistentCartChangeQuantityTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/decrease-item-quantity', $persistentCartChangeQuantityTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function increaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/increase-item-quantity', $persistentCartChangeQuantityTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/increase-item-quantity', $persistentCartChangeQuantityTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/sync-storage-quote', $quoteSyncRequestTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/sync-storage-quote', $quoteSyncRequestTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/validate-quote', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/validate-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/delete-quote', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/delete-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/persist-quote', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/persist-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/create-quote', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/create-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/update-quote', $quoteUpdateRequestTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/update-quote', $quoteUpdateRequestTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/update-and-reload-quote', $quoteUpdateRequestTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/update-and-reload-quote', $quoteUpdateRequestTransfer);
+
+        return $quoteResponseTransfer;
     }
 }

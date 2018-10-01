@@ -15,9 +15,9 @@ use Spryker\Zed\Kernel\Container;
 
 class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const QUERY_CONTAINER_GLOSSARY = 'QUERY_CONTAINER_GLOSSARY';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const QUERY_CONTAINER_GLOSSARY = 'QUERY_CONTAINER_GLOSSARY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,12 +26,22 @@ class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new GlossaryStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
-
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new GlossaryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return new GlossaryStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
         };
 
         return $container;

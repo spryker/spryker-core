@@ -11,4 +11,27 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductLabelStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @return bool
+     */
+    public function isSendingToQueue(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductAbstractLabelSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductLabelDictionarySynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }

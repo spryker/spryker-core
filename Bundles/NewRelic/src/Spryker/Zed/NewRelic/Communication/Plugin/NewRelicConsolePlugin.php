@@ -18,9 +18,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {
-    const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
+    public const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
      * @return void
@@ -50,6 +52,8 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public static function getSubscribedEvents()
@@ -62,7 +66,7 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
     /**
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
-     * @return array
+     * @return void
      */
     protected function addArgumentsAsCustomParameter(ConsoleTerminateEvent $event)
     {
@@ -72,7 +76,7 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
     /**
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
-     * @return array
+     * @return void
      */
     protected function addOptionsAsCustomParameter(ConsoleTerminateEvent $event)
     {

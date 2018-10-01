@@ -14,15 +14,15 @@ class ProductConcreteMeasurementUnitStorageMapper implements ProductConcreteMeas
 {
     /**
      * @param \Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurementUnitStorage $spyProductConcreteMeasurementUnitStorageEntity
-     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity
+     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntityTransfer
      *
      * @return \Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurementUnitStorage
      */
     public function hydrateSpyProductMeasurementUnitStorageEntity(
         SpyProductConcreteMeasurementUnitStorage $spyProductConcreteMeasurementUnitStorageEntity,
-        SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity
+        SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntityTransfer
     ): SpyProductConcreteMeasurementUnitStorage {
-        $spyProductConcreteMeasurementUnitStorageEntity->fromArray($productConcreteMeasurementUnitStorageEntity->toArray(true));
+        $spyProductConcreteMeasurementUnitStorageEntity->fromArray($productConcreteMeasurementUnitStorageEntityTransfer->toArray(true));
 
         return $spyProductConcreteMeasurementUnitStorageEntity;
     }

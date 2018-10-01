@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductQuantityStorage\Business\Model;
 
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
-use Generated\Shared\Transfer\SpyProductQuantityEntityTransfer;
+use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer;
 use Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageToProductQuantityFacadeInterface;
 use Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageEntityManagerInterface;
@@ -53,16 +53,16 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
      */
     public function publish(array $productIds): void
     {
-        $productQuantityEntities = $this->productQuantityFacade->findProductQuantityEntitiesByProductIds($productIds);
+        $productQuantityTransfers = $this->productQuantityFacade->findProductQuantityTransfersByProductIds($productIds);
         $productQuantityStorageEntities = $this->productQuantityStorageRepository->findProductQuantityStorageEntitiesByProductIds($productIds);
         $mappedProductQuantityStorageEntities = $this->mapProductQuantityStorageEntities($productQuantityStorageEntities);
 
-        foreach ($productQuantityEntities as $productQuantityEntity) {
-            $storageEntity = $this->selectStorageEntity($mappedProductQuantityStorageEntities, $productQuantityEntity->getFkProduct());
+        foreach ($productQuantityTransfers as $productQuantityTransfer) {
+            $storageEntity = $this->selectStorageEntity($mappedProductQuantityStorageEntities, $productQuantityTransfer->getFkProduct());
 
-            unset($mappedProductQuantityStorageEntities[$productQuantityEntity->getFkProduct()]);
+            unset($mappedProductQuantityStorageEntities[$productQuantityTransfer->getFkProduct()]);
 
-            $this->saveStorageEntity($storageEntity, $productQuantityEntity);
+            $this->saveStorageEntity($storageEntity, $productQuantityTransfer);
         }
 
         $this->deleteStorageEntities($mappedProductQuantityStorageEntities);
@@ -70,17 +70,17 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
 
     /**
      * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer $storageEntity
-     * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer $productQuantityEntity
+     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      *
      * @return void
      */
     protected function saveStorageEntity(
         SpyProductQuantityStorageEntityTransfer $storageEntity,
-        SpyProductQuantityEntityTransfer $productQuantityEntity
+        ProductQuantityTransfer $productQuantityTransfer
     ): void {
         $storageEntity
-            ->setFkProduct($productQuantityEntity->getFkProduct())
-            ->setData($this->getStorageEntityData($productQuantityEntity));
+            ->setFkProduct($productQuantityTransfer->getFkProduct())
+            ->setData($this->getStorageEntityData($productQuantityTransfer));
 
         $this->productQuantityStorageEntityManager->saveProductQuantityStorageEntity($storageEntity);
     }
@@ -101,15 +101,15 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer $productQuantityEntity
+     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      *
      * @return array
      */
-    protected function getStorageEntityData(SpyProductQuantityEntityTransfer $productQuantityEntity): array
+    protected function getStorageEntityData(ProductQuantityTransfer $productQuantityTransfer): array
     {
         return (new ProductQuantityStorageTransfer())
-            ->fromArray($productQuantityEntity->toArray(), true)
-            ->setIdProduct($productQuantityEntity->getFkProduct())
+            ->fromArray($productQuantityTransfer->toArray(), true)
+            ->setIdProduct($productQuantityTransfer->getFkProduct())
             ->toArray();
     }
 

@@ -19,9 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AddController
 {
-    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    const PARAM_ID_PRODUCT = 'id-product';
-    const PARAM_PRODUCT_TYPE = 'type';
+    public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const PARAM_ID_PRODUCT = 'id-product';
+    public const PARAM_PRODUCT_TYPE = 'type';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -88,7 +88,7 @@ class EditController extends AddController
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-        };
+        }
 
         $type = $request->query->get(self::PARAM_PRODUCT_TYPE);
 
@@ -164,6 +164,10 @@ class EditController extends AddController
                     ->createProductFormTransferGenerator()
                     ->buildProductConcreteTransfer($productAbstractTransfer, $form, $idProduct);
 
+                $productConcreteTransfer = $this->getFactory()
+                    ->getProductBundleFacade()
+                    ->saveBundledProducts($productConcreteTransfer);
+
                 $this->getFactory()
                     ->getProductFacade()
                     ->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
@@ -188,7 +192,7 @@ class EditController extends AddController
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-        };
+        }
 
         return $this->viewResponse([
             'form' => $form->createView(),

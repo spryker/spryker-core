@@ -31,16 +31,16 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ProductConcreteFormEdit extends ProductFormAdd
 {
-    const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const FIELD_ID_PRODUCT_CONCRETE = 'id_product';
-    const FIELD_VALID_FROM = 'valid_from';
-    const FIELD_VALID_TO = 'valid_to';
+    public const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const FIELD_ID_PRODUCT_CONCRETE = 'id_product';
+    public const FIELD_VALID_FROM = 'valid_from';
+    public const FIELD_VALID_TO = 'valid_to';
 
-    const FORM_ASSIGNED_BUNDLED_PRODUCTS = 'assigned_bundled_products';
-    const BUNDLED_PRODUCTS_TO_BE_REMOVED = 'product_bundles_to_be_removed';
+    public const FORM_ASSIGNED_BUNDLED_PRODUCTS = 'assigned_bundled_products';
+    public const BUNDLED_PRODUCTS_TO_BE_REMOVED = 'product_bundles_to_be_removed';
 
-    const OPTION_IS_BUNDLE_ITEM = 'is_bundle_item';
-    const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd H:mm:ss';
+    public const OPTION_IS_BUNDLE_ITEM = 'is_bundle_item';
+    public const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd H:mm:ss';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -358,9 +358,9 @@ class ProductConcreteFormEdit extends ProductFormAdd
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit
+     * @return $this
      */
-    protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options): ProductConcreteFormEdit
+    protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options): self
     {
         /** @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface $plugin */
         foreach ($this->getFactory()->getProductConcreteEditFormExpanderPlugins() as $plugin) {

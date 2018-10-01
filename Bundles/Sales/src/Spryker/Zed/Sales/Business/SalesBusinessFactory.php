@@ -25,6 +25,8 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
+use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
+use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
@@ -193,7 +195,19 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderExpander()
     {
-        return new OrderExpander($this->getCalculationFacade());
+        return new OrderExpander(
+            $this->getCalculationFacade(),
+            $this->createOrderItemTransformer(),
+            $this->getItemTransformerStrategyPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface
+     */
+    public function createOrderItemTransformer(): OrderItemTransformerInterface
+    {
+        return new OrderItemTransformer();
     }
 
     /**
@@ -284,5 +298,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderItemMapper()
     {
         return new SalesOrderItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface[]
+     */
+    public function getItemTransformerStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::ITEM_TRANSFORMER_STRATEGY_PLUGINS);
     }
 }

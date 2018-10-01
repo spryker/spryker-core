@@ -79,6 +79,9 @@ class PaginatedCustomerOrderReader extends CustomerOrderReader
 
         $orderListTransfer->setPagination($paginationTransfer);
 
-        return $paginationModel->getResults();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $orderEntities */
+        $orderEntities = $paginationModel->getResults();
+
+        return $orderEntities;
     }
 }

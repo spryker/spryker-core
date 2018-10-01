@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class RepositoryResolver extends AbstractClassResolver
 {
-    const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Persistence\\%2$sRepository';
+    public const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Persistence\\%2$sRepository';
 
     /**
      * @param object|string $callerClass
@@ -24,7 +24,10 @@ class RepositoryResolver extends AbstractClassResolver
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+            /** @var \Spryker\Zed\Kernel\Persistence\AbstractRepository $class */
+            $class = $this->getResolvedClassInstance();
+
+            return $class;
         }
 
         throw new RepositoryNotFoundException($this->getClassInfo());

@@ -9,6 +9,9 @@ namespace Spryker\Shared\Collector;
 
 use Spryker\Shared\Propel\PropelConstants;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CollectorConstants
 {
     /**
@@ -17,7 +20,7 @@ interface CollectorConstants
      *
      * @api
      */
-    const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
+    public const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
 
     /**
      * Specification:
@@ -25,7 +28,7 @@ interface CollectorConstants
      *
      * @api
      */
-    const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
+    public const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
 
     /**
      * Specification:
@@ -33,7 +36,7 @@ interface CollectorConstants
      *
      * @api
      */
-    const ZED_DB_ENGINE = PropelConstants::ZED_DB_ENGINE;
+    public const ZED_DB_ENGINE = PropelConstants::ZED_DB_ENGINE;
 
     /**
      * Specification:
@@ -41,7 +44,7 @@ interface CollectorConstants
      *
      * @api
      */
-    const ZED_DB_ENGINE_MYSQL = PropelConstants::ZED_DB_ENGINE_MYSQL;
+    public const ZED_DB_ENGINE_MYSQL = PropelConstants::ZED_DB_ENGINE_MYSQL;
 
     /**
      * Specification:
@@ -49,7 +52,7 @@ interface CollectorConstants
      *
      * @api
      */
-    const ZED_DB_ENGINE_PGSQL = PropelConstants::ZED_DB_ENGINE_PGSQL;
+    public const ZED_DB_ENGINE_PGSQL = PropelConstants::ZED_DB_ENGINE_PGSQL;
 
     /**
      * Specification:
@@ -57,5 +60,5 @@ interface CollectorConstants
      *
      * @api
      */
-    const TOUCH_DELETE_CLEANUP_ACTIVE = 'COLLECTOR:TOUCH_DELETE_CLEANUP_ACTIVE';
+    public const TOUCH_DELETE_CLEANUP_ACTIVE = 'COLLECTOR:TOUCH_DELETE_CLEANUP_ACTIVE';
 }

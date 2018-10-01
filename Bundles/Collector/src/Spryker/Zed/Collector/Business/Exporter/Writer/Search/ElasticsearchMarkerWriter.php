@@ -14,7 +14,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWriterInterface
 {
-    const WRITER_NAME = 'elasticsearch-marker-writer';
+    public const WRITER_NAME = 'elasticsearch-marker-writer';
 
     /**
      * @var \Elastica\Client
@@ -58,6 +58,8 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
         foreach ($dataSet as $key => $value) {
             $this->metaData[$key] = $value;
         }
+
+        return true;
     }
 
     /**

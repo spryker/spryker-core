@@ -14,8 +14,8 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsUserConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_USER = 'FACADE_USER';
-    const QUERY_CONTAINER_CMS = 'QUERY_CONTAINER_CMS';
+    public const FACADE_USER = 'FACADE_USER';
+    public const QUERY_CONTAINER_CMS = 'QUERY_CONTAINER_CMS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

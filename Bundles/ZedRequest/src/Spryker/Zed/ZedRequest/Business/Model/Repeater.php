@@ -66,7 +66,7 @@ class Repeater implements RepeaterInterface
             'module' => $httpRequest->attributes->get('module'),
             'controller' => $httpRequest->attributes->get('controller'),
             'action' => $httpRequest->attributes->get('action'),
-            'params' => $transferObject->toArray(false),
+            'params' => $transferObject->toArray(),
         ];
 
         $moduleControllerAction = sprintf(
@@ -93,7 +93,7 @@ class Repeater implements RepeaterInterface
 
         $directory = dirname($filePath);
         if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+            mkdir($directory, $this->getConfig()->getPermissionMode(), true);
         }
 
         file_put_contents($filePath, $string);

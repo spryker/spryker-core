@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,10 +7,13 @@
 
 namespace Spryker\Zed\Category\Business\Model\Category;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class Category implements CategoryInterface
 {
@@ -19,11 +23,28 @@ class Category implements CategoryInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
-    public function __construct(CategoryQueryContainerInterface $queryContainer)
-    {
+    protected $categoryRepository;
+
+    /**
+     * @var \Spryker\Zed\Category\Business\Model\Category\CategoryHydratorInterface
+     */
+    protected $categoryHydrator;
+
+    /**
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
+     * @param \Spryker\Zed\Category\Business\Model\Category\CategoryHydratorInterface $categoryHydrator
+     */
+    public function __construct(
+        CategoryQueryContainerInterface $queryContainer,
+        CategoryRepositoryInterface $categoryRepository,
+        CategoryHydratorInterface $categoryHydrator
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->categoryRepository = $categoryRepository;
+        $this->categoryHydrator = $categoryHydrator;
     }
 
     /**
@@ -108,5 +129,18 @@ class Category implements CategoryInterface
     {
         $categoryEntity = $this->getCategoryEntity($idCategory);
         $categoryEntity->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    {
+        $categoryCollectionTransfer = $this->categoryRepository->getAllCategoryCollection($localeTransfer);
+        $this->categoryHydrator->hydrateCategoryCollection($categoryCollectionTransfer, $localeTransfer);
+
+        return $categoryCollectionTransfer;
     }
 }

@@ -9,12 +9,12 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 class DefinitionNormalizer implements DefinitionNormalizerInterface
 {
-    const KEY_BUNDLE = 'bundle';
-    const KEY_CONTAINING_BUNDLE = 'containing bundle';
-    const KEY_NAME = 'name';
-    const KEY_PROPERTY = 'property';
-    const KEY_BUNDLES = 'bundles';
-    const KEY_DEPRECATED = 'deprecated';
+    public const KEY_BUNDLE = 'bundle';
+    public const KEY_CONTAINING_BUNDLE = 'containing bundle';
+    public const KEY_NAME = 'name';
+    public const KEY_PROPERTY = 'property';
+    public const KEY_BUNDLES = 'bundles';
+    public const KEY_DEPRECATED = 'deprecated';
 
     /**
      * @param array $transferDefinitions
@@ -30,7 +30,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
                 self::KEY_CONTAINING_BUNDLE => $transferDefinition[self::KEY_CONTAINING_BUNDLE],
                 self::KEY_NAME => $transferDefinition[self::KEY_NAME],
                 self::KEY_DEPRECATED => isset($transferDefinition[self::KEY_DEPRECATED]) ? $transferDefinition[self::KEY_DEPRECATED] : null,
-                self::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[self::KEY_PROPERTY], $transferDefinition[self::KEY_BUNDLE]),
+                self::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[self::KEY_PROPERTY] ?? [], $transferDefinition[self::KEY_BUNDLE]),
             ];
 
             $normalizedDefinitions[] = $normalizedDefinition;
@@ -47,6 +47,10 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
      */
     protected function normalizeAttributes(array $attributes, $bundle)
     {
+        if ($attributes === []) {
+            return [];
+        }
+
         if (isset($attributes[0])) {
             return $this->addBundleToAttributes($attributes, $bundle);
         }

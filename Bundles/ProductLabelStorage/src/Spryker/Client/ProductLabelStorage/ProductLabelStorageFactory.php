@@ -22,8 +22,7 @@ class ProductLabelStorageFactory extends AbstractFactory
         return new ProductAbstractLabelReader(
             $this->getStorage(),
             $this->getSynchronizationService(),
-            $this->createLabelDictionaryReader(),
-            $this->getStore()
+            $this->createLabelDictionaryReader()
         );
     }
 

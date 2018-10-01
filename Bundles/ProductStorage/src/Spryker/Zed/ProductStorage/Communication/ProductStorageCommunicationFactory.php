@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductStorage\Communication\Helper\AttributeMapHelper;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
 
 /**
@@ -18,45 +17,10 @@ use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
 class ProductStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface
-     */
-    public function getUtilSanitizeService()
-    {
-        return $this->getProvidedDependency(ProductStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(ProductStorageDependencyProvider::STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductBridge
-     */
-    public function getProductFacade()
-    {
-        return $this->getProvidedDependency(ProductStorageDependencyProvider::FACADE_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductStorage\Communication\Helper\AttributeMapHelperInterface
-     */
-    public function createAttributeMapHelper()
-    {
-        return new AttributeMapHelper(
-            $this->getProductFacade(),
-            $this->getQueryContainer()
-        );
     }
 }

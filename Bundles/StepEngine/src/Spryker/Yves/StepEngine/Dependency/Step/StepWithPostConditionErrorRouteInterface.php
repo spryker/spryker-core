@@ -10,7 +10,7 @@ namespace Spryker\Yves\StepEngine\Dependency\Step;
 interface StepWithPostConditionErrorRouteInterface extends StepInterface
 {
     /**
-     * @return string
+     * @return string|null
      */
     public function getPostConditionErrorRoute();
 }

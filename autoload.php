@@ -3,7 +3,7 @@
 $autoloader = function ($className) {
 
     $namespaces = [
-        'Spryker'
+        'Spryker',
     ];
 
     $codeceptionSupportDirectories = [
@@ -112,7 +112,7 @@ $autoloader = function ($className) {
     if (isset($filePathParts)) {
         $filePath = implode(DIRECTORY_SEPARATOR, $filePathParts);
         if (file_exists($filePath)) {
-            require $filePath;
+            include($filePath);
 
             return true;
         }
@@ -120,7 +120,7 @@ $autoloader = function ($className) {
         if (isset($filePathPartsHelper)) {
             $filePath = implode(DIRECTORY_SEPARATOR, $filePathPartsHelper);
             if (file_exists($filePath)) {
-                require $filePath;
+                include($filePath);
 
                 return true;
             }

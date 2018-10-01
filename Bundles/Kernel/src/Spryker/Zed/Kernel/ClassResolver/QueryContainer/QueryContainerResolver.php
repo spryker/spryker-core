@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class QueryContainerResolver extends AbstractClassResolver
 {
-    const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Persistence\\%2$sQueryContainer';
+    public const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Persistence\\%2$sQueryContainer';
 
     /**
      * @param object|string $callerClass
@@ -24,7 +24,10 @@ class QueryContainerResolver extends AbstractClassResolver
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+            /** @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $class */
+            $class = $this->getResolvedClassInstance();
+
+            return $class;
         }
 
         throw new QueryContainerNotFoundException($this->getClassInfo());

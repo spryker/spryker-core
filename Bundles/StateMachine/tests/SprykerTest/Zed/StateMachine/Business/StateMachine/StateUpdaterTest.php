@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -29,7 +30,7 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class StateUpdaterTest extends StateMachineMocks
 {
-    const TEST_STATE_MACHINE_NAME = 'test state machine name';
+    public const TEST_STATE_MACHINE_NAME = 'test state machine name';
 
     /**
      * @return void
@@ -193,7 +194,7 @@ class StateUpdaterTest extends StateMachineMocks
         }
 
         if ($stateMachinePersistenceMock === null) {
-            $stateMachinePersistenceMock = $this->createStateMachinePersitenceMock();
+            $stateMachinePersistenceMock = $this->createStateMachinePersistenceMock();
         }
 
         if ($propelConnectionMock === null) {

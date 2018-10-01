@@ -11,20 +11,23 @@ use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class EntityManagerResolver extends AbstractClassResolver
 {
-    const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Persistence\\%2$sEntityManager';
+    public const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Persistence\\%2$sEntityManager';
 
     /**
      * @param object|string $callerClass
      *
      * @throws \Spryker\Zed\Kernel\ClassResolver\EntityManager\EntityManagerNotFoundException
      *
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractRepository
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractEntityManager
      */
     public function resolve($callerClass)
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+            /** @var \Spryker\Zed\Kernel\Persistence\AbstractEntityManager $class */
+            $class = $this->getResolvedClassInstance();
+
+            return $class;
         }
 
         throw new EntityManagerNotFoundException($this->getClassInfo());

@@ -19,6 +19,7 @@ use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\Product
 
 /**
  * @method \Spryker\Zed\ProductOptionStorage\Communication\ProductOptionStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductOptionStorage\Business\ProductOptionStorageFacadeInterface getFacade()
  */
 class ProductOptionStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -31,21 +32,150 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductOptionEvents::PRODUCT_ABSTRACT_PRODUCT_OPTION_PUBLISH, new ProductOptionPublishStorageListener())
-            ->addListenerQueued(ProductOptionEvents::PRODUCT_ABSTRACT_PRODUCT_OPTION_UNPUBLISH, new ProductOptionPublishStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_CREATE, new ProductOptionStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_UPDATE, new ProductOptionStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_DELETE, new ProductOptionStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_GROUP_UPDATE, new ProductOptionGroupStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_GROUP_DELETE, new ProductOptionGroupStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_CREATE, new ProductOptionValueStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_UPDATE, new ProductOptionValueStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE, new ProductOptionValueStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_CREATE, new ProductOptionValuePriceStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_UPDATE, new ProductOptionValuePriceStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_DELETE, new ProductOptionValuePriceStorageListener());
+        $this->addProductOptionPublishStorageListener($eventCollection);
+        $this->addProductOptionUnpublishStorageListener($eventCollection);
+        $this->addProductOptionCreateStorageListener($eventCollection);
+        $this->addProductOptionUpdateStorageListener($eventCollection);
+        $this->addProductOptionDeleteStorageListener($eventCollection);
+        $this->addProductOptionGroupUpdateStorageListener($eventCollection);
+        $this->addProductOptionGroupDeleteStorageListener($eventCollection);
+        $this->addProductOptionValueCreateStorageListener($eventCollection);
+        $this->addProductOptionValueUpdateStorageListener($eventCollection);
+        $this->addProductOptionValueDeleteStorageListener($eventCollection);
+        $this->addProductOptionValuePriceCreateStorageListener($eventCollection);
+        $this->addProductOptionValuePriceUpdateStorageListener($eventCollection);
+        $this->addProductOptionValuePriceDeleteStorageListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionPublishStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::PRODUCT_ABSTRACT_PRODUCT_OPTION_PUBLISH, new ProductOptionPublishStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionUnpublishStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::PRODUCT_ABSTRACT_PRODUCT_OPTION_UNPUBLISH, new ProductOptionPublishStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_CREATE, new ProductOptionStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_UPDATE, new ProductOptionStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_DELETE, new ProductOptionStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionGroupUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_GROUP_UPDATE, new ProductOptionGroupStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionGroupDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_GROUP_DELETE, new ProductOptionGroupStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionValueCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_CREATE, new ProductOptionValueStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionValueUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_UPDATE, new ProductOptionValueStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionValueDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE, new ProductOptionValueStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionValuePriceCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_CREATE, new ProductOptionValuePriceStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionValuePriceUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_UPDATE, new ProductOptionValuePriceStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductOptionValuePriceDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_DELETE, new ProductOptionValuePriceStorageListener());
     }
 }

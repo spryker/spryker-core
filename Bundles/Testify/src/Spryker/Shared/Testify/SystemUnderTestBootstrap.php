@@ -22,14 +22,14 @@ use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvide
 
 class SystemUnderTestBootstrap
 {
-    const APPLICATION_ZED = 'Zed';
-    const APPLICATION_YVES = 'Yves';
-    const APPLICATION_SHARED = 'Shared';
-    const APPLICATION_CLIENT = 'Client';
-    const TEST_ENVIRONMENT = 'devtest';
+    public const APPLICATION_ZED = 'Zed';
+    public const APPLICATION_YVES = 'Yves';
+    public const APPLICATION_SHARED = 'Shared';
+    public const APPLICATION_CLIENT = 'Client';
+    public const TEST_ENVIRONMENT = 'devtest';
 
     /**
-     * @var \Spryker\Shared\Testify\SystemUnderTestBootstrap
+     * @var \Spryker\Shared\Testify\SystemUnderTestBootstrap|null
      */
     protected static $instance;
 
@@ -82,10 +82,10 @@ class SystemUnderTestBootstrap
         $errorHandlerEnvironment = new ErrorHandlerEnvironment();
         $errorHandlerEnvironment->initialize();
 
-        if (self::APPLICATION_ZED === $application) {
+        if ($application === self::APPLICATION_ZED) {
             return $this->bootstrapZed();
         }
-        if (self::APPLICATION_YVES === $application) {
+        if ($application === self::APPLICATION_YVES) {
             return $this->bootstrapYves();
         }
     }

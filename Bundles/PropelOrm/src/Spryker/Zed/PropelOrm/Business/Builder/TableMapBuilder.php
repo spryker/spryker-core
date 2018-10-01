@@ -6,6 +6,7 @@
  * file that was distributed with the source code of the extended class.
  *
  * @license MIT License
+ * @see https://github.com/propelorm/Propel2
  */
 
 namespace Spryker\Zed\PropelOrm\Business\Builder;
@@ -16,7 +17,7 @@ use Propel\Generator\Builder\Om\TableMapBuilder as PropelTableMapBuilder;
 class TableMapBuilder extends PropelTableMapBuilder
 {
     /**
-     * Change default propel behaviour
+     * Changes default Propel behavior.
      *
      * @param string $objName
      * @param string $clsName

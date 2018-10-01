@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\PropelOrm;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface PropelOrmConstants
 {
     /**
@@ -16,5 +19,5 @@ interface PropelOrmConstants
      *
      * @api
      */
-    const PROPEL_SHOW_EXTENDED_EXCEPTION = 'PROPEL_SHOW_EXTENDED_EXCEPTION';
+    public const PROPEL_SHOW_EXTENDED_EXCEPTION = 'PROPEL_SHOW_EXTENDED_EXCEPTION';
 }

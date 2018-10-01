@@ -19,13 +19,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CompanyUnitAddressLabelChoiceFormType extends AbstractType
 {
-    const OPTION_VALUES_LABEL_CHOICES = 'company_unit_address_label_value_options';
+    public const OPTION_VALUES_LABEL_CHOICES = 'company_unit_address_label_value_options';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\CompanyUnitAddressLabelChoiceFormType
+     * @return $this
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

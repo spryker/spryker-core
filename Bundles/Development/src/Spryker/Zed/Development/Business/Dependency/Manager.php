@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Development\Business\Dependency;
 
-use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
+use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
 use Symfony\Component\Finder\Finder;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\DashToCamelCase;
@@ -15,7 +17,7 @@ use Zend\Filter\Word\DashToCamelCase;
 class Manager implements ManagerInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\Dependency\BundleParserInterface
+     * @var \Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface
      */
     protected $moduleParser;
 
@@ -25,10 +27,10 @@ class Manager implements ManagerInterface
     protected $moduleDirectories;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Dependency\BundleParserInterface $moduleParser
-     * @param string[] $moduleDirectories
+     * @param \Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface $moduleParser
+     * @param array $moduleDirectories
      */
-    public function __construct(BundleParserInterface $moduleParser, $moduleDirectories)
+    public function __construct(ModuleDependencyParserInterface $moduleParser, array $moduleDirectories)
     {
         $this->moduleParser = $moduleParser;
         $this->moduleDirectories = array_filter($moduleDirectories, 'is_dir');
@@ -45,7 +47,14 @@ class Manager implements ManagerInterface
 
         $incomingDependencies = [];
         foreach ($allForeignModules as $foreignModule) {
-            $moduleDependencyCollectionTransfer = $this->moduleParser->parseOutgoingDependencies($foreignModule);
+            $organizationTransfer = new OrganizationTransfer();
+            $organizationTransfer->setName('Spryker');
+            $moduleTransfer = new ModuleTransfer();
+            $moduleTransfer
+                ->setName($moduleName)
+                ->setOrganization($organizationTransfer);
+
+            $moduleDependencyCollectionTransfer = $this->moduleParser->parseOutgoingDependencies($moduleTransfer);
             $dependencyModule = $this->findDependencyTo($moduleName, $moduleDependencyCollectionTransfer);
 
             if ($dependencyModule) {
@@ -61,14 +70,14 @@ class Manager implements ManagerInterface
 
     /**
      * @param string $moduleName
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer
+     * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $moduleDependencyCollectionTransfer
      *
      * @return bool|\Generated\Shared\Transfer\DependencyBundleTransfer|mixed
      */
-    protected function findDependencyTo($moduleName, BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer)
+    protected function findDependencyTo($moduleName, DependencyCollectionTransfer $moduleDependencyCollectionTransfer)
     {
-        foreach ($moduleDependencyCollectionTransfer->getDependencyBundles() as $dependencyModule) {
-            if ($dependencyModule->getBundle() === $moduleName) {
+        foreach ($moduleDependencyCollectionTransfer->getDependencyModules() as $dependencyModule) {
+            if ($dependencyModule->getModule() === $moduleName) {
                 foreach ($dependencyModule->getDependencies() as $dependencyTransfer) {
                     if (!$dependencyTransfer->getIsInTest() && !$dependencyTransfer->getIsOptional()) {
                         return $dependencyModule;
@@ -113,7 +122,7 @@ class Manager implements ManagerInterface
         $filterChain->attach(new DashToCamelCase());
 
         foreach ($modules as $module) {
-            $allModules[] = $filterChain->filter($module->getFilename());
+            $allModules[$module->getPathname()] = $filterChain->filter($module->getFilename());
         }
         asort($allModules);
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -27,8 +28,8 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class SalesFacadeTest extends Unit
 {
-    const DEFAULT_OMS_PROCESS_NAME = 'Test01';
-    const DEFAULT_ITEM_STATE = 'test';
+    public const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    public const DEFAULT_ITEM_STATE = 'test';
 
     /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester

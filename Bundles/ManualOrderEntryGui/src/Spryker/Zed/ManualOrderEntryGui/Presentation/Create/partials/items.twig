@@ -1,10 +1,10 @@
 
-{% if form.manualOrderItems|length > 0 %}
+{% if form.items|length > 0 %}
     <div class="form-group">
         <label class="control-label required">Added Items</label>
 
         <table class="manualOrderItems">
-            {% for item in form.manualOrderItems %}
+            {% for item in form.items %}
                 <tr>
                     <td>{{ form_row(item.sku) }}</td>
                     <td>{{ form_row(item.quantity) }}</td>

@@ -14,8 +14,8 @@ use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToS
 
 class ShipmentCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-     const FACADE_SHIPMENT = 'shipment facade';
-     const FACADE_PRICE = 'price facade';
+    public const FACADE_SHIPMENT = 'shipment facade';
+    public const FACADE_PRICE = 'price facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

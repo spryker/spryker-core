@@ -13,11 +13,19 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Queue name as used for processing price messages
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_LABEL_RESOURCE_NAME = 'product_abstract_label';
+    public const PRODUCT_ABSTRACT_LABEL_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing price messages
+     *
+     * @api
+     */
+    public const PRODUCT_ABSTRACT_LABEL_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
     /**
      * Specification:
@@ -25,5 +33,13 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_LABEL_DICTIONARY_RESOURCE_NAME = 'product_label_dictionary';
+    public const PRODUCT_ABSTRACT_LABEL_RESOURCE_NAME = 'product_abstract_label';
+
+    /**
+     * Specification:
+     * - Resource name, this will use for key generating
+     *
+     * @api
+     */
+    public const PRODUCT_LABEL_DICTIONARY_RESOURCE_NAME = 'product_label_dictionary';
 }

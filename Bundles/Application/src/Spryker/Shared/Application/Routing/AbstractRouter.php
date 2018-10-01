@@ -17,19 +17,19 @@ use Symfony\Component\Routing\RouterInterface;
 abstract class AbstractRouter implements RouterInterface
 {
     /**
-     * @var \Symfony\Component\Routing\RequestContext
-     */
-    protected $context;
-
-    /**
      * @var \Silex\Application
      */
     protected $app;
 
     /**
-     * @var bool
+     * @var bool|null
      */
-    private $sslEnabled;
+    protected $sslEnabled;
+
+    /**
+     * @var \Symfony\Component\Routing\RequestContext|null
+     */
+    protected $context;
 
     /**
      * Set the sslEnabledFlag to
@@ -105,7 +105,7 @@ abstract class AbstractRouter implements RouterInterface
 
     /**
      * @param string $pathInfo
-     * @param bool|string $referenceType
+     * @param int|string $referenceType
      *
      * @return string
      */
@@ -114,7 +114,7 @@ abstract class AbstractRouter implements RouterInterface
         $url = $pathInfo;
         $scheme = $this->context->getScheme();
 
-        if (self::NETWORK_PATH !== $referenceType &&
+        if ($referenceType !== self::NETWORK_PATH &&
             ($scheme === 'http' && $this->sslEnabled === true || $scheme === 'https' && $this->sslEnabled === false)) {
             $referenceType = self::ABSOLUTE_URL;
         }
@@ -137,7 +137,7 @@ abstract class AbstractRouter implements RouterInterface
 
     /**
      * @param string $pathInfo
-     * @param bool|string $referenceType
+     * @param int|string $referenceType
      *
      * @return string
      */
@@ -145,7 +145,7 @@ abstract class AbstractRouter implements RouterInterface
     {
         $scheme = $this->getScheme();
         $port = $this->getPortPart($scheme);
-        $schemeAuthority = self::NETWORK_PATH === $referenceType ? '//' : "$scheme://";
+        $schemeAuthority = $referenceType === self::NETWORK_PATH ? '//' : "$scheme://";
         $schemeAuthority .= $this->context->getHost() . $port;
 
         return $schemeAuthority . $this->context->getBaseUrl() . $pathInfo;

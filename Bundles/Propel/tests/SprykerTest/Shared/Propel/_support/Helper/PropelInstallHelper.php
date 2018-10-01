@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Shared\Propel\Helper;
 
 use Codeception\Configuration;
@@ -28,7 +33,7 @@ class PropelInstallHelper extends Module
     }
 
     /**
-     * @return int
+     * @return void
      */
     protected function initPropel()
     {
@@ -134,7 +139,7 @@ class PropelInstallHelper extends Module
         $process = new Process($command, Configuration::projectDir());
         $process->setTimeout(600);
         $process->mustRun(function ($type, $buffer) use ($command) {
-            if (Process::ERR === $type) {
+            if ($type === Process::ERR) {
                 echo $command . ' Failed:' . PHP_EOL;
                 echo $buffer;
             }

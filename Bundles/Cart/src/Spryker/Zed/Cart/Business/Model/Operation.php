@@ -15,12 +15,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
-use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\TerminationAwareCartPreCheckPluginInterface;
 
 class Operation implements OperationInterface
 {
-    const ADD_ITEMS_SUCCESS = 'cart.add.items.success';
-    const REMOVE_ITEMS_SUCCESS = 'cart.remove.items.success';
+    public const ADD_ITEMS_SUCCESS = 'cart.add.items.success';
+    public const REMOVE_ITEMS_SUCCESS = 'cart.remove.items.success';
 
     protected const TERMINATION_EVENT_NAME_ADD = 'add';
     protected const TERMINATION_EVENT_NAME_REMOVE = 'remove';
@@ -37,7 +37,7 @@ class Operation implements OperationInterface
     protected $calculationFacade;
 
     /**
-     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
+     * @var \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface
      */
     protected $messengerFacade;
 
@@ -47,7 +47,7 @@ class Operation implements OperationInterface
     protected $itemExpanderPlugins = [];
 
     /**
-     * @var \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[]
      */
     protected $preCheckPlugins;
 
@@ -62,7 +62,7 @@ class Operation implements OperationInterface
     protected $postSavePlugins = [];
 
     /**
-     * @var \Spryker\Zed\Cart\Dependency\PreReloadItemsPluginInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface[]
      */
     protected $preReloadPlugins = [];
 
@@ -76,10 +76,10 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
-     * @param \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[] $preCheckPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[] $preCheckPlugins
      * @param \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[] $postSavePlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[] $terminationPlugins
-     * @param \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[] $cartRemovalPreCheckPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface[] $cartRemovalPreCheckPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
@@ -276,7 +276,7 @@ class Operation implements OperationInterface
             }
 
             $this->collectErrorsFromPreCheckResponse($cartPreCheckResponseTransfer);
-            
+
             if ($cartRemovalPreCheckPlugin instanceof TerminationAwareCartPreCheckPluginInterface && $cartRemovalPreCheckPlugin->terminateOnFailure()) {
                 return false;
             }

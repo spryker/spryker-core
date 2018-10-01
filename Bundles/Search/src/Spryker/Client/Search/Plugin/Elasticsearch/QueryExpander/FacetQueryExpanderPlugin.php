@@ -22,8 +22,8 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-    const AGGREGATION_FILTER_NAME = 'filter';
-    const AGGREGATION_GLOBAL_PREFIX = 'global-';
+    public const AGGREGATION_FILTER_NAME = 'filter';
+    public const AGGREGATION_GLOBAL_PREFIX = 'global-';
 
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery

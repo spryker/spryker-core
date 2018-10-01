@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -9,7 +10,6 @@ namespace Spryker\Zed\CmsGui\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
-use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -20,13 +20,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditPageController extends AbstractController
 {
-    const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
-    const URL_PARAM_REDIRECT_URL = 'redirect-url';
-    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
-    const MESSAGE_TEMPLATE_SELECT_ERROR = 'Selected template doesn\'t exist anymore.';
-    const MESSAGE_PAGE_UPDATE_SUCCESS = 'Page was updated successfully.';
-    const MESSAGE_PAGE_ACTIVATION_SUCCESS = 'Page was activated successfully.';
-    const MESSAGE_PAGE_DEACTIVATION_SUCCESS = 'Page was deactivated successfully.';
+    public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
+    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    public const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+    public const MESSAGE_TEMPLATE_SELECT_ERROR = 'Selected template doesn\'t exist anymore.';
+    public const MESSAGE_PAGE_UPDATE_SUCCESS = 'Page was updated successfully.';
+    public const MESSAGE_PAGE_ACTIVATION_SUCCESS = 'Page was activated successfully.';
+    public const MESSAGE_PAGE_DEACTIVATION_SUCCESS = 'Page was deactivated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -37,7 +37,9 @@ class EditPageController extends AbstractController
     {
         $this->getFactory()
             ->getCmsFacade()
-            ->syncTemplate(CmsGuiConfig::CMS_FOLDER_PATH);
+            ->syncTemplate(
+                $this->getCmsFolderPath()
+            );
 
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
 
@@ -167,5 +169,15 @@ class EditPageController extends AbstractController
     protected function createTemplateErrorForm()
     {
         return new FormError(static::MESSAGE_TEMPLATE_SELECT_ERROR);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCmsFolderPath(): string
+    {
+        return $this->getFactory()
+            ->getConfig()
+            ->getCmsFolderPath();
     }
 }

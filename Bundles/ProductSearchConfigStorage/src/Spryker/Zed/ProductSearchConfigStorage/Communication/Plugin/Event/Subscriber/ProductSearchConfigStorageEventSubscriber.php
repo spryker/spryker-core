@@ -16,6 +16,7 @@ use Spryker\Zed\ProductSearchConfigStorage\Communication\Plugin\Event\Listener\P
 
 /**
  * @method \Spryker\Zed\ProductSearchConfigStorage\Communication\ProductSearchConfigStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSearchConfigStorage\Business\ProductSearchConfigStorageFacadeInterface getFacade()
  */
 class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -28,16 +29,95 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductSearchEvents::PRODUCT_SEARCH_CONFIG_PUBLISH, new ProductSearchConfigStorageListener())
-            ->addListenerQueued(ProductSearchEvents::PRODUCT_SEARCH_CONFIG_UNPUBLISH, new ProductSearchConfigStorageListener())
-            ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_CREATE, new ProductSearchConfigStorageListener())
-            ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_UPDATE, new ProductSearchConfigStorageListener())
-            ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE, new ProductSearchConfigStorageListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_CREATE, new ProductSearchConfigStorageListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_UPDATE, new ProductSearchConfigStorageListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_DELETE, new ProductSearchConfigStorageListener());
+        $this->addProductSearchConfigPublishStorageListener($eventCollection);
+        $this->addProductSearchConfigUnpublishStorageListener($eventCollection);
+        $this->addProductSearchConfigCreateStorageListener($eventCollection);
+        $this->addProductSearchConfigUpdateStorageListener($eventCollection);
+        $this->addProductSearchConfigDeleteStorageListener($eventCollection);
+        $this->addProductSearchConfigKeyCreateStorageListener($eventCollection);
+        $this->addProductSearchConfigKeyUpdateStorageListener($eventCollection);
+        $this->addProductSearchConfigKeyDeleteStorageListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductSearchConfigPublishStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductSearchEvents::PRODUCT_SEARCH_CONFIG_PUBLISH, new ProductSearchConfigStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductSearchConfigUnpublishStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductSearchEvents::PRODUCT_SEARCH_CONFIG_UNPUBLISH, new ProductSearchConfigStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductSearchConfigCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_CREATE, new ProductSearchConfigStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductSearchConfigUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_UPDATE, new ProductSearchConfigStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductSearchConfigDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE, new ProductSearchConfigStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductSearchConfigKeyCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_CREATE, new ProductSearchConfigStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductSearchConfigKeyUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_UPDATE, new ProductSearchConfigStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductSearchConfigKeyDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_DELETE, new ProductSearchConfigStorageListener());
     }
 }

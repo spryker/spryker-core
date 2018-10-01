@@ -29,8 +29,8 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
  */
 class EventDispatcherTest extends Unit
 {
-    const TEST_EVENT_NAME = 'trigger.before.save';
-    const LISTENER_NAME = 'Test/Listener';
+    public const TEST_EVENT_NAME = 'trigger.before.save';
+    public const LISTENER_NAME = 'Test/Listener';
 
     /**
      * @return void
@@ -165,7 +165,7 @@ class EventDispatcherTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject
      */
     protected function createTransferMock()
     {

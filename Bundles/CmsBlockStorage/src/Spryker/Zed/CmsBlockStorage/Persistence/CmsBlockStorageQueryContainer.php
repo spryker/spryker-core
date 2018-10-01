@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockStorage\Persistence;
 
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -22,7 +23,7 @@ class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements Cm
      *
      * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery
      */
-    public function queryCmsStorageEntities(array $cmsBlockIds)
+    public function queryCmsBlockStorageEntities(array $cmsBlockIds)
     {
         return $this->getFactory()
             ->createSpyCmsBlockStorage()
@@ -40,11 +41,31 @@ class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements Cm
     {
         $query = $this->getFactory()->createCmsBlockQuery()
             ->filterByIdCmsBlock_In($cmsBlockIds)
-            ->joinWith('SpyCmsBlock.CmsBlockTemplate')
-            ->joinWith('SpyCmsBlock.SpyCmsBlockGlossaryKeyMapping')
-            ->joinWith('SpyCmsBlockGlossaryKeyMapping.GlossaryKey')
+            ->joinWithCmsBlockTemplate()
+            ->joinWithSpyCmsBlockGlossaryKeyMapping()
+            ->useSpyCmsBlockGlossaryKeyMappingQuery()
+                ->joinWithGlossaryKey()
+            ->endUse()
+            ->joinWithSpyCmsBlockStore()
+            ->useSpyCmsBlockStoreQuery()
+                ->joinWithSpyStore()
+            ->endUse()
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $cmsBlockIds
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function queryCmsBlockByIds(array $cmsBlockIds): SpyCmsBlockQuery
+    {
+        return $this->getFactory()
+            ->createCmsBlockQuery()
+            ->filterByIdCmsBlock_In($cmsBlockIds);
     }
 }

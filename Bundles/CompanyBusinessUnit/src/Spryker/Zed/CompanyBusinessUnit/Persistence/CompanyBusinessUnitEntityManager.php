@@ -9,10 +9,12 @@ namespace Spryker\Zed\CompanyBusinessUnit\Persistence;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
+use Spryker\Zed\CompanyBusinessUnit\Persistence\Mapper\CompanyBusinessUnitMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitPersistenceFactory getFactory()
+ * @method \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer save(\Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer $spyCompanyBusinessUnitEntityTransfer)
  */
 class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements CompanyBusinessUnitEntityManagerInterface
 {
@@ -24,20 +26,22 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
     public function saveCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitTransfer {
-        $entityTransfer = $this->getFactory()
-            ->createCompanyBusinessUnitMapper()
-            ->mapBusinessUnitTransferToEntityTransfer(
-                $companyBusinessUnitTransfer,
-                new SpyCompanyBusinessUnitEntityTransfer()
-            );
+        $entityTransfer = $this->getMapper()->mapBusinessUnitTransferToEntityTransfer(
+            $companyBusinessUnitTransfer,
+            new SpyCompanyBusinessUnitEntityTransfer()
+        );
         $entityTransfer = $this->save($entityTransfer);
 
-        return $this->getFactory()
-            ->createCompanyBusinessUnitMapper()
-            ->mapEntityTransferToBusinessUnitTransfer(
-                $entityTransfer,
-                $companyBusinessUnitTransfer
-            );
+        if ($companyBusinessUnitTransfer->isPropertyModified(CompanyBusinessUnitTransfer::FK_PARENT_COMPANY_BUSINESS_UNIT) &&
+            $companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit() === null
+        ) {
+            $this->clearParentBusinessUnitByCompanyBusinessUnitId($entityTransfer->getIdCompanyBusinessUnit());
+        }
+
+        return $this->getMapper()->mapEntityTransferToBusinessUnitTransfer(
+            $entityTransfer,
+            $companyBusinessUnitTransfer
+        );
     }
 
     /**
@@ -51,5 +55,39 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
             ->createCompanyBusinessUnitQuery()
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit)
             ->delete();
+    }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function clearParentBusinessUnit(int $idCompanyBusinessUnit): void
+    {
+        $this->getFactory()
+            ->createCompanyBusinessUnitQuery()
+            ->filterByFkParentCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->update(['FkParentCompanyBusinessUnit' => null]);
+    }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function clearParentBusinessUnitByCompanyBusinessUnitId(int $idCompanyBusinessUnit): void
+    {
+        $this->getFactory()
+            ->createCompanyBusinessUnitQuery()
+            ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->update(['FkParentCompanyBusinessUnit' => null]);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnit\Persistence\Mapper\CompanyBusinessUnitMapperInterface
+     */
+    protected function getMapper(): CompanyBusinessUnitMapperInterface
+    {
+        return $this->getFactory()->createCompanyBusinessUnitMapper();
     }
 }

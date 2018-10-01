@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer;
-
 class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implements ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
 {
     /**
@@ -27,17 +25,7 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
-     */
-    public function getBaseUnitByIdProduct(int $idProduct): SpyProductMeasurementBaseUnitEntityTransfer
-    {
-        return $this->productMeasurementUnitFacade->getBaseUnitByIdProduct($idProduct);
-    }
-
-    /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getSalesUnitsByIdProduct(int $idProduct): array
     {
@@ -45,20 +33,38 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
     }
 
     /**
-     * @return string[]
+     * @param int[] $salesUnitsIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function getProductMeasurementUnitCodeMap(): array
+    public function getSalesUnitsByIds(array $salesUnitsIds): array
     {
-        return $this->productMeasurementUnitFacade->getProductMeasurementUnitCodeMap();
+        return $this->productMeasurementUnitFacade->getSalesUnitsByIds($salesUnitsIds);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnits(): array
+    {
+        return $this->productMeasurementUnitFacade->getSalesUnits();
     }
 
     /**
      * @param int[] $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
+    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array
     {
-        return $this->productMeasurementUnitFacade->findProductMeasurementUnitEntities($productMeasurementUnitIds);
+        return $this->productMeasurementUnitFacade->findProductMeasurementUnitTransfers($productMeasurementUnitIds);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function findAllProductMeasurementUnitTransfers(): array
+    {
+        return $this->productMeasurementUnitFacade->findAllProductMeasurementUnitTransfers();
     }
 }

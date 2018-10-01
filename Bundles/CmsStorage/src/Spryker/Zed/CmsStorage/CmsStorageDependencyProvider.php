@@ -12,19 +12,17 @@ use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsBridge;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToCmsQueryContainerBridge;
 use Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToLocaleQueryContainerBridge;
-use Spryker\Zed\CmsStorage\Dependency\Service\CmsStorageToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_CMS_PAGE = 'QUERY_CONTAINER_CMS_PAGE';
-    const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
-    const FACADE_CMS = 'FACADE_CMS';
-    const STORE = 'store';
+    public const QUERY_CONTAINER_CMS_PAGE = 'QUERY_CONTAINER_CMS_PAGE';
+    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
+    public const FACADE_CMS = 'FACADE_CMS';
+    public const STORE = 'store';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,14 +31,20 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new CmsStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
-
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new CmsStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
         $container[static::FACADE_CMS] = function (Container $container) {
             return new CmsStorageToCmsBridge($container->getLocator()->cms()->facade());
         };

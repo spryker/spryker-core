@@ -16,10 +16,10 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class TransferDefinitionLoader implements LoaderInterface
 {
-    const KEY_BUNDLE = 'bundle';
-    const KEY_CONTAINING_BUNDLE = 'containing bundle';
-    const KEY_TRANSFER = 'transfer';
-    const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
+    public const KEY_BUNDLE = 'bundle';
+    public const KEY_CONTAINING_BUNDLE = 'containing bundle';
+    public const KEY_TRANSFER = 'transfer';
+    public const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface
@@ -65,7 +65,7 @@ class TransferDefinitionLoader implements LoaderInterface
     }
 
     /**
-     * @return array
+     * @return void
      */
     protected function loadDefinitions()
     {

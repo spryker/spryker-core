@@ -43,8 +43,6 @@ class QuoteDeleter implements QuoteDeleterInterface
     protected $customerClient;
 
     /**
-     * QuoteDeleter constructor.
-     *
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientInterface $customerClient
@@ -74,9 +72,9 @@ class QuoteDeleter implements QuoteDeleterInterface
     {
         $quoteTransfer->setCustomer($this->customerClient->getCustomer());
         $quoteResponseTransfer = $this->persistentCartStub->deleteQuote($quoteTransfer);
-        $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
-        if ($this->quoteClient->getQuote()->getIdQuote() === $quoteTransfer->getIdQuote()) {
+        $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
+        if ($quoteResponseTransfer->getIsSuccessful() && $this->quoteClient->getQuote()->getIdQuote() === $quoteTransfer->getIdQuote()) {
             $this->quoteClient->setQuote(new QuoteTransfer());
         }
 

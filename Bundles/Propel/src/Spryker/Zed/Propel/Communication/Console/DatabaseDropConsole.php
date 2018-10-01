@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DatabaseDropConsole extends Console
 {
-    const COMMAND_NAME = 'propel:database:drop';
+    public const COMMAND_NAME = 'propel:database:drop';
 
     /**
      * @return void

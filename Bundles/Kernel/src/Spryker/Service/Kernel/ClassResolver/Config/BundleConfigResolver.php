@@ -11,7 +11,7 @@ use Spryker\Service\Kernel\ClassResolver\AbstractClassResolver;
 
 class BundleConfigResolver extends AbstractClassResolver
 {
-    const CLASS_NAME_PATTERN = '\\%1$s\\Service\\%2$s%3$s\\%2$sConfig';
+    public const CLASS_NAME_PATTERN = '\\%1$s\\Service\\%2$s%3$s\\%2$sConfig';
 
     /**
      * @param object|string $callerClass
@@ -24,7 +24,10 @@ class BundleConfigResolver extends AbstractClassResolver
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+            /** @var \Spryker\Service\Kernel\AbstractBundleConfig $class */
+            $class = $this->getResolvedClassInstance();
+
+            return $class;
         }
 
         throw new BundleConfigNotFoundException($this->getClassInfo());

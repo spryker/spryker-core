@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\Shipment\Business;
 
 use ArrayObject;
@@ -32,15 +37,15 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
  */
 class ShipmentFacadeTest extends Test
 {
-    const DELIVERY_TIME_PLUGIN = 'example_delivery_time_plugin';
-    const AVAILABILITY_PLUGIN = 'example_availability_plugin';
-    const PRICE_PLUGIN = 'example_price_plugin';
+    public const DELIVERY_TIME_PLUGIN = 'example_delivery_time_plugin';
+    public const AVAILABILITY_PLUGIN = 'example_availability_plugin';
+    public const PRICE_PLUGIN = 'example_price_plugin';
 
-    const AVAILABLE = true;
-    const NOT_AVAILABLE = false;
+    public const AVAILABLE = true;
+    public const NOT_AVAILABLE = false;
 
-    const DEFAULT_DELIVERY_TIME = 'example delivery time';
-    const DEFAULT_PLUGIN_PRICE = 1500;
+    public const DEFAULT_DELIVERY_TIME = 'example delivery time';
+    public const DEFAULT_PLUGIN_PRICE = 1500;
 
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester

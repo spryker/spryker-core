@@ -9,6 +9,7 @@ namespace Spryker\Zed\Event\Business\Queue\Consumer;
 
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
@@ -17,8 +18,8 @@ use Throwable;
 
 class EventQueueConsumer implements EventQueueConsumerInterface
 {
-    const EVENT_TRANSFERS = 'eventTransfers';
-    const EVENT_MESSAGES = 'eventMessages';
+    public const EVENT_TRANSFERS = 'eventTransfers';
+    public const EVENT_MESSAGES = 'eventMessages';
     /**
      * @var \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
@@ -87,7 +88,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                     $exception->getMessage(),
                     $exception->getTraceAsString()
                 );
-                $this->logConsumerAction($errorMessage);
+                $this->logConsumerAction($errorMessage, $exception);
                 $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
             }
         }
@@ -123,7 +124,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                     $throwable->getMessage(),
                     $throwable->getTraceAsString()
                 );
-                $this->logConsumerAction($errorMessage);
+                $this->logConsumerAction($errorMessage, $throwable);
                 foreach ($eventItem[static::EVENT_MESSAGES] as $queueMessageTransfer) {
                     $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
                 }
@@ -174,12 +175,17 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
     /**
      * @param string $message
+     * @param \Throwable|null $throwable
      *
      * @return void
      */
-    protected function logConsumerAction($message)
+    protected function logConsumerAction($message, ?Throwable $throwable = null)
     {
         $this->eventLogger->log('[async] ' . $message);
+
+        if ($throwable !== null) {
+            ErrorLogger::getInstance()->log($throwable);
+        }
     }
 
     /**
@@ -189,7 +195,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function createEventTransfer($transferClass)
     {
-        return new $transferClass;
+        return new $transferClass();
     }
 
     /**
@@ -199,7 +205,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function createEventListener($listenerClass)
     {
-        return new $listenerClass;
+        return new $listenerClass();
     }
 
     /**
@@ -252,9 +258,10 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function mapEventTransfer(EventQueueSendMessageBodyTransfer $eventQueueSentMessageBodyTransfer)
     {
-        $eventTransfer = $this->createEventTransfer($eventQueueSentMessageBodyTransfer->getTransferClassName());
-        $eventTransfer->fromArray($eventQueueSentMessageBodyTransfer->getTransferData(), true);
+        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer */
+        $transfer = $this->createEventTransfer($eventQueueSentMessageBodyTransfer->getTransferClassName());
+        $transfer->fromArray($eventQueueSentMessageBodyTransfer->getTransferData(), true);
 
-        return $eventTransfer;
+        return $transfer;
     }
 }

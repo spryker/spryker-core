@@ -17,4 +17,11 @@ interface ProductOptionStorageToProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
      */
     public function getProductOptionValueStorePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
+     */
+    public function getAllProductOptionValuePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
 }

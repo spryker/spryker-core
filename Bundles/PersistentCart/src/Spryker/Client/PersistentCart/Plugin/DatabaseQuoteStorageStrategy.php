@@ -23,7 +23,7 @@ use Spryker\Shared\Quote\QuoteConfig;
 
 /**
  * @method \Spryker\Client\PersistentCart\PersistentCartFactory getFactory()
- * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()()
+ * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()
  */
 class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface
 {
@@ -81,7 +81,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     public function addItems(array $itemTransfers, array $params = [])
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
-        
+
         foreach ($itemTransfers as $itemTransfer) {
             $persistentCartChangeTransfer->addItem($itemTransfer);
         }

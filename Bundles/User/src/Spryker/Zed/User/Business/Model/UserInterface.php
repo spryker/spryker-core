@@ -9,9 +9,14 @@ namespace Spryker\Zed\User\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
 
+/**
+ * @method \Generated\Shared\Transfer\UserTransfer removeUser($idUser)
+ */
 interface UserInterface
 {
     /**
+     * @deprecated Use \Spryker\Zed\User\Business\Model\UserInterface::createUser instead.
+     *
      * @param string $firstName
      * @param string $lastName
      * @param string $username
@@ -22,6 +27,13 @@ interface UserInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function addUser($firstName, $lastName, $username, $password);
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function createUser(UserTransfer $userTransfer): UserTransfer;
 
     /**
      * @param string $password

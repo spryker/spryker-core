@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
 
 class FactoryResolver extends AbstractClassResolver
 {
-    const CLASS_NAME_PATTERN = '\\%1$s\\Yves\\%2$s%3$s\\%2$sFactory';
+    public const CLASS_NAME_PATTERN = '\\%1$s\\Yves\\%2$s%3$s\\%2$sFactory';
 
     /**
      * @param object|string $callerClass
@@ -24,7 +24,10 @@ class FactoryResolver extends AbstractClassResolver
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+            /** @var \Spryker\Yves\Kernel\AbstractFactory $class */
+            $class = $this->getResolvedClassInstance();
+
+            return $class;
         }
 
         throw new FactoryNotFoundException($this->getClassInfo());

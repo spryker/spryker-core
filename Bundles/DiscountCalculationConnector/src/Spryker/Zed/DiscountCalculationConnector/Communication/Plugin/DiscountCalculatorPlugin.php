@@ -18,9 +18,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class DiscountCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {

@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Event;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface EventConstants
 {
     /**
@@ -15,7 +18,7 @@ interface EventConstants
      *
      * @api
      */
-    const LOG_FILE_PATH = 'EVENT_LOG_FILE_PATH';
+    public const LOG_FILE_PATH = 'EVENT_LOG_FILE_PATH';
 
     /**
      * Specification:
@@ -23,7 +26,7 @@ interface EventConstants
      *
      * @api
      */
-    const LOGGER_ACTIVE = 'LOGGER_ACTIVE';
+    public const LOGGER_ACTIVE = 'LOGGER_ACTIVE';
 
     /**
      * Specification:
@@ -31,7 +34,7 @@ interface EventConstants
      *
      * @api
      */
-    const EVENT_QUEUE = 'event';
+    public const EVENT_QUEUE = 'event';
 
     /**
      * Specification:
@@ -39,5 +42,5 @@ interface EventConstants
      *
      * @api
      */
-    const EVENT_QUEUE_ERROR = 'event.error';
+    public const EVENT_QUEUE_ERROR = 'event.error';
 }

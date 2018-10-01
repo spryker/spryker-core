@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -20,10 +21,10 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class VoucherController extends AbstractController
 {
-    const URL_PARAM_ID_POOL = 'id-pool';
-    const URL_PARAM_ID_DISCOUNT = 'id-discount';
-    const URL_PARAM_ID_VOUCHER = 'id-voucher';
-    const CSV_FILENAME = 'vouchers.csv';
+    public const URL_PARAM_ID_POOL = 'id-pool';
+    public const URL_PARAM_ID_DISCOUNT = 'id-discount';
+    public const URL_PARAM_ID_VOUCHER = 'id-voucher';
+    public const CSV_FILENAME = 'vouchers.csv';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

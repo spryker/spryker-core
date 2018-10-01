@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -8,7 +9,7 @@ namespace Spryker\Zed\Tax\Business\Model;
 
 class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
 {
-    const DEFAULT_BUCKET_NAME = 'default';
+    public const DEFAULT_BUCKET_NAME = 'default';
 
     /**
      * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface

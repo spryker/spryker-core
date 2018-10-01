@@ -122,7 +122,7 @@ class CustomerOrdersTable extends OrdersTable
     }
 
     /**
-     * @return $this|\Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected function buildQuery()
     {
@@ -136,7 +136,7 @@ class CustomerOrdersTable extends OrdersTable
     /**
      * @param array $item
      *
-     * @return int
+     * @return string
      */
     protected function getGrandTotal(array $item)
     {

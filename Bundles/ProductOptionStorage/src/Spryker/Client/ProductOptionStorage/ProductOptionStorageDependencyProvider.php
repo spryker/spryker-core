@@ -17,11 +17,11 @@ use Spryker\Shared\Kernel\Store;
 
 class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const CLIENT_PRICE = 'CLIENT_PRICE';
-    const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
-    const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
-    const STORE = 'STORE';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_PRICE = 'CLIENT_PRICE';
+    public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -100,9 +100,9 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addStore(Container $container): Container
+    protected function addStore(Container $container)
     {
-        $container[self::STORE] = function () {
+        $container[static::STORE] = function () {
             return Store::getInstance();
         };
 

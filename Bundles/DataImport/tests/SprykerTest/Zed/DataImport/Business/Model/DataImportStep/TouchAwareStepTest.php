@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -27,9 +27,9 @@ use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface;
  */
 class TouchAwareStepTest extends Unit
 {
-    const MAIN_TOUCHABLE_KEY = 'main touchable key';
-    const SUB_TOUCHABLE_KEY_A = 'sub touchable key a';
-    const SUB_TOUCHABLE_KEY_B = 'sub touchable key b';
+    public const MAIN_TOUCHABLE_KEY = 'main touchable key';
+    public const SUB_TOUCHABLE_KEY_A = 'sub touchable key a';
+    public const SUB_TOUCHABLE_KEY_B = 'sub touchable key b';
 
     /**
      * @return void

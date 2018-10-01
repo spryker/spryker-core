@@ -14,8 +14,8 @@ use PHPMD\Rule\ClassAware;
 
 class TooManyMethods extends AbstractRule implements ClassAware
 {
-    const MAX_METHODS = 'maxmethods';
-    const METHODS_IGNORE_PATTERN = 'ignorepattern';
+    public const MAX_METHODS = 'maxmethods';
+    public const METHODS_IGNORE_PATTERN = 'ignorepattern';
 
     /**
      * Regular expression that filters all methods that are ignored by this rule.
@@ -28,7 +28,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
      * This method checks the number of methods with in a given class and checks
      * this number against a configured threshold.
      *
-     * @param \PHPMD\AbstractNode $node
+     * @param \PHPMD\Node\AbstractTypeNode $node
      *
      * @return void
      */
@@ -59,7 +59,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
      *
      * @param \PHPMD\Node\AbstractTypeNode $node
      *
-     * @return integer
+     * @return int
      */
     private function countMethods(AbstractTypeNode $node)
     {

@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\CmsPageSearch;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 class CmsPageSearchConstants
 {
     /**
@@ -15,7 +18,7 @@ class CmsPageSearchConstants
      *
      * @api
      */
-    const CMS_SYNC_SEARCH_QUEUE = 'sync.search.cms';
+    public const CMS_SYNC_SEARCH_QUEUE = 'sync.search.cms';
 
     /**
      * Specification:
@@ -23,7 +26,7 @@ class CmsPageSearchConstants
      *
      * @api
      */
-    const CMS_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.cms.error';
+    public const CMS_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.cms.error';
 
     /**
      * Specification:
@@ -31,5 +34,5 @@ class CmsPageSearchConstants
      *
      * @api
      */
-    const CMS_PAGE_RESOURCE_NAME = 'cms_page';
+    public const CMS_PAGE_RESOURCE_NAME = 'cms_page_search';
 }

@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -30,6 +32,8 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -38,15 +42,16 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
      */
     public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $orderSourceTransfer = $this->getFactory()->getManualOrderEntryFacade()->getOrderSourceById(
-            $quoteTransfer->getOrderSource()->getIdOrderSource()
-        );
-        $quoteTransfer->setOrderSource($orderSourceTransfer);
+        $quoteTransfer = $this->getFactory()
+            ->createOrderSourceFormHandler()
+            ->handle($quoteTransfer, $form, $request);
 
         return $quoteTransfer;
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -55,11 +60,26 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
     public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
+    {
+        return false;
+    }
+
+    /**
+     * @api
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isFormSkipped(Request $request, QuoteTransfer $quoteTransfer): bool
     {
         return false;
     }

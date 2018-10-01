@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockStorage;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsBlockStorage\Dependency\Facade\CmsBlockStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -14,9 +15,10 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const FACADE_EVENT_BEHAVIOUR = 'FACADE_EVENT_BEHAVIOUR';
-    const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const FACADE_EVENT_BEHAVIOUR = 'FACADE_EVENT_BEHAVIOUR';
+    public const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
+    public const STORE = 'store';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,8 +28,20 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addEventBehaviourFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addContentWidgetDataExpanderPlugin($container);
+        $container = $this->addStore($container);
 
         return $container;
     }
@@ -69,6 +83,20 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER] = function () {
             return $this->getContentWidgetDataExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStore(Container $container)
+    {
+        $container[static::STORE] = function () {
+            return Store::getInstance();
         };
 
         return $container;

@@ -87,9 +87,9 @@ class CreateController extends AbstractController
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int[]|int ...$idsOrderItem
+     * @param int ...$idsOrderItem
      *
-     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
+     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
     protected function createReclamation(OrderTransfer $orderTransfer, int ... $idsOrderItem): ?ReclamationTransfer
     {

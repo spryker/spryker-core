@@ -20,6 +20,23 @@
         <property name="namespaceName" type="string"/>
     </transfer>
 
+    <transfer name="DependencyCollection">
+        <property name="module" type="Module"/>
+        <property name="dependencyModules" type="DependencyModule[]" singular="dependencyModule"/>
+    </transfer>
+
+    <transfer name="DependencyModule">
+        <property name="module" type="string"/>
+        <property name="dependencies" type="Dependency[]" singular="dependency"/>
+    </transfer>
+
+    <transfer name="Dependency">
+        <property name="module" type="string"/>
+        <property name="type" type="string"/>
+        <property name="isInTest" type="bool"/>
+        <property name="isOptional" type="bool"/>
+    </transfer>
+
     <transfer name="BundleDependencyCollection">
         <property name="bundle" type="string"/>
         <property name="dependencyBundles" type="DependencyBundle[]" singular="dependencyBundle"/>
@@ -30,19 +47,13 @@
         <property name="dependencies" type="Dependency[]" singular="dependency"/>
     </transfer>
 
-    <transfer name="Dependency">
-        <property name="bundle" type="string"/>
-        <property name="type" type="string"/>
-        <property name="isInTest" type="bool"/>
-        <property name="isOptional" type="bool"/>
-    </transfer>
-
     <transfer name="ComposerDependencyCollection">
         <property name="composerDependencies" type="ComposerDependency[]" singular="composerDependency"/>
     </transfer>
 
     <transfer name="ComposerDependency">
         <property name="name" type="string"/>
+        <property name="module" type="Module"/>
         <property name="isDev" type="bool"/>
         <property name="isOptional" type="bool"/>
     </transfer>
@@ -59,6 +70,93 @@
         <property name="toModuleLayer" type="string"/>
         <property name="toType" type="string"/>
         <property name="methods" type="string[]"/>
+    </transfer>
+
+    <transfer name="DependencyValidationRequest">
+        <property name="module" type="Module"/>
+        <property name="dependencyType" type="string"/>
+    </transfer>
+
+    <transfer name="DependencyValidationResponse">
+        <property name="moduleDependencies" type="ModuleDependency[]" singular="moduleDependency"/>
+    </transfer>
+
+    <transfer name="ModuleDependency">
+        <property name="module" type="string"/>
+        <property name="isValid" type="bool"/>
+        <property name="isSrcDependency" type="bool"/>
+        <property name="isTestDependency" type="bool"/>
+        <property name="isSuggested" type="bool"/>
+        <property name="isOptionalDependency" type="bool"/>
+        <property name="isOwnExtensionModule" type="bool"/>
+        <property name="isInComposerRequire" type="bool"/>
+        <property name="isInComposerRequireDev" type="bool"/>
+        <property name="dependencyTypes" type="string[]"/>
+        <property name="validationMessages" type="ValidationMessage[]" singular="validationMessage"/>
+    </transfer>
+
+    <transfer name="ValidationMessage">
+        <property name="message" type="string"/>
+        <property name="fixType" type="string"/>
+    </transfer>
+
+    <transfer name="ModuleFilter">
+        <property name="organization" type="Organization"/>
+        <property name="module" type="Module"/>
+        <property name="application" type="Application"/>
+    </transfer>
+
+    <transfer name="Package">
+        <property name="composerName" type="string"/>
+        <property name="organizationName" type="string"/>
+        <property name="organizationNameDashed" type="string"/>
+        <property name="packageName" type="string"/>
+        <property name="packageNameDashed" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="Module">
+        <property name="name" type="string"/>
+        <property name="nameDashed" type="string"/>
+        <property name="organization" type="Organization"/>
+        <property name="application" type="Application"/>
+        <property name="path" type="string"/>
+        <property name="isStandalone" type="bool"/>
+    </transfer>
+
+    <transfer name="Organization">
+        <property name="name" type="string"/>
+        <property name="nameDashed" type="string"/>
+        <property name="isProject" type="bool"/>
+    </transfer>
+
+    <transfer name="Application">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ComposerJsonValidationRequest">
+        <property name="module" type="Module"/>
+    </transfer>
+
+    <transfer name="ComposerJsonValidationResponse">
+        <property name="validationMessages" type="ValidationMessage[]" singular="validationMessage"/>
+    </transfer>
+
+    <transfer name="DependencyProvider">
+        <property name="fullyQualifiedClassName" type="string"/>
+        <property name="className" type="string"/>
+        <property name="module" type="Module"/>
+        <property name="usedPlugins" type="Plugin[]" singular="usedPlugin"/>
+    </transfer>
+
+    <transfer name="DependencyProviderCollection">
+        <property name="dependencyProvider" type="DependencyProvider[]"/>
+    </transfer>
+
+    <transfer name="Plugin">
+        <property name="fullyQualifiedClassName" type="string"/>
+        <property name="className" type="string"/>
+        <property name="module" type="Module"/>
     </transfer>
 
 </transfers>

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Shared\Kernel\Fixtures;
@@ -10,7 +11,7 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class LocatorWithMatcherMatcher implements LocatorMatcherInterface
 {
-    const NAME = 'locator';
+    public const NAME = 'locator';
 
     /**
      * @param string $method

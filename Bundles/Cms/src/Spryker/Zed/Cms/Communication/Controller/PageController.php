@@ -26,8 +26,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PageController extends AbstractController
 {
-    const REDIRECT_ADDRESS = '/cms/glossary';
-    const CMS_FOLDER_PATH = '@Cms/template/';
+    public const REDIRECT_ADDRESS = '/cms/glossary';
+    public const CMS_FOLDER_PATH = '@Cms/template/';
 
     /**
      * @return array
@@ -56,7 +56,7 @@ class PageController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function addAction(Request $request)
     {
@@ -91,7 +91,7 @@ class PageController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function editAction(Request $request)
     {

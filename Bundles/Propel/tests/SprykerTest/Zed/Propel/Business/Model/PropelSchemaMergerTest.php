@@ -23,8 +23,8 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class PropelSchemaMergerTest extends Unit
 {
-    const LEVEL_PROJECT = 'Project';
-    const LEVEL_VENDOR = 'Vendor';
+    public const LEVEL_PROJECT = 'Project';
+    public const LEVEL_VENDOR = 'Vendor';
 
     /**
      * @return void
@@ -39,6 +39,23 @@ class PropelSchemaMergerTest extends Unit
         $merger = new PropelSchemaMerger();
         $content = $merger->merge($filesToMerge);
         $expected = file_get_contents($this->getFixtureDirectory() . 'expected.merged.schema.xml');
+        $this->assertSame($expected, $content);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMergeMoreThanTwoSchemaFilesMustReturnStringWithMergedContent()
+    {
+        $filesToMerge = [
+            $this->getSplFileInfo('foo_bar.schema.xml', static::LEVEL_VENDOR),
+            $this->getSplFileInfo('bar_foo.schema.xml', static::LEVEL_VENDOR),
+            $this->getSplFileInfo('foo_bar.schema.xml', static::LEVEL_PROJECT),
+        ];
+
+        $merger = new PropelSchemaMerger();
+        $content = $merger->merge($filesToMerge);
+        $expected = file_get_contents($this->getFixtureDirectory() . 'expected.merged.three.uniques.schema.xml');
         $this->assertSame($expected, $content);
     }
 

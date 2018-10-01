@@ -204,7 +204,7 @@ class DataImporter implements
     /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSet[]
+     * @return \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface
      */
     protected function getDataReader(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
@@ -219,7 +219,7 @@ class DataImporter implements
 
     /**
      * @param \Exception $exception
-     * @param null|int $dataSetPosition
+     * @param int|null $dataSetPosition
      *
      * @return string
      */

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyUser\Business\Model;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
@@ -130,6 +131,18 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer
+    {
+        $companyUserTransfer = $this->companyUserRepository->getCompanyUserById($idCompanyUser);
+
+        return $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);
+    }
+
+    /**
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
@@ -204,6 +217,7 @@ class CompanyUser implements CompanyUserInterface
         $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePreSavePlugins($companyUserResponseTransfer);
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
         $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);
+        $companyUserTransfer->setCustomer($companyUserResponseTransfer->getCompanyUser()->getCustomer());
         $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
         $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePostSavePlugins($companyUserResponseTransfer);
 
@@ -274,6 +288,45 @@ class CompanyUser implements CompanyUserInterface
         );
 
         return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function createInitialCompanyUser(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
+    {
+        $companyResponseTransfer->getCompanyTransfer()->requireIdCompany()->requireInitialUserTransfer();
+
+        $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
+        $companyUserTransfer = $companyTransfer->getInitialUserTransfer()
+            ->setFkCompany($companyTransfer->getIdCompany());
+
+        $companyUserResponseTransfer = $this->create($companyUserTransfer);
+
+        $companyResponseTransfer->getCompanyTransfer()->setInitialUserTransfer($companyUserResponseTransfer->getCompanyUser());
+        $companyResponseTransfer->setIsSuccessful($companyUserResponseTransfer->getIsSuccessful());
+        $this->addMessagesToCompanyResponse($companyUserResponseTransfer->getMessages(), $companyResponseTransfer);
+
+        return $companyResponseTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ResponseMessageTransfer[] $messages
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    protected function addMessagesToCompanyResponse(
+        ArrayObject $messages,
+        CompanyResponseTransfer $companyResponseTransfer
+    ): CompanyResponseTransfer {
+        foreach ($messages as $messageTransfer) {
+            $companyResponseTransfer->addMessage($messageTransfer);
+        }
+
+        return $companyResponseTransfer;
     }
 
     /**

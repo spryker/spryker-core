@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -15,7 +16,7 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Base;
 
 class Request extends Base
 {
-    const OPERATION = Constants::REQUEST_MODEL_PAYMENT_REQUEST;
+    public const OPERATION = Constants::REQUEST_MODEL_PAYMENT_REQUEST;
 
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Builder\Customer

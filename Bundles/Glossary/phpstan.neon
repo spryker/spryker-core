@@ -2,7 +2,9 @@ parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
     ignoreErrors:
-    - '#.+ has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface.#'
+        - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::.+#'
+        - '#.+ has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface.#'
+        - '#Casting to .+ something that.+s already .+.#'
 
 services:
     -

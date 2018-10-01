@@ -10,16 +10,20 @@ namespace Spryker\Zed\ProductLabelSearch\Communication\Plugin\PageDataExpander;
 use DateTime;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelQuery;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
 
 /**
+ * @deprecated Use \Spryker\Zed\ProductLabelSearch\Communication\Plugin\PageDataExpander\ProductLabelDataLoaderExpanderPlugin instead.
+ *
  * @method \Spryker\Zed\ProductLabelSearch\Communication\ProductLabelSearchCommunicationFactory getFactory()
  */
 class ProductLabelDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
+     * @api
+     *
      * @param array $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *

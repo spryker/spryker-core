@@ -9,7 +9,10 @@ namespace Spryker\Shared\CategoryExporter;
 
 use Spryker\Zed\Category\CategoryConfig;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CategoryExporterConstants
 {
-    const RESOURCE_TYPE_CATEGORY_NODE = CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
+    public const RESOURCE_TYPE_CATEGORY_NODE = CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
 }

@@ -67,6 +67,11 @@ interface StoreToStoreInterface
     public function getCurrentStoreSelectedCurrencyIsoCode();
 
     /**
+     * @return array
+     */
+    public function getQueuePools();
+
+    /**
      * @return string[]
      */
     public function getStoresWithSharedPersistence();
@@ -75,4 +80,9 @@ interface StoreToStoreInterface
      * @return array
      */
     public function getCountries();
+
+    /**
+     * @return string
+     */
+    public function getTimezone();
 }

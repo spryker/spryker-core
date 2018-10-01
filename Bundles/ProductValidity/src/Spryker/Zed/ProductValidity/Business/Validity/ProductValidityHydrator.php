@@ -15,7 +15,9 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
 {
     public const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d G:i';
 
-    /** @var \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface */
+    /**
+     * @var \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface
+     */
     protected $productValidityQueryContainer;
 
     /**
@@ -43,7 +45,6 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
             return $productConcreteTransfer;
         }
 
-        /** @var \Orm\Zed\ProductValidity\Persistence\SpyProductValidity $validityEntity */
         $productConcreteTransfer->setValidFrom(
             $this->formatDateTime($productValidityEntity->getValidFrom())
         );
@@ -57,7 +58,7 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
     /**
      * @param \DateTime|null $dateTime
      *
-     * @return null|string
+     * @return string|null
      */
     protected function formatDateTime(?DateTime $dateTime = null): ?string
     {

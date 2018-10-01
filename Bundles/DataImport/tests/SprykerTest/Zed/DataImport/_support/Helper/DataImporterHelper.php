@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -28,7 +28,7 @@ class DataImporterHelper extends Module
      * @param bool $isCalled
      * @param \Generated\Shared\Transfer\DataImporterReportTransfer|null $dataImporterReportTransfer
      *
-     * @return object|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
     public function getDataImporterMock($importType, $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null)
     {
@@ -38,6 +38,7 @@ class DataImporterHelper extends Module
                 ->setImportedDataSetCount(0);
         }
 
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporterInterface $dataImporterStub */
         $dataImporterStub = Stub::makeEmpty(DataImporterInterface::class, [
             'import' => Expected::exactly(($isCalled ? 1 : 0), function () use ($dataImporterReportTransfer) {
                 return $dataImporterReportTransfer;
@@ -55,7 +56,7 @@ class DataImporterHelper extends Module
      * @param bool $isCalled
      * @param \Generated\Shared\Transfer\DataImporterReportTransfer|null $dataImporterReportTransfer
      *
-     * @return object|\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface
+     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface
      */
     public function getDataImporterPluginMock($importType, $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null)
     {
@@ -65,6 +66,7 @@ class DataImporterHelper extends Module
                 ->setImportedDataSetCount(0);
         }
 
+        /** @var \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface $dataImporterPluginStub */
         $dataImporterPluginStub = Stub::makeEmpty(DataImportPluginInterface::class, [
             'import' => Expected::exactly(($isCalled ? 1 : 0), function () use ($dataImporterReportTransfer) {
                 return $dataImporterReportTransfer;
@@ -78,10 +80,11 @@ class DataImporterHelper extends Module
     }
 
     /**
-     * @return object|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
     public function getDataImportStepMock()
     {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface $dataSetStub */
         $dataSetStub = Stub::makeEmpty(DataImportStepInterface::class);
 
         return $dataSetStub;
@@ -90,33 +93,36 @@ class DataImporterHelper extends Module
     /**
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
      *
-     * @return object|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
     public function getFailingDataImportStepMock()
     {
         $executeCallback = function () {
             throw new DataImportException();
         };
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface $dataSetStub */
         $dataSetStub = Stub::makeEmpty(DataImportStepInterface::class, ['execute' => $executeCallback]);
 
         return $dataSetStub;
     }
 
     /**
-     * @return object|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface
      */
     public function getDataSetMock()
     {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface $dataSetStub */
         $dataSetStub = Stub::makeEmpty(DataSetStepBrokerInterface::class);
 
         return $dataSetStub;
     }
 
     /**
-     * @return object|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface
      */
     public function getBeforeImportHookMock()
     {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface $beforeHook */
         $beforeHook = Stub::makeEmpty(DataImporterBeforeImportInterface::class, [
             'beforeImport' => Expected::exactly(1),
         ]);
@@ -125,10 +131,11 @@ class DataImporterHelper extends Module
     }
 
     /**
-     * @return object|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface
      */
     public function getAfterImportHookMock()
     {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface $beforeHook */
         $beforeHook = Stub::makeEmpty(DataImporterAfterImportInterface::class, [
             'afterImport' => Expected::exactly(1),
         ]);

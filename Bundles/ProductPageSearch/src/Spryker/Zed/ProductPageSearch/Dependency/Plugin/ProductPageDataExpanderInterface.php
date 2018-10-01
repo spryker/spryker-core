@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\ProductPageSearchTransfer;
 interface ProductPageDataExpanderInterface
 {
     /**
+     * Specification:
+     * - Expands the provided ProductAbstractPageSearch transfer object's data by reference.
+     *
      * @api
      *
      * @param array $productData

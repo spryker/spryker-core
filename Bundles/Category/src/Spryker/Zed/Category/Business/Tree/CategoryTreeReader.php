@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
@@ -18,16 +19,16 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
-    const ID = 'id';
-    const ID_CATEGORY = 'id_category';
-    const ID_PARENT = 'parent';
-    const TEXT = 'text';
-    const IS_ACTIVE = 'is_active';
-    const IS_MAIN = 'is_main';
-    const IS_CLICKABLE = 'is_clickable';
-    const IS_IN_MENU = 'is_in_menu';
-    const IS_SEARCHABLE = 'is_searchable';
-    const CATEGORY_TEMPLATE_NAME = 'category_template_name';
+    public const ID = 'id';
+    public const ID_CATEGORY = 'id_category';
+    public const ID_PARENT = 'parent';
+    public const TEXT = 'text';
+    public const IS_ACTIVE = 'is_active';
+    public const IS_MAIN = 'is_main';
+    public const IS_CLICKABLE = 'is_clickable';
+    public const IS_IN_MENU = 'is_in_menu';
+    public const IS_SEARCHABLE = 'is_searchable';
+    public const CATEGORY_TEMPLATE_NAME = 'category_template_name';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
@@ -308,7 +309,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idNode
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode|null
      */
     public function getNodeById($idNode)
     {
@@ -323,7 +324,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param int $idCategory
      * @param int $idParentNode
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode|null
      */
     public function getNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
     {
@@ -351,6 +352,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryAllNodesByCategoryId($idCategory)
+            ->orderByNodeOrder(Criteria::ASC)
             ->find();
     }
 

@@ -21,7 +21,7 @@ class YvesFragmentControllerResolver extends SilexControllerResolver
      */
     protected function createController($controller)
     {
-        list($bundle, $controllerName, $actionName) = explode('/', ltrim($controller, '/'));
+        [$bundle, $controllerName, $actionName] = explode('/', ltrim($controller, '/'));
 
         $bundleControllerAction = new BundleControllerAction($bundle, $controllerName, $actionName);
         $controller = $this->resolveController($bundleControllerAction);
@@ -43,6 +43,7 @@ class YvesFragmentControllerResolver extends SilexControllerResolver
     {
         $controllerResolver = new ControllerResolver();
 
+        /** @var \Spryker\Yves\Kernel\Controller\AbstractController $controller */
         $controller = $controllerResolver->resolve($bundleControllerAction);
         $controller->setApplication($this->app);
         $controller->initialize();

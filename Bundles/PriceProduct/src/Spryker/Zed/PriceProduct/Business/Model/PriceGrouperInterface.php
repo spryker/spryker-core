@@ -7,12 +7,25 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+
 interface PriceGrouperInterface
 {
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
      * @return array
      */
-    public function findPricesBySkuGroupedForCurrentStore($sku);
+    public function findPricesBySkuGroupedForCurrentStore(
+        string $sku,
+        ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
+    );
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return array
+     */
+    public function groupPriceProduct(array $priceProductTransfers);
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -22,11 +22,11 @@ use Spryker\Zed\Session\SessionConfig;
  */
 class SessionConfigTest extends Unit
 {
-    const EXPECTED_DSN_TCP_WITHOUT_PASSWORD = 'tcp://10.10.0.1:6435?database=0';
-    const EXPECTED_DSN_TCP_WITH_PASSWORD = 'tcp://10.10.0.1:6435?database=0&password=secret';
+    public const EXPECTED_DSN_TCP_WITHOUT_PASSWORD = 'tcp://10.10.0.1:6435?database=0';
+    public const EXPECTED_DSN_TCP_WITH_PASSWORD = 'tcp://10.10.0.1:6435?database=0&password=secret';
 
-    const EXPECTED_DSN_REDIS_WITHOUT_PASSWORD = 'redis://10.10.0.1:6435/0';
-    const EXPECTED_DSN_REDIS_WITH_PASSWORD = 'redis://:secret@10.10.0.1:6435/0';
+    public const EXPECTED_DSN_REDIS_WITHOUT_PASSWORD = 'redis://10.10.0.1:6435/0';
+    public const EXPECTED_DSN_REDIS_WITH_PASSWORD = 'redis://:secret@10.10.0.1:6435/0';
 
     /**
      * @return void

@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\ProductOption;
 
 use ArrayObject;
@@ -28,7 +34,7 @@ class ProductOptionPresentationTester extends Actor
 {
     use _generated\ProductOptionPresentationTesterActions;
 
-    const LANGUAGE_SWITCH_XPATH = '//*[@id="option-value-translations"]/div[2]/div/div[1]/a';
+    public const LANGUAGE_SWITCH_XPATH = '//*[@id="option-value-translations"]/div[2]/div/div[1]/a';
 
     /**
      * @var array
@@ -107,7 +113,7 @@ class ProductOptionPresentationTester extends Actor
     }
 
     /**
-     * @return array
+     * @return void
      */
     public function assignProducts()
     {

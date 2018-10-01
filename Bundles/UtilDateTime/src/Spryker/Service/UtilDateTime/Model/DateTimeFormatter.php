@@ -14,10 +14,10 @@ use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
 
 class DateTimeFormatter implements DateTimeFormatterInterface
 {
-    const DEFAULT_TIME_ZONE = 'Europe/Berlin';
-    const DEFAULT_FORMAT_TIME = 'H:i';
-    const DEFAULT_FORMAT_DATE_TIME = 'M. d, Y H:i';
-    const DEFAULT_FORMAT_DATE = 'M. d, Y';
+    public const DEFAULT_TIME_ZONE = 'Europe/Berlin';
+    public const DEFAULT_FORMAT_TIME = 'H:i';
+    public const DEFAULT_FORMAT_DATE_TIME = 'M. d, Y H:i';
+    public const DEFAULT_FORMAT_DATE = 'M. d, Y';
 
     /**
      * @var \Spryker\Shared\Config\Config
@@ -33,7 +33,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     }
 
     /**
-     * @param string $dateTime
+     * @param \DateTime|string $dateTime
      *
      * @return string
      */
@@ -43,7 +43,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     }
 
     /**
-     * @param string $dateTime
+     * @param \DateTime|string $dateTime
      *
      * @return string
      */
@@ -53,7 +53,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     }
 
     /**
-     * @param string $dateTime
+     * @param \DateTime|string $dateTime
      *
      * @return string
      */

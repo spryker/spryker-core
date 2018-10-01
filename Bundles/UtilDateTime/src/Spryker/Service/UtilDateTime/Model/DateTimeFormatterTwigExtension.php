@@ -13,7 +13,7 @@ use Spryker\Shared\Twig\TwigFilter;
 
 class DateTimeFormatterTwigExtension extends TwigExtension
 {
-    const EXTENSION_NAME = 'DateTimeFormatterTwigExtension';
+    public const EXTENSION_NAME = 'DateTimeFormatterTwigExtension';
 
     /**
      * @var array
@@ -72,7 +72,7 @@ class DateTimeFormatterTwigExtension extends TwigExtension
     }
 
     /**
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */
@@ -82,7 +82,7 @@ class DateTimeFormatterTwigExtension extends TwigExtension
     }
 
     /**
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */
@@ -92,7 +92,7 @@ class DateTimeFormatterTwigExtension extends TwigExtension
     }
 
     /**
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */

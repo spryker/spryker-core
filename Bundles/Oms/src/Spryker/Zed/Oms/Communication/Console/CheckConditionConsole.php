@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CheckConditionConsole extends Console
 {
-    const COMMAND_NAME = 'oms:check-condition';
-    const COMMAND_DESCRIPTION = 'Check conditions';
+    public const COMMAND_NAME = 'oms:check-condition';
+    public const COMMAND_DESCRIPTION = 'Check conditions';
 
     /**
      * @return void

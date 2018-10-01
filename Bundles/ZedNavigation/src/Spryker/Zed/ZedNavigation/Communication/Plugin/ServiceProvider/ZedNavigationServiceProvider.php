@@ -12,6 +12,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ZedNavigation\Communication\Plugin\ZedNavigation;
 use Symfony\Component\HttpFoundation\Request;
+use Twig_Environment;
 use Twig_SimpleFunction;
 
 /**
@@ -20,8 +21,8 @@ use Twig_SimpleFunction;
  */
 class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const URI_SUFFIX_INDEX = '\/index$';
-    const URI_SUFFIX_SLASH = '\/$';
+    public const URI_SUFFIX_INDEX = '\/index$';
+    public const URI_SUFFIX_SLASH = '\/$';
 
     /**
      * @var array|null
@@ -36,7 +37,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
     public function register(Application $application)
     {
         $application['twig'] = $application->share(
-            $application->extend('twig', function (\Twig_Environment $twig) use ($application) {
+            $application->extend('twig', function (Twig_Environment $twig) use ($application) {
                 $twig->addFunction($this->getNavigationFunction($application));
                 $twig->addFunction($this->getBreadcrumbFunction($application));
 

@@ -25,13 +25,20 @@ class EventListenerContext implements EventListenerContextInterface
     protected $isHandledInQueue;
 
     /**
+     * @var string|null
+     */
+    protected $queuePoolName;
+
+    /**
      * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param bool $isHandledInQueue
+     * @param string|null $queuePoolName
      */
-    public function __construct(EventBaseHandlerInterface $eventHandler, $isHandledInQueue)
+    public function __construct(EventBaseHandlerInterface $eventHandler, $isHandledInQueue, $queuePoolName = null)
     {
         $this->eventHandler = $eventHandler;
         $this->isHandledInQueue = $isHandledInQueue;
+        $this->queuePoolName = $queuePoolName;
     }
 
     /**
@@ -43,15 +50,23 @@ class EventListenerContext implements EventListenerContextInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
+     * @return string|null
+     */
+    public function getQueuePoolName()
+    {
+        return $this->queuePoolName;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      * @param string $eventName
      *
      * @return void
      */
-    public function handle(TransferInterface $eventTransfer, $eventName)
+    public function handle(TransferInterface $transfer, $eventName)
     {
         if ($this->eventHandler instanceof EventHandlerInterface) {
-            $this->eventHandler->handle($eventTransfer, $eventName);
+            $this->eventHandler->handle($transfer, $eventName);
         }
     }
 

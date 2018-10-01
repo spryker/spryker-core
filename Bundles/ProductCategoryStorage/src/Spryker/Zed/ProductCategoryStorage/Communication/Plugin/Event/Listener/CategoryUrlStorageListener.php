@@ -9,21 +9,23 @@ namespace Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener
 
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
  * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryStorage\Communication\ProductCategoryStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageFacadeInterface getFacade()
  */
-class CategoryUrlStorageListener extends AbstractProductCategoryStorageListener implements EventBulkHandlerInterface
+class CategoryUrlStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void
@@ -43,10 +45,10 @@ class CategoryUrlStorageListener extends AbstractProductCategoryStorageListener 
         }
 
         $categoryIds = $this->getQueryContainer()->queryCategoryIdsByNodeIds($categoryNodeIds)->find()->getData();
-        $relatedCategoryIds = $this->getRelatedCategoryIds($categoryIds);
+        $relatedCategoryIds = $this->getFacade()->getRelatedCategoryIds($categoryIds);
         $productAbstractIds = $this->getQueryContainer()->queryProductAbstractIdsByCategoryIds($relatedCategoryIds)->find()->getData();
 
-        $this->publish($productAbstractIds);
+        $this->getFacade()->publish($productAbstractIds);
     }
 
     /**

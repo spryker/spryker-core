@@ -18,7 +18,7 @@ use Spryker\Yves\Ratepay\Form\InstallmentSubForm;
 
 class InstallmentDataProvider extends DataProviderAbstract
 {
-    const INSTALLMENT_CONFIGURATION = 'installment_configuration';
+    public const INSTALLMENT_CONFIGURATION = 'installment_configuration';
 
     /**
      * @var \Spryker\Client\Ratepay\RatepayClientInterface $ratepayClient
@@ -41,9 +41,9 @@ class InstallmentDataProvider extends DataProviderAbstract
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getData(AbstractTransfer $quoteTransfer)
     {
@@ -60,7 +60,7 @@ class InstallmentDataProvider extends DataProviderAbstract
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */

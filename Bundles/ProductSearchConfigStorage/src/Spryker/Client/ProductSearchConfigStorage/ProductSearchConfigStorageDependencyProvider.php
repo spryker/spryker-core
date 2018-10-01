@@ -11,13 +11,11 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductSearchConfigStorage\Dependency\Client\ProductSearchConfigStorageToStorageClientBridge;
 use Spryker\Client\ProductSearchConfigStorage\Dependency\Service\ProductSearchConfigStorageToSynchronizationServiceBridge;
-use Spryker\Shared\Kernel\Store;
 
 class ProductSearchConfigStorageDependencyProvider extends AbstractDependencyProvider
 {
-    const STORE = 'STORE';
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,23 +26,8 @@ class ProductSearchConfigStorageDependencyProvider extends AbstractDependencyPro
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container = $this->provideStore($container);
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function provideStore(Container $container)
-    {
-        $container[self::STORE] = function () {
-            return Store::getInstance();
-        };
 
         return $container;
     }

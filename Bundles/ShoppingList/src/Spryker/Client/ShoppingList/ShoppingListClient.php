@@ -41,6 +41,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     {
         $shoppingListResponseTransfer = $this->getZedStub()->createShoppingList($shoppingListTransfer);
 
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
         $this->updatePermissions();
 
         return $shoppingListResponseTransfer;
@@ -57,7 +58,12 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function updateShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        return $this->getZedStub()->updateShoppingList($shoppingListTransfer);
+        $shoppingListResponseTransfer = $this->getZedStub()->updateShoppingList($shoppingListTransfer);
+
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
+        $this->updatePermissions();
+
+        return $shoppingListResponseTransfer;
     }
 
     /**
@@ -73,7 +79,26 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     {
         $shoppingListResponseTransfer = $this->getZedStub()->removeShoppingList($shoppingListTransfer);
 
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
         $this->updatePermissions();
+
+        return $shoppingListResponseTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        $shoppingListResponseTransfer = $this->getZedStub()->clearShoppingList($shoppingListTransfer);
+
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
 
         return $shoppingListResponseTransfer;
     }
@@ -91,6 +116,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     {
         $shoppingListItemTransfer = $this->getZedStub()->addItem($shoppingListItemTransfer);
 
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
         $this->updatePermissions();
 
         return $shoppingListItemTransfer;
@@ -107,7 +133,11 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
-        return $this->getZedStub()->removeItemById($shoppingListItemTransfer);
+        $shoppingListItemResponseTransfer = $this->getZedStub()->removeItemById($shoppingListItemTransfer);
+
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
+
+        return $shoppingListItemResponseTransfer;
     }
 
     /**
@@ -121,7 +151,11 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
-        return $this->getZedStub()->getShoppingList($shoppingListTransfer);
+        $shoppingListTransfer = $this->getZedStub()->getShoppingList($shoppingListTransfer);
+
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
+
+        return $shoppingListTransfer;
     }
 
     /**
@@ -237,7 +271,12 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
     {
-        return $this->getZedStub()->createShoppingListFromQuote($shoppingListFromCartRequestTransfer);
+        $shoppingListResponseTransfer = $this->getZedStub()->createShoppingListFromQuote($shoppingListFromCartRequestTransfer);
+
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
+        $this->updatePermissions();
+
+        return $shoppingListResponseTransfer;
     }
 
     /**
@@ -266,8 +305,11 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
         if ($shoppingListShareRequestTransfer->getIdCompanyBusinessUnit()) {
             return $this->getZedStub()->shareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
         }
+        if ($shoppingListShareRequestTransfer->getIdCompanyUser()) {
+            return $this->getZedStub()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
+        }
 
-        return $this->getZedStub()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
+        return (new ShoppingListShareResponseTransfer())->setIsSuccess(false);
     }
 
     /**

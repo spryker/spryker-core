@@ -19,7 +19,7 @@ class DataContainer implements DataContainerInterface
     protected $quoteClient;
 
     /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer
+     * @var \Generated\Shared\Transfer\QuoteTransfer|null
      */
     protected $quoteTransfer;
 
@@ -44,7 +44,7 @@ class DataContainer implements DataContainerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */

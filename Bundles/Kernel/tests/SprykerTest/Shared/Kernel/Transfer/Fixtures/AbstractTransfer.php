@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Shared\Kernel\Transfer\Fixtures;
@@ -12,17 +13,17 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class AbstractTransfer extends ParentAbstractTransfer
 {
-    const STRING = 'string';
+    public const STRING = 'string';
 
-    const INT = 'int';
+    public const INT = 'int';
 
-    const BOOL = 'bool';
+    public const BOOL = 'bool';
 
-    const ARRAY_PROPERTY = 'array';
+    public const ARRAY_PROPERTY = 'array';
 
-    const TRANSFER = 'transfer';
+    public const TRANSFER = 'transfer';
 
-    const TRANSFER_COLLECTION = 'transferCollection';
+    public const TRANSFER_COLLECTION = 'transferCollection';
 
     /**
      * @var string
@@ -50,7 +51,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     protected $transfer;
 
     /**
-     * @var \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[]
+     * @var \ArrayObject[]
      */
     protected $transferCollection;
 
@@ -278,7 +279,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[] $transferCollection
+     * @param \ArrayObject[] $transferCollection
      *
      * @return $this
      */

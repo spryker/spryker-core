@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit\Business;
 
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitAssigner\CompanyBusinessUnitAssigner;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreator;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreatorInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutor;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilder;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilderInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter\CompanyBusinessUnitWriter;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter\CompanyBusinessUnitWriterInterface;
 use Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitDependencyProvider;
@@ -41,7 +44,8 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyBusinessUnitCreator(
             $this->getEntityManager(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createCompanyBusinessUnitWriterPluginExecutor()
         );
     }
 
@@ -56,10 +60,30 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitAssigner\CompanyBusinessUnitAssignerInterface
+     */
+    public function createCompanyBusinessUnitAssigner()
+    {
+        return new CompanyBusinessUnitAssigner(
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface[]
      */
     protected function getCompanyBusinessUnitPostSavePlugins(): array
     {
         return $this->getProvidedDependency(CompanyBusinessUnitDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilderInterface
+     */
+    public function createCompanyBusinessUnitTreeBuilder(): CompanyBusinessUnitTreeBuilderInterface
+    {
+        return new CompanyBusinessUnitTreeBuilder(
+            $this->getRepository()
+        );
     }
 }

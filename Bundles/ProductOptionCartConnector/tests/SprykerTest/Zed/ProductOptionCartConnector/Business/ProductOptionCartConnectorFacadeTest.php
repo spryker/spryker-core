@@ -31,8 +31,8 @@ use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
  */
 class ProductOptionCartConnectorFacadeTest extends Unit
 {
-    const ID_PRODUCT_OPTION = 5;
-    const DUMMY_PRICE = 1500;
+    public const ID_PRODUCT_OPTION = 5;
+    public const DUMMY_PRICE = 1500;
 
     /**
      * @var \SprykerTest\Zed\ProductOptionCartConnector\ProductOptionCartConnectorBusinessTester

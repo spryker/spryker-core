@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -7,13 +8,16 @@
 namespace Spryker\Zed\Category\Communication\Form;
 
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
@@ -22,13 +26,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CategoryLocalizedAttributeType extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_FK_LOCALE = 'fk_locale';
-    const FIELD_LOCALE_NAME = 'locale_name';
-    const FIELD_META_TITLE = 'meta_title';
-    const FIELD_META_DESCRIPTION = 'meta_description';
-    const FIELD_META_KEYWORDS = 'meta_keywords';
-    const FIELD_CATEGORY_IMAGE_NAME = 'category_image_name';
+    public const FIELD_NAME = 'name';
+    public const FIELD_FK_LOCALE = 'fk_locale';
+    public const FIELD_LOCALE_NAME = 'locale_name';
+    public const FIELD_META_TITLE = 'meta_title';
+    public const FIELD_META_DESCRIPTION = 'meta_description';
+    public const FIELD_META_KEYWORDS = 'meta_keywords';
+    public const FIELD_CATEGORY_IMAGE_NAME = 'category_image_name';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -108,6 +112,17 @@ class CategoryLocalizedAttributeType extends AbstractType
             ->add(self::FIELD_NAME, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
+                    new Callback([
+                        'callback' => function ($nameKey, ExecutionContextInterface $context) {
+                            $categoryTransfer = $context->getRoot()->getData();
+
+                            if ($categoryTransfer instanceof CategoryTransfer && $nameKey) {
+                                if ($this->getFacade()->checkSameLevelCategoryByNameExists($nameKey, $categoryTransfer)) {
+                                    $context->addViolation(sprintf('Category with name "%s" already in use in this category level, please choose another one.', $nameKey));
+                                }
+                            }
+                        },
+                    ]),
                 ],
                 'required' => false,
             ]);

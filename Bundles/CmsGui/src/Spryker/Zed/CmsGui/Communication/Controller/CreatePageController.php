@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -8,7 +9,6 @@ namespace  Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
-use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreatePageController extends AbstractController
 {
-    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Page was not created.';
-    const MESSAGE_PAGE_CREATE_SUCCESS = 'Page was created successfully.';
+    public const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Page was not created.';
+    public const MESSAGE_PAGE_CREATE_SUCCESS = 'Page was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,7 +32,9 @@ class CreatePageController extends AbstractController
     {
         $this->getFactory()
             ->getCmsFacade()
-            ->syncTemplate(CmsGuiConfig::CMS_FOLDER_PATH);
+            ->syncTemplate(
+                $this->getCmsFolderPath()
+            );
 
         $pageTabs = $this->getFactory()->createPageTabs();
 
@@ -100,5 +102,15 @@ class CreatePageController extends AbstractController
     protected function createTemplateErrorForm()
     {
         return new FormError("Selected template doesn't exist anymore");
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCmsFolderPath(): string
+    {
+        return $this->getFactory()
+            ->getConfig()
+            ->getCmsFolderPath();
     }
 }

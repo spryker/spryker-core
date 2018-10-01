@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\AvailabilityStorage;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 class AvailabilityStorageConstants
 {
     /**
@@ -15,7 +18,7 @@ class AvailabilityStorageConstants
      *
      * @api
      */
-    const AVAILABILITY_SYNC_STORAGE_QUEUE = 'sync.storage.availability';
+    public const AVAILABILITY_SYNC_STORAGE_QUEUE = 'sync.storage.availability';
 
     /**
      * Specification:
@@ -23,7 +26,7 @@ class AvailabilityStorageConstants
      *
      * @api
      */
-    const AVAILABILITY_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.availability.error';
+    public const AVAILABILITY_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.availability.error';
 
     /**
      * Specification:
@@ -31,5 +34,5 @@ class AvailabilityStorageConstants
      *
      * @api
      */
-    const AVAILABILITY_RESOURCE_NAME = 'availability';
+    public const AVAILABILITY_RESOURCE_NAME = 'availability';
 }

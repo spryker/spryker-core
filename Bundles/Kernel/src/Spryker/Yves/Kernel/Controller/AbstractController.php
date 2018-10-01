@@ -9,9 +9,12 @@ namespace Spryker\Yves\Kernel\Controller;
 
 use Silex\Application;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Dependency\Messenger\KernelToMessengerBridge;
 use Spryker\Yves\Kernel\Dependency\Messenger\NullMessenger;
+use Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -84,10 +87,16 @@ abstract class AbstractController
      * @param string $absoluteUrl
      * @param int $code
      *
+     * @throws \Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function redirectResponseExternal($absoluteUrl, $code = 302)
     {
+        if (strpos($absoluteUrl, '/') !== 0 && !$this->isUrlDomainWhitelisted($absoluteUrl)) {
+            throw new ForbiddenExternalRedirectException("This URL $absoluteUrl is not a part of a whitelisted domain");
+        }
+
         return new RedirectResponse($absoluteUrl, $code);
     }
 
@@ -115,7 +124,7 @@ abstract class AbstractController
 
     /**
      * @param array $data
-     * @param \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[] $widgetPlugins
+     * @param string[] $widgetPlugins
      * @param string|null $template
      *
      * @return \Spryker\Yves\Kernel\View\View
@@ -237,5 +246,42 @@ abstract class AbstractController
     protected function renderView($viewPath, array $parameters = [])
     {
         return $this->getApplication()->render($viewPath, $parameters);
+    }
+
+    /**
+     * @param string $absoluteUrl
+     *
+     * @return bool
+     */
+    protected function isUrlDomainWhitelisted(string $absoluteUrl): bool
+    {
+        $whitelistedDomains = Config::getInstance()->get(KernelConstants::DOMAIN_WHITELIST, []);
+
+        if (empty($whitelistedDomains)) {
+            return true;
+        }
+
+        foreach ($whitelistedDomains as $whitelistedDomain) {
+            if ($this->extractDomainFromUrl($absoluteUrl) === $whitelistedDomain) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function extractDomainFromUrl(string $url): string
+    {
+        $urlDomain = parse_url($url, PHP_URL_HOST);
+        if ($urlDomain === false) {
+            return '';
+        }
+
+        return $urlDomain;
     }
 }

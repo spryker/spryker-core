@@ -79,6 +79,11 @@ class Customer implements CustomerInterface
     protected $customerExpander;
 
     /**
+     * @var \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     */
+    protected $postCustomerRegistrationPlugins;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
@@ -87,6 +92,7 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
+     * @param array $postCustomerRegistrationPlugins
      */
     public function __construct(
         CustomerQueryContainerInterface $queryContainer,
@@ -96,7 +102,8 @@ class Customer implements CustomerInterface
         CustomerToMailInterface $mailFacade,
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
-        CustomerExpanderInterface $customerExpander
+        CustomerExpanderInterface $customerExpander,
+        array $postCustomerRegistrationPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->customerReferenceGenerator = $customerReferenceGenerator;
@@ -106,6 +113,7 @@ class Customer implements CustomerInterface
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
         $this->customerExpander = $customerExpander;
+        $this->postCustomerRegistrationPlugins = $postCustomerRegistrationPlugins;
     }
 
     /**
@@ -211,6 +219,9 @@ class Customer implements CustomerInterface
             return $customerResponseTransfer;
         }
 
+        $this->executePostCustomerRegistrationPlugins($customerTransfer);
+        $customerTransfer = $this->customerExpander->expand($customerTransfer);
+
         $this->sendRegistrationToken($customerTransfer);
 
         if ($customerTransfer->getSendPasswordToken()) {
@@ -314,6 +325,8 @@ class Customer implements CustomerInterface
      */
     protected function sendPasswordRestoreConfirmation(CustomerTransfer $customerTransfer)
     {
+        $customerTransfer = $this->get($customerTransfer);
+
         $mailTransfer = new MailTransfer();
         $mailTransfer->setType(CustomerRestoredPasswordConfirmationMailTypePlugin::MAIL_TYPE);
         $mailTransfer->setCustomer($customerTransfer);
@@ -835,5 +848,17 @@ class Customer implements CustomerInterface
         $customerTransfer->setLocale($localeTransfer);
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function executePostCustomerRegistrationPlugins(CustomerTransfer $customerTransfer)
+    {
+        foreach ($this->postCustomerRegistrationPlugins as $postCustomerRegistrationPlugin) {
+            $postCustomerRegistrationPlugin->execute($customerTransfer);
+        }
     }
 }

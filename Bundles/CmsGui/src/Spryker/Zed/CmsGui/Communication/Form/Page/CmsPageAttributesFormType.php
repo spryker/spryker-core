@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -21,14 +22,14 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class CmsPageAttributesFormType extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_URL = 'url';
-    const FIELD_LOCALE_NAME = 'localeName';
-    const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'idCmsPageLocalizedAttributes';
+    public const FIELD_NAME = 'name';
+    public const FIELD_URL = 'url';
+    public const FIELD_LOCALE_NAME = 'localeName';
+    public const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'idCmsPageLocalizedAttributes';
 
-    const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
+    public const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
 
-    const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
+    public const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

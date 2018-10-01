@@ -11,9 +11,11 @@ interface ProductStorageClientInterface
 {
     /**
      * Specification:
-     * - TODO: add specification
+     * - Retrieves a current Store specific ProductAbstract resource from Storage.
      *
      * @api
+     *
+     * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
      *
      * @param int $idProductAbstract
      * @param string $localeName
@@ -24,9 +26,38 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Retrieves a current Store specific ProductAbstract resource from Storage.
      *
      * @api
+     *
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array;
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific ProductAbstract resource from Storage using specified mapping.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string $identifier
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific ProductConcrete resource from Storage.
+     *
+     * @api
+     *
+     * @deprecated Use findProductConcreteStorageData($idProductConcrete, $localeName): ?array
      *
      * @param int $idProductConcrete
      * @param string $localeName
@@ -34,6 +65,33 @@ interface ProductStorageClientInterface
      * @return array
      */
     public function getProductConcreteStorageData($idProductConcrete, $localeName);
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific ProductConcrete resource from Storage.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific ProductConcrete resource from Storage using specified mapping.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string $identifier
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
 
     /**
      * Specification:
@@ -51,4 +109,28 @@ interface ProductStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
+
+    /**
+     * Specification:
+     * - Checks if products abstract is restricted.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductAbstractRestricted(int $idProductAbstract): bool;
+
+    /**
+     * Specification:
+     * - Checks if products concrete is restricted.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isProductConcreteRestricted(int $idProductConcrete): bool;
 }

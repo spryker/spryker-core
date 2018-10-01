@@ -9,6 +9,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/kernel": "^3.18.0"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

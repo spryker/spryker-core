@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -61,7 +61,7 @@ class CmsRedirectHelper extends Module
      */
     private function cleanupUrlRedirect($idUrl)
     {
-        $this->debug(sprintf('Deleting Url redirect: %d', $idUrl));
+        $this->debug(sprintf('Deleting URL redirect: %d', $idUrl));
 
         $this->getUrlQuery()
             ->queryUrlRedirectByIdUrl($idUrl)

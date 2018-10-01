@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Service\Barcode\Helper;
 
 use Codeception\Module;
@@ -27,7 +32,7 @@ class BarcodeServiceHelper extends Module
     }
 
     /**
-     * @param null|string $generatorPlugin
+     * @param string|null $generatorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */

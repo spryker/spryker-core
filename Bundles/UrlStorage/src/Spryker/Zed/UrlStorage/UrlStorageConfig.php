@@ -11,4 +11,27 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class UrlStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @return bool
+     */
+    public function isSendingToQueue(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUrlSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUrlRedirectSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }

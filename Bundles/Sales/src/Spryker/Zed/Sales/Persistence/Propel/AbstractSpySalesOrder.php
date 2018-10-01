@@ -28,10 +28,10 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
 {
-    const COL_FK_CUSTOMER = 'fk_customer';
+    public const COL_FK_CUSTOMER = 'fk_customer';
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotals
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotals|null
      */
     public function getLastOrderTotals()
     {
@@ -76,7 +76,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      *
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $con Optional Connection object.
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomer The associated SpyCustomer object.
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer|null The associated SpyCustomer object.
      */
     public function getCustomer(?ConnectionInterface $con = null)
     {
@@ -124,11 +124,11 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      * @param string $keyType (optional) One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME,
      *                    TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                    Defaults to TableMap::TYPE_FIELDNAME.
-     * @param boolean|bool $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
+     * @param bool $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param array $alreadyDumpedObjects List of objects to skip to avoid recursion
-     * @param boolean|bool $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
+     * @param bool $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
-     * @return array an associative array containing the field names (as keys) and field values
+     * @return array|string An associative array containing the field names (as keys) and field values
      */
     public function toArray(
         $keyType = TableMap::TYPE_FIELDNAME,

@@ -9,9 +9,9 @@ namespace Spryker\Shared\Config;
 
 class Profiler
 {
-    const PROFILE_VALUE = 'value';
-    const PROFILE_DEFAULT = 'default';
-    const PROFILE_COUNT = 'count';
+    public const PROFILE_VALUE = 'value';
+    public const PROFILE_DEFAULT = 'default';
+    public const PROFILE_COUNT = 'count';
 
     /**
      * @var array
@@ -63,7 +63,7 @@ class Profiler
     /**
      * @param mixed $value
      *
-     * @return string
+     * @return string|array
      */
     protected function formatValue($value)
     {

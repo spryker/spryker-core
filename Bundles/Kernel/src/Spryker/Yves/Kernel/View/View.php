@@ -11,24 +11,22 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 use Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException;
 use Spryker\Yves\Kernel\Exception\MissingWidgetPluginException;
 use Spryker\Yves\Kernel\Exception\ReadOnlyException;
+use Spryker\Yves\Kernel\Widget\WidgetContainerAwareTrait;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 
 class View implements ViewInterface, WidgetContainerInterface
 {
+    use WidgetContainerAwareTrait;
+
     /**
      * @var string
      */
     protected $template;
 
     /**
-     * @var \Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @var array
      */
     protected $data;
-
-    /**
-     * @var \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[]
-     */
-    protected $widgets = [];
 
     /**
      * @param array $data
@@ -48,6 +46,14 @@ class View implements ViewInterface, WidgetContainerInterface
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->data;
     }
 
     /**
@@ -77,30 +83,6 @@ class View implements ViewInterface, WidgetContainerInterface
         }
 
         return $this->widgets[$name];
-    }
-
-    /**
-     * @param string[] $widgetClassNames
-     *
-     * @return void
-     */
-    protected function addWidgets(array $widgetClassNames)
-    {
-        foreach ($widgetClassNames as $widgetClassName) {
-            $this->addWidget($widgetClassName);
-        }
-    }
-
-    /**
-     * @param string $widgetClassName
-     *
-     * @return void
-     */
-    protected function addWidget(string $widgetClassName)
-    {
-        $this->assertClassIsWidgetPlugin($widgetClassName);
-
-        $this->widgets[$widgetClassName::getName()] = $widgetClassName;
     }
 
     /**

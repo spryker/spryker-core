@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\ErrorHandler;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ErrorHandlerConstants
 {
     /**
@@ -15,7 +18,7 @@ interface ErrorHandlerConstants
      *
      * @api
      */
-    const ZED_ERROR_PAGE = 'ZED_ERROR_PAGE';
+    public const ZED_ERROR_PAGE = 'ZED_ERROR_PAGE';
 
     /**
      * Specification:
@@ -23,7 +26,7 @@ interface ErrorHandlerConstants
      *
      * @api
      */
-    const YVES_ERROR_PAGE = 'YVES_ERROR_PAGE';
+    public const YVES_ERROR_PAGE = 'YVES_ERROR_PAGE';
 
     /**
      * Specification:
@@ -31,7 +34,7 @@ interface ErrorHandlerConstants
      *
      * @api
      */
-    const ERROR_RENDERER = 'ERROR_RENDERER';
+    public const ERROR_RENDERER = 'ERROR_RENDERER';
 
     /**
      * Specification:
@@ -39,7 +42,7 @@ interface ErrorHandlerConstants
      *
      * @api
      */
-    const ERROR_LEVEL = 'ERROR_LEVEL';
+    public const ERROR_LEVEL = 'ERROR_LEVEL';
 
     /**
      * Specification:
@@ -49,7 +52,7 @@ interface ErrorHandlerConstants
      *
      * @api
      */
-    const ERROR_LEVEL_LOG_ONLY = 'ERROR_LEVEL_LOG_ONLY';
+    public const ERROR_LEVEL_LOG_ONLY = 'ERROR_LEVEL_LOG_ONLY';
 
     /**
      * Specification:
@@ -58,7 +61,7 @@ interface ErrorHandlerConstants
      *
      * @api
      */
-    const PATTERN_IDE_LINK = 'PATTERN_IDE_LINK';
+    public const PATTERN_IDE_LINK = 'PATTERN_IDE_LINK';
 
     /**
      * Specification:
@@ -68,7 +71,7 @@ interface ErrorHandlerConstants
      *
      * @api
      */
-    const USER_BASE_PATH = 'USER_BASE_PATH';
+    public const USER_BASE_PATH = 'USER_BASE_PATH';
 
     /**
      * Specification:
@@ -77,7 +80,7 @@ interface ErrorHandlerConstants
      *
      * @api
      */
-    const SERVER_BASE_PATH = 'SERVER_BASE_PATH';
+    public const SERVER_BASE_PATH = 'SERVER_BASE_PATH';
 
     /**
      * Specification:
@@ -85,7 +88,7 @@ interface ErrorHandlerConstants
      *
      * @api
      */
-    const AS_AJAX = 'AS_AJAX';
+    public const AS_AJAX = 'AS_AJAX';
 
     /**
      * Specification:
@@ -95,5 +98,5 @@ interface ErrorHandlerConstants
      *
      * @api
      */
-    const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
+    public const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
 }

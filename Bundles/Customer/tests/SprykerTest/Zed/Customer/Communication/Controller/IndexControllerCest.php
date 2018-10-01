@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Customer\Communication\Controller;
 
 use Codeception\Util\Stub;
-
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
@@ -37,11 +36,14 @@ class IndexControllerCest
     }
 
     /**
-     * @return object|\Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface
      */
-    private function getMailFacadeMock()
+    protected function getMailFacadeMock()
     {
-        return Stub::makeEmpty(CustomerToMailInterface::class);
+        /** @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface $mailFacadeMock */
+        $mailFacadeMock = Stub::makeEmpty(CustomerToMailInterface::class);
+
+        return $mailFacadeMock;
     }
 
     /**
@@ -79,8 +81,12 @@ class IndexControllerCest
         $i->amOnPage('/customer/add?redirectUrl=' . urlencode('/customer'));
         $i->submitForm(['name' => 'customer'], $formData);
 
-        $i->listDataTable('/customer/index/table');
-        $i->seeInLastRow([2 => $email]);
+        $i->listDataTable('/customer/index/table', [
+            'order' => [
+                0 => ['dir' => 'desc'],
+            ],
+        ]);
+        $i->seeInFirstRow([2 => $email]);
     }
 
     /**
@@ -113,7 +119,7 @@ class IndexControllerCest
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    private function getCustomerTransfer()
+    protected function getCustomerTransfer()
     {
         $customerBuilder = new CustomerBuilder();
 

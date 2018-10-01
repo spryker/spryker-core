@@ -13,9 +13,9 @@ use Spryker\Shared\Kernel\Store;
 
 abstract class AbstractClassResolver
 {
-    const KEY_NAMESPACE = '%namespace%';
-    const KEY_BUNDLE = '%bundle%';
-    const KEY_STORE = '%store%';
+    public const KEY_NAMESPACE = '%namespace%';
+    public const KEY_BUNDLE = '%bundle%';
+    public const KEY_STORE = '%store%';
 
     /**
      * @var string
@@ -48,7 +48,7 @@ abstract class AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @return \Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver
+     * @return $this
      */
     public function setCallerClass($callerClass)
     {
@@ -138,7 +138,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Controller\AbstractController
+     * @return object
      */
     protected function getResolvedClassInstance()
     {

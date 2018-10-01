@@ -63,7 +63,7 @@ class ModuleBuilder
     {
         $namespace = static::NAMESPACE_SPRYKER;
         if (strpos($module, '.') !== false) {
-            list ($namespace, $module) = explode('.', $module, 2);
+            [$namespace, $module] = explode('.', $module, 2);
         }
 
         if ($module !== 'all') {
@@ -209,7 +209,7 @@ class ModuleBuilder
     {
         $path = $this->getDirectoryName($namespace) . $this->getModuleName($module, $namespace) . DIRECTORY_SEPARATOR;
         if (!is_dir($path)) {
-            mkdir($path, 0770, true);
+            mkdir($path, $this->config->getPermissionMode(), true);
         }
 
         $filesystem = new Filesystem();

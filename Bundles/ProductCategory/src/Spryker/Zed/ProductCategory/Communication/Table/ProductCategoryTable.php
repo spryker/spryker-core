@@ -18,9 +18,9 @@ use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterfa
 
 class ProductCategoryTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'product-category-table';
-    const COL_CHECKBOX = 'checkbox';
-    const PARAM_ID_CATEGORY = 'id-category';
+    public const TABLE_IDENTIFIER = 'product-category-table';
+    public const COL_CHECKBOX = 'checkbox';
+    public const PARAM_ID_CATEGORY = 'id-category';
 
     /**
      * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface

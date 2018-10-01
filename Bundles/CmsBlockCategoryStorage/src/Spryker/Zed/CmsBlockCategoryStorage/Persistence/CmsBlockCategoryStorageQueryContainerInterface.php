@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryStorage\Persistence;
 
+use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerInterface
@@ -25,9 +26,18 @@ interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerI
      *
      * @param array $categoryIds
      *
-     * @return $this|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
     public function queryCmsBlockCategories(array $categoryIds);
+
+    /**
+     * @api
+     *
+     * @param int[] $cmsBlockCategoriesIds
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoriesByIds(array $cmsBlockCategoriesIds): SpyCmsBlockCategoryConnectorQuery;
 
     /**
      * @api
