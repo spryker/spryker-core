@@ -120,9 +120,9 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
      */
     protected function getTransactionName(Request $request): string
     {
-        $module = $request->attributes->get('module');
-        $controller = $request->attributes->get('controller');
-        $action = $request->attributes->get('action');
+        $module = $request->attributes->get('module', 'n/a');
+        $controller = $request->attributes->get('controller', 'n/a');
+        $action = $request->attributes->get('action', 'n/a');
         $transactionName = $module . '/' . $controller . '/' . $action;
 
         return $transactionName;
