@@ -20,6 +20,8 @@ class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements Compa
 {
     /**
      * {@inheritdoc}
+     * - Assigns default role to company user after it was created.
+     * - Company user will not be changed if it has at least one assigned company role.
      *
      * @api
      *
@@ -39,11 +41,19 @@ class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements Compa
      */
     protected function assignDefaultRoleToCompanyUser(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
+        if ($companyUserResponseTransfer->getCompanyUser()->getCompanyRoleCollection() !== null &&
+            $companyUserResponseTransfer->getCompanyUser()->getCompanyRoleCollection()->getRoles()->count()
+        ) {
+            return $companyUserResponseTransfer;
+        }
+
         $defaultCompanyRole = $this->getFacade()->getDefaultCompanyRole();
-        $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
+        $companyRoleCollectionTransfer = (new CompanyRoleCollectionTransfer())
+            ->addRole($defaultCompanyRole);
+
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
         $companyUserTransfer->setCompanyRoleCollection($companyRoleCollectionTransfer);
-        $companyUserTransfer->getCompanyRoleCollection()->addRole($defaultCompanyRole);
+
         $this->getFacade()->saveCompanyUser($companyUserTransfer);
         $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
 
