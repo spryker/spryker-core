@@ -97,11 +97,14 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
      */
     protected function prepareQuery(): SpyMerchantRelationshipQuery
     {
-        return $query = $this->merchantRelationshipSalesOrderThresholdGuiRepository
+        /** @var \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery $query */
+        $query = $this->merchantRelationshipSalesOrderThresholdGuiRepository
             ->getMerchantRelationshipTableQuery()
             ->withColumn(SpyCompanyBusinessUnitTableMap::COL_NAME, static::COL_BUSINESS_UNIT_NAME)
             ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY_NAME)
             ->withColumn("CONCAT(" . SpyMerchantTableMap::COL_NAME . ", ' ', " . SpyMerchantRelationshipTableMap::COL_MERCHANT_RELATIONSHIP_KEY . ")", static::COL_MERCHANT_RELATIONSHIP_NAME);
+
+        return $query;
     }
 
     /**

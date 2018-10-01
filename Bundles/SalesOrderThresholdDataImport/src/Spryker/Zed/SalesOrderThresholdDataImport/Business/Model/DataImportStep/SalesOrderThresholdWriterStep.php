@@ -80,7 +80,7 @@ class SalesOrderThresholdWriterStep implements DataImportStepInterface
                 $currencyTransfer,
                 (int)$dataSet[SalesOrderThresholdDataSetInterface::COLUMN_THRESHOLD],
                 (int)$dataSet[SalesOrderThresholdDataSetInterface::COLUMN_FEE],
-                (int)$dataSet[SalesOrderThresholdDataSetInterface::COLUMN_MESSAGE_GLOSSARY_KEY]
+                $dataSet[SalesOrderThresholdDataSetInterface::COLUMN_MESSAGE_GLOSSARY_KEY]
             );
 
             $this->salesOrderThresholdFacade->saveSalesOrderThreshold($salesOrderThresholdTransfer);

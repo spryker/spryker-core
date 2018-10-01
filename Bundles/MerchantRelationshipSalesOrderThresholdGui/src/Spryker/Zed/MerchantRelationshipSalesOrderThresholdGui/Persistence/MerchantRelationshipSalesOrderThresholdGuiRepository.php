@@ -26,11 +26,14 @@ class MerchantRelationshipSalesOrderThresholdGuiRepository extends AbstractRepos
      */
     public function getMerchantRelationshipTableQuery(): SpyMerchantRelationshipQuery
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery $query */
+        $query = $this->getFactory()
             ->getMerchantRelationshipPropelQuery()
             ->joinWithCompanyBusinessUnit()
             ->joinWithMerchant()
             ->joinWith('CompanyBusinessUnit.Company');
+
+        return $query;
     }
 
     /**
