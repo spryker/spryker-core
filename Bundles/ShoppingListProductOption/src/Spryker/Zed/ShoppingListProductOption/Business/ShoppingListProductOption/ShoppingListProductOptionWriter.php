@@ -32,13 +32,15 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
             $this->executeSaveShoppingListItemProductOptionsTransaction($shoppingListItemTransfer);
         });
+
+        return $shoppingListItemTransfer;
     }
 
     /**

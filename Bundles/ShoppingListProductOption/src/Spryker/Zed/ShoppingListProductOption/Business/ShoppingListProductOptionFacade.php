@@ -26,11 +26,11 @@ class ShoppingListProductOptionFacade extends AbstractFacade implements Shopping
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createShoppingListProductOptionWriter()
             ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
     }

@@ -353,7 +353,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($shoppingListItemTransfer->getSku());
             $shoppingListItemTransfer->setIdProduct($idProduct);
             $shoppingListItemTransfer->setIdProductAbstract($idProductAbstract);
-
         }
 
         return $shoppingListItemTransfers;

@@ -24,11 +24,11 @@ class ShoppingListItemProductOptionPostSavePlugin extends AbstractPlugin impleme
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function execute(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function execute(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        $this->getFacade()
+        return $this->getFacade()
             ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
     }
 }

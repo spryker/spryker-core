@@ -24,11 +24,13 @@ class ShoppingListItemProductOptionBeforeDeletePlugin extends AbstractPlugin imp
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function execute(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function execute(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         $this->getFacade()
             ->removeShoppingListItemProductOptions($shoppingListItemTransfer->getIdShoppingListItem());
+
+        return $shoppingListItemTransfer;
     }
 }
