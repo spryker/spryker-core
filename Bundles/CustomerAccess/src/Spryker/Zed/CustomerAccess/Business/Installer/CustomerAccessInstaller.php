@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\CustomerAccess\Business\Installer;
 
-use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessInterface;
-use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessReaderInterface;
+use Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessCreatorInterface;
+use Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessReaderInterface;
 use Spryker\Zed\CustomerAccess\CustomerAccessConfig;
 
 class CustomerAccessInstaller implements CustomerAccessInstallerInterface
 {
     /**
-     * @var \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessInterface
+     * @var \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessCreatorInterface
      */
-    protected $customerAccess;
+    protected $customerAccessCreator;
 
     /**
      * @var \Spryker\Zed\CustomerAccess\CustomerAccessConfig
@@ -24,18 +24,18 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
     protected $customerAccessConfig;
 
     /**
-     * @var \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessReaderInterface
+     * @var \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessReaderInterface
      */
     protected $customerAccessReader;
 
     /**
      * @param \Spryker\Zed\CustomerAccess\CustomerAccessConfig $customerAccessConfig
-     * @param \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessInterface $customerAccess
-     * @param \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessReaderInterface $customerAccessReader
+     * @param \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessCreatorInterface $customerAccessCreator
+     * @param \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessReaderInterface $customerAccessReader
      */
-    public function __construct(CustomerAccessConfig $customerAccessConfig, CustomerAccessInterface $customerAccess, CustomerAccessReaderInterface $customerAccessReader)
+    public function __construct(CustomerAccessConfig $customerAccessConfig, CustomerAccessCreatorInterface $customerAccessCreator, CustomerAccessReaderInterface $customerAccessReader)
     {
-        $this->customerAccess = $customerAccess;
+        $this->customerAccessCreator = $customerAccessCreator;
         $this->customerAccessReader = $customerAccessReader;
         $this->customerAccessConfig = $customerAccessConfig;
     }
@@ -51,7 +51,7 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
                 continue;
             }
 
-            $this->customerAccess->createCustomerAccess($contentType, $defaultContentAccess);
+            $this->customerAccessCreator->createCustomerAccess($contentType, $defaultContentAccess);
         }
     }
 }

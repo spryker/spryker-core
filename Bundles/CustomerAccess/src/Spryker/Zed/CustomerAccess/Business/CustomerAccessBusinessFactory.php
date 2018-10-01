@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\CustomerAccess\Business;
 
+use Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessCreator;
+use Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessCreatorInterface;
+use Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessReader;
+use Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessReaderInterface;
+use Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessUpdater;
+use Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessUpdaterInterface;
 use Spryker\Zed\CustomerAccess\Business\Installer\CustomerAccessInstaller;
 use Spryker\Zed\CustomerAccess\Business\Installer\CustomerAccessInstallerInterface;
-use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccess;
-use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessInterface;
-use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessReader;
-use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessReaderInterface;
-use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessUpdater;
-use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessUpdaterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -31,21 +31,21 @@ class CustomerAccessBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerAccessInstaller(
             $this->getConfig(),
-            $this->createCustomerAccess(),
+            $this->createCustomerAccessCreator(),
             $this->createCustomerAccessReader()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessInterface
+     * @return \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessCreatorInterface
      */
-    public function createCustomerAccess(): CustomerAccessInterface
+    public function createCustomerAccessCreator(): CustomerAccessCreatorInterface
     {
-        return new CustomerAccess($this->getEntityManager());
+        return new CustomerAccessCreator($this->getEntityManager());
     }
 
     /**
-     * @return \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessReaderInterface
+     * @return \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessReaderInterface
      */
     public function createCustomerAccessReader(): CustomerAccessReaderInterface
     {
@@ -53,7 +53,7 @@ class CustomerAccessBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessUpdaterInterface
+     * @return \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessUpdaterInterface
      */
     public function createCustomerAccessUpdater(): CustomerAccessUpdaterInterface
     {

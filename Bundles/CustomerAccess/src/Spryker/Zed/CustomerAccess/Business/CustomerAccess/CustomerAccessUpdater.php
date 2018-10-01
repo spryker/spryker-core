@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomerAccess\Business\Model;
+namespace Spryker\Zed\CustomerAccess\Business\CustomerAccess;
 
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface;
