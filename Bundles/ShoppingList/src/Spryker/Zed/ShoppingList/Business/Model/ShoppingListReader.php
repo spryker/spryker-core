@@ -397,20 +397,21 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $businessUnitSharedShoppingLists
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
      * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
-    protected function filterBlacklistedShoppingLists(ShoppingListCollectionTransfer $businessUnitSharedShoppingLists, int $idCompanyUser): ShoppingListCollectionTransfer
+    protected function filterBlacklistedShoppingLists(ShoppingListCollectionTransfer $shoppingListCollectionTransfer, int $idCompanyUser): ShoppingListCollectionTransfer
     {
+        $filteredShoppingListCollectionTransfer = new ShoppingListCollectionTransfer();
         $blacklistedShoppingListsIds = $this->shoppingListRepository->getBlacklistedShoppingListIdsByIdCompanyUser($idCompanyUser);
-        foreach ($businessUnitSharedShoppingLists->getShoppingLists() as $index => $shoppingListTransfer) {
-            if (in_array($shoppingListTransfer->getIdShoppingList(), $blacklistedShoppingListsIds, true)) {
-                $businessUnitSharedShoppingLists->getShoppingLists()->offsetUnset($index);
+        foreach ($shoppingListCollectionTransfer->getShoppingLists() as $shoppingListTransfer) {
+            if (!in_array($shoppingListTransfer->getIdShoppingList(), $blacklistedShoppingListsIds, true)) {
+                $filteredShoppingListCollectionTransfer->addShoppingList($shoppingListTransfer);
             }
         }
 
-        return $businessUnitSharedShoppingLists;
+        return $filteredShoppingListCollectionTransfer;
     }
 }
