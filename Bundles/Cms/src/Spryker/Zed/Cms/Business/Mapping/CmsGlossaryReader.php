@@ -25,12 +25,12 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     /**
      * @deprecated Use CmsConfig::getPlaceholderPattern()
      */
-    const CMS_PLACEHOLDER_PATTERN = '';
+    public const CMS_PLACEHOLDER_PATTERN = '';
 
     /**
      * @deprecated Use CmsConfig::getPlaceholderValuePattern()
      */
-    const CMS_PLACEHOLDER_VALUE_PATTERN = '';
+    public const CMS_PLACEHOLDER_VALUE_PATTERN = '';
 
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface

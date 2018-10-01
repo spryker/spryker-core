@@ -26,16 +26,16 @@ use Symfony\Component\Validator\Constraints\Valid;
  */
 class PriceForm extends AbstractType
 {
-    const FIELD_PRICE = 'price';
-    const FIELD_PRICES = 'prices';
-    const FIELD_TAX_RATE = 'tax_rate';
+    public const FIELD_PRICE = 'price';
+    public const FIELD_PRICES = 'prices';
+    public const FIELD_TAX_RATE = 'tax_rate';
 
-    const OPTION_TAX_RATE_CHOICES = 'tax_rate_choices';
-    const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
-    const OPTION_MONEY_FACADE = 'money-facade';
-    const OPTION_CURRENCY_FACADE = 'currency-facade';
-    const DEFAULT_SCALE = 2;
-    const MAX_PRICE_SIZE = 2147483647; // 32 bit integer
+    public const OPTION_TAX_RATE_CHOICES = 'tax_rate_choices';
+    public const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
+    public const OPTION_MONEY_FACADE = 'money-facade';
+    public const OPTION_CURRENCY_FACADE = 'currency-facade';
+    public const DEFAULT_SCALE = 2;
+    public const MAX_PRICE_SIZE = 2147483647; // 32 bit integer
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

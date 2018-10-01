@@ -9,5 +9,5 @@ namespace SprykerTest\Zed\CustomerNoteGui\PageObject;
 
 class CustomerNotePage
 {
-    const URL = '/customer-note-gui';
+    public const URL = '/customer-note-gui';
 }

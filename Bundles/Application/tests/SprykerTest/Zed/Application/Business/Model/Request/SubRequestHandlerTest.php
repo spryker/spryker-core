@@ -26,10 +26,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SubRequestHandlerTest extends WebTestCase
 {
-    const GET_PARAMS = ['banana', 'mango'];
-    const POST_PARAMS = ['apple', 'orange'];
-    const URL_MASTER_REQUEST = '/';
-    const URL_SUB_REQUEST = '/sales/comment/add';
+    public const GET_PARAMS = ['banana', 'mango'];
+    public const POST_PARAMS = ['apple', 'orange'];
+    public const URL_MASTER_REQUEST = '/';
+    public const URL_SUB_REQUEST = '/sales/comment/add';
 
     /**
      * @return void

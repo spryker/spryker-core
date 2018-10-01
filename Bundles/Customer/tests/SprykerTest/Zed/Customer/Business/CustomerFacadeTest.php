@@ -36,16 +36,16 @@ use Spryker\Zed\Kernel\Container;
  */
 class CustomerFacadeTest extends Unit
 {
-    const TESTER_EMAIL = 'tester@spryker.com';
-    const TESTER_INVALID_EMAIL = 'tester<>@spryker.com';
-    const TESTER_NON_EXISTING_EMAIL = 'nonexisting@spryker.com';
-    const TESTER_UPDATE_EMAIL = 'update.tester@spryker.com';
-    const TESTER_PASSWORD = '$2tester';
-    const TESTER_NAME = 'Tester';
-    const TESTER_CITY = 'Testcity';
-    const TESTER_ADDRESS1 = 'Testerstreet 23';
-    const TESTER_ZIP_CODE = '42';
-    const TESTER_FK_COUNTRY_GERMANY = '60';
+    public const TESTER_EMAIL = 'tester@spryker.com';
+    public const TESTER_INVALID_EMAIL = 'tester<>@spryker.com';
+    public const TESTER_NON_EXISTING_EMAIL = 'nonexisting@spryker.com';
+    public const TESTER_UPDATE_EMAIL = 'update.tester@spryker.com';
+    public const TESTER_PASSWORD = '$2tester';
+    public const TESTER_NAME = 'Tester';
+    public const TESTER_CITY = 'Testcity';
+    public const TESTER_ADDRESS1 = 'Testerstreet 23';
+    public const TESTER_ZIP_CODE = '42';
+    public const TESTER_FK_COUNTRY_GERMANY = '60';
 
     /**
      * @var \SprykerTest\Zed\Customer\CustomerBusinessTester

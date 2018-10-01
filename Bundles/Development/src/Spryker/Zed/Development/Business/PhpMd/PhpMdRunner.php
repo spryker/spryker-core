@@ -13,12 +13,12 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class PhpMdRunner
 {
-    const CODE_SUCCESS = 0;
+    public const CODE_SUCCESS = 0;
 
-    const BUNDLE_ALL = 'all';
+    public const BUNDLE_ALL = 'all';
 
-    const OPTION_DRY_RUN = 'dry-run';
-    const OPTION_FORMAT = 'format';
+    public const OPTION_DRY_RUN = 'dry-run';
+    public const OPTION_FORMAT = 'format';
 
     /**
      * @var string
