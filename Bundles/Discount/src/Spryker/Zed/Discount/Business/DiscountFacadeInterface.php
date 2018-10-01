@@ -339,9 +339,9 @@ interface DiscountFacadeInterface
      *
      * @param int $idDiscount
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
      */
-    public function getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+    public function getHydratedDiscountConfiguratorByIdDiscount($idDiscount): ?DiscountConfiguratorTransfer;
 
     /**
      * Specification:

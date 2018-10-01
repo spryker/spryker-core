@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Discount\Business\Exception\DiscountNotFoundException;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -72,13 +71,13 @@ class IndexController extends AbstractController
     {
         $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
 
-        try {
-            $discountConfiguratorTransfer = $this->getFacade()
-                ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
-        } catch (DiscountNotFoundException $exception) {
+        $discountConfiguratorTransfer = $this->getFacade()
+            ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+
+        if ($discountConfiguratorTransfer === null) {
             $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
 
-            return $this->redirectResponse('/discount/index/list');
+            return $this->redirectResponse(DiscountConstants::URL_LIST_DISCOUNT);
         }
 
         $discountForm = $this->getFactory()->getDiscountForm($idDiscount);
@@ -143,13 +142,13 @@ class IndexController extends AbstractController
     {
         $idDiscount = $this->castId($request->query->get(static::URL_PARAM_ID_DISCOUNT));
 
-        try {
-            $discountConfiguratorTransfer = $this->getFacade()
-                ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
-        } catch (DiscountNotFoundException $exception) {
+        $discountConfiguratorTransfer = $this->getFacade()
+            ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+
+        if ($discountConfiguratorTransfer === null) {
             $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
 
-            return $this->redirectResponse('/discount/index/list');
+            return $this->redirectResponse(DiscountConstants::URL_LIST_DISCOUNT);
         }
 
         $voucherCodesTable = $this->renderVoucherCodeTable($request, $discountConfiguratorTransfer);

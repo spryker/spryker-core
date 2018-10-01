@@ -69,4 +69,6 @@ interface DiscountConstants
      * @api
      */
     public const CALCULATOR_MONEY_INPUT_TYPE = 'calculator-money-input-type';
+
+    public const URL_LIST_DISCOUNT = '/discount/index/list';
 }
