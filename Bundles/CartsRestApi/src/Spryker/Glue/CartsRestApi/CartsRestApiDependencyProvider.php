@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CartsRestApi;
 
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientBridge;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientBridge;
@@ -23,6 +24,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const PLUGIN_QUOTE_COLLECTION_READER = 'PLUGIN_QUOTE_COLLECTION_READER';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     protected const EXCEPTION_MESSAGE_READER_NOT_IMPLEMENTED = 'Reader not implemented on project level';
 
@@ -40,6 +42,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addQuoteCollectionReaderPlugin($container);
+        $container = $this->addCustomerClient($container);
 
         return $container;
     }
@@ -115,8 +118,6 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * Quote collection reader plugin.
-     *
      * @throws \Spryker\Glue\CartsRestApi\Exception\CartRestApiNotImplementedException
      *
      * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
@@ -124,5 +125,19 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     protected function createQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
     {
         throw new CartRestApiNotImplementedException(static::EXCEPTION_MESSAGE_READER_NOT_IMPLEMENTED);
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container): Container
+    {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+            return new CartsRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
     }
 }

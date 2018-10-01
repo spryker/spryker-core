@@ -1,26 +1,23 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Processor\Cart;
+namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Symfony\Component\HttpFoundation\Response;
 
-class CartReader implements CartReaderInterface
+class GuestCartReader implements GuestCartReaderInterface
 {
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
@@ -61,29 +58,6 @@ class CartReader implements CartReaderInterface
     }
 
     /**
-     * @param string $uuidQuote
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function readByIdentifier(string $uuidQuote, RestRequestInterface $restRequest): RestResponseInterface
-    {
-        $quoteResponseTransfer = $this->getQuoteTransferByUuid($uuidQuote, $restRequest);
-
-        if ($quoteResponseTransfer->getIsSuccessful() === false) {
-            $restResponse = $this->restResourceBuilder->createRestResponse();
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_NOT_FOUND, $uuidQuote));
-
-            return $restResponse->addError($restErrorTransfer);
-        }
-
-        return $this->getRestResponse($restRequest, $quoteResponseTransfer);
-    }
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -103,33 +77,6 @@ class CartReader implements CartReaderInterface
         }
 
         return $restResponse;
-    }
-
-    /**
-     * @param string $uuidQuote
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function getQuoteTransferByUuid(string $uuidQuote, RestRequestInterface $restRequest): QuoteResponseTransfer
-    {
-        $quoteCollectionTransfer = $this->getCustomerQuotes();
-
-        if ($quoteCollectionTransfer->getQuotes()->count() === 0) {
-            return (new QuoteResponseTransfer())
-                ->setIsSuccessful(false);
-        }
-
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getUuid() === $uuidQuote) {
-                return (new QuoteResponseTransfer())
-                    ->setIsSuccessful(true)
-                    ->setQuoteTransfer($quoteTransfer);
-            }
-        }
-
-        return (new QuoteResponseTransfer())
-            ->setIsSuccessful(false);
     }
 
     /**

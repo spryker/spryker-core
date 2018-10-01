@@ -58,4 +58,18 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     {
         return $this->getFactory()->createQuoteUpdater()->updateQuote($quoteUpdateRequestTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return string
+     */
+    public function generateGuestCartCustomerReference(string $customerReference): string
+    {
+        return $this->getFactory()->createGuestCartPreparer()->generateGuestCartCustomerReference($customerReference);
+    }
 }

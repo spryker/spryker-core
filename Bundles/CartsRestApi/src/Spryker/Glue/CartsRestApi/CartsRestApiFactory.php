@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CartsRestApi;
 
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
@@ -23,6 +24,8 @@ use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleter;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdater;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdaterInterface;
+use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReader;
+use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapper;
@@ -40,7 +43,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartReader(
             $this->getResourceBuilder(),
             $this->createCartsResourceMapper(),
-            $this->getQuoteCollectionReaderPlugin()
+            $this->getQuoteCollectionReaderPlugin(),
+            $this->getCustomerClient()
         );
     }
 
@@ -163,5 +167,26 @@ class CartsRestApiFactory extends AbstractFactory
     public function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_COLLECTION_READER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface
+     */
+    public function createGuestCartReader(): GuestCartReaderInterface
+    {
+        return new GuestCartReader(
+            $this->getResourceBuilder(),
+            $this->createCartsResourceMapper(),
+            $this->getQuoteCollectionReaderPlugin(),
+            $this->getCustomerClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface
+     */
+    public function getCustomerClient(): CartsRestApiToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_CUSTOMER);
     }
 }

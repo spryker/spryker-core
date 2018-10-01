@@ -48,4 +48,18 @@ interface PersistentCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Prepares quote transfer for guest cart.
+     * - Prepends customer transfer customer reference with anonymous prefix from configuration.
+     * - Returns prepared QuoteTransfer.
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return string
+     */
+    public function generateGuestCartCustomerReference(string $customerReference): string;
 }
