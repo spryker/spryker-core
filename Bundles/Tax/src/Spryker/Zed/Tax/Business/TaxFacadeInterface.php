@@ -358,8 +358,9 @@ interface TaxFacadeInterface
     public function taxSetWithSameNameAndIdExists(string $name, int $idTaxSet): bool;
 
     /**
-     *  Specification:
-     *  - Finds tax rate by id
+     * Specification:
+     * - Finds tax rate by id
+     * - Returns NULL if tax set does not exist
      *
      * @api
      *
@@ -370,8 +371,9 @@ interface TaxFacadeInterface
     public function findTaxRate(int $idTaxRate): ?TaxRateTransfer;
 
     /**
-     *  Specification:
-     *  - Finds tax set by id
+     * Specification:
+     * - Finds tax set by id
+     * - Returns NULL if tax set does not exist
      *
      * @api
      *

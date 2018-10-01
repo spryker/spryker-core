@@ -96,7 +96,6 @@ class FilterPreferencesController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        //todo: changed
         $idProductSearchAttribute = $this->castId($request->query->getInt(self::PARAM_ID));
 
         $dataProvider = $this
