@@ -12,9 +12,28 @@ use Spryker\Zed\CompanyRoleGui\Communication\Table\CompanyRoleTable;
 use Spryker\Zed\CompanyRoleGui\CompanyRoleGuiDependencyProvider;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\FormTypeInterface;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleChoiceFormType;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyUserRoleFormDataProvider;
 
 class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    public function createCompanyUserRoleChoiceFormType(): FormTypeInterface
+    {
+        return new CompanyUserRoleChoiceFormType();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyUserRoleFormDataProvider
+     */
+    public function createCompanyUserRoleChoiceFormDataProvider(): CompanyUserRoleFormDataProvider
+    {
+        return new CompanyUserRoleFormDataProvider($this->getCompanyRoleFacade());
+    }
+
     /**
      * @return \Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface
      */
