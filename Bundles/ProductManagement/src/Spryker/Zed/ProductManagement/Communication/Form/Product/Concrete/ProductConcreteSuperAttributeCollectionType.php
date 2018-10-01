@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  */
-class ProductConcreteSuperAttributeFormType extends AbstractType
+class ProductConcreteSuperAttributeCollectionType extends AbstractType
 {
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'form_product_concrete_super_attributes';
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL = 'Super attributes';
@@ -91,22 +91,22 @@ class ProductConcreteSuperAttributeFormType extends AbstractType
      */
     protected function addAssignProductConcreteOptionsSuperAttributes(FormBuilderInterface $builder, array $options)
     {
-        foreach ($options[static::OPTION_SUPER_ATTRIBUTES] as $productmanagementAttributeTransfer) {
+        foreach ($options[static::OPTION_SUPER_ATTRIBUTES] as $productManagementAttributeTransfer) {
             $builder
                 ->get(static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES)
                 ->add(
-                    $productmanagementAttributeTransfer->getKey(),
+                    $productManagementAttributeTransfer->getKey(),
                     ProductConcreteSuperAttributeForm::class,
                     [
-                        ProductConcreteSuperAttributeForm::OPTION_PRODUCT_MANAGEMENT_ATTRIBUTE_TRANSFER => $productmanagementAttributeTransfer,
-                        'label' => $productmanagementAttributeTransfer->getKey(),
+                        ProductConcreteSuperAttributeForm::OPTION_PRODUCT_MANAGEMENT_ATTRIBUTE_TRANSFER => $productManagementAttributeTransfer,
+                        'label' => $productManagementAttributeTransfer->getKey(),
                         'error_bubbling' => false,
                         'attr' => [
                             'class' => 'super-attribute-inputs-group',
                         ],
                         'constraints' => [
                             new ProductAttributeType(
-                                $productmanagementAttributeTransfer,
+                                $productManagementAttributeTransfer,
                                 [
                                     'checkbox' => ProductConcreteSuperAttributeForm::FIELD_CHECKBOX,
                                     'input' => ProductConcreteSuperAttributeForm::FIELD_INPUT,

@@ -136,7 +136,7 @@ class ProductConcreteFormAddDataProvider
         $formOptions[ProductConcreteFormAdd::OPTION_ATTRIBUTE_SUPER] = [];
         $formOptions[ProductConcreteFormAdd::OPTION_TAX_RATES] = $this->taxCollection;
 
-        if ($this->store) {
+        if ($this->store->getCurrencyIsoCode()) {
             $formOptions[ProductConcreteFormAdd::OPTION_CURRENCY_ISO_CODE] = $this->store->getCurrencyIsoCode();
         }
         $formOptions[ProductConcreteFormAdd::OPTION_ID_PRODUCT_ABSTRACT] = $idProductAbstract;

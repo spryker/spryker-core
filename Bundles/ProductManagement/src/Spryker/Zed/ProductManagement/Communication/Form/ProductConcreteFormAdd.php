@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ProductConcreteSuperAttributeFormType;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ProductConcreteSuperAttributeCollectionType;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuUnique;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -146,7 +146,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
 
         $builder->add(
             static::CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES,
-            ProductConcreteSuperAttributeFormType::class,
+            ProductConcreteSuperAttributeCollectionType::class,
             [
                 static::OPTION_SUPER_ATTRIBUTES => $options[static::OPTION_SUPER_ATTRIBUTES],
                 static::OPTION_ID_PRODUCT_ABSTRACT => $options[static::OPTION_ID_PRODUCT_ABSTRACT],
