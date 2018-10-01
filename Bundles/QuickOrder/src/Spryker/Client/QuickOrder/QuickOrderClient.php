@@ -9,6 +9,8 @@ namespace Spryker\Client\QuickOrder;
 
 use Generated\Shared\Transfer\CurrentProductConcretePriceTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
+use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -46,5 +48,21 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
         return $this->getFactory()
             ->createProductConcretePriceReader()
             ->getProductConcreteSumPrice($currentProductConcretePriceTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
+     */
+    public function validateQuantityRestrictions(QuickOrderItemTransfer $quickOrderItemTransfer): ProductQuantityValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductQuantityRestrictionsValidator()
+            ->validateQuantityRestrictions($quickOrderItemTransfer);
     }
 }
