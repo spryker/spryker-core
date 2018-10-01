@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Controller;
 
+use Spryker\Shared\CmsGui\CmsGuiConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -35,7 +36,7 @@ class ViewPageController extends AbstractController
         if ($cmsVersionTransfer === null) {
             $this->addErrorMessage(sprintf('Cms page with id %s doesn\'t exist', $idCmsPage));
 
-            return $this->redirectResponse('/cms-gui//list-page');
+            return $this->redirectResponse(CmsGuiConstants::URL_LIST_CMS);
         }
 
         $cmsVersionDataHelper = $this->getFactory()->createCmsVersionDataHelper();
