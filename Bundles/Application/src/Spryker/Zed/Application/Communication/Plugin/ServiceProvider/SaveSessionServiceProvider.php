@@ -11,8 +11,6 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
@@ -42,11 +40,11 @@ class SaveSessionServiceProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
-     * @return EventDispatcherInterface
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
-    protected function getDispatcher(Application $app) : EventDispatcherInterface
+    protected function getDispatcher(Application $app): EventDispatcherInterface
     {
         return $app['dispatcher'];
     }

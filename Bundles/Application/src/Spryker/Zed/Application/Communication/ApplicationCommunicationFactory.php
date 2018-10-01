@@ -30,9 +30,9 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return SaveSessionListener
+     * @return \Symfony\Component\HttpKernel\EventListener\SaveSessionListener
      */
-    public function createSaveSessionEventSubscriber() : SaveSessionListener
+    public function createSaveSessionEventSubscriber(): SaveSessionListener
     {
         return new SaveSessionListener();
     }
