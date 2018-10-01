@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductSearch\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
+use Spryker\Shared\ProductSearch\ProductSearchConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductSearch\Communication\Exception\ProductAttributeKeyNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -92,18 +92,20 @@ class SearchPreferencesController extends AbstractController
             ->getFactory()
             ->createSearchPreferencesDataProvider();
 
-        try {
-            $form = $this->getFactory()
-                ->createSearchPreferencesForm(
-                    $dataProvider->getData($idAttributeKey),
-                    $dataProvider->getOptions($idAttributeKey)
-                )
-                ->handleRequest($request);
-        } catch (ProductAttributeKeyNotFoundException $exception) {
+        $searchPreferencesFormData = $dataProvider->getData($idAttributeKey);
+
+        if ($searchPreferencesFormData === []) {
             $this->addErrorMessage(sprintf('Attribute with id %s doesn\'t exist', $idAttributeKey));
 
-            return $this->redirectResponse('/product-search/search-preferences');
+            return $this->redirectResponse(ProductSearchConstants::URL_PRODUCT_SEARCH_PREFERENCES_SEARCH);
         }
+
+        $form = $this->getFactory()
+            ->createSearchPreferencesForm(
+                $searchPreferencesFormData,
+                $dataProvider->getOptions($idAttributeKey)
+            )
+            ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
