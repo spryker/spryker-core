@@ -1,5 +1,6 @@
 {
   "name": "spryker/config",
+  "type": "library",
   "description": "Config module",
   "license": "proprietary",
   "require": {

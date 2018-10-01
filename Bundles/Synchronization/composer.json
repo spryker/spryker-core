@@ -1,5 +1,6 @@
 {
   "name": "spryker/synchronization",
+  "type": "library",
   "description": "Synchronization module",
   "license": "proprietary",
   "require": {
@@ -8,8 +9,8 @@
     "spryker/kernel": "^3.4.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/queue": "^1.0.0",
-    "spryker/search": "^6.8.0 || ^7.0.0 || ^8.0.0",
-    "spryker/storage": "^3.3.2",
+    "spryker/search": "^6.8.0 || ^7.0.0 || ^8.3.0",
+    "spryker/storage": "^3.4.1",
     "spryker/symfony": "^3.1.0",
     "spryker/synchronization-extension": "^1.0.0",
     "spryker/util-encoding": "^2.0.0"

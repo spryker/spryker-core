@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-content-widget-product-search-connector",
+  "type": "library",
   "description": "CmsContentWidgetProductSearchConnector module",
   "license": "proprietary",
   "require": {

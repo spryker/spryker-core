@@ -7,17 +7,10 @@
 
 namespace SprykerTest\Zed\CompanyBusinessUnitDataImport\Communication\Plugin;
 
-use Codeception\Test\Unit;
-use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
-use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use ReflectionClass;
-use Spryker\Zed\CompanyBusinessUnitDataImport\Business\CompanyBusinessUnitDataImportBusinessFactory;
-use Spryker\Zed\CompanyBusinessUnitDataImport\Business\CompanyBusinessUnitDataImportFacade;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Communication\Plugin\CompanyBusinessUnitDataImportPlugin;
-use Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfig;
-use Spryker\Zed\DataImport\Business\Exception\DataImportException;
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 
 /**
  * Auto-generated group annotations
@@ -30,9 +23,13 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
  * @group CompanyBusinessUnitDataImportPluginTest
  * Add your own group annotations below this line
  */
-class CompanyBusinessUnitDataImportPluginTest extends Unit
+class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUnitDataImportUnitTest
 {
-    protected const EXCEPTION_DATA_IMPORT_COMPANY_NO_FOUND_MESSAGE = 'Could not find company by key "invalid company"';
+    protected const COMPANY_KEY = 'spryker';
+
+    protected const COMPANY_BUSINESS_UNIT_KEY = 'spryker-business-unit';
+    protected const COMPANY_CHILD_BUSINESS_UNIT_KEY = 'child-spryker-business-unit';
+
     protected const IMPORT_COMPANY_BUSINESS_UNIT_CSV = 'import/company_business_unit.csv';
     protected const IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_COMPANY_CSV = 'import/company_business_unit_with_invalid_company.csv';
     protected const IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_PARENT_CSV = 'import/company_business_unit_with_invalid_parent.csv';
@@ -47,22 +44,21 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
      */
     public function testImportImportsCompanyBusinessUnit(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
-        $this->tester->haveCompany(['key' => 'spryker']);
+        $this->tester->truncateCompanyBusinessUnitRelations();
+
+        $this->tester->haveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
+        $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
+        ]);
+        $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::KEY => static::COMPANY_CHILD_BUSINESS_UNIT_KEY,
+        ]);
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
-            self::IMPORT_COMPANY_BUSINESS_UNIT_CSV
+            static::IMPORT_COMPANY_BUSINESS_UNIT_CSV
         );
-        $dataImportConfigurationTransfer->setThrowException(true);
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
-
-        $pluginReflection = new ReflectionClass($companyBusinessUnitDataImportPlugin);
-
-        $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
-        $facadePropertyReflection->setAccessible(true);
-        $facadePropertyReflection->setValue($companyBusinessUnitDataImportPlugin, $this->getFacadeMock());
-
         $dataImporterReportTransfer = $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
@@ -71,109 +67,46 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
     }
 
     /**
+     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
+     * @expectedExceptionMessage Could not find company by key "invalid company"
+     *
      * @return void
      */
     public function testImportThrowsExceptionWhenCompanyNotFound(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->truncateCompanyBusinessUnitRelations();
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
-            self::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_COMPANY_CSV
+            static::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_COMPANY_CSV
         );
-        $dataImportConfigurationTransfer->setThrowException(true);
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
-
-        $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage(static::EXCEPTION_DATA_IMPORT_COMPANY_NO_FOUND_MESSAGE);
-
-        $pluginReflection = new ReflectionClass($companyBusinessUnitDataImportPlugin);
-
-        $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
-        $facadePropertyReflection->setAccessible(true);
-        $facadePropertyReflection->setValue($companyBusinessUnitDataImportPlugin, $this->getFacadeMock());
 
         $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 
     /**
+     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
+     * @expectedExceptionMessage Could not find company business unit by key "invalid parent"
+     *
      * @return void
      */
     public function testImportThrowsExceptionWhenParentBusinessUnitNotFound(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
-        $this->tester->haveActiveCompany(['key' => 'spryker']);
+        $this->tester->truncateCompanyBusinessUnitRelations();
+
+        $this->tester->haveActiveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
+        $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
+        ]);
+        $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::KEY => static::COMPANY_CHILD_BUSINESS_UNIT_KEY,
+        ]);
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
-            self::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_PARENT_CSV
+            static::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_PARENT_CSV
         );
-        $dataImportConfigurationTransfer->setThrowException(true);
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
-
-        $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage('Could not find company business unit by key "invalid parent"');
-
-        $pluginReflection = new ReflectionClass($companyBusinessUnitDataImportPlugin);
-
-        $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
-        $facadePropertyReflection->setAccessible(true);
-        $facadePropertyReflection->setValue($companyBusinessUnitDataImportPlugin, $this->getFacadeMock());
-
         $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyBusinessUnitDataImport\Business\CompanyBusinessUnitDataImportFacade
-     */
-    public function getFacadeMock()
-    {
-        $factoryMock = $this->getMockBuilder(CompanyBusinessUnitDataImportBusinessFactory::class)
-            ->setMethods(
-                [
-                    'createTransactionAwareDataSetStepBroker',
-                    'getConfig',
-                ]
-            )
-            ->getMock();
-
-        $factoryMock
-            ->method('createTransactionAwareDataSetStepBroker')
-            ->willReturn(new DataSetStepBroker());
-
-        $factoryMock->method('getConfig')
-            ->willReturn(new CompanyBusinessUnitDataImportConfig());
-
-        $facade = new CompanyBusinessUnitDataImportFacade();
-        $facade->setFactory($factoryMock);
-
-        return $facade;
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetImportTypeReturnsTypeOfImporter(): void
-    {
-        $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
-        $this->assertSame(
-            CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT,
-            $companyBusinessUnitDataImportPlugin->getImportType()
-        );
-    }
-
-    /**
-     * @param string $file
-     *
-     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
-     */
-    protected function getDataImportConfigurationTransfer(string $file): DataImporterConfigurationTransfer
-    {
-        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . $file);
-
-        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
-        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
-
-        return $dataImportConfigurationTransfer;
     }
 }

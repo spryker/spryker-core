@@ -25,6 +25,7 @@ use Spryker\Zed\Development\Business\Composer\Updater\DescriptionUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\LicenseUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\StabilityUpdater;
+use Spryker\Zed\Development\Business\Composer\Updater\TypeUpdater;
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonUnboundRequireConstraintValidator;
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorComposite;
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface;
@@ -38,6 +39,7 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ExtensionDepend
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ExternalDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\InternalDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\LocatorDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ModuleAnnotationDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\PersistenceDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TravisDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder;
@@ -319,6 +321,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createTravisDependencyFinder(),
             $this->createComposerScriptDependencyFinder(),
             $this->createCodeceptionDependencyFinder(),
+            $this->createModuleAnnotationDependencyFinder(),
         ]);
     }
 
@@ -422,6 +425,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createCodeceptionDependencyFinder(): DependencyFinderInterface
     {
         return new CodeceptionDependencyFinder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createModuleAnnotationDependencyFinder(): DependencyFinderInterface
+    {
+        return new ModuleAnnotationDependencyFinder();
     }
 
     /**
@@ -1354,6 +1365,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createFinder()
     {
         return new SymfonyFinder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
+     */
+    protected function createComposerJsonTypeUpdater()
+    {
+        return new TypeUpdater();
     }
 
     /**

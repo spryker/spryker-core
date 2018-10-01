@@ -1,5 +1,6 @@
 {
   "name": "spryker/zed-navigation",
+  "type": "library",
   "description": "ZedNavigation module",
   "license": "proprietary",
   "require": {

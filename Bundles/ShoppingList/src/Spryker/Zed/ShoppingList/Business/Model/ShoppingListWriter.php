@@ -9,10 +9,12 @@ namespace Spryker\Zed\ShoppingList\Business\Model;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
@@ -66,12 +68,30 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     protected $eventFacade;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface
+     */
+    protected $shoppingListItemOperation;
+
+    /**
+     * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListReaderInterface
+     */
+    protected $shoppingListReader;
+
+    /**
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface
+     */
+    protected $pluginExecutor;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\ShoppingListConfig $shoppingListConfig
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface $eventFacade
+     * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface $shoppingListItemOperation
+     * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListReaderInterface $shoppingListReader
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
      */
     public function __construct(
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
@@ -79,7 +99,10 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListConfig $shoppingListConfig,
         ShoppingListToMessengerFacadeInterface $messengerFacade,
-        ShoppingListToEventFacadeInterface $eventFacade
+        ShoppingListToEventFacadeInterface $eventFacade,
+        ShoppingListItemOperationInterface $shoppingListItemOperation,
+        ShoppingListReaderInterface $shoppingListReader,
+        ShoppingListItemPluginExecutorInterface $pluginExecutor
     ) {
         $this->shoppingListEntityManager = $shoppingListEntityManager;
         $this->productFacade = $productFacade;
@@ -87,6 +110,9 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         $this->shoppingListConfig = $shoppingListConfig;
         $this->messengerFacade = $messengerFacade;
         $this->eventFacade = $eventFacade;
+        $this->shoppingListItemOperation = $shoppingListItemOperation;
+        $this->shoppingListReader = $shoppingListReader;
+        $this->pluginExecutor = $pluginExecutor;
     }
 
     /**
@@ -162,7 +188,41 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      */
     public function saveShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
-        return $this->shoppingListEntityManager->saveShoppingList($shoppingListTransfer);
+        return $this->getTransactionHandler()->handleTransaction(
+            function () use ($shoppingListTransfer) {
+                return $this->executeSaveShoppingListTransaction($shoppingListTransfer);
+            }
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        $shoppingListTransfer = $this->shoppingListReader->getShoppingList($shoppingListTransfer);
+
+        if (!$this->checkWritePermission($shoppingListTransfer)) {
+            return (new ShoppingListResponseTransfer())->setIsSuccess(false);
+        }
+
+        return $this->deleteShoppingListItems($shoppingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    protected function deleteShoppingListItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListTransfer) {
+            $this->executeDeleteShoppingListItemsTransaction($shoppingListTransfer);
+        });
+
+        return (new ShoppingListResponseTransfer())->setIsSuccess(true);
     }
 
     /**
@@ -233,7 +293,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      */
     protected function executeRemoveShoppingListTransaction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $this->shoppingListEntityManager->deleteShoppingListItems($shoppingListTransfer);
+        $this->clearShoppingList($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListCompanyUsers($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnits($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListTransfer);
@@ -257,5 +317,50 @@ class ShoppingListWriter implements ShoppingListWriterInterface
                  $shoppingListTransfer->getCustomerReference() => ShoppingListTransfer::CUSTOMER_REFERENCE,
             ]);
         $this->eventFacade->trigger(ShoppingListEvents::SHOPPING_LIST_UNPUBLISH, $eventTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function executeSaveShoppingListTransaction(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    {
+        $shoppingListTransfer = $this->shoppingListEntityManager->saveShoppingList($shoppingListTransfer);
+
+        if (!$shoppingListTransfer->getItems()->count()) {
+            return $shoppingListTransfer;
+        }
+
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+            $this->shoppingListItemOperation->saveShoppingListItemWithoutPermissionsCheck($shoppingListItemTransfer);
+        }
+
+        return $shoppingListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function executeDeleteShoppingListItemsTransaction(ShoppingListTransfer $shoppingListTransfer): void
+    {
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+            $this->deleteShoppingListItem($shoppingListItemTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return void
+     */
+    protected function deleteShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    {
+        $shoppingListItemTransfer->requireIdShoppingListItem();
+
+        $shoppingListItemTransfer = $this->pluginExecutor->executeBeforeDeletePlugins($shoppingListItemTransfer);
+        $this->shoppingListEntityManager->deleteShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
     }
 }

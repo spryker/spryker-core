@@ -13,7 +13,7 @@ use Spryker\Shared\Config\Config;
 
 class UtilDateTimeDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CONFIG = 'config';
+    public const CONFIG = 'config';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container

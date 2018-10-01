@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
-    const FORM_ADD_TYPE = 'add';
+    public const FORM_ADD_TYPE = 'add';
 
-    const MESSAGE_CREATE_SUCCESS = 'Translation %d was created successfully.';
+    public const MESSAGE_CREATE_SUCCESS = 'Translation %d was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

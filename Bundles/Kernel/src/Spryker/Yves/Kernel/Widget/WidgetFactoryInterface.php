@@ -7,6 +7,9 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetFactoryInterface instead.
+ */
 interface WidgetFactoryInterface
 {
     /**

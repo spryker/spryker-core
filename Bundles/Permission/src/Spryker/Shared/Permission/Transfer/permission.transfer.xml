@@ -8,6 +8,7 @@
         <property name="key" type="string"/>
         <property name="configuration" type="array" />
         <property name="configurationSignature" type="array" />
+        <property name="isInfrastructural" type="bool" />
     </transfer>
 
     <transfer name="PermissionCollection">

@@ -1,5 +1,6 @@
 {
   "name": "spryker/navigation-collector",
+  "type": "library",
   "description": "NavigationCollector module",
   "license": "proprietary",
   "require": {

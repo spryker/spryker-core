@@ -1,5 +1,6 @@
 {
   "name": "spryker/redis",
+  "type": "library",
   "description": "Redis module",
   "license": "proprietary",
   "require": {

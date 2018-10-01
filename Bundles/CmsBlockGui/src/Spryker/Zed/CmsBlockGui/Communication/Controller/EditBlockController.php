@@ -19,12 +19,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditBlockController extends AbstractCmsBlockController
 {
-    const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
-    const MESSAGE_CMS_BLOCK_UPDATE_ERROR = 'Invalid data provided.';
-    const MESSAGE_CMS_BLOCK_UPDATE_SUCCESS = 'CMS Block was updated successfully.';
-    const MESSAGE_CMS_BLOCK_ACTIVATE_SUCCESS = 'CMS Block was activated successfully.';
-    const MESSAGE_CMS_BLOCK_DEACTIVATE_SUCCESS = 'CMS Block was deactivated successfully.';
+    public const MESSAGE_CMS_BLOCK_UPDATE_ERROR = 'Invalid data provided.';
+    public const MESSAGE_CMS_BLOCK_UPDATE_SUCCESS = 'CMS Block was updated successfully.';
+    public const MESSAGE_CMS_BLOCK_ACTIVATE_SUCCESS = 'CMS Block was activated successfully.';
+    public const MESSAGE_CMS_BLOCK_DEACTIVATE_SUCCESS = 'CMS Block was deactivated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

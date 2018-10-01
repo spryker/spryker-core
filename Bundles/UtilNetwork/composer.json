@@ -1,5 +1,6 @@
 {
   "name": "spryker/util-network",
+  "type": "library",
   "description": "UtilNetwork module",
   "license": "proprietary",
   "require": {

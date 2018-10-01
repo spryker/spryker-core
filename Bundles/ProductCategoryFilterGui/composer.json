@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-category-filter-gui",
+  "type": "library",
   "description": "ProductCategoryFilterGui module",
   "license": "proprietary",
   "require": {

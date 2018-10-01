@@ -12,8 +12,8 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class ExternalGraphBuilder implements GraphBuilderInterface
 {
-    const FONT_COLOR = 'fontcolor';
-    const LABEL = 'label';
+    public const FONT_COLOR = 'fontcolor';
+    public const LABEL = 'label';
 
     /**
      * @var \Spryker\Shared\Graph\GraphInterface

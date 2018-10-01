@@ -76,6 +76,21 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
     }
 
     /**
+     * @param int $idProductStore
+     *
+     * @return void
+     */
+    public function deleteByIdPriceProductStore(int $idProductStore): void
+    {
+        $priceProductMerchantRelationshipEntities = $this->getFactory()
+            ->createPriceProductMerchantRelationshipQuery()
+            ->filterByFkPriceProductStore($idProductStore)
+            ->find();
+
+        $this->deleteEntitiesAndTriggerEvents($priceProductMerchantRelationshipEntities);
+    }
+
+    /**
      * @return void
      */
     public function deleteAll(): void

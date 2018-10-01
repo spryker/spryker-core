@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
 use Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -84,12 +85,47 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         $shoppingListItemEntity = $this->getFactory()
             ->createShoppingListItemQuery()
             ->filterByIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem())
-            ->findOneOrCreate();
-        $shoppingListEntity = $this->getFactory()->createShoppingListItemMapper()
+            ->findOne();
+
+        if ($shoppingListItemEntity !== null) {
+            return $this->updateShoppingListItem($shoppingListItemTransfer, $shoppingListItemEntity);
+        }
+
+        return $this->createShoppingListItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    protected function createShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        $shoppingListItemEntity = $this->getFactory()
+            ->createShoppingListItemMapper()
+            ->mapTransferToEntity($shoppingListItemTransfer, new SpyShoppingListItem());
+
+        $shoppingListItemEntity->save();
+        $shoppingListItemTransfer->setIdShoppingListItem($shoppingListItemEntity->getIdShoppingListItem());
+
+        return $shoppingListItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem $shoppingListItemEntity
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    protected function updateShoppingListItem(
+        ShoppingListItemTransfer $shoppingListItemTransfer,
+        SpyShoppingListItem $shoppingListItemEntity
+    ): ShoppingListItemTransfer {
+        $shoppingListItemEntity = $this->getFactory()
+            ->createShoppingListItemMapper()
             ->mapTransferToEntity($shoppingListItemTransfer, $shoppingListItemEntity);
 
-        $shoppingListEntity->save();
-        $shoppingListItemTransfer->setIdShoppingListItem($shoppingListEntity->getIdShoppingListItem());
+        $shoppingListItemEntity->save();
 
         return $shoppingListItemTransfer;
     }

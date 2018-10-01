@@ -15,7 +15,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class StorageTable extends AbstractTable
 {
-    const ACTIONS = 'Actions';
+    public const ACTIONS = 'Actions';
 
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface

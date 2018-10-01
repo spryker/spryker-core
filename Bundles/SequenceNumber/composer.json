@@ -1,5 +1,6 @@
 {
   "name": "spryker/sequence-number",
+  "type": "library",
   "description": "SequenceNumber module",
   "license": "proprietary",
   "require": {

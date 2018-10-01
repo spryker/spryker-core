@@ -9,5 +9,5 @@ namespace SprykerTest\Zed\Shipment\PageObject;
 
 class ShipmentMethodAddPage
 {
-    const URL = '/shipment/method/add';
+    public const URL = '/shipment/method/add';
 }

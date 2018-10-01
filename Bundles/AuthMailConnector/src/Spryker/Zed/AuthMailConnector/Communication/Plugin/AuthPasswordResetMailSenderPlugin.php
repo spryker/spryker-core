@@ -17,8 +17,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPasswordResetSenderInterface
 {
-    const SUBJECT = 'Password reset request';
-    const TEMPLATE = 'Auth.password.reset';
+    public const SUBJECT = 'Password reset request';
+    public const TEMPLATE = 'Auth.password.reset';
 
     /**
      * @api

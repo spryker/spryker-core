@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class CategoryUrlConstraint extends SymfonyConstraint
 {
-    const OPTION_URL_FACADE = 'urlFacade';
+    public const OPTION_URL_FACADE = 'urlFacade';
 
     /**
      * @var \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToUrlInterface

@@ -1,5 +1,6 @@
 {
   "name": "spryker/oms",
+  "type": "library",
   "description": "Oms module",
   "license": "proprietary",
   "require": {

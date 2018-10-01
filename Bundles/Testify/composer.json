@@ -1,5 +1,6 @@
 {
   "name": "spryker/testify",
+  "type": "library",
   "description": "Testify module",
   "license": "proprietary",
   "require": {

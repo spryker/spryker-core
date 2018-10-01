@@ -1,5 +1,6 @@
 {
   "name": "spryker/mail",
+  "type": "library",
   "description": "Mail module",
   "license": "proprietary",
   "require": {

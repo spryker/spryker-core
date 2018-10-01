@@ -13,7 +13,7 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class IsIn implements ComparatorInterface
 {
-    const EXPRESSION = 'is in';
+    public const EXPRESSION = 'is in';
 
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer

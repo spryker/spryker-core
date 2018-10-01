@@ -18,8 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class IndexController extends AbstractController
 {
-    const DEFAULT_FORMAT = 'svg';
-    const DEFAULT_FONT_SIZE = 14;
+    public const DEFAULT_FORMAT = 'svg';
+    public const DEFAULT_FONT_SIZE = 14;
 
     /**
      * @var array

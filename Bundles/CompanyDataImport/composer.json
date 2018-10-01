@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-data-import",
+  "type": "library",
   "description": "CompanyDataImport module",
   "license": "MIT",
   "require": {
@@ -10,9 +11,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/company-business-unit": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "autoload": {

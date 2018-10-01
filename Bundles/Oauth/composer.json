@@ -1,5 +1,6 @@
 {
   "name": "spryker/oauth",
+  "type": "library",
   "description": "Oauth module",
   "license": "proprietary",
   "require": {

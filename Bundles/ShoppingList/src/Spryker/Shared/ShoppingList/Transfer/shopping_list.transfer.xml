@@ -13,6 +13,7 @@
         <property name="numberOfItems" type="int" />
         <property name="owner" type="string" />
         <property name="idCompanyUser" type="int" />
+        <property name="items" type="ShoppingListItem[]" />
     </transfer>
 
     <transfer name="ShoppingListCollection">
@@ -64,16 +65,12 @@
     <transfer name="ShoppingListAddToCartRequest">
         <property name="sku" type="string" />
         <property name="quantity" type="int" />
-        <property name="idShoppingListItem" type="int" />
+        <property name="idShoppingListItem" type="int" deprecated="use shoppingListItem->idShoppingListItem instead" />
+        <property name="shoppingListItem" type="ShoppingListItem" />
     </transfer>
 
     <transfer name="ShoppingListAddToCartRequestCollection">
         <property name="requests" type="ShoppingListAddToCartRequest[]" singular="request" />
-    </transfer>
-
-    <transfer name="ProductView">
-        <property name="quantity" type="int" />
-        <property name="idShoppingListItem" type="int" />
     </transfer>
 
     <transfer name="ShoppingListShareRequest">

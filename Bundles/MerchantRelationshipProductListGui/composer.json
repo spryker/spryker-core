@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-relationship-product-list-gui",
+  "type": "library",
   "description": "MerchantRelationshipProductListGui module",
   "license": "proprietary",
   "require": {

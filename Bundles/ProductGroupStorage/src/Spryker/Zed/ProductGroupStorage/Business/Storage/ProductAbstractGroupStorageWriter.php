@@ -164,7 +164,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedAttributeEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedAttributeEntity
      * @param array $groupedProductAbstractIds
      *
      * @return array
@@ -237,7 +237,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     /**
      * @param array $productGroupIds
      *
-     * @return \Orm\Zed\ProductGroup\Persistence\Base\SpyProductAbstractGroup[]
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroup[]
      */
     protected function findProductGroupAbstractEntitiesByProductGroupIds(array $productGroupIds)
     {
@@ -247,7 +247,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     /**
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\ProductGroup\Persistence\Base\SpyProductAbstractGroup[]
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroup[]
      */
     protected function findProductGroupAbstractEntitiesByProductAbstractIds(array $productAbstractIds)
     {

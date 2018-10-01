@@ -1,5 +1,6 @@
 {
   "name": "spryker/products-product-tax-sets-resource-relationship",
+  "type": "library",
   "description": "ProductsProductTaxSetsResourceRelationship module",
   "license": "proprietary",
   "require": {

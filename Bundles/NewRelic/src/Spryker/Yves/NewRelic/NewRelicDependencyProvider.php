@@ -13,8 +13,8 @@ use Spryker\Yves\Kernel\Container;
 
 class NewRelicDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const NEW_RELIC_API = 'new relic api';
-    const SERVICE_NETWORK = 'util network service';
+    public const NEW_RELIC_API = 'new relic api';
+    public const SERVICE_NETWORK = 'util network service';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

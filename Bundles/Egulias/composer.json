@@ -1,5 +1,6 @@
 {
   "name": "spryker/egulias",
+  "type": "library",
   "description": "Egulias module",
   "license": "proprietary",
   "require": {

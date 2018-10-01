@@ -19,7 +19,7 @@ use Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface;
 
 class GiftCardReader implements GiftCardReaderInterface
 {
-    const ATTRIBUTES = 'attributes';
+    public const ATTRIBUTES = 'attributes';
 
     /**
      * @var \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface
@@ -157,9 +157,9 @@ class GiftCardReader implements GiftCardReaderInterface
     }
 
     /**
-     * @param array $giftCardEntities
+     * @param \Orm\Zed\GiftCard\Persistence\SpyGiftCard[] $giftCardEntities
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\GiftCardTransfer[]
      */
     protected function getGiftCardTransfersFromEntities(array $giftCardEntities)
     {
@@ -302,7 +302,7 @@ class GiftCardReader implements GiftCardReaderInterface
     }
 
     /**
-     * @param array $giftCardCodes
+     * @param \Orm\Zed\GiftCard\Persistence\SpyGiftCard[] $giftCardCodes
      *
      * @return array
      */

@@ -1,5 +1,6 @@
 {
   "name": "spryker/ratepay",
+  "type": "library",
   "description": "Ratepay module",
   "license": "proprietary",
   "require": {
