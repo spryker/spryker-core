@@ -10,6 +10,9 @@ namespace SprykerTest\Zed\CustomerAccess\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
+use Spryker\Zed\CustomerAccess\Business\CustomerAccessBusinessFactory;
+use Spryker\Zed\CustomerAccess\Business\CustomerAccessFacade;
+use Spryker\Zed\CustomerAccess\CustomerAccessConfig;
 
 /**
  * Auto-generated group annotations
@@ -71,14 +74,33 @@ class CustomerAccessFacadeTest extends Unit
      */
     public function testInstallNotFails(): void
     {
-        $this->tester->getFacade()->install();
+        // Arrange
+        $customerAccessConfigMock = $this->createCustomerAccessConfigMock();
+        $customerAccessConfigMock
+            ->method('getContentTypes')
+            ->willReturn([
+                'price',
+                'order-place-submit',
+                'add-to-cart',
+                'wishlist',
+                'shopping-list',
+            ]);
+        $mockedContentTypes = $customerAccessConfigMock->getContentTypes();
 
-        $contentTypesMock = $this->getContentTypesMock();
+        $customerAccessBusinessFactory = $this->createCustomerAccessBusinessFactory();
+        $customerAccessBusinessFactory->setConfig($customerAccessConfigMock);
 
-        $installedContentTypes = $this->tester->getFacade()->getAllContentTypes()->toArray();
+        $customerAccessFacade = $this->createCustomerAccessFacade();
+        $customerAccessFacade->setFactory($customerAccessBusinessFactory);
+
+        // Act
+        $customerAccessFacade->install();
+
+        $installedContentTypes = $this->tester->getFacade()->getAllContentTypes()->modifiedToArray();
         $installedContentTypes = array_column($installedContentTypes['content_type_access'], 'content_type');
 
-        $this->assertEquals($contentTypesMock, $installedContentTypes);
+        // Assert
+        $this->assertEquals($mockedContentTypes, $installedContentTypes);
     }
 
     /**
@@ -157,16 +179,26 @@ class CustomerAccessFacadeTest extends Unit
     }
 
     /**
-     * @return string[]
+     * @return \Spryker\Zed\CustomerAccess\Business\CustomerAccessFacade
      */
-    protected function getContentTypesMock(): array
+    protected function createCustomerAccessFacade(): CustomerAccessFacade
     {
-        return [
-            'price',
-            'order-place-submit',
-            'add-to-cart',
-            'wishlist',
-            'shopping-list',
-        ];
+        return new CustomerAccessFacade();
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerAccess\Business\CustomerAccessBusinessFactory
+     */
+    protected function createCustomerAccessBusinessFactory(): CustomerAccessBusinessFactory
+    {
+        return new CustomerAccessBusinessFactory();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\CustomerAccess\CustomerAccessConfig
+     */
+    protected function createCustomerAccessConfigMock()
+    {
+        return $this->getMockBuilder(CustomerAccessConfig::class)->getMock();
     }
 }
