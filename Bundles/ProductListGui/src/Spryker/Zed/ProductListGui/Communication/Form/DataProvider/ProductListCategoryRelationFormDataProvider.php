@@ -81,7 +81,10 @@ class ProductListCategoryRelationFormDataProvider
 
         foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
             foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
-                $categoryOptions[$nodeTransfer->getPath()] = $categoryTransfer->getIdCategory();
+                $path = $nodeTransfer->getIsRoot()
+                    ? $categoryTransfer->getName()
+                    : sprintf('%s/%s', $nodeTransfer->getPath(), $categoryTransfer->getName());
+                $categoryOptions[$path] = $categoryTransfer->getIdCategory();
             }
         }
 

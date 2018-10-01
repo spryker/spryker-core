@@ -39,7 +39,7 @@ use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
  */
 class WishlistFacadeTest extends Unit
 {
-    const DEFAULT_NAME = 'default';
+    public const DEFAULT_NAME = 'default';
 
     /**
      * @var \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface

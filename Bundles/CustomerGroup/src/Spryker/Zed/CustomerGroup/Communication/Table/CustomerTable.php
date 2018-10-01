@@ -18,15 +18,15 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CustomerTable extends AbstractTable
 {
-    const ACTIONS = 'Actions';
+    public const ACTIONS = 'Actions';
 
-    const COL_FK_CUSTOMER = 'fk_customer';
-    const COL_FIRST_NAME = 'first_name';
-    const COL_LAST_NAME = 'last_name';
-    const COL_GENDER = 'gender';
-    const COL_EMAIL = 'email';
+    public const COL_FK_CUSTOMER = 'fk_customer';
+    public const COL_FIRST_NAME = 'first_name';
+    public const COL_LAST_NAME = 'last_name';
+    public const COL_GENDER = 'gender';
+    public const COL_EMAIL = 'email';
 
-    const GENDER_MAP = [
+    public const GENDER_MAP = [
         0 => 'Male',
         1 => 'Female',
     ];

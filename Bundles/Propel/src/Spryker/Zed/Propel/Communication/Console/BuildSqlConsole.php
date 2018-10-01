@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 
 class BuildSqlConsole extends Console
 {
-    const COMMAND_NAME = 'propel:sql:build';
+    public const COMMAND_NAME = 'propel:sql:build';
 
     /**
      * @return void

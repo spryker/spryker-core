@@ -17,9 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ExportSynchronizedDataConsole extends Console
 {
-    const COMMAND_NAME = 'sync:data';
-    const DESCRIPTION = 'Exports synchronized data into queues';
-    const RESOURCE = 'resource';
+    public const COMMAND_NAME = 'sync:data';
+    public const DESCRIPTION = 'Exports synchronized data into queues';
+    public const RESOURCE = 'resource';
 
     /**
      * @return void

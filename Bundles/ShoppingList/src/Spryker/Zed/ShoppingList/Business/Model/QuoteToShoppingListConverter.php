@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface;
-use Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface;
 
 class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterface
 {
@@ -31,9 +30,9 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
     protected $shoppingListResolver;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface
+     * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface
      */
-    protected $shoppingListEntityManager;
+    protected $shoppingListItemOperation;
 
     /**
      * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[]
@@ -41,21 +40,29 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
     protected $quoteItemExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface[]
+     */
+    protected $itemToShoppingListItemMapperPlugins;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
-     * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface $persistentCartFacade
+     * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface $shoppingListItemOperation
      * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[] $quoteItemExpanderPlugins
+     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface[] $itemToShoppingListItemMapperPlugins
      */
     public function __construct(
         ShoppingListResolverInterface $shoppingListResolver,
-        ShoppingListEntityManagerInterface $shoppingListEntityManager,
         ShoppingListToPersistentCartFacadeInterface $persistentCartFacade,
-        array $quoteItemExpanderPlugins
+        ShoppingListItemOperationInterface $shoppingListItemOperation,
+        array $quoteItemExpanderPlugins,
+        array $itemToShoppingListItemMapperPlugins
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->shoppingListResolver = $shoppingListResolver;
-        $this->shoppingListEntityManager = $shoppingListEntityManager;
+        $this->shoppingListItemOperation = $shoppingListItemOperation;
         $this->quoteItemExpanderPlugins = $quoteItemExpanderPlugins;
+        $this->itemToShoppingListItemMapperPlugins = $itemToShoppingListItemMapperPlugins;
     }
 
     /**
@@ -130,7 +137,11 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
                 ->setQuantity($item->getQuantity())
                 ->setSku($item->getSku());
 
-            $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
+            foreach ($this->itemToShoppingListItemMapperPlugins as $itemToShoppingListItemMapperPlugin) {
+                $shoppingListItemTransfer = $itemToShoppingListItemMapperPlugin->map($item, $shoppingListItemTransfer);
+            }
+
+            $this->shoppingListItemOperation->saveShoppingListItemWithoutPermissionsCheck($shoppingListItemTransfer);
         }
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUser\Business;
 
+use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandler;
+use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandlerInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUser;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutor;
@@ -32,6 +34,17 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getCustomerFacade(),
             $this->createCompanyUserPluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandlerInterface
+     */
+    public function createCompanyUserStatusHandler(): CompanyUserStatusHandlerInterface
+    {
+        return new CompanyUserStatusHandler(
+            $this->getRepository(),
+            $this->getEntityManager()
         );
     }
 

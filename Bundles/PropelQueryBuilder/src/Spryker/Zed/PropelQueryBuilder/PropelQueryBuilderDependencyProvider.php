@@ -13,10 +13,10 @@ use Spryker\Zed\PropelQueryBuilder\Dependency\Service\PropelQueryBuilderToUtilEn
 
 class PropelQueryBuilderDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
-    const PLUGINS_QUERY_STRING_DECISION_RULE = 'PLUGINS_QUERY_STRING_DECISION_RULE';
-    const PLUGINS_QUERY_STRING_COLLECTOR = 'PLUGINS_QUERY_STRING_COLLECTOR';
+    public const PLUGINS_QUERY_STRING_DECISION_RULE = 'PLUGINS_QUERY_STRING_DECISION_RULE';
+    public const PLUGINS_QUERY_STRING_COLLECTOR = 'PLUGINS_QUERY_STRING_COLLECTOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

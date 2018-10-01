@@ -19,10 +19,10 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsGlossaryTable extends AbstractTable
 {
-    const ACTIONS = 'Actions';
-    const REQUEST_ID_MAPPING = 'id-mapping';
-    const URL_CMS_GLOSSARY_EDIT = '/cms/glossary/edit';
-    const URL_CMS_GLOSSARY_DELETE = '/cms/glossary/delete';
+    public const ACTIONS = 'Actions';
+    public const REQUEST_ID_MAPPING = 'id-mapping';
+    public const URL_CMS_GLOSSARY_EDIT = '/cms/glossary/edit';
+    public const URL_CMS_GLOSSARY_DELETE = '/cms/glossary/delete';
 
     /**
      * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery

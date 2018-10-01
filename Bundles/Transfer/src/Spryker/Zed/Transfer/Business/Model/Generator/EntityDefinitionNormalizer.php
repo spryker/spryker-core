@@ -12,13 +12,13 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class EntityDefinitionNormalizer extends DefinitionNormalizer
 {
-    const KEY_TYPE = 'type';
-    const KEY_COLUMN = 'column';
-    const KEY_FOREIGN_KEY = 'foreign-key';
-    const KEY_ENTITY = 'Entity';
-    const FOREIGN_TABLE = 'foreignTable';
-    const KEY_PHP_NAME = 'phpName';
-    const ENTITY_NAMESPACE = 'entity-namespace';
+    public const KEY_TYPE = 'type';
+    public const KEY_COLUMN = 'column';
+    public const KEY_FOREIGN_KEY = 'foreign-key';
+    public const KEY_ENTITY = 'Entity';
+    public const FOREIGN_TABLE = 'foreignTable';
+    public const KEY_PHP_NAME = 'phpName';
+    public const ENTITY_NAMESPACE = 'entity-namespace';
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\Helper\PluralizerInterface

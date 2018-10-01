@@ -9,7 +9,7 @@ namespace Spryker\Service\UtilNetwork\Model\Request;
 
 class RequestId implements RequestIdInterface
 {
-    const REQUEST_ID_HEADER_KEY = 'HTTP_X_REQUEST_ID';
+    public const REQUEST_ID_HEADER_KEY = 'HTTP_X_REQUEST_ID';
 
     /**
      * @var string
