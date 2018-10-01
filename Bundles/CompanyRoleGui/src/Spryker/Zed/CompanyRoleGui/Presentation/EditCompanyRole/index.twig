@@ -9,7 +9,7 @@
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_content %}
-            {% include '@CompanyRoleGui/_partials/company_role_edit_form.twig' with {form: form} %}
+            {% include '@CompanyRoleGui/_partials/company_role_form.twig' with {form: form} %}
         {% endblock %}
     {% endembed %}
 {% endblock %}
