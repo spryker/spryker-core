@@ -78,7 +78,9 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
 
         $productPackagingUnitEntity->save();
 
-        $this->persistAmount($dataSet, $productPackagingUnitEntity);
+        if ($this->checkIfAmountEntityShouldBeCreated($dataSet)) {
+            $this->persistAmount($dataSet, $productPackagingUnitEntity);
+        }
 
         $this->addPublishEvents(ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_PUBLISH, $this->getIdProductAbstractByProductSku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]));
     }
@@ -164,10 +166,6 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function persistAmount(DataSetInterface $dataSet, SpyProductPackagingUnit $productPackagingUnitEntity): void
     {
-        if (!$this->checkIfAmountEntityShouldBeCreated($dataSet)) {
-            return;
-        }
-
         $productPackagingUnitAmountEntity = $productPackagingUnitEntity->getSpyProductPackagingUnitAmounts()->getFirst();
 
         if ($productPackagingUnitAmountEntity === null) {

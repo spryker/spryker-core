@@ -36,6 +36,7 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
         'concrete_sku_example_2',
         'concrete_sku_example_3',
         'concrete_sku_example_4',
+        'concrete_sku_example_5',
     ];
 
     protected const PACKAGING_TYPE_DEFAULT = 'item';
