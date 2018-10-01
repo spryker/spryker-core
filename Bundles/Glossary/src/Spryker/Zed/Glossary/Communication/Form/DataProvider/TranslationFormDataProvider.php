@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Glossary\Communication\Form\DataProvider;
 
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Propel\Runtime\Map\TableMap;
-use Spryker\Zed\Glossary\Communication\Exception\GlossaryNotFoundException;
 use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
@@ -39,6 +39,11 @@ class TranslationFormDataProvider
         $data = [];
 
         $glossaryKeyEntity = $this->getGlossaryKey($fkGlossaryKey);
+
+        if ($glossaryKeyEntity === null) {
+            return $data;
+        }
+
         $data[TranslationForm::FIELD_GLOSSARY_KEY] = $glossaryKeyEntity->getKey();
 
         $translationCollection = $this->getGlossaryKeyTranslations($fkGlossaryKey, $locales);
@@ -69,15 +74,13 @@ class TranslationFormDataProvider
     /**
      * @param int $fkGlossaryKey
      *
-     * @throws \Spryker\Zed\Glossary\Communication\Exception\GlossaryNotFoundException
-     *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey|null
      */
-    protected function getGlossaryKey($fkGlossaryKey)
+    protected function getGlossaryKey($fkGlossaryKey): ?SpyGlossaryKey
     {
         $glossaryEntity = $this->glossaryQueryContainer->queryKeys()->findOneByIdGlossaryKey($fkGlossaryKey);
         if ($glossaryEntity === null) {
-            throw new GlossaryNotFoundException(sprintf('Glossary with id %s doesn\'t exist', $fkGlossaryKey));
+            return $glossaryEntity;
         }
 
         return $glossaryEntity;
