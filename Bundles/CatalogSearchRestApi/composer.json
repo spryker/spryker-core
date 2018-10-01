@@ -1,5 +1,6 @@
 {
   "name": "spryker/catalog-search-rest-api",
+  "type": "library",
   "description": "CatalogSearchRestApi module",
   "license": "proprietary",
   "require": {

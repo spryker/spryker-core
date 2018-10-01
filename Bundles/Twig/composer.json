@@ -1,5 +1,6 @@
 {
   "name": "spryker/twig",
+  "type": "library",
   "description": "Twig module",
   "license": "proprietary",
   "require": {

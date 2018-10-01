@@ -1,5 +1,6 @@
 {
   "name": "spryker/url-storage",
+  "type": "library",
   "description": "UrlStorage module",
   "license": "proprietary",
   "require": {

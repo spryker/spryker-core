@@ -1,5 +1,6 @@
 {
   "name": "spryker/propel-query-builder",
+  "type": "library",
   "description": "PropelQueryBuilder module",
   "license": "proprietary",
   "require": {

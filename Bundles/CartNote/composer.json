@@ -1,5 +1,6 @@
 {
   "name": "spryker/cart-note",
+  "type": "library",
   "description": "CartNote module",
   "license": "proprietary",
   "require": {

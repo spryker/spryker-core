@@ -1,5 +1,6 @@
 {
   "name": "spryker/file-manager-data-import",
+  "type": "library",
   "description": "FileManagerDataImport module",
   "license": "MIT",
   "require": {

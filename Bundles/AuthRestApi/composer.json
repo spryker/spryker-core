@@ -1,5 +1,6 @@
 {
   "name": "spryker/auth-rest-api",
+  "type": "library",
   "description": "AuthRestApi module",
   "license": "proprietary",
   "require": {

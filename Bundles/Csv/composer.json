@@ -1,5 +1,6 @@
 {
   "name": "spryker/csv",
+  "type": "library",
   "description": "Csv module",
   "license": "proprietary",
   "require": {

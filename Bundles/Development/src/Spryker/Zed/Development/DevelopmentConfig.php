@@ -214,6 +214,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'phpDocumentor\\GraphViz\\' => 'spryker/graphviz',
             'Egulias\\EmailValidator\\' => 'spryker/egulias',
             'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
+            'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
         ];
     }
 
@@ -240,6 +241,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'phpdocumentor/graphviz' => 'spryker/graphviz',
             'egulias/email-validator' => 'spryker/egulias',
             'ramsey/uuid' => 'spryker/ramsey-uuid',
+            'doctrine/inflector' => 'spryker/doctrine-inflector',
         ];
     }
 

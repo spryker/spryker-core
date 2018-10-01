@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-measurement-unit-data-import",
+  "type": "library",
   "description": "ProductMeasurementUnitDataImport module",
   "license": "MIT",
   "require": {

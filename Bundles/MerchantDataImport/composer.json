@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-data-import",
+  "type": "library",
   "description": "MerchantDataImport module",
   "license": "MIT",
   "require": {
@@ -11,7 +12,6 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "autoload": {

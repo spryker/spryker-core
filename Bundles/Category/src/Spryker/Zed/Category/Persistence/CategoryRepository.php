@@ -97,6 +97,26 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
+     * @param string $nodeName
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function checkSameLevelCategoryByNameExists(string $nodeName, CategoryTransfer $categoryTransfer): bool
+    {
+        return $this->getFactory()->createCategoryNodeQuery()
+            ->setIgnoreCase(true)
+            ->filterByFkParentCategoryNode($categoryTransfer->getParentCategoryNode()->getIdCategoryNode())
+            ->useCategoryQuery()
+                ->filterByIdCategory($categoryTransfer->getIdCategory(), Criteria::NOT_EQUAL)
+                ->useAttributeQuery()
+                    ->filterByName($nodeName)
+                ->endUse()
+            ->endUse()
+            ->exists();
+    }
+
+    /**
      * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer|null

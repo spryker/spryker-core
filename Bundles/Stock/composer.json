@@ -1,5 +1,6 @@
 {
   "name": "spryker/stock",
+  "type": "library",
   "description": "Stock module",
   "license": "proprietary",
   "require": {

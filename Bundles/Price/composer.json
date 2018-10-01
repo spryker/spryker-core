@@ -1,5 +1,6 @@
 {
   "name": "spryker/price",
+  "type": "library",
   "description": "Price module",
   "license": "proprietary",
   "require": {

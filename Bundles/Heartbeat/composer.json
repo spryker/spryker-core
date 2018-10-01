@@ -1,5 +1,6 @@
 {
   "name": "spryker/heartbeat",
+  "type": "library",
   "description": "Heartbeat module",
   "license": "proprietary",
   "require": {

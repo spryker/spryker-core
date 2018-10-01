@@ -1,5 +1,6 @@
 {
   "name": "spryker/tax",
+  "type": "library",
   "description": "Tax module",
   "license": "proprietary",
   "require": {
