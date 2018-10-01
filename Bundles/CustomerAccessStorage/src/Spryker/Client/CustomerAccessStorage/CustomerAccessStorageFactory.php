@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\CustomerAccessStorage;
 
+use Spryker\Client\CustomerAccessStorage\Mapper\CustomerAccessStorageMapper;
+use Spryker\Client\CustomerAccessStorage\Mapper\CustomerAccessStorageMapperInterface;
 use Spryker\Client\CustomerAccessStorage\Storage\CustomerAccessStorageReader;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -17,7 +19,19 @@ class CustomerAccessStorageFactory extends AbstractFactory
      */
     public function createCustomerAccessStorageReader()
     {
-        return new CustomerAccessStorageReader($this->getStorageClient(), $this->getSynchronizationService());
+        return new CustomerAccessStorageReader(
+            $this->getStorageClient(),
+            $this->getSynchronizationService(),
+            $this->createCustomerAccessStorageMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\CustomerAccessStorage\Mapper\CustomerAccessStorageMapperInterface
+     */
+    public function createCustomerAccessStorageMapper(): CustomerAccessStorageMapperInterface
+    {
+        return new CustomerAccessStorageMapper();
     }
 
     /**

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CustomerAccessStorage\Dependency\Client\CustomerAccessStorageToStorageClientInterface;
 use Spryker\Client\CustomerAccessStorage\Dependency\Service\CustomerAccessStorageToSynchronizationServiceInterface;
+use Spryker\Client\CustomerAccessStorage\Mapper\CustomerAccessStorageMapperInterface;
 use Spryker\Shared\CustomerAccessStorage\CustomerAccessStorageConstants;
 
 class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterface
@@ -31,13 +32,23 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
     protected $customerAccess;
 
     /**
+     * @var \Spryker\Client\CustomerAccessStorage\Mapper\CustomerAccessStorageMapperInterface
+     */
+    protected $customerAccessStorageMapper;
+
+    /**
      * @param \Spryker\Client\CustomerAccessStorage\Dependency\Client\CustomerAccessStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\CustomerAccessStorage\Dependency\Service\CustomerAccessStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\CustomerAccessStorage\Mapper\CustomerAccessStorageMapperInterface $customerAccessStorageMapper
      */
-    public function __construct(CustomerAccessStorageToStorageClientInterface $storageClient, CustomerAccessStorageToSynchronizationServiceInterface $synchronizationService)
-    {
+    public function __construct(
+        CustomerAccessStorageToStorageClientInterface $storageClient,
+        CustomerAccessStorageToSynchronizationServiceInterface $synchronizationService,
+        CustomerAccessStorageMapperInterface $customerAccessStorageMapper
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->customerAccessStorageMapper = $customerAccessStorageMapper;
     }
 
     /**
@@ -88,16 +99,7 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
             $unauthenticatedCustomerAccess = [];
         }
 
-        $this->customerAccess = $this->mapArrayToCustomerAccessTransfer($unauthenticatedCustomerAccess);
-    }
-
-    /**
-     * @param array $unauthenticatedCustomerAccess
-     *
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
-     */
-    protected function mapArrayToCustomerAccessTransfer(array $unauthenticatedCustomerAccess): CustomerAccessTransfer
-    {
-        return (new CustomerAccessTransfer())->fromArray($unauthenticatedCustomerAccess, true);
+        $this->customerAccess = $this->customerAccessStorageMapper
+            ->mapArrayToCustomerAccessTransfer($unauthenticatedCustomerAccess, new CustomerAccessTransfer());
     }
 }

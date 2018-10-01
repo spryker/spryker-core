@@ -16,26 +16,30 @@ class CustomerAccessMapper implements CustomerAccessMapperInterface
 {
     /**
      * @param \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess $customerAccessEntity
+     * @param \Generated\Shared\Transfer\ContentTypeAccessTransfer $contentTypeAccessTransfer
      *
      * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer
      */
-    public function mapCustomerAccessEntityToContentTypeAccessTransfer(SpyUnauthenticatedCustomerAccess $customerAccessEntity): ContentTypeAccessTransfer
-    {
-        return (new ContentTypeAccessTransfer())->fromArray($customerAccessEntity->toArray(), true);
+    public function mapCustomerAccessEntityToContentTypeAccessTransfer(
+        SpyUnauthenticatedCustomerAccess $customerAccessEntity,
+        ContentTypeAccessTransfer $contentTypeAccessTransfer
+    ): ContentTypeAccessTransfer {
+        return $contentTypeAccessTransfer->fromArray($customerAccessEntity->toArray(), true);
     }
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $customerAccessEntities
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function fillCustomerAccessTransferFromEntities(ObjectCollection $customerAccessEntities): CustomerAccessTransfer
-    {
-        $customerAccessTransfer = new CustomerAccessTransfer();
-
+    public function mapEntitiesToCustomerAccessTransfer(
+        ObjectCollection $customerAccessEntities,
+        CustomerAccessTransfer $customerAccessTransfer
+    ): CustomerAccessTransfer {
         foreach ($customerAccessEntities as $customerAccessEntity) {
             $customerAccessTransfer->addContentTypeAccess(
-                $this->mapCustomerAccessEntityToContentTypeAccessTransfer($customerAccessEntity)
+                $this->mapCustomerAccessEntityToContentTypeAccessTransfer($customerAccessEntity, new ContentTypeAccessTransfer())
             );
         }
 
@@ -44,12 +48,15 @@ class CustomerAccessMapper implements CustomerAccessMapperInterface
 
     /**
      * @param \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess $customerAccessEntity
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function mapEntityToCustomerAccessTransfer(SpyUnauthenticatedCustomerAccess $customerAccessEntity): CustomerAccessTransfer
-    {
-        return (new CustomerAccessTransfer())->addContentTypeAccess(
+    public function mapEntityToCustomerAccessTransfer(
+        SpyUnauthenticatedCustomerAccess $customerAccessEntity,
+        CustomerAccessTransfer $customerAccessTransfer
+    ): CustomerAccessTransfer {
+        return $customerAccessTransfer->addContentTypeAccess(
             (new ContentTypeAccessTransfer())->fromArray($customerAccessEntity->toArray(), true)
         );
     }

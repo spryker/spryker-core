@@ -16,22 +16,34 @@ interface CustomerAccessMapperInterface
 {
     /**
      * @param \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess $customerAccessEntity
+     * @param \Generated\Shared\Transfer\ContentTypeAccessTransfer $contentTypeAccessTransfer
      *
      * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer
      */
-    public function mapCustomerAccessEntityToContentTypeAccessTransfer(SpyUnauthenticatedCustomerAccess $customerAccessEntity): ContentTypeAccessTransfer;
+    public function mapCustomerAccessEntityToContentTypeAccessTransfer(
+        SpyUnauthenticatedCustomerAccess $customerAccessEntity,
+        ContentTypeAccessTransfer $contentTypeAccessTransfer
+    ): ContentTypeAccessTransfer;
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $customerAccessEntities
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function fillCustomerAccessTransferFromEntities(ObjectCollection $customerAccessEntities): CustomerAccessTransfer;
+    public function mapEntitiesToCustomerAccessTransfer(
+        ObjectCollection $customerAccessEntities,
+        CustomerAccessTransfer $customerAccessTransfer
+    ): CustomerAccessTransfer;
 
     /**
      * @param \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess $customerAccessEntity
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function mapEntityToCustomerAccessTransfer(SpyUnauthenticatedCustomerAccess $customerAccessEntity): CustomerAccessTransfer;
+    public function mapEntityToCustomerAccessTransfer(
+        SpyUnauthenticatedCustomerAccess $customerAccessEntity,
+        CustomerAccessTransfer $customerAccessTransfer
+    ): CustomerAccessTransfer;
 }

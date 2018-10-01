@@ -35,25 +35,13 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
 
         return $this->getFactory()
             ->createCustomerAccessMapper()
-            ->mapEntityToCustomerAccessTransfer($customerAccessEntity);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
-     */
-    public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer
-    {
-        $this->setAllContentTypesToAccessible();
-
-        return $this->setContentTypesToInaccessible($customerAccessTransfer);
+            ->mapEntityToCustomerAccessTransfer($customerAccessEntity, new CustomerAccessTransfer());
     }
 
     /**
      * @return void
      */
-    protected function setAllContentTypesToAccessible(): void
+    public function setAllContentTypesToAccessible(): void
     {
         $customerAccessEntities = $this->getFactory()->customerAccessQuery()->find();
 
@@ -68,7 +56,7 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    protected function setContentTypesToInaccessible(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer
+    public function setContentTypesToInaccessible(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer
     {
         $updatedContentTypeAccessCollection = new ArrayObject();
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
@@ -77,7 +65,9 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
             $customerAccessEntity->setIsRestricted(true);
             $customerAccessEntity->save();
             $updatedContentTypeAccessCollection->append(
-                $this->getFactory()->createCustomerAccessMapper()->mapCustomerAccessEntityToContentTypeAccessTransfer($customerAccessEntity)
+                $this->getFactory()
+                    ->createCustomerAccessMapper()
+                    ->mapCustomerAccessEntityToContentTypeAccessTransfer($customerAccessEntity, new ContentTypeAccessTransfer())
             );
         }
         $customerAccessTransfer->setContentTypeAccess($updatedContentTypeAccessCollection);

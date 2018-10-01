@@ -20,9 +20,14 @@ interface CustomerAccessEntityManagerInterface
     public function createCustomerAccess(string $contentType, bool $isRestricted): CustomerAccessTransfer;
 
     /**
+     * @return void
+     */
+    public function setAllContentTypesToAccessible(): void;
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
+    public function setContentTypesToInaccessible(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
 }

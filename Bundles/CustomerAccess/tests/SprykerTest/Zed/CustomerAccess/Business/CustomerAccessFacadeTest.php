@@ -41,6 +41,10 @@ class CustomerAccessFacadeTest extends Unit
 
         // Assert
         $this->assertInstanceOf(CustomerAccessTransfer::class, $customerTransferAccess);
+
+        foreach ($customerTransferAccess->getContentTypeAccess() as $contentTypeAccess) {
+            $this->assertFalse($contentTypeAccess->getIsRestricted());
+        }
     }
 
     /**
@@ -56,6 +60,10 @@ class CustomerAccessFacadeTest extends Unit
 
         // Assert
         $this->assertInstanceOf(CustomerAccessTransfer::class, $customerTransferAccess);
+
+        foreach ($customerTransferAccess->getContentTypeAccess() as $contentTypeAccess) {
+            $this->assertTrue($contentTypeAccess->getIsRestricted());
+        }
     }
 
     /**
@@ -64,6 +72,13 @@ class CustomerAccessFacadeTest extends Unit
     public function testInstallNotFails(): void
     {
         $this->tester->getFacade()->install();
+
+        $contentTypesMock = $this->getContentTypesMock();
+
+        $installedContentTypes = $this->tester->getFacade()->getAllContentTypes()->toArray();
+        $installedContentTypes = array_column($installedContentTypes['content_type_access'], 'content_type');
+
+        $this->assertEquals($contentTypesMock, $installedContentTypes);
     }
 
     /**
@@ -139,5 +154,19 @@ class CustomerAccessFacadeTest extends Unit
                 $this->assertEquals($contentTypeAccess, $contentTypeAccessTransfer);
             }
         }
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getContentTypesMock(): array
+    {
+        return [
+            'price',
+            'order-place-submit',
+            'add-to-cart',
+            'wishlist',
+            'shopping-list',
+        ];
     }
 }

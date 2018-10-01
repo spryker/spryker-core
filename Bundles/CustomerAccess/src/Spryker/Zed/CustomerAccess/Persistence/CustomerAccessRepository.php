@@ -38,7 +38,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
 
         return $this->getFactory()
             ->createCustomerAccessMapper()
-            ->mapCustomerAccessEntityToContentTypeAccessTransfer($customerAccessEntity);
+            ->mapCustomerAccessEntityToContentTypeAccessTransfer($customerAccessEntity, new ContentTypeAccessTransfer());
     }
 
     /**
@@ -57,7 +57,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
 
         return $this->getFactory()
             ->createCustomerAccessMapper()
-            ->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccessEntity);
+            ->mapEntitiesToCustomerAccessTransfer($unauthenticatedCustomerAccessEntity, new CustomerAccessTransfer());
     }
 
     /**
@@ -76,7 +76,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
 
         return $this->getFactory()
             ->createCustomerAccessMapper()
-            ->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccessEntity);
+            ->mapEntitiesToCustomerAccessTransfer($unauthenticatedCustomerAccessEntity, new CustomerAccessTransfer());
     }
 
     /**
@@ -95,6 +95,6 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
 
         return $this->getFactory()
             ->createCustomerAccessMapper()
-            ->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccessEntity);
+            ->mapEntitiesToCustomerAccessTransfer($unauthenticatedCustomerAccessEntity, new CustomerAccessTransfer());
     }
 }
