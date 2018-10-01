@@ -22,7 +22,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  */
 class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
-    const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
+    public const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
 
     /**
      * @var array|null

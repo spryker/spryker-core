@@ -17,20 +17,20 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsBlockTable extends AbstractTable
 {
-    const COL_ID_CMS_BLOCK = SpyCmsBlockTableMap::COL_ID_CMS_BLOCK;
-    const COL_NAME = SpyCmsBlockTableMap::COL_NAME;
-    const COL_ACTIONS = 'Actions';
-    const COL_IS_ACTIVE = SpyCmsBlockTableMap::COL_IS_ACTIVE;
-    const COL_STORE_RELATION = 'Store';
-    const COL_TEMPLATE_NAME = 'template_name';
+    public const COL_ID_CMS_BLOCK = SpyCmsBlockTableMap::COL_ID_CMS_BLOCK;
+    public const COL_NAME = SpyCmsBlockTableMap::COL_NAME;
+    public const COL_ACTIONS = 'Actions';
+    public const COL_IS_ACTIVE = SpyCmsBlockTableMap::COL_IS_ACTIVE;
+    public const COL_STORE_RELATION = 'Store';
+    public const COL_TEMPLATE_NAME = 'template_name';
 
-    const REQUEST_ID_CMS_BLOCK = 'id-cms-block';
+    public const REQUEST_ID_CMS_BLOCK = 'id-cms-block';
 
-    const URL_CMS_BLOCK_GLOSSARY = '/cms-block-gui/edit-glossary';
-    const URL_CMS_BLOCK_VIEW = '/cms-block-gui/view-block';
-    const URL_CMS_BLOCK_EDIT = '/cms-block-gui/edit-block';
-    const URL_CMS_BLOCK_DEACTIVATE = '/cms-block-gui/edit-block/deactivate';
-    const URL_CMS_BLOCK_ACTIVATE = '/cms-block-gui/edit-block/activate';
+    public const URL_CMS_BLOCK_GLOSSARY = '/cms-block-gui/edit-glossary';
+    public const URL_CMS_BLOCK_VIEW = '/cms-block-gui/view-block';
+    public const URL_CMS_BLOCK_EDIT = '/cms-block-gui/edit-block';
+    public const URL_CMS_BLOCK_DEACTIVATE = '/cms-block-gui/edit-block/deactivate';
+    public const URL_CMS_BLOCK_ACTIVATE = '/cms-block-gui/edit-block/activate';
 
     /**
      * @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery

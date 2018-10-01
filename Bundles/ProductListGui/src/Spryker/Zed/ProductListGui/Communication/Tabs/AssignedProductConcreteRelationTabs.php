@@ -13,13 +13,13 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class AssignedProductConcreteRelationTabs extends AbstractTabs
 {
-    const ASSIGNED_PRODUCT_TAB_NAME = 'assigned_product';
-    const ASSIGNED_PRODUCT_TAB_TITLE = 'Products in this list';
-    const ASSIGNED_PRODUCT_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/assigned-product-table.twig';
+    public const ASSIGNED_PRODUCT_TAB_NAME = 'assigned_product';
+    public const ASSIGNED_PRODUCT_TAB_TITLE = 'Products in this list';
+    public const ASSIGNED_PRODUCT_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/assigned-product-table.twig';
 
-    const DEASSIGNED_PRODUCT_TAB_NAME = 'deassignment_product';
-    const DEASSIGNED_PRODUCT_TAB_TITLE = 'Products to be deassigned';
-    const DEASSIGNED_PRODUCT_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/deassignment-product-table.twig';
+    public const DEASSIGNED_PRODUCT_TAB_NAME = 'deassignment_product';
+    public const DEASSIGNED_PRODUCT_TAB_TITLE = 'Products to be deassigned';
+    public const DEASSIGNED_PRODUCT_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/deassignment-product-table.twig';
 
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer

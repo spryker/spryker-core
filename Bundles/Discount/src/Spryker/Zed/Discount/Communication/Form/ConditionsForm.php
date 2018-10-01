@@ -21,7 +21,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ConditionsForm extends AbstractType
 {
-    const FIELD_DECISION_RULE_QUERY_STRING = 'decision_rule_query_string';
+    public const FIELD_DECISION_RULE_QUERY_STRING = 'decision_rule_query_string';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

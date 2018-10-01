@@ -11,17 +11,17 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
 
 class SalesDetailPage
 {
-    const URL = '/sales/detail?id-sales-order=';
+    public const URL = '/sales/detail?id-sales-order=';
 
-    const SELECTOR_ID_SALES_ORDER_ITEM = '//div[@id="items"]//table/tbody/tr/td[{{position}}]/input';
-    const SELECTOR_SALES_ORDER_ROW = '//div[@id="items"]//table/tbody/tr/td[{{position}}]/input';
-    const SELECTOR_ITEM_TOTAL_ELEMENT = '//table[@data-qa="order-item-list"]/tbody/tr[@data-qa-item-row="{{idSalesOrderItem}}"]/td[@data-qa="item-total-amount"]';
-    const SELECTOR_CURRENT_STATE = '//td[@data-qa-item-current-state={{idSalesOrderItem}}]';
+    public const SELECTOR_ID_SALES_ORDER_ITEM = '//div[@id="items"]//table/tbody/tr/td[{{position}}]/input';
+    public const SELECTOR_SALES_ORDER_ROW = '//div[@id="items"]//table/tbody/tr/td[{{position}}]/input';
+    public const SELECTOR_ITEM_TOTAL_ELEMENT = '//table[@data-qa="order-item-list"]/tbody/tr[@data-qa-item-row="{{idSalesOrderItem}}"]/td[@data-qa="item-total-amount"]';
+    public const SELECTOR_CURRENT_STATE = '//td[@data-qa-item-current-state={{idSalesOrderItem}}]';
 
-    const SELECTOR_GRAND_TOTAL = '//td[@data-qa="grand-total"]';
+    public const SELECTOR_GRAND_TOTAL = '//td[@data-qa="grand-total"]';
 
-    const ATTRIBUTE_ITEM_TOTAL_RAW = 'data-qa-raw';
-    const ATTRIBUTE_GRAND_TOTAL_RAW = 'data-qa-grand-total-raw';
+    public const ATTRIBUTE_ITEM_TOTAL_RAW = 'data-qa-raw';
+    public const ATTRIBUTE_GRAND_TOTAL_RAW = 'data-qa-grand-total-raw';
 
     /**
      * @var \SprykerTest\Zed\Sales\SalesPresentationTester

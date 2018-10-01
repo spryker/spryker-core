@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AjaxController extends AbstractController
 {
-    const SEARCH_TERM = 'term';
+    public const SEARCH_TERM = 'term';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

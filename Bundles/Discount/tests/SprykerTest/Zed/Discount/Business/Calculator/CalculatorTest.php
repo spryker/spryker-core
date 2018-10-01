@@ -50,7 +50,7 @@ use Spryker\Zed\Messenger\Business\MessengerFacade;
  */
 class CalculatorTest extends Unit
 {
-    const ITEM_GROSS_PRICE_500 = 500;
+    public const ITEM_GROSS_PRICE_500 = 500;
 
     /**
      * @return void

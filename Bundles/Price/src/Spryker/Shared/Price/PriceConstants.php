@@ -15,5 +15,5 @@ interface PriceConstants
     /**
      * @deprecated use \Spryker\Shared\PriceProduct\PriceProductConfig instead
      */
-    const DEFAULT_PRICE_TYPE = 'DEFAULT_PRICE_TYPE';
+    public const DEFAULT_PRICE_TYPE = 'DEFAULT_PRICE_TYPE';
 }

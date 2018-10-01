@@ -13,12 +13,12 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 
 class ComparatorOperators implements ComparatorOperatorsInterface
 {
-    const MATCH_ALL_IDENTIFIER = '*';
-    const TYPE_NUMBER = 'number';
-    const TYPE_STRING = 'string';
-    const TYPE_LIST = 'list';
-    const NUMBER_REGEXP = '/[0-9\.\,]+/';
-    const LIST_DELIMITER = ';';
+    public const MATCH_ALL_IDENTIFIER = '*';
+    public const TYPE_NUMBER = 'number';
+    public const TYPE_STRING = 'string';
+    public const TYPE_LIST = 'list';
+    public const NUMBER_REGEXP = '/[0-9\.\,]+/';
+    public const LIST_DELIMITER = ';';
 
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[]

@@ -15,9 +15,9 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 {
-    const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
-    const KEY_REQUIRE = 'require';
-    const KEY_REQUIRE_DEV = 'require-dev';
+    public const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
+    public const KEY_REQUIRE = 'require';
+    public const KEY_REQUIRE_DEV = 'require-dev';
 
     /**
      * @var \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface

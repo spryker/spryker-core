@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MailConfig extends AbstractBundleConfig
 {
-    const MAIL_TYPE_ALL = '*';
+    public const MAIL_TYPE_ALL = '*';
 
     /**
      * @return string
