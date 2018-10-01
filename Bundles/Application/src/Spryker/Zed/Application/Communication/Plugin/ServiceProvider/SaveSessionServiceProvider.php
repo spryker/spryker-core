@@ -17,21 +17,17 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
-class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
+class SaveSessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
-     * @param \Silex\Application $app
-     *
-     * @return void
+     * @param Application $app
      */
     public function register(Application $app)
     {
     }
 
     /**
-     * @param \Silex\Application $app
-     *
-     * @return void
+     * @param Application $app
      */
     public function boot(Application $app)
     {
