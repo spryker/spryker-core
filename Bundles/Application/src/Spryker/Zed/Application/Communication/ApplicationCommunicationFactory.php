@@ -33,7 +33,7 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
      */
-    public function createSaveSessionEventSubscriber() : EventSubscriberInterface
+    public function createSaveSessionEventSubscriber(): EventSubscriberInterface
     {
         return new SaveSessionListener();
     }
