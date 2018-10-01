@@ -8,7 +8,6 @@
 namespace Spryker\Client\QuickOrderExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer;
 
 interface ProductConcreteExpanderPluginInterface
 {
