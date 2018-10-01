@@ -12,6 +12,7 @@ use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionPluginInt
 
 class AttachUserToCompanyPlugin implements CustomerTableActionPluginInterface
 {
+    protected const URL_ATTACH_CUSTOMER_TO_COMPANY = 'company-user-gui/attach-customer-company?id-customer=%s';
     /**
      * {@inheritdoc}
      *
@@ -24,7 +25,15 @@ class AttachUserToCompanyPlugin implements CustomerTableActionPluginInterface
      */
     public function execute(CustomerTransfer $customerTransfer, array $buttons): array
     {
-        $buttons[] = '<a href="/product-attribute-gui/view/productAbstract?id-product-abstract=219" class="btn btn-xs btn-outline  btn-edit"><i class="fa fa-pencil-square-o"></i> Attach to company</a>';
+        if($customerTransfer->getCompanyUserTransfer() !== null) {
+            return $buttons;
+        }
+
+        $attachCustomerToCompanyButton = sprintf(
+            '<a href="%s" class="btn btn-xs btn-outline  btn-edit"><i class="fa fa-pencil-square-o"></i> Attach to company</a>',
+            sprintf(static::URL_ATTACH_CUSTOMER_TO_COMPANY, $customerTransfer->getIdCustomer())
+        );
+        $buttons[] = $attachCustomerToCompanyButton;
 
         return $buttons;
     }

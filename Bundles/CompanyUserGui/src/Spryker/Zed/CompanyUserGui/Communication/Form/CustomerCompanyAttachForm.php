@@ -90,10 +90,10 @@ class CustomerCompanyAttachForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPluginForms(FormBuilderInterface $builder)
+    protected function addPluginForms(FormBuilderInterface $builder): self
     {
         foreach ($this->getFactory()->getCustomerCompanyAttachFormPlugins() as $formPlugin) {
-            $formPlugin->buildForm($builder);
+            $builder = $formPlugin->buildForm($builder);
         }
 
         return $this;

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CustomerCompanyAttachForm;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
@@ -37,19 +38,24 @@ class CustomerCompanyAttachFormDataProvider
     }
 
     /**
-     * @param int|null $idCompanyUser
+     * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    public function getData(?int $idCompanyUser = null): CompanyUserTransfer
+    public function getData(int $idCustomer): ?CompanyUserTransfer
     {
-        $companyUserTransfer = $this->createCompanyUserTransfer();
+        $customerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($idCustomer);
 
-        if (!$idCompanyUser) {
-            return $companyUserTransfer;
+        $companyUserTransfer = $this->companyUserFacade
+            ->findActiveCompanyUserByCustomerId($customerTransfer);
+
+        if($companyUserTransfer === null) {
+            return $this->createCompanyUserTransfer()
+                ->setCustomer($customerTransfer);
         }
 
-        return $this->companyUserFacade->getCompanyUserById($companyUserTransfer->setIdCompanyUser($idCompanyUser));
+        return $companyUserTransfer;
     }
 
     /**

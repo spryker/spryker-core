@@ -19,7 +19,7 @@ interface CustomerCompanyAttachFormExpanderPluginInterface
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return void
+     * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function buildForm(FormBuilderInterface $builder): void;
+    public function buildForm(FormBuilderInterface $builder): FormBuilderInterface;
 }

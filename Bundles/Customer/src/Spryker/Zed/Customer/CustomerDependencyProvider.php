@@ -326,8 +326,6 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getCustomerTableActionPlugins(): array
     {
-        return [
-            new AttachUserToCompanyPlugin(),
-        ];
+        return [];
     }
 }

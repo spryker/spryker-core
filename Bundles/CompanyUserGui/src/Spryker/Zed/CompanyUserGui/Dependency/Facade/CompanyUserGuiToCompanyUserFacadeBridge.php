@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 class CompanyUserGuiToCompanyUserFacadeBridge implements CompanyUserGuiToCompanyUserFacadeInterface
 {
@@ -97,5 +98,15 @@ class CompanyUserGuiToCompanyUserFacadeBridge implements CompanyUserGuiToCompany
     ): CompanyUserCollectionTransfer {
         return $this->companyUserFacade
             ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByCustomerId(CustomerTransfer $customerTransfer): ?CompanyUserTransfer
+    {
+        return $this->companyUserFacade->findActiveCompanyUserByCustomerId($customerTransfer);
     }
 }
