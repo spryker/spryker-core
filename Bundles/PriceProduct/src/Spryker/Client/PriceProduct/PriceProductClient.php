@@ -87,8 +87,6 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
      *
      * @api
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
