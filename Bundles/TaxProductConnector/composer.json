@@ -1,5 +1,6 @@
 {
   "name": "spryker/tax-product-connector",
+  "type": "library",
   "description": "TaxProductConnector module",
   "license": "proprietary",
   "require": {

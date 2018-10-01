@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-set-gui",
+  "type": "library",
   "description": "ProductSetGui module",
   "license": "proprietary",
   "require": {

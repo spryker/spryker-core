@@ -1,5 +1,6 @@
 {
   "name": "spryker/zend",
+  "type": "library",
   "description": "Zend module",
   "license": "proprietary",
   "require": {

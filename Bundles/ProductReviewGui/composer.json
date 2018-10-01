@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-review-gui",
+  "type": "library",
   "description": "ProductReviewGui module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-alternative-gui",
+  "type": "library",
   "description": "ProductAlternativeGui module",
   "license": "proprietary",
   "require": {

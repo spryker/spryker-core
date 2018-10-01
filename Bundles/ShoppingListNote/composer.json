@@ -1,5 +1,6 @@
 {
   "name": "spryker/shopping-list-note",
+  "type": "library",
   "description": "ShoppingListNote module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-set",
+  "type": "library",
   "description": "ProductSet module",
   "license": "proprietary",
   "require": {

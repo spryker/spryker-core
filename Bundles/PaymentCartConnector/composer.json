@@ -1,5 +1,6 @@
 {
   "name": "spryker/payment-cart-connector",
+  "type": "library",
   "description": "PaymentCartConnector module",
   "license": "proprietary",
   "require": {

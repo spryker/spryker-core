@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-relation-collector",
+  "type": "library",
   "description": "ProductRelationCollector module",
   "license": "proprietary",
   "require": {

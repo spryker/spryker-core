@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-mail-connector",
+  "type": "library",
   "description": "CompanyMailConnector module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/url",
+  "type": "library",
   "description": "Url module",
   "license": "proprietary",
   "require": {

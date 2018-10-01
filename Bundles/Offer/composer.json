@@ -1,5 +1,6 @@
 {
   "name": "spryker/offer",
+  "type": "library",
   "description": "Offer module",
   "license": "proprietary",
   "require": {
