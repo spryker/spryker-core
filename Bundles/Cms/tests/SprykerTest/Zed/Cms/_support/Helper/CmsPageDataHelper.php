@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\Cms\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CmsPageAttributesBuilder;
 use Generated\Shared\DataBuilder\CmsPageBuilder;
+use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -26,6 +28,8 @@ class CmsPageDataHelper extends Module
     public function haveCmsPage(array $seedData = [])
     {
         $cmsPageTransfer = $this->generateLocalizedCmsPageTransfer($seedData);
+
+        $this->setStoreRelation($cmsPageTransfer, $seedData);
 
         $idCmsPage = $this->getCmsFacade()->createPage($cmsPageTransfer);
 
@@ -49,6 +53,24 @@ class CmsPageDataHelper extends Module
         $cmsPageTransfer->addPageAttribute($cmsPageLocalizedAttributes);
 
         return $cmsPageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     * @param array $seedData
+     *
+     * @return void
+     */
+    protected function setStoreRelation(CmsPageTransfer $cmsPageTransfer, array $seedData = []): void
+    {
+        if (!isset($seedData[CmsPageTransfer::STORE_RELATION])) {
+            return;
+        }
+
+        $cmsPageTransfer->setStoreRelation(
+            (new StoreRelationTransfer())
+                ->fromArray($seedData[CmsPageTransfer::STORE_RELATION])
+        );
     }
 
     /**

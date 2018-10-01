@@ -28,6 +28,7 @@ interface CmsPageTableConstants
     const COL_STATUS = 'status';
     const COL_CMS_URLS = 'cmsUrls';
     const COL_CMS_VERSION_COUNT = 'cmsVersionCount';
+    const COL_STORE_RELATION = 'Store';
 
     const VERSION_PAGE_URL_PARAM_ID_CMS_PAGE = VersionPageController::URL_PARAM_ID_CMS_PAGE;
     const VERSION_PAGE_URL_PARAM_REDIRECT_URL = VersionPageController::URL_PARAM_REDIRECT_URL;

@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsGui\Dependency\Facade;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\CmsVersionDataTransfer;
 
 interface CmsGuiToCmsInterface
 {
@@ -136,4 +137,11 @@ interface CmsGuiToCmsInterface
      * @return bool
      */
     public function syncTemplate($cmsTemplateFolderPath);
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     */
+    public function getCmsVersionData(int $idCmsPage): CmsVersionDataTransfer;
 }

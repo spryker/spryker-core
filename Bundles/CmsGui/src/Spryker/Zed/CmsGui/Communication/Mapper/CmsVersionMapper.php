@@ -39,7 +39,7 @@ class CmsVersionMapper implements CmsVersionMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
-    public function mapToCmsVersionDataTransfer(CmsVersionTransfer $cmsVersionTransfer)
+    public function mapToCmsVersionDataTransfer(CmsVersionTransfer $cmsVersionTransfer): CmsVersionDataTransfer
     {
         $cmsVersionData = $this->utilEncoding->decodeJson($cmsVersionTransfer->getData(), true);
         $cmsVersionDataTransfer = (new CmsVersionDataTransfer())->fromArray($cmsVersionData);
@@ -53,7 +53,7 @@ class CmsVersionMapper implements CmsVersionMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
-    protected function mapCmsPageTransferWithUrl(CmsVersionDataTransfer $cmsVersionDataTransfer)
+    public function mapCmsPageTransferWithUrl(CmsVersionDataTransfer $cmsVersionDataTransfer): CmsVersionDataTransfer
     {
         foreach ($cmsVersionDataTransfer->getCmsPage()->getPageAttributes() as $cmsPageAttributesTransfer) {
             $urlEntity = $this->cmsQueryContainer->queryPageWithUrlByIdCmsPageAndLocaleName(

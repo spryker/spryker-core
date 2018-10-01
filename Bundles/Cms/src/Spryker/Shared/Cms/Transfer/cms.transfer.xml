@@ -56,6 +56,7 @@
         <property name="validTo" type="string" />
         <property name="pageAttributes" type="CmsPageAttributes[]" singular="pageAttribute" />
         <property name="metaAttributes" type="CmsPageMetaAttributes[]" singular="metaAttribute" />
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="CmsPageAttributes">
@@ -134,4 +135,15 @@
         <property name="locale" type="Locale" />
         <property name="flattenedLocaleCmsPageData" type="array" />
     </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int" />
+        <property name="idStores" type="int[]" />
+        <property name="stores" type="Store[]" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+    </transfer>
+
 </transfers>
