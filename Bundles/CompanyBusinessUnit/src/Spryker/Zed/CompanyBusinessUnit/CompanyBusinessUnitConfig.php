@@ -11,11 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyBusinessUnitConfig extends AbstractBundleConfig
 {
+    protected const COMPANY_BUSINESS_UNIT_DEFAULT_NAME = 'Headquarters';
+
     /**
      * @return string
      */
     public function getCompanyBusinessUnitDefaultName(): string
     {
-        return 'Default';
+        return static::COMPANY_BUSINESS_UNIT_DEFAULT_NAME;
     }
 }
