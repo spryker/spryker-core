@@ -9,8 +9,6 @@ namespace Spryker\Client\QuickOrder;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\ProductMeasurementUnitStorage\Plugin\QuickOrderPage\ProductConcreteMeasurementUnitExpanderPlugin;
-use Spryker\Client\ProductQuantityStorage\Plugin\QuickOrderPage\ProductConcreteQuantityRestrictionsExpanderPlugin;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductClientBridge;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductStorageClientBridge;
 
@@ -85,9 +83,6 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
      */
     protected function getProductConcreteExpanderPlugins(): array
     {
-        return [
-            new ProductConcreteMeasurementUnitExpanderPlugin(),
-            new ProductConcreteQuantityRestrictionsExpanderPlugin(),
-        ];
+        return [];
     }
 }
