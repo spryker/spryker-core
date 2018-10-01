@@ -102,13 +102,10 @@ class CompanyRoleCreateDataProvider implements CompanyRoleCreateDataProviderInte
      */
     protected function prepareAvailableCompanies(CompanyCollectionTransfer $companyCollectionTransfer): array
     {
-        $companyTransfers = $companyCollectionTransfer->getCompanies();
-
         $preparedCompanies = [];
-        foreach ($companyTransfers as $companyTransfer) {
-            $preparedCompanies += [
-                $companyTransfer->getName() => $companyTransfer->getIdCompany(),
-            ];
+
+        foreach ($companyCollectionTransfer->getCompanies() as $companyTransfer) {
+            $preparedCompanies[$companyTransfer->getName()] = $companyTransfer->getIdCompany();
         }
 
         return $preparedCompanies;
@@ -121,15 +118,12 @@ class CompanyRoleCreateDataProvider implements CompanyRoleCreateDataProviderInte
      */
     protected function prepareAvailablePermissions(PermissionCollectionTransfer $permissionCollectionTransfer): array
     {
-        $permissionTransfers = $permissionCollectionTransfer->getPermissions();
-
         $preparedPermissions = [];
-        foreach ($permissionTransfers as $permissionTransfer) {
+
+        foreach ($permissionCollectionTransfer->getPermissions() as $permissionTransfer) {
             $permissionName = $this->getPermissionVerboseName($permissionTransfer);
 
-            $preparedPermissions += [
-                $permissionName => $permissionTransfer->getIdPermission(),
-            ];
+            $preparedPermissions[$permissionName] = $permissionTransfer->getIdPermission();
         }
 
         return $preparedPermissions;
