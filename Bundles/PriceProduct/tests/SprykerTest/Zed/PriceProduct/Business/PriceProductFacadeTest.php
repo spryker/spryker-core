@@ -115,7 +115,7 @@ class PriceProductFacadeTest extends Unit
 
         $price = $priceProductFacade->findPriceFor($priceProductFilterTransfer);
 
-        $this->assertSame(50, $price);
+        $this->assertSame(100, $price);
     }
 
     /**
