@@ -128,6 +128,18 @@ interface CompanyBusinessUnitFacadeInterface
 
     /**
      * Specification:
+     * - Returns customer references of company users related to business units.
+     *
+     * @api
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
+
+    /**
+     * Specification:
      * - Returns hierarchy tree of company business units relation.
      *
      * @api

@@ -97,4 +97,27 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryCategoryIdsByNodeIds(array $nodeIds);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoriesWithAttributesAndOrderByDescendant();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoryNodes();
+
+    /**
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoryWithCategoryNodes(array $productAbstractIds);
 }

@@ -138,11 +138,9 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         );
 
         if ($hasUsers) {
+            $message = (new ResponseMessageTransfer())->setText(static::ERROR_MESSAGE_HAS_RELATED_USERS);
             $companyBusinessUnitResponseTransfer
-                ->addMessage(
-                    (new ResponseMessageTransfer())
-                        ->setText(static::ERROR_MESSAGE_HAS_RELATED_USERS)
-                )
+                ->setMessages(new ArrayObject([$message]))
                 ->setIsSuccessful(false);
 
             return $companyBusinessUnitResponseTransfer;

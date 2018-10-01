@@ -13,8 +13,8 @@ use PHPMD\Rule\ClassAware;
 
 class NumberOfChildren extends AbstractRule implements ClassAware
 {
-    const NUMBER_OF_CHILDREN = 'nocc';
-    const THRESHOLD = 'minimum';
+    public const NUMBER_OF_CHILDREN = 'nocc';
+    public const THRESHOLD = 'minimum';
 
     /**
      * This method checks the number of classes derived from the given class

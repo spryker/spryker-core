@@ -16,10 +16,10 @@ use Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceBrid
 
 class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const MONITORING_SERVICE = 'monitoring service';
-    const FACADE_STORE = 'store facade';
-    const FACADE_LOCALE = 'locale facade';
-    const SERVICE_UTIL_NETWORK = 'util network service';
+    public const MONITORING_SERVICE = 'monitoring service';
+    public const FACADE_STORE = 'store facade';
+    public const FACADE_LOCALE = 'locale facade';
+    public const SERVICE_UTIL_NETWORK = 'util network service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

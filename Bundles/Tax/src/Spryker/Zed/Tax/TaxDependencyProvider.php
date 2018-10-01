@@ -14,9 +14,9 @@ use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridge;
 
 class TaxDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const STORE_CONFIG = 'store config';
-    const FACADE_COUNTRY = 'facade country';
-    const SERVICE_DATE_FORMATTER = 'date formatter';
+    public const STORE_CONFIG = 'store config';
+    public const FACADE_COUNTRY = 'facade country';
+    public const SERVICE_DATE_FORMATTER = 'date formatter';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

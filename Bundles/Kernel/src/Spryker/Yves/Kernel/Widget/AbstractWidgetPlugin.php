@@ -10,16 +10,15 @@ namespace Spryker\Yves\Kernel\Widget;
 use ArrayAccess;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
-use Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException;
 use Spryker\Yves\Kernel\Exception\MissingWidgetPluginException;
 use Spryker\Yves\Kernel\Exception\ReadOnlyException;
 
+/**
+ * @deprecated Use \Spryker\Yves\Kernel\Widget\AbstractWidget instead.
+ */
 abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPluginInterface, ArrayAccess
 {
-    /**
-     * @var array
-     */
-    protected $widgets;
+    use WidgetContainerAwareTrait;
 
     /**
      * @var array
@@ -53,34 +52,6 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
         }
 
         return $this->widgets[$name];
-    }
-
-    /**
-     * @param array $widgetClassNames
-     *
-     * @return $this
-     */
-    protected function addWidgets(array $widgetClassNames)
-    {
-        foreach ($widgetClassNames as $widgetClass) {
-            $this->addWidget($widgetClass);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $widgetClassName
-     *
-     * @return $this
-     */
-    protected function addWidget(string $widgetClassName)
-    {
-        $this->assertClassIsWidgetPlugin($widgetClassName);
-
-        $this->widgets[$widgetClassName::getName()] = $widgetClassName;
-
-        return $this;
     }
 
     /**
@@ -139,23 +110,5 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
     public function offsetUnset($offset)
     {
         throw new ReadOnlyException('This is a read only object.');
-    }
-
-    /**
-     * @param string $widgetClassName
-     *
-     * @throws \Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException
-     *
-     * @return void
-     */
-    protected function assertClassIsWidgetPlugin(string $widgetClassName)
-    {
-        if (!is_subclass_of($widgetClassName, WidgetPluginInterface::class)) {
-            throw new InvalidWidgetPluginException(sprintf(
-                'Invalid widget plugin %s. This class needs to implement %s.',
-                $widgetClassName,
-                WidgetPluginInterface::class
-            ));
-        }
     }
 }

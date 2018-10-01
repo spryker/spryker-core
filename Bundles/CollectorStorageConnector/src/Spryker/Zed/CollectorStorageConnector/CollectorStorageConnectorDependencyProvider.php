@@ -14,8 +14,8 @@ use Spryker\Zed\Kernel\Container;
 
 class CollectorStorageConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_STORAGE = 'storage facade';
-    const FACADE_COLLECTOR = 'collector facade';
+    public const FACADE_STORAGE = 'storage facade';
+    public const FACADE_COLLECTOR = 'collector facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

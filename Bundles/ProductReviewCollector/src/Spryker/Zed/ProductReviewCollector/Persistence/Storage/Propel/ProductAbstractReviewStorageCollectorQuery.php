@@ -15,9 +15,9 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductAbstractReviewStorageCollectorQuery extends AbstractPropelCollectorQuery
 {
-    const FIELD_FK_PRODUCT_ABSTRACT = ProductAbstractReviewTransfer::ID_PRODUCT_ABSTRACT;
-    const FIELD_AVERAGE_RATING = ProductAbstractReviewTransfer::AVERAGE_RATING;
-    const FIELD_COUNT = ProductAbstractReviewTransfer::REVIEW_COUNT;
+    public const FIELD_FK_PRODUCT_ABSTRACT = ProductAbstractReviewTransfer::ID_PRODUCT_ABSTRACT;
+    public const FIELD_AVERAGE_RATING = ProductAbstractReviewTransfer::AVERAGE_RATING;
+    public const FIELD_COUNT = ProductAbstractReviewTransfer::REVIEW_COUNT;
 
     /**
      * @return void
@@ -44,6 +44,7 @@ class ProductAbstractReviewStorageCollectorQuery extends AbstractPropelCollector
     protected function getApprovedReviewStatus()
     {
         $productReviewStatusValueSet = SpyProductReviewTableMap::getValueSet(SpyProductReviewTableMap::COL_STATUS);
+        /** @var int $convertedStatus */
         $convertedStatus = array_search(SpyProductReviewTableMap::COL_STATUS_APPROVED, $productReviewStatusValueSet);
 
         return $convertedStatus;

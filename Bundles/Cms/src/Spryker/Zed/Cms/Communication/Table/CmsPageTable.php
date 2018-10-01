@@ -16,10 +16,10 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsPageTable extends AbstractTable
 {
-    const ACTIONS = 'Actions';
-    const REQUEST_ID_PAGE = 'id-page';
-    const URL_CMS_PAGE_ACTIVATE = '/cms/page/activate';
-    const URL_CMS_PAGE_DEACTIVATE = '/cms/page/deactivate';
+    public const ACTIONS = 'Actions';
+    public const REQUEST_ID_PAGE = 'id-page';
+    public const URL_CMS_PAGE_ACTIVATE = '/cms/page/activate';
+    public const URL_CMS_PAGE_DEACTIVATE = '/cms/page/deactivate';
 
     /**
      * @var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery

@@ -171,4 +171,19 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
             ->createCompanyBusinessUnitTreeBuilder()
             ->getCustomerCompanyBusinessUnitTree($customerTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    {
+        return $this->getRepository()
+            ->getCustomerReferencesByCompanyBusinessUnitIds($companyBusinessUnitIds);
+    }
 }

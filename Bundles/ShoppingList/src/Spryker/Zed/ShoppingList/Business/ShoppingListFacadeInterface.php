@@ -51,7 +51,11 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
+     *  - Remove all items related to shipping list.
+     *  - Remove all shared with company user relations of shopping list.
+     *  - Remove all shared with company business unit relations of shopping list.
      *  - Remove shopping list.
+     *  - Executes ShoppingListEvents::SHOPPING_LIST_UNPUBLISH event after removing.
      *
      * @api
      *
@@ -60,6 +64,18 @@ interface ShoppingListFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Remove all shopping list items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 
     /**
      * Specification:

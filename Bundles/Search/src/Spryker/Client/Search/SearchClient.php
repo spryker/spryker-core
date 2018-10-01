@@ -180,6 +180,23 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeBulk(array $searchDocumentTransfers): bool
+    {
+        return $this
+            ->getFactory()
+            ->createWriter()
+            ->writeBulk($searchDocumentTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param array $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
@@ -192,5 +209,22 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->getFactory()
             ->createWriter()
             ->delete($dataSet, $typeName, $indexName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteBulk(array $searchDocumentTransfers): bool
+    {
+        return $this
+            ->getFactory()
+            ->createWriter()
+            ->deleteBulk($searchDocumentTransfers);
     }
 }

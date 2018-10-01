@@ -15,11 +15,11 @@ use Spryker\Zed\ProductSetStorage\Dependency\QueryContainer\ProductSetStorageToP
 
 class ProductSetStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
-    const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
+    public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

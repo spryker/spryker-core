@@ -14,8 +14,8 @@ use Spryker\Zed\ProductNew\Dependency\QueryContainer\ProductNewToProductLabelBri
 
 class ProductNewDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
-    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    public const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
+    public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

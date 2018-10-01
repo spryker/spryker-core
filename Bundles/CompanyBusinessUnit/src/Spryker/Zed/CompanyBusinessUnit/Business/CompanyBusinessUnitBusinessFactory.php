@@ -44,7 +44,8 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyBusinessUnitCreator(
             $this->getEntityManager(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createCompanyBusinessUnitWriterPluginExecutor()
         );
     }
 

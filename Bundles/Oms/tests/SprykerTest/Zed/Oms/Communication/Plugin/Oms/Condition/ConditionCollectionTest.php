@@ -27,7 +27,7 @@ use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
  */
 class ConditionCollectionTest extends Unit
 {
-    const CONDITION_NAME = 'conditionName';
+    public const CONDITION_NAME = 'conditionName';
 
     /**
      * @return void

@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class EmptyGeneratedDirectoryConsole extends Console
 {
-    const COMMAND_NAME = 'setup:empty-generated-directory';
+    public const COMMAND_NAME = 'setup:empty-generated-directory';
 
     /**
      * @return void
