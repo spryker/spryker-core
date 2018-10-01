@@ -17,4 +17,18 @@ interface CustomersRestApiToCustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function registerCustomer(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer);
 }

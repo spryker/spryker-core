@@ -29,4 +29,8 @@
         <property name="salutation" type="string" />
     </transfer>
 
+    <transfer name="RestCustomerForgottenPasswordAttributes">
+        <property name="email" type="string" />
+    </transfer>
+
 </transfers>
