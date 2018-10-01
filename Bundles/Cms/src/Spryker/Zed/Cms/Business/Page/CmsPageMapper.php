@@ -10,9 +10,10 @@ namespace Spryker\Zed\Cms\Business\Page;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
-use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface;
 
 class CmsPageMapper implements CmsPageMapperInterface
 {
@@ -22,20 +23,20 @@ class CmsPageMapper implements CmsPageMapperInterface
     protected $cmsPageUrlBuilder;
 
     /**
-     * @var \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface
+     * @var \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface
      */
-    protected $cmsPageStoreRelationMapper;
+    protected $cmsPageStoreRelationReader;
 
     /**
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface $cmsPageUrlBuilder
-     * @param \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface $cmsPageStoreRelationMapper
+     * @param \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReader
      */
     public function __construct(
         CmsPageUrlBuilderInterface $cmsPageUrlBuilder,
-        CmsPageStoreRelationMapperInterface $cmsPageStoreRelationMapper
+        CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReader
     ) {
         $this->cmsPageUrlBuilder = $cmsPageUrlBuilder;
-        $this->cmsPageStoreRelationMapper = $cmsPageStoreRelationMapper;
+        $this->cmsPageStoreRelationReader = $cmsPageStoreRelationReader;
     }
 
     /**
@@ -101,9 +102,12 @@ class CmsPageMapper implements CmsPageMapperInterface
         $cmsPageTransfer->setTemplateName($cmsPageEntity->getCmsTemplate()->getTemplateName());
         $cmsPageTransfer->setFkPage($cmsPageEntity->getIdCmsPage());
         $cmsPageTransfer->fromArray($cmsPageEntity->toArray(), true);
-        $cmsPageTransfer->setStoreRelation(
-            $this->cmsPageStoreRelationMapper->mapCmsPageStoreEntityCollectionToStoreRelationTransfer($cmsPageEntity)
+
+        $storeRelationTransfer = $this->cmsPageStoreRelationReader->getStoreRelation(
+            (new StoreRelationTransfer())->setIdEntity($cmsPageEntity->getIdCmsPage())
         );
+
+        $cmsPageTransfer->setStoreRelation($storeRelationTransfer);
 
         return $cmsPageTransfer;
     }

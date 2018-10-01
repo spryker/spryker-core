@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsGui\Communication\Table;
 
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
@@ -537,26 +537,28 @@ class CmsPageTable extends AbstractTable
      */
     protected function getStoreNames(int $idCmsPage): string
     {
-        $cmsPageStoreCollection = $this
-            ->cmsQueryContainer
-            ->queryCmsPageStoreWithStoreByFkCmsPage($idCmsPage)
-            ->find();
+        $cmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
 
-        return $this->formatStoreNames($cmsPageStoreCollection);
+        return $this->formatStoreNames($cmsPageTransfer->getStoreRelation());
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $cmsPageStoreEntityCollection
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $storeRelationTransfer
      *
      * @return string
      */
-    protected function formatStoreNames(ObjectCollection $cmsPageStoreEntityCollection): string
+    protected function formatStoreNames(?StoreRelationTransfer $storeRelationTransfer): string
     {
+        if (!$storeRelationTransfer) {
+            return '';
+        }
+
         $storeNames = [];
-        foreach ($cmsPageStoreEntityCollection as $cmsPageStoreEntity) {
+
+        foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
-                $cmsPageStoreEntity->getSpyStore()->getName()
+                $storeTransfer->getName()
             );
         }
 

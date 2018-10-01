@@ -17,11 +17,12 @@ use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Generated\Shared\Transfer\CmsVersionTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
-use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface;
 use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface;
 
 class VersionDataMapper implements VersionDataMapperInterface
@@ -32,18 +33,20 @@ class VersionDataMapper implements VersionDataMapperInterface
     protected $utilEncoding;
 
     /**
-     * @var \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface
+     * @var \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface
      */
-    protected $cmsPageStoreRelationMapper;
+    protected $cmsPageStoreRelationReader;
 
     /**
      * @param \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface $utilEncoding
-     * @param \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface $cmsPageStoreRelationMapper
+     * @param \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReader
      */
-    public function __construct(CmsToUtilEncodingInterface $utilEncoding, CmsPageStoreRelationMapperInterface $cmsPageStoreRelationMapper)
-    {
+    public function __construct(
+        CmsToUtilEncodingInterface $utilEncoding,
+        CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReader
+    ) {
         $this->utilEncoding = $utilEncoding;
-        $this->cmsPageStoreRelationMapper = $cmsPageStoreRelationMapper;
+        $this->cmsPageStoreRelationReader = $cmsPageStoreRelationReader;
     }
 
     /**
@@ -158,9 +161,11 @@ class VersionDataMapper implements VersionDataMapperInterface
      */
     protected function mapToCmsPageStoreRelationData(CmsPageTransfer $cmsPageTransfer, SpyCmsPage $cmsPageEntity): CmsPageTransfer
     {
-        $cmsPageTransfer->setStoreRelation(
-            $this->cmsPageStoreRelationMapper->mapCmsPageStoreEntityCollectionToStoreRelationTransfer($cmsPageEntity)
+        $storeRelationTransfer = $this->cmsPageStoreRelationReader->getStoreRelation(
+            (new StoreRelationTransfer())->setIdEntity($cmsPageEntity->getIdCmsPage())
         );
+
+        $cmsPageTransfer->setStoreRelation($storeRelationTransfer);
 
         return $cmsPageTransfer;
     }

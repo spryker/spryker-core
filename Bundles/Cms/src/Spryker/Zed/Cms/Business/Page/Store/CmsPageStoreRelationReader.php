@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Cms\Business\Page\Store;
 
+use ArrayObject;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Spryker\Zed\Cms\Persistence\CmsRepositoryInterface;
 
 class CmsPageStoreRelationReader implements CmsPageStoreRelationReaderInterface
 {
@@ -17,21 +20,21 @@ class CmsPageStoreRelationReader implements CmsPageStoreRelationReaderInterface
      */
     protected $cmsQueryContainer;
 
-    /***
-     * @var \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface
+    /**
+     * @var \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface
      */
-    protected $cmsPageStoreRelationMapper;
+    protected $cmsRepository;
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
-     * @param \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface $cmsPageStoreRelationMapper
+     * @param \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface $cmsRepository
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        CmsPageStoreRelationMapperInterface $cmsPageStoreRelationMapper
+        CmsRepositoryInterface $cmsRepository
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
-        $this->cmsPageStoreRelationMapper = $cmsPageStoreRelationMapper;
+        $this->cmsRepository = $cmsRepository;
     }
 
     /**
@@ -43,13 +46,28 @@ class CmsPageStoreRelationReader implements CmsPageStoreRelationReaderInterface
     {
         $storeRelationTransfer->requireIdEntity();
 
-        $cmsPageEntity = $this->cmsQueryContainer
-            ->queryCmsPageWithStoreRelationByFkCmsPage($storeRelationTransfer->getIdEntity())
-            ->find()
-            ->getFirst();
+        $relatedStores = $this->cmsRepository->getRelatedStoresByIdCmsPage(
+            $storeRelationTransfer->getIdEntity()
+        );
 
-        $storeRelationTransfer = $this->cmsPageStoreRelationMapper->mapCmsPageStoreEntityCollectionToStoreRelationTransfer($cmsPageEntity);
+        $idStores = $this->getIdStores($relatedStores);
+
+        $storeRelationTransfer
+            ->setStores($relatedStores)
+            ->setIdStores($idStores);
 
         return $storeRelationTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $relatedStores
+     *
+     * @return int[]
+     */
+    protected function getIdStores(ArrayObject $relatedStores): array
+    {
+        return array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getIdStore();
+        }, $relatedStores->getArrayCopy());
     }
 }

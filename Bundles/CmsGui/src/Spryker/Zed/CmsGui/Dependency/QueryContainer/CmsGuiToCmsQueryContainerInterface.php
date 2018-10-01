@@ -6,8 +6,6 @@
  */
 namespace Spryker\Zed\CmsGui\Dependency\QueryContainer;
 
-use Orm\Zed\Cms\Persistence\SpyCmsPageStoreQuery;
-
 interface CmsGuiToCmsQueryContainerInterface
 {
     /**
@@ -70,11 +68,4 @@ interface CmsGuiToCmsQueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
      */
     public function queryCmsPageLocalizedAttributes();
-
-    /**
-     * @param int $idCmsPage
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageStoreQuery
-     */
-    public function queryCmsPageStoreWithStoreByFkCmsPage(int $idCmsPage): SpyCmsPageStoreQuery;
 }

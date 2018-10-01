@@ -33,8 +33,6 @@ use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\Business\Page\PageManagerInterface;
 use Spryker\Zed\Cms\Business\Page\PageRemover;
 use Spryker\Zed\Cms\Business\Page\PageRemoverInterface;
-use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapper;
-use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface;
 use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReader;
 use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface;
 use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriter;
@@ -69,6 +67,8 @@ use Symfony\Component\Finder\Finder;
 /**
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Cms\Persistence\CmsEntityManagerInterface getEntityManager()
  */
 class CmsBusinessFactory extends AbstractBusinessFactory
 {
@@ -315,7 +315,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new VersionDataMapper(
             $this->getUtilEncodingService(),
-            $this->createCmsPageStoreRelationMapper()
+            $this->createCmsPageStoreRelationReader()
         );
     }
 
@@ -400,21 +400,13 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface
-     */
-    public function createCmsPageStoreRelationMapper(): CmsPageStoreRelationMapperInterface
-    {
-        return new CmsPageStoreRelationMapper();
-    }
-
-    /**
      * @return \Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface
      */
     public function createCmsPageMapper(): CmsPageMapperInterface
     {
         return new CmsPageMapper(
             $this->createCmsUrlBuilder(),
-            $this->createCmsPageStoreRelationMapper()
+            $this->createCmsPageStoreRelationReader()
         );
     }
 
@@ -425,7 +417,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsPageStoreRelationReader(
             $this->getQueryContainer(),
-            $this->createCmsPageStoreRelationMapper()
+            $this->getRepository()
         );
     }
 
@@ -435,7 +427,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     public function createCmsPageStoreRelationWriter(): CmsPageStoreRelationWriterInterface
     {
         return new CmsPageStoreRelationWriter(
-            $this->getQueryContainer(),
+            $this->getEntityManager(),
             $this->createCmsPageStoreRelationReader()
         );
     }

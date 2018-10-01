@@ -8,15 +8,14 @@
 namespace Spryker\Zed\Cms\Business\Page\Store;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Orm\Zed\Cms\Persistence\SpyCmsPageStore;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Spryker\Zed\Cms\Persistence\CmsEntityManagerInterface;
 
 class CmsPageStoreRelationWriter implements CmsPageStoreRelationWriterInterface
 {
     /**
-     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsEntityManagerInterface
      */
-    protected $cmsQueryContainer;
+    protected $cmsEntityManager;
 
     /**
      * @var \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface
@@ -24,12 +23,12 @@ class CmsPageStoreRelationWriter implements CmsPageStoreRelationWriterInterface
     protected $cmsPageStoreRelationReader;
 
     /**
-     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Persistence\CmsEntityManagerInterface $cmsEntityManager
      * @param \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReader
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReader)
+    public function __construct(CmsEntityManagerInterface $cmsEntityManager, CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReader)
     {
-        $this->cmsQueryContainer = $cmsQueryContainer;
+        $this->cmsEntityManager = $cmsEntityManager;
         $this->cmsPageStoreRelationReader = $cmsPageStoreRelationReader;
     }
 
@@ -48,45 +47,8 @@ class CmsPageStoreRelationWriter implements CmsPageStoreRelationWriterInterface
         $saveIdStores = array_diff($requestedIdStores, $currentIdStores);
         $deleteIdStores = array_diff($currentIdStores, $requestedIdStores);
 
-        $this->addStoreRelations($saveIdStores, $storeRelationTransfer->getIdEntity());
-        $this->removeStoreRelations($deleteIdStores, $storeRelationTransfer->getIdEntity());
-    }
-
-    /**
-     * @param int[] $idStores
-     * @param int $idCmsPage
-     *
-     * @return void
-     */
-    protected function addStoreRelations(array $idStores, int $idCmsPage): void
-    {
-        foreach ($idStores as $idStore) {
-            (new SpyCmsPageStore())
-                ->setFkStore($idStore)
-                ->setFkCmsPage($idCmsPage)
-                ->save();
-        }
-    }
-
-    /**
-     * @param array $idStores
-     * @param int $idCmsPage
-     *
-     * @return void
-     */
-    protected function removeStoreRelations(array $idStores, int $idCmsPage): void
-    {
-        if (empty($idStores)) {
-            return;
-        }
-
-        $cmsPageStoreEntities = $this->cmsQueryContainer
-            ->queryCmsPageStoreByFkCmsPageAndFkStores($idCmsPage, $idStores)
-            ->find();
-
-        foreach ($cmsPageStoreEntities as $cmsPageStoreEntity) {
-            $cmsPageStoreEntity->delete();
-        }
+        $this->cmsEntityManager->addStoreRelations($saveIdStores, $storeRelationTransfer->getIdEntity());
+        $this->cmsEntityManager->removeStoreRelations($deleteIdStores, $storeRelationTransfer->getIdEntity());
     }
 
     /**
