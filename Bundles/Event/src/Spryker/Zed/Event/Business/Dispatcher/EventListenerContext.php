@@ -71,15 +71,15 @@ class EventListenerContext implements EventListenerContextInterface
     }
 
     /**
-     * @param array $eventTransfers
+     * @param array $transfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $transfers, $eventName)
     {
         if ($this->eventHandler instanceof EventBulkHandlerInterface) {
-            $this->eventHandler->handleBulk($eventTransfers, $eventName);
+            $this->eventHandler->handleBulk($transfers, $eventName);
         }
     }
 

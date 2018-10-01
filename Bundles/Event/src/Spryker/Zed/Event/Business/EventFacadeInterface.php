@@ -17,7 +17,7 @@ interface EventFacadeInterface
     /**
      * Specification:
      * - Handles all events by registered by give $eventName
-     * - Passes eventTransfer to each listener
+     * - Passes transfer object to each listener
      * - If listener is queueable then it will put into queue system.
      *
      * @api
@@ -31,6 +31,21 @@ interface EventFacadeInterface
 
     /**
      * Specification:
+     * - Handles all events by registered by give $eventName
+     * - Passes array of transfer object to each listener
+     * - If listener is queueable then it will put into queue system.
+     *
+     * @api
+     *
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     *
+     * @return void
+     */
+    public function triggerBulk($eventName, array $transfers): void;
+
+    /**
+     * Specification:
      * - Processes all listeners enqueued in event queue (queue consumer)
      *
      * @api
@@ -40,4 +55,16 @@ interface EventFacadeInterface
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
     public function processEnqueuedMessages(array $queueMessageTransfers);
+
+    /**
+     * Specification:
+     * - Forward consumed messages to event queue
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function forwardMessages(array $queueMessageTransfers): array;
 }
