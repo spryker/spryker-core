@@ -18,6 +18,7 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServicePr
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SessionServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SilexRoutingServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SubRequestServiceProvider;
@@ -85,6 +86,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new TranslationServiceProvider(),
             new SubRequestServiceProvider(),
             new HeadersSecurityServiceProvider(),
+            new SessionServiceProvider(),
         ];
 
         if (Environment::isDevelopment()) {
