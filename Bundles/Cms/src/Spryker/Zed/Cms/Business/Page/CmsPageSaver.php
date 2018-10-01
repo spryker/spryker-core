@@ -363,10 +363,10 @@ class CmsPageSaver implements CmsPageSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[] $cmsPageLocalizedAttributesList
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $cmsPageLocalizedAttributesList
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[]
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[]
      */
     protected function createNewCmsPageLocalizedAttributes(
         CmsPageTransfer $cmsPageTransfer,
