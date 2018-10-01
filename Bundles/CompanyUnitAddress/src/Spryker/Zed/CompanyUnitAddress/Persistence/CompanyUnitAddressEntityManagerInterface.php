@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyUnitAddress\Persistence;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer;
 
 interface CompanyUnitAddressEntityManagerInterface
 {
@@ -52,4 +53,11 @@ interface CompanyUnitAddressEntityManagerInterface
      * @return void
      */
     public function unAssignFromCompanyBusinessUnit(array $idAddresses, int $idCompanyBusinessUnit): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer
+     *
+     * @return void
+     */
+    public function saveAddressToBusinessUnitRelation(SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer): void;
 }

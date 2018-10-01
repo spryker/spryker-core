@@ -14,7 +14,7 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterfa
  */
 class CheckoutPlaceOrderPermissionPlugin implements PermissionPluginInterface
 {
-    const KEY = 'permission.checkout.placeOrder';
+    public const KEY = 'permission.checkout.placeOrder';
 
     /**
      * @return string

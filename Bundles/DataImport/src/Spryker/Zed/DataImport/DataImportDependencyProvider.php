@@ -17,14 +17,14 @@ use Spryker\Zed\Kernel\Container;
 
 class DataImportDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'touch facade';
-    const FACADE_EVENT = 'event facade';
-    const PROPEL_CONNECTION = 'propel connection';
-    const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
-    const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
-    const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
-    const DATA_IMPORT_DEFAULT_WRITER_PLUGINS = 'DATA_IMPORT_DEFAULT_WRITER_PLUGINS';
-    const STORE = 'store';
+    public const FACADE_TOUCH = 'touch facade';
+    public const FACADE_EVENT = 'event facade';
+    public const PROPEL_CONNECTION = 'propel connection';
+    public const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
+    public const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
+    public const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
+    public const DATA_IMPORT_DEFAULT_WRITER_PLUGINS = 'DATA_IMPORT_DEFAULT_WRITER_PLUGINS';
+    public const STORE = 'store';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

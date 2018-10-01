@@ -26,8 +26,8 @@ use Traversable;
 
 class Reader implements ReaderInterface
 {
-    const MESSAGE_NO_RESULT = 'no stock set for this sku';
-    const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
+    public const MESSAGE_NO_RESULT = 'no stock set for this sku';
+    public const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
     /**
      * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface

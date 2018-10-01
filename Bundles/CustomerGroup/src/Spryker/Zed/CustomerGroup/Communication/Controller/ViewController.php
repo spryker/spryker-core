@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
-    const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
+    public const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

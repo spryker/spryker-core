@@ -13,11 +13,11 @@ use Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolverIn
 
 class CsvReaderConfiguration implements CsvReaderConfigurationInterface
 {
-    const DEFAULT_HAS_HEADER = true;
-    const DEFAULT_DELIMITER = ',';
-    const DEFAULT_ENCLOSURE = '"';
-    const DEFAULT_ESCAPE = '\\';
-    const DEFAULT_FLAGS = SplFileObject::READ_CSV | SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD | SplFileObject::DROP_NEW_LINE;
+    public const DEFAULT_HAS_HEADER = true;
+    public const DEFAULT_DELIMITER = ',';
+    public const DEFAULT_ENCLOSURE = '"';
+    public const DEFAULT_ESCAPE = '\\';
+    public const DEFAULT_FLAGS = SplFileObject::READ_CSV | SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD | SplFileObject::DROP_NEW_LINE;
 
     /**
      * @var \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer

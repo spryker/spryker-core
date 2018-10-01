@@ -17,12 +17,12 @@ use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSaniti
 
 class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRODUCT_REVIEW = 'FACADE_PRODUCT_REVIEW';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+    public const FACADE_PRODUCT_REVIEW = 'FACADE_PRODUCT_REVIEW';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
-    const QUERY_CONTAINER_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
+    public const QUERY_CONTAINER_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

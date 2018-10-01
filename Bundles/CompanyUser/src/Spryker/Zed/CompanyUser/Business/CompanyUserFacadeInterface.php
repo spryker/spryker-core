@@ -154,4 +154,32 @@ interface CompanyUserFacadeInterface
      * @return string[]
      */
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
+
+    /**
+     * Specification:
+     * - Enables company user.
+     * - Uses idCompanyUser from company user transfer to find company user.
+     * - Sets company user's 'is_active' flag to true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Disables company user.
+     * - Uses idCompanyUser from company user transfer to find company user.
+     * - Sets company user's 'is_active' flag to false.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }

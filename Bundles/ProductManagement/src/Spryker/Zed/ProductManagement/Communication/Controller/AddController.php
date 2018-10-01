@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
-    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

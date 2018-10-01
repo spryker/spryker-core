@@ -16,7 +16,7 @@ use Spryker\Zed\GiftCard\Business\Exception\GiftCardMissingCodeException;
 
 class GiftCardCreator implements GiftCardCreatorInterface
 {
-    const ATTRIBUTES = 'attributes';
+    public const ATTRIBUTES = 'attributes';
 
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface

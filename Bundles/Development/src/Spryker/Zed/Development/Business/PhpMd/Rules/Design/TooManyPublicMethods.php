@@ -14,8 +14,8 @@ use PHPMD\Rule\ClassAware;
 
 class TooManyPublicMethods extends AbstractRule implements ClassAware
 {
-    const NUMBER_OF_PUBLIC_METHODS = 'npm';
-    const THRESHOLD = 'maxmethods';
+    public const NUMBER_OF_PUBLIC_METHODS = 'npm';
+    public const THRESHOLD = 'maxmethods';
 
     /**
      * Regular expression that filters all methods that are ignored by this rule.

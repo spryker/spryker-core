@@ -18,7 +18,7 @@ class ProductGroupStorageConstants
      *
      * @api
      */
-    const PRODUCT_GROUP_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_GROUP_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ class ProductGroupStorageConstants
      *
      * @api
      */
-    const PRODUCT_GROUP_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+    public const PRODUCT_GROUP_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
     /**
      * Specification:
@@ -34,5 +34,5 @@ class ProductGroupStorageConstants
      *
      * @api
      */
-    const PRODUCT_GROUP_RESOURCE_NAME = 'product_abstract_group';
+    public const PRODUCT_GROUP_RESOURCE_NAME = 'product_abstract_group';
 }
