@@ -25,7 +25,7 @@ interface FinderInterface
      *
      * @return bool
      */
-    public function isOrderFlagged(int $idOrder, string $flag);
+    public function isOrderFlagged($idOrder, $flag);
 
     /**
      * @param int $idOrder
@@ -33,7 +33,7 @@ interface FinderInterface
      *
      * @return bool
      */
-    public function isOrderFlaggedAll(int $idOrder, string $flag): bool;
+    public function isOrderFlaggedAll($idOrder, $flag);
 
     /**
      * @param string $sku

@@ -119,7 +119,7 @@ class Finder implements FinderInterface
      *
      * @return bool
      */
-    public function isOrderFlagged(int $idOrder, string $flag): bool
+    public function isOrderFlagged($idOrder, $flag)
     {
         $order = $this->queryContainer
             ->querySalesOrderById($idOrder)
@@ -140,7 +140,7 @@ class Finder implements FinderInterface
      *
      * @return bool
      */
-    public function isOrderFlaggedAll(int $idOrder, string $flag): bool
+    public function isOrderFlaggedAll($idOrder, $flag)
     {
         $order = $this->queryContainer
             ->querySalesOrderById($idOrder)
