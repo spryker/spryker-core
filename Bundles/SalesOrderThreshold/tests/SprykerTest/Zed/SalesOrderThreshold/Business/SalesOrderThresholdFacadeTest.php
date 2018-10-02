@@ -245,22 +245,21 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
                     ->setMessage('Test message')
             );
 
-        $this->getFacade()->saveSalesOrderThreshold($salesOrderThresholdTransfer);
-
         // Act
+        $salesOrderThresholdTransfer = $this->getFacade()->saveSalesOrderThreshold($salesOrderThresholdTransfer);
+
+        // Assert
         $globalThresholds = $this->getFacade()->getSalesOrderThresholds(
             $storeTransfer,
             $currencyTransfer
         );
 
-        // Assert
-        $this->assertCount(1, $globalThresholds);
-
-        $threshold = $globalThresholds[0];
-        $this->assertEquals($thresholdValue, $threshold->getSalesOrderThresholdValue()->getThreshold());
-        $this->assertEquals(SalesOrderThresholdConfig::GROUP_SOFT, $threshold->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup());
-
-        $this->assertNotNull($threshold->getLocalizedMessages());
+        foreach($globalThresholds as $globalThreshold) {
+            if($globalThreshold->getSalesOrderThresholdValue()->getSalesOrderThresholdType() === SalesOrderThresholdConfig::GROUP_SOFT) {
+                $this->assertEquals($salesOrderThresholdTransfer, $globalThreshold);
+                break;
+            }
+        }
     }
 
     /**

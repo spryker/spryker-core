@@ -79,7 +79,9 @@ class SalesOrderThresholdDataImportPluginTest extends Unit
             new SoftMinimumThresholdWithMessageStrategyPlugin(),
         ];
 
-        $this->tester->getFacade();
+        foreach ($strategies as $strategy) {
+            $this->tester->haveSalesOrderThresholdType($strategy->toTransfer());
+        }
 
         $this->tester->setDependency(SalesOrderThresholdDependencyProvider::PLUGINS_SALES_ORDER_THRESHOLD_STRATEGY, $strategies);
     }
