@@ -23,10 +23,10 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CarrierForm extends AbstractType
 {
-    const FIELD_NAME_GLOSSARY_FIELD = 'glossaryKeyName';
-    const FIELD_NAME_FIELD = 'name';
-    const FIELD_IS_ACTIVE_FIELD = 'isActive';
-    const FIELD_ID_CARRIER = 'id_carrier';
+    public const FIELD_NAME_GLOSSARY_FIELD = 'glossaryKeyName';
+    public const FIELD_NAME_FIELD = 'name';
+    public const FIELD_IS_ACTIVE_FIELD = 'isActive';
+    public const FIELD_ID_CARRIER = 'id_carrier';
 
     /**
      * @return string

@@ -63,6 +63,28 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
+    public function testGetCustomerCompanyBusinessUnitTreeShouldReturnNodesCollection()
+    {
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        $this->getFacade()->create($businessUnitTransfer);
+
+        $customerTransfer = $this->tester->haveCustomer();
+        $companyUserTransfer = $this->tester->haveCompanyUser(
+            [
+                CompanyUserTransfer::CUSTOMER => $customerTransfer,
+                CompanyUserTransfer::FK_COMPANY => $businessUnitTransfer->getFkCompany(),
+            ]
+        );
+        $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
+
+        $companyBusinessUnitTreeNodeCollectionTransfer = $this->getFacade()->getCustomerCompanyBusinessUnitTree($customerTransfer);
+
+        $this->assertEquals(1, count($companyBusinessUnitTreeNodeCollectionTransfer->getCompanyBusinessUnitTreeNodes()));
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateShouldPersistCompanyBusinessUnitChanges()
     {
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();

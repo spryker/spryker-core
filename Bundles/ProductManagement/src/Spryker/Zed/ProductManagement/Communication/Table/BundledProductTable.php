@@ -26,13 +26,13 @@ use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEnco
 
 class BundledProductTable extends AbstractTable
 {
-    const COL_SELECT = 'select';
-    const COL_PRICE = 'price';
-    const COL_AVAILABILITY = 'availability';
-    const COL_ID_PRODUCT_CONCRETE = 'id_product_concrete';
-    const SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME = 'Name';
-    const SPY_STOCK_PRODUCT_ALIAS_QUANTITY = 'stockQuantity';
-    const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
+    public const COL_SELECT = 'select';
+    public const COL_PRICE = 'price';
+    public const COL_AVAILABILITY = 'availability';
+    public const COL_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    public const SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME = 'Name';
+    public const SPY_STOCK_PRODUCT_ALIAS_QUANTITY = 'stockQuantity';
+    public const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface

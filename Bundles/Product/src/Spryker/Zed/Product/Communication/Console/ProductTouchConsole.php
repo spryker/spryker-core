@@ -18,21 +18,21 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductTouchConsole extends Console
 {
-    const ACTION_ACTIVATE = 'activate';
-    const ACTION_ACTIVATE_SHORT = 'a';
-    const ACTION_INACTIVATE = 'inactivate';
-    const ACTION_INACTIVATE_SHORT = 'i';
-    const ACTION_DELETE = 'delete';
-    const ACTION_DELETE_SHORT = 'd';
+    public const ACTION_ACTIVATE = 'activate';
+    public const ACTION_ACTIVATE_SHORT = 'a';
+    public const ACTION_INACTIVATE = 'inactivate';
+    public const ACTION_INACTIVATE_SHORT = 'i';
+    public const ACTION_DELETE = 'delete';
+    public const ACTION_DELETE_SHORT = 'd';
 
-    const COMMAND_NAME = 'product:touch';
-    const DESCRIPTION = 'product:touch <activate|inactivate|delete|a|i|d> <id>';
+    public const COMMAND_NAME = 'product:touch';
+    public const DESCRIPTION = 'product:touch <activate|inactivate|delete|a|i|d> <id>';
 
-    const ARGUMENT_ID_ABSTRACT_PRODUCT = 'id_product_abstract';
-    const ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION = 'The `id_product_abstract` id of the record to be touched.';
+    public const ARGUMENT_ID_ABSTRACT_PRODUCT = 'id_product_abstract';
+    public const ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION = 'The `id_product_abstract` id of the record to be touched.';
 
-    const ARGUMENT_TOUCH_ACTION = 'action';
-    const ARGUMENT_TOUCH_ACTION_DESCRIPTION = 'The `touch action` can be one of the following: `active`, `inactive`, `deleted` or just the first letter.';
+    public const ARGUMENT_TOUCH_ACTION = 'action';
+    public const ARGUMENT_TOUCH_ACTION_DESCRIPTION = 'The `touch action` can be one of the following: `active`, `inactive`, `deleted` or just the first letter.';
 
     /**
      * @return void

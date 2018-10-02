@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
-    const QUERY_PARAM_ID_CATEGORY = 'id-category';
+    public const QUERY_PARAM_ID_CATEGORY = 'id-category';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

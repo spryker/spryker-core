@@ -24,11 +24,11 @@ use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
  */
 class ViewControllerTest extends Unit
 {
-    const PIM_IMAGE_URL = '/foo/bar.jpg';
-    const SECURE_CDN_IMAGE_URL = 'https://example.com/bar.jpg';
-    const NON_SECURE_CDN_IMAGE_URL = 'http://example.com/bar.jpg';
-    const CDN_IMAGE_URL = '//example.com/bar.jpg';
-    const IMAGE_URL_PREFIX = 'IMAGE_URL_PREFIX';
+    public const PIM_IMAGE_URL = '/foo/bar.jpg';
+    public const SECURE_CDN_IMAGE_URL = 'https://example.com/bar.jpg';
+    public const NON_SECURE_CDN_IMAGE_URL = 'http://example.com/bar.jpg';
+    public const CDN_IMAGE_URL = '//example.com/bar.jpg';
+    public const IMAGE_URL_PREFIX = 'IMAGE_URL_PREFIX';
 
     /**
      * @return void

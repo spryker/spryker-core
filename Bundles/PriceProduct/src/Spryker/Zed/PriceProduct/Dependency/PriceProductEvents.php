@@ -15,7 +15,7 @@ interface PriceProductEvents
      *
      * @api
      */
-    const PRICE_ABSTRACT_PUBLISH = 'Price.price_abstract.publish';
+    public const PRICE_ABSTRACT_PUBLISH = 'Price.price_abstract.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface PriceProductEvents
      *
      * @api
      */
-    const PRICE_ABSTRACT_UNPUBLISH = 'Price.price_abstract.unpublish';
+    public const PRICE_ABSTRACT_UNPUBLISH = 'Price.price_abstract.unpublish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface PriceProductEvents
      *
      * @api
      */
-    const PRICE_CONCRETE_PUBLISH = 'Price.price_concrete.publish';
+    public const PRICE_CONCRETE_PUBLISH = 'Price.price_concrete.publish';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface PriceProductEvents
      *
      * @api
      */
-    const PRICE_CONCRETE_UNPUBLISH = 'Price.price_concrete.unpublish';
+    public const PRICE_CONCRETE_UNPUBLISH = 'Price.price_concrete.unpublish';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface PriceProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRICE_PRODUCT_CREATE = 'Entity.spy_price_product.create';
+    public const ENTITY_SPY_PRICE_PRODUCT_CREATE = 'Entity.spy_price_product.create';
 
     /**
      * Specification
@@ -55,7 +55,7 @@ interface PriceProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRICE_PRODUCT_UPDATE = 'Entity.spy_price_product.update';
+    public const ENTITY_SPY_PRICE_PRODUCT_UPDATE = 'Entity.spy_price_product.update';
 
     /**
      * Specification
@@ -63,7 +63,7 @@ interface PriceProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRICE_PRODUCT_DELETE = 'Entity.spy_price_product.delete';
+    public const ENTITY_SPY_PRICE_PRODUCT_DELETE = 'Entity.spy_price_product.delete';
 
     /**
      * Specification
@@ -71,7 +71,7 @@ interface PriceProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRICE_TYPE_CREATE = 'Entity.spy_price_type.create';
+    public const ENTITY_SPY_PRICE_TYPE_CREATE = 'Entity.spy_price_type.create';
 
     /**
      * Specification
@@ -79,7 +79,7 @@ interface PriceProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRICE_TYPE_UPDATE = 'Entity.spy_price_type.update';
+    public const ENTITY_SPY_PRICE_TYPE_UPDATE = 'Entity.spy_price_type.update';
 
     /**
      * Specification
@@ -87,7 +87,7 @@ interface PriceProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRICE_TYPE_DELETE = 'Entity.spy_price_type.delete';
+    public const ENTITY_SPY_PRICE_TYPE_DELETE = 'Entity.spy_price_type.delete';
 
     /**
      * Specification
@@ -95,7 +95,7 @@ interface PriceProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE = 'Entity.spy_price_product_store.create';
+    public const ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE = 'Entity.spy_price_product_store.create';
 
     /**
      * Specification
@@ -103,7 +103,7 @@ interface PriceProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE = 'Entity.spy_price_product_store.update';
+    public const ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE = 'Entity.spy_price_product_store.update';
 
     /**
      * Specification
@@ -111,5 +111,5 @@ interface PriceProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE = 'Entity.spy_price_product_store.delete';
+    public const ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE = 'Entity.spy_price_product_store.delete';
 }

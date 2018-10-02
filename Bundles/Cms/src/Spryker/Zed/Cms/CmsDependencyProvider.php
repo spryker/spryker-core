@@ -18,22 +18,22 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_URL = 'facade_url';
-    const FACADE_LOCALE = 'facade_locale';
-    const FACADE_GLOSSARY = 'facade glossary';
-    const FACADE_TOUCH = 'facade_touch';
-    const QUERY_CONTAINER_URL = 'url_query_container';
-    const QUERY_CONTAINER_GLOSSARY = 'glossary_query_container';
-    const QUERY_CONTAINER_CATEGORY = 'category query container';
-    const QUERY_CONTAINER_LOCALE = 'locale query container';
+    public const FACADE_URL = 'facade_url';
+    public const FACADE_LOCALE = 'facade_locale';
+    public const FACADE_GLOSSARY = 'facade glossary';
+    public const FACADE_TOUCH = 'facade_touch';
+    public const QUERY_CONTAINER_URL = 'url_query_container';
+    public const QUERY_CONTAINER_GLOSSARY = 'glossary_query_container';
+    public const QUERY_CONTAINER_CATEGORY = 'category query container';
+    public const QUERY_CONTAINER_LOCALE = 'locale query container';
 
-    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
-    const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'cms version post save plugins';
-    const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'cms version transfer expander plugins';
-    const PLUGINS_CMS_PAGE_DATA_EXPANDER = 'PLUGINS_CMS_PAGE_DATA_EXPANDER';
-    const PLUGINS_CMS_PAGE_POST_ACTIVATOR = 'PLUGINS_CMS_PAGE_POST_ACTIVATOR';
+    public const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+    public const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'cms version post save plugins';
+    public const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'cms version transfer expander plugins';
+    public const PLUGINS_CMS_PAGE_DATA_EXPANDER = 'PLUGINS_CMS_PAGE_DATA_EXPANDER';
+    public const PLUGINS_CMS_PAGE_POST_ACTIVATOR = 'PLUGINS_CMS_PAGE_POST_ACTIVATOR';
 
-    const SERVICE_UTIL_ENCODING = 'util encoding service';
+    public const SERVICE_UTIL_ENCODING = 'util encoding service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

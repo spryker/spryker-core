@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UpdateController extends AbstractController
 {
-    const PARAM_ID = 'id';
+    public const PARAM_ID = 'id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

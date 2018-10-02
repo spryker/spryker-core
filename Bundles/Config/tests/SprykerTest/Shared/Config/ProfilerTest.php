@@ -20,7 +20,7 @@ use Spryker\Shared\Config\Profiler;
  */
 class ProfilerTest extends Unit
 {
-    const PROFILE_KEY = 'profile-key';
+    public const PROFILE_KEY = 'profile-key';
 
     /**
      * @var \SprykerTest\Shared\Config\ConfigSharedTester

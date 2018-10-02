@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class QuoteSession implements QuoteSessionInterface
 {
-    const QUOTE_SESSION_IDENTIFIER = 'quote session identifier';
+    public const QUOTE_SESSION_IDENTIFIER = 'quote session identifier';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface

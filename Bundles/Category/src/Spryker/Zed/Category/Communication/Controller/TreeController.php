@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TreeController extends AbstractController
 {
-    const PARAM_ID_ROOT_NODE = 'id-root-node';
+    public const PARAM_ID_ROOT_NODE = 'id-root-node';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

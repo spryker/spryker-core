@@ -25,17 +25,17 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class MoneyType extends AbstractType
 {
-    const FIELD_NET_AMOUNT = 'net_amount';
-    const FIELD_GROSS_AMOUNT = 'gross_amount';
-    const FIELD_FK_CURRENCY = 'fk_currency';
-    const FIELD_FK_STORE = 'fk_store';
+    public const FIELD_NET_AMOUNT = 'net_amount';
+    public const FIELD_GROSS_AMOUNT = 'gross_amount';
+    public const FIELD_FK_CURRENCY = 'fk_currency';
+    public const FIELD_FK_STORE = 'fk_store';
 
-    const MAX_MONEY_INT = 21474835;
-    const MIN_MONEY_INT = 0;
+    public const MAX_MONEY_INT = 21474835;
+    public const MIN_MONEY_INT = 0;
 
-    const OPTION_VALIDATION_GROUPS = 'validation_groups';
+    public const OPTION_VALIDATION_GROUPS = 'validation_groups';
 
-    const REGULAR_EXPRESSION_MONEY_VALUE = '/[0-9\.\,]+/';
+    public const REGULAR_EXPRESSION_MONEY_VALUE = '/[0-9\.\,]+/';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

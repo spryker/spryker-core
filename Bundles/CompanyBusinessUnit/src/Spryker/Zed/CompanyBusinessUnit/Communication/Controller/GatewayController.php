@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -71,5 +73,15 @@ class GatewayController extends AbstractGatewayController
         CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
         return $this->getFacade()->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
+     */
+    public function getCustomerCompanyBusinessUnitTreeAction(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer
+    {
+        return $this->getFacade()->getCustomerCompanyBusinessUnitTree($customerTransfer);
     }
 }
