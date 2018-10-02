@@ -16,6 +16,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistsResourceMapperInterface;
 use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,6 +34,11 @@ class WishlistsReader implements WishlistsReaderInterface
     protected $wishlistsResourceMapper;
 
     /**
+     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface
+     */
+    protected $wishlistsItemResourceMapper;
+
+    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
@@ -41,15 +47,18 @@ class WishlistsReader implements WishlistsReaderInterface
      * @param \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface $wishlistClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistsResourceMapperInterface $wishlistsResourceMapper
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface $wishlistsItemResourceMapper
      */
     public function __construct(
         WishlistsRestApiToWishlistClientInterface $wishlistClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        WishlistsResourceMapperInterface $wishlistsResourceMapper
+        WishlistsResourceMapperInterface $wishlistsResourceMapper,
+        WishlistItemsResourceMapperInterface $wishlistsItemResourceMapper
     ) {
         $this->wishlistClient = $wishlistClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->wishlistsResourceMapper = $wishlistsResourceMapper;
+        $this->wishlistsItemResourceMapper = $wishlistsItemResourceMapper;
     }
 
     /**
@@ -102,7 +111,27 @@ class WishlistsReader implements WishlistsReaderInterface
     {
         $wishlistOverviewResponseTransfer = $this->getWishlistOverviewWithoutProductDetails($wishlistTransfer);
 
-        return $this->wishlistsResourceMapper->mapWishlistOverviewResponseTransferToRestResource($wishlistOverviewResponseTransfer);
+        $restWishlistsAttributesTransfer = $this->wishlistsResourceMapper->mapWishlistTransferToRestWishlistsAttributes($wishlistOverviewResponseTransfer->getWishlist());
+
+        $wishlistResource = $this->restResourceBuilder->createRestResource(
+            WishlistsRestApiConfig::RESOURCE_WISHLISTS,
+            $wishlistTransfer->getUuid(),
+            $restWishlistsAttributesTransfer
+        );
+
+        foreach ($wishlistOverviewResponseTransfer->getItems() as $itemTransfer) {
+            $restWishlistsItemAttributesTransfer = $this->wishlistsItemResourceMapper->mapWishlistItemTransferToRestWishlistItemsAttributes($itemTransfer);
+
+            $itemResource = $this->restResourceBuilder->createRestResource(
+                WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
+                $restWishlistsItemAttributesTransfer->getSku(),
+                $restWishlistsItemAttributesTransfer
+            );
+
+            $wishlistResource->addRelationship($itemResource);
+        }
+
+        return $wishlistResource;
     }
 
     /**
@@ -140,7 +169,14 @@ class WishlistsReader implements WishlistsReaderInterface
         $customerWishlists = $customerWishlistCollectionTransfer->getWishlists();
 
         foreach ($customerWishlists as $wishlistTransfer) {
-            $wishlistResource = $this->wishlistsResourceMapper->mapWishlistTransferToRestResource($wishlistTransfer);
+            $restWishlistsAttributesTransfer = $this->wishlistsResourceMapper->mapWishlistTransferToRestWishlistsAttributes($wishlistTransfer);
+
+            $wishlistResource = $this->restResourceBuilder->createRestResource(
+                WishlistsRestApiConfig::RESOURCE_WISHLISTS,
+                $wishlistTransfer->getUuid(),
+                $restWishlistsAttributesTransfer
+            );
+
             $restResponse->addResource($wishlistResource);
         }
 
