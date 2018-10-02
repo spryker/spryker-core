@@ -14,8 +14,8 @@ use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartCo
 
 class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
-    const FACADE_PRICE = 'FACADE_PRICE';
+    public const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
+    public const FACADE_PRICE = 'FACADE_PRICE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

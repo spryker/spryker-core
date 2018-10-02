@@ -16,10 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MethodController extends AbstractController
 {
-    const ID_METHOD_PARAMETER = 'id-method';
+    public const ID_METHOD_PARAMETER = 'id-method';
 
-    const MESSAGE_UPDATE_SUCCESS = 'Shipment method "%s" was updated successfully.';
-    const MESSAGE_CREATE_SUCCESS = 'Shipment method "%s" was created successfully.';
+    public const MESSAGE_UPDATE_SUCCESS = 'Shipment method "%s" was updated successfully.';
+    public const MESSAGE_CREATE_SUCCESS = 'Shipment method "%s" was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

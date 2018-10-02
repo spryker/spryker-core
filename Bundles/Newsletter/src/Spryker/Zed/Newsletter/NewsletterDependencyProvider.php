@@ -15,10 +15,10 @@ use Spryker\Zed\Newsletter\Dependency\Service\NewsletterToUtilValidateServiceBri
 
 class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_MAIL = 'mail facade';
-    const FACADE_GLOSSARY = 'glossary facade';
+    public const FACADE_MAIL = 'mail facade';
+    public const FACADE_GLOSSARY = 'glossary facade';
 
-    const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

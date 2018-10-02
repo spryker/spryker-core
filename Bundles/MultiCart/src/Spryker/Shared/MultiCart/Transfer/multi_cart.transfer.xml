@@ -22,6 +22,11 @@
 
     <transfer name="QuoteUpdateRequestAttributes">
         <property name="name" type="string"/>
+        <property name="totals" type="Totals" />
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="grandTotal" type="int" />
     </transfer>
 
 </transfers>

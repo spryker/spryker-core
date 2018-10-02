@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ShipmentMethodFilter implements ShipmentMethodFilterInterface
 {
-    const NO_SHIPMENT_METHOD = 'No shipment';
+    public const NO_SHIPMENT_METHOD = 'No shipment';
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods

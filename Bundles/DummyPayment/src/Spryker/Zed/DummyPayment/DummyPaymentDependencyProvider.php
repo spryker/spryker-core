@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 
 class DummyPaymentDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_REFUND = 'refund facade';
+    public const FACADE_REFUND = 'refund facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

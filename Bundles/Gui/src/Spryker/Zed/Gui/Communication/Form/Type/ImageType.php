@@ -18,10 +18,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ImageType extends AbstractType
 {
-    const OPTION_IMAGE_WIDTH = 'image_width';
-    const OPTION_IMAGE_HEIGHT = 'image_height';
-    const OPTION_IMAGE_TITLE = 'image_title';
-    const OPTION_IMAGE_URL = 'image_url';
+    public const OPTION_IMAGE_WIDTH = 'image_width';
+    public const OPTION_IMAGE_HEIGHT = 'image_height';
+    public const OPTION_IMAGE_TITLE = 'image_title';
+    public const OPTION_IMAGE_URL = 'image_url';
 
     /**
      * @param \Symfony\Component\Form\FormView $view

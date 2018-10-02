@@ -159,4 +159,15 @@ interface MultiCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Сhecks the possibility of removing the quote
+     * - If customer has more one quote - returns TRUE
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isQuoteDeletable(): bool;
 }

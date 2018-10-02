@@ -15,7 +15,7 @@ interface ProductSearchEvents
      *
      * @api
      */
-    const SYNCHRONIZATION_FILTER_PUBLISH = 'ProductSearch.synchronization_filter.publish';
+    public const SYNCHRONIZATION_FILTER_PUBLISH = 'ProductSearch.synchronization_filter.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface ProductSearchEvents
      *
      * @api
      */
-    const PRODUCT_SEARCH_CONFIG_PUBLISH = 'ProductSearch.config.publish';
+    public const PRODUCT_SEARCH_CONFIG_PUBLISH = 'ProductSearch.config.publish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface ProductSearchEvents
      *
      * @api
      */
-    const PRODUCT_SEARCH_CONFIG_UNPUBLISH = 'ProductSearch.config.unpublish';
+    public const PRODUCT_SEARCH_CONFIG_UNPUBLISH = 'ProductSearch.config.unpublish';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface ProductSearchEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_CREATE = 'Entity.spy_product_search_attribute.create';
+    public const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_CREATE = 'Entity.spy_product_search_attribute.create';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface ProductSearchEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_UPDATE = 'Entity.spy_product_search_attribute.update';
+    public const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_UPDATE = 'Entity.spy_product_search_attribute.update';
 
     /**
      * Specification
@@ -55,5 +55,5 @@ interface ProductSearchEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE = 'Entity.spy_product_search_attribute.delete';
+    public const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE = 'Entity.spy_product_search_attribute.delete';
 }

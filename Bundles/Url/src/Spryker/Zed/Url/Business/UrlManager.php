@@ -23,7 +23,7 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
  */
 class UrlManager implements UrlManagerInterface
 {
-    const ITEM_TYPE_URL = 'url';
+    public const ITEM_TYPE_URL = 'url';
 
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface

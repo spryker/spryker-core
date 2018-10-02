@@ -16,16 +16,16 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductReviewSearchQueryContainer extends AbstractQueryContainer implements ProductReviewSearchQueryContainerInterface
 {
-    const FIELD_FK_PRODUCT_ABSTRACT = ProductPageSearchTransfer::ID_PRODUCT_ABSTRACT;
-    const FIELD_AVERAGE_RATING = ProductPageSearchTransfer::AVERAGE_RATING;
-    const FIELD_COUNT = ProductPageSearchTransfer::REVIEW_COUNT;
+    public const FIELD_FK_PRODUCT_ABSTRACT = ProductPageSearchTransfer::ID_PRODUCT_ABSTRACT;
+    public const FIELD_AVERAGE_RATING = ProductPageSearchTransfer::AVERAGE_RATING;
+    public const FIELD_COUNT = ProductPageSearchTransfer::REVIEW_COUNT;
 
     /**
      * @api
      *
      * @param array $productReviewIds
      *
-     * @return $this|\Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery
+     * @return \Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery
      */
     public function queryProductReviewSearchByIds(array $productReviewIds)
     {
@@ -55,7 +55,7 @@ class ProductReviewSearchQueryContainer extends AbstractQueryContainer implement
      *
      * @param int $idAbstractProduct
      *
-     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
     public function queryProductReviewRatingByIdAbstractProduct($idAbstractProduct)
     {

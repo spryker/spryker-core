@@ -21,17 +21,17 @@ use Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingBrid
 
 class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRODUCT_SET = 'FACADE_ProductSet';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
-    const FACADE_URL = 'FACADE_URL';
-    const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
-    const FACADE_PRICE_PRODUCT = 'FACADE_PRICE';
-    const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_PRODUCT_SET = 'FACADE_ProductSet';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_URL = 'FACADE_URL';
+    public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+    public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE';
+    public const FACADE_MONEY = 'FACADE_MONEY';
 
-    const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
-    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    public const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
+    public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

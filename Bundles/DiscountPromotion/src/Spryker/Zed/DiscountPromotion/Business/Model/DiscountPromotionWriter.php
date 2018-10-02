@@ -104,7 +104,7 @@ class DiscountPromotionWriter implements DiscountPromotionWriterInterface
     /**
      * @param int $idDiscountPromotion
      *
-     * @return \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion
+     * @return \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion|null
      */
     protected function getDiscountPromotionEntity($idDiscountPromotion)
     {

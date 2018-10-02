@@ -19,15 +19,15 @@ use Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUt
 
 class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
-    const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
-    const SERVICE_UTIL_SYNCHRONIZATION = 'SERVICE_UTIL_SYNCHRONIZATION';
-    const SERVICE_UTIL_ENCODING = 'util encoding service';
-    const FACADE_SEARCH = 'FACADE_SEARCH';
-    const FACADE_PRODUCT_SET = 'FACADE_PRODUCT_SET';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const STORE = 'STORE';
+    public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+    public const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
+    public const SERVICE_UTIL_SYNCHRONIZATION = 'SERVICE_UTIL_SYNCHRONIZATION';
+    public const SERVICE_UTIL_ENCODING = 'util encoding service';
+    public const FACADE_SEARCH = 'FACADE_SEARCH';
+    public const FACADE_PRODUCT_SET = 'FACADE_PRODUCT_SET';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
