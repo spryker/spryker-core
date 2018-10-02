@@ -353,7 +353,7 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
         $this->tester->setDependency(SalesOrderThresholdDependencyProvider::PLUGINS_SALES_ORDER_THRESHOLD_STRATEGY, $this->strategies);
 
         foreach ($this->strategies as $strategy) {
-            $this->getFacade()->saveSalesOrderThresholdType($strategy->toTransfer());
+            $this->tester->haveSalesOrderThresholdType($strategy->toTransfer());
         }
     }
 

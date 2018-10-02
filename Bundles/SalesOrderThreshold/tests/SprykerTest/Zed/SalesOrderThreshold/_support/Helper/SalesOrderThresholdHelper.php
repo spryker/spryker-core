@@ -14,11 +14,13 @@ use Orm\Zed\SalesOrderThreshold\Persistence\Map\SpySalesOrderThresholdTypeTableM
 use Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThresholdQuery;
 use Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThresholdTypeQuery;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class SalesOrderThresholdHelper extends Module
 {
     use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
 
     protected const ERROR_MESSAGE_FOUND = 'Found at least one entry in the database table but database table `%s` was expected to be empty.';
 
@@ -59,7 +61,16 @@ class SalesOrderThresholdHelper extends Module
      */
     public function haveSalesOrderThresholdType(SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer): SalesOrderThresholdTypeTransfer
     {
-        return $this->getFacade()->saveSalesOrderThresholdType($salesOrderThresholdTypeTransfer);
+        $salesOrderThresholdTypeTransfer = $this->getFacade()->saveSalesOrderThresholdType($salesOrderThresholdTypeTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($salesOrderThresholdTypeTransfer) {
+            $this->getSalesOrderThresholdTypeQuery()
+                ->filterByKey($salesOrderThresholdTypeTransfer->getKey())
+                ->filterByThresholdGroup($salesOrderThresholdTypeTransfer->getThresholdGroup())
+                ->delete();
+        });
+
+        return $salesOrderThresholdTypeTransfer;
     }
 
     /**

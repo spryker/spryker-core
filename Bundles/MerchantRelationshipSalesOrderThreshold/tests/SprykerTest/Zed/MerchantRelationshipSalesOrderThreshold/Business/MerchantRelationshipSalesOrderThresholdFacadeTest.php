@@ -37,11 +37,6 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends MerchantRelation
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface[]
-     */
-    protected $strategies;
-
-    /**
      * @return void
      */
     public function testSaveMerchantRelationshipHardAndSoftThresholds(): void
@@ -142,15 +137,15 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends MerchantRelation
      */
     protected function setupDependencies(): void
     {
-        $this->strategies = [
+        $strategies = [
             new HardMinimumThresholdStrategyPlugin(),
             new SoftMinimumThresholdWithMessageStrategyPlugin(),
         ];
 
-        foreach ($this->strategies as $strategy) {
+        foreach ($strategies as $strategy) {
             $this->tester->haveSalesOrderThresholdType($strategy->toTransfer());
         }
 
-        $this->tester->setDependency(SalesOrderThresholdDependencyProvider::PLUGINS_SALES_ORDER_THRESHOLD_STRATEGY, $this->strategies);
+        $this->tester->setDependency(SalesOrderThresholdDependencyProvider::PLUGINS_SALES_ORDER_THRESHOLD_STRATEGY, $strategies);
     }
 }

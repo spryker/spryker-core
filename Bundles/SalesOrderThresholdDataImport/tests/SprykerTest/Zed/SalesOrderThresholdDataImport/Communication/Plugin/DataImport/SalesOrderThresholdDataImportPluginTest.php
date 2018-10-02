@@ -74,11 +74,13 @@ class SalesOrderThresholdDataImportPluginTest extends Unit
      */
     protected function setupDependencies(): void
     {
-        $this->strategies = [
+        $strategies = [
             new HardMinimumThresholdStrategyPlugin(),
             new SoftMinimumThresholdWithMessageStrategyPlugin(),
         ];
 
-        $this->tester->setDependency(SalesOrderThresholdDependencyProvider::PLUGINS_SALES_ORDER_THRESHOLD_STRATEGY, $this->strategies);
+        $this->tester->getFacade();
+
+        $this->tester->setDependency(SalesOrderThresholdDependencyProvider::PLUGINS_SALES_ORDER_THRESHOLD_STRATEGY, $strategies);
     }
 }
