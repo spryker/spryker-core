@@ -42,7 +42,7 @@ class CustomerTable extends AbstractTable
     protected $utilDateTimeService;
 
     /**
-     * @var \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface
+     * @var \Spryker\Zed\Customer\Communication\Table\CustomerTablePluginExecutor\CustomerTablePluginExecutorInterface
      */
     protected $customerTablePluginExecutor;
 
