@@ -102,6 +102,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
         return new QuoteToShoppingListConverter(
             $this->createShoppingListResolver(),
             $this->getEntityManager(),
+            $this->getRepository(),
             $this->getPersistentCartFacade(),
             $this->getQuoteItemExpanderPlugins()
         );

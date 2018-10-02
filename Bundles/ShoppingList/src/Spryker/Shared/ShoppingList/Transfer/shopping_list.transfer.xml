@@ -111,6 +111,7 @@
 
     <transfer name="ShoppingListFromCartRequest">
         <property name="shoppingListName" type="string" />
+        <property name="idShoppingList" type="int" />
         <property name="idQuote" type="int" />
         <property name="customer" type="Customer" />
     </transfer>
