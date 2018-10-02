@@ -7,17 +7,23 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication;
 
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleCreateForm;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleChoiceFormType;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProvider;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProviderInterface;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyUserRoleFormDataProvider;
 use Spryker\Zed\CompanyRoleGui\Communication\Table\CompanyRoleTable;
 use Spryker\Zed\CompanyRoleGui\CompanyRoleGuiDependencyProvider;
+use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
+use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToGlossaryFacadeInterface;
+use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToPermissionFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
-use Generated\Shared\Transfer\CompanyRoleTransfer;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleCreateForm;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
 
 class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -51,7 +57,7 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCompanyRoleTable(): CompanyRoleTable
     {
         return new CompanyRoleTable(
-            $this->getPropelCompanyRoleQuery()
+            $this->getCompanyRolePropelQuery()
         );
     }
 
@@ -62,7 +68,6 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CompanyRoleGuiDependencyProvider::PROPEL_QUERY_COMPANY_ROLE);
     }
-
 
     /**
      * @return \Symfony\Component\Form\FormInterface
