@@ -8,11 +8,9 @@
 namespace Spryker\Zed\Category\Business;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
-use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -30,7 +28,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return bool
      */
-    public function hasCategoryNode(string $categoryName, LocaleTransfer $localeTransfer): bool
+    public function hasCategoryNode($categoryName, LocaleTransfer $localeTransfer)
     {
         return $this
             ->getFactory()
@@ -47,7 +45,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
      */
-    public function getNodeById(int $idNode): NodeTransfer
+    public function getNodeById($idNode)
     {
         $nodeEntity = $this
             ->getFactory()
@@ -70,7 +68,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return int
      */
-    public function getCategoryNodeIdentifier(string $categoryName, LocaleTransfer $localeTransfer): int
+    public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $localeTransfer)
     {
         return $this
             ->getFactory()
@@ -88,7 +86,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return int
      */
-    public function getCategoryIdentifier(string $categoryName, LocaleTransfer $localeTransfer): int
+    public function getCategoryIdentifier($categoryName, LocaleTransfer $localeTransfer)
     {
         return $this
             ->getFactory()
@@ -105,7 +103,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllNodesByIdCategory(int $idCategory): array
+    public function getAllNodesByIdCategory($idCategory)
     {
         $nodeEntities = $this
             ->getFactory()
@@ -127,7 +125,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getMainNodesByIdCategory(int $idCategory): array
+    public function getMainNodesByIdCategory($idCategory)
     {
         $nodeEntities = $this
             ->getFactory()
@@ -149,7 +147,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getNotMainNodesByIdCategory(int $idCategory): array
+    public function getNotMainNodesByIdCategory($idCategory)
     {
         $nodeEntities = $this
             ->getFactory()
@@ -174,7 +172,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function read(int $idCategory): CategoryTransfer
+    public function read($idCategory)
     {
         return $this
             ->getFactory()
@@ -192,7 +190,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return int
      */
-    public function createCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null): int
+    public function createCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         return $this
             ->getFactory()
@@ -212,7 +210,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer): void
+    public function create(CategoryTransfer $categoryTransfer)
     {
         $this
             ->getFactory()
@@ -230,7 +228,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null): void
+    public function updateCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $this
             ->getFactory()
@@ -252,7 +250,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer): void
+    public function update(CategoryTransfer $categoryTransfer)
     {
         $this
             ->getFactory()
@@ -270,7 +268,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function addCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): void
+    public function addCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
     {
         $this
             ->getFactory()
@@ -287,7 +285,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function deleteCategory(int $idCategory): void
+    public function deleteCategory($idCategory)
     {
         $this
             ->getFactory()
@@ -306,7 +304,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function delete(int $idCategory): void
+    public function delete($idCategory)
     {
         $this
             ->getFactory()
@@ -324,7 +322,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function deleteNodeById(int $idCategoryNode, int $idChildrenDestinationNode): void
+    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode)
     {
         $this->getFactory()
             ->createCategoryNode()
@@ -342,7 +340,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return int
      */
-    public function createCategoryNode(NodeTransfer $nodeTransfer, ?LocaleTransfer $localeTransfer = null, bool $createUrlPath = true): int
+    public function createCategoryNode(NodeTransfer $nodeTransfer, ?LocaleTransfer $localeTransfer = null, $createUrlPath = true)
     {
         return $this
             ->getFactory()
@@ -360,7 +358,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, ?LocaleTransfer $localeTransfer = null): void
+    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $this
             ->getFactory()
@@ -378,7 +376,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNodeOrder(int $idCategoryNode, int $position): void
+    public function updateCategoryNodeOrder($idCategoryNode, $position)
     {
         $this
             ->getFactory()
@@ -397,7 +395,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return int
      */
-    public function deleteNode(int $idNode, LocaleTransfer $localeTransfer, bool $deleteChildren = false): int
+    public function deleteNode($idNode, LocaleTransfer $localeTransfer, $deleteChildren = false)
     {
         return $this
             ->getFactory()
@@ -427,7 +425,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getRootNodes(): array
+    public function getRootNodes()
     {
         $rootNodes = $this
             ->getFactory()
@@ -450,7 +448,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return array
      */
-    public function getTree(int $idCategory, LocaleTransfer $localeTransfer): array
+    public function getTree($idCategory, LocaleTransfer $localeTransfer)
     {
         return $this
             ->getFactory()
@@ -468,7 +466,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function getChildren(int $idNode, LocaleTransfer $localeTransfer): ObjectCollection
+    public function getChildren($idNode, LocaleTransfer $localeTransfer)
     {
         return $this
             ->getFactory()
@@ -487,7 +485,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return array
      */
-    public function getParents(int $idNode, LocaleTransfer $localeTransfer, bool $excludeStartNode = true): array
+    public function getParents($idNode, LocaleTransfer $localeTransfer, $excludeStartNode = true)
     {
         return $this
             ->getFactory()
@@ -505,7 +503,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return array
      */
-    public function getTreeNodeChildrenByIdCategoryAndLocale(int $idCategory, LocaleTransfer $localeTransfer): array
+    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer)
     {
         return $this
             ->getFactory()
@@ -523,7 +521,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return array
      */
-    public function getSubTreeByIdCategoryNodeAndLocale(int $idCategoryNode, LocaleTransfer $localeTransfer): array
+    public function getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, LocaleTransfer $localeTransfer)
     {
         return $this
             ->getFactory()
@@ -538,7 +536,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function rebuildClosureTable(): void
+    public function rebuildClosureTable()
     {
         $this
             ->getFactory()
@@ -555,7 +553,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return string
      */
-    public function generatePath(array $pathTokens): string
+    public function generatePath(array $pathTokens)
     {
         return $this
             ->getFactory()
@@ -573,7 +571,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function getCategoryByKey(string $categoryKey, int $idLocale): CategoryTransfer
+    public function getCategoryByKey($categoryKey, $idLocale)
     {
         return $this
             ->getFactory()
@@ -590,7 +588,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function touchCategoryActive(int $idCategory): void
+    public function touchCategoryActive($idCategory)
     {
         $this
             ->getFactory()
@@ -605,7 +603,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function syncCategoryTemplate(): void
+    public function syncCategoryTemplate()
     {
         $this->getFactory()
             ->createCategoryTemplateSync()
@@ -619,7 +617,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
      */
-    public function findCategoryTemplateByName(string $name): ?CategoryTemplateTransfer
+    public function findCategoryTemplateByName($name)
     {
         return $this->getFactory()
             ->createCategoryTemplateReader()

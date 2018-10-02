@@ -8,11 +8,9 @@
 namespace Spryker\Zed\Category\Business;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
-use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 
 interface CategoryFacadeInterface
 {
@@ -26,7 +24,7 @@ interface CategoryFacadeInterface
      *
      * @return bool
      */
-    public function hasCategoryNode(string $categoryName, LocaleTransfer $localeTransfer): bool;
+    public function hasCategoryNode($categoryName, LocaleTransfer $localeTransfer);
 
     /**
      * @api
@@ -37,7 +35,7 @@ interface CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
      */
-    public function getNodeById(int $idNode): NodeTransfer;
+    public function getNodeById($idNode);
 
     /**
      * @api
@@ -49,7 +47,7 @@ interface CategoryFacadeInterface
      *
      * @return int
      */
-    public function getCategoryNodeIdentifier(string $categoryName, LocaleTransfer $localeTransfer): int;
+    public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $localeTransfer);
 
     /**
      * @api
@@ -61,7 +59,7 @@ interface CategoryFacadeInterface
      *
      * @return int
      */
-    public function getCategoryIdentifier(string $categoryName, LocaleTransfer $localeTransfer): int;
+    public function getCategoryIdentifier($categoryName, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:
@@ -75,7 +73,7 @@ interface CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllNodesByIdCategory(int $idCategory): array;
+    public function getAllNodesByIdCategory($idCategory);
 
     /**
      * @api
@@ -86,7 +84,7 @@ interface CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getMainNodesByIdCategory(int $idCategory): array;
+    public function getMainNodesByIdCategory($idCategory);
 
     /**
      * @api
@@ -97,7 +95,7 @@ interface CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getNotMainNodesByIdCategory(int $idCategory): array;
+    public function getNotMainNodesByIdCategory($idCategory);
 
     /**
      * Specification:
@@ -111,7 +109,7 @@ interface CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function read(int $idCategory): CategoryTransfer;
+    public function read($idCategory);
 
     /**
      * @api
@@ -123,7 +121,7 @@ interface CategoryFacadeInterface
      *
      * @return int
      */
-    public function createCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null): int;
+    public function createCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:
@@ -144,7 +142,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer): void;
+    public function create(CategoryTransfer $categoryTransfer);
 
     /**
      * @api
@@ -156,7 +154,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null): void;
+    public function updateCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:
@@ -195,7 +193,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer): void;
+    public function update(CategoryTransfer $categoryTransfer);
 
     /**
      * @api
@@ -207,7 +205,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function addCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): void;
+    public function addCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer);
 
     /**
      * @api
@@ -218,7 +216,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function deleteCategory(int $idCategory): void;
+    public function deleteCategory($idCategory);
 
     /**
      * Specification:
@@ -240,7 +238,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function delete(int $idCategory): void;
+    public function delete($idCategory);
 
     /**
      * Specification:
@@ -254,7 +252,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function deleteNodeById(int $idCategoryNode, int $idChildrenDestinationNode): void;
+    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
 
     /**
      * @api
@@ -267,7 +265,7 @@ interface CategoryFacadeInterface
      *
      * @return int
      */
-    public function createCategoryNode(NodeTransfer $nodeTransfer, ?LocaleTransfer $localeTransfer = null, bool $createUrlPath = true): int;
+    public function createCategoryNode(NodeTransfer $nodeTransfer, ?LocaleTransfer $localeTransfer = null, $createUrlPath = true);
 
     /**
      * @api
@@ -279,7 +277,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, ?LocaleTransfer $localeTransfer = null): void;
+    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:
@@ -294,7 +292,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNodeOrder(int $idCategoryNode, int $position): void;
+    public function updateCategoryNodeOrder($idCategoryNode, $position);
 
     /**
      * @api
@@ -307,14 +305,14 @@ interface CategoryFacadeInterface
      *
      * @return int
      */
-    public function deleteNode(int $idNode, LocaleTransfer $localeTransfer, bool $deleteChildren = false): int;
+    public function deleteNode($idNode, LocaleTransfer $localeTransfer, $deleteChildren = false);
 
     /**
      * @api
      *
      * @deprecated Will be removed with next major release
      *
-     * @return string|false
+     * @return bool
      */
     public function renderCategoryTreeVisual();
 
@@ -325,7 +323,7 @@ interface CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getRootNodes(): array;
+    public function getRootNodes();
 
     /**
      * @api
@@ -337,7 +335,7 @@ interface CategoryFacadeInterface
      *
      * @return array
      */
-    public function getTree(int $idCategory, LocaleTransfer $localeTransfer): array;
+    public function getTree($idCategory, LocaleTransfer $localeTransfer);
 
     /**
      * @api
@@ -347,9 +345,9 @@ interface CategoryFacadeInterface
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return array
      */
-    public function getChildren(int $idNode, LocaleTransfer $localeTransfer): ObjectCollection;
+    public function getChildren($idNode, LocaleTransfer $localeTransfer);
 
     /**
      * @api
@@ -362,7 +360,7 @@ interface CategoryFacadeInterface
      *
      * @return array
      */
-    public function getParents(int $idNode, LocaleTransfer $localeTransfer, bool $excludeStartNode = true): array;
+    public function getParents($idNode, LocaleTransfer $localeTransfer, $excludeStartNode = true);
 
     /**
      * Specification:
@@ -378,14 +376,14 @@ interface CategoryFacadeInterface
      *
      * @return array
      */
-    public function getTreeNodeChildrenByIdCategoryAndLocale(int $idCategory, LocaleTransfer $localeTransfer): array;
+    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer);
 
     /**
      * @api
      *
      * @return void
      */
-    public function rebuildClosureTable(): void;
+    public function rebuildClosureTable();
 
     /**
      * Specification:
@@ -400,19 +398,19 @@ interface CategoryFacadeInterface
      *
      * @return string
      */
-    public function generatePath(array $pathTokens): string;
+    public function generatePath(array $pathTokens);
 
     /**
      * @api
      *
      * @deprecated Will be removed with next major release
      *
-     * @param string $categoryKey
+     * @param array $categoryKey
      * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function getCategoryByKey(string $categoryKey, int $idLocale): CategoryTransfer;
+    public function getCategoryByKey($categoryKey, $idLocale);
 
     /**
      * Specification:
@@ -425,7 +423,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function touchCategoryActive(int $idCategory): void;
+    public function touchCategoryActive($idCategory);
 
     /**
      * Specification:
@@ -440,7 +438,7 @@ interface CategoryFacadeInterface
      *
      * @return array
      */
-    public function getSubTreeByIdCategoryNodeAndLocale(int $idCategoryNode, LocaleTransfer $localeTransfer): array;
+    public function getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:
@@ -452,7 +450,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function syncCategoryTemplate(): void;
+    public function syncCategoryTemplate();
 
     /**
      * Specification:
@@ -466,7 +464,7 @@ interface CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
      */
-    public function findCategoryTemplateByName(string $name): ?CategoryTemplateTransfer;
+    public function findCategoryTemplateByName($name);
 
     /**
      * Specification:

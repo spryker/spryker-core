@@ -13,14 +13,13 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Category\Business\Model\Category\CategoryInterface;
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface;
-use Spryker\Zed\Category\Business\Model\CategoryInterface as BaseCategoryInterface;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
-class Category implements BaseCategoryInterface
+class Category
 {
     /**
      * @var \Spryker\Zed\Category\Business\Model\Category\CategoryInterface
@@ -105,7 +104,7 @@ class Category implements BaseCategoryInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function read(int $idCategory): CategoryTransfer
+    public function read($idCategory)
     {
         $categoryTransfer = new CategoryTransfer();
 
@@ -122,7 +121,7 @@ class Category implements BaseCategoryInterface
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer): void
+    public function create(CategoryTransfer $categoryTransfer)
     {
         $this->queryContainer->getConnection()->beginTransaction();
 
@@ -145,7 +144,7 @@ class Category implements BaseCategoryInterface
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer): void
+    public function update(CategoryTransfer $categoryTransfer)
     {
         $this->queryContainer->getConnection()->beginTransaction();
 
@@ -169,7 +168,7 @@ class Category implements BaseCategoryInterface
      *
      * @return void
      */
-    protected function runUpdatePlugins(CategoryTransfer $categoryTransfer): void
+    protected function runUpdatePlugins(CategoryTransfer $categoryTransfer)
     {
         foreach ($this->updatePlugins as $updatePlugin) {
             $updatePlugin->update($categoryTransfer);
@@ -181,7 +180,7 @@ class Category implements BaseCategoryInterface
      *
      * @return void
      */
-    public function delete(int $idCategory): void
+    public function delete($idCategory)
     {
         $this->queryContainer->getConnection()->beginTransaction();
 
@@ -229,7 +228,7 @@ class Category implements BaseCategoryInterface
      *
      * @return void
      */
-    protected function runDeletePlugins(int $idCategory): void
+    protected function runDeletePlugins($idCategory)
     {
         foreach ($this->deletePlugins as $deletePlugin) {
             $deletePlugin->delete($idCategory);
@@ -242,7 +241,7 @@ class Category implements BaseCategoryInterface
      *
      * @return void
      */
-    protected function triggerEvent(string $eventName, CategoryTransfer $categoryTransfer): void
+    protected function triggerEvent($eventName, CategoryTransfer $categoryTransfer)
     {
         if ($this->eventFacade === null) {
             return;
@@ -256,7 +255,7 @@ class Category implements BaseCategoryInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    protected function createCategoryTransfer(int $idCategory): CategoryTransfer
+    protected function createCategoryTransfer($idCategory)
     {
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setIdCategory($idCategory);
