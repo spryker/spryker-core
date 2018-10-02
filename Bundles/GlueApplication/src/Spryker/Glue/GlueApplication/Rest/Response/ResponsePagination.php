@@ -59,10 +59,10 @@ class ResponsePagination implements ResponsePaginationInterface
         }
 
         $offsetLinks = [
-            RestLinkInterface::LINK_NEXT => sprintf(self::LINK_PATTERN, $domain, $pageOffsetsTransfer->getNextOffset(), $limit),
-            RestLinkInterface::LINK_PREV => sprintf(self::LINK_PATTERN, $domain, $pageOffsetsTransfer->getPrevOffset(), $limit),
-            RestLinkInterface::LINK_LAST => sprintf(self::LINK_PATTERN, $domain, $pageOffsetsTransfer->getLastOffset(), $limit),
-            RestLinkInterface::LINK_FIRST => sprintf(self::LINK_PATTERN, $domain, 0, $limit),
+            RestLinkInterface::LINK_NEXT => sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getNextOffset(), $limit),
+            RestLinkInterface::LINK_PREV => sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getPrevOffset(), $limit),
+            RestLinkInterface::LINK_LAST => sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getLastOffset(), $limit),
+            RestLinkInterface::LINK_FIRST => sprintf(static::LINK_PATTERN, $domain, 0, $limit),
         ];
 
         return array_merge(
