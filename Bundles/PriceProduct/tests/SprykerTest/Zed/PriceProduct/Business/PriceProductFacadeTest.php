@@ -101,18 +101,17 @@ class PriceProductFacadeTest extends Unit
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
-        $priceProductTransfer1 = $this->createProductWithAmount(50, 40);
-        $priceProductTransfer2 = $this->createProductWithAmount(
+        $priceProductTransfer = $this->createProductWithAmount(
             100,
             90,
-            $priceProductTransfer1->getSkuProductAbstract(),
-            $priceProductTransfer1->getSkuProduct(),
+            '',
+            '',
             self::USD_ISO_CODE
         );
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setCurrencyIsoCode(self::USD_ISO_CODE)
-            ->setSku($priceProductTransfer2->getSkuProduct());
+            ->setSku($priceProductTransfer->getSkuProduct());
 
         $price = $priceProductFacade->findPriceFor($priceProductFilterTransfer);
 

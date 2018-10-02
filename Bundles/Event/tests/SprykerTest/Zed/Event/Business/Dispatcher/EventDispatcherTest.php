@@ -59,6 +59,33 @@ class EventDispatcherTest extends Unit
      */
     public function testTriggerWhenAsynchronousEventTriggeredShouldWriteToQueue()
     {
+        $transferMocks = [];
+        $transferMocks[] = $this->createTransferMock();
+        $transferMocks[] = $this->createTransferMock();
+
+        $eventCollection = $this->createEventCollection();
+        $eventListerMock = $this->createEventListenerMock();
+
+        $eventListerMock
+            ->expects($this->never())
+            ->method('handle');
+
+        $eventCollection->addListenerQueued(static::TEST_EVENT_NAME, $eventListerMock);
+
+        $queueProducerMock = $this->createQueueProducerMock();
+        $queueProducerMock->expects($this->once())
+            ->method('enqueueListenerBulk');
+
+        $eventDispatcher = $this->createEventDispatcher($eventCollection, $queueProducerMock);
+
+        $eventDispatcher->triggerBulk(static::TEST_EVENT_NAME, $transferMocks);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerBulkWhenAsynchronousEventTriggeredShouldWriteToQueue()
+    {
         $eventCollection = $this->createEventCollection();
         $transferMock = $this->createTransferMock();
         $eventListerMock = $this->createEventListenerMock();

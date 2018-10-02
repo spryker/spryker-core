@@ -17,6 +17,7 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
+use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
@@ -28,6 +29,7 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
+ * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  */
 class SalesBusinessFactory extends AbstractBusinessFactory
@@ -110,6 +112,17 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydrator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader
+     */
+    public function createOrderRepositoryReader()
+    {
+        return new OrderRepositoryReader(
+            $this->createOrderHydrator(),
+            $this->getRepository()
         );
     }
 
