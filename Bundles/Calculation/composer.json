@@ -1,5 +1,6 @@
 {
   "name": "spryker/calculation",
+  "type": "library",
   "description": "Calculation module",
   "license": "proprietary",
   "require": {
@@ -10,7 +11,7 @@
   },
   "require-dev": {
     "spryker/checkout": "*",
-    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

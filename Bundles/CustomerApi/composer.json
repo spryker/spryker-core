@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-api",
+  "type": "library",
   "description": "CustomerApi module",
   "license": "proprietary",
   "require": {
@@ -13,12 +14,8 @@
     "spryker/util-date-time": "^1.0.0"
   },
   "require-dev": {
-    "spryker/application": "*",
-    "spryker/assertion": "*",
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/auth-mail-connector",
+  "type": "library",
   "description": "AuthMailConnector module",
   "license": "proprietary",
   "require": {
@@ -8,9 +9,7 @@
     "spryker/mail": "^4.0.0"
   },
   "require-dev": {
-    "spryker/auth": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/auth": "*"
   },
   "suggest": {
     "spryker/auth": "If you want to use Auth plugins."

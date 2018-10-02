@@ -15,13 +15,13 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
-    const FACADE_SEARCH = 'FACADE_SEARCH';
-    const FACADE_CMS = 'FACADE_CMS';
+    public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    public const FACADE_SEARCH = 'FACADE_SEARCH';
+    public const FACADE_CMS = 'FACADE_CMS';
 
-    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+    public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
-    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

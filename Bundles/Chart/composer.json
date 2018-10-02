@@ -1,5 +1,6 @@
 {
   "name": "spryker/chart",
+  "type": "library",
   "description": "Chart module",
   "license": "proprietary",
   "require": {

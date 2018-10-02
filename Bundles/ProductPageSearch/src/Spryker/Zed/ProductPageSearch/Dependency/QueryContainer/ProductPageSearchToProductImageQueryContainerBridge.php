@@ -15,8 +15,6 @@ class ProductPageSearchToProductImageQueryContainerBridge implements ProductPage
     protected $productImageQueryContainer;
 
     /**
-     * ProductPageSearchToProductImageQueryContainerBridge constructor.
-     *
      * @param \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface $productImageQueryContainer
      */
     public function __construct($productImageQueryContainer)
@@ -40,5 +38,13 @@ class ProductPageSearchToProductImageQueryContainerBridge implements ProductPage
     public function queryProductImageSetToProductImage()
     {
         return $this->productImageQueryContainer->queryProductImageSetToProductImage();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryProductImageSet()
+    {
+        return $this->productImageQueryContainer->queryProductImageSet();
     }
 }

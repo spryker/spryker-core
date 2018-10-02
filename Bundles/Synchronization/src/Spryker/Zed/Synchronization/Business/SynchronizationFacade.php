@@ -45,9 +45,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
-     * Specification:
-     * - Writes json encoded data to search
-     * - Will not write if the data is outdated compare to search timestamp
+     * {@inheritdoc}
      *
      * @api
      *
@@ -62,9 +60,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
-     * Specification:
-     * - Deletes all data keys from search
-     * - Will not delete if the data is outdated compare to search timestamp
+     * {@inheritdoc}
      *
      * @api
      *
@@ -76,5 +72,49 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     public function searchDelete(array $data, $queueName)
     {
         $this->getFactory()->createSearchManager()->delete($data, $queueName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function processSearchMessages(array $queueMessageTransfers): array
+    {
+        return $this->getFactory()
+            ->createSearchQueueMessageProcessor()
+            ->processMessages($queueMessageTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function processStorageMessages(array $queueMessageTransfers): array
+    {
+        return $this->getFactory()
+            ->createStorageQueueMessageProcessor()
+            ->processMessages($queueMessageTransfers);
+    }
+
+    /**
+     * @api
+     *
+     * @param string[] $resources
+     *
+     * @return void
+     */
+    public function executeResolvedPluginsBySources(array $resources)
+    {
+        $this->getFactory()->createExporterPluginResolver()->executeResolvedPluginsBySources($resources);
     }
 }

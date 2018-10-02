@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductStorage\Persistence;
 
+use Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsBlockProductStorageQueryContainerInterface extends QueryContainerInterface
@@ -25,7 +26,16 @@ interface CmsBlockProductStorageQueryContainerInterface extends QueryContainerIn
      *
      * @param array $productIds
      *
-     * @return $this|\Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
     public function queryCmsBlockProducts(array $productIds);
+
+    /**
+     * @api
+     *
+     * @param int[] $cmsBlockProductIds
+     *
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     */
+    public function queryCmsBlockProductsByIds(array $cmsBlockProductIds): SpyCmsBlockProductConnectorQuery;
 }

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-attribute-gui",
+  "type": "library",
   "description": "ProductAttributeGui module",
   "license": "proprietary",
   "require": {
@@ -13,8 +14,10 @@
     "spryker/util-text": "^1.2.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/application": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {

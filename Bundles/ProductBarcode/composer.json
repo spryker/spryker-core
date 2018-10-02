@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-barcode",
+  "type": "library",
   "description": "ProductBarcode module",
   "license": "proprietary",
   "require": {
@@ -9,7 +10,9 @@
     "spryker/product": "^6.0.0"
   },
   "require-dev": {
+    "spryker/barcode-extension": "*",
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

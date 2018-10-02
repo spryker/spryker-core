@@ -31,13 +31,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class CartFacadeTest extends Unit
 {
-    const PRICE_TYPE_DEFAULT = 'DEFAULT';
-    const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
-    const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
-    const DUMMY_1_PRICE = 99;
-    const DUMMY_2_SKU_ABSTRACT_PRODUCT = 'ABSTRACT2';
-    const DUMMY_2_SKU_CONCRETE_PRODUCT = 'CONCRETE2';
-    const DUMMY_2_PRICE = 100;
+    public const PRICE_TYPE_DEFAULT = 'DEFAULT';
+    public const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
+    public const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
+    public const DUMMY_1_PRICE = 99;
+    public const DUMMY_2_SKU_ABSTRACT_PRODUCT = 'ABSTRACT2';
+    public const DUMMY_2_SKU_CONCRETE_PRODUCT = 'CONCRETE2';
+    public const DUMMY_2_PRICE = 100;
 
     /**
      * @var \Spryker\Zed\Cart\Business\CartFacadeInterface
@@ -197,6 +197,53 @@ class CartFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
         $changedItem = $cartItems[0];
         $this->assertEquals(2, $changedItem->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItem(): void
+    {
+        // Arrange
+        $quoteTransfer = new QuoteTransfer();
+        $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(3)
+            ->setUnitGrossPrice(1)
+            ->setGroupKeyPrefix(uniqid('', true));
+
+        $quoteTransfer->addItem($cartItem);
+
+        // Act
+        $this->cartFacade->cleanUpItems($quoteTransfer);
+
+        // Assert
+        $this->assertNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItemIfMoreThanOne(): void
+    {
+        // Arrange
+        $quoteTransfer = new QuoteTransfer();
+        $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(3)
+            ->setUnitGrossPrice(1)
+            ->setGroupKeyPrefix(uniqid('', true));
+
+        $newItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(1)
+            ->setUnitGrossPrice(1);
+
+        $quoteTransfer->addItem($cartItem);
+        $quoteTransfer->addItem($newItem);
+
+        // Act
+        $this->cartFacade->cleanUpItems($quoteTransfer);
+
+        // Assert
+        $this->assertNotNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
     }
 
     /**

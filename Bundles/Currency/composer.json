@@ -1,5 +1,6 @@
 {
   "name": "spryker/currency",
+  "type": "library",
   "description": "Currency module",
   "license": "proprietary",
   "require": {
@@ -15,17 +16,16 @@
     "spryker/zed-request": "^3.2.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
-    "spryker/transfer": "*",
     "spryker/twig": "*"
   },
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider.",
-    "spryker/twig": "If you want to use currency in Twig.",
-    "spryker/zed-request": "If you want to use Zed request meta data provider plugin which adds currency to each request."
+    "spryker/twig": "If you want to use currency in Twig."
   },
   "autoload": {
     "psr-4": {

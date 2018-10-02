@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\CategoryPageSearch;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 class CategoryPageSearchConstants
 {
     /**
@@ -15,7 +18,7 @@ class CategoryPageSearchConstants
      *
      * @api
      */
-    const CATEGORY_SYNC_SEARCH_QUEUE = 'sync.search.category';
+    public const CATEGORY_SYNC_SEARCH_QUEUE = 'sync.search.category';
 
     /**
      * Specification:
@@ -23,7 +26,7 @@ class CategoryPageSearchConstants
      *
      * @api
      */
-    const CATEGORY_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.category.error';
+    public const CATEGORY_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.category.error';
 
     /**
      * Specification:
@@ -31,5 +34,5 @@ class CategoryPageSearchConstants
      *
      * @api
      */
-    const CATEGORY_NODE_RESOURCE_NAME = 'category_node';
+    public const CATEGORY_NODE_RESOURCE_NAME = 'category_node';
 }

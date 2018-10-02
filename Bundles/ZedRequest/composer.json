@@ -1,5 +1,6 @@
 {
   "name": "spryker/zed-request",
+  "type": "library",
   "description": "ZedRequest module",
   "license": "proprietary",
   "require": {
@@ -15,7 +16,7 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

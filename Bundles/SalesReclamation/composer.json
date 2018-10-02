@@ -1,5 +1,6 @@
 {
   "name": "spryker/sales-reclamation",
+  "type": "library",
   "description": "SalesReclamation module",
   "license": "proprietary",
   "require": {

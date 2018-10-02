@@ -37,12 +37,29 @@ class PriceProductStorageClient extends AbstractClient implements PriceProductSt
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getPriceProductConcreteTransfers(int $idProductConcrete): array
     {
         return $this->getFactory()
             ->createPriceConcreteStorageReader()
             ->findPriceProductConcreteTransfers($idProductConcrete);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getResolvedPriceProductConcreteTransfers(int $idProductConcrete, int $idProductAbstract): array
+    {
+        return $this->getFactory()
+            ->createPriceConcreteResolver()
+            ->resolvePriceProductConcrete($idProductConcrete, $idProductAbstract);
     }
 }

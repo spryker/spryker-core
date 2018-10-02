@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model;
@@ -19,7 +19,7 @@ class CompanyBusinessUnitWriterStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $companyBusinessUnitEntity = SpyCompanyBusinessUnitQuery::create()
             ->filterByKey($dataSet[CompanyBusinessUnitDataSet::BUSINESS_UNIT_KEY])

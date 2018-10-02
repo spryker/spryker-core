@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-option",
+  "type": "library",
   "description": "ProductOption module",
   "license": "proprietary",
   "require": {
@@ -26,16 +27,17 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/calculation": "*",
     "spryker/checkout": "*",
-    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "suggest": {
-    "spryker/checkout": "If checkout plugins are needed.",
-    "spryker/calculation": "If tax rate calculation for options is needed."
+    "spryker/calculation": "If tax rate calculation for options is needed.",
+    "spryker/checkout": "If checkout plugins are needed."
   },
   "autoload": {
     "psr-4": {

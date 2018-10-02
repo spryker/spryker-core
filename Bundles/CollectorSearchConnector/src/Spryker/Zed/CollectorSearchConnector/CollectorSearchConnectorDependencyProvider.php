@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 
 class CollectorSearchConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_COLLECTOR = 'collector facade';
+    public const FACADE_COLLECTOR = 'collector facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

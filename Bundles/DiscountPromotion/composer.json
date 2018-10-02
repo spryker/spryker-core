@@ -1,11 +1,12 @@
 {
   "name": "spryker/discount-promotion",
+  "type": "library",
   "description": "DiscountPromotion module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/availability": "^5.0.3 || ^6.0.0",
-    "spryker/cart-extension": "^1.0.0",
+    "spryker/cart-extension": "^1.0.0 || ^2.0.0",
     "spryker/discount": "^4.5.0 || ^5.0.0 || ^6.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
@@ -19,9 +20,7 @@
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*",
-    "spryker/transfer": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/calculation": "Used by plugin to reset promotional items.",

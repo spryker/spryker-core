@@ -13,11 +13,11 @@ use Spryker\Zed\Kernel\Container;
 
 class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CHECKOUT_PRE_CONDITIONS = 'checkout_pre_conditions';
-    const CHECKOUT_POST_HOOKS = 'checkout_post_hooks';
-    const CHECKOUT_ORDER_SAVERS = 'checkout_order_savers';
-    const CHECKOUT_PRE_SAVE_HOOKS = 'checkout_pre_save_hooks';
-    const FACADE_OMS = 'FACADE_OMS';
+    public const CHECKOUT_PRE_CONDITIONS = 'checkout_pre_conditions';
+    public const CHECKOUT_POST_HOOKS = 'checkout_post_hooks';
+    public const CHECKOUT_ORDER_SAVERS = 'checkout_order_savers';
+    public const CHECKOUT_PRE_SAVE_HOOKS = 'checkout_pre_save_hooks';
+    public const FACADE_OMS = 'FACADE_OMS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

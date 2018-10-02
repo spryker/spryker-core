@@ -14,19 +14,19 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class IndexMapGenerator implements IndexMapGeneratorInterface
 {
-    const TWIG_TEMPLATES_LOCATION = '/Templates/';
+    public const TWIG_TEMPLATES_LOCATION = '/Templates/';
 
-    const CLASS_NAME_SUFFIX = 'IndexMap';
+    public const CLASS_NAME_SUFFIX = 'IndexMap';
 
-    const CLASS_EXTENSION = '.php';
+    public const CLASS_EXTENSION = '.php';
 
-    const PROPERTIES = 'properties';
+    public const PROPERTIES = 'properties';
 
-    const PROPERTY_PATH_SEPARATOR = '.';
+    public const PROPERTY_PATH_SEPARATOR = '.';
 
-    const TEMPLATE_VARIABLE_CLASS_NAME = 'className';
-    const TEMPLATE_VARIABLE_CONSTANTS = 'constants';
-    const TEMPLATE_VARIABLE_METADATA = 'metadata';
+    public const TEMPLATE_VARIABLE_CLASS_NAME = 'className';
+    public const TEMPLATE_VARIABLE_CONSTANTS = 'constants';
+    public const TEMPLATE_VARIABLE_METADATA = 'metadata';
 
     /**
      * @var string
@@ -39,11 +39,18 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
     protected $twig;
 
     /**
-     * @param string $targetDirectory
+     * @var int
      */
-    public function __construct($targetDirectory)
+    protected $permissionMode;
+
+    /**
+     * @param string $targetDirectory
+     * @param int $permissionMode
+     */
+    public function __construct(string $targetDirectory, int $permissionMode)
     {
         $this->targetBaseDirectory = rtrim($targetDirectory, '/') . '/';
+        $this->permissionMode = $permissionMode;
 
         $loader = new Twig_Loader_Filesystem(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
         $this->twig = new Twig_Environment($loader, []);
@@ -92,7 +99,7 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
         $fileContent = $this->twig->render('class.php.twig', $templateData);
 
         if (!is_dir($this->targetBaseDirectory)) {
-            mkdir($this->targetBaseDirectory, 0755, true);
+            mkdir($this->targetBaseDirectory, $this->permissionMode, true);
         }
 
         file_put_contents($this->targetBaseDirectory . $fileName, $fileContent);

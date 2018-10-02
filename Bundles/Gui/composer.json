@@ -1,5 +1,6 @@
 {
   "name": "spryker/gui",
+  "type": "library",
   "description": "Gui module",
   "license": "proprietary",
   "require": {
@@ -12,7 +13,8 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
+    "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },

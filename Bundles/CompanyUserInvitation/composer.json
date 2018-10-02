@@ -1,12 +1,13 @@
 {
   "name": "spryker/company-user-invitation",
+  "type": "library",
   "description": "CompanyUserInvitation module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/application": "^3.9.0",
     "spryker/company-business-unit": "^1.1.0 || ^2.0.0",
-    "spryker/company-user": "^1.0.0",
+    "spryker/company-user": "^1.0.0 || ^2.0.0",
     "spryker/customer-extension": "^1.0.0",
     "spryker/kernel": "^3.8.0",
     "spryker/mail": "^4.0.2",
@@ -17,17 +18,19 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company": "*",
+    "spryker/company-role": "*",
     "spryker/customer": "*",
     "spryker/installer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*",
-    "spryker/twig": "*"
+    "spryker/permission": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/customer": "You need to have Customer installed create company users after registration",
     "spryker/installer": "You need to have Installer to set up values for invitation statuses",
     "spryker/silex": "You need to have Silex installed to use the Config Profiler",
-    "spryker/twig": "You need to have Twig installed to use the Config Profiler",
-    "spryker/customer": "You need to have Customer installed create company users after registration"
+    "spryker/twig": "You need to have Twig installed to use the Config Profiler"
   },
   "autoload": {
     "psr-4": {

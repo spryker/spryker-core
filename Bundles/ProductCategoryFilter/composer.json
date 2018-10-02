@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-category-filter",
+  "type": "library",
   "description": "ProductCategoryFilter module",
   "license": "proprietary",
   "require": {
@@ -14,6 +15,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

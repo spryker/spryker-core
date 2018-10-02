@@ -15,9 +15,9 @@ use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
 class SessionHandlerMysql implements SessionHandlerInterface
 {
-    const METRIC_SESSION_DELETE_TIME = 'Mysql/Session_delete_time';
-    const METRIC_SESSION_WRITE_TIME = 'Mysql/Session_write_time';
-    const METRIC_SESSION_READ_TIME = 'Mysql/Session_read_time';
+    public const METRIC_SESSION_DELETE_TIME = 'Mysql/Session_delete_time';
+    public const METRIC_SESSION_WRITE_TIME = 'Mysql/Session_write_time';
+    public const METRIC_SESSION_READ_TIME = 'Mysql/Session_read_time';
 
     /**
      * @var \PDO|null
@@ -72,7 +72,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
         if (strpos($host, ':')) {
             $parts = explode(':', $host);
             $host = $parts[0];
-            $this->port = $parts[1];
+            $this->port = (int)$parts[1];
         }
 
         $this->newRelicApi = $newRelicApi;
@@ -173,7 +173,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $key = $this->keyPrefix . $sessionId;
 
         $startTime = microtime(true);
-        $result = $this->connection->delete($key);
+        $this->connection->delete($key);
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
         return true;

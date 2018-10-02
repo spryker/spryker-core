@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -18,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CategoryEditDataProvider
 {
-    const DATA_CLASS = 'data_class';
+    public const DATA_CLASS = 'data_class';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface

@@ -1,5 +1,6 @@
 {
   "name": "spryker/heartbeat",
+  "type": "library",
   "description": "Heartbeat module",
   "license": "proprietary",
   "require": {
@@ -15,7 +16,7 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

@@ -26,12 +26,12 @@ use Spryker\Zed\ProductRelation\ProductRelationConfig;
 
 class ProductRelationTable extends AbstractTable
 {
-    const COL_ACTIONS = 'Actions';
+    public const COL_ACTIONS = 'Actions';
 
-    const URL_RELATION_DEACTIVATE = '/product-relation/edit/deactivate';
-    const URL_RELATION_DELETE = '/product-relation/delete/index';
-    const URL_RELATION_ACTIVATE = '/product-relation/edit/activate';
-    const URL_PRODUCT_RELATION_LIST = '/product-relation/list';
+    public const URL_RELATION_DEACTIVATE = '/product-relation/edit/deactivate';
+    public const URL_RELATION_DELETE = '/product-relation/delete/index';
+    public const URL_RELATION_ACTIVATE = '/product-relation/edit/activate';
+    public const URL_PRODUCT_RELATION_LIST = '/product-relation/list';
 
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
@@ -292,7 +292,7 @@ class ProductRelationTable extends AbstractTable
     /**
      * @param array $product
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findProductUrl(array $product)
     {

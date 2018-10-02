@@ -16,10 +16,10 @@ interface EventBulkHandlerInterface extends EventBaseHandlerInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName);
+    public function handleBulk(array $transfers, $eventName);
 }

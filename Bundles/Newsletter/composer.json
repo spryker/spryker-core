@@ -1,5 +1,6 @@
 {
   "name": "spryker/newsletter",
+  "type": "library",
   "description": "Newsletter module",
   "license": "proprietary",
   "require": {
@@ -13,11 +14,8 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

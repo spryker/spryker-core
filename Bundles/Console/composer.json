@@ -1,5 +1,6 @@
 {
   "name": "spryker/console",
+  "type": "library",
   "description": "Console module",
   "license": "proprietary",
   "require": {
@@ -9,10 +10,9 @@
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
     "spryker/log": "^3.0.0",
-    "spryker/propel-orm": "*",
-    "spryker/silex": "^2.0.0",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

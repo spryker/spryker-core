@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -63,6 +64,7 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      *  - Finds all category-node entities for idCategory
+     *  - Category-node entities sorted by node order
      *  - Returns hydrated NodeTransfer collection
      *
      * @api
@@ -364,6 +366,7 @@ interface CategoryFacadeInterface
      * Specification:
      *  - Finds first category-node for idCategory and finds all of its children
      *  - Formats all child category-nodes as a nested array structure
+     *  - Category-node entities sorted by node order
      *  - Returns array representation of sub-tree
      *
      * @api
@@ -462,4 +465,42 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
      */
     public function findCategoryTemplateByName($name);
+
+    /**
+     * Specification:
+     * - Check exist a first level children by the category name
+     *
+     * @api
+     *
+     * @param string $name
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function hasFirstLevelChildrenByName(string $name, CategoryTransfer $categoryTransfer): bool;
+
+    /**
+     * Specification:
+     * - Checks if there is a category node on the same level with provided category by name
+     *
+     * @api
+     *
+     * @param string $name
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function checkSameLevelCategoryByNameExists(string $name, CategoryTransfer $categoryTransfer): bool;
+
+    /**
+     * Specification:
+     * - Retrieves collection with all categories from DB.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 }

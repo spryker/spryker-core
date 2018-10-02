@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\CategoryDataImport;
@@ -11,7 +11,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class CategoryDataImportConfig extends DataImportConfig
 {
-    const IMPORT_TYPE_CATEGORY = 'category';
+    public const IMPORT_TYPE_CATEGORY = 'category';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer

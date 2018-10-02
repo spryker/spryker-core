@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Persistence;
 
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery;
+use Spryker\Zed\ProductLabelSearch\ProductLabelSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()
@@ -22,5 +24,13 @@ class ProductLabelSearchPersistenceFactory extends AbstractPersistenceFactory
     public function createSpyProductLabelProductAbstractQuery()
     {
         return SpyProductLabelProductAbstractQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function getPropelProductLabelQuery(): SpyProductLabelQuery
+    {
+        return $this->getProvidedDependency(ProductLabelSearchDependencyProvider::PROPEL_QUERY_PRODUCT_LABEL);
     }
 }

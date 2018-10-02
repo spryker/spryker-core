@@ -16,12 +16,14 @@ use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToPro
 
 class ProductValidator implements ProductValidatorInterface
 {
-    const MESSAGE_ERROR_ABSTRACT_PRODUCT_EXISTS = 'product-cart.validation.error.abstract-product-exists';
-    const MESSAGE_ERROR_CONCRETE_PRODUCT_EXISTS = 'product-cart.validation.error.concrete-product-exists';
-    const MESSAGE_PARAM_SKU = 'sku';
+    public const MESSAGE_ERROR_ABSTRACT_PRODUCT_EXISTS = 'product-cart.validation.error.abstract-product-exists';
+    public const MESSAGE_ERROR_CONCRETE_PRODUCT_EXISTS = 'product-cart.validation.error.concrete-product-exists';
+    public const MESSAGE_PARAM_SKU = 'sku';
     public const MESSAGE_ERROR_CONCRETE_PRODUCT_INACTIVE = 'product-cart.validation.error.concrete-product-inactive';
 
-    /** @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface */
+    /**
+     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
+     */
     protected $productFacade;
 
     /**
@@ -43,8 +45,10 @@ class ProductValidator implements ProductValidatorInterface
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getSku()) {
+                if ($this->validateConcreteItem($itemTransfer, $responseTransfer) === false) {
+                    continue;
+                }
                 $this->productStatusCheck($itemTransfer, $responseTransfer);
-                $this->validateConcreteItem($itemTransfer, $responseTransfer);
                 continue;
             }
 
@@ -58,14 +62,14 @@ class ProductValidator implements ProductValidatorInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
-     * @return void
+     * @return bool
      */
     protected function validateConcreteItem(ItemTransfer $itemTransfer, CartPreCheckResponseTransfer $responseTransfer)
     {
         $isValid = $this->productFacade->hasProductConcrete($itemTransfer->getSku());
 
         if ($isValid) {
-            return;
+            return true;
         }
 
         $message = $this->createViolationMessage(static::MESSAGE_ERROR_CONCRETE_PRODUCT_EXISTS);
@@ -74,6 +78,8 @@ class ProductValidator implements ProductValidatorInterface
         ]);
 
         $responseTransfer->addMessage($message);
+
+        return false;
     }
 
     /**

@@ -9,12 +9,12 @@ namespace Spryker\Shared\Config;
 
 class Environment
 {
-    const DEFAULT_ENVIRONMENT = 'production';
+    public const DEFAULT_ENVIRONMENT = 'production';
 
-    const PRODUCTION = 'production';
-    const STAGING = 'staging';
-    const DEVELOPMENT = 'development';
-    const TESTING = 'devtest';
+    public const PRODUCTION = 'production';
+    public const STAGING = 'staging';
+    public const DEVELOPMENT = 'development';
+    public const TESTING = 'devtest';
 
     /**
      * @var string
@@ -22,7 +22,7 @@ class Environment
     protected static $environment = APPLICATION_ENV;
 
     /**
-     * @var self
+     * @var self|null
      */
     protected static $instance;
 

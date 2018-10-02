@@ -1,5 +1,6 @@
 {
   "name": "spryker/application",
+  "type": "library",
   "description": "Application module",
   "license": "proprietary",
   "require": {
@@ -19,6 +20,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

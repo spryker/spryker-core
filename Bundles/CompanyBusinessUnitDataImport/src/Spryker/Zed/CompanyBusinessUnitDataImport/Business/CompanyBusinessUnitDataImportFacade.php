@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\CompanyBusinessUnitDataImport\Business;
@@ -27,6 +27,34 @@ class CompanyBusinessUnitDataImportFacade extends AbstractFacade implements Comp
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createCompanyBusinessUnitDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()->getCompanyBusinessUnitDataImport()->import($dataImporterConfigurationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importBusinessUnitUser(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    {
+        return $this->getFactory()->getCompanyBusinessUnitUserDataImport()->import($dataImporterConfigurationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importBusinessUnitAddresses(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    {
+        return $this->getFactory()->getCompanyBusinessUnitAddressDataImport()->import($dataImporterConfigurationTransfer);
     }
 }

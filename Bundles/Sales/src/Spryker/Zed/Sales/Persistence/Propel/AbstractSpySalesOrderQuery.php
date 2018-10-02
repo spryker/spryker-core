@@ -206,7 +206,7 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery
+     * @return $this
      */
     public function filterByFkCustomer($fkCustomer = null, $comparison = Criteria::EQUAL)
     {

@@ -7,7 +7,14 @@
 
 namespace Spryker\Zed\Development\Business;
 
-use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
+use Generated\Shared\Transfer\ComposerJsonValidationRequestTransfer;
+use Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer;
+use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\DependencyProviderCollectionTransfer;
+use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
+use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -65,16 +72,24 @@ interface DevelopmentFacadeInterface
     public function createModule($module, array $options);
 
     /**
+     * Specification:
+     * - Parses all dependencies for a given module.
+     *
      * @api
      *
-     * @param string $moduleName
+     * @internal
      *
-     * @return \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     * @param string|null $dependencyType
+     *
+     * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    public function showOutgoingDependenciesForModule($moduleName);
+    public function showOutgoingDependenciesForModule(ModuleTransfer $moduleTransfer, ?string $dependencyType = null): DependencyCollectionTransfer;
 
     /**
      * @api
+     *
+     * @internal
      *
      * @param string $moduleName
      *
@@ -84,6 +99,8 @@ interface DevelopmentFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Please use `getModules()` instead.
      *
      * @return array
      */
@@ -201,11 +218,11 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer
+     * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $dependencyCollectionTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer);
+    public function getComposerDependencyComparison(DependencyCollectionTransfer $dependencyCollectionTransfer);
 
     /**
      * @api
@@ -234,6 +251,13 @@ interface DevelopmentFacadeInterface
      * @return void
      */
     public function generateServiceIdeAutoCompletion();
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateGlueIdeAutoCompletion();
 
     /**
      * Run the architecture sniffer against the given module and returns the violations
@@ -286,4 +310,106 @@ interface DevelopmentFacadeInterface
      * @return int
      */
     public function runPhpstan(InputInterface $input, OutputInterface $output);
+
+    /**
+     * Specification:
+     * - Validates that Abstract classes for database table exist.
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param string|null $module
+     *
+     * @return bool
+     */
+    public function runPropelAbstractValidation(OutputInterface $output, ?string $module): bool;
+
+    /**
+     * Specification:
+     * - Parses all dependencies in src and tests directory of a given module.
+     * - Parses all defined composer dependencies.
+     * - Compares and validates the parsed results.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DependencyValidationRequestTransfer $dependencyValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DependencyValidationResponseTransfer
+     */
+    public function validateModuleDependencies(DependencyValidationRequestTransfer $dependencyValidationRequestTransfer): DependencyValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Validates composer.json file for given module.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ComposerJsonValidationRequestTransfer $composerJsonValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer
+     */
+    public function validateComposerJson(ComposerJsonValidationRequestTransfer $composerJsonValidationRequestTransfer): ComposerJsonValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns a collection of all Plugins used inside projects DependencyProvider.
+     * - Parses use statements of project dependency provider.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
+     */
+    public function getInProjectDependencyProviderUsedPlugins(?ModuleFilterTransfer $moduleFilterTransfer = null): DependencyProviderCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds all project modules.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return array
+     */
+    public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
+
+    /**
+     * Specification:
+     * - Gets all modules.
+     * - Creates an array of ModuleTransfer objects.
+     * - The key of the returned array is `OrganizationName.ModuleName`.
+     * - A ModuleFilterTransfer can be used to filter the returned collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
+
+    /**
+     * Specification:
+     * - Returns a list of packages defined in the Spryker namespace.
+     * - Packages are not spryker modules.
+     *
+     * @api
+     *
+     * @internal
+     *
+     * @return \Generated\Shared\Transfer\PackageTransfer[]
+     */
+    public function getPackages(): array;
+
+    /**
+     * Specification:
+     * - Returns a list of all modules.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
+     */
+    public function getModuleOverview(): array;
 }

@@ -239,7 +239,9 @@ class Reader implements ReaderInterface
         array $concretePriceProductTransfers
     ) {
         $priceProductTransfers = [];
-        foreach ($abstractPriceProductTransfers as $abstractKey => $priceProductAbstractTransfer) {
+        foreach ($abstractPriceProductTransfers as $priceProductAbstractTransfer) {
+            $abstractKey = $this->buildPriceProductIdentifier($priceProductAbstractTransfer);
+
             $priceProductTransfers = $this->mergeConcreteProduct(
                 $concretePriceProductTransfers,
                 $abstractKey,
@@ -263,7 +265,9 @@ class Reader implements ReaderInterface
      */
     protected function addConcreteNotMergedPrices(array $concretePriceProductTransfers, array $priceProductTransfers)
     {
-        foreach ($concretePriceProductTransfers as $concreteKey => $priceProductConcreteTransfer) {
+        foreach ($concretePriceProductTransfers as $priceProductConcreteTransfer) {
+            $concreteKey = $this->buildPriceProductIdentifier($priceProductConcreteTransfer);
+
             if (isset($priceProductTransfers[$concreteKey])) {
                 continue;
             }
@@ -288,7 +292,9 @@ class Reader implements ReaderInterface
         PriceProductTransfer $priceProductAbstractTransfer,
         array $priceProductTransfers
     ) {
-        foreach ($concretePriceProductTransfers as $concreteKey => $priceProductConcreteTransfer) {
+        foreach ($concretePriceProductTransfers as $priceProductConcreteTransfer) {
+            $concreteKey = $this->buildPriceProductIdentifier($priceProductConcreteTransfer);
+
             if ($abstractKey !== $concreteKey) {
                 continue;
             }
@@ -410,5 +416,47 @@ class Reader implements ReaderInterface
         }
 
         return $priceProductDimensionTransfer;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePricesWithoutPriceExtraction(
+        int $idProductConcrete,
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array {
+        $abstractPriceProductTransfers = $this->priceProductAbstractReader
+            ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
+
+        $concretePriceProductTransfers = $this->priceProductConcreteReader
+            ->findProductConcretePricesWithoutPriceExtraction($idProductConcrete, $priceProductCriteriaTransfer);
+
+        return $this->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return string
+     */
+    protected function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
+    {
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        $priceTypeTransfer = $priceProductTransfer->requirePriceType()->getPriceType();
+
+        return implode(
+            '-',
+            [
+                $moneyValueTransfer->getFkStore(),
+                $moneyValueTransfer->getFkCurrency(),
+                $priceTypeTransfer->getName(),
+                $priceTypeTransfer->getPriceModeConfiguration(),
+            ]
+        );
     }
 }

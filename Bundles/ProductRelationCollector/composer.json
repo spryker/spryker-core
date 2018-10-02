@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-relation-collector",
+  "type": "library",
   "description": "ProductRelationCollector module",
   "license": "proprietary",
   "require": {
@@ -18,8 +19,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "^3.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
   "autoload": {

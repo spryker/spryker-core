@@ -1,5 +1,6 @@
 {
   "name": "spryker/store",
+  "type": "library",
   "description": "Store module",
   "license": "proprietary",
   "require": {
@@ -10,11 +11,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
     "spryker/quote": "*",
-    "spryker/testify": "*",
-    "spryker/transfer": "*",
-    "spryker/twig": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/quote": "If you want to use StoreQuoteTransferExpander plugin, minimum required version: 1.2.0"

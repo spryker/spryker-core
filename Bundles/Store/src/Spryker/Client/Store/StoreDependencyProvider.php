@@ -14,7 +14,7 @@ use Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreAdapter;
 
 class StoreDependencyProvider extends AbstractDependencyProvider
 {
-    const STORE = 'STORE';
+    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

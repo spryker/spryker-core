@@ -15,19 +15,19 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class FooBarTransfer extends AbstractTransfer
 {
-    const NAME = 'name';
+    public const NAME = 'name';
 
-    const BLA = 'bla';
+    public const BLA = 'bla';
 
-    const SELF_REFERENCE = 'selfReference';
+    public const SELF_REFERENCE = 'selfReference';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $name;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $bla;
 
@@ -58,25 +58,28 @@ class FooBarTransfer extends AbstractTransfer
             'name_underscore' => 'name',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'no',
         ],
         self::BLA => [
             'type' => 'int',
             'name_underscore' => 'bla',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'no',
         ],
         self::SELF_REFERENCE => [
             'type' => 'Generated\Shared\Transfer\FooBarTransfer',
             'name_underscore' => 'self_reference',
             'is_collection' => true,
             'is_transfer' => true,
+            'rest_request_parameter' => 'no',
         ],
     ];
 
     /**
      * @module Test
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return $this
      */
@@ -91,7 +94,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return string
+     * @return string|null
      */
     public function getName()
     {
@@ -113,7 +116,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test|Test2
      *
-     * @param int $bla
+     * @param int|null $bla
      *
      * @return $this
      */
@@ -128,7 +131,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test|Test2
      *
-     * @return int
+     * @return int|null
      */
     public function getBla()
     {

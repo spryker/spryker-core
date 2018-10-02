@@ -262,6 +262,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
@@ -388,5 +390,92 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
         $this->getFactory()
             ->createPriceProductStoreWriter()
             ->deleteOrphanPriceProductStoreEntities();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtraction(
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array {
+        return $this->getFactory()
+            ->createPriceProductAbstractReader()
+            ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array|int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createPriceProductAbstractReader()
+            ->findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn($productAbstractIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
+     */
+    public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductCriteriaTransfer
+    {
+        return $this->getFactory()
+            ->createProductCriteriaBuilder()
+            ->buildCriteriaFromFilter($priceProductFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePricesWithoutPriceExtraction(
+        int $idProductConcrete,
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findProductConcretePricesWithoutPriceExtraction($idProductConcrete, $idProductAbstract, $priceProductCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int|null
+     */
+    public function findIdProductAbstractForPriceProduct(PriceProductTransfer $priceProductTransfer): ?int
+    {
+        return $this->getFactory()
+            ->createPriceProductAbstractReader()
+            ->findIdProductAbstractForPriceProduct($priceProductTransfer);
     }
 }

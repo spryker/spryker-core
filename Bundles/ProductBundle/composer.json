@@ -1,11 +1,12 @@
 {
   "name": "spryker/product-bundle",
+  "type": "library",
   "description": "ProductBundle module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/availability": "^5.0.1 || ^6.0.0",
-    "spryker/cart-extension": "^1.0.0",
+    "spryker/cart-extension": "^1.0.0 || ^2.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/messenger": "^3.0.0",
@@ -24,11 +25,8 @@
     "spryker/calculation": "*",
     "spryker/cart": "*",
     "spryker/checkout": "*",
-    "spryker/code-sniffer": "*",
     "spryker/oms": "*",
     "spryker/propel": "*",
-    "spryker/sales-aggregator": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

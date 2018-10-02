@@ -1,5 +1,6 @@
 {
   "name": "spryker/propel-orm",
+  "type": "library",
   "description": "PropelOrm module",
   "license": "proprietary",
   "require": {
@@ -8,6 +9,11 @@
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
     "spryker/kernel": "^3.17.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

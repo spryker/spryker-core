@@ -39,7 +39,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     protected $isSendingToQueue = true;
 
     /**
-     * @var int[] Keys are store ids, values are store names.
+     * @var string[] Keys are store ids, values are store names.
      */
     protected $storeNameMapBuffer;
 
@@ -218,7 +218,8 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         $priceGroupsCollection = [];
         $priceProductCriteria = $this->getPriceCriteriaTransfer();
         foreach ($productAbstractIds as $idProductAbstract) {
-            $productAbstractPriceProductTransfers = $this->priceProductFacade->findProductAbstractPrices($idProductAbstract, $priceProductCriteria);
+            $productAbstractPriceProductTransfers = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteria);
+            $priceGroups[$idProductAbstract] = [];
             foreach ($productAbstractPriceProductTransfers as $priceProductTransfer) {
                 $storeName = $this->getStoreNameById($priceProductTransfer->getMoneyValue()->getFkStore());
                 $priceGroups[$idProductAbstract][$storeName][] = $priceProductTransfer;

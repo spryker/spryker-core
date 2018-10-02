@@ -17,11 +17,27 @@ class ProductReviewSearchConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_REVIEW_RESOURCE_NAME = 'product_review';
+    public const PRODUCT_REVIEW_RESOURCE_NAME = 'product_review';
 
     /**
      * //TODO add specification
      * @api
      */
-    const PLUGIN_PRODUCT_PAGE_RATING_DATA = 'PLUGIN_PRODUCT_PAGE_RATING_DATA';
+    public const PLUGIN_PRODUCT_PAGE_RATING_DATA = 'PLUGIN_PRODUCT_PAGE_RATING_DATA';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing Product messages
+     *
+     * @api
+     */
+    public const PRODUCT_REVIEW_SYNC_SEARCH_QUEUE = 'sync.search.product';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing Product messages
+     *
+     * @api
+     */
+    public const PRODUCT_REVIEW_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.product.error';
 }

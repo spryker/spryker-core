@@ -7,7 +7,10 @@
 
 namespace Spryker\Shared\User;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface UserConstants
 {
-    const USER_SYSTEM_USERS = 'USER_SYSTEM_USERS';
+    public const USER_SYSTEM_USERS = 'USER_SYSTEM_USERS';
 }

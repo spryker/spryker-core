@@ -1,5 +1,6 @@
 {
   "name": "spryker/product",
+  "type": "library",
   "description": "Product module",
   "license": "proprietary",
   "require": {
@@ -18,9 +19,7 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {

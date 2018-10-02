@@ -7,7 +7,10 @@
 
 namespace Spryker\Shared\PropelQueryBuilder;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface PropelQueryBuilderConstants
 {
-    const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
+    public const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
 }

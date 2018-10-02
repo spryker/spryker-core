@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-user-connector-gui",
+  "type": "library",
   "description": "CustomerUserConnectorGui module",
   "license": "proprietary",
   "require": {
@@ -10,12 +11,10 @@
     "spryker/kernel": "^3.5.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/user": "^3.0.0"
+    "spryker/user": "^3.0.0",
+    "spryker/user-extension": "^1.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*",
     "spryker/util-text": "*"
   },
   "suggest": {

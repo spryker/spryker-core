@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block-collector",
+  "type": "library",
   "description": "CmsBlockCollector module",
   "license": "proprietary",
   "require": {
@@ -15,7 +16,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {

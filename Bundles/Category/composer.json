@@ -1,5 +1,6 @@
 {
   "name": "spryker/category",
+  "type": "library",
   "description": "Category module",
   "license": "proprietary",
   "require": {
@@ -7,7 +8,7 @@
     "spryker/event": "^1.0.0 || ^2.0.0",
     "spryker/graph": "^3.0.0",
     "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.17.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
@@ -18,10 +19,13 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {

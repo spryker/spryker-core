@@ -13,10 +13,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
  * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductPersistenceFactory getFactory()
+ * @method \Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer save(\Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer $spyCompanyUnitAddressEntityTransfer)
  */
 class PriceProductEntityManager extends AbstractEntityManager implements PriceProductEntityManagerInterface
 {
     /**
+     * @deprecated Use \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter::deleteOrphanPriceProductStoreEntities() instead.
+     *
      * @return void
      */
     public function deleteOrphanPriceProductStoreEntities(): void
@@ -36,6 +39,20 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
         }
 
         $priceProductStoreQuery->find()->delete();
+    }
+
+    /**
+     * @param int $idPriceProductStore
+     *
+     * @return void
+     */
+    public function deletePriceProductStore(int $idPriceProductStore): void
+    {
+        $this->getFactory()
+            ->createPriceProductStoreQuery()
+            ->filterByIdPriceProductStore($idPriceProductStore)
+            ->findOne()
+            ->delete();
     }
 
     /**

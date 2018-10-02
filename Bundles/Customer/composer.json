@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer",
+  "type": "library",
   "description": "Customer module",
   "license": "proprietary",
   "require": {
@@ -23,15 +24,10 @@
   },
   "require-dev": {
     "spryker/application": "*",
-    "spryker/assertion": "*",
     "spryker/checkout": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/config": "*",
-    "spryker/console": "*",
     "spryker/sales": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*",
-    "spryker/twig": "*"
+    "spryker/zed-navigation": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins.",

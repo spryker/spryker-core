@@ -7,7 +7,14 @@
 
 namespace Spryker\Zed\Development\Business;
 
-use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
+use Generated\Shared\Transfer\ComposerJsonValidationRequestTransfer;
+use Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer;
+use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\DependencyProviderCollectionTransfer;
+use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
+use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -73,6 +80,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
+     * @deprecated Use Spryk tool instead.
+     *
      * @param string $module
      * @param array $options
      *
@@ -97,19 +106,26 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
+     * @internal
      *
-     * @param string $moduleName
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     * @param string|null $dependencyType
      *
-     * @return \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
+     * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    public function showOutgoingDependenciesForModule($moduleName)
+    public function showOutgoingDependenciesForModule(ModuleTransfer $moduleTransfer, ?string $dependencyType = null): DependencyCollectionTransfer
     {
-        return $this->getFactory()->createDependencyBundleParser()->parseOutgoingDependencies($moduleName);
+        return $this->getFactory()->createModuleDependencyParser()->parseOutgoingDependencies($moduleTransfer, $dependencyType);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
+     * @internal
      *
      * @param string $moduleName
      *
@@ -228,6 +244,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
+     * @deprecated This method is not used anymore.
+     *
      * @return array
      */
     public function getDependencyViolations()
@@ -248,6 +266,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
+     * @deprecated This method is not used anymore.
+     *
      * @return array
      */
     public function getExternalDependencyTree()
@@ -258,13 +278,13 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer
+     * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $dependencyCollectionTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer)
+    public function getComposerDependencyComparison(DependencyCollectionTransfer $dependencyCollectionTransfer)
     {
-        return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($moduleDependencyCollectionTransfer);
+        return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($dependencyCollectionTransfer);
     }
 
     /**
@@ -305,6 +325,16 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function generateServiceIdeAutoCompletion()
     {
         $this->getFactory()->createServiceIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateGlueIdeAutoCompletion()
+    {
+        $this->getFactory()->createGlueIdeAutoCompletionWriter()->writeCompletionFiles();
     }
 
     /**
@@ -371,5 +401,116 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function runPhpstan(InputInterface $input, OutputInterface $output)
     {
         return $this->getFactory()->createPhpstanRunner()->run($input, $output);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param string|null $module
+     *
+     * @return bool
+     */
+    public function runPropelAbstractValidation(OutputInterface $output, ?string $module): bool
+    {
+        return $this->getFactory()->createPropelAbstractValidator()->validate($output, $module);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DependencyValidationRequestTransfer $dependencyValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DependencyValidationResponseTransfer
+     */
+    public function validateModuleDependencies(DependencyValidationRequestTransfer $dependencyValidationRequestTransfer): DependencyValidationResponseTransfer
+    {
+        return $this->getFactory()->createDependencyValidator()->validate($dependencyValidationRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ComposerJsonValidationRequestTransfer $composerJsonValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer
+     */
+    public function validateComposerJson(ComposerJsonValidationRequestTransfer $composerJsonValidationRequestTransfer): ComposerJsonValidationResponseTransfer
+    {
+        return $this->getFactory()->createComposerJsonValidator()->validate($composerJsonValidationRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
+     */
+    public function getInProjectDependencyProviderUsedPlugins(?ModuleFilterTransfer $moduleFilterTransfer = null): DependencyProviderCollectionTransfer
+    {
+        return $this->getFactory()->createDependencyProviderUsedPluginFinder()->getUsedPlugins($moduleFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return array
+     */
+    public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
+    {
+        return $this->getFactory()->createProjectModuleFinder()->getProjectModules($moduleFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
+    {
+        return $this->getFactory()->createModuleFinder()->getModules($moduleFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @internal
+     *
+     * @return \Generated\Shared\Transfer\PackageTransfer[]
+     */
+    public function getPackages(): array
+    {
+        return $this->getFactory()->createPackageFinder()->getPackages();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
+     */
+    public function getModuleOverview(): array
+    {
+        return $this->getFactory()->createModuleOverview()->getOverview();
     }
 }

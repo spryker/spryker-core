@@ -13,12 +13,12 @@ use Spryker\Zed\Setup\SetupConfig;
 
 class Cronjobs
 {
-    const ROLE_ADMIN = 'admin';
-    const ROLE_REPORTING = 'reporting';
-    const ROLE_EMPTY = 'empty';
-    const DEFAULT_ROLE = self::ROLE_ADMIN;
-    const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
-    const JENKINS_API_JOBS_URL = 'api/json/jobs?pretty=true&tree=jobs[name]';
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_REPORTING = 'reporting';
+    public const ROLE_EMPTY = 'empty';
+    public const DEFAULT_ROLE = self::ROLE_ADMIN;
+    public const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
+    public const JENKINS_API_JOBS_URL = 'api/json/jobs?pretty=true&tree=jobs[name]';
 
     /**
      * @var array

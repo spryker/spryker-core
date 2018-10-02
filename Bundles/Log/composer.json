@@ -1,5 +1,6 @@
 {
   "name": "spryker/log",
+  "type": "library",
   "description": "Log module",
   "license": "proprietary",
   "require": {
@@ -13,7 +14,7 @@
     "spryker/util-network": "^1.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },

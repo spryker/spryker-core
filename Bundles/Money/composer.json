@@ -1,5 +1,6 @@
 {
   "name": "spryker/money",
+  "type": "library",
   "description": "Money module",
   "license": "proprietary",
   "require": {
@@ -11,8 +12,10 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/config": "^3.0.0",
+    "spryker/propel": "*",
+    "spryker/session": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"

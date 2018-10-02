@@ -1,5 +1,6 @@
 {
   "name": "spryker/mandrill",
+  "type": "library",
   "description": "Mandrill module",
   "license": "proprietary",
   "require": {

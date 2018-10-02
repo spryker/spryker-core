@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -10,8 +11,10 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -151,5 +154,36 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
         return $this->getFactory()
             ->createCompanyBusinessUnitAssigner()
             ->assignDefaultBusinessUnitToCompanyUser($companyUserResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
+     */
+    public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitTreeBuilder()
+            ->getCustomerCompanyBusinessUnitTree($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    {
+        return $this->getRepository()
+            ->getCustomerReferencesByCompanyBusinessUnitIds($companyBusinessUnitIds);
     }
 }

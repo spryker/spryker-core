@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Development\Business\DependencyTree\DependencyGraph;
 
 use ArrayObject;
-use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
-use Spryker\Zed\Development\Business\Dependency\BundleParserInterface;
+use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
 use Spryker\Zed\Development\Business\Dependency\ManagerInterface;
+use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 
 class OutgoingGraphBuilder
@@ -26,9 +28,9 @@ class OutgoingGraphBuilder
     protected $graph;
 
     /**
-     * @var \Spryker\Zed\Development\Business\Dependency\BundleParserInterface
+     * @var \Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface
      */
-    protected $bundleParser;
+    protected $moduleDependencyParser;
 
     /**
      * @var \Spryker\Zed\Development\Business\Dependency\ManagerInterface
@@ -43,15 +45,15 @@ class OutgoingGraphBuilder
     /**
      * @param string $bundleName
      * @param \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin $graph
-     * @param \Spryker\Zed\Development\Business\Dependency\BundleParserInterface $bundleParser
+     * @param \Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface $moduleDependencyParser
      * @param \Spryker\Zed\Development\Business\Dependency\ManagerInterface $dependencyManager
      * @param array $bundlesToFilter
      */
-    public function __construct($bundleName, GraphPlugin $graph, BundleParserInterface $bundleParser, ManagerInterface $dependencyManager, array $bundlesToFilter = [])
+    public function __construct($bundleName, GraphPlugin $graph, ModuleDependencyParserInterface $moduleDependencyParser, ManagerInterface $dependencyManager, array $bundlesToFilter = [])
     {
         $this->bundleName = $bundleName;
         $this->graph = $graph;
-        $this->bundleParser = $bundleParser;
+        $this->moduleDependencyParser = $moduleDependencyParser;
         $this->dependencyManager = $dependencyManager;
         $this->bundlesToFilter = $bundlesToFilter;
     }
@@ -115,21 +117,28 @@ class OutgoingGraphBuilder
     }
 
     /**
-     * @param string $bundleName
+     * @param string $moduleName
      * @param \ArrayObject $allDependencies
      *
      * @return void
      */
-    protected function buildGraph($bundleName, ArrayObject $allDependencies)
+    protected function buildGraph($moduleName, ArrayObject $allDependencies)
     {
-        $dependencies = $this->bundleParser->parseOutgoingDependencies($bundleName);
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer->setName('Spryker');
+        $moduleTransfer = new ModuleTransfer();
+        $moduleTransfer
+            ->setName($moduleName)
+            ->setOrganization($organizationTransfer);
+
+        $dependencies = $this->moduleDependencyParser->parseOutgoingDependencies($moduleTransfer);
         $dependencies = $this->getBundleNames($dependencies);
 
-        if ($bundleName === $this->bundleName) {
+        if ($moduleName === $this->bundleName) {
             $dependencies = $this->filterBundles($dependencies);
         }
 
-        $allDependencies[$bundleName] = $dependencies;
+        $allDependencies[$moduleName] = $dependencies;
         foreach ($dependencies as $dependentBundle) {
             if (array_key_exists($dependentBundle, $allDependencies)) {
                 continue;
@@ -139,14 +148,14 @@ class OutgoingGraphBuilder
     }
 
     /**
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
+     * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $bundleDependencyCollectionTransfer
      *
      * @return array
      */
-    protected function getBundleNames(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
+    protected function getBundleNames(DependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
         $bundleNames = [];
-        foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
+        foreach ($bundleDependencyCollectionTransfer->getDependencyModules() as $dependencyBundleTransfer) {
             $hasDependencyInSource = false;
 
             foreach ($dependencyBundleTransfer->getDependencies() as $dependencyTransfer) {
@@ -156,7 +165,7 @@ class OutgoingGraphBuilder
             }
 
             if ($hasDependencyInSource) {
-                $bundleNames[] = $dependencyBundleTransfer->getBundle();
+                $bundleNames[] = $dependencyBundleTransfer->getModule();
             }
         }
 

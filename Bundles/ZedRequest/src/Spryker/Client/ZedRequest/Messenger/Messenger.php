@@ -18,7 +18,7 @@ class Messenger implements MessengerInterface
     protected $zedClient;
 
     /**
-     * @var \Spryker\Client\Messenger\MessengerClientInterface
+     * @var \Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToMessengerClientInterface
      */
     protected $messengerClient;
 

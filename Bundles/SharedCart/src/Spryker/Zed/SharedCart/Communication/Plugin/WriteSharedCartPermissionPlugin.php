@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SharedCart\Communication\Plugin;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\InfrastructuralPermissionPluginInterface;
 use Spryker\Shared\SharedCart\SharedCartConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -15,11 +16,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
  */
-class WriteSharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
+class WriteSharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface, InfrastructuralPermissionPluginInterface
 {
     public const KEY = 'WriteSharedCartPermissionPlugin';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getKey(): string

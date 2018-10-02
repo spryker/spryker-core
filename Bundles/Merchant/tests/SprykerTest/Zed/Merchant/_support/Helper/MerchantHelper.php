@@ -31,14 +31,6 @@ class MerchantHelper extends Module
     }
 
     /**
-     * @return void
-     */
-    public function ensureDatabaseTableIsEmpty(): void
-    {
-        $this->getMerchantQuery()->deleteAll();
-    }
-
-    /**
      * @param int $idMerchant
      *
      * @return void

@@ -1,5 +1,6 @@
 {
   "name": "spryker/sales-split",
+  "type": "library",
   "description": "SalesSplit module",
   "license": "proprietary",
   "require": {
@@ -10,7 +11,6 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/propel": "^3.0.0",
     "spryker/testify": "*"
   },

@@ -9,16 +9,16 @@ namespace SprykerTest\Zed\Auth\PageObject;
 
 class LoginPage
 {
-    const URL = '/auth/login/';
+    public const URL = '/auth/login/';
 
-    const ADMIN_USERNAME = 'admin@spryker.com';
-    const ADMIN_PASSWORD = 'change123';
+    public const ADMIN_USERNAME = 'admin@spryker.com';
+    public const ADMIN_PASSWORD = 'change123';
 
-    const SELECTOR_USERNAME_FIELD = '#auth_username';
-    const SELECTOR_PASSWORD_FIELD = '#auth_password';
-    const SELECTOR_SUBMIT_BUTTON = 'Login';
+    public const SELECTOR_USERNAME_FIELD = '#auth_username';
+    public const SELECTOR_PASSWORD_FIELD = '#auth_password';
+    public const SELECTOR_SUBMIT_BUTTON = 'Login';
 
-    const AUTHENTICATION_FAILED = 'Authentication failed!';
+    public const AUTHENTICATION_FAILED = 'Authentication failed!';
 
-    const ERROR_MESSAGE_EMPTY_FIELD = 'This value should not be blank.';
+    public const ERROR_MESSAGE_EMPTY_FIELD = 'This value should not be blank.';
 }

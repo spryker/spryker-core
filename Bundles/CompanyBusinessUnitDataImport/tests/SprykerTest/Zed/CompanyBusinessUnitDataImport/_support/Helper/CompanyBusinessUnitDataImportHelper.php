@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\CompanyBusinessUnitDataImport\Helper;
@@ -12,17 +12,6 @@ use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 
 class CompanyBusinessUnitDataImportHelper extends Module
 {
-    /**
-     * @return void
-     */
-    public function ensureDatabaseTableIsEmpty(): void
-    {
-        $this->getCompanyBusinessUnitQuery()
-            ->update(['FkParentCompanyBusinessUnit' => null]);
-        $this->getCompanyBusinessUnitQuery()
-            ->deleteAll();
-    }
-
     /**
      * @return void
      */

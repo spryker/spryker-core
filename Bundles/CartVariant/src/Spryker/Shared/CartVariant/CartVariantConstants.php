@@ -7,8 +7,11 @@
 
 namespace Spryker\Shared\CartVariant;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CartVariantConstants
 {
-    const AVAILABLE = 'available';
-    const SELECTED = 'selected';
+    public const AVAILABLE = 'available';
+    public const SELECTED = 'selected';
 }

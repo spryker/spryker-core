@@ -19,8 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class SelectType extends AbstractType
 {
-    const URL = 'url';
-    const PLACEHOLDER = 'placeholder';
+    public const URL = 'url';
+    public const PLACEHOLDER = 'placeholder';
 
     /**
      * @param \Symfony\Component\Form\FormView $view

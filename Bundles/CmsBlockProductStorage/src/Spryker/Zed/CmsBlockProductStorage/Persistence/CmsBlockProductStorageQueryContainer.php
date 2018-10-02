@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockProductStorage\Persistence;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
+use Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -15,14 +16,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implements CmsBlockProductStorageQueryContainerInterface
 {
-    const NAME = 'name';
+    public const NAME = 'name';
 
     /**
      * @api
      *
      * @param array $productIds
      *
-     * @return $this|\Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery
+     * @return \Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery
      */
     public function queryCmsBlockProductStorageByIds(array $productIds)
     {
@@ -36,7 +37,7 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @param array $productIds
      *
-     * @return $this|\Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
     public function queryCmsBlockProducts(array $productIds)
     {
@@ -46,5 +47,22 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
             ->innerJoinCmsBlock()
             ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
             ->filterByFkProductAbstract_In($productIds);
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $cmsBlockProductIds
+     *
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     */
+    public function queryCmsBlockProductsByIds(array $cmsBlockProductIds): SpyCmsBlockProductConnectorQuery
+    {
+        return $this->getFactory()
+            ->getCmsBlockProductConnectorQuery()
+            ->queryCmsBlockProductConnector()
+            ->innerJoinCmsBlock()
+            ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
+            ->filterByIdCmsBlockProductConnector_In($cmsBlockProductIds);
     }
 }

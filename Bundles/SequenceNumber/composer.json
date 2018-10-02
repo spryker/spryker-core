@@ -1,5 +1,6 @@
 {
   "name": "spryker/sequence-number",
+  "type": "library",
   "description": "SequenceNumber module",
   "license": "proprietary",
   "require": {
@@ -8,9 +9,7 @@
     "spryker/propel-orm": "^1.4.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {

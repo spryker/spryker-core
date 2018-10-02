@@ -1,5 +1,6 @@
 {
   "name": "spryker/storage",
+  "type": "library",
   "description": "Storage module",
   "license": "proprietary",
   "require": {
@@ -15,8 +16,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "suggest": {

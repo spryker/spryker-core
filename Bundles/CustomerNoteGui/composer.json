@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-note-gui",
+  "type": "library",
   "description": "CustomerNoteGui module",
   "license": "proprietary",
   "require": {
@@ -10,12 +11,10 @@
   },
   "require-dev": {
     "spryker/application": "*",
-    "spryker/assertion": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/config": "*",
+    "spryker/customer": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {

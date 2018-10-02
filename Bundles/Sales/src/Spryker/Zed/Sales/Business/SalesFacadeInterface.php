@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -113,7 +114,7 @@ interface SalesFacadeInterface
      * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
-     * @return boolean
+     * @return bool
      */
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
 
@@ -182,9 +183,25 @@ interface SalesFacadeInterface
     public function findOrderByIdSalesOrderItem($idSalesOrderItem);
 
     /**
+     * Specification:
+     * - Gets hydrated OrderTransfer by given order reference and customer reference.
+     * - OrderTransfer must have customerReference and orderReference, otherwise method fails.
+     * - Returns empty OrderTransfer if order entity not found in the database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
      *
      * Specification:
-     *  - Expands order by quantity 1 recalculates order transfer with new values
+     * - Transforms provided cart items according configured cart item transformer strategies.
+     * - If no cart item transformer strategy is configured, explodes the provided items per quantity.
+     * - Recalculates order transfer with new values.
      *
      * @api
      *

@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\MerchantDataImport\Helper;
@@ -15,15 +15,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 class MerchantDataImportHelper extends Module
 {
     use LocatorHelperTrait;
-
-    /**
-     * @return void
-     */
-    public function ensureDatabaseTableIsEmpty(): void
-    {
-        $query = $this->getMerchantQuery();
-        $query->deleteAll();
-    }
 
     /**
      * @return void
@@ -54,7 +45,7 @@ class MerchantDataImportHelper extends Module
     /**
      * @param string $key
      *
-     * @return \Orm\Zed\Merchant\Persistence\SpyMerchant
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchant|null
      */
     public function findMerchantByKey(string $key): SpyMerchant
     {

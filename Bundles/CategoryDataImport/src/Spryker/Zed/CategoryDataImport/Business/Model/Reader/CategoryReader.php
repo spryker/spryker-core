@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\CategoryDataImport\Business\Model\Reader;
@@ -17,10 +17,10 @@ use Spryker\Zed\CategoryDataImport\Business\Exception\CategoryByKeyNotFoundExcep
 
 class CategoryReader implements CategoryReaderInterface
 {
-    const ID_CATEGORY_NODE = 'id_category_node';
-    const ID_LOCALE = 'idLocale';
-    const URL = 'url';
-    const ID_CATEGORY = 'id_category';
+    public const ID_CATEGORY_NODE = 'id_category_node';
+    public const ID_LOCALE = 'idLocale';
+    public const URL = 'url';
+    public const ID_CATEGORY = 'id_category';
 
     /**
      * @var \ArrayObject

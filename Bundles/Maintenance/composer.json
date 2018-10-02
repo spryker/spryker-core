@@ -1,5 +1,6 @@
 {
   "name": "spryker/maintenance",
+  "type": "library",
   "description": "Maintenance module",
   "license": "proprietary",
   "require": {
@@ -8,10 +9,6 @@
     "spryker/error-handler": "^2.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/symfony": "^3.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

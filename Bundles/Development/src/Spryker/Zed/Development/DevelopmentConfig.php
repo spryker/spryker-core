@@ -15,17 +15,48 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DevelopmentConfig extends AbstractBundleConfig
 {
-    const BUNDLE_PLACEHOLDER = '[BUNDLE]';
-    const APPLICATION_NAMESPACES = [
+    public const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+
+    public const APPLICATION_NAMESPACES = [
         'Orm',
     ];
-    const APPLICATION_LAYERS = [
+
+    public const APPLICATIONS = [
         'Client',
         'Service',
         'Shared',
         'Yves',
         'Zed',
+        'Glue',
     ];
+
+    /**
+     * @return int
+     */
+    public function getPermissionMode(): int
+    {
+        return $this->get(DevelopmentConstants::DIRECTORY_PERMISSION, 0777);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getInternalNamespaces(): array
+    {
+        return ['Spryker', 'SprykerEco', 'SprykerSdk', 'SprykerShop', 'Orm'];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getTwigPathPatterns(): array
+    {
+        return [
+            $this->getPathToCore() . '%1$s/src/Spryker/Zed/%1$s/Presentation/',
+            $this->getPathToCore() . '%1$s/src/Spryker/Yves/%1$s/Theme/',
+            $this->getPathToShop() . '%1$s/src/SprykerShop/Yves/%1$s/Theme/',
+        ];
+    }
 
     /**
      * Gets path to application root directory.
@@ -44,7 +75,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getApplications()
     {
-        return static::APPLICATION_LAYERS;
+        return static::APPLICATIONS;
     }
 
     /**
@@ -182,6 +213,8 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Zend\\' => 'spryker/zend',
             'phpDocumentor\\GraphViz\\' => 'spryker/graphviz',
             'Egulias\\EmailValidator\\' => 'spryker/egulias',
+            'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
+            'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
         ];
     }
 
@@ -207,6 +240,8 @@ class DevelopmentConfig extends AbstractBundleConfig
             '/zendframework/' => 'spryker/zend',
             'phpdocumentor/graphviz' => 'spryker/graphviz',
             'egulias/email-validator' => 'spryker/egulias',
+            'ramsey/uuid' => 'spryker/ramsey-uuid',
+            'doctrine/inflector' => 'spryker/doctrine-inflector',
         ];
     }
 
@@ -265,6 +300,17 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @return array
      */
+    public function getGlueIdeAutoCompletionOptions()
+    {
+        $options = $this->getDefaultIdeAutoCompletionOptions();
+        $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Glue';
+
+        return $options;
+    }
+
+    /**
+     * @return array
+     */
     public function getServiceIdeAutoCompletionOptions()
     {
         $options = $this->getDefaultIdeAutoCompletionOptions();
@@ -288,6 +334,7 @@ class DevelopmentConfig extends AbstractBundleConfig
                 'Generated\%s\Ide',
                 IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
             ),
+            IdeAutoCompletionConstants::DIRECTORY_PERMISSION => $this->getPermissionMode(),
         ];
     }
 
@@ -374,6 +421,6 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getPhpstanLevel()
     {
-        return 2;
+        return 3;
     }
 }

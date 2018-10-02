@@ -225,6 +225,30 @@ interface ProductFacadeInterface
      */
     public function findProductConcreteIdBySku($sku);
 
+   /**
+    * Specification:
+    * - Returns concrete products transfers filtered by skus.
+    *
+    * @api
+    *
+    * @param string[] $skus
+    *
+    * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+    */
+    public function findProductConcretesBySkus(array $skus): array;
+
+    /**
+     * Specification:
+     * - Returns the abstract product ID by given concrete product ID.
+     *
+     * @api
+     *
+     * @param int $idConcrete
+     *
+     * @return int|null
+     */
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int;
+
     /**
      * Specification:
      * - Returns the concrete product with attributes and localized attributes.
@@ -586,7 +610,7 @@ interface ProductFacadeInterface
      *          [red] => Red
      *          [blue] => Blue
      *      )
-     *     [flavour] => Array
+     *     [flavor] => Array
      *      (
      *          [sweet] => Cakes
      *      )
@@ -715,4 +739,91 @@ interface ProductFacadeInterface
      * @return array
      */
     public function decodeProductAttributes($attributes);
+
+    /**
+     * Specification:
+     * - Suggests product abstract by name or SKU.
+     *
+     * @api
+     *
+     * @param string $suggestion
+     *
+     * @return string[]
+     */
+    public function suggestProductAbstract(string $suggestion): array;
+
+    /**
+     * Specification:
+     * - Suggests product concrete by name or SKU.
+     *
+     * @api
+     *
+     * @param string $suggestion
+     *
+     * @return string[]
+     */
+    public function suggestProductConcrete(string $suggestion): array;
+
+    /**
+     * Specification:
+     * - Finds product concrete ids by product abstract id.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     * - Returns the abstract product ID of the given concrete product ID if it exists.
+     * - Throws exception if no abstract product is found.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteId(int $idProductConcrete): int;
+
+    /**
+     * Specification:
+     * - Finds product concrete ids by concrete skus.
+     *
+     * Expected result structure:
+     * [
+     *     'sku' => 'id_product_concrete',
+     *     ...
+     * ]
+     *
+     * @api
+     *
+     * @param string[] $skus
+     *
+     * @return array
+     */
+    public function getProductConcreteIdsByConcreteSkus(array $skus): array;
+
+    /**
+     * Specification:
+     * - Finds product concrete ids by concrete skus.
+     *
+     * Expected result structure:
+     * [
+     *     'sku' => 'id_product_concrete',
+     *     ...
+     * ]
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return array
+     */
+    public function getProductConcreteSkusByConcreteIds(array $productIds): array;
 }

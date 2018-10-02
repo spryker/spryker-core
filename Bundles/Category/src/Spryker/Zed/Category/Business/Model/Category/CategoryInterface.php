@@ -6,7 +6,9 @@
  */
 namespace Spryker\Zed\Category\Business\Model\Category;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryInterface
 {
@@ -40,4 +42,11 @@ interface CategoryInterface
      * @return void
      */
     public function delete($idCategory);
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 }

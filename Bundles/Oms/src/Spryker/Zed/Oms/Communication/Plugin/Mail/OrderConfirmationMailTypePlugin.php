@@ -17,9 +17,11 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    const MAIL_TYPE = 'order confirmation mail';
+    public const MAIL_TYPE = 'order confirmation mail';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -28,6 +30,8 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
      * @return void

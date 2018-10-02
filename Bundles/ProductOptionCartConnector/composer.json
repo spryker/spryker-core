@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-option-cart-connector",
+  "type": "library",
   "description": "ProductOptionCartConnector module",
   "license": "proprietary",
   "require": {
@@ -10,10 +11,7 @@
   },
   "require-dev": {
     "spryker/cart": "*",
-    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

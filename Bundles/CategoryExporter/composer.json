@@ -1,5 +1,6 @@
 {
   "name": "spryker/category-exporter",
+  "type": "library",
   "description": "CategoryExporter module",
   "license": "proprietary",
   "require": {
@@ -8,10 +9,6 @@
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/storage": "^3.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

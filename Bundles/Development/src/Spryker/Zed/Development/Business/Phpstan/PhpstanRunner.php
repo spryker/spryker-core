@@ -22,17 +22,17 @@ class PhpstanRunner implements PhpstanRunnerInterface
 {
     use PathTrait;
 
-    const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
-    const NAMESPACE_SPRYKER = 'Spryker';
+    public const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+    public const NAMESPACE_SPRYKER = 'Spryker';
 
-    const DEFAULT_LEVEL = 'defaultLevel';
-    const MEMORY_LIMIT = '512M';
-    const CODE_SUCCESS = 0;
-    const CODE_ERROR = 0;
+    public const DEFAULT_LEVEL = 'defaultLevel';
+    public const MEMORY_LIMIT = '512M';
+    public const CODE_SUCCESS = 0;
+    public const CODE_ERROR = 0;
 
-    const OPTION_DRY_RUN = 'dry-run';
-    const OPTION_VERBOSE = 'verbose';
-    const OPTION_MODULE = 'module';
+    public const OPTION_DRY_RUN = 'dry-run';
+    public const OPTION_VERBOSE = 'verbose';
+    public const OPTION_MODULE = 'module';
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
@@ -84,6 +84,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $count = 0;
         $total = count($paths);
         $this->errorCount = 0;
+
+        asort($paths);
+
         foreach ($paths as $path => $configFilePath) {
             $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
             $count++;
@@ -184,7 +187,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         foreach ($namespaces as $namespace) {
             $path = $pathToRoot . 'src' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR;
 
-            foreach (DevelopmentConfig::APPLICATION_LAYERS as $layer) {
+            foreach (DevelopmentConfig::APPLICATIONS as $layer) {
                 $layerPath = $path . $layer . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
                 if ($pathSuffix) {
                     $layerPath .= $pathSuffix;
@@ -249,7 +252,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected function resolveCorePaths($module)
     {
         $paths = [];
-        list ($namespace, $module) = explode('.', $module, 2);
+        [$namespace, $module] = explode('.', $module, 2);
 
         if ($module === 'all') {
             if ($namespace === static::NAMESPACE_SPRYKER_SHOP) {
@@ -283,7 +286,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         $vendor = $this->dasherize($namespace);
         $module = $this->dasherize($module);
-        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module;
+        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
         $paths = $this->addPath($paths, $path);
 
         return $paths;
@@ -357,7 +360,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      *
      * @return void
      */
-    protected function addErrors($buffer)
+    protected function addErrors(string $buffer): void
     {
         preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
         if (!$matches) {

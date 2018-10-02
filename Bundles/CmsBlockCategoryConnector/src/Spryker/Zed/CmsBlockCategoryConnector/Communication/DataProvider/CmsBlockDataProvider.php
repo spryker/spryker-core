@@ -133,13 +133,13 @@ class CmsBlockDataProvider
     protected function getCategoryList()
     {
         $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory[] $categoryCollection */
         $categoryCollection = $this->categoryQueryContainer
             ->queryCategory($idLocale)
             ->find();
 
         $categoryList = [];
 
-        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
         foreach ($categoryCollection as $categoryEntity) {
             $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
             $categoryTemplateName = $this->getCategoryTemplateName($categoryEntity);
@@ -159,6 +159,7 @@ class CmsBlockDataProvider
     protected function getCategoryTemplateName(SpyCategory $categoryEntity)
     {
         $categoryTemplateName = '';
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryTemplate|null $categoryTemplateEntity */
         $categoryTemplateEntity = $categoryEntity->getCategoryTemplate();
 
         if ($categoryTemplateEntity) {

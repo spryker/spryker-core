@@ -1,9 +1,11 @@
 {
   "name": "spryker/new-relic-api",
+  "type": "library",
   "description": "NewRelicApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/monitoring-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

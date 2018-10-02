@@ -29,8 +29,6 @@ class QuoteValidator implements QuoteValidatorInterface
     protected $messengerFacade;
 
     /**
-     * QuoteValidator constructor.
-     *
      * @param \Spryker\Zed\Cart\Business\Model\OperationInterface $operation
      * @param \Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface $changeNote
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
@@ -77,6 +75,7 @@ class QuoteValidator implements QuoteValidatorInterface
      */
     protected function checkErrorMessages()
     {
+        /** @var \Generated\Shared\Transfer\FlashMessagesTransfer|null $storedMessages */
         $storedMessages = $this->messengerFacade->getStoredMessages();
 
         return !$storedMessages || count($storedMessages->getErrorMessages()) === 0;

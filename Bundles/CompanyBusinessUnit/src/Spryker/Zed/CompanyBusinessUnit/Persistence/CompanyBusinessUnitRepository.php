@@ -24,6 +24,11 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     protected const TABLE_JOIN_PARENT_BUSINESS_UNIT = 'parentCompanyBusinessUnit';
 
     /**
+     * @see \Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap::COL_CUSTOMER_REFERENCE
+     */
+    protected const COL_CUSTOMER_REFERENCE = 'spy_customer.customer_reference';
+
+    /**
      * @param int $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
@@ -118,10 +123,31 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     }
 
     /**
+     * @module CompanyUser
+     * @module Customer
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitQuery()
+            ->useCompanyUserQuery()
+                ->joinCustomer()
+            ->endUse()
+            ->filterByIdCompanyBusinessUnit_In($companyBusinessUnitIds)
+            ->select(static::COL_CUSTOMER_REFERENCE)
+            ->find()
+            ->toArray();
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return mixed|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

@@ -7,8 +7,11 @@
 
 namespace Spryker\Shared\DummyPayment;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface DummyPaymentConstants
 {
-    const PROVIDER_NAME = 'DummyPayment';
-    const LAST_NAME_FOR_INVALID_TEST = 'Invalid';
+    public const PROVIDER_NAME = 'DummyPayment';
+    public const LAST_NAME_FOR_INVALID_TEST = 'Invalid';
 }

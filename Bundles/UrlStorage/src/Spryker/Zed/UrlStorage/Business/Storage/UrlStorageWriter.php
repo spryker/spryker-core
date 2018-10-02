@@ -17,10 +17,10 @@ use Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface;
 
 class UrlStorageWriter implements UrlStorageWriterInterface
 {
-    const FK_URL = 'fkUrl';
+    public const FK_URL = 'fkUrl';
 
-    const RESOURCE_TYPE = 'type';
-    const RESOURCE_VALUE = 'value';
+    public const RESOURCE_TYPE = 'type';
+    public const RESOURCE_VALUE = 'value';
 
     /**
      * @var \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface
@@ -128,7 +128,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     /**
      * @param array $data
      *
-     * @throws \Spryker\Zed\UrlStorage\Communication\Plugin\Event\Exception\MissingResourceException
+     * @throws \Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException
      *
      * @return array
      */

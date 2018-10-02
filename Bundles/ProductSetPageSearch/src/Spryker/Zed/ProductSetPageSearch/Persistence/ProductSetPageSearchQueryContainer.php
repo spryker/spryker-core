@@ -21,7 +21,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implements ProductSetPageSearchQueryContainerInterface
 {
-    const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
+    public const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
 
     /**
      * @api
@@ -100,5 +100,17 @@ class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implemen
             ->addAnd(SpyProductImageSetTableMap::COL_FK_RESOURCE_PRODUCT_SET, null, ModelCriteria::NOT_EQUAL);
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSetByIds(array $ids)
+    {
+        return $this->getFactory()->getProductSetQueryContainer()->queryProductSetByIds($ids);
     }
 }
