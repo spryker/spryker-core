@@ -69,9 +69,9 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
         array $quoteItemExpanderPlugins,
         array $itemToShoppingListItemMapperPlugins
     ) {
-        $this->persistentCartFacade = $persistentCartFacade;
         $this->shoppingListResolver = $shoppingListResolver;
         $this->shoppingListRepository = $shoppingListRepository;
+        $this->persistentCartFacade = $persistentCartFacade;
         $this->shoppingListItemOperation = $shoppingListItemOperation;
         $this->quoteItemExpanderPlugins = $quoteItemExpanderPlugins;
         $this->itemToShoppingListItemMapperPlugins = $itemToShoppingListItemMapperPlugins;
