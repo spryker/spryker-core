@@ -91,4 +91,12 @@ interface QueueConstants
      * @api
      */
     public const QUEUE_WORKER_MESSAGE_CHECK_OPTION = 'QUEUE_WORKER_MESSAGE_CHECK_OPTION';
+
+    /**
+     * Specification:
+     * - This option lets the worker to run over a loop until there is no message in the queues
+     *
+     * @api
+     */
+    public const QUEUE_WORKER_LOOP = 'QUEUE_WORKER_LOOP';
 }

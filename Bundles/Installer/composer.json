@@ -1,5 +1,6 @@
 {
   "name": "spryker/installer",
+  "type": "library",
   "description": "Installer module",
   "license": "proprietary",
   "require": {

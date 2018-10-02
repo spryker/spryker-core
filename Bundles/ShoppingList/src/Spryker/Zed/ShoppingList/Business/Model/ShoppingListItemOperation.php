@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface;
@@ -55,9 +56,9 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     protected $messengerFacade;
 
     /**
-     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface
      */
-    protected $addItemPreCheckPlugins;
+    protected $pluginExecutor;
 
     /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
@@ -65,7 +66,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[] $addItemPreCheckPlugins
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
      */
     public function __construct(
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
@@ -73,14 +74,14 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListResolverInterface $shoppingListResolver,
         ShoppingListToMessengerFacadeInterface $messengerFacade,
-        array $addItemPreCheckPlugins = []
+        ShoppingListItemPluginExecutorInterface $pluginExecutor
     ) {
         $this->shoppingListEntityManager = $shoppingListEntityManager;
         $this->productFacade = $productFacade;
         $this->shoppingListRepository = $shoppingListRepository;
         $this->shoppingListResolver = $shoppingListResolver;
         $this->messengerFacade = $messengerFacade;
-        $this->addItemPreCheckPlugins = $addItemPreCheckPlugins;
+        $this->pluginExecutor = $pluginExecutor;
     }
 
     /**
@@ -170,11 +171,12 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         $shoppingListTransfer = (new ShoppingListTransfer())
             ->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
             ->setIdCompanyUser($shoppingListItemTransfer->getIdCompanyUser());
+
         if (!$this->checkWritePermission($shoppingListTransfer)) {
             return $shoppingListItemTransfer;
         }
 
-        return $this->createOrUpdateShoppingListItem($shoppingListItemTransfer);
+        return $this->saveShoppingListItemTransfer($shoppingListItemTransfer);
     }
 
     /**
@@ -184,7 +186,33 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      */
     public function saveShoppingListItemWithoutPermissionsCheck(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->createOrUpdateShoppingListItem($shoppingListItemTransfer);
+        return $this->saveShoppingListItemTransfer($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    protected function deleteShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
+    {
+        $shoppingListItemTransfer = $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItemTransfer);
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
+            return $this->deleteShoppingListItemTransaction($shoppingListItemTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    protected function saveShoppingListItemTransfer(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
+            return $this->saveShoppingListItemTransaction($shoppingListItemTransfer);
+        });
     }
 
     /**
@@ -207,9 +235,25 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    protected function createOrUpdateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    protected function saveShoppingListItemTransaction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
+        $shoppingListItemTransfer = $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
+        $this->pluginExecutor->executePostSavePlugins($shoppingListItemTransfer);
+
+        return $shoppingListItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    protected function deleteShoppingListItemTransaction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
+    {
+        $this->pluginExecutor->executeBeforeDeletePlugins($shoppingListItemTransfer);
+        $this->shoppingListEntityManager->deleteShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
+
+        return (new ShoppingListItemResponseTransfer())->setIsSuccess(true);
     }
 
     /**
@@ -232,26 +276,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             return false;
         }
 
-        return $this->preAddItemCheck($shoppingListItemTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return bool
-     */
-    protected function preAddItemCheck(ShoppingListItemTransfer $shoppingListItemTransfer): bool
-    {
-        $isValid = true;
-        foreach ($this->addItemPreCheckPlugins as $preAddItemCheckPlugin) {
-            $shoppingListPreAddItemCheckResponseTransfer = $preAddItemCheckPlugin->check($shoppingListItemTransfer);
-            if (!$shoppingListPreAddItemCheckResponseTransfer->getIsSuccess()) {
-                $this->processErrorMessages($shoppingListPreAddItemCheckResponseTransfer);
-                $isValid = false;
-            }
-        }
-
-        return $isValid;
+        return $this->pluginExecutor->executeAddItemPreCheckPlugins($shoppingListItemTransfer);
     }
 
     /**
@@ -303,17 +328,5 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             $shoppingListTransfer->getIdCompanyUser(),
             $shoppingListTransfer->getIdShoppingList()
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer $shoppingListPreAddItemCheckResponseTransfer
-     *
-     * @return void
-     */
-    protected function processErrorMessages(ShoppingListPreAddItemCheckResponseTransfer $shoppingListPreAddItemCheckResponseTransfer): void
-    {
-        foreach ($shoppingListPreAddItemCheckResponseTransfer->getMessages() as $messageTransfer) {
-            $this->messengerFacade->addErrorMessage($messageTransfer);
-        }
     }
 }

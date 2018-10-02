@@ -78,16 +78,12 @@
     <transfer name="ShoppingListAddToCartRequest">
         <property name="sku" type="string" />
         <property name="quantity" type="int" />
-        <property name="idShoppingListItem" type="int" />
+        <property name="idShoppingListItem" type="int" deprecated="use shoppingListItem->idShoppingListItem instead" />
+        <property name="shoppingListItem" type="ShoppingListItem" />
     </transfer>
 
     <transfer name="ShoppingListAddToCartRequestCollection">
         <property name="requests" type="ShoppingListAddToCartRequest[]" singular="request" />
-    </transfer>
-
-    <transfer name="ProductView">
-        <property name="quantity" type="int" />
-        <property name="idShoppingListItem" type="int" />
     </transfer>
 
     <transfer name="ShoppingListShareRequest">

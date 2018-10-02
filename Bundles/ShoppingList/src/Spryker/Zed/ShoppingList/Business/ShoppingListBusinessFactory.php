@@ -22,6 +22,8 @@ use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharer;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharerInterface;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriter;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriterInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutor;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
@@ -46,7 +48,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getProductFacade(),
             $this->getCompanyUserFacade(),
-            $this->getItemExpanderPlugins()
+            $this->createShoppingListItemPluginExecutor()
         );
     }
 
@@ -62,7 +64,9 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getMessengerFacade(),
             $this->getEventFacade(),
-            $this->createShoppingListItemOperation()
+            $this->createShoppingListItemOperation(),
+            $this->createShoppingListReader(),
+            $this->createShoppingListItemPluginExecutor()
         );
     }
 
@@ -90,7 +94,21 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createShoppingListResolver(),
             $this->getMessengerFacade(),
-            $this->getAddItemPreCheckPlugins()
+            $this->createShoppingListItemPluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface
+     */
+    public function createShoppingListItemPluginExecutor(): ShoppingListItemPluginExecutorInterface
+    {
+        return new ShoppingListItemPluginExecutor(
+            $this->getMessengerFacade(),
+            $this->getShoppingListItemBeforeDeletePlugins(),
+            $this->getShoppingListItemPostSavePlugins(),
+            $this->getAddItemPreCheckPlugins(),
+            $this->getItemExpanderPlugins()
         );
     }
 
@@ -104,7 +122,9 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getPersistentCartFacade(),
-            $this->getQuoteItemExpanderPlugins()
+            $this->createShoppingListItemOperation(),
+            $this->getQuoteItemExpanderPlugins(),
+            $this->getItemToShoppingListItemMapperPlugins()
         );
     }
 
@@ -197,5 +217,29 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getAddItemPreCheckPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_PRE_CHECK);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface[]
+     */
+    public function getShoppingListItemPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface[]
+     */
+    public function getShoppingListItemBeforeDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface[]
+     */
+    public function getItemToShoppingListItemMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER);
     }
 }
