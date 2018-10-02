@@ -32,6 +32,7 @@ class AclRoleFormDataProvider
     public function findData($idAclRole)
     {
         $roleTransfer = $this->aclFacade->findRoleById($idAclRole);
+
         if (!$roleTransfer) {
             return null;
         }

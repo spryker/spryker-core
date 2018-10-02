@@ -99,7 +99,16 @@ interface AclFacadeInterface
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
      */
-    public function findRoleById($id);
+    public function getRoleById($id);
+
+    /**
+     * @api
+     *
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer|null
+     */
+    public function findRoleById(int $id): ?RoleTransfer;
 
     /**
      * @api

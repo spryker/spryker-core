@@ -63,9 +63,18 @@ interface RoleInterface
     /**
      * @param int $id
      *
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer
+     */
+    public function getRoleById($id);
+
+    /**
+     * @param int $id
+     *
      * @return \Generated\Shared\Transfer\RoleTransfer|null
      */
-    public function findRoleById($id);
+    public function findRoleById(int $id): ?RoleTransfer;
 
     /**
      * @param int $idRole

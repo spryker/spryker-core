@@ -174,9 +174,30 @@ class Role implements RoleInterface
     /**
      * @param int $id
      *
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNotFoundException
+     *
      * @return \Generated\Shared\Transfer\RoleTransfer|null
      */
-    public function findRoleById($id)
+    public function getRoleById($id)
+    {
+        $aclRoleEntity = $this->queryContainer->queryRoleById($id)->findOne();
+
+        if ($aclRoleEntity === null) {
+            throw new RoleNotFoundException();
+        }
+
+        $roleTransfer = new RoleTransfer();
+        $roleTransfer->fromArray($aclRoleEntity->toArray(), true);
+
+        return $roleTransfer;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer|null
+     */
+    public function findRoleById(int $id): ?RoleTransfer
     {
         $aclRoleEntity = $this->queryContainer->queryRoleById($id)->findOne();
 
