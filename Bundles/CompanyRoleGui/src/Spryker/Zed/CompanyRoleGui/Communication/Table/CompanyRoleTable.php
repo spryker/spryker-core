@@ -21,9 +21,9 @@ class CompanyRoleTable extends AbstractTable
     protected const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
     protected const COL_ACTIONS = 'Actions';
 
-    protected const HEADER_ID_COMPANY_ROLE = 'Id';
+    protected const HEADER_ID_COMPANY_ROLE = 'Role Id';
     protected const HEADER_NAME_COMPANY_ROLE = 'Name';
-    protected const HEADER_NAME_COMPANY = 'Company';
+    protected const HEADER_NAME_COMPANY = 'Company Name';
     protected const HEADER_ACTIONS = 'Actions';
 
     protected const PARAM_ID_COMPANY_ROLE = 'id-company-role';
