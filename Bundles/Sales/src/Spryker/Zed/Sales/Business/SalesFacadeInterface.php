@@ -195,6 +195,20 @@ interface SalesFacadeInterface
     public function findOrderByIdSalesOrderItem($idSalesOrderItem);
 
     /**
+     * Specification:
+     * - Gets hydrated OrderTransfer by given order reference and customer reference.
+     * - OrderTransfer must have customerReference and orderReference, otherwise method fails.
+     * - Returns empty OrderTransfer if order entity not found in the database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
      *
      * Specification:
      * - Transforms provided cart items according configured cart item transformer strategies.
