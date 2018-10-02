@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-business-unit-gui-extension",
+  "type": "library",
   "description": "CompanyBusinessUnitGuiExtension module",
   "license": "proprietary",
   "require": {

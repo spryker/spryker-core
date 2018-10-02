@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-availabilities-rest-api",
+  "type": "library",
   "description": "ProductAvailabilitiesRestApi module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/stock-sales-connector",
+  "type": "library",
   "description": "StockSalesConnector module",
   "license": "proprietary",
   "require": {

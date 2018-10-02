@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-role",
+  "type": "library",
   "description": "CompanyRole module",
   "license": "proprietary",
   "require": {

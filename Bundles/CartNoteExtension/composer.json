@@ -1,5 +1,6 @@
 {
   "name": "spryker/cart-note-extension",
+  "type": "library",
   "description": "CartNoteExtension module",
   "license": "proprietary",
   "require": {

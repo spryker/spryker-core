@@ -1,5 +1,6 @@
 {
   "name": "spryker/sales-extension",
+  "type": "library",
   "description": "SalesExtension module",
   "license": "proprietary",
   "require": {

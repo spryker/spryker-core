@@ -1,5 +1,6 @@
 {
   "name": "spryker/util-data-reader",
+  "type": "library",
   "description": "UtilDataReader module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/refund",
+  "type": "library",
   "description": "Refund module",
   "license": "proprietary",
   "require": {

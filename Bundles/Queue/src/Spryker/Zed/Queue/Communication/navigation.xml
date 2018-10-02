@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <config>
     <maintenance>
-        <label>Maintenance</label>
-        <title>Maintenance</title>
-        <bundle>queue</bundle>
         <pages>
             <queue>
                 <label>Queue Processes</label>

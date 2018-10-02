@@ -1,5 +1,6 @@
 {
   "name": "spryker/step-engine",
+  "type": "library",
   "description": "StepEngine module",
   "license": "proprietary",
   "require": {

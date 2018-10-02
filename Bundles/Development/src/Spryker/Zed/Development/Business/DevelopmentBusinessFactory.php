@@ -25,6 +25,7 @@ use Spryker\Zed\Development\Business\Composer\Updater\DescriptionUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\LicenseUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\StabilityUpdater;
+use Spryker\Zed\Development\Business\Composer\Updater\TypeUpdater;
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonUnboundRequireConstraintValidator;
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorComposite;
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface;
@@ -131,6 +132,8 @@ use Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinder;
 use Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinderInterface;
 use Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinder;
 use Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface;
+use Spryker\Zed\Development\Business\Module\ModuleOverview;
+use Spryker\Zed\Development\Business\Module\ModuleOverviewInterface;
 use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderComposite;
 use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuilder;
@@ -729,6 +732,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createProjectModuleFinder(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Module\ModuleOverviewInterface
+     */
+    public function createModuleOverview(): ModuleOverviewInterface
+    {
+        return new ModuleOverview($this->createProjectModuleFinder(), $this->createModuleFinder());
     }
 
     /**
@@ -1364,6 +1375,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createFinder()
     {
         return new SymfonyFinder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
+     */
+    protected function createComposerJsonTypeUpdater()
+    {
+        return new TypeUpdater();
     }
 
     /**

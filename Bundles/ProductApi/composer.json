@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-api",
+  "type": "library",
   "description": "ProductApi module",
   "license": "proprietary",
   "require": {

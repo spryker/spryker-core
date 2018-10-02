@@ -1,5 +1,6 @@
 {
   "name": "spryker/nopayment",
+  "type": "library",
   "description": "Nopayment module",
   "license": "proprietary",
   "require": {

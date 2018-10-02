@@ -1,5 +1,6 @@
 {
   "name": "spryker/oms-discount-connector",
+  "type": "library",
   "description": "OmsDiscountConnector module",
   "license": "proprietary",
   "require": {

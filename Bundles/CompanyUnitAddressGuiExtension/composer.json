@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-unit-address-gui-extension",
+  "type": "library",
   "description": "CompanyUnitAddressGuiExtension module",
   "license": "proprietary",
   "require": {

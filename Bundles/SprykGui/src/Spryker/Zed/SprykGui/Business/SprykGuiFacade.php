@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SprykGui\Business;
 
 use Generated\Shared\Transfer\AccessibleTransferCollection;
-use Generated\Shared\Transfer\ClassInformationCollectionTransfer;
 use Generated\Shared\Transfer\ClassInformationTransfer;
 use Generated\Shared\Transfer\ModuleCollectionTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
@@ -121,20 +120,6 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     *
-     * @return \Generated\Shared\Transfer\ClassInformationCollectionTransfer
-     */
-    public function getZedBusinessModels(ModuleTransfer $moduleTransfer): ClassInformationCollectionTransfer
-    {
-        return $this->getFactory()->createZedBusinessModelFinder()->findBusinessModels($moduleTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $className
      *
      * @return \Generated\Shared\Transfer\ClassInformationTransfer
@@ -170,5 +155,20 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
     public function buildOptions(ModuleTransfer $moduleTransfer): ModuleTransfer
     {
         return $this->getFactory()->createOptionBuilder()->build($moduleTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $choiceLoaderName
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return array
+     */
+    public function loadChoices(string $choiceLoaderName, ModuleTransfer $moduleTransfer): array
+    {
+        return $this->getFactory()->createChoiceLoader()->loadChoices($choiceLoaderName, $moduleTransfer);
     }
 }

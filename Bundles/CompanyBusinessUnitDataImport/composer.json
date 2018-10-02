@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-business-unit-data-import",
+  "type": "library",
   "description": "CompanyBusinessUnitDataImport module",
   "license": "MIT",
   "require": {

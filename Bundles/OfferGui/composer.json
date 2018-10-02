@@ -1,5 +1,6 @@
 {
   "name": "spryker/offer-gui",
+  "type": "library",
   "description": "OfferGui module",
   "license": "proprietary",
   "require": {

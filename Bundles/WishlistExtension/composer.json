@@ -1,5 +1,6 @@
 {
   "name": "spryker/wishlist-extension",
+  "type": "library",
   "description": "WishlistExtension module",
   "license": "proprietary",
   "require": {

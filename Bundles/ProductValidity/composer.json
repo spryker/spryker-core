@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-validity",
+  "type": "library",
   "description": "ProductValidity module",
   "license": "proprietary",
   "require": {
