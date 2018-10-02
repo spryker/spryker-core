@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Orm\Zed\Acl\Persistence\SpyAclRole;
 use Spryker\Shared\Acl\AclConstants;
-use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameEmptyException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
