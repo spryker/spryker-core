@@ -55,7 +55,7 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends MerchantRelation
         $currencyTransferEUR = $this->tester->createTestCurrencyTransfer();
         $currencyTransferUSD = (new CurrencyTransfer())->setIdCurrency(2)->setCode('USD');
 
-        // Action
+        // Act
         $hardThreshold1 = $this->getFacade()->saveMerchantRelationshipSalesOrderThreshold(
             $this->tester->createTestMerchantRelationshipSalesOrderThresholdTransfer(
                 static::HARD_STRATEGY_KEY,
@@ -122,10 +122,10 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends MerchantRelation
      */
     public function testFindApplicableThresholds(): void
     {
-        // Prepare
+        // Arrange
         $quoteTransfer = $this->tester->createTestQuoteTransfer();
 
-        // Action
+        // Act
         $this->getFacade()->findApplicableThresholds($quoteTransfer);
     }
 
@@ -146,6 +146,10 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends MerchantRelation
             new HardMinimumThresholdStrategyPlugin(),
             new SoftMinimumThresholdWithMessageStrategyPlugin(),
         ];
+
+        foreach ($this->strategies as $strategy) {
+            $this->tester->haveSalesOrderThresholdType($strategy->toTransfer());
+        }
 
         $this->tester->setDependency(SalesOrderThresholdDependencyProvider::PLUGINS_SALES_ORDER_THRESHOLD_STRATEGY, $this->strategies);
     }

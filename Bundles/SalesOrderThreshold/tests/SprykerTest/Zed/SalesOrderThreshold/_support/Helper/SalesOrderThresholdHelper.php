@@ -8,13 +8,18 @@
 namespace SprykerTest\Zed\SalesOrderThreshold\Helper;
 
 use Codeception\Module;
+use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Orm\Zed\SalesOrderThreshold\Persistence\Map\SpySalesOrderThresholdTableMap;
 use Orm\Zed\SalesOrderThreshold\Persistence\Map\SpySalesOrderThresholdTypeTableMap;
 use Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThresholdQuery;
 use Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThresholdTypeQuery;
+use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class SalesOrderThresholdHelper extends Module
 {
+    use LocatorHelperTrait;
+
     protected const ERROR_MESSAGE_FOUND = 'Found at least one entry in the database table but database table `%s` was expected to be empty.';
 
     protected const ERROR_MESSAGE_EXPECTED = 'Expected at least %d entries in the database table `%s` and found %d entries.';
@@ -48,6 +53,16 @@ class SalesOrderThresholdHelper extends Module
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer
+     */
+    public function haveSalesOrderThresholdType(SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer): SalesOrderThresholdTypeTransfer
+    {
+        return $this->getFacade()->saveSalesOrderThresholdType($salesOrderThresholdTypeTransfer);
+    }
+
+    /**
      * @return \Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThresholdQuery
      */
     protected function getSalesOrderThresholdQuery(): SpySalesOrderThresholdQuery
@@ -61,5 +76,13 @@ class SalesOrderThresholdHelper extends Module
     protected function getSalesOrderThresholdTypeQuery(): SpySalesOrderThresholdTypeQuery
     {
         return SpySalesOrderThresholdTypeQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface
+     */
+    protected function getFacade(): SalesOrderThresholdFacadeInterface
+    {
+        return $this->getLocator()->salesOrderThreshold()->facade();
     }
 }

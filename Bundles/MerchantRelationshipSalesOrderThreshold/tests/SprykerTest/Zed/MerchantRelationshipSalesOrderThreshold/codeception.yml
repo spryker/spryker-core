@@ -28,3 +28,4 @@ suites:
                 - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
                 - \SprykerTest\Zed\MerchantRelationship\Helper\MerchantRelationshipHelper
                 - \SprykerTest\Zed\MerchantRelationshipSalesOrderThreshold\Helper\MerchantRelationshipSalesOrderThresholdHelper
+                - \SprykerTest\Zed\SalesOrderThreshold\Helper\SalesOrderThresholdHelper
