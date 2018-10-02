@@ -109,7 +109,7 @@ class GlossaryStorage implements GlossaryStorageInterface
             return null;
         }
 
-        return $translation['value'] ?? '';
+        return $translation['value'];
     }
 
     /**
