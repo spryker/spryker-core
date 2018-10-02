@@ -44,6 +44,7 @@ class MerchantRelationshipFacadeTest extends Unit
 
     /**
      * @expectedException \Exception
+     *
      * @return void
      */
     public function testCreateMerchantRelationshipWithNotUniqueKeyThrowsException(): void
