@@ -80,14 +80,14 @@ class RestResource implements RestResourceInterface
 
     /**
      * @param string $name
-     * @param string $resourceUri
+     * @param string $resourceHref
      * @param array $meta
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function addLink(string $name, string $resourceUri, array $meta = []): RestResourceInterface
+    public function addLink(string $name, string $resourceHref, array $meta = []): RestResourceInterface
     {
-        $this->links[] = new RestLink($name, $resourceUri, $meta);
+        $this->links[] = new RestLink($name, $resourceHref, $meta);
 
         return $this;
     }

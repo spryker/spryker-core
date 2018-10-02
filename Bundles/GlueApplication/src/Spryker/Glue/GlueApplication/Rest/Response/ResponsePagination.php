@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -13,6 +14,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ResponsePagination implements ResponsePaginationInterface
 {
+    public const LINK_PATTERN = '\\%1$s\\%2$s\\%3$s';
+
     /**
      * @var string
      */
@@ -56,10 +59,10 @@ class ResponsePagination implements ResponsePaginationInterface
         }
 
         $offsetLinks = [
-            RestLinkInterface::LINK_NEXT => $domain . $pageOffsetsTransfer->getNextOffset() . $limit,
-            RestLinkInterface::LINK_PREV => $domain . $pageOffsetsTransfer->getPrevOffset() . $limit,
-            RestLinkInterface::LINK_LAST => $domain . $pageOffsetsTransfer->getLastOffset() . $limit,
-            RestLinkInterface::LINK_FIRST => $domain . 0 . $limit,
+            RestLinkInterface::LINK_NEXT => sprintf(self::LINK_PATTERN, $domain, $pageOffsetsTransfer->getNextOffset(), $limit),
+            RestLinkInterface::LINK_PREV => sprintf(self::LINK_PATTERN, $domain, $pageOffsetsTransfer->getPrevOffset(), $limit),
+            RestLinkInterface::LINK_LAST => sprintf(self::LINK_PATTERN, $domain, $pageOffsetsTransfer->getLastOffset(), $limit),
+            RestLinkInterface::LINK_FIRST => sprintf(self::LINK_PATTERN, $domain, 0, $limit),
         ];
 
         return array_merge(
