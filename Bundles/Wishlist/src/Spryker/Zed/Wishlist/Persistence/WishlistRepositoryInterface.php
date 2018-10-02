@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Wishlist\Persistence;
 
-use ArrayObject;
+use Generated\Shared\Transfer\WishlistCollectionTransfer;
 
 interface WishlistRepositoryInterface
 {
     /**
      * @param string $customerReference
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\WishlistTransfer[]
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
-    public function findByCustomerReference(string $customerReference): ArrayObject;
+    public function getByCustomerReference(string $customerReference): WishlistCollectionTransfer;
 }

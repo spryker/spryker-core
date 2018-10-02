@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Wishlist\Persistence;
 
-use ArrayObject;
+use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -19,11 +19,12 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
     /**
      * @param string $customerReference
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\WishlistTransfer[]
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
-    public function findByCustomerReference(string $customerReference): ArrayObject
+    public function getByCustomerReference(string $customerReference): WishlistCollectionTransfer
     {
-        $wishlistsTransfer = new ArrayObject();
+        $wishlistCollection = new WishlistCollectionTransfer();
+
         $wishlistEntities = $this->getFactory()->createWishlistQuery()
             ->joinWithSpyCustomer()
             ->where(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE . ' = ?', $customerReference)
@@ -31,9 +32,9 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
 
         foreach ($wishlistEntities as $wishlistEntity) {
             $wishlistTransfer = $this->getFactory()->createWishlistMapper()->mapWishlistEntityToWishlistTransfer($wishlistEntity->toArray());
-            $wishlistsTransfer->append($wishlistTransfer);
+            $wishlistCollection->addWishlist($wishlistTransfer);
         }
 
-        return $wishlistsTransfer;
+        return $wishlistCollection;
     }
 }

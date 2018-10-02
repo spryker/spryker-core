@@ -9,7 +9,6 @@ namespace Spryker\Glue\WishlistsRestApi\Processor\Wishlists;
 
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -37,9 +36,9 @@ interface WishlistsReaderInterface
     public function findWishlistOverviewByUuid(string $wishlistUuid): ?WishlistOverviewResponseTransfer;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
+     * @param string $customerReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getCustomerWishlists(RestResourceInterface $restResource): array;
+    public function getWishlistsByCustomerReference(string $customerReference): array;
 }

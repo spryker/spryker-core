@@ -453,18 +453,6 @@ class Reader implements ReaderInterface
      */
     protected function getCollectionByCustomerReference(string $customerReference): WishlistCollectionTransfer
     {
-        $wishlistCollection = new WishlistCollectionTransfer();
-        $wishlists = $this->wishlistRepository
-            ->findByCustomerReference($customerReference);
-
-        if (!$wishlists->count()) {
-            return $wishlistCollection;
-        }
-
-        foreach ($wishlists as $wishlist) {
-            $wishlistCollection->addWishlist($wishlist);
-        }
-
-        return $wishlistCollection;
+        return $this->wishlistRepository->getByCustomerReference($customerReference);
     }
 }
