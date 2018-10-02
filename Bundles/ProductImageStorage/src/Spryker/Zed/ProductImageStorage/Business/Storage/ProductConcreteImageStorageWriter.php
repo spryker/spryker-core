@@ -201,18 +201,18 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
         $productImageSets = $this->repository->getProductImageSetsByFkProductIn($productFks);
         $productImageSetsIndexedByFkProduct = $this->indexImageSetsByProduct($productImageSets);
 
-        $combinedImageSets = [];
+        $imageSets = [];
         foreach ($productLocalizedAttributes as $productLocalizedAttribute) {
             $idProduct = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT];
             $colIdProductAttributes = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_ID_PRODUCT_ATTRIBUTES];
 
-            $combinedImageSets[$idProduct][$colIdProductAttributes] = $this->getImageSetForLocalizedAttribute(
+            $imageSets[$idProduct][$colIdProductAttributes] = $this->getImageSetForLocalizedAttribute(
                 $productLocalizedAttribute,
                 $productImageSetsIndexedByFkProduct
             );
         }
 
-        return $combinedImageSets;
+        return $imageSets;
     }
 
     /**
@@ -225,16 +225,16 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
         array $productLocalizedAttribute,
         array &$productImageSetsIndexedByFkProduct
     ): ArrayObject {
-        $combinedImageSet = new ArrayObject();
+        $imageSet = new ArrayObject();
 
         $colFkProduct = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT];
         $colFkLocale = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE];
 
         foreach ($productImageSetsIndexedByFkProduct[$colFkProduct][$colFkLocale] ?? [] as $item) {
-            $combinedImageSet->append($item);
+            $imageSet->append($item);
         }
 
-        return $combinedImageSet;
+        return $imageSet;
     }
 
     /**
