@@ -1,5 +1,6 @@
 {
   "name": "spryker/graph",
+  "type": "library",
   "description": "Graph module",
   "license": "proprietary",
   "require": {

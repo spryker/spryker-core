@@ -172,7 +172,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param string $bundleProductSku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle|null
      */
     protected function findBundleProductEntityBySku($bundleProductSku)
     {
@@ -185,7 +185,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      * @param string $bundledItemSku
      * @param int $idStore
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability|null
      */
     protected function findBundledItemAvailabilityEntityBySku($bundledItemSku, $idStore)
     {
@@ -246,7 +246,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     protected function skipBundledItem(SpyAvailability $bundledProductAvailabilityEntity)
     {
-        return ($bundledProductAvailabilityEntity === null || $bundledProductAvailabilityEntity->getIsNeverOutOfStock());
+        return $bundledProductAvailabilityEntity->getIsNeverOutOfStock();
     }
 
     /**

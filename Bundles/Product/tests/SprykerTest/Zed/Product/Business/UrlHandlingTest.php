@@ -242,7 +242,7 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @param int $idUrl
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouch
+     * @return \Orm\Zed\Touch\Persistence\SpyTouch|null
      */
     protected function getProductUrlTouchEntry($idUrl)
     {

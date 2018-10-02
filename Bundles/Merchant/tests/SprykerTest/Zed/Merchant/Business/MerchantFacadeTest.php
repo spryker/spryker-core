@@ -195,7 +195,7 @@ class MerchantFacadeTest extends Unit
      */
     public function testGetMerchantsReturnNotEmptyCollection(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->truncateMerchantRelations();
 
         $this->tester->haveMerchant();
         $this->tester->haveMerchant();

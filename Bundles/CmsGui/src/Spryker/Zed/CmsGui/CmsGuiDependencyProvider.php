@@ -19,20 +19,20 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'locale facade';
-    const FACADE_CMS = 'locale cms';
-    const FACADE_URL = 'url facade';
-    const FACADE_GLOSSARY = 'glossary facade';
-    const FACADE_CMS_CONTENT_WIDGET = 'content widget facade';
+    public const FACADE_LOCALE = 'locale facade';
+    public const FACADE_CMS = 'locale cms';
+    public const FACADE_URL = 'url facade';
+    public const FACADE_GLOSSARY = 'glossary facade';
+    public const FACADE_CMS_CONTENT_WIDGET = 'content widget facade';
 
-    const QUERY_CONTAINER_CMS = 'cms query container';
+    public const QUERY_CONTAINER_CMS = 'cms query container';
 
-    const SERVICE_UTIL_ENCODING = 'util encoding service';
+    public const SERVICE_UTIL_ENCODING = 'util encoding service';
 
-    const TWIG_ENVIRONMENT = 'twig environment';
+    public const TWIG_ENVIRONMENT = 'twig environment';
 
-    const PLUGINS_CMS_PAGE_TABLE_EXPANDER = 'PLUGINS_CMS_PAGE_TABLE_EXPANDER';
-    const PLUGINS_CREATE_GLOSSARY_EXPANDER = 'PLUGINS_CREATE_GLOSSARY_EXPANDER';
+    public const PLUGINS_CMS_PAGE_TABLE_EXPANDER = 'PLUGINS_CMS_PAGE_TABLE_EXPANDER';
+    public const PLUGINS_CREATE_GLOSSARY_EXPANDER = 'PLUGINS_CREATE_GLOSSARY_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

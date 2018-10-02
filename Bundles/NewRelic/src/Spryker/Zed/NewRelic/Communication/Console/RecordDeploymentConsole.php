@@ -18,23 +18,23 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RecordDeploymentConsole extends Console
 {
-    const COMMAND_NAME = 'newrelic:record-deployment';
-    const DESCRIPTION = 'Send deployment notification to New Relic';
+    public const COMMAND_NAME = 'newrelic:record-deployment';
+    public const DESCRIPTION = 'Send deployment notification to New Relic';
 
-    const ARGUMENT_APPLICATION_NAME = 'app_name';
-    const ARGUMENT_APPLICATION_NAME_DESCRIPTION = 'The name of the application in New Relic';
+    public const ARGUMENT_APPLICATION_NAME = 'app_name';
+    public const ARGUMENT_APPLICATION_NAME_DESCRIPTION = 'The name of the application in New Relic';
 
-    const ARGUMENT_USER = 'user';
-    const ARGUMENT_USER_DESCRIPTION = 'The name of the deployer';
+    public const ARGUMENT_USER = 'user';
+    public const ARGUMENT_USER_DESCRIPTION = 'The name of the deployer';
 
-    const ARGUMENT_REVISION = 'revision';
-    const ARGUMENT_REVISION_DESCRIPTION = 'Revision number';
+    public const ARGUMENT_REVISION = 'revision';
+    public const ARGUMENT_REVISION_DESCRIPTION = 'Revision number';
 
-    const ARGUMENT_DESCRIPTION = 'description';
-    const ARGUMENT_DESCRIPTION_DESCRIPTION = 'Deployment description';
+    public const ARGUMENT_DESCRIPTION = 'description';
+    public const ARGUMENT_DESCRIPTION_DESCRIPTION = 'Deployment description';
 
-    const ARGUMENT_CHANGELOG = 'changelog';
-    const ARGUMENT_CHANGELOG_DESCRIPTION = 'Change log';
+    public const ARGUMENT_CHANGELOG = 'changelog';
+    public const ARGUMENT_CHANGELOG_DESCRIPTION = 'Change log';
 
     /**
      * @return void

@@ -9,7 +9,7 @@ namespace Spryker\Yves\StepEngine\Dependency\Form;
 
 interface SubFormInterface
 {
-    const OPTIONS_FIELD_NAME = 'select_options';
+    public const OPTIONS_FIELD_NAME = 'select_options';
 
     /**
      * @return string

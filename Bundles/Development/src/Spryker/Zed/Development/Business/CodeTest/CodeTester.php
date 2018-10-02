@@ -13,13 +13,13 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class CodeTester
 {
-    const OPTION_VERBOSE = 'verbose';
+    public const OPTION_VERBOSE = 'verbose';
 
-    const OPTION_INITIALIZE = 'initialize';
+    public const OPTION_INITIALIZE = 'initialize';
 
-    const OPTION_GROUP = 'group';
+    public const OPTION_GROUP = 'group';
 
-    const OPTION_TYPE_EXCLUDE = 'exclude';
+    public const OPTION_TYPE_EXCLUDE = 'exclude';
 
     /**
      * @var string

@@ -265,12 +265,10 @@ class IndexInstaller implements SearchInstallerInterface
      */
     protected function getIndexState(Index $index): string
     {
-        if ($index->getClient()) {
-            $clusterState = $index->getClient()->getCluster()->getState();
+        $clusterState = $index->getClient()->getCluster()->getState();
 
-            if (isset($clusterState['metadata']['indices'][$index->getName()]['state'])) {
-                return $clusterState['metadata']['indices'][$index->getName()]['state'];
-            }
+        if (isset($clusterState['metadata']['indices'][$index->getName()]['state'])) {
+            return $clusterState['metadata']['indices'][$index->getName()]['state'];
         }
 
         throw new MissingIndexStateException('Can not determine index state.');

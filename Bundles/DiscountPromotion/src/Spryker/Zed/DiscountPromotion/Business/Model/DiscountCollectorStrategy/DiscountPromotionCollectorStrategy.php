@@ -188,7 +188,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion
+     * @return \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion|null
      */
     protected function findDiscountPromotionByIdDiscount(DiscountTransfer $discountTransfer)
     {

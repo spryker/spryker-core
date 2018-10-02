@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CategoryStorage\Storage;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CategoryTreeStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface;
@@ -38,14 +39,14 @@ class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
     /**
      * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
     public function getCategories($locale)
     {
         $categoryTreeKey = $this->generateKey($locale);
         $categories = $this->storageClient->get($categoryTreeKey);
         if (!$categories) {
-            return [];
+            return new ArrayObject();
         }
 
         $categoryTreeStorageTransfer = new CategoryTreeStorageTransfer();

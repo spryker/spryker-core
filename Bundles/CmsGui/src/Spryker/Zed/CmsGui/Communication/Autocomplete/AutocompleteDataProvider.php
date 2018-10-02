@@ -11,7 +11,7 @@ use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterf
 
 class AutocompleteDataProvider implements AutocompleteDataProviderInterface
 {
-    const SEARCH_LIMIT = 20;
+    public const SEARCH_LIMIT = 20;
 
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface

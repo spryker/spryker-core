@@ -13,7 +13,7 @@ use Spryker\Service\UtilValidate\Dependency\External\UtilValidateToEguliasRfcEma
 
 class UtilValidateDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const EMAIL_VALIDATOR = 'EMAIL_VALIDATOR';
+    public const EMAIL_VALIDATOR = 'EMAIL_VALIDATOR';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container

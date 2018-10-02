@@ -25,7 +25,7 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
  */
 class DataImporterTest extends Unit
 {
-    const IMPORTER_TYPE = 'specific-importer';
+    public const IMPORTER_TYPE = 'specific-importer';
 
     /**
      * @var \SprykerTest\Zed\DataImport\BusinessTester

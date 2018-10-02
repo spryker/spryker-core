@@ -1,5 +1,6 @@
 {
   "name": "spryker/error-handler",
+  "type": "library",
   "description": "ErrorHandler module",
   "license": "proprietary",
   "require": {

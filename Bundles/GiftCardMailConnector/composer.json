@@ -1,5 +1,6 @@
 {
   "name": "spryker/gift-card-mail-connector",
+  "type": "library",
   "description": "GiftCardMailConnector module",
   "license": "proprietary",
   "require": {

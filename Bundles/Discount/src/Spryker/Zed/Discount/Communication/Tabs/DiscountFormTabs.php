@@ -22,12 +22,12 @@ class DiscountFormTabs extends AbstractTabs
     protected $discountForm;
 
     /**
-     * @var \Symfony\Component\Form\FormInterface
+     * @var \Symfony\Component\Form\FormInterface|null
      */
     protected $voucherForm;
 
     /**
-     * @var \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     * @var \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
      */
     protected $discountConfiguratorTransfer;
 

@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUser\Persistence\Mapper;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\SpyCompanyUserEntityTransfer;
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUser;
 
 interface CompanyUserMapperInterface
 {
@@ -37,4 +38,13 @@ interface CompanyUserMapperInterface
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function mapCompanyUserCollection($collection): CompanyUserCollectionTransfer;
+
+    /**
+     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUser $companyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function mapCompanyUserEntityToCompanyUserTransfer(
+        SpyCompanyUser $companyUser
+    ): CompanyUserTransfer;
 }

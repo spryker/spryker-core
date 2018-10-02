@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Country\Business\Cldr;
 
+use RuntimeException;
+
 class JsonFileCldrDataProvider implements CldrDataProviderInterface
 {
     /**
@@ -23,13 +25,18 @@ class JsonFileCldrDataProvider implements CldrDataProviderInterface
     }
 
     /**
-     * @return mixed
+     * @throws \RuntimeException
+     *
+     * @return array
      */
     public function getCldrData()
     {
         $rawFileInput = file_get_contents(
             $this->cldrFilePath
         );
+        if ($rawFileInput === false) {
+            throw new RuntimeException('Invalid content for cldr file.');
+        }
 
         return json_decode($rawFileInput, true);
     }

@@ -17,6 +17,8 @@ use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 class OfferCustomerHydratorPlugin extends AbstractPlugin implements OfferHydratorPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
