@@ -99,7 +99,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
 
         $shoppingListTransfer = $this->findShoppingListByShoppingListId($shoppingListFromCartRequestTransfer);
 
-        if (!$shoppingListTransfer) {
+        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
             $shoppingListFromCartRequestTransfer->requireShoppingListName();
 
             $shoppingListTransfer = $this->shoppingListResolver->createShoppingListIfNotExists(
@@ -133,11 +133,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
 
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
 
-        if ($shoppingListTransfer !== null && $this->checkWritePermission($shoppingListTransfer)) {
-            return $shoppingListTransfer;
-        }
-
-        return null;
+        return $shoppingListTransfer;
     }
 
     /**
