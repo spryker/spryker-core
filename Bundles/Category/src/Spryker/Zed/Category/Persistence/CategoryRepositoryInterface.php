@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryRepositoryInterface
@@ -26,4 +27,12 @@ interface CategoryRepositoryInterface
      * @return string
      */
     public function getNodePath(int $idCategoryNode, LocaleTransfer $localeTransfer);
+
+    /**
+     * @param string $nodeName
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function checkSameLevelCategoryByNameExists(string $nodeName, CategoryTransfer $categoryTransfer): bool;
 }

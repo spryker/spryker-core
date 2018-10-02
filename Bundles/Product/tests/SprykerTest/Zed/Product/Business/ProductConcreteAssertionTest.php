@@ -26,8 +26,8 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
  */
 class ProductConcreteAssertionTest extends Unit
 {
-    const SKU = 'sku-concrete';
-    const ID_PRODUCT_CONCRETE = 1;
+    public const SKU = 'sku-concrete';
+    public const ID_PRODUCT_CONCRETE = 1;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface|\PHPUnit_Framework_MockObject_MockObject

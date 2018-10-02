@@ -21,13 +21,13 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class LocalizedProductImageSetFormType extends AbstractType
 {
-    const FIELD_ID_PRODUCT_IMAGE_SET = 'id_product_image_set';
-    const FIELD_NAME = 'name';
-    const FIELD_FK_LOCALE = 'fk_locale';
-    const FIELD_FK_RESOURCE_PRODUCT_SET = 'fk_resource_product_set';
-    const FIELD_PRODUCT_IMAGE_COLLECTION = 'product_image_collection';
+    public const FIELD_ID_PRODUCT_IMAGE_SET = 'id_product_image_set';
+    public const FIELD_NAME = 'name';
+    public const FIELD_FK_LOCALE = 'fk_locale';
+    public const FIELD_FK_RESOURCE_PRODUCT_SET = 'fk_resource_product_set';
+    public const FIELD_PRODUCT_IMAGE_COLLECTION = 'product_image_collection';
 
-    const VALIDATION_GROUP_IMAGE_COLLECTION = 'validation_group_image_collection';
+    public const VALIDATION_GROUP_IMAGE_COLLECTION = 'validation_group_image_collection';
 
     /**
      * @return string

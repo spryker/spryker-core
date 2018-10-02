@@ -13,7 +13,7 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 abstract class AbstractBulkTouchHandler implements BulkTouchInterface
 {
-    const BULK_UPDATE_CHUNK_SIZE = 250;
+    public const BULK_UPDATE_CHUNK_SIZE = 250;
 
     /**
      * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface

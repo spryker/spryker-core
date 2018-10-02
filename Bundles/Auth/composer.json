@@ -1,5 +1,6 @@
 {
   "name": "spryker/auth",
+  "type": "library",
   "description": "Auth module",
   "license": "proprietary",
   "require": {

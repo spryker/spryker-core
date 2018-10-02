@@ -6,6 +6,7 @@ parameters:
         - '#Call to an undefined method Generated\\Shared\\Transfer\\PriceProductTransfer\:\:getPriceProduct\(\)#'
         - '#Call to an undefined method .+Criteria::.+\(\).#'
         - '#Call to an undefined method .+SpyPriceProductQuery::joinWithPriceProductDefault\(\)#'
+        - '#Method .+PriceProductRepository::findProductAbstractPricesByIdIn\(\) should return iterable\<Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductStore\>\&Propel\\Runtime\\Collection\\ObjectCollection but returns iterable\<Orm\\Zed\\Company\\Persistence\\SpyCompany\>\&Propel\\Runtime\\Collection\\ObjectCollection#'
 services:
     -
         class: PhpStan\DynamicType\FacadeDynamicTypeExtension

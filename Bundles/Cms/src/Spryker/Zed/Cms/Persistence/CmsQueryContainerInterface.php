@@ -22,6 +22,7 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 /**
  * @method \Orm\Zed\Cms\Persistence\SpyCmsPageQuery queryPagesWithTemplates()
+ * @method \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery queryNodeByCategoryName(string $categoryName, int $idLocale)
  */
 interface CmsQueryContainerInterface extends QueryContainerInterface
 {

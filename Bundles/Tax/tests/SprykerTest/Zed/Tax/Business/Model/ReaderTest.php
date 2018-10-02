@@ -24,12 +24,12 @@ use Spryker\Zed\Tax\Business\TaxFacade;
  */
 class ReaderTest extends Unit
 {
-    const DUMMY_TAX_SET_NAME = 'SalesTax';
-    const DUMMY_TAX_RATE1_NAME = 'Local';
-    const DUMMY_TAX_RATE1_PERCENTAGE = 25;
-    const DUMMY_TAX_RATE2_NAME = 'Regional';
-    const DUMMY_TAX_RATE2_PERCENTAGE = 10;
-    const NON_EXISTENT_ID = 999999999;
+    public const DUMMY_TAX_SET_NAME = 'SalesTax';
+    public const DUMMY_TAX_RATE1_NAME = 'Local';
+    public const DUMMY_TAX_RATE1_PERCENTAGE = 25;
+    public const DUMMY_TAX_RATE2_NAME = 'Regional';
+    public const DUMMY_TAX_RATE2_PERCENTAGE = 10;
+    public const NON_EXISTENT_ID = 999999999;
 
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<database
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        name="zed"
+        xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+        namespace="Orm\Foo\Bar\Persistence"
+        package="src.Orm.Foo.Bar.Persistence">
+
+    <table name="spy_foo_bar" idMethod="native" phpName="SpyFooBar">
+        <column name="id_foo_bar" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_zip_zap" required="true" type="INTEGER"/>
+        <column name="fk_extra_long_foreign_key_name_with_postgres_index_name_max_length_overflow" required="true" type="INTEGER"/>
+
+        <foreign-key name="spy_foo_bar-fk_zip_zap" foreignTable="spy_zip_zap" phpName="ZipZap" refPhpName="ZipZap">
+            <reference foreign="id_zip_zap" local="fk_zip_zap"/>
+        </foreign-key>
+
+        <foreign-key name="spy_foo_bar-fk_zip_zap" foreignTable="spy_zip_zap" phpName="ZipZap" refPhpName="ZipZap">
+            <reference foreign="id_zip_zap" local="fk_extra_long_foreign_key_name_with_postgres_index_name_max_length_overflow"/>
+        </foreign-key>
+    </table>
+
+</database>

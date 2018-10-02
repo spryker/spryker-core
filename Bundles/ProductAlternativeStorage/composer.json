@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-alternative-storage",
+  "type": "library",
   "description": "ProductAlternativeStorage module",
   "license": "proprietary",
   "require": {
