@@ -28,7 +28,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
 {
-    const COL_FK_CUSTOMER = 'fk_customer';
+    public const COL_FK_CUSTOMER = 'fk_customer';
 
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotals|null

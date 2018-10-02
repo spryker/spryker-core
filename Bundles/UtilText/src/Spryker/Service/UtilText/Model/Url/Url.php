@@ -12,14 +12,14 @@ namespace Spryker\Service\UtilText\Model\Url;
  */
 class Url
 {
-    const SCHEME = 'scheme';
-    const HOST = 'host';
-    const PORT = 'port';
-    const USER = 'user';
-    const PASS = 'pass';
-    const PATH = 'path';
-    const QUERY = 'query';
-    const FRAGMENT = 'fragment';
+    public const SCHEME = 'scheme';
+    public const HOST = 'host';
+    public const PORT = 'port';
+    public const USER = 'user';
+    public const PASS = 'pass';
+    public const PATH = 'path';
+    public const QUERY = 'query';
+    public const FRAGMENT = 'fragment';
 
     /**
      * @var string

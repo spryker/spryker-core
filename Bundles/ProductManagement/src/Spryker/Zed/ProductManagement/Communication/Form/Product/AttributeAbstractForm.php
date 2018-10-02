@@ -28,16 +28,16 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class AttributeAbstractForm extends AbstractSubForm
 {
-    const FIELD_NAME = 'name';
-    const FIELD_VALUE = 'value';
-    const FIELD_VALUE_HIDDEN_ID = 'value_hidden_id';
+    public const FIELD_NAME = 'name';
+    public const FIELD_VALUE = 'value';
+    public const FIELD_VALUE_HIDDEN_ID = 'value_hidden_id';
 
-    const OPTION_ATTRIBUTE = 'option_attribute';
-    const OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER = 'product-management-query-container';
-    const OPTION_LOCALE_PROVIDER = 'locale-provider';
-    const OPTION_LOCALE_TRANSFER = 'locale-transfer';
+    public const OPTION_ATTRIBUTE = 'option_attribute';
+    public const OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER = 'product-management-query-container';
+    public const OPTION_LOCALE_PROVIDER = 'locale-provider';
+    public const OPTION_LOCALE_TRANSFER = 'locale-transfer';
 
-    const VALIDATION_GROUP_ATTRIBUTE_VALUE = 'validation_group_attribute_value';
+    public const VALIDATION_GROUP_ATTRIBUTE_VALUE = 'validation_group_attribute_value';
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer

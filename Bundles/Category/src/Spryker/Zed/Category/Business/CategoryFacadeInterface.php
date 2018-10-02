@@ -481,6 +481,19 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
+     * - Checks if there is a category node on the same level with provided category by name
+     *
+     * @api
+     *
+     * @param string $name
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function checkSameLevelCategoryByNameExists(string $name, CategoryTransfer $categoryTransfer): bool;
+
+    /**
+     * Specification:
      * - Retrieves collection with all categories from DB.
      *
      * @api

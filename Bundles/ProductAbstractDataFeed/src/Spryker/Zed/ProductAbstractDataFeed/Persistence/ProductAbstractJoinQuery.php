@@ -14,8 +14,8 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
 {
-    const LOCALE_FILTER_VALUE = 'LOCALE_FILTER_VALUE';
-    const LOCALE_FILTER_CRITERIA = 'LOCALE_FILTER_CRITERIA';
+    public const LOCALE_FILTER_VALUE = 'LOCALE_FILTER_VALUE';
+    public const LOCALE_FILTER_CRITERIA = 'LOCALE_FILTER_CRITERIA';
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $abstractProductQuery

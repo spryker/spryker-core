@@ -13,7 +13,7 @@ use Spryker\Yves\Price\Dependency\Client\PriceToQuoteClientBridge;
 
 class PriceDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

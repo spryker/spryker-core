@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 
 class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_AVAILABILITY = 'availability facade';
+    public const FACADE_AVAILABILITY = 'availability facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

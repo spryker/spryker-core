@@ -9,5 +9,5 @@ namespace SprykerTest\Zed\Cms\PageObject;
 
 class CmsRedirectListPage
 {
-    const URL = '/cms/redirect';
+    public const URL = '/cms/redirect';
 }

@@ -97,30 +97,35 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'name_underscore' => 'scalar_field',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'no',
         ],
         self::ARRAY_FIELD => [
             'type' => 'array',
             'name_underscore' => 'array_field',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'no',
         ],
         self::TRANSFER_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
             'name_underscore' => 'transfer_field',
             'is_collection' => false,
             'is_transfer' => true,
+            'rest_request_parameter' => 'no',
         ],
         self::TRANSFER_COLLECTION_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
             'name_underscore' => 'transfer_collection_field',
             'is_collection' => true,
             'is_transfer' => true,
+            'rest_request_parameter' => 'no',
         ],
         self::PROJECT_LEVEL_DEPRECATED_FIELD => [
             'type' => 'string',
             'name_underscore' => 'project_level_deprecated_field',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'no',
         ],
     ];
 

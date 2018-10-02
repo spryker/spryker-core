@@ -16,13 +16,13 @@ use Spryker\Client\Kernel\Container;
 
 class CartDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_QUOTE = 'quote client';
-    const CLIENT_ZED_REQUEST = 'zed request client';
-    const PLUGIN_ITEM_COUNT = 'item count plugin';
-    const PLUGINS_QUOTE_STORAGE_STRATEGY = 'PLUGINS_QUOTE_STORAGE_STRATEGY';
-    const PLUGINS_ADD_ITEMS_REQUEST_EXPANDER = 'PLUGINS_ADD_ITEMS_REQUEST_EXPANDER';
-    const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
-    const PLUGIN_QUOTE_ITEM_FINDER = 'PLUGIN_QUOTE_ITEMS_FINDER';
+    public const CLIENT_QUOTE = 'quote client';
+    public const CLIENT_ZED_REQUEST = 'zed request client';
+    public const PLUGIN_ITEM_COUNT = 'item count plugin';
+    public const PLUGINS_QUOTE_STORAGE_STRATEGY = 'PLUGINS_QUOTE_STORAGE_STRATEGY';
+    public const PLUGINS_ADD_ITEMS_REQUEST_EXPANDER = 'PLUGINS_ADD_ITEMS_REQUEST_EXPANDER';
+    public const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
+    public const PLUGIN_QUOTE_ITEM_FINDER = 'PLUGIN_QUOTE_ITEMS_FINDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

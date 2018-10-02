@@ -44,7 +44,7 @@ use Spryker\Zed\Ratepay\Business\RatepayBusinessFactory;
  */
 abstract class AbstractBusinessTest extends Unit
 {
-    const PAYMENT_METHOD = '';
+    public const PAYMENT_METHOD = '';
 
     /**
      * @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay

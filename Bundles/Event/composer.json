@@ -1,5 +1,6 @@
 {
   "name": "spryker/event",
+  "type": "library",
   "description": "Event module",
   "license": "proprietary",
   "require": {
