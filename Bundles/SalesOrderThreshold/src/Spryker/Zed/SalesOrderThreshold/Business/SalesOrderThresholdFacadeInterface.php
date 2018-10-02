@@ -206,4 +206,17 @@ interface SalesOrderThresholdFacadeInterface
      * @return void
      */
     public function saveSalesOrderThresholdTaxSet(int $idTaxSet): void;
+
+    /**
+     * Specification:
+     * - Resolves $typeKey to SalesOrderThresholdTypeTransfer from threshold types
+     * - Saves and returns SalesOrderThresholdType
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer
+     */
+    public function saveSalesOrderThresholdType(SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer): SalesOrderThresholdTypeTransfer;
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold;
 
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
+use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\SalesOrderThreshold\Business\Strategy\Resolver\SalesOrderThresholdStrategyResolverInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdGlossaryKeyGeneratorInterface;
@@ -127,6 +128,16 @@ class SalesOrderThresholdWriter implements SalesOrderThresholdWriterInterface
         return $this->getTransactionHandler()->handleTransaction(function () use ($salesOrderThresholdTransfer) {
             return $this->executeDeleteSalesOrderThresholdTransaction($salesOrderThresholdTransfer);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer
+     */
+    public function saveSalesOrderThresholdType(SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer): SalesOrderThresholdTypeTransfer
+    {
+        return $this->salesOrderThresholdEntityManager->saveSalesOrderThresholdType($salesOrderThresholdTypeTransfer);
     }
 
     /**

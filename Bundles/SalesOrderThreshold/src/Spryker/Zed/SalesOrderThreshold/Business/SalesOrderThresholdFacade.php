@@ -242,4 +242,18 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     {
         $this->getEntityManager()->saveSalesOrderThresholdTaxSet($idTaxSet);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer
+     */
+    public function saveSalesOrderThresholdType(SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer): SalesOrderThresholdTypeTransfer
+    {
+        return $this->getFactory()->createSalesOrderThresholdWriter()->saveSalesOrderThresholdType($salesOrderThresholdTypeTransfer);
+    }
 }

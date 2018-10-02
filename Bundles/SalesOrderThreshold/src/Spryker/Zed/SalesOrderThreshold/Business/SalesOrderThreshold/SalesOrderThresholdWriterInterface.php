@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold;
 
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
+use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 
 interface SalesOrderThresholdWriterInterface
 {
@@ -30,4 +31,11 @@ interface SalesOrderThresholdWriterInterface
     public function deleteSalesOrderThreshold(
         SalesOrderThresholdTransfer $salesOrderThresholdTransfer
     ): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer
+     */
+    public function saveSalesOrderThresholdType(SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer): SalesOrderThresholdTypeTransfer;
 }
