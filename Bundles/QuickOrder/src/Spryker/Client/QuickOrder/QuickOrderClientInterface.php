@@ -50,4 +50,16 @@ interface QuickOrderClientInterface
      * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
      */
     public function validateQuantityRestrictions(QuickOrderItemTransfer $quickOrderItemTransfer): ProductQuantityValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds CurrentProductConcretePriceTransfer[] using idProductConcrete property.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     */
+    public function findProductConcretesByQuickOrderItemTransfers(array $quickOrderItemTransfers): array;
 }
