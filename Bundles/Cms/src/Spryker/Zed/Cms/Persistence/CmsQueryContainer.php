@@ -25,27 +25,27 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
-    const TEMPLATE_NAME = 'template_name';
-    const TEMPLATE_PATH = 'template_path';
-    const CATEGORY_NODE_ID = 'categoryNodeId';
-    const CATEGORY_NAME = 'categoryName';
-    const ID_URL = 'id_url';
-    const URL = 'url';
-    const TO_URL = 'toUrl';
-    const TRANS = 'trans';
-    const KEY = 'keyname';
-    const LABEL = 'label';
-    const VALUE = 'value';
-    const IS_ACTIVE = 'is_active';
-    const CMS_URLS = 'cmsUrls';
-    const CMS_VERSION_COUNT = 'cmsVersionCount';
-    const ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE = 'aliasCmsPageLocalizedAttribute';
-    const ALIAS_CMS_PAGE_TEMPLATE = 'aliasCmsPageTemplate';
-    const ALIAS_CMS_GLOSSARY_KEY_MAPPING = 'aliasCmsGlossaryKeyMapping';
-    const ALIAS_GLOSSARY_KEY = 'aliasGlossaryKey';
-    const ALIAS_TRANSLATION = 'aliasTranslation';
-    const ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE = 'aliasLocaleForLocalizedAttribute';
-    const ALIAS_LOCALE_FOR_TRANSLATION = 'aliasLocaleForTranslation';
+    public const TEMPLATE_NAME = 'template_name';
+    public const TEMPLATE_PATH = 'template_path';
+    public const CATEGORY_NODE_ID = 'categoryNodeId';
+    public const CATEGORY_NAME = 'categoryName';
+    public const ID_URL = 'id_url';
+    public const URL = 'url';
+    public const TO_URL = 'toUrl';
+    public const TRANS = 'trans';
+    public const KEY = 'keyname';
+    public const LABEL = 'label';
+    public const VALUE = 'value';
+    public const IS_ACTIVE = 'is_active';
+    public const CMS_URLS = 'cmsUrls';
+    public const CMS_VERSION_COUNT = 'cmsVersionCount';
+    public const ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE = 'aliasCmsPageLocalizedAttribute';
+    public const ALIAS_CMS_PAGE_TEMPLATE = 'aliasCmsPageTemplate';
+    public const ALIAS_CMS_GLOSSARY_KEY_MAPPING = 'aliasCmsGlossaryKeyMapping';
+    public const ALIAS_GLOSSARY_KEY = 'aliasGlossaryKey';
+    public const ALIAS_TRANSLATION = 'aliasTranslation';
+    public const ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE = 'aliasLocaleForLocalizedAttribute';
+    public const ALIAS_LOCALE_FOR_TRANSLATION = 'aliasLocaleForTranslation';
 
     /**
      * @api
@@ -104,7 +104,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @api
      *
-     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPagesWithTemplates()
     {
@@ -460,7 +460,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param string $categoryName
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Category\Persistence\Base\SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryNodeByCategoryName($categoryName, $idLocale)
     {

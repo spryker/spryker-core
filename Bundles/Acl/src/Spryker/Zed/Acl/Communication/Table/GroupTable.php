@@ -16,9 +16,9 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class GroupTable extends AbstractTable
 {
-    const ROLES = 'roles';
-    const EDIT = 'Edit';
-    const EDIT_PARAMETER = 'id-group';
+    public const ROLES = 'roles';
+    public const EDIT = 'Edit';
+    public const EDIT_PARAMETER = 'id-group';
 
     /**
      * @var \Orm\Zed\Acl\Persistence\SpyAclGroupQuery

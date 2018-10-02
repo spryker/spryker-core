@@ -44,11 +44,12 @@ class Reader implements ReaderInterface
      */
     public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract)
     {
-        $imageCollection = $this->productImageContainer
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetCollection */
+        $productImageSetCollection = $this->productImageContainer
             ->queryImageSetByProductAbstractId($idProductAbstract)
             ->find();
 
-        return $this->transferMapper->mapProductImageSetCollection($imageCollection);
+        return $this->transferMapper->mapProductImageSetCollection($productImageSetCollection);
     }
 
     /**
@@ -94,7 +95,7 @@ class Reader implements ReaderInterface
             $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract()
         );
 
-        if ($imageSetCollection === null) {
+        if (!$imageSetCollection) {
             return $productAbstractTransfer;
         }
 
@@ -110,15 +111,15 @@ class Reader implements ReaderInterface
      */
     public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $imageSetCollection = $this->getProductImagesSetCollectionByProductId(
+        $productImageSetCollection = $this->getProductImagesSetCollectionByProductId(
             $productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete()
         );
 
-        if ($imageSetCollection === null) {
+        if (!$productImageSetCollection) {
             return $productConcreteTransfer;
         }
 
-        $productConcreteTransfer->setImageSets(new ArrayObject($imageSetCollection));
+        $productConcreteTransfer->setImageSets(new ArrayObject($productImageSetCollection));
 
         return $productConcreteTransfer;
     }

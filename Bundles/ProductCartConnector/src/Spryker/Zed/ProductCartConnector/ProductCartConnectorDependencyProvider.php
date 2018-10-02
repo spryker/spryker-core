@@ -15,8 +15,8 @@ use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToPro
 
 class ProductCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
 
     /**

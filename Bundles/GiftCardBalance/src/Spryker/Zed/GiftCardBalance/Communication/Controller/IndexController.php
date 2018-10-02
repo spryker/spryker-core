@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
-    const PARAM_ID_GIFT_CARD = 'id-gift-card';
+    public const PARAM_ID_GIFT_CARD = 'id-gift-card';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

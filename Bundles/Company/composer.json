@@ -1,5 +1,6 @@
 {
   "name": "spryker/company",
+  "type": "library",
   "description": "Company module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-barcode-gui",
+  "type": "library",
   "description": "ProductBarcodeGui module",
   "license": "proprietary",
   "require": {

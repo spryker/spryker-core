@@ -1,5 +1,6 @@
 {
   "name": "spryker/price-product",
+  "type": "library",
   "description": "PriceProduct module",
   "license": "proprietary",
   "require": {
@@ -18,7 +19,6 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
-    "spryker/price-product-merchant-relationship": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

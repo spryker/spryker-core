@@ -1,5 +1,6 @@
 {
   "name": "spryker/web-profiler",
+  "type": "library",
   "description": "WebProfiler module",
   "license": "proprietary",
   "require": {

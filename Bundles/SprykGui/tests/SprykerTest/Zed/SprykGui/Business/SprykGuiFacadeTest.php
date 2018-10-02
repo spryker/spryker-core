@@ -33,7 +33,7 @@ class SprykGuiFacadeTest extends Unit
      */
     public function testGetSprykDefinitionsReturnsListOfSpryks(): void
     {
-        $sprykDefinitions = $this->tester->getFacade()->getSprykDefinitions();
+        $sprykDefinitions = $this->tester->getSprykGuiFacade()->getSprykDefinitions();
         $this->assertInternalType('array', $sprykDefinitions);
     }
 
@@ -58,7 +58,7 @@ class SprykGuiFacadeTest extends Unit
             'output' => 'bool',
             'comment' => "Specification:\r\n- Line one.\r\n- Line two.",
         ];
-        $sprykView = $this->tester->getFacade()->buildSprykView('AddZedBusinessFacadeMethod', $userInput);
+        $sprykView = $this->tester->getSprykGuiFacade()->buildSprykView('AddZedBusinessFacadeMethod', $userInput);
         $this->tester->assertCommandLine($sprykView);
         $this->tester->assertJiraTemplate($sprykView);
     }

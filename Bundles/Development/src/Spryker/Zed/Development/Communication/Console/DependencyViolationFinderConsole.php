@@ -22,11 +22,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
 {
-    const COMMAND_NAME = 'dev:dependency:find';
-    const OPTION_DEPENDENCY_TYPE = 'dependency-type';
-    const OPTION_DEPENDENCY_TYPE_SHORT = 'd';
-    const OPTION_STOP_ON_VIOLATION = 'stop-on-violation';
-    const OPTION_STOP_ON_VIOLATION_SHORT = 's';
+    public const COMMAND_NAME = 'dev:dependency:find';
+    public const OPTION_DEPENDENCY_TYPE = 'dependency-type';
+    public const OPTION_DEPENDENCY_TYPE_SHORT = 'd';
+    public const OPTION_STOP_ON_VIOLATION = 'stop-on-violation';
+    public const OPTION_STOP_ON_VIOLATION_SHORT = 's';
 
     /**
      * @var int
@@ -57,7 +57,7 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $modulesToValidate = $this->getModulesToCheckForViolations($input);
+        $modulesToValidate = $this->getModulesToExecute($input);
 
         if (!$this->canRun($modulesToValidate)) {
             return static::CODE_ERROR;
@@ -71,28 +71,10 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
             if (!$this->isNamespacedModuleName($index)) {
                 continue;
             }
-            if ($moduleTransfer->getIsStandalone()) {
-                $this->notifyStandaloneModuleExecution($output, $moduleTransfer);
-                continue;
-            }
             $this->validateModule($moduleTransfer, $output, $dependencyType);
         }
 
         return $this->endValidation();
-    }
-
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     *
-     * @return void
-     */
-    protected function notifyStandaloneModuleExecution(OutputInterface $output, ModuleTransfer $moduleTransfer): void
-    {
-        if ($output->isVerbose()) {
-            $output->writeln(sprintf('<fg=yellow>%s</> is a standalone module and will be skipped.', $moduleTransfer->getName()));
-            $output->writeln('');
-        }
     }
 
     /**

@@ -13,15 +13,15 @@ use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
 
 class RedisSpinLockLocker implements SessionLockerInterface
 {
-    const KEY_SUFFIX = ':lock';
+    public const KEY_SUFFIX = ':lock';
 
-    const DEFAULT_TIMEOUT_MILLISECONDS = 10000;
-    const DEFAULT_RETRY_DELAY_MICROSECONDS = 10000;
-    const DEFAULT_LOCK_TTL_MILLISECONDS = 20000;
+    public const DEFAULT_TIMEOUT_MILLISECONDS = 10000;
+    public const DEFAULT_RETRY_DELAY_MICROSECONDS = 10000;
+    public const DEFAULT_LOCK_TTL_MILLISECONDS = 20000;
 
-    const LOG_METRIC_LOCK_ACQUIRE_TIME = 'Redis/Session_lock_acquire_time';
-    const LOG_METRIC_LOCK_RELEASE_TIME = 'Redis/Session_lock_release_time';
-    const LOG_METRIC_LOCK_WAIT_TIME = 'Redis/Session_lock_wait_time';
+    public const LOG_METRIC_LOCK_ACQUIRE_TIME = 'Redis/Session_lock_acquire_time';
+    public const LOG_METRIC_LOCK_RELEASE_TIME = 'Redis/Session_lock_release_time';
+    public const LOG_METRIC_LOCK_WAIT_TIME = 'Redis/Session_lock_wait_time';
 
     /**
      * @var \Predis\Client

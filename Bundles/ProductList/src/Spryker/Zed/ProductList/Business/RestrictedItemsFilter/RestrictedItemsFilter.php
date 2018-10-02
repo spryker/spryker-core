@@ -55,10 +55,8 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
      */
     public function filterRestrictedItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        /** @var \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer */
         $customerTransfer = $quoteTransfer->getCustomer();
         if ($customerTransfer) {
-            /** @var \Generated\Shared\Transfer\CustomerProductListCollectionTransfer|null $customerProductListCollectionTransfer */
             $customerProductListCollectionTransfer = $customerTransfer->getCustomerProductListCollection();
             if ($customerProductListCollectionTransfer) {
                 $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?: [];

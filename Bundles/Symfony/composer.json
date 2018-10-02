@@ -1,5 +1,6 @@
 {
   "name": "spryker/symfony",
+  "type": "library",
   "description": "Symfony module",
   "license": "proprietary",
   "require": {

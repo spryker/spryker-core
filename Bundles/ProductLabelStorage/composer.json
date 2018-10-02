@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-label-storage",
+  "type": "library",
   "description": "ProductLabelStorage module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/pimple",
+  "type": "library",
   "description": "Pimple module",
   "license": "proprietary",
   "require": {

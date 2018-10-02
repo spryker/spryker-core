@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-unit-address-label",
+  "type": "library",
   "description": "CompanyUnitAddressLabel module",
   "license": "proprietary",
   "require": {

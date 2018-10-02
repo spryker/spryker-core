@@ -1,5 +1,6 @@
 {
   "name": "spryker/wishlist",
+  "type": "library",
   "description": "Wishlist module",
   "license": "proprietary",
   "require": {

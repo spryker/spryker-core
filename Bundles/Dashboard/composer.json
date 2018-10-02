@@ -1,5 +1,6 @@
 {
   "name": "spryker/dashboard",
+  "type": "library",
   "description": "Dashboard module",
   "license": "proprietary",
   "require": {

@@ -15,8 +15,8 @@ use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeBridge;
 
 class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SPRYK_FACADE = 'spryk facade';
-    const PLUGIN_GRAPH = 'graph plugin';
+    public const SPRYK_FACADE = 'spryk facade';
+    public const PLUGIN_GRAPH = 'graph plugin';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

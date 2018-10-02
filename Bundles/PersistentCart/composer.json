@@ -1,5 +1,6 @@
 {
   "name": "spryker/persistent-cart",
+  "type": "library",
   "description": "PersistentCart module",
   "license": "proprietary",
   "require": {

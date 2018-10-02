@@ -29,11 +29,11 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CustomerGroupForm extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_DESCRIPTION = 'description';
-    const FIELD_ID_CUSTOMER_GROUP = self::ID_CUSTOMER_GROUP;
-    const FIELD_CUSTOMER_ASSIGNMENT = 'customerAssignment';
-    const ID_CUSTOMER_GROUP = 'idCustomerGroup';
+    public const FIELD_NAME = 'name';
+    public const FIELD_DESCRIPTION = 'description';
+    public const FIELD_ID_CUSTOMER_GROUP = self::ID_CUSTOMER_GROUP;
+    public const FIELD_CUSTOMER_ASSIGNMENT = 'customerAssignment';
+    public const ID_CUSTOMER_GROUP = 'idCustomerGroup';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

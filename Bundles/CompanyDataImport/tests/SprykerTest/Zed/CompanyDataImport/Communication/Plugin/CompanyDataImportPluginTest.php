@@ -40,7 +40,7 @@ class CompanyDataImportPluginTest extends Unit
      */
     public function testImportImportsCompany(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->truncateCompanyRelations();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/company.csv');

@@ -1,6 +1,6 @@
-# QuoteExtensionExtension Module
-[![Build Status](https://travis-ci.org/spryker/QuoteExtensionExtension.svg)](https://travis-ci.org/spryker/QuoteExtensionExtension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/QuoteExtensionExtension/badge.svg)](https://coveralls.io/github/spryker/QuoteExtension)
+# QuoteExtension Module
+[![Build Status](https://travis-ci.org/spryker/QuoteExtension.svg)](https://travis-ci.org/spryker/QuoteExtension)
+[![Coverage Status](https://coveralls.io/repos/github/spryker/QuoteExtension/badge.svg)](https://coveralls.io/github/spryker/QuoteExtension)
 
 This module provides module provides plugin interfaces used by Quote module.
 

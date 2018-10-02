@@ -8,8 +8,6 @@
 namespace Spryker\Zed\SprykGui\Business\Spryk;
 
 use Generated\Shared\Transfer\ArgumentTransfer;
-use Generated\Shared\Transfer\ModuleTransfer;
-use Generated\Shared\Transfer\ReturnTypeTransfer;
 use Spryker\Zed\SprykGui\Business\Graph\GraphBuilderInterface;
 use Spryker\Zed\SprykGui\Business\Spryk\Form\FormDataNormalizer;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
@@ -80,47 +78,6 @@ class Spryk implements SprykInterface
     }
 
     /**
-     * @param array $formData
-     *
-     * @return array
-     */
-    protected function normalizeFormData(array $formData): array
-    {
-        $normalizedFormData = [];
-        foreach ($formData as $key => $value) {
-            if ($key === 'spryk') {
-                continue;
-            }
-            if ($value instanceof ModuleTransfer) {
-                $normalizedFormData['module'] = $value->getName();
-                $normalizedFormData['organization'] = $value->getOrganization()->getName();
-                $normalizedFormData['rootPath'] = $value->getOrganization()->getRootPath();
-
-                continue;
-            }
-
-            if ($key === 'sprykDetails') {
-                foreach ($value as $sprykDetailKey => $sprykDetailValue) {
-                    if (isset($normalizedFormData[$sprykDetailKey])) {
-                        continue;
-                    }
-
-                    if ($sprykDetailValue instanceof ReturnTypeTransfer) {
-                        $sprykDetailValue = $sprykDetailValue->getType();
-                    }
-
-                    $normalizedFormData[$sprykDetailKey] = $sprykDetailValue;
-                }
-                continue;
-            }
-
-            $normalizedFormData[$key] = $value;
-        }
-
-        return $normalizedFormData;
-    }
-
-    /**
      * @param string $sprykName
      * @param array $formData
      *
@@ -128,8 +85,8 @@ class Spryk implements SprykInterface
      */
     public function runSpryk(string $sprykName, array $formData): string
     {
-        $formData = $this->normalizeFormData($formData);
-        $commandLine = $this->getCommandLine($sprykName, $formData);
+        $normalizedFormData = (new FormDataNormalizer())->normalizeFormData($formData);
+        $commandLine = $this->getCommandLine($sprykName, $normalizedFormData);
         $process = new Process($commandLine, APPLICATION_ROOT_DIR);
         $process->run();
 

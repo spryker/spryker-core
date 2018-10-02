@@ -20,22 +20,22 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @deprecated scalarField is deprecated.
      */
-    const SCALAR_FIELD = 'scalarField';
+    public const SCALAR_FIELD = 'scalarField';
 
     /**
      * @deprecated arrayField is deprecated.
      */
-    const ARRAY_FIELD = 'arrayField';
+    public const ARRAY_FIELD = 'arrayField';
 
     /**
      * @deprecated transferField is deprecated.
      */
-    const TRANSFER_FIELD = 'transferField';
+    public const TRANSFER_FIELD = 'transferField';
 
     /**
      * @deprecated transferCollectionField is deprecated.
      */
-    const TRANSFER_COLLECTION_FIELD = 'transferCollectionField';
+    public const TRANSFER_COLLECTION_FIELD = 'transferCollectionField';
 
     /**
      * @var string|null
@@ -53,7 +53,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     protected $transferField;
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]|null
+     * @var \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]
      */
     protected $transferCollectionField;
 
@@ -84,24 +84,28 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'name_underscore' => 'scalar_field',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'no',
         ],
         self::ARRAY_FIELD => [
             'type' => 'array',
             'name_underscore' => 'array_field',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'no',
         ],
         self::TRANSFER_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
             'name_underscore' => 'transfer_field',
             'is_collection' => false,
             'is_transfer' => true,
+            'rest_request_parameter' => 'no',
         ],
         self::TRANSFER_COLLECTION_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
             'name_underscore' => 'transfer_collection_field',
             'is_collection' => true,
             'is_transfer' => true,
+            'rest_request_parameter' => 'no',
         ],
     ];
 
@@ -277,7 +281,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated transferCollectionField is deprecated.
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]|null
+     * @return \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]
      */
     public function getTransferCollectionField()
     {
