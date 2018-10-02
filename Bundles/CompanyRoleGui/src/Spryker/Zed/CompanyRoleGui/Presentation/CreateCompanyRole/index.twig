@@ -1,0 +1,15 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Create role' | trans %}
+
+{% block action %}
+    {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            {% include '@CompanyRoleGui/_partials/company_role_form.twig' with {form: form} %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -48,6 +48,26 @@ class CompanyRoleGuiToCompanyRoleFacadeBridge implements CompanyRoleGuiToCompany
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function create(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
+    {
+        return $this->companyRoleFacade->create($companyRoleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return void
+     */
+    public function update(CompanyRoleTransfer $companyRoleTransfer): void
+    {
+        $this->companyRoleFacade->update($companyRoleTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer

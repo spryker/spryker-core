@@ -29,6 +29,20 @@ interface CompanyRoleGuiToCompanyRoleFacadeInterface
     public function getCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function create(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return void
+     */
+    public function update(CompanyRoleTransfer $companyRoleTransfer): void;
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
