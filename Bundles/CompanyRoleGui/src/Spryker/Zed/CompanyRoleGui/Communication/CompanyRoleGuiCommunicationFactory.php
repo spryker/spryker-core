@@ -55,8 +55,8 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery
      */
-    public function getPropelCompanyRoleQuery(): SpyCompanyRoleQuery
+    public function getCompanyRolePropelQuery(): SpyCompanyRoleQuery
     {
-        return $this->getProvidedDependency(CompanyRoleGuiDependencyProvider::PROPEL_COMPANY_ROLE_QUERY);
+        return $this->getProvidedDependency(CompanyRoleGuiDependencyProvider::PROPEL_QUERY_COMPANY_ROLE);
     }
 }

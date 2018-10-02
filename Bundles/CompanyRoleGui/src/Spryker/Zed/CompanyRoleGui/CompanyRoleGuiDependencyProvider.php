@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Container;
 class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
-    public const PROPEL_COMPANY_ROLE_QUERY = 'PROPEL_COMPANY_ROLE_QUERY';
+    public const PROPEL_QUERY_COMPANY_ROLE = 'PROPEL_QUERY_COMPANY_ROLE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,7 +26,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCompanyRoleFacade($container);
-        $container = $this->addPropelCompanyRoleQuery($container);
+        $container = $this->addCompanyRolePropelQuery($container);
 
         return $container;
     }
@@ -52,9 +52,9 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPropelCompanyRoleQuery(Container $container): Container
+    protected function addCompanyRolePropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_COMPANY_ROLE_QUERY] = function (Container $container) {
+        $container[static::PROPEL_QUERY_COMPANY_ROLE] = function (Container $container) {
             return SpyCompanyRoleQuery::create();
         };
 

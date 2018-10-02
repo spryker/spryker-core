@@ -37,15 +37,14 @@ class CompanyRoleTable extends AbstractTable
     /**
      * @var \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery
      */
-    protected $spyCompanyRoleQuery;
+    protected $companyRoleQuery;
 
     /**
-     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery $spyCompanyRoleQuery
+     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery $companyRoleQuery
      */
-    public function __construct(
-        SpyCompanyRoleQuery $spyCompanyRoleQuery
-    ) {
-        $this->spyCompanyRoleQuery = $spyCompanyRoleQuery;
+    public function __construct(SpyCompanyRoleQuery $companyRoleQuery)
+    {
+        $this->companyRoleQuery = $companyRoleQuery;
     }
 
     /**
@@ -129,7 +128,7 @@ class CompanyRoleTable extends AbstractTable
     protected function prepareQuery(): SpyCompanyRoleQuery
     {
         /** @var \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery $query */
-        $query = $this->spyCompanyRoleQuery
+        $query = $this->companyRoleQuery
             ->leftJoinWithCompany()
             ->select([
                 static::COL_ID_COMPANY_ROLE,
