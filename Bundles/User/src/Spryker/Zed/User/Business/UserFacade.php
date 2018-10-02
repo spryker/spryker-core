@@ -74,13 +74,13 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
      *
      * @param int $idUser
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    public function getUserById($idUser)
+    public function findUserById($idUser)
     {
         return $this->getFactory()
             ->createUserModel()
-            ->getUserById($idUser);
+            ->findUserById($idUser);
     }
 
     /**

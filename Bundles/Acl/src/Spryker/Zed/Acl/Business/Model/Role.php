@@ -174,16 +174,14 @@ class Role implements RoleInterface
     /**
      * @param int $id
      *
-     * @throws \Spryker\Zed\Acl\Business\Exception\EmptyEntityException
-     *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer|null
      */
-    public function getRoleById($id)
+    public function findRoleById($id)
     {
         $aclRoleEntity = $this->queryContainer->queryRoleById($id)->findOne();
 
         if ($aclRoleEntity === null) {
-            throw new EmptyEntityException();
+            return null;
         }
 
         $roleTransfer = new RoleTransfer();

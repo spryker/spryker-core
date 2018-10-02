@@ -63,9 +63,9 @@ interface RoleInterface
     /**
      * @param int $id
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer|null
      */
-    public function getRoleById($id);
+    public function findRoleById($id);
 
     /**
      * @param int $idRole

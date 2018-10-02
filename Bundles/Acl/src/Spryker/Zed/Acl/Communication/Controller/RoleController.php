@@ -105,16 +105,17 @@ class RoleController extends AbstractController
         }
 
         $dataProvider = $this->getFactory()->createAclRoleFormDataProvider();
+        $formData = $dataProvider->findData($idAclRole);
 
-        try {
-            $roleForm = $this->getFactory()
-                ->createRoleForm($dataProvider->getData($idAclRole))
-                ->handleRequest($request);
-        } catch (EmptyEntityException $e) {
+        if (!$formData) {
             $this->addErrorMessage("Role couldn't be found");
 
             return $this->redirectResponse(static::ACL_ROLE_LIST_URL);
         }
+
+        $roleForm = $this->getFactory()
+            ->createRoleForm($formData)
+            ->handleRequest($request);
 
         $this->handleRoleForm($request, $roleForm);
 
@@ -129,7 +130,7 @@ class RoleController extends AbstractController
             'roleForm' => $roleForm->createView(),
             'ruleSetForm' => $ruleSetForm->createView(),
             'ruleSetTable' => $ruleSetTable->render(),
-            'roleTransfer' => $this->getFacade()->getRoleById($idAclRole),
+            'roleTransfer' => $this->getFacade()->findRoleById($idAclRole),
         ];
     }
 

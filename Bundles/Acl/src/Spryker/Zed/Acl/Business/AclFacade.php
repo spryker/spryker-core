@@ -152,13 +152,13 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
      *
      * @param int $id
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer|null
      */
-    public function getRoleById($id)
+    public function findRoleById($id)
     {
         return $this->getFactory()
             ->createRoleModel()
-            ->getRoleById($id);
+            ->findRoleById($id);
     }
 
     /**
