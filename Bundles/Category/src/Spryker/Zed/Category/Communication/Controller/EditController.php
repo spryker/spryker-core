@@ -36,7 +36,7 @@ class EditController extends AbstractController
         if ($categoryTransfer === null) {
             $this->addErrorMessage(sprintf('Category with id %s doesn\'t exist', $request->get('id-category')));
 
-            return $this->redirectResponse(CategoryConstants::URL_ROOT_CATEGORY);
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
 
         $form = $this->getFactory()

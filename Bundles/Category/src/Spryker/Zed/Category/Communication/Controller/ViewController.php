@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Category\Communication\Controller;
 
-use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -34,7 +33,7 @@ class ViewController extends AbstractController
         if ($categoryTransfer === null) {
             $this->addErrorMessage(sprintf('Category with id %s doesn\'t exist', $idCategory));
 
-            return $this->redirectResponse(CategoryConstants::URL_ROOT_CATEGORY);
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
 
         $localeTransfer = $this->getFactory()->getCurrentLocale();

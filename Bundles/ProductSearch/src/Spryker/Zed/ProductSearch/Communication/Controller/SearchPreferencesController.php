@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductSearch\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
-use Spryker\Shared\ProductSearch\ProductSearchConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SearchPreferencesController extends AbstractController
 {
     public const PARAM_ID = 'id';
+    public const REDIRECT_URL_DEFAULT = '/product-search/search-preferences';
 
     /**
      * @return array
@@ -97,7 +97,7 @@ class SearchPreferencesController extends AbstractController
         if ($searchPreferencesFormData === []) {
             $this->addErrorMessage(sprintf('Attribute with id %s doesn\'t exist', $idAttributeKey));
 
-            return $this->redirectResponse(ProductSearchConstants::URL_PRODUCT_SEARCH_PREFERENCES_SEARCH);
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
 
         $form = $this->getFactory()

@@ -28,6 +28,4 @@ interface CmsGuiConstants
      * @api
      */
     public const CMS_FOLDER_PATH = 'CMS_FOLDER_PATH';
-
-    public const URL_LIST_CMS = '/cms-gui/list-page';
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\NavigationGui\Communication\Controller;
 
-use Spryker\Shared\NavigationGui\NavigationGuiConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,7 +32,7 @@ class UpdateController extends AbstractController
         if ($navigationFormData === null) {
             $this->addErrorMessage(sprintf('Navigation with id %s doesn\'t exist', $idNavigation));
 
-            return $this->redirectResponse(NavigationGuiConstants::URL_NAVIGATION_GUI);
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
 
         $navigationForm = $this->getFactory()

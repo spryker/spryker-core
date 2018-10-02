@@ -9,7 +9,6 @@ namespace Spryker\Zed\Tax\Communication\Controller;
 
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
 class SetController extends AbstractController
 {
     public const PARAM_URL_ID_TAX_SET = 'id-tax-set';
+
+    public const REDIRECT_URL_DEFAULT = '/tax/set/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -68,7 +69,9 @@ class SetController extends AbstractController
         if ($taxSetTransfer === null) {
             $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
 
-            return $this->redirectResponse(TaxConstants::URL_LIST_TAX_SET);
+            return $this->redirectResponse(
+                static::REDIRECT_URL_DEFAULT
+            );
         }
 
         $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider($taxSetTransfer);
@@ -110,7 +113,7 @@ class SetController extends AbstractController
         if ($taxSetTransfer === null) {
             $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
 
-            return $this->redirectResponse(TaxConstants::URL_LIST_TAX_SET);
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
 
         return [

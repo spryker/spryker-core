@@ -9,7 +9,6 @@ namespace Spryker\Zed\Tax\Communication\Controller;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
 class RateController extends AbstractController
 {
     public const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
+
+    public const REDIRECT_URL_DEFAULT = '/tax/rate/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -73,7 +74,7 @@ class RateController extends AbstractController
         if ($taxRateTransfer === null) {
             $this->addErrorMessage(sprintf('Tax rate with id %s doesn\'t exist', $idTaxRate));
 
-            return $this->redirectResponse(TaxConstants::URL_LIST_TAX_RATE);
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
 
         $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider($taxRateTransfer);
@@ -123,7 +124,7 @@ class RateController extends AbstractController
         if ($taxRateTransfer === null) {
             $this->addErrorMessage(sprintf('Tax rate with id %s doesn\'t exist', $idTaxRate));
 
-            return $this->redirectResponse(TaxConstants::URL_LIST_TAX_RATE);
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
 
         return [

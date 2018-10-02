@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\CmsGui\CmsGuiConstants;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
@@ -55,7 +54,7 @@ class EditPageController extends AbstractController
         if ($cmsPageTransfer === null) {
             $this->addErrorMessage(sprintf('Cms page with id %s doesn\'t exist', $idCmsPage));
 
-            return $this->redirectResponse(CmsGuiConstants::URL_LIST_CMS);
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
 
         $pageForm = $this->getFactory()

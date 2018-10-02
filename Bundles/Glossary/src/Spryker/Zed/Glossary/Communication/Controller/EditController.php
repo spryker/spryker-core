@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Glossary\Communication\Controller;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
-use Spryker\Shared\Glossary\GlossaryConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -43,7 +42,7 @@ class EditController extends AbstractController
         if ($formData === []) {
             $this->addErrorMessage(sprintf('Glossary with id %s doesn\'t exist', $idGlossaryKey));
 
-            return $this->redirectResponse(GlossaryConstants::URL_INDEX_GLOSSARY);
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
 
         $glossaryForm = $this

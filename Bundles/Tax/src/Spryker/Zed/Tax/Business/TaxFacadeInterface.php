@@ -372,8 +372,8 @@ interface TaxFacadeInterface
 
     /**
      * Specification:
-     * - Finds tax set by id
-     * - Returns NULL if tax set does not exist
+     * - Finds tax set by id.
+     * - Returns NULL if tax set does not exist.
      *
      * @api
      *
