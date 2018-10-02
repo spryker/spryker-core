@@ -26,6 +26,7 @@ use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdater;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReader;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapper;
@@ -110,6 +111,20 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getZedRequestClient(),
             $this->getQuoteClient(),
             $this->createCartReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemUpdaterInterface
+     */
+    public function createGuestCartItemUpdater(): GuestCartItemUpdaterInterface
+    {
+        return new CartItemUpdater(
+            $this->getCartClient(),
+            $this->getResourceBuilder(),
+            $this->getZedRequestClient(),
+            $this->getQuoteClient(),
+            $this->createGuestCartReader()
         );
     }
 
