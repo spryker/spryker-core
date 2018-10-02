@@ -1,13 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: ruslan.ivanov
- * Date: 10/1/18
- * Time: 3:54 PM
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin;
-
 
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CustomerCompanyAttachFormExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;

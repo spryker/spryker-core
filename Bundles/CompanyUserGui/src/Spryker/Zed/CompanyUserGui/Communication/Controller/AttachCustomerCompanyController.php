@@ -34,7 +34,7 @@ class AttachCustomerCompanyController extends AbstractController
         $idCompanyUser = (int)$request->query->get(static::PARAM_ID_CUSTOMER);
         $dataProvider = $this->getFactory()->createCustomerCompanyAttachFormDataProvider();
 
-        if(!$idCompanyUser || $dataProvider->getData($idCompanyUser)->getIdCompanyUser()) {
+        if (!$idCompanyUser || $dataProvider->getData($idCompanyUser)->getIdCompanyUser()) {
             $this->addErrorMessage(static::MESSAGE_COMPANY_USER_ATTACH_ERROR);
             return $this->redirectResponse(static::REDIRECT_URL_CUSTOMER_LIST);
         }

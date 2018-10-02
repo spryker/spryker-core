@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Customer;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\CompanyUserGui\Communication\Plugin\AttachUserToCompanyPlugin;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;

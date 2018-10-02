@@ -40,22 +40,15 @@ class CustomerCompanyAttachFormDataProvider
     /**
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function getData(int $idCustomer): ?CompanyUserTransfer
+    public function getData(int $idCustomer): CompanyUserTransfer
     {
         $customerTransfer = (new CustomerTransfer())
             ->setIdCustomer($idCustomer);
 
-        $companyUserTransfer = $this->companyUserFacade
-            ->findActiveCompanyUserByCustomerId($customerTransfer);
-
-        if($companyUserTransfer === null) {
-            return $this->createCompanyUserTransfer()
-                ->setCustomer($customerTransfer);
-        }
-
-        return $companyUserTransfer;
+        return (new CompanyUserTransfer())
+            ->setCustomer($customerTransfer);
     }
 
     /**
@@ -66,14 +59,6 @@ class CustomerCompanyAttachFormDataProvider
         return [
             CustomerCompanyAttachForm::FIELD_COMPANY => $this->createCompanyList(),
         ];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
-    protected function createCompanyUserTransfer(): CompanyUserTransfer
-    {
-        return new CompanyUserTransfer();
     }
 
     /**

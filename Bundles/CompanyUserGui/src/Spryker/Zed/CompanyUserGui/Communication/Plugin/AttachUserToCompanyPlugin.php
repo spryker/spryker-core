@@ -9,10 +9,15 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class AttachUserToCompanyPlugin implements CustomerTableActionPluginInterface
+/**
+ * @method \Spryker\Zed\CompanyUserGui\Communication\CompanyUserGuiCommunicationFactory getFactory()
+ */
+class AttachUserToCompanyPlugin extends AbstractPlugin implements CustomerTableActionPluginInterface
 {
     protected const URL_ATTACH_CUSTOMER_TO_COMPANY = 'company-user-gui/attach-customer-company?id-customer=%s';
+
     /**
      * {@inheritdoc}
      *
@@ -25,7 +30,11 @@ class AttachUserToCompanyPlugin implements CustomerTableActionPluginInterface
      */
     public function execute(CustomerTransfer $customerTransfer, array $buttons): array
     {
-        if($customerTransfer->getCompanyUserTransfer() !== null) {
+        $countActiveCompanyUsersByIdCustomer = $this->getFactory()
+            ->getCompanyUserFacade()
+            ->countActiveCompanyUsersByIdCustomer($customerTransfer);
+
+        if ($countActiveCompanyUsersByIdCustomer !== 0) {
             return $buttons;
         }
 

@@ -73,7 +73,7 @@ interface CompanyUserGuiToCompanyUserFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     * @return int
      */
-    public function findActiveCompanyUserByCustomerId(CustomerTransfer $customerTransfer): ?CompanyUserTransfer;
+    public function countActiveCompanyUsersByIdCustomer(CustomerTransfer $customerTransfer): int;
 }

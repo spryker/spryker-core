@@ -16,9 +16,24 @@
         {% block widget_content %}
 
             {{ form_start(form) }}
-                {{ form_widget(form) }}
 
-                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Attach' | trans }}" />
+            {% for child in form %}
+                <div class="form-group">
+
+                    {% if "hidden" not in child.vars.block_prefixes %}
+                        {{ form_label(child) }}
+                        {{ form_errors(child) }}
+                    {% endif %}
+
+                    {% if child.vars.attr.template_path is defined %}
+                        {% include child.vars.attr.template_path with {'form': child} %}
+                    {% else %}
+                        {{ form_widget(child, {'id':'company-user_fk_company'}) }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>
             {{ form_end(form) }}
 
         {% endblock %}

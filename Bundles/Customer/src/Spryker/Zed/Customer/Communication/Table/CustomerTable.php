@@ -208,8 +208,7 @@ class CustomerTable extends AbstractTable
     {
         $query = $this->customerQueryContainer
             ->queryCustomers()
-            ->leftJoinBillingAddress()
-            ->leftJoinCompanyUser();
+            ->leftJoinBillingAddress();
 
         $query->withColumn(SpyCustomerAddressTableMap::COL_ZIP_CODE, self::COL_ZIP_CODE)
             ->withColumn(SpyCustomerAddressTableMap::COL_CITY, self::COL_CITY)
