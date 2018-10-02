@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-measurement-unit-gui",
+  "type": "library",
   "description": "ProductMeasurementUnitGui module",
   "license": "proprietary",
   "require": {

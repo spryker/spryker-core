@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-set-storage",
+  "type": "library",
   "description": "ProductSetStorage module",
   "license": "proprietary",
   "require": {

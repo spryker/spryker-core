@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-discount-connector",
+  "type": "library",
   "description": "ProductDiscountConnector module",
   "license": "proprietary",
   "require": {

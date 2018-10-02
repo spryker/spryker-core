@@ -1,5 +1,6 @@
 {
   "name": "spryker/price-product-extension",
+  "type": "library",
   "description": "PriceProductExtension module",
   "license": "proprietary",
   "require": {
