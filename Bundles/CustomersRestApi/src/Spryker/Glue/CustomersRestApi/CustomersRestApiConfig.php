@@ -13,6 +13,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_CUSTOMERS = 'customers';
     public const RESOURCE_FORGOTTEN_PASSWORD = 'customer-forgotten-password';
+    public const RESOURCE_CUSTOMER_RESTORE_PASSWORD = 'customer-restore-password';
 
     public const RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS = '400';
     public const RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER = '401';

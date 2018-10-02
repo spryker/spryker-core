@@ -54,4 +54,14 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
     {
         return $this->customerClient->findCustomerWithEmailAndPassword($customerTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function restorePassword(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->customerClient->restorePassword($customerTransfer);
+    }
 }

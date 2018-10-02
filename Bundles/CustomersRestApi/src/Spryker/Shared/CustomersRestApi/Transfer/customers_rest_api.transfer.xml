@@ -33,4 +33,10 @@
         <property name="email" type="string" />
     </transfer>
 
+    <transfer name="RestCustomerRestorePasswordAttributes">
+        <property name="restorePasswordKey" type="string" />
+        <property name="password" type="string" />
+        <property name="passwordConfirmation" type="string" />
+    </transfer>
+
 </transfers>

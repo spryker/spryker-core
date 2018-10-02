@@ -10,10 +10,14 @@ use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerCl
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomerForgottenPasswordProcessor;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomerForgottenPasswordProcessorInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomerPasswordWriter;
+use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomerPasswordWriterInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriter;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerForgottenPasswordResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerForgottenPasswordResourceMapperInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResetPasswordResourceMapper;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResetPasswordResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -45,6 +49,18 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomerPasswordWriterInterface
+     */
+    public function createCustomerPasswordWriter(): CustomerPasswordWriterInterface
+    {
+        return new CustomerPasswordWriter(
+            $this->getCustomerClient(),
+            $this->getResourceBuilder(),
+            $this->createCustomerResetPasswordResourceMapper()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
      */
     public function getCustomerClient(): CustomersRestApiToCustomerClientInterface
@@ -58,6 +74,14 @@ class CustomersRestApiFactory extends AbstractFactory
     public function createCustomerForgottenPasswordResourceMapper(): CustomerForgottenPasswordResourceMapperInterface
     {
         return new CustomerForgottenPasswordResourceMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResetPasswordResourceMapperInterface
+     */
+    public function createCustomerResetPasswordResourceMapper(): CustomerResetPasswordResourceMapperInterface
+    {
+        return new CustomerResetPasswordResourceMapper();
     }
 
     /**
