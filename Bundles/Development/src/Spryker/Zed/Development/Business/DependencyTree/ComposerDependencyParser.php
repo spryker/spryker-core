@@ -22,10 +22,10 @@ use Zend\Filter\Word\SeparatorToCamelCase;
 
 class ComposerDependencyParser implements ComposerDependencyParserInterface
 {
-    const TYPE_INCLUDE = 'include';
-    const TYPE_EXCLUDE = 'exclude';
-    const TYPE_INCLUDE_DEV = 'include-dev';
-    const TYPE_EXCLUDE_DEV = 'exclude-dev';
+    public const TYPE_INCLUDE = 'include';
+    public const TYPE_EXCLUDE = 'exclude';
+    public const TYPE_INCLUDE_DEV = 'include-dev';
+    public const TYPE_EXCLUDE_DEV = 'exclude-dev';
 
     /**
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $dependencyCollectionTransfer
@@ -251,7 +251,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      */
     protected function parseDeclaredDependenciesForBundle(ModuleTransfer $moduleTransfer): array
     {
-        $dependencyJsonFilePath = sprintf('%s/dependency.json', $moduleTransfer->getRootDirectory());
+        $dependencyJsonFilePath = sprintf('%s/dependency.json', $moduleTransfer->getPath());
 
         if (!file_exists($dependencyJsonFilePath)) {
             return [];
@@ -287,7 +287,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     {
         $composerDependencies = new ComposerDependencyCollectionTransfer();
 
-        $composerJsonFilePath = sprintf('%s/composer.json', $moduleTransfer->getRootDirectory());
+        $composerJsonFilePath = sprintf('%s/composer.json', $moduleTransfer->getPath());
 
         if (!file_exists($composerJsonFilePath)) {
             return $composerDependencies;

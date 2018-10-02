@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block-product-connector",
+  "type": "library",
   "description": "CmsBlockProductConnector module",
   "license": "proprietary",
   "require": {

@@ -12,17 +12,17 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
 {
-    const PARAM_URL = 'url';
-    const PARAM_VALID_FROM = 'valid_from';
-    const PARAM_VALID_TO = 'valid_to';
-    const PARAM_IS_ACTIVE = 'is_active';
-    const PARAM_ID = 'id';
-    const PARAM_TEMPLATE = 'template';
-    const PARAM_PLACEHOLDERS = 'placeholders';
-    const PARAM_NAME = 'name';
-    const PARAM_META_TITLE = 'meta_title';
-    const PARAM_META_KEYWORDS = 'meta_keywords';
-    const PARAM_META_DESCRIPTION = 'meta_description';
+    public const PARAM_URL = 'url';
+    public const PARAM_VALID_FROM = 'valid_from';
+    public const PARAM_VALID_TO = 'valid_to';
+    public const PARAM_IS_ACTIVE = 'is_active';
+    public const PARAM_ID = 'id';
+    public const PARAM_TEMPLATE = 'template';
+    public const PARAM_PLACEHOLDERS = 'placeholders';
+    public const PARAM_NAME = 'name';
+    public const PARAM_META_TITLE = 'meta_title';
+    public const PARAM_META_KEYWORDS = 'meta_keywords';
+    public const PARAM_META_DESCRIPTION = 'meta_description';
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]

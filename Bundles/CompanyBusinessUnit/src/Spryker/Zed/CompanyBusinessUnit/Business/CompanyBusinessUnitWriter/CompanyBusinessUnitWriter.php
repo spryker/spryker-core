@@ -23,9 +23,11 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
 
     protected const ERROR_MESSAGE_HAS_RELATED_USERS = 'company.company_business_unit.delete.error.has_users';
 
-    protected const ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has not been updated. A Business Unit cannot be set as a child to an own child Business Unit, please check the Business Unit hierarchy.';
+    protected const ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE = 'message.business_unit.update.cycle_dependency_error';
 
-    protected const SUCCESS_MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has been updated.';
+    protected const MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS = 'message.business_unit.update';
+    protected const MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS = 'message.business_unit.create';
+    protected const MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS = 'message.business_unit.delete';
 
     protected const HIERARCHY_CYCLE_CHECK_DEPTH = 1000;
 
@@ -69,7 +71,13 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         $companyBusinessUnitResponseTransfer = (new CompanyBusinessUnitResponseTransfer())
             ->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer)
             ->setIsSuccessful(true)
-            ->addMessage($this->getSuccessMessageResponseTransfer($companyBusinessUnitTransfer));
+            ->addMessage((new ResponseMessageTransfer())->setText(static::MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS));
+
+        if (!$companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getIdCompanyBusinessUnit()) {
+            $companyBusinessUnitResponseTransfer
+                ->setMessages(new ArrayObject())
+                ->addMessage((new ResponseMessageTransfer())->setText(static::MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS));
+        }
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyBusinessUnitResponseTransfer) {
             return $this->executeUpdateTransaction($companyBusinessUnitResponseTransfer);
@@ -88,7 +96,8 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
 
         $companyBusinessUnitResponseTransfer = (new CompanyBusinessUnitResponseTransfer())
             ->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer)
-            ->setIsSuccessful(true);
+            ->setIsSuccessful(true)
+            ->addMessage((new ResponseMessageTransfer())->setText(static::MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS));
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyBusinessUnitResponseTransfer) {
             return $this->executeDeleteTransaction($companyBusinessUnitResponseTransfer);
@@ -136,11 +145,9 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         );
 
         if ($hasUsers) {
+            $message = (new ResponseMessageTransfer())->setText(static::ERROR_MESSAGE_HAS_RELATED_USERS);
             $companyBusinessUnitResponseTransfer
-                ->addMessage(
-                    (new ResponseMessageTransfer())
-                        ->setText(static::ERROR_MESSAGE_HAS_RELATED_USERS)
-                )
+                ->setMessages(new ArrayObject([$message]))
                 ->setIsSuccessful(false);
 
             return $companyBusinessUnitResponseTransfer;
@@ -159,9 +166,12 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         $companyBusinessUnitTransfer = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer();
 
         if ($this->isCompanyBusinessUnitHierarchyCycleExists($companyBusinessUnitTransfer)) {
-            $companyBusinessUnitResponseTransfer->setIsSuccessful(false);
-            $companyBusinessUnitResponseTransfer->setMessages(new ArrayObject());
-            $companyBusinessUnitResponseTransfer->addMessage($this->getHierarchyCycleErrorMessageResponseTransfer($companyBusinessUnitTransfer));
+            $companyBusinessUnitResponseTransfer
+                ->setIsSuccessful(false)
+                ->setMessages(new ArrayObject())
+                ->addMessage(
+                    (new ResponseMessageTransfer())->setText(static::ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE)
+                );
 
             return $companyBusinessUnitResponseTransfer;
         }
@@ -184,6 +194,12 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         $parentBusinessUnitId = (int)$companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit();
 
         $companyBusinessUnitMap = $this->getCompanyBusinessUnits();
+
+        // A new element in the tree can not cause cycle, since it has no descendants
+        if (!$businessUnitId) {
+            return false;
+        }
+
         $companyBusinessUnitMap[$businessUnitId]->setFkParentCompanyBusinessUnit($parentBusinessUnitId);
 
         return $this->isHierarchyCycleExists($companyBusinessUnitMap, $businessUnitId);
@@ -228,24 +244,6 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         } while ($nodeToCheck && $attemptCount++ < static::HIERARCHY_CYCLE_CHECK_DEPTH);
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResponseMessageTransfer
-     */
-    protected function getSuccessMessageResponseTransfer(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ResponseMessageTransfer
-    {
-        $responseMessage = new ResponseMessageTransfer();
-        $responseMessage->setText(
-            sprintf(
-                static::SUCCESS_MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE,
-                $companyBusinessUnitTransfer->getName()
-            )
-        );
-
-        return $responseMessage;
     }
 
     /**

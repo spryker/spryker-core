@@ -159,7 +159,7 @@ interface CustomerFacadeInterface
      *      - Encrypts provided plain text password before update.
      * - Identifies customer by either customer ID, customer email, or password restoration key.
      * - Validates customer email information.
-     * - Updates customer data which is set in provided transfer object.
+     * - Updates customer data which is set in provided transfer object (including password property - dismantles newPassword property).
      * - Sends password restoration email if SendPasswordToken property is set in the provided transfer object.
      *
      * @api

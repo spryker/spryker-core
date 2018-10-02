@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelSearch;
 
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToEventBehaviorFacadeBridge;
@@ -16,10 +17,11 @@ use Spryker\Zed\ProductLabelSearch\Dependency\Service\ProductLabelSearchToUtilSa
 
 class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
-    const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+    public const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
+    public const PROPEL_QUERY_PRODUCT_LABEL = 'PROPEL_QUERY_PRODUCT_LABEL';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -42,6 +44,32 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
 
         $container[static::FACADE_PRODUCT_PAGE_SEARCH] = function (Container $container) {
             return new ProductLabelSearchToProductPageSearchBridge($container->getLocator()->productPageSearch()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = $this->addPropelProductLabelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPropelProductLabelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_PRODUCT_LABEL] = function (): SpyProductLabelQuery {
+            return SpyProductLabelQuery::create();
         };
 
         return $container;

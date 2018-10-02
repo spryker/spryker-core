@@ -9,7 +9,7 @@ namespace Spryker\Zed\Url\Business\Redirect\Observer;
 
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Orm\Zed\Url\Persistence\Base\SpyUrlRedirect;
+use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Spryker\Zed\Url\Business\Deletion\UrlDeleterInterface;
 use Spryker\Zed\Url\Business\Url\UrlCreatorBeforeSaveObserverInterface;
 use Spryker\Zed\Url\Business\Url\UrlUpdaterBeforeSaveObserverInterface;
@@ -81,7 +81,7 @@ class UrlRedirectOverwriteObserver implements UrlCreatorBeforeSaveObserverInterf
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect|null
      */
     protected function findUrlRedirectEntity(UrlTransfer $urlTransfer)
     {
@@ -91,7 +91,7 @@ class UrlRedirectOverwriteObserver implements UrlCreatorBeforeSaveObserverInterf
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\Base\SpyUrlRedirect $urlRedirectEntity
+     * @param \Orm\Zed\Url\Persistence\SpyUrlRedirect $urlRedirectEntity
      *
      * @return void
      */

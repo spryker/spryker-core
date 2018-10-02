@@ -12,9 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsConfig extends AbstractBundleConfig
 {
-    const CMS_TWIG_TEMPLATE_PREFIX = '@Cms';
-    const CMS_PLACEHOLDER_PATTERN = '/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
-    const CMS_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
+    public const CMS_TWIG_TEMPLATE_PREFIX = '@Cms';
+    public const CMS_PLACEHOLDER_PATTERN = '/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
+    public const CMS_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
 
     /**
      * @return string
