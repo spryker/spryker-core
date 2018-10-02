@@ -9,14 +9,14 @@ namespace Spryker\Glue\RestRequestValidator\Plugin;
 
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Glue\RestRequestValidator\RestRequestValidatorFactory getFactory()
  */
-class ValidateRestRequestAttributesPlugin extends AbstractPlugin implements ValidateRestRequestPluginInterface
+class ValidateRestRequestAttributesPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
      * {@inheritdoc}

@@ -14,16 +14,25 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RestRequestValidator implements RestRequestValidatorInterface
 {
+    protected const POST_DATA_MISSING = 'Post data missing.';
+
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
+     */
+    protected $validateRestRequestPlugins = [];
+
+    /**
+     * @var array|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface[]
      */
     protected $restRequestValidatorPlugins = [];
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[] $restRequestValidatorPlugins
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[] $validateRestRequestPlugins
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface[] $restRequestValidatorPlugins
      */
-    public function __construct(array $restRequestValidatorPlugins)
+    public function __construct(array $validateRestRequestPlugins, array $restRequestValidatorPlugins)
     {
+        $this->validateRestRequestPlugins = $validateRestRequestPlugins;
         $this->restRequestValidatorPlugins = $restRequestValidatorPlugins;
     }
 
@@ -57,7 +66,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
         $restResource = $restRequest->getResource();
         if (!$restResource->getAttributes()) {
             $restErrorMessageTransfer = new RestErrorMessageTransfer();
-            $restErrorMessageTransfer->setDetail('Post data missing.');
+            $restErrorMessageTransfer->setDetail(static::POST_DATA_MISSING);
 
             return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
         }
@@ -76,10 +85,17 @@ class RestRequestValidator implements RestRequestValidatorInterface
         RestRequestInterface $restRequest
     ): ?RestErrorCollectionTransfer {
 
-        foreach ($this->restRequestValidatorPlugins as $requestValidatorPlugin) {
-            $restErrorCollectionTransfer = $requestValidatorPlugin->validate($httpRequest, $restRequest);
+        foreach ($this->restRequestValidatorPlugins as $restRequestValidatorPlugin) {
+            $restErrorCollectionTransfer = $restRequestValidatorPlugin->validate($httpRequest, $restRequest);
             if ($restErrorCollectionTransfer !== null) {
                 return $restErrorCollectionTransfer;
+            }
+        }
+
+        foreach ($this->validateRestRequestPlugins as $validateRestRequestPlugins) {
+            $restErrorMessageTransfer = $validateRestRequestPlugins->validate($httpRequest, $restRequest);
+            if ($restErrorMessageTransfer !== null) {
+                return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
             }
         }
 
