@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SprykGui\Communication\Form;
 
-use Generated\Shared\Transfer\DependentModuleTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\SprykGui\Communication\Form\Type\ModuleChoiceType;
@@ -26,6 +25,13 @@ class SprykMainForm extends AbstractType
 {
     protected const SPRYK = 'spryk';
     protected const MODULE = 'module';
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    const DEPENDENT_MODULE = 'dependentModule';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -64,10 +70,9 @@ class SprykMainForm extends AbstractType
             ModuleChoiceType::MODULE_TRANSFER_COLLECTION => $moduleTransferCollection,
         ]);
 
-        if (array_key_exists('dependentModule', $sprykDefinition['arguments'])) {
-            $builder->add('dependentModule', ModuleChoiceType::class, [
+        if (array_key_exists(static::DEPENDENT_MODULE, $sprykDefinition['arguments'])) {
+            $builder->add(static::DEPENDENT_MODULE, ModuleChoiceType::class, [
                 ModuleChoiceType::MODULE_TRANSFER_COLLECTION => $moduleTransferCollection,
-                'data_class' => DependentModuleTransfer::class,
             ]);
         }
 
