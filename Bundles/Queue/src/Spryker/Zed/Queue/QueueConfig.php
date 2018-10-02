@@ -12,10 +12,10 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class QueueConfig extends AbstractBundleConfig
 {
-    const DEFAULT_QUEUE_OUTPUT_FILE_NAME = 'queue.log';
-    const DEFAULT_INTERVAL_MILLISECONDS = 1000;
-    const DEFAULT_PROCESS_TRIGGER_INTERVAL_MICROSECONDS = 1000;
-    const DEFAULT_THRESHOLD = 59;
+    public const DEFAULT_QUEUE_OUTPUT_FILE_NAME = 'queue.log';
+    public const DEFAULT_INTERVAL_MILLISECONDS = 1000;
+    public const DEFAULT_PROCESS_TRIGGER_INTERVAL_MICROSECONDS = 1000;
+    public const DEFAULT_THRESHOLD = 59;
 
     /**
      * @return array|null
@@ -129,6 +129,22 @@ class QueueConfig extends AbstractBundleConfig
      */
     public function getQueueAdapterConfiguration()
     {
-        return $this->get(QueueConstants::QUEUE_ADAPTER_CONFIGURATION);
+        return $this->get(QueueConstants::QUEUE_ADAPTER_CONFIGURATION, []);
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultQueueAdapterConfiguration(): array
+    {
+        return $this->get(QueueConstants::QUEUE_ADAPTER_CONFIGURATION_DEFAULT, []);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsWorkerLoopEnabled(): bool
+    {
+        return $this->get(QueueConstants::QUEUE_WORKER_LOOP, false);
     }
 }

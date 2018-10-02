@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomersWriter implements CustomersWriterInterface
 {
-    const ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
+    public const ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
 
     /**
      * @var \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface

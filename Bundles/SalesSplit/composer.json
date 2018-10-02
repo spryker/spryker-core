@@ -1,5 +1,6 @@
 {
   "name": "spryker/sales-split",
+  "type": "library",
   "description": "SalesSplit module",
   "license": "proprietary",
   "require": {

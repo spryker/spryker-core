@@ -1,18 +1,22 @@
 {
   "name": "spryker/company-business-unit-data-import",
+  "type": "library",
   "description": "CompanyBusinessUnitDataImport module",
   "license": "MIT",
   "require": {
     "php": ">=7.1",
     "spryker/company": "^1.0.0",
     "spryker/company-business-unit": "^2.0.0",
+    "spryker/company-unit-address": "^1.0.0",
+    "spryker/company-user": "^1.3.0 || ^2.0.0",
     "spryker/data-import": "^1.2.0",
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/country": "*",
+    "spryker/customer": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "autoload": {

@@ -18,14 +18,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ModuleBridgeCreateConsole extends Console
 {
-    const COMMAND_NAME = 'dev:bridge:create';
+    public const COMMAND_NAME = 'dev:bridge:create';
 
-    const OPTION_BRIDGE_TYPE = 'bridge type';
-    const OPTION_MODULE = 'from module';
-    const OPTION_TO_MODULE = 'to module';
+    public const OPTION_BRIDGE_TYPE = 'bridge type';
+    public const OPTION_MODULE = 'from module';
+    public const OPTION_TO_MODULE = 'to module';
 
-    const OPTION_METHODS = 'methods';
-    const OPTION_METHODS_SHORT = 'm';
+    public const OPTION_METHODS = 'methods';
+    public const OPTION_METHODS_SHORT = 'm';
 
     /**
      * @return void

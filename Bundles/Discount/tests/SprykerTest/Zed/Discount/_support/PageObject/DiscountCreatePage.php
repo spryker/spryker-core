@@ -12,22 +12,22 @@ use SprykerTest\Zed\Discount\DiscountPresentationTester;
 
 class DiscountCreatePage
 {
-    const URL = '/discount/index/create';
+    public const URL = '/discount/index/create';
 
-    const MESSAGE_SUCCESSFUL_ALERT_CREATION = 'Discount successfully created, but not activated.';
-    const MESSAGE_SUCCESSFUL_ALERT_ACTIVATION = 'Discount successfully activated.';
+    public const MESSAGE_SUCCESSFUL_ALERT_CREATION = 'Discount successfully created, but not activated.';
+    public const MESSAGE_SUCCESSFUL_ALERT_ACTIVATION = 'Discount successfully activated.';
 
     // DATA
-    const DISCOUNT_VALID_EXCLUSIVE = 'validExclusiveDiscount';
-    const EMPTY_DISCOUNT = 'emptyDiscount';
-    const DISCOUNT_VALID_NOT_EXCLUSIVE = 'validNotExclusiveDiscount';
+    public const DISCOUNT_VALID_EXCLUSIVE = 'validExclusiveDiscount';
+    public const EMPTY_DISCOUNT = 'emptyDiscount';
+    public const DISCOUNT_VALID_NOT_EXCLUSIVE = 'validNotExclusiveDiscount';
 
     // Locators: Discount Tab
-    const BTN_CALCULATION_GET = '#btn-calculation-get';
-    const FIELD_DISCOUNT_QUERY = '#discount_discountCalculator_collector_query_string';
-    const DISCOUNT_CALCULATION_GROUP = '#builder_calculation_group_0';
-    const CURRENT_TAB = '.nav-tabs li.active';
-    const CURRENT_TAB_ERROR = '.nav-tabs li.active.error';
+    public const BTN_CALCULATION_GET = '#btn-calculation-get';
+    public const FIELD_DISCOUNT_QUERY = '#discount_discountCalculator_collector_query_string';
+    public const DISCOUNT_CALCULATION_GROUP = '#builder_calculation_group_0';
+    public const CURRENT_TAB = '.nav-tabs li.active';
+    public const CURRENT_TAB_ERROR = '.nav-tabs li.active.error';
 
     /**
      * @var array

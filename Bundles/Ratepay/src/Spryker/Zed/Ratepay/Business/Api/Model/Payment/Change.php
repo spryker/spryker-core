@@ -11,5 +11,5 @@ use Spryker\Zed\Ratepay\Business\Api\Constants;
 
 class Change extends Request
 {
-    const OPERATION = Constants::REQUEST_MODEL_PAYMENT_CHANGE;
+    public const OPERATION = Constants::REQUEST_MODEL_PAYMENT_CHANGE;
 }

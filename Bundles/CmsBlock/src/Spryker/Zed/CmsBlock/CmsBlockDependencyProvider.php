@@ -16,13 +16,13 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'FACADE_TOUCH';
-    const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
-    const QUERY_CONTAINER_GLOSSARY = 'QUERY_CONTAINER_GLOSSARY';
+    public const QUERY_CONTAINER_GLOSSARY = 'QUERY_CONTAINER_GLOSSARY';
 
-    const PLUGIN_CMS_BLOCK_UPDATE = 'CMS_BLOCK:PLUGIN_CMS_BLOCK_UPDATE';
+    public const PLUGIN_CMS_BLOCK_UPDATE = 'CMS_BLOCK:PLUGIN_CMS_BLOCK_UPDATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CarrierController extends AbstractController
 {
-    const MESSAGE_CARRIER_CREATE_SUCCESS = 'Carrier was created successfully.';
+    public const MESSAGE_CARRIER_CREATE_SUCCESS = 'Carrier was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

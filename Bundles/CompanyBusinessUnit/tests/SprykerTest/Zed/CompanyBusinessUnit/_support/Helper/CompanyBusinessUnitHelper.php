@@ -10,8 +10,12 @@ namespace SprykerTest\Zed\CompanyBusinessUnit\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
+use Generated\Shared\DataBuilder\CompanyUserBuilder;
+use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -56,6 +60,36 @@ class CompanyBusinessUnitHelper extends Module
         return $this->getCompanyBusinessUnitFacade()
             ->create($companyBusinessUnitTransfer)
             ->getCompanyBusinessUnitTransfer();
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function haveCustomer(array $seedData = []): CustomerTransfer
+    {
+        $companyTransfer = (new CustomerBuilder($seedData))->build();
+        $customerFacade = $this->getLocator()->customer()->facade();
+
+        $customerFacade->addCustomer($companyTransfer);
+
+        return $customerFacade->getCustomer($companyTransfer);
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function haveCompanyUser(array $seedData = []): CompanyUserTransfer
+    {
+        $companyUserTransfer = (new CompanyUserBuilder($seedData))->build();
+        $companyUserFacade = $this->getLocator()->companyUser()->facade();
+
+        $companyUserResponseTransfer = $companyUserFacade->create($companyUserTransfer);
+
+        return $companyUserFacade->getCompanyUserById($companyUserResponseTransfer->getCompanyUser()->getIdCompanyUser());
     }
 
     /**

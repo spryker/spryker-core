@@ -216,6 +216,27 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findProductConcretesBySkus(array $skus): array
+    {
+        $productConcreteEntities = $this->productQueryContainer
+            ->queryProduct()
+            ->filterBySku_In($skus)
+            ->find();
+
+        if (!$productConcreteEntities->getData()) {
+            return [];
+        }
+
+        $productConcreteTransfers = $this->productTransferMapper->convertProductCollection($productConcreteEntities);
+
+        return $productConcreteTransfers;
+    }
+
+    /**
      * @param string $concreteSku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException

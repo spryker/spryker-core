@@ -31,7 +31,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleReaderTest extends Unit
 {
-    const ID_STORE = 1;
+    public const ID_STORE = 1;
     /**
      * @var array
      */

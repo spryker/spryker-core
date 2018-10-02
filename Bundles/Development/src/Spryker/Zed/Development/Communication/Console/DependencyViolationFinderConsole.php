@@ -22,11 +22,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
 {
-    const COMMAND_NAME = 'dev:dependency:find';
-    const OPTION_DEPENDENCY_TYPE = 'dependency-type';
-    const OPTION_DEPENDENCY_TYPE_SHORT = 'd';
-    const OPTION_STOP_ON_VIOLATION = 'stop-on-violation';
-    const OPTION_STOP_ON_VIOLATION_SHORT = 's';
+    public const COMMAND_NAME = 'dev:dependency:find';
+    public const OPTION_DEPENDENCY_TYPE = 'dependency-type';
+    public const OPTION_DEPENDENCY_TYPE_SHORT = 'd';
+    public const OPTION_STOP_ON_VIOLATION = 'stop-on-violation';
+    public const OPTION_STOP_ON_VIOLATION_SHORT = 's';
 
     /**
      * @var int

@@ -13,7 +13,7 @@ use Spryker\Zed\OmsDiscountConnector\Dependency\Facade\OmsDiscountConnectorToDis
 
 class OmsDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_DISCOUNT = 'facade discount';
+    public const FACADE_DISCOUNT = 'facade discount';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
