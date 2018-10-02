@@ -144,6 +144,7 @@ class Role implements RoleInterface
     protected function addGroupRoles(RolesTransfer $rolesTransfer, $idAclGroup)
     {
         $groupRoles = $this->getGroupRoles($idAclGroup);
+        
         foreach ($groupRoles as $groupRole) {
             $rolesTransfer->addRole($groupRole);
         }
