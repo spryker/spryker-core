@@ -254,8 +254,8 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
             $currencyTransfer
         );
 
-        foreach($globalThresholds as $globalThreshold) {
-            if($globalThreshold->getSalesOrderThresholdValue()->getSalesOrderThresholdType() === SalesOrderThresholdConfig::GROUP_SOFT) {
+        foreach ($globalThresholds as $globalThreshold) {
+            if ($globalThreshold->getSalesOrderThresholdValue()->getSalesOrderThresholdType() === SalesOrderThresholdConfig::GROUP_SOFT) {
                 $this->assertEquals($salesOrderThresholdTransfer, $globalThreshold);
                 break;
             }
