@@ -56,8 +56,8 @@ class CompanyRoleTable extends AbstractTable
     {
         $config->setHeader([
             static::COL_ID_COMPANY_ROLE => static::HEADER_ID_COMPANY_ROLE,
-            static::COL_NAME_COMPANY_ROLE => static::HEADER_NAME_COMPANY_ROLE,
             static::COL_COMPANY_NAME => static::HEADER_NAME_COMPANY,
+            static::COL_NAME_COMPANY_ROLE => static::HEADER_NAME_COMPANY_ROLE,
             static::COL_ACTIONS => static::HEADER_ACTIONS,
         ]);
 
