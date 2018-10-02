@@ -53,6 +53,8 @@ class SprykMainForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $typeToAddListenerTo = static::MODULE;
+
         $spryk = $options[static::SPRYK];
         $sprykDefinition = $this->getFacade()->getSprykDefinitionByName($spryk);
 
@@ -74,16 +76,25 @@ class SprykMainForm extends AbstractType
             $builder->add(static::DEPENDENT_MODULE, ModuleChoiceType::class, [
                 ModuleChoiceType::MODULE_TRANSFER_COLLECTION => $moduleTransferCollection,
             ]);
+
+            $typeToAddListenerTo = static::DEPENDENT_MODULE;
         }
 
         $this->addNextButton($builder);
 
-        $builder->get('module')->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($options, $builder) {
+        $builder->get($typeToAddListenerTo)->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($options, $builder) {
             $form = $event->getForm()->getParent();
-            $moduleTransfer = $event->getForm()->getData();
+            $moduleTransfer = $form->get(static::MODULE)->getData();
             if ($moduleTransfer instanceof ModuleTransfer) {
                 if ($moduleTransfer->getName() && ($moduleTransfer->getOrganization() && $moduleTransfer->getOrganization()->getName())) {
                     $form->remove('next');
+
+                    if ($form->has(static::DEPENDENT_MODULE)) {
+                        $dependentModuleForm = $form->get(static::DEPENDENT_MODULE);
+                        $dependentModuleTransfer = $dependentModuleForm->getData();
+
+                        $moduleTransfer->setDependentModule($dependentModuleTransfer);
+                    }
 
                     $sprykDataProvider = $this->getFactory()->createSprykFormDataProvider();
                     $sprykDetailsForm = $builder->getFormFactory()

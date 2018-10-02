@@ -13,6 +13,7 @@ use Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderComposite;
 use Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderCompositeInterface;
 use Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderInterface;
 use Spryker\Zed\SprykGui\Business\ChoiceLoader\Zed\Business\Model\ZedBusinessModelChoiceLoader;
+use Spryker\Zed\SprykGui\Business\ChoiceLoader\Zed\Business\ZedFacadeMethodChoiceLoader;
 use Spryker\Zed\SprykGui\Business\ChoiceLoader\Zed\Communication\Controller\ZedCommunicationControllerChoiceLoader;
 use Spryker\Zed\SprykGui\Business\Finder\AccessibleTransfer\AccessibleTransferFinder;
 use Spryker\Zed\SprykGui\Business\Finder\AccessibleTransfer\AccessibleTransferFinderInterface;
@@ -176,6 +177,7 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
         return new ChoiceLoaderComposite([
             $this->createZedBusinessModelLoader(),
             $this->createZedControllerChoiceLoader(),
+            $this->createZedFacadeMethodChoiceLoader(),
         ]);
     }
 
@@ -193,5 +195,13 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
     public function createZedControllerChoiceLoader(): ChoiceLoaderInterface
     {
         return new ZedCommunicationControllerChoiceLoader();
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderInterface
+     */
+    public function createZedFacadeMethodChoiceLoader(): ChoiceLoaderInterface
+    {
+        return new ZedFacadeMethodChoiceLoader();
     }
 }

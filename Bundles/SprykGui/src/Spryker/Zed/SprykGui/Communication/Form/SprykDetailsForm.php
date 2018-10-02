@@ -103,6 +103,9 @@ class SprykDetailsForm extends AbstractType
                 if (isset($argumentDefinition['isOptional'])) {
                     $typeOptions['required'] = false;
                 }
+                if (isset($argumentDefinition['isMultiple'])) {
+                    $typeOptions['multiple'] = true;
+                }
                 $formTypeName = 'Spryker\\Zed\\SprykGui\\Communication\\Form\\Type\\' . $argumentDefinition['type'] . 'Type';
 
                 $builder->add($argumentName, $formTypeName, $typeOptions);
