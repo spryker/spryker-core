@@ -49,6 +49,7 @@ class PaginatedCustomerOrderOverview extends PaginatedCustomerOrderReader implem
         $ordersQuery
             ->clearOrderByColumns()
             ->addDescendingOrderByColumn(SpySalesOrderTableMap::COL_CREATED_AT);
+
         $orderCollection = $this->getOrderCollection($orderListTransfer, $ordersQuery);
 
         return $this->prepareOrderListTransfer($orderListTransfer, $orderCollection);
