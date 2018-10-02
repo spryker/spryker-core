@@ -21,8 +21,8 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class LoginForm extends AbstractType
 {
-    const FIELD_USERNAME = 'username';
-    const FIELD_PASSWORD = 'password';
+    public const FIELD_USERNAME = 'username';
+    public const FIELD_PASSWORD = 'password';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

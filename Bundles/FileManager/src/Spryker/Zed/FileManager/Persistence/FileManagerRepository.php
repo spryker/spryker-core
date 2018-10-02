@@ -67,7 +67,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
     /**
      * @param int $idFileInfo
      *
-     * @return \Generated\Shared\Transfer\FileInfoTransfer
+     * @return \Generated\Shared\Transfer\FileInfoTransfer|null
      */
     public function getFileInfo(int $idFileInfo)
     {
@@ -78,7 +78,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
         $fileInfoEntity = $query->findOne();
 
         if ($fileInfoEntity === null) {
-            return $fileInfoEntity;
+            return null;
         }
 
         return $this->getFactory()

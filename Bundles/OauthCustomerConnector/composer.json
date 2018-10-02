@@ -1,5 +1,6 @@
 {
   "name": "spryker/oauth-customer-connector",
+  "type": "library",
   "description": "OauthCustomerConnector module",
   "license": "proprietary",
   "require": {
@@ -13,6 +14,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

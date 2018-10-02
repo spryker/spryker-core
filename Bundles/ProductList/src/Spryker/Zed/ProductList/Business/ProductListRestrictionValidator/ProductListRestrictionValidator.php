@@ -49,13 +49,11 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
     public function validateItemAddition(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
-        /** @var \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer */
         $customerTransfer = $cartChangeTransfer->getQuote()->getCustomer();
         if (!$customerTransfer) {
             return $responseTransfer;
         }
 
-        /** @var \Generated\Shared\Transfer\CustomerProductListCollectionTransfer|null $customerProductListCollectionTransfer */
         $customerProductListCollectionTransfer = $customerTransfer->getCustomerProductListCollection();
         if (!$customerProductListCollectionTransfer) {
             return $responseTransfer;

@@ -1,5 +1,6 @@
 {
   "name": "spryker/dashboard",
+  "type": "library",
   "description": "Dashboard module",
   "license": "proprietary",
   "require": {
@@ -7,9 +8,11 @@
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*",
-    "spryker/twig": "*"
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {

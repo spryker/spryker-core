@@ -1,5 +1,6 @@
 {
   "name": "spryker/price-product-storage",
+  "type": "library",
   "description": "PriceProductStorage module",
   "license": "proprietary",
   "require": {
@@ -16,8 +17,13 @@
     "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/event": "*",
-    "spryker/product-storage": "*"
+    "spryker/product-storage": "*",
+    "spryker/propel": "*",
+    "spryker/propel-query-builder": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",

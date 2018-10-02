@@ -1,5 +1,6 @@
 {
   "name": "spryker/customers-rest-api",
+  "type": "library",
   "description": "CustomersRestApi module",
   "license": "proprietary",
   "require": {
@@ -14,9 +15,6 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/glue-application": "If you want to use Glue infrastructure."
   },
   "autoload": {
     "psr-4": {

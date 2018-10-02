@@ -18,7 +18,7 @@ class ProductSetStorageConstants
      *
      * @api
      */
-    const PRODUCT_SET_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_SET_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ class ProductSetStorageConstants
      *
      * @api
      */
-    const PRODUCT_SET_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+    public const PRODUCT_SET_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
     /**
      * Specification:
@@ -34,5 +34,5 @@ class ProductSetStorageConstants
      *
      * @api
      */
-    const PRODUCT_SET_RESOURCE_NAME = 'product_set';
+    public const PRODUCT_SET_RESOURCE_NAME = 'product_set';
 }

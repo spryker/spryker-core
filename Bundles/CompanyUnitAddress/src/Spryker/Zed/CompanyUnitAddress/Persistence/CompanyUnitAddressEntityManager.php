@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 /**
  * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressPersistenceFactory getFactory()
  * @method \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer save(\Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer|\Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $spyCompanyUnitAddressEntityTransfer)
+ * @method \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer delete(\Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $spyCompanyUnitAddressEntityTransfer)
  */
 class CompanyUnitAddressEntityManager extends AbstractEntityManager implements CompanyUnitAddressEntityManagerInterface
 {
@@ -35,11 +36,8 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
                 $companyUnitAddressTransfer,
                 new SpyCompanyUnitAddressEntityTransfer()
             );
-
         $entityTransfer = $this->save($entityTransfer);
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress(
-            $entityTransfer->getIdCompanyUnitAddress()
-        );
+        $companyUnitAddressTransfer->setIdCompanyUnitAddress($entityTransfer->getIdCompanyUnitAddress());
 
         return $companyUnitAddressTransfer;
     }
@@ -95,5 +93,15 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
             ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->filterByFkCompanyUnitAddress_In($idAddresses)
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer
+     *
+     * @return void
+     */
+    public function saveAddressToBusinessUnitRelation(SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer): void
+    {
+        $this->save($companyUnitAddressToCompanyBusinessUnitEntityTransfer);
     }
 }

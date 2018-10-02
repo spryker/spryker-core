@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -64,15 +65,15 @@ class ConverterTest extends Unit
      */
     public function testConverterData()
     {
-        $responseTransfer = $this->getResponseTransferObject((new Response)->getTestPaymentConfirmResponseData());
+        $responseTransfer = $this->getResponseTransferObject((new Response())->getTestPaymentConfirmResponseData());
         $this->doTestInstance($responseTransfer, RatepayResponseTransfer::class);
         $this->doTestConverterData($responseTransfer);
 
-        $responseTransfer = $this->getResponseInstallmentConfigurationObject((new Response)->getTestConfigurationResponseData());
+        $responseTransfer = $this->getResponseInstallmentConfigurationObject((new Response())->getTestConfigurationResponseData());
         $this->doTestInstance($responseTransfer, RatepayInstallmentConfigurationResponseTransfer::class);
         $this->doTestConverterData($responseTransfer->getBaseResponse());
 
-        $responseTransfer = $this->getResponseInstallmentCalculationObject((new Response)->getTestCalculationResponseData());
+        $responseTransfer = $this->getResponseInstallmentCalculationObject((new Response())->getTestCalculationResponseData());
         $this->doTestInstance($responseTransfer, RatepayInstallmentCalculationResponseTransfer::class);
         $this->doTestConverterData($responseTransfer->getBaseResponse());
     }
@@ -106,7 +107,7 @@ class ConverterTest extends Unit
      */
     public function testResponseSuccessState()
     {
-        $response = new Response;
+        $response = new Response();
         $successResponseTransfer = $this->getResponseTransferObject($response->getTestPaymentConfirmResponseData());
         $unSuccessResponseTransfer = $this->getResponseTransferObject($response->getTestPaymentConfirmUnsuccessResponseData());
 

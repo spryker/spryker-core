@@ -28,14 +28,14 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class TranslationForm extends AbstractType
 {
-    const FIELD_GLOSSARY_KEY = 'glossary_key';
-    const FIELD_LOCALES = 'locales';
+    public const FIELD_GLOSSARY_KEY = 'glossary_key';
+    public const FIELD_LOCALES = 'locales';
 
-    const OPTION_LOCALES = 'locales';
+    public const OPTION_LOCALES = 'locales';
 
-    const GROUP_UNIQUE_GLOSSARY_KEY_CHECK = 'unique_glossary_key_check';
+    public const GROUP_UNIQUE_GLOSSARY_KEY_CHECK = 'unique_glossary_key_check';
 
-    const TYPE_DATA = 'data';
+    public const TYPE_DATA = 'data';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

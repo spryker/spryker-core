@@ -64,15 +64,32 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
         $productConcreteIds = array_flip($attributeMap[static::KEY_PRODUCT_CONCRETE_IDS]);
 
         if (isset($attributeMap[static::KEY_ATTRIBUTE_VARIANTS])) {
-            foreach ($attributeMap[static::KEY_ATTRIBUTE_VARIANTS] as $key => $data) {
-                $attributeMap[static::KEY_ATTRIBUTE_VARIANTS][$key][static::KEY_ID_PRODUCT_CONCRETE] =
-                    $productConcreteIds[$data[static::KEY_ID_PRODUCT_CONCRETE]];
-            }
+            $attributeMap[static::KEY_ATTRIBUTE_VARIANTS] = $this->changeVariantsIdsToSkus($attributeMap[static::KEY_ATTRIBUTE_VARIANTS], $productConcreteIds);
         }
 
         $attributeMap[static::KEY_PRODUCT_CONCRETE_IDS] = array_values($productConcreteIds);
 
         return $restAbstractProductsAttributesTransfer
             ->setAttributeMap($attributeMap);
+    }
+
+    /**
+     * @param array $variants
+     * @param array $productConcreteIds
+     *
+     * @return array
+     */
+    protected function changeVariantsIdsToSkus(array $variants, array $productConcreteIds): array
+    {
+        foreach ($variants as $key => $data) {
+            if (isset($variants[$key][static::KEY_ID_PRODUCT_CONCRETE])) {
+                $variants[$key][static::KEY_ID_PRODUCT_CONCRETE] =
+                    $productConcreteIds[$data[static::KEY_ID_PRODUCT_CONCRETE]];
+                continue;
+            }
+            $variants[$key] = $this->changeVariantsIdsToSkus($variants[$key], $productConcreteIds);
+        }
+
+        return $variants;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -12,7 +13,7 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Response\CalculationResponse;
 
 class InstallmentCalculationTransaction extends BaseTransaction implements QuoteTransactionInterface
 {
-    const TRANSACTION_TYPE = ApiConstants::REQUEST_MODEL_CALCULATION_REQUEST;
+    public const TRANSACTION_TYPE = ApiConstants::REQUEST_MODEL_CALCULATION_REQUEST;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

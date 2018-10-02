@@ -18,7 +18,7 @@ class GlossaryStorageConstants
      *
      * @api
      */
-    const SYNC_STORAGE_QUEUE = 'sync.storage.translation';
+    public const SYNC_STORAGE_QUEUE = 'sync.storage.translation';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ class GlossaryStorageConstants
      *
      * @api
      */
-    const SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.translation.error';
+    public const SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.translation.error';
 
     /**
      * Specification:
@@ -34,5 +34,5 @@ class GlossaryStorageConstants
      *
      * @api
      */
-    const RESOURCE_NAME = 'translation';
+    public const RESOURCE_NAME = 'translation';
 }

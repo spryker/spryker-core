@@ -96,6 +96,65 @@ class PageMapBuilderTest extends Unit
     }
 
     /**
+     * @dataProvider wronglyIndexedArrays
+     *
+     * @param array $value
+     *
+     * @return void
+     */
+    public function testAddStringFacetResetsValueKeys(array $value)
+    {
+        // Assign
+        $pageMapTransfer = new PageMapTransfer();
+        $name = "does not matter";
+        $expectedResult = [0, 1, 2];
+
+        // Act
+        $this->pageMapBuilder->addStringFacet($pageMapTransfer, $name, $value);
+        $actualResult = array_keys($pageMapTransfer->getStringFacet()[0]->getValue());
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @dataProvider wronglyIndexedArrays
+     *
+     * @param array $value
+     *
+     * @return void
+     */
+    public function testAddIntegerFacetResetsValueKeys(array $value)
+    {
+        // Assign
+        $pageMapTransfer = new PageMapTransfer();
+        $name = "does not matter";
+        $expectedResult = [0, 1, 2];
+
+        // Act
+        $this->pageMapBuilder->addIntegerFacet($pageMapTransfer, $name, $value);
+        $actualResult = array_keys($pageMapTransfer->getIntegerFacet()[0]->getValue());
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return array
+     */
+    public function wronglyIndexedArrays()
+    {
+        return [
+           [
+               [1 => 'wrongly', 2 => 'indexed', 3 => 'array'],
+           ],
+           [
+               ['a' => 'wrongly', 'b' => 'indexed', 'c' => 'array'],
+           ],
+        ];
+    }
+
+    /**
      * @return array
      */
     protected function createSingleFulltextData()

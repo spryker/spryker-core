@@ -18,11 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FilterPreferencesController extends AbstractController
 {
-    const PARAM_ID = 'id';
-    const PARAM_TERM = 'term';
+    public const PARAM_ID = 'id';
+    public const PARAM_TERM = 'term';
 
-    const MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS = 'Filter preference was created successfully.';
-    const MESSAGE_FILTER_PREFERENCE_UPDATE_SUCCESS = 'Filter preference was updated successfully.';
+    public const MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS = 'Filter preference was created successfully.';
+    public const MESSAGE_FILTER_PREFERENCE_UPDATE_SUCCESS = 'Filter preference was updated successfully.';
 
     /**
      * @return array

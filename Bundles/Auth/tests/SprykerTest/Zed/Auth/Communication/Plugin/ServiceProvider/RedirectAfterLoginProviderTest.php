@@ -28,9 +28,9 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 class RedirectAfterLoginProviderTest extends Unit
 {
-    const REQUEST_URI = 'REQUEST_URI';
-    const REDIRECT_URL_VALID = '/valid-redirect-url?query=string';
-    const REDIRECT_URL_INVALID = 'http://foo/redirect-url?query=string';
+    public const REQUEST_URI = 'REQUEST_URI';
+    public const REDIRECT_URL_VALID = '/valid-redirect-url?query=string';
+    public const REDIRECT_URL_INVALID = 'http://foo/redirect-url?query=string';
 
     /**
      * @return void

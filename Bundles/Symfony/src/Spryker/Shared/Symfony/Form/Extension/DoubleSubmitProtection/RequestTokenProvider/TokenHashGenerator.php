@@ -36,7 +36,7 @@ class TokenHashGenerator implements TokenGeneratorInterface
      * @param mixed $expected
      * @param mixed $actual
      *
-     * @return boolean
+     * @return bool
      */
     public function checkTokenEquals($expected, $actual)
     {

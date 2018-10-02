@@ -17,8 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InitializeDatabaseConsole extends Console
 {
-    const COMMAND_NAME = 'setup:init-db';
-    const DESCRIPTION = 'Fill the database with required data';
+    public const COMMAND_NAME = 'setup:init-db';
+    public const DESCRIPTION = 'Fill the database with required data';
 
     /**
      * @return void
@@ -70,7 +70,7 @@ class InitializeDatabaseConsole extends Console
      */
     protected function getPluginNameFromClass($className)
     {
-        $pattern = '#^(.+)\\\(.+)\\\(.+)\\\(.+)\\\(.*)$#i';
-        return preg_replace($pattern, '${2}', $className);
+        $pattern = '#^.+?\\\.+?\\\(.+?)\\\.+$#i';
+        return preg_replace($pattern, '${1}', $className);
     }
 }

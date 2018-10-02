@@ -8,6 +8,12 @@
         <property name="isActive" dataBuilderRule="=true" />
     </transfer>
 
+    <transfer name="LocalizedAttributes">
+        <property name="isSearchable" dataBuilderRule="=1" />
+        <property name="name" dataBuilderRule="sentence(2)" />
+        <property name="description" dataBuilderRule="sentence(2)" />
+    </transfer>
+
     <transfer name="ProductAbstract">
         <property name="sku" dataBuilderRule="isbn10" />
     </transfer>

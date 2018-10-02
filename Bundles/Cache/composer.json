@@ -1,5 +1,6 @@
 {
   "name": "spryker/cache",
+  "type": "library",
   "description": "Cache module",
   "license": "proprietary",
   "require": {
@@ -8,7 +9,7 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

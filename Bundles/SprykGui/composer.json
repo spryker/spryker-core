@@ -1,5 +1,6 @@
 {
   "name": "spryker/spryk-gui",
+  "type": "library",
   "description": "SprykGui module",
   "license": "proprietary",
   "require": {
@@ -8,6 +9,13 @@
     "spryker/kernel": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/zend": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/application": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {
