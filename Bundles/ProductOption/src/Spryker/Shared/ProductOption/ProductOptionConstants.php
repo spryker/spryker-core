@@ -12,5 +12,5 @@ namespace Spryker\Shared\ProductOption;
  */
 interface ProductOptionConstants
 {
-    const AMOUNT = 'amount';
+    public const AMOUNT = 'amount';
 }

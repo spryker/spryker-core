@@ -29,12 +29,12 @@ class BundleControllerAction implements BundleControllerActionInterface
     private $action;
 
     /**
-     * @var \Zend\Filter\Word\DashToCamelCase
+     * @var \Zend\Filter\Word\DashToCamelCase|null
      */
     private $filter;
 
     /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver|null
      */
     protected $bundleNameResolver;
 

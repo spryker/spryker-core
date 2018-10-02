@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 
 class InsertSqlConsole extends Console
 {
-    const COMMAND_NAME = 'propel:sql:insert';
+    public const COMMAND_NAME = 'propel:sql:insert';
 
     /**
      * @return void

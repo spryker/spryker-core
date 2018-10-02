@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ReorderProductSetsFormType extends AbstractType
 {
-    const FIELD_PRODUCT_SET_WEIGHTS = 'product_set_weights';
+    public const FIELD_PRODUCT_SET_WEIGHTS = 'product_set_weights';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

@@ -20,7 +20,7 @@ class Elv extends AbstractMethod
     /**
      * @const Payment method code.
      */
-    const METHOD = RatepayConstants::METHOD_ELV;
+    public const METHOD = RatepayConstants::METHOD_ELV;
 
     /**
      * @return string

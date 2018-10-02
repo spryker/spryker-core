@@ -18,7 +18,7 @@ class ProductSetPageSearchConstants
      *
      * @api
      */
-    const PRODUCT_SET_RESOURCE_NAME = 'product_set';
+    public const PRODUCT_SET_RESOURCE_NAME = 'product_set';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ class ProductSetPageSearchConstants
      *
      * @api
      */
-    const PRODUCT_SET_SYNC_SEARCH_QUEUE = 'sync.search.product';
+    public const PRODUCT_SET_SYNC_SEARCH_QUEUE = 'sync.search.product';
 
     /**
      * Specification:
@@ -34,5 +34,5 @@ class ProductSetPageSearchConstants
      *
      * @api
      */
-    const PRODUCT_SET_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.product.error';
+    public const PRODUCT_SET_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.product.error';
 }

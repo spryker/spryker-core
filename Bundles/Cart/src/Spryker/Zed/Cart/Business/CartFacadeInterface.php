@@ -96,4 +96,16 @@ interface CartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Clean ups quote items key group prefix.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function cleanUpItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

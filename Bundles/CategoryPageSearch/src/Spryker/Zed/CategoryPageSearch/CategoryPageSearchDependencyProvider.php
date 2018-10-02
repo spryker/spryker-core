@@ -18,13 +18,13 @@ use Spryker\Zed\Kernel\Container;
 
 class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
-    const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
-    const FACADE_CATEGORY = 'FACADE_CATEGORY';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const FACADE_SEARCH = 'FACADE_SEARCH';
-    const STORE = 'store';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_SEARCH = 'FACADE_SEARCH';
+    public const STORE = 'store';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

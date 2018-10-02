@@ -12,7 +12,7 @@ use Spryker\Zed\Ratepay\Business\Api\Constants;
 
 class Address extends AbstractBuilder implements BuilderInterface
 {
-    const ROOT_TAG = 'address';
+    public const ROOT_TAG = 'address';
 
     /**
      * @var string

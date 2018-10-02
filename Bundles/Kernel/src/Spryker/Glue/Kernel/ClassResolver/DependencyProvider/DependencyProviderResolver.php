@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyProviderResolver extends AbstractClassResolver
 {
-    const CLASS_NAME_PATTERN = '\\%1$s\\Glue\\%2$s%3$s\\%2$sDependencyProvider';
+    public const CLASS_NAME_PATTERN = '\\%1$s\\Glue\\%2$s%3$s\\%2$sDependencyProvider';
 
     /**
      * @param object|string $callerClass

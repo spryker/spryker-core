@@ -1,5 +1,6 @@
 {
   "name": "spryker/cart-currency-connector",
+  "type": "library",
   "description": "CartCurrencyConnector module",
   "license": "proprietary",
   "require": {

@@ -26,7 +26,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
-    const DEFAULT_TRANSLATION = '';
+    public const DEFAULT_TRANSLATION = '';
 
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
@@ -205,7 +205,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     /**
      * @param string $translationKey
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey|null
      */
     protected function findGlossaryKeyEntityByTranslationKey($translationKey)
     {
@@ -318,7 +318,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     /**
      * @param int $idGlossaryKeyMapping
      *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping|null
      */
     protected function findGlossaryKeyMappingEntityById($idGlossaryKeyMapping)
     {

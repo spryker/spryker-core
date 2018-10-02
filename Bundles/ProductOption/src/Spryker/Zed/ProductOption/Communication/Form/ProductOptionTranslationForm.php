@@ -22,10 +22,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductOptionTranslationForm extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_LOCALE_CODE = 'localeCode';
-    const FIELD_KEY = 'key';
-    const FIELD_RELATED_OPTION_HASH = 'relatedOptionHash';
+    public const FIELD_NAME = 'name';
+    public const FIELD_LOCALE_CODE = 'localeCode';
+    public const FIELD_KEY = 'key';
+    public const FIELD_RELATED_OPTION_HASH = 'relatedOptionHash';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

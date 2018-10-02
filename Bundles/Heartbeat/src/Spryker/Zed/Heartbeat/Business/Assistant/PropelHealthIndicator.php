@@ -14,7 +14,7 @@ use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
 class PropelHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {
-    const HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_DATABASE = 'Unable to write to database';
+    public const HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_DATABASE = 'Unable to write to database';
 
     /**
      * @return void
