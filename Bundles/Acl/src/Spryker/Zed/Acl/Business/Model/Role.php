@@ -175,6 +175,8 @@ class Role implements RoleInterface
     /**
      * @param int $id
      *
+     * @throws \Spryker\Zed\Acl\Business\Exception\EmptyEntityException
+     *
      * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getRoleById($id)

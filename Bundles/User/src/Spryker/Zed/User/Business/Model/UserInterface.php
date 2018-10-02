@@ -94,7 +94,7 @@ interface UserInterface
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserById($id);
 
