@@ -13,8 +13,8 @@ use Spryker\Shared\Kernel\Store;
 
 class ProductSearchDependencyProvider extends AbstractDependencyProvider
 {
-    const STORE = 'store';
-    const CLIENT_STORAGE = 'storage client';
+    public const STORE = 'store';
+    public const CLIENT_STORAGE = 'storage client';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

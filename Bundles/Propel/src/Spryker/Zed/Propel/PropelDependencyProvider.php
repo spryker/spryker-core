@@ -14,8 +14,8 @@ use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceBridge;
 
 class PropelDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const UTIL_TEXT_SERVICE = 'util text service';
-    const FACADE_LOG = 'FACADE_LOG';
+    public const UTIL_TEXT_SERVICE = 'util text service';
+    public const FACADE_LOG = 'FACADE_LOG';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

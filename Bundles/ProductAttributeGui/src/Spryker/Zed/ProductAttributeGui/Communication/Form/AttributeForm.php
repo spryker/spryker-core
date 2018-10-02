@@ -27,19 +27,19 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class AttributeForm extends AbstractType
 {
-    const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
-    const FIELD_KEY = 'key';
-    const FIELD_INPUT_TYPE = 'input_type';
-    const FIELD_ALLOW_INPUT = 'allow_input';
-    const FIELD_IS_SUPER = 'is_super';
-    const FIELD_VALUES = 'values';
+    public const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
+    public const FIELD_KEY = 'key';
+    public const FIELD_INPUT_TYPE = 'input_type';
+    public const FIELD_ALLOW_INPUT = 'allow_input';
+    public const FIELD_IS_SUPER = 'is_super';
+    public const FIELD_VALUES = 'values';
 
-    const OPTION_ATTRIBUTE_TYPE_CHOICES = 'attribute_type_choices';
-    const OPTION_VALUES_CHOICES = 'values_choices';
-    const OPTION_IS_UPDATE = 'is_update';
+    public const OPTION_ATTRIBUTE_TYPE_CHOICES = 'attribute_type_choices';
+    public const OPTION_VALUES_CHOICES = 'values_choices';
+    public const OPTION_IS_UPDATE = 'is_update';
 
-    const GROUP_VALUES = 'values_group';
-    const GROUP_UNIQUE_KEY = 'unique_key_group';
+    public const GROUP_VALUES = 'values_group';
+    public const GROUP_UNIQUE_KEY = 'unique_key_group';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SetController extends AbstractController
 {
-    const PARAM_URL_ID_TAX_SET = 'id-tax-set';
+    public const PARAM_URL_ID_TAX_SET = 'id-tax-set';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

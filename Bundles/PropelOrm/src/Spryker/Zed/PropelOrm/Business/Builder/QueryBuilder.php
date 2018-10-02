@@ -6,6 +6,7 @@
  * file that was distributed with the source code of the extended class.
  *
  * @license MIT License
+ * @see https://github.com/propelorm/Propel2
  */
 
 namespace Spryker\Zed\PropelOrm\Business\Builder;
@@ -16,7 +17,7 @@ use Propel\Generator\Model\PropelTypes;
 
 class QueryBuilder extends PropelQueryBuilder
 {
-    const ATTRIBUTE_CASE_INSENSITIVE = 'caseInsensitive';
+    public const ATTRIBUTE_CASE_INSENSITIVE = 'caseInsensitive';
 
     /**
      * @param \Propel\Generator\Model\Column $col

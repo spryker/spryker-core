@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\MultiCart;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 
 /**
@@ -52,5 +53,18 @@ class MultiCartConfig extends AbstractBundleConfig
     public function getQuickOrderQuoteName(): string
     {
         return $this->getSharedConfig()->getQuickOrderQuoteName();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getQuoteFieldsAllowedForQuoteDuplicate(): array
+    {
+        return [
+            QuoteTransfer::ITEMS,
+            QuoteTransfer::TOTALS,
+            QuoteTransfer::CURRENCY,
+            QuoteTransfer::PRICE_MODE,
+        ];
     }
 }

@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class AttributeTranslationForm extends AbstractType
 {
-    const FIELD_KEY_TRANSLATION = 'key_translation';
+    public const FIELD_KEY_TRANSLATION = 'key_translation';
 
     /**
      * @return string

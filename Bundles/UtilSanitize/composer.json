@@ -1,5 +1,6 @@
 {
   "name": "spryker/util-sanitize",
+  "type": "library",
   "description": "UtilSanitize module",
   "license": "proprietary",
   "require": {

@@ -13,7 +13,7 @@ use Spryker\Service\NewRelicApi\Plugin\NewRelicMonitoringExtensionPlugin;
 
 class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const MONITORING_EXTENSIONS = 'monitoring extensions';
+    public const MONITORING_EXTENSIONS = 'monitoring extensions';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container

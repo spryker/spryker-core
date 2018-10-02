@@ -14,10 +14,10 @@ use Spryker\Zed\UrlCollector\Dependency\QueryContainer\UrlCollectorToUrlQueryCon
 
 class UrlCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
-    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
-    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
-    const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
+    public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+    public const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

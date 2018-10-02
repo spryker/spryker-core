@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Container;
 
 class SessionDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SESSION_CLIENT = 'SESSION_CLIENT';
+    public const SESSION_CLIENT = 'SESSION_CLIENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

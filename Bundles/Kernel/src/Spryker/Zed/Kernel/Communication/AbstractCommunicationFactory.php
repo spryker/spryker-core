@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 
 abstract class AbstractCommunicationFactory extends AbstractFactory
 {
-    const FORM_FACTORY = 'FORM_FACTORY';
+    public const FORM_FACTORY = 'FORM_FACTORY';
 
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade

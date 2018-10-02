@@ -83,7 +83,7 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
             return null;
         }
 
-        return $this->getImageSetImages($productAbstractImageSetCollection->getImageSets(), $imageSetName);
+        return $this->getImageSetImages($productAbstractImageSetCollection->getImageSets()->getArrayCopy(), $imageSetName);
     }
 
     /**

@@ -1,5 +1,6 @@
 {
   "name": "spryker/availability-data-feed",
+  "type": "library",
   "description": "AvailabilityDataFeed module",
   "license": "proprietary",
   "require": {

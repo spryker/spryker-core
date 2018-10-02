@@ -15,11 +15,11 @@ use Spryker\Zed\Stock\Dependency\Facade\StockToTouchBridge;
 
 class StockDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'FACADE_TOUCH';
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_STORE = 'FACADE_STORE';
 
-    const PLUGINS_STOCK_UPDATE = 'PLUGINS_STOCK_UPDATE';
+    public const PLUGINS_STOCK_UPDATE = 'PLUGINS_STOCK_UPDATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
