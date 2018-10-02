@@ -37,6 +37,23 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
      *
      * @api
      *
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     *
+     * @return void
+     */
+    public function triggerBulk($eventName, array $transfers): void
+    {
+        $this->getFactory()
+            ->createEventDispatcher()
+            ->triggerBulk($eventName, $transfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
@@ -46,5 +63,21 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
         return $this->getFactory()
             ->createEventQueueConsumer()
             ->processMessages($queueMessageTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function forwardMessages(array $queueMessageTransfers): array
+    {
+        return $this->getFactory()
+            ->createMessageForwarder()
+            ->forwardMessages($queueMessageTransfers);
     }
 }
