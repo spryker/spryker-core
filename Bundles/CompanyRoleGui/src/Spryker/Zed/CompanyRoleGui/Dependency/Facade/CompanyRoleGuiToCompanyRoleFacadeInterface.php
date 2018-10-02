@@ -17,6 +17,13 @@ interface CompanyRoleGuiToCompanyRoleFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function delete(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
     public function getCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer;

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyRoleGui;
 
+use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyFacadeBridge;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeBridge;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToGlossaryFacadeBridge;
@@ -18,6 +19,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COMPANY = 'FACADE_COMPANY';
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
+    public const PROPEL_QUERY_COMPANY_ROLE = 'PROPEL_QUERY_COMPANY_ROLE';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
 
@@ -30,6 +32,8 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCompanyFacade($container);
+        $container = $this->addCompanyRoleFacade($container);
+        $container = $this->addCompanyRolePropelQuery($container);
         $container = $this->addCompanyRoleFacade($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addPermissionFacade($container);
@@ -64,6 +68,20 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
             return new CompanyRoleGuiToCompanyRoleFacadeBridge(
                 $container->getLocator()->companyRole()->facade()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyRolePropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_COMPANY_ROLE] = function (Container $container) {
+            return SpyCompanyRoleQuery::create();
         };
 
         return $container;
