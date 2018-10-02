@@ -1,5 +1,6 @@
 {
   "name": "spryker/category-data-feed",
+  "type": "library",
   "description": "CategoryDataFeed module",
   "license": "proprietary",
   "require": {

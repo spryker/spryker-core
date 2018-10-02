@@ -5,26 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SprykGui\Business\Finder\Zed\Business;
+namespace Spryker\Zed\SprykGui\Business\ChoiceLoader\Zed\Business\Model;
 
-use Generated\Shared\Transfer\ClassInformationCollectionTransfer;
 use Generated\Shared\Transfer\ClassInformationTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
+use Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderInterface;
 use Symfony\Component\Finder\Finder;
 
-class BusinessModelFinder implements BusinessModelFinderInterface
+class ZedBusinessModelChoiceLoader implements ChoiceLoaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return \Generated\Shared\Transfer\ClassInformationCollectionTransfer
+     * @return array
      */
-    public function findBusinessModels(ModuleTransfer $moduleTransfer): ClassInformationCollectionTransfer
+    public function loadChoices(ModuleTransfer $moduleTransfer): array
     {
-        $classInformationCollectionTransfer = new ClassInformationCollectionTransfer();
+        $classInformationTransferCollection = [];
         $moduleBusinessDirectory = $this->getPathToModulesBusinessDirectory($moduleTransfer);
         if (!is_dir($moduleBusinessDirectory)) {
-            return $classInformationCollectionTransfer;
+            return $classInformationTransferCollection;
         }
 
         $finder = new Finder();
@@ -39,12 +39,14 @@ class BusinessModelFinder implements BusinessModelFinderInterface
                 $relativeClassName
             );
             $classInformationTransfer = new ClassInformationTransfer();
-            $classInformationTransfer->setName($className);
+            $classInformationTransfer
+                ->setFullyQualifiedClassName($className)
+                ->setClassName($relativeClassName);
 
-            $classInformationCollectionTransfer->addClassInformation($classInformationTransfer);
+            $classInformationTransferCollection[] = $classInformationTransfer;
         }
 
-        return $classInformationCollectionTransfer;
+        return $classInformationTransferCollection;
     }
 
     /**

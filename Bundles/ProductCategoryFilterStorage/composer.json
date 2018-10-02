@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-category-filter-storage",
+  "type": "library",
   "description": "ProductCategoryFilterStorage module",
   "license": "proprietary",
   "require": {
