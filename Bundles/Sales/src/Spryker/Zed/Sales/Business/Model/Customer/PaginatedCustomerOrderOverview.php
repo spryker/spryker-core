@@ -10,6 +10,7 @@ namespace Spryker\Zed\Sales\Business\Model\Customer;
 use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -57,7 +58,7 @@ class PaginatedCustomerOrderOverview extends PaginatedCustomerOrderReader implem
 
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection $orderCollection
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderCollection
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
@@ -65,7 +66,7 @@ class PaginatedCustomerOrderOverview extends PaginatedCustomerOrderReader implem
     {
         $orders = new ArrayObject();
         foreach ($orderCollection as $salesOrderEntity) {
-            if ($salesOrderEntity->countItems() === 0 || $this->excludeOrder($salesOrderEntity)) {
+            if (!$this->isOrderCanBeAddedToOrderListTransfer($salesOrderEntity)) {
                 continue;
             }
 
@@ -76,5 +77,15 @@ class PaginatedCustomerOrderOverview extends PaginatedCustomerOrderReader implem
         $orderListTransfer->setOrders($orders);
 
         return $orderListTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return bool
+     */
+    protected function isOrderCanBeAddedToOrderListTransfer(SpySalesOrder $salesOrderEntity): bool
+    {
+        return !($salesOrderEntity->countItems() === 0 || $this->excludeOrder($salesOrderEntity));
     }
 }
