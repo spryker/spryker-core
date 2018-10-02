@@ -27,6 +27,6 @@ class CustomerRestorePasswordResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createCustomerPasswordWriter()
-            ->resetPassword($restCustomerRestorePasswordAttributesTransfer);
+            ->restorePassword($restCustomerRestorePasswordAttributesTransfer);
     }
 }

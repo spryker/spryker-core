@@ -10,15 +10,12 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomerRestorePasswordAttributesTransfer;
 
-class CustomerResetPasswordResourceMapper implements CustomerResetPasswordResourceMapperInterface
+interface CustomerRestorePasswordResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function mapCustomerResetPasswordAttributesToCustomerTransfer(RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer): CustomerTransfer
-    {
-        return (new CustomerTransfer())->fromArray($restCustomerRestorePasswordAttributesTransfer->toArray(), true);
-    }
+    public function mapCustomerRestorePasswordAttributesToCustomerTransfer(RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer): CustomerTransfer;
 }

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RestCustomerRestorePasswordAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResetPasswordResourceMapperInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,23 +31,23 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResetPasswordResourceMapperInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface
      */
-    protected $customerResetPasswordResourceMapper;
+    protected $customerRestorePasswordResourceMapper;
 
     /**
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResetPasswordResourceMapperInterface $customerResetPasswordResourceMapper
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface $customerRestorePasswordResourceMapper
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        CustomerResetPasswordResourceMapperInterface $customerResetPasswordResourceMapper
+        CustomerRestorePasswordResourceMapperInterface $customerRestorePasswordResourceMapper
     ) {
         $this->customerClient = $customerClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->customerResetPasswordResourceMapper = $customerResetPasswordResourceMapper;
+        $this->customerRestorePasswordResourceMapper = $customerRestorePasswordResourceMapper;
     }
 
     /**
@@ -55,11 +55,11 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function resetPassword(RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer): RestResponseInterface
+    public function restorePassword(RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer): RestResponseInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $customerTransfer = $this->customerResetPasswordResourceMapper->mapCustomerResetPasswordAttributesToCustomerTransfer($restCustomerRestorePasswordAttributesTransfer);
+        $customerTransfer = $this->customerRestorePasswordResourceMapper->mapCustomerRestorePasswordAttributesToCustomerTransfer($restCustomerRestorePasswordAttributesTransfer);
         $customerResponseTransfer = $this->customerClient->restorePassword($customerTransfer);
 
         if (!$customerResponseTransfer->getIsSuccess()) {

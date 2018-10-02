@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -16,8 +17,8 @@ use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriter;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerForgottenPasswordResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerForgottenPasswordResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResetPasswordResourceMapper;
-use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResetPasswordResourceMapperInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapper;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -56,7 +57,7 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomerPasswordWriter(
             $this->getCustomerClient(),
             $this->getResourceBuilder(),
-            $this->createCustomerResetPasswordResourceMapper()
+            $this->createCustomerRestorePasswordResourceMapper()
         );
     }
 
@@ -77,11 +78,11 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResetPasswordResourceMapperInterface
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface
      */
-    public function createCustomerResetPasswordResourceMapper(): CustomerResetPasswordResourceMapperInterface
+    public function createCustomerRestorePasswordResourceMapper(): CustomerRestorePasswordResourceMapperInterface
     {
-        return new CustomerResetPasswordResourceMapper();
+        return new CustomerRestorePasswordResourceMapper();
     }
 
     /**
