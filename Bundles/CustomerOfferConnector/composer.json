@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-offer-connector",
+  "type": "library",
   "description": "CustomerOfferConnector module",
   "license": "proprietary",
   "require": {
