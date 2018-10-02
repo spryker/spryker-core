@@ -14,12 +14,12 @@ use Symfony\Component\Process\Process;
 
 class SetupHelper extends Module
 {
-    const SPRYKER_DEPLOY = 'vendor/bin/install -r testing -q';
+    public const SPRYKER_DEPLOY = 'vendor/bin/install -r testing -q';
 
     /**
      * @deprecated Please use the spryker/deploy module.
      */
-    const TEST_ENV_SCRIPT = './setup_test';
+    public const TEST_ENV_SCRIPT = './setup_test';
 
     /**
      * @var bool

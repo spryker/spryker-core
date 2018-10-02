@@ -25,7 +25,7 @@ class ElvSaverTest extends AbstractSaverTest
     /**
      * @const Payment method code.
      */
-    const PAYMENT_METHOD = RatepayConstants::ELV;
+    public const PAYMENT_METHOD = RatepayConstants::ELV;
 
     /**
      * @return \Generated\Shared\Transfer\RatepayPaymentElvTransfer

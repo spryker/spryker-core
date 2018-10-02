@@ -23,13 +23,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class StoreRelationToggleType extends AbstractType
 {
-    const FIELD_ID_ENTITY = 'id_entity';
-    const FIELD_ID_STORES = 'id_stores';
-    const FIELD_ID_STORES_DISABLED = 'id_stores_disabled';
+    public const FIELD_ID_ENTITY = 'id_entity';
+    public const FIELD_ID_STORES = 'id_stores';
+    public const FIELD_ID_STORES_DISABLED = 'id_stores_disabled';
 
-    const STORE_TOGGLE_NAME = 'Store relation';
+    public const STORE_TOGGLE_NAME = 'Store relation';
 
-    const MESSAGE_MULTI_STORE_PER_ZED_DISABLED = 'Multi-store per Zed feature is disabled';
+    public const MESSAGE_MULTI_STORE_PER_ZED_DISABLED = 'Multi-store per Zed feature is disabled';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

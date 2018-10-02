@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 
 class CheckoutPermissionConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PERMISSION = 'FACADE_PERMISSION';
+    public const FACADE_PERMISSION = 'FACADE_PERMISSION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

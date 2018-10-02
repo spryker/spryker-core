@@ -26,7 +26,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
  */
 class CategoryFacadeTest extends Unit
 {
-    const CATEGORY_NODE_ID_ROOT = 1;
+    public const CATEGORY_NODE_ID_ROOT = 1;
 
     /**
      * @return void

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImporter;
 use Spryker\Zed\DataImport\Business\Model\DataImporterCollection;
+use Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAware;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\RenameDataSetKeysStep;
@@ -73,11 +74,19 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]
+     */
+    public function getDefaultDataImportWriterPlugins()
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::DATA_IMPORT_DEFAULT_WRITER_PLUGINS);
+    }
+
+    /**
      * @return \Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisherInterface
      */
     public function createDataImporterPublisher()
     {
-        return new DataImporterPublisher($this->getPublicEventFacade());
+        return new DataImporterPublisher();
     }
 
     /**
@@ -120,6 +129,17 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param string $importType
+     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $reader
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAwareInterface
+     */
+    public function createDataImporterWriterAware($importType, DataReaderInterface $reader)
+    {
+        return new DataImporterDataSetWriterAware($importType, $reader);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
@@ -129,6 +149,18 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
         $csvReader = $this->createCsvReaderFromConfig($dataImporterConfigurationTransfer->getReaderConfiguration());
 
         return $this->createDataImporter($dataImporterConfigurationTransfer->getImportType(), $csvReader);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAwareInterface
+     */
+    public function getCsvDataImporterWriterAwareFromConfig(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
+    {
+        $csvReader = $this->createCsvReaderFromConfig($dataImporterConfigurationTransfer->getReaderConfiguration());
+
+        return $this->createDataImporterWriterAware($dataImporterConfigurationTransfer->getImportType(), $csvReader);
     }
 
     /**

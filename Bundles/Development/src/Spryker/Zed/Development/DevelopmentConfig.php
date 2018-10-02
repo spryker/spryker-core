@@ -15,13 +15,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DevelopmentConfig extends AbstractBundleConfig
 {
-    const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+    public const BUNDLE_PLACEHOLDER = '[BUNDLE]';
 
-    const APPLICATION_NAMESPACES = [
+    public const APPLICATION_NAMESPACES = [
         'Orm',
     ];
 
-    const APPLICATIONS = [
+    public const APPLICATIONS = [
         'Client',
         'Service',
         'Shared',
@@ -214,6 +214,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'phpDocumentor\\GraphViz\\' => 'spryker/graphviz',
             'Egulias\\EmailValidator\\' => 'spryker/egulias',
             'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
+            'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
         ];
     }
 
@@ -240,6 +241,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'phpdocumentor/graphviz' => 'spryker/graphviz',
             'egulias/email-validator' => 'spryker/egulias',
             'ramsey/uuid' => 'spryker/ramsey-uuid',
+            'doctrine/inflector' => 'spryker/doctrine-inflector',
         ];
     }
 

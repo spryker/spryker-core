@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Queue\Business\Worker;
 
 use Spryker\Client\Queue\QueueClientInterface;
-use Spryker\Shared\Queue\QueueConfig as SharedConfig;
+use Spryker\Shared\Queue\QueueConfig as SharedQueueConfig;
 use Spryker\Zed\Queue\Business\Process\ProcessManagerInterface;
 use Spryker\Zed\Queue\QueueConfig;
 
@@ -17,11 +17,12 @@ use Spryker\Zed\Queue\QueueConfig;
  */
 class Worker implements WorkerInterface
 {
-    const DEFAULT_MAX_QUEUE_WORKER = 1;
-    const SECOND_TO_MILLISECONDS = 1000;
-    const PROCESS_BUSY = 'busy';
-    const PROCESS_NEW = 'new';
-    const PROCESSES_INSTANCES = 'processes';
+    public const DEFAULT_MAX_QUEUE_WORKER = 1;
+    public const SECOND_TO_MILLISECONDS = 1000;
+    public const PROCESS_BUSY = 'busy';
+    public const PROCESS_NEW = 'new';
+    public const PROCESSES_INSTANCES = 'processes';
+    public const RETRY_INTERVAL_SECONDS = 5;
 
     /**
      * @var \Spryker\Zed\Queue\Business\Process\ProcessManagerInterface
@@ -99,8 +100,8 @@ class Worker implements WorkerInterface
         }
 
         $this->workerProgressBar->finish();
-        $this->waitForPendingProcesses($pendingProcesses, $command, $round, $delayIntervalMilliseconds);
         $this->processManager->flushIdleProcesses();
+        $this->waitForPendingProcesses($pendingProcesses, $command, $round, $delayIntervalMilliseconds);
     }
 
     /**
@@ -117,8 +118,13 @@ class Worker implements WorkerInterface
         $pendingProcesses = $this->getPendingProcesses($processes);
 
         if (count($pendingProcesses) > 0) {
-            $this->workerProgressBar->reset();
-            $this->start($command, ++$round, $pendingProcesses);
+            if ($this->queueConfig->getIsWorkerLoopEnabled()) {
+                $this->workerProgressBar->reset();
+                $this->start($command, ++$round, $pendingProcesses);
+            }
+
+            sleep(static::RETRY_INTERVAL_SECONDS);
+            $this->waitForPendingProcesses($processes, $command, $round, $delayIntervalSeconds);
         }
     }
 
@@ -212,16 +218,35 @@ class Worker implements WorkerInterface
     {
         $adapterConfiguration = $this->queueConfig->getQueueAdapterConfiguration();
 
-        if (!array_key_exists($queueName, $adapterConfiguration)) {
-            return static::DEFAULT_MAX_QUEUE_WORKER;
+        if (empty($adapterConfiguration) || !array_key_exists($queueName, $adapterConfiguration)) {
+            $adapterConfiguration = $this->getQueueAdapterDefaultConfiguration($queueName);
         }
+
         $queueAdapterConfiguration = $adapterConfiguration[$queueName];
 
-        if (!array_key_exists(SharedConfig::CONFIG_MAX_WORKER_NUMBER, $queueAdapterConfiguration)) {
+        if (!array_key_exists(SharedQueueConfig::CONFIG_MAX_WORKER_NUMBER, $queueAdapterConfiguration)) {
             return static::DEFAULT_MAX_QUEUE_WORKER;
         }
 
-        return $queueAdapterConfiguration[SharedConfig::CONFIG_MAX_WORKER_NUMBER];
+        return $queueAdapterConfiguration[SharedQueueConfig::CONFIG_MAX_WORKER_NUMBER];
+    }
+
+    /**
+     * @param string $queueName
+     *
+     * @return array
+     */
+    protected function getQueueAdapterDefaultConfiguration(string $queueName): array
+    {
+        $adapterConfiguration = $this->queueConfig->getDefaultQueueAdapterConfiguration();
+
+        if (!empty($adapterConfiguration)) {
+            return [
+                $queueName => $adapterConfiguration,
+            ];
+        }
+
+        return [];
     }
 
     /**

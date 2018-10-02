@@ -26,22 +26,22 @@ use Spryker\Zed\ProductOption\Exception\MissingMoneyCollectionFormTypePluginExce
 
 class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'FACADE_LOCALE';
-    const FACADE_TAX = 'FACADE_TAX';
-    const FACADE_TOUCH = 'FACADE_TOUCH';
-    const FACADE_MONEY = 'FACADE_MONEY';
-    const FACADE_CURRENCY = 'FACADE_CURRENCY';
-    const FACADE_STORE = 'FACADE_STORE';
-    const FACADE_PRICE = 'FACADE_PRICE';
-    const FACADE_EVENT = 'FACADE_EVENT';
-    const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_TAX = 'FACADE_TAX';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_PRICE = 'FACADE_PRICE';
+    public const FACADE_EVENT = 'FACADE_EVENT';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
-    const MONEY_COLLECTION_FORM_TYPE_PLUGIN = 'MONEY_COLLECTION_FORM_TYPE_PLUGIN';
+    public const MONEY_COLLECTION_FORM_TYPE_PLUGIN = 'MONEY_COLLECTION_FORM_TYPE_PLUGIN';
 
-    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
-    const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
+    public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+    public const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
 
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

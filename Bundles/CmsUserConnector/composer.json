@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-user-connector",
+  "type": "library",
   "description": "CmsUserConnector module",
   "license": "proprietary",
   "require": {

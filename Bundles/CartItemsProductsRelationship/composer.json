@@ -1,5 +1,6 @@
 {
   "name": "spryker/cart-items-products-relationship",
+  "type": "library",
   "description": "CartItemsProductsRelationship module",
   "license": "proprietary",
   "require": {

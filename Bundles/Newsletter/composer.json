@@ -1,5 +1,6 @@
 {
   "name": "spryker/newsletter",
+  "type": "library",
   "description": "Newsletter module",
   "license": "proprietary",
   "require": {

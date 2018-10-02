@@ -402,4 +402,14 @@ interface DevelopmentFacadeInterface
      * @return \Generated\Shared\Transfer\PackageTransfer[]
      */
     public function getPackages(): array;
+
+    /**
+     * Specification:
+     * - Returns a list of all modules.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
+     */
+    public function getModuleOverview(): array;
 }

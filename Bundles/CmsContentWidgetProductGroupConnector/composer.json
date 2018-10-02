@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-content-widget-product-group-connector",
+  "type": "library",
   "description": "CmsContentWidgetProductGroupConnector module",
   "license": "proprietary",
   "require": {

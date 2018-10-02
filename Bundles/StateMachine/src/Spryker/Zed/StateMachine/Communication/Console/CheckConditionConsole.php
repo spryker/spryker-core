@@ -18,10 +18,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CheckConditionConsole extends Console
 {
-    const COMMAND_NAME = 'state-machine:check-condition';
-    const COMMAND_DESCRIPTION = 'Check conditions';
-    const ARGUMENT_STATE_MACHINE_NAME = 'state machine name';
-    const OPTION_STATE_MACHINE_NAME = 'state-machine-name';
+    public const COMMAND_NAME = 'state-machine:check-condition';
+    public const COMMAND_DESCRIPTION = 'Check conditions';
+    public const ARGUMENT_STATE_MACHINE_NAME = 'state machine name';
+    public const OPTION_STATE_MACHINE_NAME = 'state-machine-name';
 
     /**
      * @return void

@@ -53,7 +53,7 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->truncateMerchantRelationshipRelations();
         $this->tester->assertDatabaseTableIsEmpty();
 
         $this->createRelatedData();

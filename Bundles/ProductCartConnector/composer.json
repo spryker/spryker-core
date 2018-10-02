@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-cart-connector",
+  "type": "library",
   "description": "ProductCartConnector module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/discount-promotion",
+  "type": "library",
   "description": "DiscountPromotion module",
   "license": "proprietary",
   "require": {

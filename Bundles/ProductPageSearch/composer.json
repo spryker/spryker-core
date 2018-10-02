@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-page-search",
+  "type": "library",
   "description": "ProductPageSearch module",
   "license": "proprietary",
   "require": {
@@ -8,10 +9,12 @@
     "spryker/category": "^4.3.0",
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.21.0",
+    "spryker/price": "^5.3.0",
     "spryker/price-product": "^1.1.0 || ^2.1.0",
     "spryker/product": "^5.5.0 || ^6.0.0",
     "spryker/product-category": "^4.5.0",
     "spryker/product-image": "^3.5.0",
+    "spryker/product-page-search-extension": "^1.0.0",
     "spryker/product-search": "^5.4.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/search": "^7.0.0 || ^8.0.0",

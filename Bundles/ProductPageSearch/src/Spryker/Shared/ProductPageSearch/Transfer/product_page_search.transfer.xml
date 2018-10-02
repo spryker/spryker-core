@@ -29,4 +29,16 @@
         <property name="productImages" type="array" />
     </transfer>
 
+    <transfer name="ProductPageLoad">
+        <property name="productAbstractIds" type="array" />
+        <property name="payloadTransfers" type="array" />
+    </transfer>
+
+    <transfer name="ProductPayload">
+        <property name="idProductAbstract" type="int" />
+        <property name="categories" type="array" />
+        <property name="images" type="array" />
+        <property name="prices" type="array" />
+    </transfer>
+
 </transfers>

@@ -40,6 +40,7 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
             $this->getCountryFacade(),
             $this->getLocaleFacade(),
             $this->getCompanyBusinessUnitFacade(),
+            $this->createCompanyBusinessUnitAddressReader(),
             $this->createCompanyUnitAddressPluginExecutor()
         );
     }

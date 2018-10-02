@@ -58,18 +58,21 @@ class FooBarTransfer extends AbstractTransfer
             'name_underscore' => 'name',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'no',
         ],
         self::BLA => [
             'type' => 'int',
             'name_underscore' => 'bla',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'no',
         ],
         self::SELF_REFERENCE => [
             'type' => 'Generated\Shared\Transfer\FooBarTransfer',
             'name_underscore' => 'self_reference',
             'is_collection' => true,
             'is_transfer' => true,
+            'rest_request_parameter' => 'no',
         ],
     ];
 

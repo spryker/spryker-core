@@ -11,8 +11,8 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class PackageVersionHydrator implements DependencyHydratorInterface
 {
-    const NAME = 'name';
-    const VERSION = 'version';
+    public const NAME = 'name';
+    public const VERSION = 'version';
 
     /**
      * @var array

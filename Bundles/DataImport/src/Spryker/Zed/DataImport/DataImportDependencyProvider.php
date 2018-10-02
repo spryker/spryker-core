@@ -17,13 +17,14 @@ use Spryker\Zed\Kernel\Container;
 
 class DataImportDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'touch facade';
-    const FACADE_EVENT = 'event facade';
-    const PROPEL_CONNECTION = 'propel connection';
-    const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
-    const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
-    const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
-    const STORE = 'store';
+    public const FACADE_TOUCH = 'touch facade';
+    public const FACADE_EVENT = 'event facade';
+    public const PROPEL_CONNECTION = 'propel connection';
+    public const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
+    public const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
+    public const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
+    public const DATA_IMPORT_DEFAULT_WRITER_PLUGINS = 'DATA_IMPORT_DEFAULT_WRITER_PLUGINS';
+    public const STORE = 'store';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,6 +40,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStore($container);
         $container = $this->addDataImportBeforeImportHookPlugins($container);
         $container = $this->addDataImportAfterImportHookPlugins($container);
+        $container = $this->addDataImportDefaultWriterPlugins($container);
 
         return $container;
     }
@@ -167,6 +169,28 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      * @return array
      */
     protected function getDataImportAfterImportHookPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDataImportDefaultWriterPlugins(Container $container): Container
+    {
+        $container[static::DATA_IMPORT_DEFAULT_WRITER_PLUGINS] = function () {
+            return $this->getDataImportDefaultWriterPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]
+     */
+    protected function getDataImportDefaultWriterPlugins(): array
     {
         return [];
     }

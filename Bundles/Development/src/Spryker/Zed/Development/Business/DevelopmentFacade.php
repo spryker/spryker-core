@@ -501,4 +501,16 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     {
         return $this->getFactory()->createPackageFinder()->getPackages();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
+     */
+    public function getModuleOverview(): array
+    {
+        return $this->getFactory()->createModuleOverview()->getOverview();
+    }
 }

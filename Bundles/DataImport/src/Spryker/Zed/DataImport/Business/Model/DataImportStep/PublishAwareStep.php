@@ -24,7 +24,12 @@ class PublishAwareStep implements DataImportStepAfterExecuteInterface
      */
     public function afterExecute()
     {
-        DataImporterPublisher::addImportedEntityEvents($this->entityEvents);
+        foreach ($this->entityEvents as $eventName => $ids) {
+            foreach ($ids as $id) {
+                DataImporterPublisher::addEvent($eventName, $id);
+            }
+        }
+        $this->entityEvents = [];
     }
 
     /**

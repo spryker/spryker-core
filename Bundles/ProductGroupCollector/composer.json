@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-group-collector",
+  "type": "library",
   "description": "ProductGroupCollector module",
   "license": "proprietary",
   "require": {

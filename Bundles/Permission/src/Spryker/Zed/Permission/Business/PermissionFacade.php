@@ -72,4 +72,18 @@ class PermissionFacade extends AbstractFacade implements PermissionFacadeInterfa
     {
         return $this->getRepository()->findPermissionByKey($key);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createPermissionFinder()
+            ->findMergedRegisteredNonInfrastructuralPermissions();
+    }
 }

@@ -22,12 +22,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CustomerForm extends AbstractType
 {
-    const FIELD_FIRST_NAME = 'first_name';
-    const FIELD_LAST_NAME = 'last_name';
-    const FIELD_SALUTATION = 'salutation';
-    const FIELD_EMAIL = 'email';
+    public const FIELD_FIRST_NAME = 'first_name';
+    public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_SALUTATION = 'salutation';
+    public const FIELD_EMAIL = 'email';
 
-    const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+    public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
 
     /**
      * @return string

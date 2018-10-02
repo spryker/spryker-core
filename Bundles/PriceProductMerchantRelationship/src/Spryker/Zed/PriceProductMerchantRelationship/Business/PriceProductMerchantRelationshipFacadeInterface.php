@@ -43,6 +43,18 @@ interface PriceProductMerchantRelationshipFacadeInterface
 
     /**
      * Specification:
+     *  - Deletes connection records between spy_price_product_store and spy_price_product_business_unit by idPriceProductStore
+     *
+     * @api
+     *
+     * @param int $idPriceProductStore
+     *
+     * @return void
+     */
+    public function deletePriceProductMerchantRelationshipByIdPriceProductStore(int $idPriceProductStore): void;
+
+    /**
+     * Specification:
      *  - Deletes all connections between spy_price_product_store and spy_price_product_business_unit
      *
      * @api

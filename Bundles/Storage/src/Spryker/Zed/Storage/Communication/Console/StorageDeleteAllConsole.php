@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class StorageDeleteAllConsole extends Console
 {
-    const COMMAND_NAME = 'storage:delete';
-    const DESCRIPTION = 'This command will delete all keys from storage.';
+    public const COMMAND_NAME = 'storage:delete';
+    public const DESCRIPTION = 'This command will delete all keys from storage.';
 
     /**
      * @return void
