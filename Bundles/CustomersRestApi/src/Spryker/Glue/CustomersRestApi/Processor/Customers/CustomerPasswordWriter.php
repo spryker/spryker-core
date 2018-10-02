@@ -78,7 +78,7 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
     {
         return (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_RESTORE_PASSWORD_KEY_INVALID)
-            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_RESTORE_PASSWORD_KEY_INVALID);
     }
 }
