@@ -15,6 +15,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistsResourceMapperInterface;
 use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +38,11 @@ class WishlistsWriter implements WishlistsWriterInterface
     protected $wishlistsResourceMapper;
 
     /**
+     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface
+     */
+    protected $wishlistsItemResourceMapper;
+
+    /**
      * @var \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsReaderInterface
      */
     protected $wishlistsReader;
@@ -45,17 +51,20 @@ class WishlistsWriter implements WishlistsWriterInterface
      * @param \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface $wishlistClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistsResourceMapperInterface $wishlistsResourceMapper
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface $wishlistsItemResourceMapper
      * @param \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsReaderInterface $wishlistsReader
      */
     public function __construct(
         WishlistsRestApiToWishlistClientInterface $wishlistClient,
         RestResourceBuilderInterface $restResourceBuilder,
         WishlistsResourceMapperInterface $wishlistsResourceMapper,
+        WishlistItemsResourceMapperInterface $wishlistsItemResourceMapper,
         WishlistsReaderInterface $wishlistsReader
     ) {
         $this->wishlistClient = $wishlistClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->wishlistsResourceMapper = $wishlistsResourceMapper;
+        $this->wishlistsItemResourceMapper = $wishlistsItemResourceMapper;
         $this->wishlistsReader = $wishlistsReader;
     }
 
@@ -82,9 +91,14 @@ class WishlistsWriter implements WishlistsWriterInterface
         }
 
         $wishlistTransfer = $wishlistResponseTransfer->getWishlist();
-        $restResource = $this->wishlistsResourceMapper->mapWishlistTransferToRestResource($wishlistTransfer);
 
-        return $response->addResource($restResource);
+        $wishlistResource = $this->restResourceBuilder->createRestResource(
+            WishlistsRestApiConfig::RESOURCE_WISHLISTS,
+            $wishlistTransfer->getUuid(),
+            $this->wishlistsResourceMapper->mapWishlistTransferToRestWishlistsAttributes($wishlistTransfer)
+        );
+
+        return $response->addResource($wishlistResource);
     }
 
     /**
@@ -118,9 +132,13 @@ class WishlistsWriter implements WishlistsWriterInterface
         }
 
         $wishlistOverviewTransfer = $this->wishlistsReader->findWishlistOverviewByUuid($wishlistResponseTransfer->getWishlist()->getUuid());
-        $restResource = $this->wishlistsResourceMapper->mapWishlistOverviewResponseTransferToRestResource($wishlistOverviewTransfer);
+        $wishlistResource = $this->restResourceBuilder->createRestResource(
+            WishlistsRestApiConfig::RESOURCE_WISHLISTS,
+            $wishlistTransfer->getUuid(),
+            $this->wishlistsResourceMapper->mapWishlistTransferToRestWishlistsAttributes($wishlistOverviewTransfer->getWishlist())
+        );
 
-        return $response->addResource($restResource);
+        return $response->addResource($wishlistResource);
     }
 
     /**
