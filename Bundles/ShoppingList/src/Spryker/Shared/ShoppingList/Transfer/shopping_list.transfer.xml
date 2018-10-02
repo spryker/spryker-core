@@ -27,6 +27,7 @@
         <property name="quantity" type="int"/>
         <property name="sku" type="string" />
         <property name="idProduct" type="int" />
+        <property name="idProductAbstract" type="int" />
         <property name="shoppingListName" type="string" />
         <property name="product" type="StorageProduct" />
         <property name="idCompanyUser" type="int" />
@@ -70,6 +71,12 @@
 
     <transfer name="ShoppingListAddToCartRequestCollection">
         <property name="requests" type="ShoppingListAddToCartRequest[]" singular="request" />
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="quantity" type="int" />
+        <property name="idShoppingListItem" type="int" />
+        <property name="shoppingListItem" type="ShoppingListItem" />
     </transfer>
 
     <transfer name="ShoppingListShareRequest">
