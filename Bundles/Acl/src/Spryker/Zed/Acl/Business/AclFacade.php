@@ -158,7 +158,7 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     {
         return $this->getFactory()
             ->createRoleModel()
-            ->findRoleById($id);
+            ->getRoleById($id);
     }
 
     /**

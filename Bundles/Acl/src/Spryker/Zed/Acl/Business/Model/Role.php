@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Orm\Zed\Acl\Persistence\SpyAclRole;
 use Spryker\Shared\Acl\AclConstants;
+use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameEmptyException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
@@ -174,16 +175,14 @@ class Role implements RoleInterface
     /**
      * @param int $id
      *
-     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\RoleTransfer|null
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getRoleById($id)
     {
         $aclRoleEntity = $this->queryContainer->queryRoleById($id)->findOne();
 
         if ($aclRoleEntity === null) {
-            throw new RoleNotFoundException();
+            throw new EmptyEntityException();
         }
 
         $roleTransfer = new RoleTransfer();
