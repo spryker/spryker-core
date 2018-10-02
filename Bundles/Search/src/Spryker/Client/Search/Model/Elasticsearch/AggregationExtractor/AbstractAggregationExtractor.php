@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 abstract class AbstractAggregationExtractor implements AggregationExtractorInterface
 {
-    const PATH_SEPARATOR = '.';
+    public const PATH_SEPARATOR = '.';
 
-    const DOC_COUNT = 'doc_count';
+    public const DOC_COUNT = 'doc_count';
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer

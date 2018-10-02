@@ -1,5 +1,6 @@
 {
   "name": "spryker/data-import",
+  "type": "library",
   "description": "DataImport module",
   "license": "proprietary",
   "require": {

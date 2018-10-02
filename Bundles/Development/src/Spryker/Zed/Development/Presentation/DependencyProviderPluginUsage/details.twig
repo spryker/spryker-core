@@ -1,0 +1,28 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Plugins used in Projects DependencyProvider' } %}
+        {% block widget_content %}
+            <div class="spy-layout sparse" xmlns="http://www.w3.org/1999/html">
+                {% if dependencyProviderPluginUsages.dependencyProvider | length == 0 %}
+                    No plugins used in this Module
+                {% else %}
+                    <table class="table-condensed table-hover table-striped">
+                        {% for dependencProvider in dependencyProviderPluginUsages.dependencyProvider %}
+                            <tr>
+                                <td valign="top">{{ dependencProvider.fullyQualifiedClassName }}</td>
+                                <td>
+                                    {% for usedPlugin in dependencProvider.usedPlugins %}
+                                        {{ usedPlugin.fullyQualifiedClassName }}<br />
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

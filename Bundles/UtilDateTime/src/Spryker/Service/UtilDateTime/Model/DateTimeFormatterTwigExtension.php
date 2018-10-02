@@ -13,7 +13,7 @@ use Spryker\Shared\Twig\TwigFilter;
 
 class DateTimeFormatterTwigExtension extends TwigExtension
 {
-    const EXTENSION_NAME = 'DateTimeFormatterTwigExtension';
+    public const EXTENSION_NAME = 'DateTimeFormatterTwigExtension';
 
     /**
      * @var array

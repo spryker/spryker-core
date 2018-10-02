@@ -1,5 +1,6 @@
 {
   "name": "spryker/flysystem",
+  "type": "library",
   "description": "Flysystem module",
   "license": "proprietary",
   "require": {

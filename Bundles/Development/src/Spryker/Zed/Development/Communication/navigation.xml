@@ -66,6 +66,14 @@
                     </rules>
                 </pages>
             </architecture-sniffer>
+            <integration>
+                <label>Used Plugins</label>
+                <title>Used Plugins</title>
+                <bundle>development</bundle>
+                <controller>dependency-provider-plugin-usage</controller>
+                <action>index</action>
+                <icon>fa-globe</icon>
+            </integration>
         </pages>
     </maintenance>
 </config>

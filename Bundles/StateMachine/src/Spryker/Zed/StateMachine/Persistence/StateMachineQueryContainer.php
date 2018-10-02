@@ -78,7 +78,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      * @param int $identifier
      * @param int $idStateMachineProcess
      *
-     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery
      */
     public function queryItemHistoryByStateItemIdentifier($identifier, $idStateMachineProcess)
     {
@@ -158,7 +158,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      * @param string $identifier
      * @param \DateTime $expirationDate
      *
-     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
     public function queryLockedItemsByIdentifierAndExpirationDate($identifier, DateTime $expirationDate)
     {
@@ -173,7 +173,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      *
      * @param \DateTime $expirationDate
      *
-     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
     public function queryLockedItemsByExpirationDate(DateTime $expirationDate)
     {

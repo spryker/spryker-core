@@ -20,14 +20,14 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AvailabilityTable extends AbstractTable
 {
-    const TABLE_COL_ACTION = 'Actions';
-    const URL_PARAM_ID_PRODUCT = 'id-product';
-    const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
-    const URL_PARAM_SKU = 'sku';
-    const URL_PARAM_ID_STORE = 'id-store';
-    const URL_BACK_BUTTON = 'url-back-button';
+    public const TABLE_COL_ACTION = 'Actions';
+    public const URL_PARAM_ID_PRODUCT = 'id-product';
+    public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
+    public const URL_PARAM_SKU = 'sku';
+    public const URL_PARAM_ID_STORE = 'id-store';
+    public const URL_BACK_BUTTON = 'url-back-button';
 
-    const IS_BUNDLE_PRODUCT = 'Is bundle product';
+    public const IS_BUNDLE_PRODUCT = 'Is bundle product';
 
     /**
      * @var int

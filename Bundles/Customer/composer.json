@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer",
+  "type": "library",
   "description": "Customer module",
   "license": "proprietary",
   "require": {

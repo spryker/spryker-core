@@ -9,7 +9,7 @@ namespace Spryker\Zed\Development\Business\Module\PathBuilder;
 
 use Generated\Shared\Transfer\ModuleTransfer;
 
-class SprykerStandAloneModulePathBuilder extends AbstractPathBuilder
+class SprykerStandaloneModulePathBuilder extends AbstractPathBuilder
 {
     /**
      * @var string

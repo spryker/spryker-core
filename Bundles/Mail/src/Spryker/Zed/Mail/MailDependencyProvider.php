@@ -22,11 +22,11 @@ use Swift_Message;
 
 class MailDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const MAIL_PROVIDER_COLLECTION = 'mail provider collection';
-    const MAIL_TYPE_COLLECTION = 'mail collection';
-    const FACADE_GLOSSARY = 'glossary facade';
-    const RENDERER = 'twig';
-    const MAILER = 'mailer';
+    public const MAIL_PROVIDER_COLLECTION = 'mail provider collection';
+    public const MAIL_TYPE_COLLECTION = 'mail collection';
+    public const FACADE_GLOSSARY = 'glossary facade';
+    public const RENDERER = 'twig';
+    public const MAILER = 'mailer';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

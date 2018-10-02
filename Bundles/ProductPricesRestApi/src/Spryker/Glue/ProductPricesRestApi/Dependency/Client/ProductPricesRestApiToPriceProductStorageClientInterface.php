@@ -22,4 +22,12 @@ interface ProductPricesRestApiToPriceProductStorageClientInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getPriceProductConcreteTransfers(int $idProductConcrete): array;
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function resolvePriceProductConcrete(int $idProductConcrete, int $idProductAbstract): array;
 }

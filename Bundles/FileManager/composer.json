@@ -1,5 +1,6 @@
 {
   "name": "spryker/file-manager",
+  "type": "library",
   "description": "FileManager module",
   "license": "proprietary",
   "require": {

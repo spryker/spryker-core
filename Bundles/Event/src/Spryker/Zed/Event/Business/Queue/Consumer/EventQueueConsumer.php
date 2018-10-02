@@ -18,8 +18,8 @@ use Throwable;
 
 class EventQueueConsumer implements EventQueueConsumerInterface
 {
-    const EVENT_TRANSFERS = 'eventTransfers';
-    const EVENT_MESSAGES = 'eventMessages';
+    public const EVENT_TRANSFERS = 'eventTransfers';
+    public const EVENT_MESSAGES = 'eventMessages';
     /**
      * @var \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */

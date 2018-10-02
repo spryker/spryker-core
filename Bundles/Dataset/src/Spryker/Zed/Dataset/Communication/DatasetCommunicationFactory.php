@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetRepository getRepository()
  */
 class DatasetCommunicationFactory extends AbstractCommunicationFactory
 {

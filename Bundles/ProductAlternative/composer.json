@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-alternative",
+  "type": "library",
   "description": "ProductAlternative module",
   "license": "proprietary",
   "require": {
