@@ -50,7 +50,7 @@ interface UserFacadeInterface
      *
      * @param int $idUser
      *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserById($idUser);
 
