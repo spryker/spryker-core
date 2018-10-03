@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-role-data-import",
+  "type": "library",
   "description": "CompanyRoleDataImport module",
   "license": "MIT",
   "require": {

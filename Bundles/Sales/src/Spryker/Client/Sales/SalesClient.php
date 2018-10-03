@@ -63,4 +63,20 @@ class SalesClient extends AbstractClient implements SalesClientInterface
             ->createZedSalesStub()
             ->getOrderDetails($orderTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createZedSalesStub()
+            ->getCustomerOrderByOrderReference($orderTransfer);
+    }
 }

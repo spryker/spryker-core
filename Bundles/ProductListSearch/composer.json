@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-list-search",
+  "type": "library",
   "description": "ProductListSearch module",
   "license": "proprietary",
   "require": {
