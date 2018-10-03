@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -66,7 +67,14 @@ class CustomersWriter implements CustomersWriterInterface
             return $this->createErrorResponse($customerResponseTransfer, $response);
         }
 
-        $restResource = $this->customersResourceMapper->mapCustomerToCustomersRestResource($customerResponseTransfer->getCustomerTransfer());
+        $restCustomersResponseAttributesTransfer = $this->customersResourceMapper
+            ->mapCustomerToRestCustomersResponseAttributesTransfer($customerResponseTransfer->getCustomerTransfer());
+
+        $restResource = $this->restResourceBuilder->createRestResource(
+            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
+            $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),
+            $restCustomersResponseAttributesTransfer
+        );
 
         return $response->addResource($restResource);
     }
