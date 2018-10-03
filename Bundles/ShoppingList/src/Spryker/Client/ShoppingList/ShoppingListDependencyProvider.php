@@ -26,7 +26,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
     public const PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER = 'PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER';
-    public const PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_EXPANDER = 'PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_EXPANDER';
+    public const PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER = 'PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -43,7 +43,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
         $container = $this->addMessengerClient($container);
 
         $container = $this->addShoppingListItemToItemMapperPlugins($container);
-        $container = $this->addAddItemShoppingListItemExpanderPlugins($container);
+        $container = $this->addAddItemShoppingListItemMapperPlugins($container);
 
         return $container;
     }
@@ -159,19 +159,19 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addAddItemShoppingListItemExpanderPlugins(Container $container): Container
+    protected function addAddItemShoppingListItemMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_EXPANDER] = function () {
-            return $this->getAddItemShoppingListItemExpanderPlugins();
+        $container[static::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER] = function () {
+            return $this->getAddItemShoppingListItemMapperPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemExpanderPluginInterface[]
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface[]
      */
-    protected function getAddItemShoppingListItemExpanderPlugins(): array
+    protected function getAddItemShoppingListItemMapperPlugins(): array
     {
         return [];
     }

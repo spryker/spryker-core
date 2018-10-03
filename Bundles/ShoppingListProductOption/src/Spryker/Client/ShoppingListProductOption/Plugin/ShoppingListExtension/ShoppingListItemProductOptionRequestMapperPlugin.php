@@ -9,15 +9,15 @@ namespace Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListExtension;
 
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemExpanderPluginInterface;
+use Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface;
 
-class ShoppingListItemProductOptionRequestExpanderPlugin implements ShoppingListItemExpanderPluginInterface
+class ShoppingListItemProductOptionRequestMapperPlugin implements ShoppingListItemMapperPluginInterface
 {
     protected const REQUEST_PARAM_PRODUCT_OPTION = 'product-option';
 
     /**
      * {@inheritdoc}
-     * - Expands ShoppingListItemTransfer with product option IDs.
+     * - Maps ShoppingListItemTransfer with product option IDs.
      * - Expects an array of product option IDs in `product-option` key of "params".
      *
      * @api
@@ -27,7 +27,7 @@ class ShoppingListItemProductOptionRequestExpanderPlugin implements ShoppingList
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function expand(ShoppingListItemTransfer $shoppingListItemTransfer, array $params): ShoppingListItemTransfer
+    public function map(ShoppingListItemTransfer $shoppingListItemTransfer, array $params): ShoppingListItemTransfer
     {
         foreach ($this->getIdProductOptions($params) as $idProductOption) {
             $shoppingListItemTransfer->addProductOption(
