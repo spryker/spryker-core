@@ -763,7 +763,7 @@ class ProductOptionFacadeTest extends Unit
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setProductOptionIds($productOptionIds);
 
         // Act
-        $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
+        $actualResult = $this->createProductOptionFacade()->findProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
 
         // Assert
         $this->assertSame(count($productOptionIds), $actualResult->getProductOptions()->count());
@@ -791,7 +791,7 @@ class ProductOptionFacadeTest extends Unit
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setProductOptionIds($productOptionIds);
 
         // Act
-        $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
+        $actualResult = $this->createProductOptionFacade()->findProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
 
         // Assert
         $this->assertSame(count($productOptionIds), $actualResult->getProductOptions()->count());
@@ -810,7 +810,7 @@ class ProductOptionFacadeTest extends Unit
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setProductOptionIds($productOptionIds);
 
         // Act
-        $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
+        $actualResult = $this->createProductOptionFacade()->findProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
 
         // Assert
         $this->assertSame(count($productOptionIds), $actualResult->getProductOptions()->count());

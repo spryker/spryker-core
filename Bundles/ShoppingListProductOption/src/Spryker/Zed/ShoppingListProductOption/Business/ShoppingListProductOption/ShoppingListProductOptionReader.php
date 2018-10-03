@@ -45,7 +45,7 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
     {
         $productOptionCriteriaTransfer = $this->getProductOptionCriteriaTransfer($idShoppingListItem);
 
-        return $this->productOptionFacade->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
+        return $this->productOptionFacade->findProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
     }
 
     /**
