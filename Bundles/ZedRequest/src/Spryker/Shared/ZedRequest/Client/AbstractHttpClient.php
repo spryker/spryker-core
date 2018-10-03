@@ -31,6 +31,11 @@ abstract class AbstractHttpClient implements HttpClientInterface
 {
     public const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
+    /**
+     * @deprecated
+     */
+    public const HOST_NAME_ERROR =
+        'Incorrect HOST_ZED config, expected `%s`, got `%s`. Set the URLs in your Shared/config_default_%s.php or env specific config files.';
 
     public const HEADER_USER_AGENT = 'User-Agent';
     public const HEADER_HOST_YVES = 'X-Yves-Host';
@@ -38,8 +43,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
     public const HEADER_HOST_ZED = 'X-Zed-Host';
     protected const SERVER_HTTP_HOST = 'HTTP_HOST';
 
-    public const ZED_REQUEST_ERROR = 'Attempted to make request to Zed %s.
-Configured Host for zed is %s.
+    protected const ZED_REQUEST_ERROR = 'Attempted to make request to Zed %s.
+Configured host for zed is %s.
 Failures here are usually due to network errors or redirection loops.';
 
     /**
