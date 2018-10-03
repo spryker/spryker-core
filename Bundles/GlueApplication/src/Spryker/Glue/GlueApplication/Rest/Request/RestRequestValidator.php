@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RestRequestValidator implements RestRequestValidatorInterface
 {
+    const EXCEPTION_MESSAGE_POST_DATA_IS_INVALID = 'Post data is invalid.';
+
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
      */
@@ -55,7 +58,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
         $restResource = $restRequest->getResource();
         if (!$restResource->getAttributes()) {
             $restErrorMessageTransfer = new RestErrorMessageTransfer();
-            $restErrorMessageTransfer->setDetail('Post data missing.');
+            $restErrorMessageTransfer->setDetail(static::EXCEPTION_MESSAGE_POST_DATA_IS_INVALID);
 
             return $restErrorMessageTransfer;
         }

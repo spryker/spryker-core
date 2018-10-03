@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -140,6 +141,11 @@ class RequestFormatter implements RequestFormatterInterface
         }
 
         $data = $requestData[RestResourceInterface::RESOURCE_DATA];
+
+        if (!isset($data[RestResourceInterface::RESOURCE_TYPE]) ||
+            !isset($data[RestResourceInterface::RESOURCE_ATTRIBUTES])) {
+            return null;
+        }
 
         return $this->restResourceBuilder->createRestResource(
             $data[RestResourceInterface::RESOURCE_TYPE],
