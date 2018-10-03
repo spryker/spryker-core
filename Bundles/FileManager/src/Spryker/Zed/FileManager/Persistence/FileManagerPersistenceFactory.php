@@ -26,7 +26,9 @@ class FileManagerPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createFileQuery()
     {
-        return SpyFileQuery::create();
+        $spyFileQuery = SpyFileQuery::create();
+
+        return $spyFileQuery;
     }
 
     /**
