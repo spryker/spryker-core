@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomerPasswordWriter implements CustomerPasswordWriterInterface
 {
+    /**
+     * @var \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
+     */
     protected $customerClient;
 
     /**
