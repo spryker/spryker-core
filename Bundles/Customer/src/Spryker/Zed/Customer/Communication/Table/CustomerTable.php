@@ -12,7 +12,7 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Customer\Communication\Table\CustomerTablePluginExecutor\CustomerTablePluginExecutorInterface;
+use Spryker\Zed\Customer\Communication\Table\CustomerTableActionExpanderPluginExecutor\CustomerTableActionExpanderPluginExecutorInterface;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -42,23 +42,23 @@ class CustomerTable extends AbstractTable
     protected $utilDateTimeService;
 
     /**
-     * @var \Spryker\Zed\Customer\Communication\Table\CustomerTablePluginExecutor\CustomerTablePluginExecutorInterface
+     * @var \Spryker\Zed\Customer\Communication\Table\CustomerTableActionExpanderPluginExecutor\CustomerTableActionExpanderPluginExecutorInterface
      */
-    protected $customerTablePluginExecutor;
+    protected $customerTableActionExpanderPluginExecutor;
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
      * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface $utilDateTimeService
-     * @param \Spryker\Zed\Customer\Communication\Table\CustomerTablePluginExecutor\CustomerTablePluginExecutorInterface $customerTablePluginExecutor
+     * @param \Spryker\Zed\Customer\Communication\Table\CustomerTableActionExpanderPluginExecutor\CustomerTableActionExpanderPluginExecutorInterface $customerTableActionExpanderPluginExecutor
      */
     public function __construct(
         CustomerQueryContainerInterface $customerQueryContainer,
         CustomerToUtilDateTimeServiceInterface $utilDateTimeService,
-        CustomerTablePluginExecutorInterface $customerTablePluginExecutor
+        CustomerTableActionExpanderPluginExecutorInterface $customerTableActionExpanderPluginExecutor
     ) {
         $this->customerQueryContainer = $customerQueryContainer;
         $this->utilDateTimeService = $utilDateTimeService;
-        $this->customerTablePluginExecutor = $customerTablePluginExecutor;
+        $this->customerTableActionExpanderPluginExecutor = $customerTableActionExpanderPluginExecutor;
     }
 
     /**
@@ -140,8 +140,18 @@ class CustomerTable extends AbstractTable
         $buttons[] = $this->generateViewButton('/customer/view?id-customer=' . $customer->getIdCustomer(), 'View');
         $buttons[] = $this->generateEditButton('/customer/edit?id-customer=' . $customer->getIdCustomer(), 'Edit');
 
-        if ($customer) {
-            $buttons = $this->customerTablePluginExecutor->execute($this->prepareCustomerEntityForPluginExecutor($customer), $buttons);
+        $customerTransfer = $this->mapSpyCustomerToCustomerTransfer($customer);
+        $expandedButtons = $this->customerTableActionExpanderPluginExecutor->execute($customerTransfer);
+        foreach ($expandedButtons as $button) {
+            if (!$button->getUrl()) {
+                continue;
+            }
+            $buttons[] = $this->generateButton(
+                $button->getUrl(),
+                $button->getTitle(),
+                $button->getDefaultOptions(),
+                $button->getCustomOptions()
+            );
         }
 
         return implode(' ', $buttons);
@@ -218,11 +228,11 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer|null $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function prepareCustomerEntityForPluginExecutor(?SpyCustomer $customer): CustomerTransfer
+    protected function mapSpyCustomerToCustomerTransfer(SpyCustomer $customer): CustomerTransfer
     {
         return (new CustomerTransfer())
             ->fromArray($customer->toArray(), true);

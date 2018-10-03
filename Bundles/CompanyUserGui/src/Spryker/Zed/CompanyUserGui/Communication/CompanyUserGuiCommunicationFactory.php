@@ -143,7 +143,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CustomerCompanyAttachFormExpanderPluginInterface[]
      */
-    public function getCustomerCompanyAttachFormPlugins(): array
+    public function getCustomerCompanyAttachFormExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGINS_CUSTOMER_COMPANY_ATTACH_FORM_EXPANDER);
     }

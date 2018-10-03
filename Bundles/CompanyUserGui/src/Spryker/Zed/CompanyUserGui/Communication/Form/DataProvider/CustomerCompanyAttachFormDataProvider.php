@@ -54,23 +54,23 @@ class CustomerCompanyAttachFormDataProvider
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return [
-            CustomerCompanyAttachForm::FIELD_COMPANY => $this->createCompanyList(),
+            'data_class' => CompanyUserTransfer::class,
+            CustomerCompanyAttachForm::OPTION_COMPANY_CHOICES => $this->createCompanyList(),
         ];
     }
 
     /**
-     * @return array
+     * @return int[] [company name => company id]
      */
-    protected function createCompanyList()
+    protected function createCompanyList(): array
     {
-        $companyCollection = $this->companyFacade->getCompanies();
         $companies = [];
 
-        foreach ($companyCollection->getCompanies() as $companyTransfer) {
-            $companies[$companyTransfer->getIdCompany()] = $companyTransfer->getName();
+        foreach ($this->companyFacade->getCompanies()->getCompanies() as $companyTransfer) {
+            $companies[$companyTransfer->getName()] = $companyTransfer->getIdCompany();
         }
 
         return $companies;

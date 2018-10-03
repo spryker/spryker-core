@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Customer\Communication\Table\CustomerTablePluginExecutor;
+namespace Spryker\Zed\Customer\Communication\Table\CustomerTableActionExpanderPluginExecutor;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface CustomerTablePluginExecutorInterface
+interface CustomerTableActionExpanderPluginExecutorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param string[] $buttons
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function execute(CustomerTransfer $customerTransfer, array $buttons): array;
+    public function execute(CustomerTransfer $customerTransfer): array;
 }

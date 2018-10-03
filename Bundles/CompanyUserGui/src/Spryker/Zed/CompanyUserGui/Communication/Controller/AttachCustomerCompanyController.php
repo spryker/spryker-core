@@ -31,13 +31,8 @@ class AttachCustomerCompanyController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCompanyUser = (int)$request->query->get(static::PARAM_ID_CUSTOMER);
+        $idCompanyUser = static::castId($request->query->get(static::PARAM_ID_CUSTOMER));
         $dataProvider = $this->getFactory()->createCustomerCompanyAttachFormDataProvider();
-
-        if (!$idCompanyUser || $dataProvider->getData($idCompanyUser)->getIdCompanyUser()) {
-            $this->addErrorMessage(static::MESSAGE_COMPANY_USER_ATTACH_ERROR);
-            return $this->redirectResponse(static::REDIRECT_URL_CUSTOMER_LIST);
-        }
 
         $form = $this->getFactory()
             ->getCustomerCompanyAttachForm(

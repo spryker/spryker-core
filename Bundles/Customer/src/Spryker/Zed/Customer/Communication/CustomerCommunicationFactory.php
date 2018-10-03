@@ -15,8 +15,8 @@ use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerFormDataProvide
 use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerUpdateFormDataProvider;
 use Spryker\Zed\Customer\Communication\Table\AddressTable;
 use Spryker\Zed\Customer\Communication\Table\CustomerTable;
-use Spryker\Zed\Customer\Communication\Table\CustomerTablePluginExecutor\CustomerTablePluginExecutor;
-use Spryker\Zed\Customer\Communication\Table\CustomerTablePluginExecutor\CustomerTablePluginExecutorInterface;
+use Spryker\Zed\Customer\Communication\Table\CustomerTableActionExpanderPluginExecutor\CustomerTableActionExpanderPluginExecutor;
+use Spryker\Zed\Customer\Communication\Table\CustomerTableActionExpanderPluginExecutor\CustomerTableActionExpanderPluginExecutorInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -170,20 +170,20 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionPluginInterface[]
+     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface[]
      */
-    public function getCustomerTableActionPlugins(): array
+    public function getCustomerTableActionExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_TABLE);
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER);
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Communication\Table\CustomerTablePluginExecutor\CustomerTablePluginExecutorInterface
+     * @return \Spryker\Zed\Customer\Communication\Table\CustomerTableActionExpanderPluginExecutor\CustomerTableActionExpanderPluginExecutorInterface
      */
-    public function createCustomerTableActionPluginExecutor(): CustomerTablePluginExecutorInterface
+    public function createCustomerTableActionPluginExecutor(): CustomerTableActionExpanderPluginExecutorInterface
     {
-        return (new CustomerTablePluginExecutor(
-            $this->getCustomerTableActionPlugins()
+        return (new CustomerTableActionExpanderPluginExecutor(
+            $this->getCustomerTableActionExpanderPlugins()
         ));
     }
 }

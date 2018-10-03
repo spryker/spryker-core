@@ -1,13 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: ruslan.ivanov
- * Date: 10/1/18
- * Time: 3:57 PM
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin;
-
 
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CustomerCompanyAttachFormExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -16,10 +14,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\CompanyRoleGui\Communication\CompanyRoleGuiCommunicationFactory getFactory()
  */
-class CompanyRoleFieldCustomerCompanyAttachFormExpander extends AbstractPlugin implements CustomerCompanyAttachFormExpanderPluginInterface
+class CompanyRoleFieldCustomerCompanyAttachFormExpanderPlugin extends AbstractPlugin implements CustomerCompanyAttachFormExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
+     *  - Expand CustomerCompanyAttachForm on choice of company roles form CompanyUserRoleChoiceFormType.
      *
      * @api
      *

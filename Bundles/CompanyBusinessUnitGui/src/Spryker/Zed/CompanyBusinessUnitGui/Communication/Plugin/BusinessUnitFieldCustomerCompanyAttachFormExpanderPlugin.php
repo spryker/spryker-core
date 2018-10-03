@@ -14,10 +14,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
  */
-class BusinessUnitFieldCustomerCompanyAttachFormExpander extends AbstractPlugin implements CustomerCompanyAttachFormExpanderPluginInterface
+class BusinessUnitFieldCustomerCompanyAttachFormExpanderPlugin extends AbstractPlugin implements CustomerCompanyAttachFormExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
+     *  - Expand CustomerCompanyAttachForm on choice of company business units form CompanyUserBusinessUnitChoiceFormType.
      *
      * @api
      *

@@ -41,7 +41,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
     const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
     const PLUGINS_POST_CUSTOMER_REGISTRATION = 'PLUGINS_POST_CUSTOMER_REGISTRATION';
-    const PLUGINS_CUSTOMER_TABLE = 'PLUGINS_CUSTOMER_TABLE';
+    public const PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER = 'PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER';
 
     public const SUB_REQUEST_HANDLER = 'SUB_REQUEST_HANDLER';
 
@@ -313,17 +313,17 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideCustomerTableActionPlugins($container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_TABLE] = function () {
-            return $this->getCustomerTableActionPlugins();
+        $container[static::PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER] = function () {
+            return $this->getCustomerTableActionExpanderPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionPluginInterface[]
+     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface[]
      */
-    protected function getCustomerTableActionPlugins(): array
+    protected function getCustomerTableActionExpanderPlugins(): array
     {
         return [];
     }
