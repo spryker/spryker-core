@@ -10,6 +10,7 @@ namespace Spryker\Client\QuickOrder\ProductConcretePriceReader;
 use Generated\Shared\Transfer\CurrentProductConcretePriceTransfer;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Spryker\Client\PriceProductStorage\PriceProductStorageClient;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductStorageClientInterface;
 
@@ -50,8 +51,9 @@ class ProductConcretePriceReader implements ProductConcretePriceReaderInterface
 
         $currentProductPriceTransfer = $currentProductConcretePriceTransfer->getCurrentProductPrice();
 
-        $priceProductTransfers = $this->priceProductStorageClient->getPriceProductConcreteTransfers(
-            $currentProductConcretePriceTransfer->getIdProductConcrete()
+        $priceProductTransfers = $this->priceProductStorageClient->getResolvedPriceProductConcreteTransfers(
+            $currentProductConcretePriceTransfer->getIdProductConcrete(),
+            $currentProductConcretePriceTransfer->getIdProductAbstract()
         );
 
         $priceProductFilterTransfer = $this->createPriceProductFilterTransferFromCurrentProductPriceTransfer($currentProductPriceTransfer);
