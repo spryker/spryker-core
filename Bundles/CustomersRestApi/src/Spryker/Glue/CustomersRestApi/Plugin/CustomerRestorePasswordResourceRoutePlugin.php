@@ -20,7 +20,7 @@ class CustomerRestorePasswordResourceRoutePlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritdoc}
-     *  - Configuration for customer restore password resource routing.
+     *  - Configures available actions for customer restore password resource.
      *
      * @api
      *
@@ -38,7 +38,6 @@ class CustomerRestorePasswordResourceRoutePlugin extends AbstractPlugin implemen
 
     /**
      * {@inheritdoc}
-     *  - Resource name this plugin handles.
      *
      * @api
      *
@@ -51,7 +50,6 @@ class CustomerRestorePasswordResourceRoutePlugin extends AbstractPlugin implemen
 
     /**
      * {@inheritdoc}
-     * - Module controller name, separated by dashes. customer-restore-password-resource would point to CustomerRestorePasswordResourceController
      *
      * @api
      *
@@ -64,8 +62,6 @@ class CustomerRestorePasswordResourceRoutePlugin extends AbstractPlugin implemen
 
     /**
      * {@inheritdoc}
-     *  - This method should return FQCN to RestCustomerRestorePasswordAttributesTransfer object. This object will be automatically populated from POST/PATCH
-     * requests, and passed to REST controller actions as first argument. It is also used when creating JSONAPI resource objects.
      *
      * @api
      *
