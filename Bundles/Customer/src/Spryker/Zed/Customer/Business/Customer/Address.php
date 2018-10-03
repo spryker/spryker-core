@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
@@ -38,15 +39,26 @@ class Address implements AddressInterface
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface
+     */
+    protected $customerExpander;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface $countryFacade
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
      */
-    public function __construct(CustomerQueryContainerInterface $queryContainer, CustomerToCountryInterface $countryFacade, CustomerToLocaleInterface $localeFacade)
-    {
+    public function __construct(
+        CustomerQueryContainerInterface $queryContainer,
+        CustomerToCountryInterface $countryFacade,
+        CustomerToLocaleInterface $localeFacade,
+        CustomerExpanderInterface $customerExpander
+    ) {
         $this->queryContainer = $queryContainer;
         $this->countryFacade = $countryFacade;
         $this->localeFacade = $localeFacade;
+        $this->customerExpander = $customerExpander;
     }
 
     /**
@@ -491,6 +503,7 @@ class Address implements AddressInterface
 
         $customerTransfer = $this->entityToCustomerTransfer($customerEntity);
         $customerTransfer->setAddresses($this->getAddresses($customerTransfer));
+        $customerTransfer = $this->customerExpander->expand($customerTransfer);
 
         return $customerTransfer;
     }
@@ -523,6 +536,7 @@ class Address implements AddressInterface
 
         $customerTransfer = $this->entityToCustomerTransfer($customerEntity);
         $customerTransfer->setAddresses($this->getAddresses($customerTransfer));
+        $customerTransfer = $this->customerExpander->expand($customerTransfer);
 
         return $customerTransfer;
     }
