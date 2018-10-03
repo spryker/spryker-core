@@ -9,13 +9,13 @@ namespace Spryker\Glue\WishlistsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 
 class WishlistItemsResourceMapper implements WishlistItemsResourceMapperInterface
 {
-    protected const SELF_LINK_NAME = 'self';
     protected const SELF_LINK_FORMAT_PATTERN = '%s/%s/%s/%s';
 
     /**
@@ -47,7 +47,7 @@ class WishlistItemsResourceMapper implements WishlistItemsResourceMapperInterfac
             $restWishlistItemsAttributesTransfer
         );
         $wishlistItemResource->addLink(
-            static::SELF_LINK_NAME,
+            RestLinkInterface::LINK_SELF,
             $this->createSelfLinkForWishlistItem($parentResourceId, $restWishlistItemsAttributesTransfer->getSku())
         );
 
