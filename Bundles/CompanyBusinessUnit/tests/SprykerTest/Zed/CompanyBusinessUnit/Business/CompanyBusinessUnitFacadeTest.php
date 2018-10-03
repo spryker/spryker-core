@@ -113,8 +113,8 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->getCompanyBusinessUnitTransfer();
 
         $this->getFacade()->delete($createdBusinessUnitTransfer);
-        $this->expectException(TypeError::class);
-        $this->getFacade()->getCompanyBusinessUnitById($createdBusinessUnitTransfer);
+        $companyBusinessUnitTransfer = $this->getFacade()->getCompanyBusinessUnitById($createdBusinessUnitTransfer);
+        $this->assertEmpty($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
     }
 
     /**
