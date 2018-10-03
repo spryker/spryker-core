@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ShoppingListProductOption\Dependency\Client\ShoppingListProductOptionToCartClientInterface;
-use Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListItemProductOptionToItemProductOptionMapperPlugin;
+use Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListExtension\ShoppingListItemProductOptionToItemProductOptionMapperPlugin;
 use Spryker\Client\ShoppingListProductOption\ShoppingListProductOptionDependencyProvider;
 use Spryker\Client\ShoppingListProductOption\ShoppingListProductOptionFactory;
 
@@ -153,7 +153,7 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListItemProductOptionToItemProductOptionMapperPlugin
+     * @return \Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListExtension\ShoppingListItemProductOptionToItemProductOptionMapperPlugin
      */
     protected function getShoppingListItemProductOptionToItemProductOptionMapperPlugin(Container $container): ShoppingListItemProductOptionToItemProductOptionMapperPlugin
     {
