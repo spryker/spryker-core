@@ -15,9 +15,9 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsBlockProductStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const QUERY_CONTAINER_CMS_BLOCK_PRODUCT_CONNECTOR = 'QUERY_CONTAINER_CMS_BLOCK_PRODUCT_CONNECTOR';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const QUERY_CONTAINER_CMS_BLOCK_PRODUCT_CONNECTOR = 'QUERY_CONTAINER_CMS_BLOCK_PRODUCT_CONNECTOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

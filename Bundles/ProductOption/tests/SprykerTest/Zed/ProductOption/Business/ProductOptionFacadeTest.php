@@ -37,12 +37,12 @@ use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
  */
 class ProductOptionFacadeTest extends Unit
 {
-    const DEFAULT_LOCALE_ISO_CODE = 'en_US';
+    public const DEFAULT_LOCALE_ISO_CODE = 'en_US';
 
-    const DEFAULT_ID_CURRENCY = 5;
-    const DEFAULT_ID_STORE = null;
-    const DEFAULT_NET_PRICE = 100;
-    const DEFAULT_GROSS_PRICE = 200;
+    public const DEFAULT_ID_CURRENCY = 5;
+    public const DEFAULT_ID_STORE = null;
+    public const DEFAULT_NET_PRICE = 100;
+    public const DEFAULT_GROSS_PRICE = 200;
 
     /**
      * @var \SprykerTest\Zed\ProductOption\ProductOptionBusinessTester

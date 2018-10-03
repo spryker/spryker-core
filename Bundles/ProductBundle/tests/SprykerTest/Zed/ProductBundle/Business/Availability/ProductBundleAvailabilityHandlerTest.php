@@ -32,7 +32,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleAvailabilityHandlerTest extends Unit
 {
-    const ID_STORE = 1;
+    public const ID_STORE = 1;
 
     /**
      * @return void

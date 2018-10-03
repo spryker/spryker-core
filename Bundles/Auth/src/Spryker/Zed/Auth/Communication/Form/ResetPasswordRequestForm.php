@@ -23,9 +23,9 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class ResetPasswordRequestForm extends AbstractType
 {
-    const FIELD_EMAIL = 'email';
-    const FIELD_SUBMIT = 'submit';
-    const FIELD_LOGIN = 'login';
+    public const FIELD_EMAIL = 'email';
+    public const FIELD_SUBMIT = 'submit';
+    public const FIELD_LOGIN = 'login';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

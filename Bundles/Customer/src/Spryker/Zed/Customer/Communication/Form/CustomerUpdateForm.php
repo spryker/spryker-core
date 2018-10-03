@@ -19,10 +19,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CustomerUpdateForm extends CustomerForm
 {
-    const FIELD_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
-    const FIELD_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
+    public const FIELD_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
+    public const FIELD_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
 
-    const OPTION_ADDRESS_CHOICES = 'address_choices';
+    public const OPTION_ADDRESS_CHOICES = 'address_choices';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

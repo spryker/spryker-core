@@ -55,7 +55,8 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
             ->useSpyProductPackagingUnitQuery()
                 ->leftJoinWithSpyProductPackagingUnitAmount()
                 ->innerJoinWithProductPackagingUnitType()
-            ->endUse();
+            ->endUse()
+            ->orderByCreatedAt();
 
         return $this->buildQueryFromCriteria($query)->find();
     }

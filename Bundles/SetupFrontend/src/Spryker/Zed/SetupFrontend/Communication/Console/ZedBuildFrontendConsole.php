@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ZedBuildFrontendConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:zed:build';
-    const DESCRIPTION = 'This command will build Zed\'s frontend.';
+    public const COMMAND_NAME = 'frontend:zed:build';
+    public const DESCRIPTION = 'This command will build Zed\'s frontend.';
 
     /**
      * @return void

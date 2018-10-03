@@ -40,6 +40,13 @@ interface PriceProductMerchantRelationshipEntityManagerInterface
     public function deleteByIdMerchantRelationship(int $idMerchantRelationship): void;
 
     /**
+     * @param int $idProductStore
+     *
+     * @return void
+     */
+    public function deleteByIdPriceProductStore(int $idProductStore): void;
+
+    /**
      * @return void
      */
     public function deleteAll(): void;

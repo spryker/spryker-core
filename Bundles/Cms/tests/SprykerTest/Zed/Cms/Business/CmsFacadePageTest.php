@@ -25,9 +25,9 @@ use Spryker\Zed\Cms\Business\CmsFacade;
  */
 class CmsFacadePageTest extends Unit
 {
-    const CMS_PAGE_NEW_TITLE = 'new title';
-    const CMS_PAGE_NEW_KEY_WORDS = 'new key words';
-    const CMS_PAGE_NEW_DESCRIPTION = 'new description';
+    public const CMS_PAGE_NEW_TITLE = 'new title';
+    public const CMS_PAGE_NEW_KEY_WORDS = 'new key words';
+    public const CMS_PAGE_NEW_DESCRIPTION = 'new description';
 
     /**
      * @var \Spryker\Zed\Cms\Business\CmsFacade

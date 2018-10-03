@@ -13,7 +13,7 @@ use Spryker\Client\Url\Dependency\Client\UrlToStorageClientBridge;
 
 class UrlDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

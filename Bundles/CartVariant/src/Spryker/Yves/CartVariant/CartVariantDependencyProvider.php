@@ -14,8 +14,8 @@ use Spryker\Yves\Kernel\Container;
 
 class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_AVAILABILITY = 'CLIENT_PRODUCT_OPTION';
-    const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    public const CLIENT_AVAILABILITY = 'CLIENT_PRODUCT_OPTION';
+    public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
