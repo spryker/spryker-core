@@ -45,7 +45,6 @@ class CustomerFacadeTest extends Unit
     public const TESTER_CITY = 'Testcity';
     public const TESTER_ADDRESS1 = 'Testerstreet 23';
     public const TESTER_ZIP_CODE = '42';
-    public const TESTER_FK_COUNTRY_GERMANY = '60';
 
     /**
      * @var \SprykerTest\Zed\Customer\CustomerBusinessTester
@@ -918,54 +917,7 @@ class CustomerFacadeTest extends Unit
         $this->assertSame($customerTransfer, $facade->updateCustomerPassword($customerTransfer));
     }
 
-    /**
-     * @return void
-     */
-    public function testAnonymizeCustomer()
-    {
-        // Assign
-        $customerTransfer = $this->createTestCustomer();
 
-        // Act
-        $this->customerFacade->anonymizeCustomer($customerTransfer);
-
-        // Assert
-        $this->expectException(CustomerNotFoundException::class);
-        $this->customerFacade->getCustomer($customerTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindCustomerByReference()
-    {
-        // Assign
-        $customerTransfer = $this->tester->haveCustomer();
-
-        // Act
-        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($customerTransfer->getCustomerReference());
-
-        // Assert
-        $this->assertTrue($customerResponseTransfer->getIsSuccess());
-        $this->assertEquals($customerTransfer->getCustomerReference(), $customerResponseTransfer->getCustomerTransfer()->getCustomerReference());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetAddressesHasCountry()
-    {
-        // Assign
-        $customerTransfer = $this->tester->haveCustomer();
-        $this->customerFacade->createAddressAndUpdateCustomerDefaultAddresses($customerTransfer->getShippingAddress()[0]);
-
-        // Act
-        $addressesTransfer = $this->customerFacade->getAddresses($customerTransfer);
-        $addressTransfer = $addressesTransfer->getAddresses()[0];
-
-        // Assert
-        $this->assertEquals(self::TESTER_FK_COUNTRY_GERMANY, $addressTransfer->getCountry()->getIdCountry());
-    }
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer

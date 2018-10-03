@@ -276,7 +276,7 @@ class Address implements AddressInterface
         $addressTransfer->setIso2Code($entity->getCountry()->getIso2Code());
 
         $countryTransfer = new CountryTransfer();
-        $countryTransfer->fromArray($entity->toArray());
+        $countryTransfer->fromArray($entity->getCountry()->toArray());
 
         $addressTransfer->setCountry($countryTransfer);
 
