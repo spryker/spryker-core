@@ -156,9 +156,7 @@ class RestResource implements RestResourceInterface
             $response[RestResourceInterface::RESOURCE_ATTRIBUTES] = $this->attributes->toArray(true, true);
         }
 
-        if ($this->links) {
-            $this->addLinksDataToResponse($response);
-        }
+        $response = $this->addLinksDataToResponse($response);
 
         if (!$includeRelations) {
             return $response;
@@ -175,13 +173,18 @@ class RestResource implements RestResourceInterface
     /**
      * @param array $response
      *
-     * @return void
+     * @return array
      */
-    protected function addLinksDataToResponse(array &$response): void
+    protected function addLinksDataToResponse(array $response): array
     {
-        foreach ($this->links as $link) {
-            $response[RestResourceInterface::RESOURCE_LINKS][$link->getName()] = $link->toArray();
+        if ($this->links) {
+            $response[RestResourceInterface::RESOURCE_LINKS] = [];
+            foreach ($this->links as $link) {
+                $response[RestResourceInterface::RESOURCE_LINKS] += $link->toArray();
+            }
         }
+
+        return $response;
     }
 
     /**
