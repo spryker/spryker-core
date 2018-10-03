@@ -89,7 +89,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            $concreteProductData['sku'],
+            $concreteProductData[static::PRODUCT_CONCRETE_MAPPING_TYPE],
             $restConcreteProductsAttributesTransfer
         );
 
