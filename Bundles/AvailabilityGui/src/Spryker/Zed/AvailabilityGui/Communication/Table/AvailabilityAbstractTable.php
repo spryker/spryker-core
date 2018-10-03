@@ -21,13 +21,13 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AvailabilityAbstractTable extends AbstractTable
 {
-    const TABLE_COL_ACTION = 'Actions';
-    const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product';
-    const AVAILABLE = 'Available';
-    const NOT_AVAILABLE = 'Not available';
-    const IS_BUNDLE_PRODUCT = 'Is bundle product';
-    const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
-    const URL_PARAM_ID_STORE = 'id-store';
+    public const TABLE_COL_ACTION = 'Actions';
+    public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product';
+    public const AVAILABLE = 'Available';
+    public const NOT_AVAILABLE = 'Not available';
+    public const IS_BUNDLE_PRODUCT = 'Is bundle product';
+    public const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
+    public const URL_PARAM_ID_STORE = 'id-store';
 
     /**
      * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery

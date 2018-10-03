@@ -14,15 +14,15 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductReviewSearchCollectorQuery extends AbstractPropelCollectorQuery
 {
-    const FIELD_ID_PRODUCT_REVIEW = 'id_product_review';
-    const FIELD_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
-    const FIELD_FK_LOCALE = 'fk_locale';
-    const FIELD_CUSTOMER_REFERENCE = 'customer_reference';
-    const FIELD_CREATED_AT = 'created_at';
-    const FIELD_RATING = 'rating';
-    const FIELD_NICKNAME = 'nickname';
-    const FIELD_SUMMARY = 'summary';
-    const FIELD_DESCRIPTION = 'description';
+    public const FIELD_ID_PRODUCT_REVIEW = 'id_product_review';
+    public const FIELD_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+    public const FIELD_FK_LOCALE = 'fk_locale';
+    public const FIELD_CUSTOMER_REFERENCE = 'customer_reference';
+    public const FIELD_CREATED_AT = 'created_at';
+    public const FIELD_RATING = 'rating';
+    public const FIELD_NICKNAME = 'nickname';
+    public const FIELD_SUMMARY = 'summary';
+    public const FIELD_DESCRIPTION = 'description';
 
     /**
      * @return void

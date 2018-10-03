@@ -56,6 +56,13 @@ interface CompanyUserRepositoryInterface
     public function countActiveCompanyUsersByIdCustomer(int $idCustomer): int;
 
     /**
+     * @param int[] $companyUserIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null

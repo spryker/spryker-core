@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-relation-storage",
+  "type": "library",
   "description": "ProductRelationStorage module",
   "license": "proprietary",
   "require": {

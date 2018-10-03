@@ -18,7 +18,7 @@ interface CmsBlockConstants
      *
      * @api
      */
-    const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';
+    public const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';
 
     /**
      * Specification
@@ -26,5 +26,5 @@ interface CmsBlockConstants
      *
      * @api
      */
-    const YVES_THEME = 'YVES_THEME';
+    public const YVES_THEME = 'YVES_THEME';
 }

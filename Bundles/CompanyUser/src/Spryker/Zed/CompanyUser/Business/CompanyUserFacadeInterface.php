@@ -145,6 +145,18 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Returns customer references of customers related to company users;
+     *
+     * @api
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
+
+    /**
+     * Specification:
      * - Enables company user.
      * - Uses idCompanyUser from company user transfer to find company user.
      * - Sets company user's 'is_active' flag to true.

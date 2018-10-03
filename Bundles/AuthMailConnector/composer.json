@@ -1,5 +1,6 @@
 {
   "name": "spryker/auth-mail-connector",
+  "type": "library",
   "description": "AuthMailConnector module",
   "license": "proprietary",
   "require": {

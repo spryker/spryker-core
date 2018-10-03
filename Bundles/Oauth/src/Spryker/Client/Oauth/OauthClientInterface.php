@@ -19,7 +19,7 @@ interface OauthClientInterface
 {
     /**
      * Specification:
-     *  - Process access tokens request, makes RPC ZED call to retrieve new access token
+     *  - Process access tokens request, makes RPC Zed call to retrieve new access token
      *
      * @api
      *
@@ -31,7 +31,7 @@ interface OauthClientInterface
 
     /**
      * Specification:
-     *  - Validates JWT token, checks if fingerprint is valid using public key, does not go to ZED.
+     *  - Validates JWT token, checks if fingerprint is valid using public key, does not go to Zed.
      *
      * @api
      *

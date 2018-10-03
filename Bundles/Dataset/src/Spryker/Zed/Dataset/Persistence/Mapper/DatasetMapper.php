@@ -13,8 +13,10 @@ use Generated\Shared\Transfer\DatasetRowColumnValueTransfer;
 use Generated\Shared\Transfer\DatasetRowTransfer;
 use Generated\Shared\Transfer\DatasetTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Dataset\Persistence\Map\SpyDatasetRowColumnValueTableMap;
 use Orm\Zed\Dataset\Persistence\SpyDataset;
 use Orm\Zed\Dataset\Persistence\SpyDatasetRowColumnValue;
+use Propel\Runtime\ActiveQuery\Criteria;
 
 class DatasetMapper implements DatasetMapperInterface
 {
@@ -63,7 +65,7 @@ class DatasetMapper implements DatasetMapperInterface
         SpyDataset $datasetEntity,
         DatasetTransfer $datasetTransfer
     ): void {
-        foreach ($datasetEntity->getSpyDatasetRowColumnValues() as $datasetRowColumnValue) {
+        foreach ($datasetEntity->getSpyDatasetRowColumnValues($this->getSpyDatasetRowColumnValuesCriteria()) as $datasetRowColumnValue) {
             $datasetRowColumnValueTransfer = new DatasetRowColumnValueTransfer();
             $datasetRowTransfer = $this->createDatasetRowTransfer($datasetRowColumnValue);
             $datasetColumnTransfer = $this->createDatasetColumnTransfer($datasetRowColumnValue);
@@ -98,5 +100,13 @@ class DatasetMapper implements DatasetMapperInterface
         $datasetColumnTransfer->fromArray($datasetRowColumnValueEntity->getSpyDatasetColumn()->toArray());
 
         return $datasetColumnTransfer;
+    }
+
+    /**
+     * @return \Propel\Runtime\ActiveQuery\Criteria
+     */
+    protected function getSpyDatasetRowColumnValuesCriteria(): Criteria
+    {
+        return (new Criteria())->addAscendingOrderByColumn(SpyDatasetRowColumnValueTableMap::COL_ID_ROW_COLUMN_VALUE);
     }
 }
