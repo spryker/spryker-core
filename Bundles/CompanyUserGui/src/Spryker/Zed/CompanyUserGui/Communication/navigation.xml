@@ -12,6 +12,22 @@
                 <controller>list-company-user</controller>
                 <action>index</action>
                 <pages>
+                    <create-company-user>
+                        <label>Create Company User</label>
+                        <title>Create Company User</title>
+                        <bundle>company-user-gui</bundle>
+                        <controller>create-company-user</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </create-company-user>
+                    <edit-company-user>
+                        <label>Edit Company User</label>
+                        <title>Edit Company User</title>
+                        <bundle>company-user-gui</bundle>
+                        <controller>edit-company-user</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </edit-company-user>
                     <delete-company-user>
                         <label>Delete Company User</label>
                         <title>Delete Company User</title>

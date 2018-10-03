@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui;
+namespace Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin;
 
 interface CompanyUserTablePrepareDataExpanderPluginInterface
 {

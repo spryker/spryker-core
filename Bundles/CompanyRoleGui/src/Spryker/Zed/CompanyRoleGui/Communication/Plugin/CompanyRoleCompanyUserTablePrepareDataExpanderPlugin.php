@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
-use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTablePrepareDataExpanderPluginInterface;
+use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
