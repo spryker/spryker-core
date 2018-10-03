@@ -43,14 +43,14 @@ class CompanyUserReader implements CompanyUserReaderInterface
     {
         $customerTransfer->requireIdCustomer();
 
-        $companyCollection = new CompanyUserCollectionTransfer();
+        $companyUserCollection = new CompanyUserCollectionTransfer();
         $idCompanyUsers = $this->repository->findActiveCompanyUserIdsByCustomerId($customerTransfer->getIdCustomer());
         foreach ($idCompanyUsers as $idCompanyUser) {
-            $companyCollection->addCompanyUser(
+            $companyUserCollection->addCompanyUser(
                 $this->companyUserFacade->getCompanyUserById($idCompanyUser)
             );
         }
 
-        return $companyCollection;
+        return $companyUserCollection;
     }
 }
