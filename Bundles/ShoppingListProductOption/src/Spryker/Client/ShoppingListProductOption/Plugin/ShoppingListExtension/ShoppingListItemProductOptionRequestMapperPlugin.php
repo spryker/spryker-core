@@ -29,7 +29,7 @@ class ShoppingListItemProductOptionRequestMapperPlugin implements ShoppingListIt
      */
     public function map(ShoppingListItemTransfer $shoppingListItemTransfer, array $params): ShoppingListItemTransfer
     {
-        foreach ($this->getIdProductOptions($params) as $idProductOption) {
+        foreach ($this->findProductOptionIds($params) as $idProductOption) {
             $shoppingListItemTransfer->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue($idProductOption)
             );
@@ -43,7 +43,7 @@ class ShoppingListItemProductOptionRequestMapperPlugin implements ShoppingListIt
      *
      * @return array
      */
-    protected function getIdProductOptions(array $params): array
+    protected function findProductOptionIds(array $params): array
     {
         if (isset($params[static::REQUEST_PARAM_PRODUCT_OPTION]) && is_array($params[static::REQUEST_PARAM_PRODUCT_OPTION])) {
             return array_filter($params[static::REQUEST_PARAM_PRODUCT_OPTION]);

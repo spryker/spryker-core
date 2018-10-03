@@ -8,30 +8,29 @@
 namespace Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListExtension;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface;
+use Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapperPluginInterface;
 
 /**
  * @method \Spryker\Client\ShoppingListProductOption\ShoppingListProductOptionFactory getFactory()
  */
-class ShoppingListItemProductOptionToItemProductOptionMapperPlugin extends AbstractPlugin implements ShoppingListItemToItemMapperPluginInterface
+class ProductOptionQuoteItemToItemMapperPluginInterfacePlugin extends AbstractPlugin implements QuoteItemToItemMapperPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Copies productOptions from ShoppingListItemTransfer to ItemTransfer.
+     * - Merges the item to the item existing in cart if they have the same productOptions.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $quoteItemTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function map(ShoppingListItemTransfer $shoppingListItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
+    public function map(ItemTransfer $quoteItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
     {
         return $this->getFactory()
-            ->createShoppingListItemToItemMapper()
-            ->map($shoppingListItemTransfer, $itemTransfer);
+            ->createQuoteItemToItemMapper()
+            ->map($quoteItemTransfer, $itemTransfer);
     }
 }

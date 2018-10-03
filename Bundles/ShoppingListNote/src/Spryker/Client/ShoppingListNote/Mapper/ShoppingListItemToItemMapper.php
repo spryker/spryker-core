@@ -27,6 +27,8 @@ class ShoppingListItemToItemMapper implements ShoppingListItemToItemMapperInterf
     }
 
     /**
+     * @todo: has to be refactored according to the new Interface "QuoteItemToItemMapperPluginInterface"
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
