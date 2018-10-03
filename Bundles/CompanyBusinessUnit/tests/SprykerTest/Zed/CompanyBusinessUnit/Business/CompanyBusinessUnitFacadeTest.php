@@ -113,7 +113,7 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         $this->getFacade()->delete($createdBusinessUnitTransfer);
         $companyBusinessUnitTransfer = $this->getFacade()->getCompanyBusinessUnitById($createdBusinessUnitTransfer);
-        $this->assertEmpty($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+        $this->assertNull($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
     }
 
     /**
