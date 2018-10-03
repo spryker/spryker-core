@@ -10,7 +10,6 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 
 class CustomersResourceMapper implements CustomersResourceMapperInterface
 {
