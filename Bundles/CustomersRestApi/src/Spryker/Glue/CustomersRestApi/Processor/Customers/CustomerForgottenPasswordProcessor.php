@@ -56,10 +56,7 @@ class CustomerForgottenPasswordProcessor implements CustomerForgottenPasswordPro
         $response = $this->restResourceBuilder->createRestResponse();
 
         $customerTransfer = $this->customerForgottenPasswordResourceMapper->mapCustomerForgottenPasswordAttributesToCustomerTransfer($restCustomerForgottenPasswordAttributesTransfer);
-
-        if ($this->customerClient->findCustomerWithEmailAndPassword($customerTransfer)) {
-            $this->customerClient->sendPasswordRestoreMail($customerTransfer);
-        }
+        $this->customerClient->sendPasswordRestoreMail($customerTransfer);
 
         $restResource = $this->restResourceBuilder->createRestResource(CustomersRestApiConfig::RESOURCE_FORGOTTEN_PASSWORD);
 

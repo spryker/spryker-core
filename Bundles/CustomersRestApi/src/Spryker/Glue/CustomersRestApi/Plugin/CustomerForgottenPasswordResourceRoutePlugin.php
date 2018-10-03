@@ -20,6 +20,7 @@ class CustomerForgottenPasswordResourceRoutePlugin extends AbstractPlugin implem
 {
     /**
      * {@inheritdoc}
+     *  - Configuration for forgotten password resource routing.
      *
      * @api
      *
@@ -37,6 +38,7 @@ class CustomerForgottenPasswordResourceRoutePlugin extends AbstractPlugin implem
 
     /**
      * {@inheritdoc}
+     *  - Resource name this plugin handles.
      *
      * @api
      *
@@ -49,6 +51,7 @@ class CustomerForgottenPasswordResourceRoutePlugin extends AbstractPlugin implem
 
     /**
      * {@inheritdoc}
+     * - Module controller name, separated by dashes. customer-forgotten-password-resource would point to CustomerForgottenPasswordResourceController
      *
      * @api
      *
@@ -56,11 +59,13 @@ class CustomerForgottenPasswordResourceRoutePlugin extends AbstractPlugin implem
      */
     public function getController(): string
     {
-        return 'customer-forgotten-password-resource';
+        return CustomersRestApiConfig::CONTROLLER_CUSTOMER_FORGOTTEN_PASSWORD;
     }
 
     /**
      * {@inheritdoc}
+     *  - This method should return FQCN to RestCustomerForgottenPasswordAttributesTransfer object. This object will be automatically populated from POST/PATCH
+     * requests, and passed to REST controller actions as first argument. It is also used when creating JSONAPI resource objects.
      *
      * @api
      *
