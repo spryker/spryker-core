@@ -15,8 +15,8 @@ interface ShoppingListProductOptionFacadeInterface
 {
     /**
      * Specification:
-     * - Removes existing shopping list product options.
-     * - Creates new shopping list product options.
+     * - Removes existing shopping list product options from persistence.
+     * - Creates new shopping list product options in persistence.
      *
      * @api
      *
@@ -28,7 +28,7 @@ interface ShoppingListProductOptionFacadeInterface
 
     /**
      * Specification:
-     * - Removes existing shopping list product options.
+     * - Removes existing shopping list product options from persistence.
      *
      * @api
      *
@@ -48,11 +48,11 @@ interface ShoppingListProductOptionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getShoppingListItemProductOptionsByIdShoppingListItem(int $idShoppingListItem): ProductOptionCollectionTransfer;
+    public function findShoppingListItemProductOptionsByIdShoppingListItem(int $idShoppingListItem): ProductOptionCollectionTransfer;
 
     /**
      * Specification:
-     * - Adds a product options to shopping list item.
+     * - Populates product options in shopping list item from persistence.
      *
      * @api
      *

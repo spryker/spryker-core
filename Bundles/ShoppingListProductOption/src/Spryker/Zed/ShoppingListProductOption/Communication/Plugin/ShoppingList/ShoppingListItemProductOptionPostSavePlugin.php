@@ -18,7 +18,7 @@ class ShoppingListItemProductOptionPostSavePlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritdoc}
-     * - Saves product options to shopping list item.
+     * - Saves the new list of product options to the shopping list item in persistence.
      *
      * @api
      *
