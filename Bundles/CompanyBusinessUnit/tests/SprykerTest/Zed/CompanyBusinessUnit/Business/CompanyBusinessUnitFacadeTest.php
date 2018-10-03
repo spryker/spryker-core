@@ -11,7 +11,6 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
-use TypeError;
 
 /**
  * Auto-generated group annotations
