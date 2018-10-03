@@ -276,7 +276,10 @@ class Address implements AddressInterface
         $addressTransfer->fromArray($entity->toArray(), true);
         $addressTransfer->setIso2Code($entity->getCountry()->getIso2Code());
 
-        $addressTransfer = $this->addCountryToAddressTransfer($entity->getCountry(), $addressTransfer);
+        $countryTransfer = new CountryTransfer();
+        $countryTransfer->fromArray($entity->toArray());
+
+        $addressTransfer->setCountry($countryTransfer);
 
         return $addressTransfer;
     }
@@ -296,24 +299,6 @@ class Address implements AddressInterface
         }
 
         return $addressTransferCollection;
-    }
-
-    /**
-     * @param \Orm\Zed\Country\Persistence\SpyCountry $entity
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function addCountryToAddressTransfer(
-        SpyCountry $entity,
-        AddressTransfer $addressTransfer
-    ): AddressTransfer {
-        $countryTransfer = new CountryTransfer();
-        $countryTransfer->fromArray($entity->toArray());
-
-        $addressTransfer->setCountry($countryTransfer);
-
-        return $addressTransfer;
     }
 
     /**
