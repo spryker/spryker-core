@@ -44,7 +44,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected const SERVER_HTTP_HOST = 'HTTP_HOST';
 
     protected const ZED_REQUEST_ERROR = 'Attempted to make request to Zed %s.
-Configured host for zed is %s.
+Configured host for Zed is %s.
 Failures here are usually due to network errors or redirection loops.';
 
     /**
