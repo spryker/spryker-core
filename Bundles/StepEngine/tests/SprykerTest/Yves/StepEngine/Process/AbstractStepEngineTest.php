@@ -26,25 +26,25 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 abstract class AbstractStepEngineTest extends Unit
 {
-    const ERROR_ROUTE = 'error-route';
-    const ERROR_URL = '/error/url';
+    public const ERROR_ROUTE = 'error-route';
+    public const ERROR_URL = '/error/url';
 
-    const ESCAPE_ROUTE = 'escape-route';
-    const ESCAPE_URL = '/escape/url';
+    public const ESCAPE_ROUTE = 'escape-route';
+    public const ESCAPE_URL = '/escape/url';
 
-    const STEP_ROUTE_A = 'step-route-a';
-    const STEP_URL_A = '/step/url/a';
+    public const STEP_ROUTE_A = 'step-route-a';
+    public const STEP_URL_A = '/step/url/a';
 
-    const STEP_ROUTE_B = 'step-route-b';
-    const STEP_URL_B = '/step/url/b';
+    public const STEP_ROUTE_B = 'step-route-b';
+    public const STEP_URL_B = '/step/url/b';
 
-    const STEP_ROUTE_C = 'step-route-c';
-    const STEP_URL_C = '/step/url/c';
+    public const STEP_ROUTE_C = 'step-route-c';
+    public const STEP_URL_C = '/step/url/c';
 
-    const STEP_ROUTE_D = 'step-route-d';
-    const STEP_URL_D = '/step/url/d';
+    public const STEP_ROUTE_D = 'step-route-d';
+    public const STEP_URL_D = '/step/url/d';
 
-    const EXTERNAL_URL = 'http://external.de';
+    public const EXTERNAL_URL = 'http://external.de';
 
     /**
      * @return \Spryker\Yves\StepEngine\Process\StepCollection

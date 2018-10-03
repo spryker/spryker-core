@@ -1,5 +1,6 @@
 {
   "name": "spryker/cart-note-product-bundle-connector",
+  "type": "library",
   "description": "CartNoteProductBundleConnector module",
   "license": "proprietary",
   "require": {

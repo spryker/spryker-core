@@ -1,5 +1,6 @@
 {
   "name": "spryker/sales-product-connector",
+  "type": "library",
   "description": "SalesProductConnector module",
   "license": "proprietary",
   "require": {

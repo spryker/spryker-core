@@ -1,5 +1,6 @@
 {
   "name": "spryker/transfer",
+  "type": "library",
   "description": "Transfer module",
   "license": "proprietary",
   "require": {

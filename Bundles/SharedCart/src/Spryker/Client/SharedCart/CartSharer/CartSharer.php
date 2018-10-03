@@ -65,6 +65,8 @@ class CartSharer implements CartSharerInterface
     }
 
     /**
+     * @deprecated Please use CartSharerInterface::updateQuotePermissions() instead
+     *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -104,6 +106,59 @@ class CartSharer implements CartSharerInterface
             );
 
         return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuotePermissions(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
+    {
+        $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
+        $quoteTransfer = $this->updateQuoteShareDetailsAccordinglyToShareCartRequest($shareCartRequestTransfer, $quoteTransfer);
+        $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
+        $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()
+            ->setShareDetails($quoteTransfer->getShareDetails());
+
+        return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function updateQuoteShareDetailsAccordinglyToShareCartRequest(
+        ShareCartRequestTransfer $shareCartRequestTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        $cartShareDetails = $shareCartRequestTransfer->getShareDetails();
+
+        $filteredShareDetails = $this->filterShareDetailsWithoutQuotePermissionGroup($cartShareDetails);
+        $quoteTransfer->setShareDetails($filteredShareDetails);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[] $shareDetails
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]
+     */
+    protected function filterShareDetailsWithoutQuotePermissionGroup(ArrayObject $shareDetails): ArrayObject
+    {
+        $filteredShareDetails = new ArrayObject();
+        foreach ($shareDetails as $shareDetail) {
+            if ($shareDetail->getQuotePermissionGroup() === null) {
+                continue;
+            }
+
+            $filteredShareDetails[] = $shareDetail;
+        }
+
+        return $filteredShareDetails;
     }
 
     /**

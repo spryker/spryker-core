@@ -17,7 +17,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class DiscountVoucherCodesTable extends AbstractTable
 {
-    const HEADER_COL_ACTIONS = 'Actions';
+    public const HEADER_COL_ACTIONS = 'Actions';
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface

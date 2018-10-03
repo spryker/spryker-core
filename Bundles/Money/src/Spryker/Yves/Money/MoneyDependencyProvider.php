@@ -17,8 +17,8 @@ use Spryker\Yves\Kernel\Container;
 
 class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const STORE = 'store';
-    const MONEY_PARSER = 'money parser';
+    public const STORE = 'store';
+    public const MONEY_PARSER = 'money parser';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

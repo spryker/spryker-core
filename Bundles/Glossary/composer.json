@@ -1,5 +1,6 @@
 {
   "name": "spryker/glossary",
+  "type": "library",
   "description": "Glossary module",
   "license": "proprietary",
   "require": {

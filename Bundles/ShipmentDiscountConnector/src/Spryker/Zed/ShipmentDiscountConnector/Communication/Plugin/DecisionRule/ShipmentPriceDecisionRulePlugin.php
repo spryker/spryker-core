@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ShipmentPriceDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
-    const DECISION_RULE_FIELD_NAME = 'shipment-price';
+    public const DECISION_RULE_FIELD_NAME = 'shipment-price';
 
     /**
      * {@inheritdoc}

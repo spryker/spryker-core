@@ -26,7 +26,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
-    const DEFAULT_TRANSLATION = '';
+    public const DEFAULT_TRANSLATION = '';
 
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
