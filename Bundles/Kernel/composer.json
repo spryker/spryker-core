@@ -1,5 +1,6 @@
 {
   "name": "spryker/kernel",
+  "type": "library",
   "description": "Kernel module",
   "license": "proprietary",
   "require": {

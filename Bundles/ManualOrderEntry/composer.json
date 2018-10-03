@@ -1,5 +1,6 @@
 {
   "name": "spryker/manual-order-entry",
+  "type": "library",
   "description": "ManualOrderEntry module",
   "license": "proprietary",
   "require": {
