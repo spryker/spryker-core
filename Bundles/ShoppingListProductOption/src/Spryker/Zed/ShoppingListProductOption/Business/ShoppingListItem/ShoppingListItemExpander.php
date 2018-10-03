@@ -31,7 +31,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    public function expandShoppingListItemWithProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         $productOptionCollectionTransfer = $this->shoppingListProductOptionReader
             ->findShoppingListItemProductOptionsByIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());

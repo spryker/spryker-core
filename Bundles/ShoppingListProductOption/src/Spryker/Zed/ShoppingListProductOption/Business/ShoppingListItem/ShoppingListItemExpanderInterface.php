@@ -16,5 +16,5 @@ interface ShoppingListItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+    public function expandShoppingListItemWithProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 }
