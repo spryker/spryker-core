@@ -13,10 +13,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class RestRequestValidatorConfig extends AbstractBundleConfig
 {
     protected const VALIDATION_FILENAME_PATTERN = '*.validation.yaml';
-    protected const VALIDATION_CACHE_FILENAME_PATTERN = '/src/Generated/Glue/Validator/validation.cache';
     protected const PATH_PATTERN_PROJECT_STORE_VALIDATION = '/*/Glue/*%s/Validation';
     protected const PATH_PATTERN_PROJECT_VALIDATION = '/*/Glue/*[^%s]/Validation';
-    protected const PATH_PATTERN_CORE_VALIDATION = '/*/*/*/*/*/*/Glue/*/Validation';
+    protected const PATH_PATTERN_CORE_VALIDATION = '/*/*/*/*/Glue/*/Validation';
 
     /**
      * @return string[]
@@ -36,14 +35,6 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     public function getValidationSchemaFileNamePattern(): string
     {
         return static::VALIDATION_FILENAME_PATTERN;
-    }
-
-    /**
-     * @return string
-     */
-    public function getValidationSchemaCacheFile(): string
-    {
-        return APPLICATION_ROOT_DIR . static::VALIDATION_CACHE_FILENAME_PATTERN;
     }
 
     /**

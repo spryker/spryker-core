@@ -17,10 +17,6 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
 
     protected const CONSTRAINTS_NAMESPACE_SYMFONY_COMPONENT_VALIDATOR = 'Symfony\\Component\\Validator\\Constraints\\';
     protected const CONSTRAINTS_NAMESPACE_REST_REQUEST_VALIDATOR = 'Spryker\\Glue\\RestRequestValidator\\Constraints\\';
-    protected const ALLOW_EXTRA_FIELDS = 'allowExtraFields';
-    protected const ALLOW_EXTRA_FIELDS_VALUE = true;
-    protected const GROUPS = 'groups';
-    protected const GROUPS_VALUE = ['Default'];
 
     /**
      * @return string[]
@@ -55,11 +51,11 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getConstraintCollectionConfig(): array
+    public function getConstraintCollectionOptions(): array
     {
         return [
-            static::ALLOW_EXTRA_FIELDS => static::ALLOW_EXTRA_FIELDS_VALUE,
-            static::GROUPS => static::GROUPS_VALUE,
+            'allowExtraFields' => true,
+            'groups' => ['Default'],
         ];
     }
 }

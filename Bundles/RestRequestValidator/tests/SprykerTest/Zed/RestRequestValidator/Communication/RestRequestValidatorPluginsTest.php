@@ -17,7 +17,7 @@ use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorTo
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapter;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToValidationAdapter;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapter;
-use Spryker\Glue\RestRequestValidator\Processor\Exception\ClassNotFoundException;
+use Spryker\Glue\RestRequestValidator\Processor\Exception\ConstraintNotFoundException;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReader;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolver;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface;
@@ -99,7 +99,7 @@ class RestRequestValidatorPluginsTest extends Unit
      */
     public function testValidateWillPassByGetRequest(): void
     {
-        $this->expectException(ClassNotFoundException::class);
+        $this->expectException(ConstraintNotFoundException::class);
 
         $mockRestRequestValidator = $this->createMockRestRequestValidatorWithWrongConstraint();
         $mockRestRequest = $this->createMockRestRequestWithData(static::CORRECT_ENDPOINT_DATA);

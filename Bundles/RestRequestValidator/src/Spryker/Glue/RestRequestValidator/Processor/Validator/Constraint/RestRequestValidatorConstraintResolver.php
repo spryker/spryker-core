@@ -9,7 +9,7 @@ namespace Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface;
-use Spryker\Glue\RestRequestValidator\Processor\Exception\ClassNotFoundException;
+use Spryker\Glue\RestRequestValidator\Processor\Exception\ConstraintNotFoundException;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface;
 use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,7 +62,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
         }
 
         $constraints = $this->constraintCollectionAdapter->createCollection(
-            ['fields' => $initializedConstraintCollection] + $this->getConstraintCollectionConfig()
+            ['fields' => $initializedConstraintCollection] + $this->getConstraintCollectionOptions()
         );
 
         return $constraints;
@@ -128,7 +128,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     /**
      * @param string $className
      *
-     * @throws \Spryker\Glue\RestRequestValidator\Processor\Exception\ClassNotFoundException
+     * @throws \Spryker\Glue\RestRequestValidator\Processor\Exception\ConstraintNotFoundException
      *
      * @return string|null
      */
@@ -140,14 +140,14 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
             }
         }
 
-        throw new ClassNotFoundException($className, Response::HTTP_NOT_FOUND);
+        throw new ConstraintNotFoundException($className, Response::HTTP_NOT_FOUND);
     }
 
     /**
      * @return array
      */
-    protected function getConstraintCollectionConfig(): array
+    protected function getConstraintCollectionOptions(): array
     {
-        return $this->config->getConstraintCollectionConfig();
+        return $this->config->getConstraintCollectionOptions();
     }
 }

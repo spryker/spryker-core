@@ -52,7 +52,10 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
      */
     public function save(array $validatorConfig, StoreTransfer $storeTransfer): void
     {
-        $this->filesystem->remove($this->getOutdatedConfig($storeTransfer));
+        $outdatedConfigFiles = $this->getOutdatedConfig($storeTransfer);
+        if (!empty($outdatedConfigFiles)) {
+            $this->filesystem->remove($outdatedConfigFiles);
+        }
 
         $this->filesystem->dumpFile(
             $this->getStoreCacheFilePath($storeTransfer),

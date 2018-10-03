@@ -68,7 +68,7 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
         $paths = [];
         foreach ($this->config->getValidationSchemaPathPattern() as $pathPattern) {
             $pathPattern = $this->preparePathPattern($storeTransfer, $pathPattern);
-            $paths += array_merge($paths, glob($pathPattern));
+            $paths = array_merge($paths, glob($pathPattern));
         }
 
         return $paths;
