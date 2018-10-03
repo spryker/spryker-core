@@ -18,11 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomerPasswordWriter implements CustomerPasswordWriterInterface
 {
-    public const ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
-
-    /**
-     * @var \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
-     */
     protected $customerClient;
 
     /**

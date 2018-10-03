@@ -19,6 +19,8 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CustomerRestorePasswordResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
@@ -34,6 +36,8 @@ class CustomerRestorePasswordResourceRoutePlugin extends AbstractPlugin implemen
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -44,6 +48,8 @@ class CustomerRestorePasswordResourceRoutePlugin extends AbstractPlugin implemen
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -54,6 +60,8 @@ class CustomerRestorePasswordResourceRoutePlugin extends AbstractPlugin implemen
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
