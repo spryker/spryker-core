@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Address;
 
+use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
@@ -136,17 +138,10 @@ class AddressWriter implements AddressWriterInterface
 
         $customerTransfer = $this->customerClient->updateAddressAndCustomerDefaultAddresses($addressTransfer);
 
-        $updatedAddressTransfer = null;
-        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {
-            if ($addressTransfer->getUuid() === $restRequest->getResource()->getId()) {
-                $updatedAddressTransfer = $addressTransfer;
-            }
-        }
-
         $restResource = $this
             ->addressesResourceMapper
             ->mapAddressTransferToRestResource(
-                $updatedAddressTransfer,
+                $this->getAddressByUuid($customerTransfer->getAddresses(), $restRequest->getResource()->getId()),
                 $customerTransfer
             );
 
@@ -181,5 +176,22 @@ class AddressWriter implements AddressWriterInterface
         $this->customerClient->deleteAddress($addressTransfer);
 
         return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function getAddressByUuid(AddressesTransfer $addressesTransfer, string $uuid): AddressTransfer
+    {
+        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
+            if ($addressTransfer->getUuid() === $uuid) {
+                return $addressTransfer;
+            }
+        }
+
+        return new AddressTransfer();
     }
 }
