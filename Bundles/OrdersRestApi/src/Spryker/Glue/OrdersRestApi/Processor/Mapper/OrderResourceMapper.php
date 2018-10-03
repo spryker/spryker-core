@@ -41,6 +41,8 @@ class OrderResourceMapper implements OrderResourceMapperInterface
 
         $restOrderDetailsAttributesTransfer = (new RestOrderDetailsAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
         $restOrderDetailsAttributesTransfer->getTotals()->setTaxTotal($orderTransfer->getTotals()->getTaxTotal()->getAmount());
+        $restOrderDetailsAttributesTransfer->getBillingAddress()->setIsBilling(true);
+        $restOrderDetailsAttributesTransfer->getShippingAddress()->setIsShipping(true);
 
         return $restOrderDetailsAttributesTransfer;
     }
