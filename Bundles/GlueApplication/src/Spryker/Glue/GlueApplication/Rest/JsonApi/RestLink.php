@@ -17,12 +17,12 @@ class RestLink implements RestLinkInterface
     /**
      * @var string
      */
-    public $href;
+    protected $href;
 
     /**
      * @var array
      */
-    public $meta;
+    protected $meta;
 
     /**
      * @param string $name

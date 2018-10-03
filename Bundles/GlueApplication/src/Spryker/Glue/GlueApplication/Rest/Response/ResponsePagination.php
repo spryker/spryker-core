@@ -14,7 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ResponsePagination implements ResponsePaginationInterface
 {
-    public const LINK_PATTERN = '\\%1$s\\%2$s\\%3$s';
+    protected const LINK_PATTERN = '\\%1$s\\%2$s\\%3$s';
 
     /**
      * @var string
