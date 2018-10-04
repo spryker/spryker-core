@@ -255,7 +255,7 @@ class CompanyUserTable extends AbstractTable
     protected function generateCompanyUserDeleteButton(array $companyUserDataItem): string
     {
         return $this->generateRemoveButton(
-            Url::generate(CompanyUserTableConstants::URL_DELETE_COMPANY_USER, [
+            Url::generate(CompanyUserTableConstants::URL_CONFIRM_DELETE_COMPANY_USER, [
                 CompanyUserTableConstants::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
             'Delete'

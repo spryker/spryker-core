@@ -18,7 +18,7 @@
             <p>It will be deleted from everywhere</p>
             <div>
                 <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Cancel' | trans}}</a>
-                <a href="{{ url('/company-user-gui/delete-company-user/confirm-delete', {'id-company-user': companyUser.idCompanyUser}) }}" class="btn btn-danger safe-submit">{{ 'Delete company user' | trans}}</a>
+                <a href="{{ url('/company-user-gui/delete-company-user/delete', {'id-company-user': companyUser.idCompanyUser}) }}" class="btn btn-danger safe-submit">{{ 'Delete company user' | trans}}</a>
             </div>
         {% endblock %}
 
