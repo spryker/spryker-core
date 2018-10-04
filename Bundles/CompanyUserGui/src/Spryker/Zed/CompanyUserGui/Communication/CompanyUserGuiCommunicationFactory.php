@@ -96,19 +96,11 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Communication\Plugin\CompanyUserFormExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserFormExpanderPluginInterface[]
      */
     public function getCompanyUserFormPlugins(): array
     {
-        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::COMPANY_USER_FORM_EXPANDER_PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Communication\Plugin\CompanyUserFormExpanderPluginInterface[]
-     */
-    public function getCompanyUserEditFormPlugins(): array
-    {
-        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::COMPANY_USER_EDIT_FORM_EXPANDER_PLUGINS);
+        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGINS_COMPANY_USER_FORM_EXPANDER);
     }
 
     /**
@@ -161,7 +153,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTableConfigExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableConfigExpanderPluginInterface[]
      */
     public function getCompanyUserTableConfigExpanderPlugins(): array
     {
@@ -169,7 +161,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTablePrepareDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface[]
      */
     public function getCompanyUserTablePrepareDataExpanderPlugins(): array
     {

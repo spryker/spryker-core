@@ -24,11 +24,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
-    const URL_PARAM_ID_DISCOUNT = 'id-discount';
-    const URL_PARAM_BATCH_PARAMETER = 'batch';
-    const URL_PARAM_ID_POOL = 'id-pool';
-    const URL_PARAM_VISIBILITY = 'visibility';
-    const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    public const URL_PARAM_ID_DISCOUNT = 'id-discount';
+    public const URL_PARAM_BATCH_PARAMETER = 'batch';
+    public const URL_PARAM_ID_POOL = 'id-pool';
+    public const URL_PARAM_VISIBILITY = 'visibility';
+    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -10,7 +10,9 @@
 {% endblock %}
 
 {% block content %}
+
     {% embed '@Gui/Partials/widget.twig' %}
+
         {% block widget_content %}
             <p>You are trying to delete company role: <b>{{ companyRoleTransfer.name }}</b></p>
             <p>It will be deleted from everywhere</p>
@@ -20,5 +22,7 @@
                    class="btn btn-danger safe-submit">{{ 'Delete company role' | trans }}</a>
             </div>
         {% endblock %}
+
     {% endembed %}
+
 {% endblock %}

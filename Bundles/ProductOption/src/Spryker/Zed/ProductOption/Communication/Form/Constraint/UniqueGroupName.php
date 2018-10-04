@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueGroupName extends SymfonyConstraint
 {
-    const OPTION_PRODUCT_OPTION_QUERY_CONTAINER = 'productOptionQueryContainer';
+    public const OPTION_PRODUCT_OPTION_QUERY_CONTAINER = 'productOptionQueryContainer';
 
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface

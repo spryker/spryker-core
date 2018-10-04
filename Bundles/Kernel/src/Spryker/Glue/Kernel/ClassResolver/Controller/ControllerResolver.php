@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 
 class ControllerResolver extends AbstractControllerResolver
 {
-    const CLASS_NAME_PATTERN = '\\%s\\Glue\\%s%s\\Controller\\%sController';
+    public const CLASS_NAME_PATTERN = '\\%s\\Glue\\%s%s\\Controller\\%sController';
 
     /**
      * @return string

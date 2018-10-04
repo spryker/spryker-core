@@ -1,5 +1,6 @@
 {
   "name": "spryker/business-on-behalf",
+  "type": "library",
   "description": "BusinessOnBehalf module",
   "license": "proprietary",
   "require": {

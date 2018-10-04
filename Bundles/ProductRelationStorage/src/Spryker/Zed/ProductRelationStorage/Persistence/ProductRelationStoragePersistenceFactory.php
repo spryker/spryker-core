@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductRelationStorage\Persistence;
 
+use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstractQuery;
 use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductRelationStorage\ProductRelationStorageDependencyProvider;
@@ -39,5 +40,13 @@ class ProductRelationStoragePersistenceFactory extends AbstractPersistenceFactor
     public function createSpyProductAbstractRelationStorageQuery()
     {
         return SpyProductAbstractRelationStorageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstractQuery
+     */
+    public function getProductRelationProductAbstractQuery(): SpyProductRelationProductAbstractQuery
+    {
+        return $this->getProvidedDependency(ProductRelationStorageDependencyProvider::PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT);
     }
 }

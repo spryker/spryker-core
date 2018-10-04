@@ -14,7 +14,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class UtilDataReaderDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const YAML_READER = 'yaml reader';
+    public const YAML_READER = 'yaml reader';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container

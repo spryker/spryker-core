@@ -70,7 +70,6 @@ class CompanyUserTable extends AbstractTable
             static::COL_ID_COMPANY_USER,
             static::COL_COMPANY_NAME,
             static::COL_COMPANY_USER_NAME,
-            static::COL_IS_ACTIVE,
         ]);
 
         $config->setRawColumns([
@@ -98,6 +97,11 @@ class CompanyUserTable extends AbstractTable
             static::COL_IS_ACTIVE => 'Status',
         ];
         $config->setHeader($configHeader);
+
+        $configSortable = $config->getSortable();
+        $configSortable[] = static::COL_IS_ACTIVE;
+
+        $config->setSortable($configSortable);
 
         return $config;
     }
@@ -251,7 +255,7 @@ class CompanyUserTable extends AbstractTable
     protected function generateCompanyUserDeleteButton(array $companyUserDataItem): string
     {
         return $this->generateRemoveButton(
-            Url::generate(CompanyUserTableConstants::URL_DELETE_COMPANY_USER, [
+            Url::generate(CompanyUserTableConstants::URL_CONFIRM_DELETE_COMPANY_USER, [
                 CompanyUserTableConstants::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
             'Delete'

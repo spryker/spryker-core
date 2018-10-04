@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -117,7 +118,10 @@ class CompanyRoleCreateForm extends AbstractType
      */
     protected function addIsDefaultField(FormBuilderInterface $builder): self
     {
-        $builder->add(static::FIELD_IS_DEFAULT, HiddenType::class);
+        $builder->add(static::FIELD_IS_DEFAULT, CheckboxType::class, [
+            'label' => 'Is Default',
+            'required' => false,
+        ]);
 
         return $this;
     }

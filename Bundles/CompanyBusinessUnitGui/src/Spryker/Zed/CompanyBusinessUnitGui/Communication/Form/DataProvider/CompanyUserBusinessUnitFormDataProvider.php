@@ -8,8 +8,9 @@
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitChoiceFormType;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
 
 class CompanyUserBusinessUnitFormDataProvider
@@ -47,8 +48,8 @@ class CompanyUserBusinessUnitFormDataProvider
         [$choicesValues, $choicesAttributes] = $this->prepareCompanyBusinessUnitAttributeMap();
 
         return [
-            CompanyUserBusinessUnitChoiceFormType::OPTION_VALUES_BUSINESS_UNITS_CHOICES => $choicesValues,
-            CompanyUserBusinessUnitChoiceFormType::OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES => $choicesAttributes,
+            CompanyUserBusinessUnitForm::OPTION_VALUES_BUSINESS_UNITS_CHOICES => $choicesValues,
+            CompanyUserBusinessUnitForm::OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES => $choicesAttributes,
         ];
     }
 
@@ -66,12 +67,23 @@ class CompanyUserBusinessUnitFormDataProvider
             (new CompanyBusinessUnitCriteriaFilterTransfer())
         );
 
-        foreach ($companyBusinessUnitCollection->getCompanyBusinessUnits() as $unitTransfer) {
-            $unitKey = sprintf('%s - %s', $unitTransfer->getIdCompanyBusinessUnit(), $unitTransfer->getName());
-            $values[$unitKey] = $unitTransfer->getIdCompanyBusinessUnit();
-            $attributes[$unitKey] = [static::OPTION_ATTRIBUTE_DATA => $unitTransfer->getFkCompany()];
+        foreach ($companyBusinessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
+            $unitKey = $this->generateCompanyBusinessUnitName($companyBusinessUnitTransfer);
+
+            $values[$unitKey] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
+            $attributes[$unitKey] = [static::OPTION_ATTRIBUTE_DATA => $companyBusinessUnitTransfer->getFkCompany()];
         }
 
         return [$values, $attributes];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return string
+     */
+    protected function generateCompanyBusinessUnitName(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): string
+    {
+        return sprintf('%s - %s', $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(), $companyBusinessUnitTransfer->getName());
     }
 }

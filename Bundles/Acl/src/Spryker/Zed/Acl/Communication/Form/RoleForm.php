@@ -20,8 +20,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class RoleForm extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_ID_ROLE = 'id_acl_role';
+    public const FIELD_NAME = 'name';
+    public const FIELD_ID_ROLE = 'id_acl_role';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

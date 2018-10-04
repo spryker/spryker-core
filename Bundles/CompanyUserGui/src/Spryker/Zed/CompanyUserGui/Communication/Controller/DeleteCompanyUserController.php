@@ -26,7 +26,7 @@ class DeleteCompanyUserController extends AbstractController
      *
      * @return array
      */
-    public function deleteAction(Request $request): array
+    public function confirmDeleteAction(Request $request): array
     {
         $idCompanyUser = $request->query->getInt(CompanyUserTableConstants::PARAM_ID_COMPANY_USER);
 
@@ -49,7 +49,7 @@ class DeleteCompanyUserController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function confirmDeleteAction(Request $request): RedirectResponse
+    public function deleteAction(Request $request): RedirectResponse
     {
         $idCompanyUser = $request->query->getInt(CompanyUserTableConstants::PARAM_ID_COMPANY_USER);
         if (!$idCompanyUser) {

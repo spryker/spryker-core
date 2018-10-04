@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 
 class MigrateConsole extends Console
 {
-    const COMMAND_NAME = 'propel:migrate';
+    public const COMMAND_NAME = 'propel:migrate';
 
     /**
      * @return void

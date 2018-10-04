@@ -8,8 +8,9 @@
 namespace Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleChoiceFormType;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleForm;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
 
 class CompanyUserRoleFormDataProvider
@@ -47,8 +48,8 @@ class CompanyUserRoleFormDataProvider
         [$choicesValues, $choicesAttributes] = $this->prepareCompanyRoleAttributeMap();
 
         return [
-            CompanyUserRoleChoiceFormType::OPTION_VALUES_ROLES_CHOICES => $choicesValues,
-            CompanyUserRoleChoiceFormType::OPTION_ATTRIBUTES_ROLES_CHOICES => $choicesAttributes,
+            CompanyUserRoleForm::OPTION_VALUES_ROLES_CHOICES => $choicesValues,
+            CompanyUserRoleForm::OPTION_ATTRIBUTES_ROLES_CHOICES => $choicesAttributes,
         ];
     }
 
@@ -66,12 +67,23 @@ class CompanyUserRoleFormDataProvider
             (new CompanyRoleCriteriaFilterTransfer())
         );
 
-        foreach ($companyRoleCollection->getRoles() as $roleTransfer) {
-            $roleKey = sprintf('%s - %s', $roleTransfer->getIdCompanyRole(), $roleTransfer->getName());
-            $values[$roleKey] = $roleTransfer->getIdCompanyRole();
-            $attributes[$roleKey] = [static::OPTION_ATTRIBUTE_DATA => $roleTransfer->getFkCompany()];
+        foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {
+            $roleKey = $this->generateCompanyRoleName($companyRoleTransfer);
+
+            $values[$roleKey] = $companyRoleTransfer->getIdCompanyRole();
+            $attributes[$roleKey] = [static::OPTION_ATTRIBUTE_DATA => $companyRoleTransfer->getFkCompany()];
         }
 
         return [$values, $attributes];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return string
+     */
+    protected function generateCompanyRoleName(CompanyRoleTransfer $companyRoleTransfer): string
+    {
+        return sprintf('%s - %s', $companyRoleTransfer->getIdCompanyRole(), $companyRoleTransfer->getName());
     }
 }

@@ -27,9 +27,9 @@ interface CompanyUserTableConstants
     public const URL_DISABLE_COMPANY_USER = '/company-user-gui/company-user-status/disable-company-user';
 
     /**
-     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\DeleteCompanyUserController::deleteAction()
+     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\DeleteCompanyUserController::confirmDeleteAction()
      */
-    public const URL_DELETE_COMPANY_USER = '/company-user-gui/delete-company-user/delete';
+    public const URL_CONFIRM_DELETE_COMPANY_USER = '/company-user-gui/delete-company-user/confirm-delete';
 
     /**
      * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\ListCompanyUserController::indexAction()

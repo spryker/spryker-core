@@ -222,7 +222,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\Navigation\Persistence\Base\SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity
      *
      * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer
      */

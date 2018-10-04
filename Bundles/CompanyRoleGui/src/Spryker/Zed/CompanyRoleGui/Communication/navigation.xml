@@ -13,21 +13,37 @@
                 <action>index</action>
                 <pages>
                     <create-company-role>
-                        <label>Create role</label>
-                        <title>Create role</title>
+                        <label>Create Company Role</label>
+                        <title>Create Company Role</title>
                         <bundle>company-role-gui</bundle>
                         <controller>create-company-role</controller>
                         <action>index</action>
                         <visible>0</visible>
                     </create-company-role>
                     <edit-company-role>
-                        <label>Edit Role</label>
-                        <title>Edit Role</title>
+                        <label>Edit Company Role</label>
+                        <title>Edit Company Role</title>
                         <bundle>company-role-gui</bundle>
                         <controller>edit-company-role</controller>
                         <action>index</action>
                         <visible>0</visible>
                     </edit-company-role>
+                    <delete-company-role>
+                        <label>Delete Company Role</label>
+                        <title>Delete Company Role</title>
+                        <bundle>company-role-gui</bundle>
+                        <controller>delete-company-role</controller>
+                        <action>delete</action>
+                        <visible>0</visible>
+                    </delete-company-role>
+                    <confirm-delete-company-role>
+                        <label>Confirm Delete Company Role</label>
+                        <title>Confirm Delete Company Role</title>
+                        <bundle>company-role-gui</bundle>
+                        <controller>delete-company-role</controller>
+                        <action>confirm-delete</action>
+                        <visible>0</visible>
+                    </confirm-delete-company-role>
                 </pages>
             </company-role-gui>
         </pages>

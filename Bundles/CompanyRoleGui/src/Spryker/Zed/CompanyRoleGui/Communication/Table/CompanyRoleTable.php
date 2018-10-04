@@ -21,9 +21,9 @@ class CompanyRoleTable extends AbstractTable
     protected const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
     protected const COL_ACTIONS = 'Actions';
 
-    protected const HEADER_ID_COMPANY_ROLE = 'Id';
+    protected const HEADER_ID_COMPANY_ROLE = 'Role ID';
     protected const HEADER_NAME_COMPANY_ROLE = 'Name';
-    protected const HEADER_NAME_COMPANY = 'Company';
+    protected const HEADER_NAME_COMPANY = 'Company Name';
     protected const HEADER_ACTIONS = 'Actions';
 
     protected const PARAM_ID_COMPANY_ROLE = 'id-company-role';
@@ -56,8 +56,8 @@ class CompanyRoleTable extends AbstractTable
     {
         $config->setHeader([
             static::COL_ID_COMPANY_ROLE => static::HEADER_ID_COMPANY_ROLE,
-            static::COL_NAME_COMPANY_ROLE => static::HEADER_NAME_COMPANY_ROLE,
             static::COL_COMPANY_NAME => static::HEADER_NAME_COMPANY,
+            static::COL_NAME_COMPANY_ROLE => static::HEADER_NAME_COMPANY_ROLE,
             static::COL_ACTIONS => static::HEADER_ACTIONS,
         ]);
 

@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Form;
 use DateTime;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -39,6 +40,7 @@ class CompanyUserCustomerForm extends AbstractType
     protected const FIELD_FIRST_NAME = 'first_name';
     protected const FIELD_LAST_NAME = 'last_name';
     protected const FIELD_GENDER = 'gender';
+    protected const FIELD_SEND_PASSWORD_TOKEN = 'send_password_token';
     protected const FIELD_ID_CUSTOMER = 'id_customer';
     protected const FIELD_COMPANY = 'company';
     protected const FIELD_PHONE = 'phone';
@@ -78,6 +80,7 @@ class CompanyUserCustomerForm extends AbstractType
             ->addFirstNameField($builder)
             ->addLastNameField($builder)
             ->addGenderField($builder, $options[static::OPTION_GENDER_CHOICES])
+            ->addSendPasswordField($builder)
             ->addDateOfBirthField($builder)
             ->addPhoneField($builder);
     }
@@ -174,6 +177,21 @@ class CompanyUserCustomerForm extends AbstractType
             'constraints' => [
                 new Required(),
             ],
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addSendPasswordField(FormBuilderInterface $builder): self
+    {
+        $builder->add(self::FIELD_SEND_PASSWORD_TOKEN, CheckboxType::class, [
+            'label' => 'Send password token through email',
             'required' => false,
         ]);
 

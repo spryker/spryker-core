@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-gui",
+  "type": "library",
   "description": "MerchantGui module",
   "license": "proprietary",
   "require": {

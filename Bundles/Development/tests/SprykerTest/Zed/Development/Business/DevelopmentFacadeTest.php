@@ -79,10 +79,6 @@ class DevelopmentFacadeTest extends Unit
     {
         return [
             ['Spryker', 'Development', 1],
-            ['Spryke*', 'Development', 1],
-            ['*pryker', 'Development', 1],
-            ['Spryker', 'Developmen*', 2],
-            ['Spryker', '*evelopment', 1],
         ];
     }
 
@@ -104,6 +100,14 @@ class DevelopmentFacadeTest extends Unit
         $packageTransferCollection = $this->getFacade()->getPackages();
 
         $this->assertInternalType('array', $packageTransferCollection);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetModuleOverviewReturnsCollection(): void
+    {
+        $this->assertInternalType('array', $this->getFacade()->getModuleOverview());
     }
 
     /**

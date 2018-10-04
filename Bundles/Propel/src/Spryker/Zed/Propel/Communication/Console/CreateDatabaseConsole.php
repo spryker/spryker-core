@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CreateDatabaseConsole extends Console
 {
-    const COMMAND_NAME = 'propel:database:create';
+    public const COMMAND_NAME = 'propel:database:create';
 
     /**
      * @return void

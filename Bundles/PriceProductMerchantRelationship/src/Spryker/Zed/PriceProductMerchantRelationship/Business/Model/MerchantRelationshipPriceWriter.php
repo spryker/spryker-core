@@ -91,6 +91,16 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
     }
 
     /**
+     * @param int $idPriceProductStore
+     *
+     * @return void
+     */
+    public function deleteByIdPriceProductStore(int $idPriceProductStore): void
+    {
+        $this->priceProductMerchantRelationshipEntityManager->deleteByIdPriceProductStore($idPriceProductStore);
+    }
+
+    /**
      * @return void
      */
     public function deleteAll(): void

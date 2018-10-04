@@ -16,8 +16,8 @@ use Symfony\Component\Form\FormEvents;
 
 class FormEventSubscriber implements EventSubscriberInterface
 {
-    const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
-    const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
+    public const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
+    public const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
 
     /**
      * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface

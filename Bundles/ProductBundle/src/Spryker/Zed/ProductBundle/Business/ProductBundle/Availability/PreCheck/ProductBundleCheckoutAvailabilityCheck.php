@@ -102,12 +102,13 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
             $sku = $bundledProductConcreteEntity->getSku();
-            if (!$this->checkIfItemIsSellable($currentCartItems, $sku, $storeTransfer)) {
-                $unavailableCheckoutBundledItems[] = [
-                    static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $itemTransfer->getSku(),
-                    static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $sku,
-                ];
+            if ($this->checkIfItemIsSellable($currentCartItems, $sku, $storeTransfer) && $bundledProductConcreteEntity->getIsActive()) {
+                continue;
             }
+            $unavailableCheckoutBundledItems[] = [
+                static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $itemTransfer->getSku(),
+                static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $sku,
+            ];
         }
 
         return $unavailableCheckoutBundledItems;

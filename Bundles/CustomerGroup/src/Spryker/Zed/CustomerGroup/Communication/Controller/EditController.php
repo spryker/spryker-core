@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-    const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
-    const MESSAGE_CUSTOMER_GROUP_UPDATE_SUCCESS = 'Customer group was updated successfully.';
+    public const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
+    public const MESSAGE_CUSTOMER_GROUP_UPDATE_SUCCESS = 'Customer group was updated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

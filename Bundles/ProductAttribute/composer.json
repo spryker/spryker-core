@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-attribute",
+  "type": "library",
   "description": "ProductAttribute module",
   "license": "proprietary",
   "require": {

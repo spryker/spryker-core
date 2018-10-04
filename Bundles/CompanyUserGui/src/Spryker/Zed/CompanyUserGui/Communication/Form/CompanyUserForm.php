@@ -61,7 +61,7 @@ class CompanyUserForm extends AbstractType
             ->addIdCompanyUserField($builder)
             ->addCustomerSubForm($builder, $options)
             ->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
-            ->addPluginForms($builder);
+            ->executeCompanyUserExpanderFormPlugins($builder);
     }
 
     /**
@@ -124,10 +124,10 @@ class CompanyUserForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPluginForms(FormBuilderInterface $builder): self
+    protected function executeCompanyUserExpanderFormPlugins(FormBuilderInterface $builder): self
     {
-        foreach ($this->getFactory()->getCompanyUserFormPlugins() as $formPlugin) {
-            $builder = $formPlugin->buildForm($builder);
+        foreach ($this->getFactory()->getCompanyUserFormPlugins() as $companyUserFormExpanderPlugin) {
+            $builder = $companyUserFormExpanderPlugin->expand($builder);
         }
 
         return $this;
