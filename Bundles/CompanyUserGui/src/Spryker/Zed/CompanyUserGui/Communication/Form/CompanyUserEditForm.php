@@ -37,18 +37,4 @@ class CompanyUserEditForm extends CompanyUserForm
 
         return $this;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addPluginForms(FormBuilderInterface $builder): CompanyUserForm
-    {
-        foreach ($this->getFactory()->getCompanyUserEditFormPlugins() as $formPlugin) {
-            $builder = $formPlugin->buildForm($builder);
-        }
-
-        return $this;
-    }
 }

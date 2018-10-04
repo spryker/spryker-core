@@ -24,8 +24,7 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGINS_COMPANY_USER_TABLE_CONFIG_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_CONFIG_EXPANDER';
     public const PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER';
-    public const COMPANY_USER_FORM_EXPANDER_PLUGINS = 'COMPANY_USER_FORM_EXPANDER_PLUGINS';
-    public const COMPANY_USER_EDIT_FORM_EXPANDER_PLUGINS = 'COMPANY_USER_EDIT_FORM_EXPANDER_PLUGINS';
+    public const PLUGINS_COMPANY_USER_FORM_EXPANDER = 'PLUGINS_COMPANY_USER_FORM_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -42,7 +41,6 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserTableConfigExpanderPlugins($container);
         $container = $this->addCompanyUserTablePrepareDataExpanderPlugins($container);
         $container = $this->addCompanyUserFormExpanderPlugins($container);
-        $container = $this->addCompanyUserEditFormExpanderPlugins($container);
 
         return $container;
     }
@@ -102,22 +100,8 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserFormExpanderPlugins(Container $container): Container
     {
-        $container[static::COMPANY_USER_FORM_EXPANDER_PLUGINS] = function (Container $container) {
+        $container[static::PLUGINS_COMPANY_USER_FORM_EXPANDER] = function (Container $container) {
             return $this->getCompanyUserFormExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCompanyUserEditFormExpanderPlugins(Container $container): Container
-    {
-        $container[static::COMPANY_USER_EDIT_FORM_EXPANDER_PLUGINS] = function (Container $container) {
-            return $this->getCompanyUserEditFormExpanderPlugins();
         };
 
         return $container;
@@ -166,7 +150,7 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTableConfigExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableConfigExpanderPluginInterface[]
      */
     protected function getCompanyUserTableConfigExpanderPlugins(): array
     {
@@ -174,7 +158,7 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTablePrepareDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface[]
      */
     protected function getCompanyUserTablePrepareDataExpanderPlugins(): array
     {
@@ -182,17 +166,9 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Communication\Plugin\CompanyUserFormExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserFormExpanderPluginInterface[]
      */
     protected function getCompanyUserFormExpanderPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Communication\Plugin\CompanyUserFormExpanderPluginInterface[]
-     */
-    protected function getCompanyUserEditFormExpanderPlugins(): array
     {
         return [];
     }

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleCreateForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleChoiceFormType;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProvider;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProviderInterface;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyUserRoleFormDataProvider;
@@ -30,15 +30,15 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Form\FormTypeInterface
      */
-    public function createCompanyUserRoleChoiceFormType(): FormTypeInterface
+    public function createCompanyUserRoleForm(): FormTypeInterface
     {
-        return new CompanyUserRoleChoiceFormType();
+        return new CompanyUserRoleForm();
     }
 
     /**
      * @return \Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyUserRoleFormDataProvider
      */
-    public function createCompanyUserRoleChoiceFormDataProvider(): CompanyUserRoleFormDataProvider
+    public function createCompanyUserRoleFormDataProvider(): CompanyUserRoleFormDataProvider
     {
         return new CompanyUserRoleFormDataProvider($this->getCompanyRoleFacade());
     }

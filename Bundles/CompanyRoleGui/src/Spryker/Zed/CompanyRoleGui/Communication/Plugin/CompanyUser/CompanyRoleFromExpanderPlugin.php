@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin;
+namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin\CompanyUser;
 
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserFormExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyRoleGui\Communication\CompanyRoleGuiCommunicationFactory getFactory()
  */
-class CompanyUserBusinessUnitFieldPlugin extends AbstractPlugin implements CompanyUserFormExpanderPluginInterface
+class CompanyRoleFromExpanderPlugin extends AbstractPlugin implements CompanyUserFormExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -25,13 +25,13 @@ class CompanyUserBusinessUnitFieldPlugin extends AbstractPlugin implements Compa
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function buildForm(FormBuilderInterface $builder): FormBuilderInterface
+    public function expand(FormBuilderInterface $builder): FormBuilderInterface
     {
         $formType = $this->getFactory()
-            ->createCompanyUserBusinessUnitChoiceFormType();
+            ->createCompanyUserRoleForm();
 
         $dataProvider = $this->getFactory()
-            ->createCompanyUserBusinessUnitChoiceFormDataProvider();
+            ->createCompanyUserRoleFormDataProvider();
 
         $companyUserTransfer = $builder->getData();
         $dataProvider->getData($companyUserTransfer);

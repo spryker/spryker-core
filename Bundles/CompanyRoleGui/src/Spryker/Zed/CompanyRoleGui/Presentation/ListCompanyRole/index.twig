@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Company Role' %}
+{% set widget_title = 'Overview of Company Roles' %}
 
 {% block head_title widget_title | trans %}
 
@@ -11,15 +11,12 @@
 {% endblock %}
 
 {% block content %}
-
     {% embed '@Gui/Partials/widget.twig' %}
-
+        {% block widget_title -%}
+            <h5>{{ 'List of Company Roles' | trans}}</h5>
+        {%- endblock %}
         {% block widget_content %}
-
             {{ companyRoleTable | raw }}
-
         {% endblock %}
-
     {% endembed %}
-
 {% endblock %}

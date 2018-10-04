@@ -21,5 +21,5 @@ interface CompanyUserFormExpanderPluginInterface
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function buildForm(FormBuilderInterface $builder): FormBuilderInterface;
+    public function expand(FormBuilderInterface $builder): FormBuilderInterface;
 }

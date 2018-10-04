@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CompanyUserBusinessUnitChoiceFormType extends AbstractType
+class CompanyUserBusinessUnitForm extends AbstractType
 {
     public const OPTION_VALUES_BUSINESS_UNITS_CHOICES = 'company_business_unit_choices';
     public const OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES = 'company_business_unit_attributes';
@@ -71,7 +71,7 @@ class CompanyUserBusinessUnitChoiceFormType extends AbstractType
     /**
      * @return string
      */
-    public function getTemplatePath(): string
+    protected function getTemplatePath(): string
     {
         return static::TEMPLATE_PATH;
     }

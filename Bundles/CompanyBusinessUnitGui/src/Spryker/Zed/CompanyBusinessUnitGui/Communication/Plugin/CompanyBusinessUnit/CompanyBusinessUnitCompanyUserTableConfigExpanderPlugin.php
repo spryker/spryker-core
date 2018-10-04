@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin;
+namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin\CompanyBusinessUnit;
 
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableConfigExpanderPluginInterface;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CompanyRoleGui\Communication\CompanyRoleGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
  */
-class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin implements CompanyUserTableConfigExpanderPluginInterface
+class CompanyBusinessUnitCompanyUserTableConfigExpanderPlugin extends AbstractPlugin implements CompanyUserTableConfigExpanderPluginInterface
 {
-    public const COL_COMPANY_ROLE_NAMES = 'company_role_names';
+    public const COL_COMPANY_BUSINESS_UNIT_NAME = 'company_business_unit_name';
 
-    protected const TITLE_COMPANY_ROLE_NAMES = 'Roles';
+    protected const TITLE_COMPANY_BUSINESS_UNIT_NAME = 'Company Business Unit';
 
     /**
      * {@inheritdoc}
-     * - Expands company user table with company role column.
+     * - Expands config options of company user table with company business unit column.
      *
      * @api
      *
@@ -33,11 +33,9 @@ class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin imp
     public function expandConfig(TableConfiguration $config): TableConfiguration
     {
         $configHeader = $config->getHeader() + [
-            static::COL_COMPANY_ROLE_NAMES => static::TITLE_COMPANY_ROLE_NAMES,
+            static::COL_COMPANY_BUSINESS_UNIT_NAME => static::TITLE_COMPANY_BUSINESS_UNIT_NAME,
         ];
         $config->setHeader($configHeader);
-
-        $config->addRawColumn(static::COL_COMPANY_ROLE_NAMES);
 
         return $config;
     }
