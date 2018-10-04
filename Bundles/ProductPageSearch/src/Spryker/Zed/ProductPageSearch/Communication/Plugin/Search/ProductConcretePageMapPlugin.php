@@ -44,6 +44,7 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
 
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, static::KEY_ID_PRODUCT, $data[ProductConcretePageSearchTransfer::FK_PRODUCT])
+            ->addSearchResultData($pageMapTransfer, ProductConcretePageSearchTransfer::FK_PRODUCT_ABSTRACT, $data[ProductConcretePageSearchTransfer::FK_PRODUCT_ABSTRACT])
             ->addSearchResultData($pageMapTransfer, ProductConcretePageSearchTransfer::ABSTRACT_SKU, $data[ProductConcretePageSearchTransfer::ABSTRACT_SKU])
             ->addSearchResultData($pageMapTransfer, ProductConcretePageSearchTransfer::SKU, $data[ProductConcretePageSearchTransfer::SKU])
             ->addSearchResultData($pageMapTransfer, ProductConcretePageSearchTransfer::TYPE, $data[ProductConcretePageSearchTransfer::TYPE])

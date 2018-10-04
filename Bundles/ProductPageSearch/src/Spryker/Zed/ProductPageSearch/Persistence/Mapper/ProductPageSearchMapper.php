@@ -86,6 +86,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         );
 
         $productConcretePageSearchTransfer->setFkProduct($productConcreteTransfer->getIdProductConcrete())
+            ->setFkProductAbstract($productConcreteTransfer->getFkProductAbstract())
             ->setType(ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME)
             ->setStore($storeTransfer->getName())
             ->setLocale($localizedAttributesTransfer->getLocale()->getLocaleName())
