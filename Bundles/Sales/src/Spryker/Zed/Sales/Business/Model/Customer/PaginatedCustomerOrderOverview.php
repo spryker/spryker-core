@@ -11,12 +11,13 @@ use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
- * @property \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface orderHydrator
+ * @property \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface $orderHydrator
  */
 class PaginatedCustomerOrderOverview extends PaginatedCustomerOrderReader implements CustomerOrderOverviewInterface
 {
@@ -58,11 +59,11 @@ class PaginatedCustomerOrderOverview extends PaginatedCustomerOrderReader implem
 
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderCollection
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection $orderCollection
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    protected function prepareOrderListTransfer(OrderListTransfer $orderListTransfer, $orderCollection): OrderListTransfer
+    protected function prepareOrderListTransfer(OrderListTransfer $orderListTransfer, ObjectCollection $orderCollection): OrderListTransfer
     {
         $orders = new ArrayObject();
         foreach ($orderCollection as $salesOrderEntity) {

@@ -59,7 +59,10 @@ class SalesStub implements SalesStubInterface
      */
     public function getPaginatedCustomerOrdersOverview(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        return $this->zedStub->call('/sales/gateway/get-paginated-customer-orders-overview', $orderListTransfer);
+        /** @var \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer */
+        $this->zedStub->call('/sales/gateway/get-paginated-customer-orders-overview', $orderListTransfer);
+
+        return $orderListTransfer;
     }
 
     /**

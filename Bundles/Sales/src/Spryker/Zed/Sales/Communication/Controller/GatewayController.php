@@ -55,7 +55,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getPaginatedCustomerOrdersOverviewAction(OrderListTransfer $orderListTransfer)
+    public function getPaginatedCustomerOrdersOverviewAction(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
         return $this->getFacade()->getPaginatedCustomerOrdersOverview($orderListTransfer);
     }
