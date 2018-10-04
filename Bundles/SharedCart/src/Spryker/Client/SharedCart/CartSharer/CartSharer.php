@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface;
@@ -51,21 +52,29 @@ class CartSharer implements CartSharerInterface
     protected $messengerClient;
 
     /**
+     * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface
+     */
+    protected $customerClient;
+
+    /**
      * @param \Spryker\Client\SharedCart\Zed\SharedCartStubInterface $sharedCartStub
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface $multiCartClient
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface $persistentCartClient
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface $messengerClient
+     * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface $customerClient
      */
     public function __construct(
         SharedCartStubInterface $sharedCartStub,
         SharedCartToMultiCartClientInterface $multiCartClient,
         SharedCartToPersistentCartClientInterface $persistentCartClient,
-        SharedCartToMessengerClientInterface $messengerClient
+        SharedCartToMessengerClientInterface $messengerClient,
+        SharedCartToCustomerClientInterface $customerClient
     ) {
         $this->multiCartClient = $multiCartClient;
         $this->persistentCartClient = $persistentCartClient;
         $this->sharedCartStub = $sharedCartStub;
         $this->messengerClient = $messengerClient;
+        $this->customerClient = $customerClient;
     }
 
     /**
@@ -219,6 +228,8 @@ class CartSharer implements CartSharerInterface
         $customerQuoteCollectionTransfer = $this->multiCartClient->getQuoteCollection();
         foreach ($customerQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             if ($quoteTransfer->getIdQuote() === $idQuote) {
+                $quoteTransfer->setCustomer($this->customerClient->getCustomer());
+
                 return $quoteTransfer;
             }
         }

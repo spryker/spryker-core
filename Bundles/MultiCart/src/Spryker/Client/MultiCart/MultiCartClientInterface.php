@@ -62,7 +62,6 @@ interface MultiCartClientInterface
     /**
      * Specification:
      * - Find quote by id in customer session.
-     * - Sets current customer to quote.
      *
      * @api
      *
