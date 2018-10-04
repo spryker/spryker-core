@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsPageDataImport\Business;
 
+use Spryker\Zed\CmsPageDataImport\Business\CmsPage\CmsPagePublishStep;
 use Spryker\Zed\CmsPageDataImport\Business\CmsPage\CmsPageWriterStep;
 use Spryker\Zed\CmsPageDataImport\Business\CmsPage\PlaceholderExtractorStep;
 use Spryker\Zed\CmsPageDataImport\Business\CmsPageStore\CmsPageKeyToIdCmsPageStep;
@@ -32,7 +33,7 @@ class CmsPageDataImportBusinessFactory extends DataImportBusinessFactory
             $this->getConfig()->getCmsPageDataImporterConfiguration()
         );
 
-        $cmsPageWriterStep = new CmsPageWriterStep($this->getCmsFacade());
+        $cmsPageWriterStep = new CmsPageWriterStep();
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker(CmsPageWriterStep::BULK_SIZE);
         $dataSetStepBroker
@@ -68,6 +69,7 @@ class CmsPageDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker->addStep($this->createStoreNameToIdStoreStep());
         $dataSetStepBroker->addStep($this->createCmsPageKeyToIdCmsPageStep());
         $dataSetStepBroker->addStep(new CmsPageStoreWriterStep());
+        $dataSetStepBroker->addStep($this->createCmsPagePublishStep());
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
@@ -97,6 +99,14 @@ class CmsPageDataImportBusinessFactory extends DataImportBusinessFactory
     protected function createPlaceholderExtractorStep(array $defaultPlaceholder = []): DataImportStepInterface
     {
         return new PlaceholderExtractorStep($defaultPlaceholder);
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    protected function createCmsPagePublishStep(): DataImportStepInterface
+    {
+        return new CmsPagePublishStep($this->getCmsFacade());
     }
 
     /**

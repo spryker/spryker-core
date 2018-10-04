@@ -39,6 +39,9 @@ use SprykerTest\Zed\CmsPageSearch\CmsPageSearchConfigMock;
  */
 class CmsPageSearchListenerTest extends Unit
 {
+    public const NUMBER_OF_LOCALES = 2;
+    public const NUMBER_OF_STORES = 3;
+
     /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
@@ -73,7 +76,7 @@ class CmsPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCmsPageSearchQuery::create()->count();
-        $this->assertSame($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
         $this->assertCmsPageSearch();
     }
 
@@ -98,7 +101,7 @@ class CmsPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCmsPageSearchQuery::create()->count();
-        $this->assertSame($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
         $this->assertCmsPageSearch();
     }
 
@@ -121,7 +124,7 @@ class CmsPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCmsPageSearchQuery::create()->count();
-        $this->assertSame($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
         $this->assertCmsPageSearch();
     }
 
