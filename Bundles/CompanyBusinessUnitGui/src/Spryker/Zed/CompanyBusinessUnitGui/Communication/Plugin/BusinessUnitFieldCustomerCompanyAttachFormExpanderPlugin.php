@@ -18,7 +18,7 @@ class BusinessUnitFieldCustomerCompanyAttachFormExpanderPlugin extends AbstractP
 {
     /**
      * {@inheritdoc}
-     *  - Expands CustomerCompanyAttachForm on choice of company business units form CompanyUserBusinessUnitChoiceFormType.
+     *  - Expands CustomerCompanyAttachForm with choice field of company business units form CompanyUserBusinessUnitChoiceFormType.
      *
      * @api
      *

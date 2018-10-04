@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CustomerCompanyAttachForm;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
+use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeInterface;
 
 class CustomerCompanyAttachFormDataProvider
 {
@@ -26,15 +27,23 @@ class CustomerCompanyAttachFormDataProvider
     protected $companyFacade;
 
     /**
+     * @var \Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeInterface
+     */
+    protected $customerFacade;
+
+    /**
      * @param \Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface $companyUserFacade
      * @param \Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface $companyFacade
+     * @param \Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeInterface $customerFacade
      */
     public function __construct(
         CompanyUserGuiToCompanyUserFacadeInterface $companyUserFacade,
-        CompanyUserGuiToCompanyFacadeInterface $companyFacade
+        CompanyUserGuiToCompanyFacadeInterface $companyFacade,
+        CompanyUserGuiToCustomerFacadeInterface $customerFacade
     ) {
         $this->companyUserFacade = $companyUserFacade;
         $this->companyFacade = $companyFacade;
+        $this->customerFacade = $customerFacade;
     }
 
     /**
@@ -46,6 +55,8 @@ class CustomerCompanyAttachFormDataProvider
     {
         $customerTransfer = (new CustomerTransfer())
             ->setIdCustomer($idCustomer);
+
+        $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
 
         return (new CompanyUserTransfer())
             ->setCustomer($customerTransfer);

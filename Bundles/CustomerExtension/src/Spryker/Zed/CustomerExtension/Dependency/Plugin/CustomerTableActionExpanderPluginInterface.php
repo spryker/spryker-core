@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CustomerExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ButtonTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerTableActionExpanderPluginInterface
@@ -19,8 +18,9 @@ interface CustomerTableActionExpanderPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttons
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function prepareButton(CustomerTransfer $customerTransfer): ButtonTransfer;
+    public function execute(CustomerTransfer $customerTransfer, array $buttons): array;
 }

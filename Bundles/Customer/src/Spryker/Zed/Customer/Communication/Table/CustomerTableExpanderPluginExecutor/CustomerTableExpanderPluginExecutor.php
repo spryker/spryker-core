@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Customer\Communication\Table\CustomerTableActionExpanderPluginExecutor;
+namespace Spryker\Zed\Customer\Communication\Table\CustomerTableExpanderPluginExecutor;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 
 /**
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
-class CustomerTableActionExpanderPluginExecutor implements CustomerTableActionExpanderPluginExecutorInterface
+class CustomerTableExpanderPluginExecutor implements CustomerTableExpanderPluginExecutorInterface
 {
     /**
      * @var array|\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface[]
@@ -32,12 +32,12 @@ class CustomerTableActionExpanderPluginExecutor implements CustomerTableActionEx
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function execute(CustomerTransfer $customerTransfer): array
+    public function executeActionExpanderPlugins(CustomerTransfer $customerTransfer): array
     {
         $buttons = [];
 
         foreach ($this->customerTableActionExpanderPlugins as $customerTableActionExpanderPlugin) {
-            $buttons[] = $customerTableActionExpanderPlugin->prepareButton($customerTransfer);
+            $buttons = $customerTableActionExpanderPlugin->execute($customerTransfer, $buttons);
         }
 
         return $buttons;

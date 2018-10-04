@@ -32,4 +32,31 @@
             </company-user-gui>
         </pages>
     </company-gui>
+    <customer>
+        <label>Customers</label>
+        <title>Customers</title>
+        <icon>fa-users</icon>
+        <uri>#</uri>
+        <visible>1</visible>
+        <pages>
+            <customer>
+                <label>Customers</label>
+                <title>Customers</title>
+                <bundle>customer</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <visible>1</visible>
+                <pages>
+                    <customer-company-attach>
+                        <label>Attach customer to company</label>
+                        <title>Attach customer to company</title>
+                        <bundle>company-user-gui</bundle>
+                        <controller>attach-customer-company</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </customer-company-attach>
+                </pages>
+            </customer>
+        </pages>
+    </customer>
 </config>

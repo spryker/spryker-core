@@ -54,7 +54,7 @@ class CustomerCompanyAttachForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
-            ->addPluginForms($builder);
+            ->executeCustomerCompanyAttachFormExpanderPlugins($builder);
     }
 
     /**
@@ -87,7 +87,7 @@ class CustomerCompanyAttachForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPluginForms(FormBuilderInterface $builder): self
+    protected function executeCustomerCompanyAttachFormExpanderPlugins(FormBuilderInterface $builder): self
     {
         foreach ($this->getFactory()->getCustomerCompanyAttachFormExpanderPlugins() as $customerCompanyAttachFormExpanderPlugin) {
             $builder = $customerCompanyAttachFormExpanderPlugin->buildForm($builder);

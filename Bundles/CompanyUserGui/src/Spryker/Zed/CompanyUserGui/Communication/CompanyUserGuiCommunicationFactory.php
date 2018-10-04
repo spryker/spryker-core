@@ -82,7 +82,8 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CustomerCompanyAttachFormDataProvider(
             $this->getCompanyUserFacade(),
-            $this->getCompanyFacade()
+            $this->getCompanyFacade(),
+            $this->getCustomerFacade()
         );
     }
 

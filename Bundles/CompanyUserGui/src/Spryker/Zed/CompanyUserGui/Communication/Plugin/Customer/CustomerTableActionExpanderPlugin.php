@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUserGui\Communication\Plugin;
+namespace Spryker\Zed\CompanyUserGui\Communication\Plugin\Customer;
 
 use Generated\Shared\Transfer\ButtonTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CompanyUserGui\Communication\CompanyUserGuiCommunicationFactory getFactory()
  */
-class AttachUserToCompanyPlugin extends AbstractPlugin implements CustomerTableActionExpanderPluginInterface
+class CustomerTableActionExpanderPlugin extends AbstractPlugin implements CustomerTableActionExpanderPluginInterface
 {
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_URL = 'company-user-gui/attach-customer-company';
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE = 'Attach to company';
@@ -25,22 +25,23 @@ class AttachUserToCompanyPlugin extends AbstractPlugin implements CustomerTableA
 
     /**
      * {@inheritdoc}
-     * - Add "Attaches to company" button in actions for customer table
+     * - Adds "Attach to company" button in actions for customer table
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttons
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function prepareButton(CustomerTransfer $customerTransfer): ButtonTransfer
+    public function execute(CustomerTransfer $customerTransfer, array $buttons): array
     {
         $countActiveCompanyUsersByIdCustomer = $this->getFactory()
             ->getCompanyUserFacade()
             ->countActiveCompanyUsersByIdCustomer($customerTransfer);
 
         if ($countActiveCompanyUsersByIdCustomer !== 0) {
-            return new ButtonTransfer();
+            return $buttons;
         }
 
         $defaultOptions = [
@@ -55,9 +56,11 @@ class AttachUserToCompanyPlugin extends AbstractPlugin implements CustomerTableA
             ]
         );
 
-        return (new ButtonTransfer())
+        $buttons[] = (new ButtonTransfer())
             ->setUrl($url)
             ->setTitle(static::BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE)
             ->setDefaultOptions($defaultOptions);
+
+        return $buttons;
     }
 }

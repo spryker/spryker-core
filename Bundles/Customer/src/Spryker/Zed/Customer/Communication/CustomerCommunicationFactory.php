@@ -15,8 +15,8 @@ use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerFormDataProvide
 use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerUpdateFormDataProvider;
 use Spryker\Zed\Customer\Communication\Table\AddressTable;
 use Spryker\Zed\Customer\Communication\Table\CustomerTable;
-use Spryker\Zed\Customer\Communication\Table\CustomerTableActionExpanderPluginExecutor\CustomerTableActionExpanderPluginExecutor;
-use Spryker\Zed\Customer\Communication\Table\CustomerTableActionExpanderPluginExecutor\CustomerTableActionExpanderPluginExecutorInterface;
+use Spryker\Zed\Customer\Communication\Table\CustomerTableExpanderPluginExecutor\CustomerTableExpanderPluginExecutor;
+use Spryker\Zed\Customer\Communication\Table\CustomerTableExpanderPluginExecutor\CustomerTableExpanderPluginExecutorInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -178,11 +178,11 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Communication\Table\CustomerTableActionExpanderPluginExecutor\CustomerTableActionExpanderPluginExecutorInterface
+     * @return \Spryker\Zed\Customer\Communication\Table\CustomerTableExpanderPluginExecutor\CustomerTableExpanderPluginExecutorInterface
      */
-    public function createCustomerTableActionPluginExecutor(): CustomerTableActionExpanderPluginExecutorInterface
+    public function createCustomerTableActionPluginExecutor(): CustomerTableExpanderPluginExecutorInterface
     {
-        return new CustomerTableActionExpanderPluginExecutor(
+        return new CustomerTableExpanderPluginExecutor(
             $this->getCustomerTableActionExpanderPlugins()
         );
     }
