@@ -65,4 +65,20 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
             ->createProductQuantityRestrictionsValidator()
             ->validateQuantityRestrictions($quickOrderItemTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     */
+    public function findProductConcretesByQuickOrderItemTransfers(array $quickOrderItemTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteReader()
+            ->findProductConcretesByQuickOrderItemTransfers($quickOrderItemTransfers);
+    }
 }

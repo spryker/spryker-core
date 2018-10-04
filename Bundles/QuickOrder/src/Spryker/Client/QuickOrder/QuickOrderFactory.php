@@ -8,14 +8,18 @@
 namespace Spryker\Client\QuickOrder;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductStorageClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityStorageClientInterface;
+use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface;
 use Spryker\Client\QuickOrder\ProductConcreteExpander\ProductConcreteExpander;
 use Spryker\Client\QuickOrder\ProductConcreteExpander\ProductConcreteExpanderInterface;
 use Spryker\Client\QuickOrder\ProductConcretePriceReader\ProductConcretePriceReader;
 use Spryker\Client\QuickOrder\ProductConcretePriceReader\ProductConcretePriceReaderInterface;
+use Spryker\Client\QuickOrder\ProductConcreteReader\ProductConcreteReader;
+use Spryker\Client\QuickOrder\ProductConcreteReader\ProductConcreteReaderInterface;
 use Spryker\Client\QuickOrder\ProductQuantityRestrictionsValidator\ProductQuantityRestrictionsValidator;
 use Spryker\Client\QuickOrder\ProductQuantityRestrictionsValidator\ProductQuantityRestrictionsValidatorInterface;
 
@@ -52,6 +56,17 @@ class QuickOrderFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\QuickOrder\ProductConcreteReader\ProductConcreteReaderInterface
+     */
+    public function createProductConcreteReader(): ProductConcreteReaderInterface
+    {
+        return new ProductConcreteReader(
+            $this->getProductStorageClient(),
+            $this->getLocaleClient()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductClientInterface
      */
     public function getPriceProductClient(): QuickOrderToPriceProductClientInterface
@@ -81,6 +96,22 @@ class QuickOrderFactory extends AbstractFactory
     public function getProductQuantityStorageClient(): QuickOrderToProductQuantityStorageClientInterface
     {
         return $this->getProvidedDependency(QuickOrderDependencyProvider::CLIENT_PRODUCT_QUANTITY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface
+     */
+    public function getProductStorageClient(): QuickOrderToProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientInterface
+     */
+    public function getLocaleClient(): QuickOrderToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderDependencyProvider::CLIENT_LOCALE);
     }
 
     /**
