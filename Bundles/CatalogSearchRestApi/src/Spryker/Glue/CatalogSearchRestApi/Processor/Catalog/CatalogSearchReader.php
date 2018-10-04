@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -88,6 +89,14 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         }
         $this->store->setCurrencyIsoCode($currency);
 
+        $priceMode = $this->getPriceMode($restRequest);
+        if (!$this->isPriceModeAvailable($priceMode)) {
+            return $this->createInvalidPriceModeResponse();
+        }
+        if ($priceMode !== $this->priceClient->getCurrentPriceMode()) {
+            $this->priceClient->switchPriceMode($priceMode);
+        }
+
         $response = $this->restResourceBuilder->createRestResponse();
         $searchString = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::QUERY_STRING_PARAMETER);
         $requestParameters = $this->getAllRequestParameters($restRequest);
@@ -119,6 +128,14 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
             return $this->createInvalidCurrencyResponse();
         }
         $this->store->setCurrencyIsoCode($currency);
+
+        $priceMode = $this->getPriceMode($restRequest);
+        if (!$this->isPriceModeAvailable($priceMode)) {
+            return $this->createInvalidPriceModeResponse();
+        }
+        if ($priceMode !== $this->priceClient->getCurrentPriceMode()) {
+            $this->priceClient->switchPriceMode($priceMode);
+        }
 
         $response = $this->restResourceBuilder->createRestResponse();
         $searchString = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::QUERY_STRING_PARAMETER);
@@ -201,6 +218,21 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return string
+     */
+    protected function getPriceMode($restRequest): string
+    {
+        $priceMode = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::PRICE_MODE_STRING_PARAMETER);
+        if (empty($priceMode)) {
+            return $this->priceClient->getCurrentPriceMode();
+        }
+
+        return $priceMode;
+    }
+
+    /**
      * @param string $currency
      *
      * @return bool
@@ -208,6 +240,16 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
     protected function isCurrencyAvailable(string $currency): bool
     {
         return in_array($currency, $this->store->getCurrencyIsoCodes());
+    }
+
+    /**
+     * @param string $priceMode
+     *
+     * @return bool
+     */
+    protected function isPriceModeAvailable(string $priceMode): bool
+    {
+        return in_array($priceMode, $this->priceClient->getPriceModes());
     }
 
     /**
@@ -221,6 +263,19 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
             ->setCode(CatalogSearchRestApiConfig::RESPONSE_CODE_INVALID_CURRENCY)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CatalogSearchRestApiConfig::RESPONSE_DETAIL_INVALID_CURRENCY));
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createInvalidPriceModeResponse(): RestResponseInterface
+    {
+        $response = $this->restResourceBuilder->createRestResponse();
+
+        return $response->addError((new RestErrorMessageTransfer())
+            ->setCode(CatalogSearchRestApiConfig::RESPONSE_CODE_INVALID_PRICE_MODE)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CatalogSearchRestApiConfig::RESPONSE_DETAIL_INVALID_PRICE_MODE));
     }
 
     /**
