@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
 
 /**
- * @method \Spryker\Zed\SharedCartDataImport\Communication\SharedCartDataImportCommunicationFactory getFactory()
  * @method \Spryker\Zed\SharedCartDataImport\Business\SharedCartDataImportFacadeInterface getFacade()
  * @method \Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig getConfig()
  */

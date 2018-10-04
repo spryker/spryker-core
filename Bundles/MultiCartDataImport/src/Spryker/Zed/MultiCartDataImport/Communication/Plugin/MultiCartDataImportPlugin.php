@@ -15,7 +15,6 @@ use Spryker\Zed\MultiCartDataImport\MultiCartDataImportConfig;
 
 /**
  * @method \Spryker\Zed\MultiCartDataImport\Business\MultiCartDataImportFacadeInterface getFacade()
- * @method \Spryker\Zed\MultiCartDataImport\Communication\MultiCartDataImportCommunicationFactory getFactory()
  */
 class MultiCartDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
