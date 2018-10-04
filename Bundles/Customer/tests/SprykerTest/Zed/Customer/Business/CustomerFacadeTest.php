@@ -693,6 +693,7 @@ class CustomerFacadeTest extends Unit
 
         $this->assertSame($customerTransfer, $facade->updateCustomerPassword($customerTransfer));
     }
+
     /**
      * @return void
      */

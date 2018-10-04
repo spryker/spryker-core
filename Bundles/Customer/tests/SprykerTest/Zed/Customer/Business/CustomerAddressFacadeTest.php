@@ -228,7 +228,6 @@ class CustomerAddressFacadeTest extends Unit
         $this->assertTrue($isSuccess);
     }
 
-
     /**
      * @expectedException \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
