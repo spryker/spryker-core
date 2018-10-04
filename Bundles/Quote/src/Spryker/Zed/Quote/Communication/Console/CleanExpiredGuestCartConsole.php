@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Quote\Business\QuoteFacadeInterface getFacade()
  */
-class CleanExpiredGuestCartConsoleConsole extends Console
+class CleanExpiredGuestCartConsole extends Console
 {
     protected const COMMAND_NAME = 'quote:guest-cart:clean-expired';
     protected const COMMAND_DESCRIPTION = 'Delete all expired guest carts';
