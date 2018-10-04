@@ -100,7 +100,7 @@ class CompanyUserTable extends AbstractTable
 
         $configSortable = $config->getSortable();
         $configSortable[] = static::COL_IS_ACTIVE;
-        
+
         $config->setSortable($configSortable);
 
         return $config;
