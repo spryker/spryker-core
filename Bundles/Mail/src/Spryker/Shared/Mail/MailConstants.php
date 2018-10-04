@@ -12,7 +12,7 @@ namespace Spryker\Shared\Mail;
  */
 interface MailConstants
 {
-    const MAILCATCHER_GUI = 'MAILCATCHER_GUI';
+    public const MAILCATCHER_GUI = 'MAILCATCHER_GUI';
 
     public const SMTP_HOST = 'MAIL_CONSTANTS:SMTP_HOST';
     public const SMTP_PORT = 'MAIL_CONSTANTS:SMTP_PORT';
