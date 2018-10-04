@@ -1,5 +1,6 @@
 {
   "name": "spryker/shared-cart",
+  "type": "library",
   "description": "SharedCart module",
   "license": "proprietary",
   "require": {
