@@ -33,4 +33,20 @@ class CartsRestApiToQuoteClientBridge implements CartsRestApiToQuoteClientInterf
     {
         $this->quoteClient->setQuote($quoteTransfer);
     }
+
+    /**
+     * @return string
+     */
+    public function getStorageStrategy()
+    {
+        return $this->quoteClient->getStorageStrategy();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote()
+    {
+        return $this->quoteClient->getQuote();
+    }
 }

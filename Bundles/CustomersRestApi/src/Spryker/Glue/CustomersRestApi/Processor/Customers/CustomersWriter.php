@@ -7,6 +7,7 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -36,18 +37,26 @@ class CustomersWriter implements CustomersWriterInterface
     protected $customersResourceMapper;
 
     /**
+     * @var \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[]
+     */
+    protected $customerPostRegisterPlugins;
+
+    /**
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface $customersResourceMapper
+     * @param \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[] $customerPostRegisterPlugins
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        CustomersResourceMapperInterface $customersResourceMapper
+        CustomersResourceMapperInterface $customersResourceMapper,
+        array $customerPostRegisterPlugins
     ) {
         $this->customerClient = $customerClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customersResourceMapper = $customersResourceMapper;
+        $this->customerPostRegisterPlugins = $customerPostRegisterPlugins;
     }
 
     /**
@@ -66,7 +75,10 @@ class CustomersWriter implements CustomersWriterInterface
             return $this->createErrorResponse($customerResponseTransfer, $response);
         }
 
-        $restResource = $this->customersResourceMapper->mapCustomerToCustomersRestResource($customerResponseTransfer->getCustomerTransfer());
+        $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
+        $customerTransfer = $this->executeCustomerPostRegisterPlugins($customerTransfer);
+
+        $restResource = $this->customersResourceMapper->mapCustomerToCustomersRestResource($customerTransfer);
 
         return $response->addResource($restResource);
     }
@@ -111,5 +123,19 @@ class CustomersWriter implements CustomersWriterInterface
         }
 
         return $response;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function executeCustomerPostRegisterPlugins(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        foreach ($this->customerPostRegisterPlugins as $customerPostRegisterPlugin) {
+            $customerTransfer = $customerPostRegisterPlugin->postRegister($customerTransfer);
+        }
+
+        return $customerTransfer;
     }
 }

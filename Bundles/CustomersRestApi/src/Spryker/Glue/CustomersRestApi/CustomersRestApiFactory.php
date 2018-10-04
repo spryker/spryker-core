@@ -24,7 +24,8 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomersWriter(
             $this->getCustomerClient(),
             $this->getResourceBuilder(),
-            $this->createCustomersResourceMapper()
+            $this->createCustomersResourceMapper(),
+            $this->getCustomerRegisterPostSavePlugins()
         );
     }
 
@@ -52,5 +53,13 @@ class CustomersRestApiFactory extends AbstractFactory
     public function getSessionClient(): CustomersRestApiToSessionClientInterface
     {
         return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[]
+     */
+    public function getCustomerRegisterPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PLUGINS_CUSTOMER_POST_REGISTER);
     }
 }
