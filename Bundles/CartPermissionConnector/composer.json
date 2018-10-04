@@ -1,5 +1,6 @@
 {
   "name": "spryker/cart-permission-connector",
+  "type": "library",
   "description": "CartPermissionConnector module",
   "license": "proprietary",
   "require": {

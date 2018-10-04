@@ -54,6 +54,28 @@ function AttributeManager() {
             alert('Attribute "'+ key +'" already defined');
             return false;
         }
+        var hasAttribute = false;
+        $.ajax({
+            url: '/product-attribute-gui/suggest/keys',
+            dataType: 'json',
+            async: false,
+            data: {
+                q: key,
+            },
+            success: function(data) {
+                data = data.filter(function(value) {
+                    return (value.key == key);
+                });
+                if (data.length > 0) {
+                    hasAttribute = true;
+                }
+            }
+        });
+        if (!hasAttribute) {
+            alert('Attribute "'+ key +'" doesn\'t exist.');
+
+            return false;
+        }
 
         return true;
     };
