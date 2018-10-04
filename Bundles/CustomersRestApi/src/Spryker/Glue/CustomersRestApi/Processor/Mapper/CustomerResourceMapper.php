@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -13,7 +14,7 @@ use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-class CustomersResourceMapper implements CustomersResourceMapperInterface
+class CustomerResourceMapper implements CustomerResourceMapperInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -43,14 +44,15 @@ class CustomersResourceMapper implements CustomersResourceMapperInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapCustomerToCustomersRestResource(CustomerTransfer $customerTransfer): RestResourceInterface
+    public function mapCustomerTransferToRestResource(CustomerTransfer $customerTransfer): RestResourceInterface
     {
-        $restCustomersResponseAttributesTransfer = (new RestCustomersResponseAttributesTransfer())->fromArray($customerTransfer->toArray(), true);
+        $restCustomersAttributesTransfer = (new RestCustomersResponseAttributesTransfer())
+            ->fromArray($customerTransfer->toArray(), true);
 
         return $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_CUSTOMERS,
             $customerTransfer->getCustomerReference(),
-            $restCustomersResponseAttributesTransfer
+            $restCustomersAttributesTransfer
         );
     }
 }
