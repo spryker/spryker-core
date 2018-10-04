@@ -5,7 +5,7 @@
           namespace="Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence"
           package="src.Orm.Zed.MerchantRelationshipSalesOrderThreshold.Persistence">
 
-    <table name="spy_merchant_relationship_sales_order_threshold" idMethod="native" allowPkInsert="true" phpName="SpyMerchantRelationshipSalesOrderThreshold">
+    <table name="spy_merchant_relationship_sales_order_threshold" idMethod="native" allowPkInsert="true" identifierQuoting="true" phpName="SpyMerchantRelationshipSalesOrderThreshold">
         <column name="id_merchant_relationship_sales_order_threshold" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_merchant_relationship" type="INTEGER" required="true"/>
         <column name="fk_sales_order_threshold_type" type="INTEGER" required="true"/>
