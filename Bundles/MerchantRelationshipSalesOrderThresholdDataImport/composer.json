@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-relationship-sales-order-threshold-data-import",
+  "type": "library",
   "description": "MerchantRelationshipSalesOrderThresholdDataImport module",
   "license": "MIT",
   "require": {

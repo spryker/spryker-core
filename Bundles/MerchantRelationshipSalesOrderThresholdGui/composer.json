@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-relationship-sales-order-threshold-gui",
+  "type": "library",
   "description": "MerchantRelationshipSalesOrderThresholdGui module",
   "license": "proprietary",
   "require": {

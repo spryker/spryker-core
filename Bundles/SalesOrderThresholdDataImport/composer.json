@@ -1,5 +1,6 @@
 {
   "name": "spryker/sales-order-threshold-data-import",
+  "type": "library",
   "description": "SalesOrderThresholdDataImport module",
   "license": "MIT",
   "require": {

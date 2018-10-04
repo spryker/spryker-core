@@ -1,5 +1,6 @@
 {
   "name": "spryker/sales-order-threshold-extension",
+  "type": "library",
   "description": "SalesOrderThresholdExtension module",
   "license": "proprietary",
   "require": {
