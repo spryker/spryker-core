@@ -135,7 +135,7 @@ class CartReader implements CartReaderInterface
     /**
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    protected function getCustomerQuotes(): QuoteCollectionTransfer
+    public function getCustomerQuotes(): QuoteCollectionTransfer
     {
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
         $quoteCriteriaFilterTransfer->setCustomerReference($this->customerClient->getCustomer()->getCustomerReference());

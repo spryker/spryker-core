@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Controller;
 
+use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -14,15 +15,18 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
-class GuestCartsResourceController extends AbstractController
+class GuestCartItemsResourceController extends AbstractController
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $request
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
+    public function postAction(RestRequestInterface $request, RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): RestResponseInterface
     {
-        return $this->getFactory()->createCartReader()->readCurrentCustomerCarts($restRequest);
+        return $this->getFactory()
+            ->createGUestCartItemAdder()
+            ->addItem($request, $restCartItemsAttributesTransfer);
     }
 }
