@@ -18,6 +18,11 @@
             <reference local="fk_product_option_value" foreign="id_product_option_value"/>
         </foreign-key>
 
+        <unique name="fk_shopping_list_item-fk_product_option_value">
+            <unique-column name="fk_shopping_list_item"/>
+            <unique-column name="fk_product_option_value"/>
+        </unique>
+
         <id-method-parameter value="spy_shopping_list_product_option_pk_seq"/>
     </table>
 </database>
