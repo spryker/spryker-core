@@ -23,6 +23,13 @@ use Spryker\Shared\Quote\QuoteConstants;
  */
 class GuestCartCleanerTest extends Unit
 {
+    protected const ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:123';
+    protected const CONFIG_LIFETIME_ONE_SECOND = 'PT01S';
+    protected const CONFIG_LIFETIME_ONE_HOUR = 'PT01H';
+
+    protected const MESSAGE_SHOULD_BE_DELETED = 'Quote should have been deleted from database.';
+    protected const MESSAGE_SHOULD_NOT_BE_DELETED = 'Quote should not have been deleted from database.';
+
     /**
      * @var \SprykerTest\Zed\Quote\QuoteBusinessTester
      */
@@ -34,17 +41,17 @@ class GuestCartCleanerTest extends Unit
     public function testGuestCartClearAfterLifetimeIsExceeded(): void
     {
         $customerTransfer = $this->tester->haveCustomer();
-        $customerTransfer->setCustomerReference('anonymous:123');
+        $customerTransfer->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
 
         $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
-        $this->tester->setConfig(QuoteConstants::GUEST_CART_LIFETIME, 'PT01S');
+        $this->tester->setConfig(QuoteConstants::GUEST_CART_LIFETIME, static::CONFIG_LIFETIME_ONE_SECOND);
         sleep(1);
 
         $this->tester->getFacade()->cleanExpiredGuestCart();
         $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
-        $this->assertNull($findQuoteResponseTransfer->getQuoteTransfer(), 'Quote should have been deleted from database.');
+        $this->assertNull($findQuoteResponseTransfer->getQuoteTransfer(), static::MESSAGE_SHOULD_BE_DELETED);
     }
 
     /**
@@ -53,15 +60,15 @@ class GuestCartCleanerTest extends Unit
     public function testGuestCartNotClearedBeforeLifetimeIsExceeded(): void
     {
         $customerTransfer = $this->tester->haveCustomer();
-        $customerTransfer->setCustomerReference('anonymous:123');
+        $customerTransfer->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
 
         $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
-        $this->tester->setConfig(QuoteConstants::GUEST_CART_LIFETIME, 'PT01H');
+        $this->tester->setConfig(QuoteConstants::GUEST_CART_LIFETIME, static::CONFIG_LIFETIME_ONE_HOUR);
 
         $this->tester->getFacade()->cleanExpiredGuestCart();
         $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
-        $this->assertNotNull($findQuoteResponseTransfer->getQuoteTransfer(), 'Quote should not have been deleted from database.');
+        $this->assertNotNull($findQuoteResponseTransfer->getQuoteTransfer(), static::MESSAGE_SHOULD_NOT_BE_DELETED);
     }
 }
