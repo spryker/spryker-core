@@ -349,10 +349,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
             if (!isset($keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()])) {
                 continue;
             }
-            $idProduct = $this->productFacade->findProductConcreteIdBySku($shoppingListItemTransfer->getSku());
-            $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($shoppingListItemTransfer->getSku());
-            $shoppingListItemTransfer->setIdProduct($idProduct);
-            $shoppingListItemTransfer->setIdProductAbstract($idProductAbstract);
+
+            $productConcreteTransfer = $keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()];
+            $shoppingListItemTransfer->setIdProduct($productConcreteTransfer->getIdProductConcrete());
+            $shoppingListItemTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract());
         }
 
         return $shoppingListItemTransfers;

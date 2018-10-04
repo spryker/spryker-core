@@ -752,7 +752,7 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductOptionCollectionByCriteriaWithOneIdReturnsCollection(): void
+    public function testFindProductOptionCollectionByProductOptionCriteriaWithOneIdReturnsCollection(): void
     {
         $productOptionFacade = $this->createProductOptionFacade();
         $productOptionValueTransfer = $this->createProductOptionValueTransfer();
@@ -776,7 +776,7 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductOptionCollectionByCriteriaWithTwoIdsReturnsCollection(): void
+    public function testFindProductOptionCollectionByProductOptionCriteriaWithTwoIdsReturnsCollection(): void
     {
         $productOptionFacade = $this->createProductOptionFacade();
         $productOptionValueTransfer = $this->createProductOptionValueTransfer();
@@ -804,7 +804,7 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductOptionCollectionByCriteriaWithNoIdReturnsEmptyCollection(): void
+    public function testFindProductOptionCollectionByProductOptionCriteriaWithNoIdReturnsEmptyCollection(): void
     {
         $productOptionIds = [];
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setProductOptionIds($productOptionIds);

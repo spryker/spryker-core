@@ -33,16 +33,6 @@ class ShoppingListToProductFacadeBridge implements ShoppingListToProductFacadeIn
     }
 
     /**
-     * @param string $sku
-     *
-     * @return int|null
-     */
-    public function findProductConcreteIdBySku($sku): ?int
-    {
-        return $this->productFacade->findProductConcreteIdBySku($sku);
-    }
-
-    /**
      * @param string[] $skus
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
@@ -50,15 +40,5 @@ class ShoppingListToProductFacadeBridge implements ShoppingListToProductFacadeIn
     public function findProductConcretesBySkus(array $skus): array
     {
         return $this->productFacade->findProductConcretesBySkus($skus);
-    }
-
-    /**
-     * @param string $concreteSku
-     *
-     * @return int
-     */
-    public function getProductAbstractIdByConcreteSku($concreteSku)
-    {
-        return $this->productFacade->getProductAbstractIdByConcreteSku($concreteSku);
     }
 }
