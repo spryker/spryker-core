@@ -19,6 +19,8 @@ class CompanyTypeFieldPlugin extends AbstractPlugin implements CompanyFormExpand
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void

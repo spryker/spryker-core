@@ -6,6 +6,7 @@
  * file that was distributed with the source code of the extended class.
  *
  * @license MIT License
+ * @see https://github.com/propelorm/Propel2
  */
 
 namespace Spryker\Zed\PropelOrm\Business\Builder;
@@ -96,6 +97,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
             '\PDO'
         );
         $table = $this->getTable();
+        /** @var \Propel\Generator\Platform\DefaultPlatform $platform */
         $platform = $this->getPlatform();
         $primaryKeyMethodInfo = '';
         if ($table->getIdMethodParameters()) {

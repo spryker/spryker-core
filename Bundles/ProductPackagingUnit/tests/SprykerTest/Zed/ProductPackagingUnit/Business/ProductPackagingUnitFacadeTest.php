@@ -957,7 +957,6 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $itemTransfer = (new ItemTransfer())
             ->setSku(static::CONCRETE_PRODUCT_SKU)
             ->setAmountSalesUnit(new ProductMeasurementSalesUnitTransfer());
-        ;
 
         //Act
         $isProductPackagingUnitItemQuantitySplittable = $this->getFacade()->isProductPackagingUnitItemQuantitySplittable($itemTransfer);

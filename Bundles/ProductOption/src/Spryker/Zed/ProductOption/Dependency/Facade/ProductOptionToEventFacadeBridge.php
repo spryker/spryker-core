@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -25,12 +26,12 @@ class ProductOptionToEventFacadeBridge implements ProductOptionToEventFacadeInte
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $eventTransfer)
+    public function trigger($eventName, TransferInterface $transfer)
     {
-        $this->eventFacade->trigger($eventName, $eventTransfer);
+        $this->eventFacade->trigger($eventName, $transfer);
     }
 }

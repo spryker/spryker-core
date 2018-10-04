@@ -12,8 +12,8 @@ use Spryker\Yves\Kernel\Container;
 
 class RatepayDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_RATEPAY = 'ratepay client';
-    const CLIENT_SESSION = 'session client';
+    public const CLIENT_RATEPAY = 'ratepay client';
+    public const CLIENT_SESSION = 'session client';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

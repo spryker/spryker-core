@@ -64,8 +64,9 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
         foreach ($productAbstractIds as $idProductAbstract) {
             $packageProductConcreteEntityTransfers = $this->getPackageProductsByAbstractId($idProductAbstract);
 
-            if ($packageProductConcreteEntityTransfers) {
-                list($productPackagingLeadProduct) = $packageProductConcreteEntityTransfers[0]->getSpyProductPackagingLeadProducts();
+            if (!empty($packageProductConcreteEntityTransfers)) {
+                [$packageProductConcreteEntityTransfer] = $packageProductConcreteEntityTransfers;
+                [$productPackagingLeadProduct] = $packageProductConcreteEntityTransfer->getSpyProductPackagingLeadProducts();
                 $productAbstractPackagingStoreTransfers[] = $this->hydrateProductAbstractPackagingStoreTransfer(
                     $idProductAbstract,
                     $productPackagingLeadProduct,
@@ -139,7 +140,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
                 continue;
             }
 
-            list($productPackagingUnitEntityTransfer) = $packageProductConcreteEntityTransfer->getSpyProductPackagingUnits();
+            [$productPackagingUnitEntityTransfer] = $packageProductConcreteEntityTransfer->getSpyProductPackagingUnits();
             $this->getProductAbstractPackagingStorageNameAndLead($productConcretePackagingStorageTransfer, $productPackagingUnitEntityTransfer, $defaultPackagingUnitTypeName);
 
             if (!$productPackagingUnitEntityTransfer->getSpyProductPackagingUnitAmounts()->count()) {
@@ -148,7 +149,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
                 continue;
             }
 
-            list($productPackagingUnitAmountEntityTransfer) = $productPackagingUnitEntityTransfer->getSpyProductPackagingUnitAmounts();
+            [$productPackagingUnitAmountEntityTransfer] = $productPackagingUnitEntityTransfer->getSpyProductPackagingUnitAmounts();
             $this->getProductAbstractPackagingStorageAmount($productConcretePackagingStorageTransfer, $productPackagingUnitAmountEntityTransfer);
             $productConcretePackagingStorageTransfers[] = $productConcretePackagingStorageTransfer;
         }
@@ -163,10 +164,6 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
      */
     protected function hasProductPackagingUnit(SpyProductEntityTransfer $productEntityTransfer): bool
     {
-        if ($productEntityTransfer->getSpyProductPackagingUnits() === null) {
-            return false;
-        }
-
         return $productEntityTransfer->getSpyProductPackagingUnits()->count() > 0;
     }
 

@@ -58,28 +58,28 @@ class EventListenerContext implements EventListenerContextInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      * @param string $eventName
      *
      * @return void
      */
-    public function handle(TransferInterface $eventTransfer, $eventName)
+    public function handle(TransferInterface $transfer, $eventName)
     {
         if ($this->eventHandler instanceof EventHandlerInterface) {
-            $this->eventHandler->handle($eventTransfer, $eventName);
+            $this->eventHandler->handle($transfer, $eventName);
         }
     }
 
     /**
-     * @param array $eventTransfers
+     * @param array $transfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $transfers, $eventName)
     {
         if ($this->eventHandler instanceof EventBulkHandlerInterface) {
-            $this->eventHandler->handleBulk($eventTransfers, $eventName);
+            $this->eventHandler->handleBulk($transfers, $eventName);
         }
     }
 

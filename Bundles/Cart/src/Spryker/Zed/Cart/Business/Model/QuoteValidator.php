@@ -75,6 +75,7 @@ class QuoteValidator implements QuoteValidatorInterface
      */
     protected function checkErrorMessages()
     {
+        /** @var \Generated\Shared\Transfer\FlashMessagesTransfer|null $storedMessages */
         $storedMessages = $this->messengerFacade->getStoredMessages();
 
         return !$storedMessages || count($storedMessages->getErrorMessages()) === 0;

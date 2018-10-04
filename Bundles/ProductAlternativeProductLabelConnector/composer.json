@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-alternative-product-label-connector",
+  "type": "library",
   "description": "ProductAlternativeProductLabelConnector module",
   "license": "proprietary",
   "require": {
@@ -14,6 +15,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

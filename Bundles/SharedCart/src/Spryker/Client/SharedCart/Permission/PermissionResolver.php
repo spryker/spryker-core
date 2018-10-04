@@ -10,6 +10,7 @@ namespace Spryker\Client\SharedCart\Permission;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface;
+use Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin;
 use Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin;
 use Spryker\Shared\SharedCart\SharedCartConfig;
 
@@ -60,7 +61,7 @@ class PermissionResolver implements PermissionResolverInterface
         }
 
         $readAllowed = $this->can(
-            WriteSharedCartPermissionPlugin::KEY,
+            ReadSharedCartPermissionPlugin::KEY,
             $quoteTransfer->getIdQuote()
         );
         if ($readAllowed) {

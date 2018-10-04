@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class GuzzleBodyProcessorPlugin extends AbstractPlugin implements LogProcessorPluginInterface
 {
     /**
+     * @api
+     *
      * @param array $data
      *
      * @return array

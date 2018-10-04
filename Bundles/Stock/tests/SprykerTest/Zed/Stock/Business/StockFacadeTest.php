@@ -74,10 +74,10 @@ class StockFacadeTest extends Unit
      */
     protected $productConcreteEntity;
 
-    const ABSTRACT_SKU = 'abstract-sku';
-    const CONCRETE_SKU = 'concrete-sku';
-    const STOCK_QUANTITY_1 = 92;
-    const STOCK_QUANTITY_2 = 8;
+    public const ABSTRACT_SKU = 'abstract-sku';
+    public const CONCRETE_SKU = 'concrete-sku';
+    public const STOCK_QUANTITY_1 = 92;
+    public const STOCK_QUANTITY_2 = 8;
 
     /**
      * @return void

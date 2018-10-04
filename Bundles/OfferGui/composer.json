@@ -1,5 +1,6 @@
 {
   "name": "spryker/offer-gui",
+  "type": "library",
   "description": "OfferGui module",
   "license": "proprietary",
   "require": {
@@ -23,7 +24,6 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/calculation": "*",
     "spryker/code-sniffer": "*",
     "spryker/manual-order-entry-gui": "*",
     "spryker/testify": "*"

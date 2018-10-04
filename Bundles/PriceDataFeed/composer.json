@@ -1,5 +1,6 @@
 {
   "name": "spryker/price-data-feed",
+  "type": "library",
   "description": "PriceDataFeed module",
   "license": "proprietary",
   "require": {
@@ -8,10 +9,7 @@
     "spryker/price-product": "^1.0.0 || ^2.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/propel": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
   "autoload": {

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUser\Business;
 
+use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandler;
+use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandlerInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUser;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutor;
@@ -36,6 +38,17 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandlerInterface
+     */
+    public function createCompanyUserStatusHandler(): CompanyUserStatusHandlerInterface
+    {
+        return new CompanyUserStatusHandler(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutorInterface
      */
     protected function createCompanyUserPluginExecutor(): CompanyUserPluginExecutorInterface
@@ -57,7 +70,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface[]
      */
     protected function getCompanyUserPreSavePlugins(): array
     {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/category-storage",
+  "type": "library",
   "description": "CategoryStorage module",
   "license": "proprietary",
   "require": {
@@ -16,7 +17,12 @@
     "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/event": "*",
+    "spryker/propel": "*",
+    "spryker/propel-query-builder": "*",
+    "spryker/testify": "*",
     "spryker/url-storage": "*"
   },
   "suggest": {

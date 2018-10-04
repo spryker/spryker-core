@@ -22,7 +22,7 @@ interface ZedRequestFacadeInterface
      *
      * @param string|null $bundleControllerAction
      *
-     * @return string
+     * @return array
      */
     public function getRepeatData($bundleControllerAction);
 }

@@ -22,11 +22,11 @@ class ProductOptionGroupDataHelper extends Module
 {
     use LocatorHelperTrait;
 
-    const DEFAULT_STORE = 'DE';
-    const DEFAULT_CURRENCY = 'EUR';
+    public const DEFAULT_STORE = 'DE';
+    public const DEFAULT_CURRENCY = 'EUR';
 
-    const CURRENCY_CODE = 'currencyCode';
-    const STORE_NAME = 'storeName';
+    public const CURRENCY_CODE = 'currencyCode';
+    public const STORE_NAME = 'storeName';
 
     /**
      * @param array $override
@@ -87,7 +87,7 @@ class ProductOptionGroupDataHelper extends Module
             $this->createProductOptionTranslationTransfer($productOptionGroupTransfer->getName())
         );
 
-        foreach ($overrideValues as list($overrideValue, $overridePrices)) {
+        foreach ($overrideValues as [$overrideValue, $overridePrices]) {
             $productOptionValueTransfer = $this->createProductOptionValueTransfer($overrideValue, $overridePrices);
             $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
             $productOptionGroupTransfer->addProductOptionValueTranslation(

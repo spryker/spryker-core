@@ -252,7 +252,7 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
-     * - Creates new Cms page with given Url and Locale
+     * - Creates new CMS page with given URL and Locale
      * - Touches cms collector
      *
      * @api

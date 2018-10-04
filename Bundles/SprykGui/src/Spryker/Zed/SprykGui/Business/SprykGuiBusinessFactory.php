@@ -9,6 +9,11 @@ namespace Spryker\Zed\SprykGui\Business;
 
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderComposite;
+use Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderCompositeInterface;
+use Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderInterface;
+use Spryker\Zed\SprykGui\Business\ChoiceLoader\Zed\Business\Model\ZedBusinessModelChoiceLoader;
+use Spryker\Zed\SprykGui\Business\ChoiceLoader\Zed\Communication\Controller\ZedCommunicationControllerChoiceLoader;
 use Spryker\Zed\SprykGui\Business\Finder\AccessibleTransfer\AccessibleTransferFinder;
 use Spryker\Zed\SprykGui\Business\Finder\AccessibleTransfer\AccessibleTransferFinderInterface;
 use Spryker\Zed\SprykGui\Business\Finder\Factory\FactoryInfoFinder;
@@ -17,8 +22,6 @@ use Spryker\Zed\SprykGui\Business\Finder\Module\ModuleFinder;
 use Spryker\Zed\SprykGui\Business\Finder\Module\ModuleFinderInterface;
 use Spryker\Zed\SprykGui\Business\Finder\Organization\OrganizationFinder;
 use Spryker\Zed\SprykGui\Business\Finder\Organization\OrganizationFinderInterface;
-use Spryker\Zed\SprykGui\Business\Finder\Zed\Business\BusinessModelFinder;
-use Spryker\Zed\SprykGui\Business\Finder\Zed\Business\BusinessModelFinderInterface;
 use Spryker\Zed\SprykGui\Business\Graph\GraphBuilder;
 use Spryker\Zed\SprykGui\Business\Graph\GraphBuilderInterface;
 use Spryker\Zed\SprykGui\Business\Option\Argument\ArgumentOptionBuilder;
@@ -110,14 +113,6 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SprykGui\Business\Finder\Zed\Business\BusinessModelFinderInterface
-     */
-    public function createZedBusinessModelFinder(): BusinessModelFinderInterface
-    {
-        return new BusinessModelFinder();
-    }
-
-    /**
      * @return \Spryker\Zed\SprykGui\Business\Option\OptionBuilderInterface
      */
     public function createOptionBuilder(): OptionBuilderInterface
@@ -162,5 +157,32 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
     public function createPhpInternalTypes(): TypeInterface
     {
         return new Type();
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderCompositeInterface
+     */
+    public function createChoiceLoader(): ChoiceLoaderCompositeInterface
+    {
+        return new ChoiceLoaderComposite([
+            $this->createZedBusinessModelLoader(),
+            $this->createZedControllerChoiceLoader(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderInterface
+     */
+    public function createZedBusinessModelLoader(): ChoiceLoaderInterface
+    {
+        return new ZedBusinessModelChoiceLoader();
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderInterface
+     */
+    public function createZedControllerChoiceLoader(): ChoiceLoaderInterface
+    {
+        return new ZedCommunicationControllerChoiceLoader();
     }
 }

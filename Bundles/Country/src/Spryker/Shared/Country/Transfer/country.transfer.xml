@@ -10,10 +10,18 @@
         <property name="name" type="string" />
         <property name="postalCodeMandatory" type="bool" />
         <property name="postalCodeRegex" type="string" />
+        <property name="regions" type="Region[]" singular="region" />
     </transfer>
 
     <transfer name="CountryCollection">
         <property name="countries" type="Country[]" />
+    </transfer>
+
+    <transfer name="Region">
+        <property name="idRegion" type="int" />
+        <property name="fkCountry" type="int" />
+        <property name="name" type="string" />
+        <property name="iso2Code" type="string" />
     </transfer>
 
 </transfers>

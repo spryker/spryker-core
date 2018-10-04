@@ -26,4 +26,19 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\ProductPackagingUnitStorage\Helper\ProductPackagingUnitStorageHelper
-
+    Communication:
+        path: Communication
+        class_name: ProductPackagingUnitStorageCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitHelper
+                - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingLeadProductHelper
+                - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitTypeHelper
+                - \SprykerTest\Zed\ProductPackagingUnitStorage\Helper\ProductPackagingUnitStorageHelper

@@ -1,5 +1,6 @@
 {
   "name": "spryker/util-validate",
+  "type": "library",
   "description": "UtilValidate module",
   "license": "proprietary",
   "require": {

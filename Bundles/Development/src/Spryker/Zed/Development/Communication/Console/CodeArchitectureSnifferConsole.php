@@ -127,7 +127,7 @@ class CodeArchitectureSnifferConsole extends Console
     {
         $namespace = null;
         if (strpos($module, '.') !== false) {
-            list ($namespace, $module) = explode('.', $module, 2);
+            [$namespace, $module] = explode('.', $module, 2);
         }
 
         if ($namespace === static::NAMESPACE_SPRYKER && is_dir($this->getFactory()->getConfig()->getPathToCore() . $module)) {

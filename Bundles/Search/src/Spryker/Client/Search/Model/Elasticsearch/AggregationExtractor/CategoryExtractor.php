@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 
 class CategoryExtractor implements AggregationExtractorInterface
 {
-    const DOC_COUNT = 'doc_count';
+    public const DOC_COUNT = 'doc_count';
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */

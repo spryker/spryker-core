@@ -18,6 +18,8 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 class MailProviderPlugin extends AbstractPlugin implements MailProviderPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return void

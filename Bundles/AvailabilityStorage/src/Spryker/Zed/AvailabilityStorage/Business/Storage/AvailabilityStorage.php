@@ -13,11 +13,11 @@ use Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContaine
 
 class AvailabilityStorage implements AvailabilityStorageInterface
 {
-    const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const ID_AVAILABILITY_ABSTRACT = 'id_availability_abstract';
-    const FK_AVAILABILITY_ABSTRACT = 'fkAvailabilityAbstract';
-    const STORE = 'Store';
-    const STORE_NAME = 'name';
+    public const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const ID_AVAILABILITY_ABSTRACT = 'id_availability_abstract';
+    public const FK_AVAILABILITY_ABSTRACT = 'fkAvailabilityAbstract';
+    public const STORE = 'Store';
+    public const STORE_NAME = 'name';
 
     /**
      * @var \Spryker\Shared\Kernel\Store

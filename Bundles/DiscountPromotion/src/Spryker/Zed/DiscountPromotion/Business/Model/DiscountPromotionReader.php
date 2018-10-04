@@ -96,7 +96,7 @@ class DiscountPromotionReader implements DiscountPromotionReaderInterface
      */
     public function findDiscountPromotionByIdDiscount($idDiscount)
     {
-        $discountPromotionEntity = $discountPromotionEntity = $this->discountPromotionQueryContainer
+        $discountPromotionEntity = $this->discountPromotionQueryContainer
             ->queryDiscountPromotionByIdDiscount($idDiscount)
             ->findOne();
 

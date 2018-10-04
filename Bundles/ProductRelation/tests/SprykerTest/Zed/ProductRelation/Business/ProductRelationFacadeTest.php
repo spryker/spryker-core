@@ -33,7 +33,7 @@ use Spryker\Zed\ProductRelation\Business\ProductRelationFacade;
  */
 class ProductRelationFacadeTest extends Unit
 {
-    const ID_TEST_LOCALE = 66;
+    public const ID_TEST_LOCALE = 66;
 
     /**
      * @return void
@@ -216,8 +216,8 @@ class ProductRelationFacadeTest extends Unit
     }
 
     /**
-     * @param null|string $skuValueForFilter
-     * @param null|string $categoryName
+     * @param string|null $skuValueForFilter
+     * @param string|null $categoryName
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */

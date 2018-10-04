@@ -1,5 +1,6 @@
 {
   "name": "spryker/discount-promotion",
+  "type": "library",
   "description": "DiscountPromotion module",
   "license": "proprietary",
   "require": {
@@ -19,9 +20,7 @@
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*",
-    "spryker/transfer": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/calculation": "Used by plugin to reset promotional items.",
