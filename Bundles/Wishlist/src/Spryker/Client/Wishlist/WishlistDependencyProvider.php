@@ -16,12 +16,12 @@ use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductBridge;
 
 class WishlistDependencyProvider extends AbstractDependencyProvider
 {
-    const SERVICE_ZED = 'SERVICE_ZED';
+    public const SERVICE_ZED = 'SERVICE_ZED';
 
-    const CLIENT_CART = 'CLIENT_CART';
-    const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+    public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

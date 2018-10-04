@@ -66,7 +66,7 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableStockTypes()
     {

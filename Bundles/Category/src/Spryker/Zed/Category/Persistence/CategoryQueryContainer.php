@@ -90,13 +90,16 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryAllCategoryNodes()
     {
-        return $this->getFactory()->createCategoryNodeQuery();
+        return $this->getFactory()->createCategoryNodeQuery()
+            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
     }
 
     /**

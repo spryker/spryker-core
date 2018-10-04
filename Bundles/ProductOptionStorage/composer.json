@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-option-storage",
+  "type": "library",
   "description": "ProductOptionStorage module",
   "license": "proprietary",
   "require": {
@@ -17,7 +18,12 @@
     "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
-    "spryker/event": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
+    "spryker/event": "*",
+    "spryker/propel": "*",
+    "spryker/propel-query-builder": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"

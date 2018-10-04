@@ -1,5 +1,6 @@
 {
   "name": "spryker/currency-extension",
+  "type": "library",
   "description": "CurrencyExtension module",
   "license": "proprietary",
   "require": {

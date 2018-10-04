@@ -26,7 +26,7 @@ class TwigChartFunctionServiceProvider extends AbstractPlugin implements Service
     public function register(Application $app): void
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) {
+            $app->extend('twig', function (Twig_Environment $twig) {
                 return $this->registerChartTwigFunctions($twig);
             })
         );

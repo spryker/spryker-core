@@ -56,7 +56,7 @@ class CompanyBusinessUnitFormDataProvider
      */
     public function getOptions(?int $idCompanyBusinessUnit = null): array
     {
-        list($choicesValues, $choicesAttributes) = $this->prepareUnitParentAttributeMap($idCompanyBusinessUnit);
+        [$choicesValues, $choicesAttributes] = $this->prepareUnitParentAttributeMap($idCompanyBusinessUnit);
 
         return [
             'data_class' => CompanyBusinessUnitTransfer::class,

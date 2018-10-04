@@ -78,15 +78,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
             return null;
         }
 
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer
-            ->setReference($idProductAbstract)
-            ->setLocale($localeName)
-            ->setStore($this->store->getStoreName());
-
-        $key = $this->synchronizationService
-            ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
+        $key = $this->getStorageKey($idProductAbstract, $localeName);
 
         return $this->storageClient->get($key);
     }
@@ -105,5 +97,44 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         }
 
         return false;
+    }
+
+    /**
+     * @param string $mappingType
+     * @param string $identifier
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array
+    {
+        $reference = $mappingType . ':' . $identifier;
+        $mappingKey = $this->getStorageKey($reference, $localeName);
+        $mappingData = $this->storageClient->get($mappingKey);
+
+        if (!$mappingData) {
+            return null;
+        }
+
+        return $this->findProductAbstractStorageData($mappingData['id'], $localeName);
+    }
+
+    /**
+     * @param string $reference
+     * @param string $locale
+     *
+     * @return string
+     */
+    protected function getStorageKey(string $reference, string $locale): string
+    {
+        $synchronizationDataTransfer = new SynchronizationDataTransfer();
+        $synchronizationDataTransfer
+            ->setReference($reference)
+            ->setLocale($locale)
+            ->setStore($this->store->getStoreName());
+
+        return $this->synchronizationService
+            ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME)
+            ->generateKey($synchronizationDataTransfer);
     }
 }

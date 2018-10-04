@@ -148,7 +148,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
      */
     protected function findProductDiscontinuedCollection(array $productDiscontinuedIds): ProductDiscontinuedCollectionTransfer
     {
-        $criteriaFilterTransfer = (new ProductDiscontinuedCriteriaFilterTransfer)
+        $criteriaFilterTransfer = (new ProductDiscontinuedCriteriaFilterTransfer())
             ->setIds($productDiscontinuedIds);
 
         return $this->productDiscontinuedFacade->findProductDiscontinuedCollection($criteriaFilterTransfer);

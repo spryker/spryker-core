@@ -47,7 +47,7 @@ class RedirectChainTest extends Unit
      */
     public function testAvoidRedirectChainByUpdatingExistingRedirectTargets()
     {
-        list($urlTransfer, $modifiedUrlTransfer) = $this->prepareTestData();
+        [$urlTransfer, $modifiedUrlTransfer] = $this->prepareTestData();
 
         $newestUrlTransfer = $this->changeUrl(clone $modifiedUrlTransfer, '/test-baz');
 

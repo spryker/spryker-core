@@ -129,7 +129,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
             $cartAmountMap[$productGroupKey] = (int)$amountPerQuantity;
 
             if (isset($quoteAmountMapByGroupKey[$productGroupKey])) {
-                $cartAmountMap[$productGroupKey] += $quoteAmountMapByGroupKey[$productGroupKey];
+                $cartAmountMap[$productGroupKey] += (int)$quoteAmountMapByGroupKey[$productGroupKey];
             }
         }
 

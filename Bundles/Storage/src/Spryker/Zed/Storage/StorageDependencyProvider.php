@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Container;
 
 class StorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_STORAGE = 'storage client';
+    public const CLIENT_STORAGE = 'storage client';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

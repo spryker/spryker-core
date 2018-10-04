@@ -14,7 +14,7 @@ use Spryker\Zed\Application\Business\Model\Router\MvcRouter;
 class MvcRoutingServiceProvider implements ServiceProviderInterface
 {
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Shared\Kernel\Communication\Application $app
      *
      * @return void
      */
@@ -24,7 +24,7 @@ class MvcRoutingServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Shared\Kernel\Communication\Application $app
      *
      * @return void
      */

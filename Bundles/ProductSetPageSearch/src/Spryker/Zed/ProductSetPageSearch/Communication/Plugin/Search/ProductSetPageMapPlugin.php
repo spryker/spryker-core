@@ -21,7 +21,7 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
  */
 class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInterface
 {
-    const FILTERED_KEYS = [
+    public const FILTERED_KEYS = [
         'locale',
         'store',
         'type',
@@ -66,6 +66,8 @@ class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInte
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()

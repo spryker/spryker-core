@@ -22,7 +22,7 @@ use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
  */
 class PropelGroupedSchemaFinderTest extends AbstractPropelSchemaTest
 {
-    const NAME_OF_SCHEMA_FILE_GROUP = 'spy_foo.schema.xml';
+    public const NAME_OF_SCHEMA_FILE_GROUP = 'spy_foo.schema.xml';
 
     /**
      * @return void

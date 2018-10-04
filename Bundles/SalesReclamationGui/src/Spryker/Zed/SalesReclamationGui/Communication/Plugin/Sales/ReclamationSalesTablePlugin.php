@@ -14,7 +14,7 @@ use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig;
 
 class ReclamationSalesTablePlugin implements SalesTablePluginInterface
 {
-    const URL_CREATE_RECLAMATION = '/sales-reclamation-gui/create';
+    public const URL_CREATE_RECLAMATION = '/sales-reclamation-gui/create';
 
     /**
      * @api

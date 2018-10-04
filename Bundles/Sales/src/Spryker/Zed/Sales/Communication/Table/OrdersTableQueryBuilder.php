@@ -14,11 +14,11 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria as SprykerCriter
 
 class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
 {
-    const FIELD_ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
-    const FIELD_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
-    const DATE_FILTER_DAY = 'day';
-    const DATE_FILTER_WEEK = 'week';
-    const FIELD_ORDER_GRAND_TOTAL = 'order_grand_total';
+    public const FIELD_ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
+    public const FIELD_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    public const DATE_FILTER_DAY = 'day';
+    public const DATE_FILTER_WEEK = 'week';
+    public const FIELD_ORDER_GRAND_TOTAL = 'order_grand_total';
 
     /**
      * @var \Orm\Zed\Sales\Persistence\SpySalesOrderQuery

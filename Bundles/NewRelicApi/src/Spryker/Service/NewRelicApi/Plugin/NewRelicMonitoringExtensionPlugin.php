@@ -45,9 +45,9 @@ class NewRelicMonitoringExtensionPlugin implements MonitoringExtensionPluginInte
     }
 
     /**
-     * @param null|string $application
-     * @param null|string $store
-     * @param null|string $environment
+     * @param string|null $application
+     * @param string|null $store
+     * @param string|null $environment
      *
      * @return void
      */

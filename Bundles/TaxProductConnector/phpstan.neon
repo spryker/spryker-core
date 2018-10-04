@@ -3,6 +3,7 @@ parameters:
 
     ignoreErrors:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
+    - "#Casting to int something that's already int#"
 
 services:
     -

@@ -1,14 +1,11 @@
 {
   "name": "spryker/silex",
+  "type": "library",
   "description": "Silex module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "silex/silex": "^1.3.5"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

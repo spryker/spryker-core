@@ -566,7 +566,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @deprecated Will be removed with next major release
      *
-     * @param array $categoryKey
+     * @param string $categoryKey
      * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
@@ -637,6 +637,23 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
         return $this->getFactory()
             ->createCategoryNodeChecker()
             ->hasFirstLevelChildrenByName($name, $categoryTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $name
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function checkSameLevelCategoryByNameExists(string $name, CategoryTransfer $categoryTransfer): bool
+    {
+        return $this->getFactory()
+            ->createCategoryNodeChecker()
+            ->checkSameLevelCategoryByNameExists($name, $categoryTransfer);
     }
 
     /**

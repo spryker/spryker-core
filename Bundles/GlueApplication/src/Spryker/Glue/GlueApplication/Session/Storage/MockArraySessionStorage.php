@@ -56,8 +56,6 @@ class MockArraySessionStorage implements SessionStorageInterface
     protected static $bags;
 
     /**
-     * Constructor.
-     *
      * @param string $name Session name
      * @param \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag|null $metaBag MetadataBag instance
      */
@@ -222,7 +220,7 @@ class MockArraySessionStorage implements SessionStorageInterface
      */
     public function setMetadataBag(?MetadataBag $bag = null)
     {
-        if (null === $bag) {
+        if ($bag === null) {
             $bag = new MetadataBag();
         }
 

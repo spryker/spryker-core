@@ -72,9 +72,9 @@ class QuoteDeleter implements QuoteDeleterInterface
     {
         $quoteTransfer->setCustomer($this->customerClient->getCustomer());
         $quoteResponseTransfer = $this->persistentCartStub->deleteQuote($quoteTransfer);
-        $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
-        if ($this->quoteClient->getQuote()->getIdQuote() === $quoteTransfer->getIdQuote()) {
+        $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
+        if ($quoteResponseTransfer->getIsSuccessful() && $this->quoteClient->getQuote()->getIdQuote() === $quoteTransfer->getIdQuote()) {
             $this->quoteClient->setQuote(new QuoteTransfer());
         }
 

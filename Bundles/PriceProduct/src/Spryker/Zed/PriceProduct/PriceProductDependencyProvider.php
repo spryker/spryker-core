@@ -31,6 +31,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER = 'PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER';
     public const PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER = 'PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER';
     public const PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR';
+    public const PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE = 'PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -49,6 +50,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPriceDimensionConcreteSaverPlugins($container);
         $container = $this->addPriceProductDimensionExpanderStrategyPlugins($container);
         $container = $this->addPriceProductPricesExtractorPlugins($container);
+        $container = $this->addPriceProductStorePreDeletePlugins($container);
 
         return $container;
     }
@@ -206,6 +208,20 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductStorePreDeletePlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE] = function () {
+            return $this->getPriceProductStorePreDeletePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * The plugins in this stack will provide additional criteria to main price product query.
      *
      * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
@@ -223,6 +239,16 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
      */
     protected function getPriceDimensionAbstractSaverPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * The plugins are executed before deleting price product store entity
+     *
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface[]
+     */
+    protected function getPriceProductStorePreDeletePlugins(): array
     {
         return [];
     }

@@ -13,7 +13,7 @@ interface SalesToMoneyInterface
 {
     /**
      * @param int $amount
-     * @param null|string $isoCode
+     * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */

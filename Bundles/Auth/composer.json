@@ -1,5 +1,6 @@
 {
   "name": "spryker/auth",
+  "type": "library",
   "description": "Auth module",
   "license": "proprietary",
   "require": {
@@ -11,9 +12,10 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
     "spryker/config": "*",
-    "spryker/propel-orm": "*",
+    "spryker/discount": "*",
+    "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },

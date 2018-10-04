@@ -29,7 +29,7 @@ interface ShoppingListRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ShoppingListTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
      */
     public function findCustomerShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer;
 
@@ -50,9 +50,16 @@ interface ShoppingListRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ShoppingListTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
      */
     public function findShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer;
+
+    /**
+     * @param int $idShoppingList
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function findShoppingListItemsByIdShoppingList(int $idShoppingList): ShoppingListItemCollectionTransfer;
 
     /**
      * @param int[] $shoppingListIds
@@ -92,14 +99,14 @@ interface ShoppingListRepositoryInterface
     /**
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]
      */
     public function findCompanyBusinessUnitSharedShoppingListsIds(int $idCompanyBusinessUnit);
 
     /**
      * @param int $idCompanyUser
      *
-     * @return mixed|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]
      */
     public function findCompanyUserSharedShoppingListsIds(int $idCompanyUser);
 
