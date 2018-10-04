@@ -7,8 +7,6 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
-use Generated\Shared\Transfer\StatusMessagesTransfer;
-
 /**
  * @method \Spryker\Shared\Kernel\Transfer\TransferInterface call(string $url, \Spryker\Shared\Kernel\Transfer\TransferInterface $object, array $requestOptions = null)
  */

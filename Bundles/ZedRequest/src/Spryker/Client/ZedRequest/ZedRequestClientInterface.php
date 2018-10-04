@@ -64,11 +64,9 @@ interface ZedRequestClientInterface
      *  - Writes error message to flash bag.
      *  - Writes success message to flash bag.
      *  - Writes informational message to flash bag.
+     * This behavior is different from addAllResponseMessagesToMessenger and inspects only the last Zed request.
      *
      * @api
-     *
-     *
-     * This behavior is different from addAllResponseMessagesToMessenger and inspects only the last Zed request.
      *
      * @return void
      */
@@ -82,7 +80,7 @@ interface ZedRequestClientInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesInfoMessages(): array;
+    public function getResponsesInfoMessages(): array;
 
     /**
      * Specification:
@@ -102,7 +100,7 @@ interface ZedRequestClientInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesSuccessMessages(): array;
+    public function getResponsesSuccessMessages(): array;
 
     /**
      * Specification:
@@ -110,10 +108,9 @@ interface ZedRequestClientInterface
      *  - Writes error messages to flash bag.
      *  - Writes success messages to flash bag.
      *  - Writes informationals message to flash bag.
+     * This behavior is different from addFlashMessagesFromLastZedRequest which only inspects the most recent Zed request.
      *
      * @api
-     *
-     * This behavior is different from addFlashMessagesFromLastZedRequest which only inspects the most recent Zed request.
      *
      * @return void
      */

@@ -32,17 +32,17 @@ interface MessengerInterface
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesInfoMessages(): array;
+    public function getResponsesInfoMessages(): array;
 
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesErrorMessages(): array;
+    public function getResponsesErrorMessages(): array;
 
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesSuccessMessages(): array;
+    public function getResponsesSuccessMessages(): array;
 
     /**
      * @return void

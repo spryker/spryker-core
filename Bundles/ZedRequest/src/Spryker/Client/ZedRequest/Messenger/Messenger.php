@@ -113,7 +113,7 @@ class Messenger implements MessengerInterface
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesInfoMessages(): array
+    public function getResponsesInfoMessages(): array
     {
         return $this->zedClient->getInfoStatusMessages();
     }
@@ -121,7 +121,7 @@ class Messenger implements MessengerInterface
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesErrorMessages(): array
+    public function getResponsesErrorMessages(): array
     {
         return $this->zedClient->getErrorStatusMessages();
     }
@@ -129,7 +129,7 @@ class Messenger implements MessengerInterface
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesSuccessMessages(): array
+    public function getResponsesSuccessMessages(): array
     {
         return $this->zedClient->getSuccessStatusMessages();
     }
@@ -137,9 +137,9 @@ class Messenger implements MessengerInterface
    /**
     * @return void
     */
-    protected function addAllResponseErrorMessagesToMessenger(): void
+    protected function pushResponseErrorMessagesToMessenger(): void
     {
-        foreach ($this->getAllResponsesErrorMessages() as $errorMessage) {
+        foreach ($this->getResponsesErrorMessages() as $errorMessage) {
             $this->messengerClient->addErrorMessage($errorMessage);
         }
     }
@@ -147,9 +147,9 @@ class Messenger implements MessengerInterface
     /**
      * @return void
      */
-    protected function addAllResponseSuccessMessagesToMessenger(): void
+    protected function pushResponseSuccessMessagesToMessenger(): void
     {
-        foreach ($this->getAllResponsesSuccessMessages() as $successMessage) {
+        foreach ($this->getResponsesSuccessMessages() as $successMessage) {
             $this->messengerClient->addSuccessMessage($successMessage);
         }
     }
@@ -157,9 +157,9 @@ class Messenger implements MessengerInterface
     /**
      * @return void
      */
-    protected function addAllResponseInfoMessagesToMessenger(): void
+    protected function pushResponseInfoMessagesToMessenger(): void
     {
-        foreach ($this->getAllResponsesInfoMessages() as $infoMessage) {
+        foreach ($this->getResponsesInfoMessages() as $infoMessage) {
             $this->messengerClient->addInfoMessage($infoMessage);
         }
     }
@@ -169,8 +169,8 @@ class Messenger implements MessengerInterface
      */
     public function addAllResponseMessagesToMessenger(): void
     {
-        $this->addAllResponseErrorMessagesToMessenger();
-        $this->addAllResponseSuccessMessagesToMessenger();
-        $this->addAllResponseInfoMessagesToMessenger();
+        $this->pushResponseErrorMessagesToMessenger();
+        $this->pushResponseSuccessMessagesToMessenger();
+        $this->pushResponseInfoMessagesToMessenger();
     }
 }

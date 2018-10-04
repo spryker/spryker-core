@@ -24,12 +24,12 @@ interface CurrencyToZedRequestClientInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesErrorMessages(): array;
+    public function getResponsesErrorMessages(): array;
 
     /**
      * @api
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesSuccessMessages(): array;
+    public function getResponsesSuccessMessages(): array;
 }

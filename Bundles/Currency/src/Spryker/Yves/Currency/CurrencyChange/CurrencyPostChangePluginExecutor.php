@@ -80,7 +80,7 @@ class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecut
      */
     protected function addErrorMessages()
     {
-        foreach ($this->zedRequestClient->getAllResponsesErrorMessages() as $messageTransfer) {
+        foreach ($this->zedRequestClient->getResponsesErrorMessages() as $messageTransfer) {
             $this->messengerClient->addErrorMessage($messageTransfer->getValue());
         }
     }

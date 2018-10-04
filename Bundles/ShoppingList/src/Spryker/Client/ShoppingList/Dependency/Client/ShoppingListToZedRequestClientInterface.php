@@ -19,7 +19,7 @@ interface ShoppingListToZedRequestClientInterface
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesErrorMessages(): array;
+    public function getResponsesErrorMessages(): array;
 
     /**
      * @param string $url

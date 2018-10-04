@@ -108,11 +108,11 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesInfoMessages(): array
+    public function getResponsesInfoMessages(): array
     {
         return $this->getFactory()
             ->createMessenger()
-            ->getAllResponsesInfoMessages();
+            ->getResponsesInfoMessages();
     }
 
     /**
@@ -122,11 +122,11 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesErrorMessages(): array
+    public function getResponsesErrorMessages(): array
     {
         return $this->getFactory()
             ->createMessenger()
-            ->getAllResponsesErrorMessages();
+            ->getResponsesErrorMessages();
     }
 
     /**
@@ -136,11 +136,11 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesSuccessMessages(): array
+    public function getResponsesSuccessMessages(): array
     {
         return $this->getFactory()
             ->createMessenger()
-            ->getAllResponsesSuccessMessages();
+            ->getResponsesSuccessMessages();
     }
 
     /**

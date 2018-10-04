@@ -35,7 +35,7 @@ class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements Curren
             $cartClient->reloadItems();
 
             $zedRequestClient = $this->getFactory()->getZedRequestClient();
-            if (count($zedRequestClient->getAllResponsesErrorMessages()) > 0) {
+            if (count($zedRequestClient->getResponsesErrorMessages()) > 0) {
                 return false;
             }
         }

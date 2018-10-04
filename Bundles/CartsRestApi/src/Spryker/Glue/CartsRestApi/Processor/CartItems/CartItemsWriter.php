@@ -104,7 +104,7 @@ class CartItemsWriter implements CartItemsWriterInterface
             $this->prepareItemTransfer($restCartItemsAttributesTransfer)
         );
 
-        $errors = $this->zedRequestClient->getAllResponsesErrorMessages();
+        $errors = $this->zedRequestClient->getResponsesErrorMessages();
         if (count($errors) > 0) {
             return $this->returnWithError($errors, $restResponse);
         }
@@ -147,7 +147,7 @@ class CartItemsWriter implements CartItemsWriterInterface
             $restCartItemsAttributesTransfer->getQuantity()
         );
 
-        $errors = $this->zedRequestClient->getAllResponsesErrorMessages();
+        $errors = $this->zedRequestClient->getResponsesErrorMessages();
         if (count($errors) > 0) {
             return $this->returnWithError($errors, $restResponse);
         }

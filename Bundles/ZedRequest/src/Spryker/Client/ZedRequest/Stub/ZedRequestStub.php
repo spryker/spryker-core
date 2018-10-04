@@ -51,24 +51,24 @@ class ZedRequestStub
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesInfoMessages(): array
+    public function getResponsesInfoMessages(): array
     {
-        return $this->zedStub->getAllResponsesInfoMessages();
+        return $this->zedStub->getResponsesInfoMessages();
     }
 
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesSuccessMessages(): array
+    public function getResponsesSuccessMessages(): array
     {
-        return $this->zedStub->getAllResponsesSuccessMessages();
+        return $this->zedStub->getResponsesSuccessMessages();
     }
 
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesErrorMessages(): array
+    public function getResponsesErrorMessages(): array
     {
-        return $this->zedStub->getAllResponsesErrorMessages();
+        return $this->zedStub->getResponsesErrorMessages();
     }
 }

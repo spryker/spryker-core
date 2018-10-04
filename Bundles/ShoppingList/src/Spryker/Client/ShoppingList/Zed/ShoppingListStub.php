@@ -284,8 +284,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesErrorMessages(): array
+    public function getResponsesErrorMessages(): array
     {
-        return $this->zedRequestClient->getAllResponsesErrorMessages();
+        return $this->zedRequestClient->getResponsesErrorMessages();
     }
 }
