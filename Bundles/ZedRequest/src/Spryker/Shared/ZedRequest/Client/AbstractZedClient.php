@@ -8,7 +8,6 @@
 namespace Spryker\Shared\ZedRequest\Client;
 
 use BadMethodCallException;
-use Generated\Shared\Transfer\StatusMessagesTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 abstract class AbstractZedClient implements AbstractZedClientInterface
@@ -23,10 +22,18 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
      */
     private static $lastResponse = null;
 
+    private const INFO_MESSAGES = 'infoMessages';
+    private const ERROR_MESSAGES = 'errorMessages';
+    private const SUCCESS_MESSAGES = 'successMessages';
+
     /**
      * @var \Generated\Shared\Transfer\StatusMessagesTransfer;
      */
-    private static $statusMessages;
+    private static $statusMessages = [
+        self::INFO_MESSAGES => [],
+        self::ERROR_MESSAGES => [],
+        self::SUCCESS_MESSAGES => [],
+    ];
 
     /**
      * @var \Spryker\Shared\Kernel\Transfer\TransferInterface[]|\Closure[]
@@ -39,7 +46,6 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     public function __construct(HttpClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
-        self::$statusMessages = new StatusMessagesTransfer();
     }
 
     /**
@@ -98,16 +104,16 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
      *
      * @return void
      */
-    protected function collectStatusMessages(ResponseInterface $response): void
+    private function collectStatusMessages(ResponseInterface $response): void
     {
         foreach ($response->getErrorMessages() as $errorMessage) {
-            self::$statusMessages->addErrorMessage($errorMessage);
+            self::$statusMessages[self::ERROR_MESSAGES][] = $errorMessage;
         }
         foreach ($response->getSuccessMessages() as $successMessage) {
-            self::$statusMessages->addSuccessMessage($successMessage);
+            self::$statusMessages[self::SUCCESS_MESSAGES][] = $successMessage;
         }
         foreach ($response->getInfoMessages() as $infoMessage) {
-            self::$statusMessages->getInfoMessages($infoMessage);
+            self::$statusMessages[self::INFO_MESSAGES][] = $infoMessage;
         }
     }
 
@@ -136,8 +142,24 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     /**
      * @return \Generated\Shared\Transfer\StatusMessagesTransfer;
      */
-    public function getStatusMessages(): StatusMessagesTransfer
+    public function getInfoStatusMessages(): array
     {
-        return self::$statusMessages;
+        return self::$statusMessages[self::INFO_MESSAGES];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StatusMessagesTransfer;
+     */
+    public function getErrorStatusMessages(): array
+    {
+        return self::$statusMessages[self::ERROR_MESSAGES];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StatusMessagesTransfer;
+     */
+    public function getSuccessStatusMessages(): array
+    {
+        return self::$statusMessages[self::SUCCESS_MESSAGES];
     }
 }

@@ -8,10 +8,4 @@
         <property name="parameters" type="array"/>
     </transfer>
 
-    <transfer name="StatusMessages">
-        <property name="successMessages" type="Message[]" singular="successMessage"/>
-        <property name="errorMessages" type="Message[]" singular="errorMessage"/>
-        <property name="infoMessages" type="Message[]" singular="infoMessage"/>
-    </transfer>
-
 </transfers>

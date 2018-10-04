@@ -115,9 +115,7 @@ class Messenger implements MessengerInterface
      */
     public function getAllResponsesInfoMessages(): array
     {
-        $statusMessages = $this->zedClient->getStatusMessages();
-
-        return $statusMessages->getInfoMessages()->getArrayCopy();
+        return $this->zedClient->getInfoStatusMessages();
     }
 
     /**
@@ -125,9 +123,7 @@ class Messenger implements MessengerInterface
      */
     public function getAllResponsesErrorMessages(): array
     {
-        $statusMessages = $this->zedClient->getStatusMessages();
-
-        return $statusMessages->getErrorMessages()->getArrayCopy();
+        return $this->zedClient->getErrorStatusMessages();
     }
 
     /**
@@ -135,9 +131,7 @@ class Messenger implements MessengerInterface
      */
     public function getAllResponsesSuccessMessages(): array
     {
-        $statusMessages = $this->zedClient->getStatusMessages();
-
-        return $statusMessages->getSuccessMessages()->getArrayCopy();
+        return $this->zedClient->getSuccessStatusMessages();
     }
 
    /**
@@ -146,7 +140,7 @@ class Messenger implements MessengerInterface
     protected function addAllResponseErrorMessagesToMessenger(): void
     {
         foreach ($this->getAllResponsesErrorMessages() as $errorMessage) {
-            $this->messengerClient->addErrorMessage($errorMessage->getValue());
+            $this->messengerClient->addErrorMessage($errorMessage);
         }
     }
 
@@ -156,7 +150,7 @@ class Messenger implements MessengerInterface
     protected function addAllResponseSuccessMessagesToMessenger(): void
     {
         foreach ($this->getAllResponsesSuccessMessages() as $successMessage) {
-            $this->messengerClient->addSuccessMessage($successMessage->getValue());
+            $this->messengerClient->addSuccessMessage($successMessage);
         }
     }
 
@@ -166,7 +160,7 @@ class Messenger implements MessengerInterface
     protected function addAllResponseInfoMessagesToMessenger(): void
     {
         foreach ($this->getAllResponsesInfoMessages() as $infoMessage) {
-            $this->messengerClient->addInfoMessage($infoMessage->getValue());
+            $this->messengerClient->addInfoMessage($infoMessage);
         }
     }
 

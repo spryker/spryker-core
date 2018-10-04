@@ -92,7 +92,7 @@ interface ZedRequestClientInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesErrorMessages(): array;
+    public function getResponsesErrorMessages(): array;
 
     /**
      * Specification:
@@ -117,5 +117,5 @@ interface ZedRequestClientInterface
      *
      * @return void
      */
-    public function addAllResponseMessagesToMessenger(): void;
+    public function addResponseMessagesToMessenger(): void;
 }

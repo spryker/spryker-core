@@ -35,7 +35,17 @@ interface AbstractZedClientInterface
     public function getLastResponse();
 
     /**
-     * @return Generated\Shared\Transfer\StatusMessagesTransfer;
+     * @return \Generated\Shared\Transfer\StatusMessagesTransfer;
      */
-    public function getStatusMessages(): StatusMessagesTransfer;
+    public function getInfoStatusMessages(): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\StatusMessagesTransfer;
+     */
+    public function getErrorStatusMessages(): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\StatusMessagesTransfer;
+     */
+    public function getSuccessStatusMessages(): array;
 }
