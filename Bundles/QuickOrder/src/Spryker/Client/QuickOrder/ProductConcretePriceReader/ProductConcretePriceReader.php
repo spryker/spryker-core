@@ -10,7 +10,6 @@ namespace Spryker\Client\QuickOrder\ProductConcretePriceReader;
 use Generated\Shared\Transfer\CurrentProductConcretePriceTransfer;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Spryker\Client\PriceProductStorage\PriceProductStorageClient;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductStorageClientInterface;
 
