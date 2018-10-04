@@ -50,8 +50,9 @@ class ProductConcretePriceReader implements ProductConcretePriceReaderInterface
 
         $currentProductPriceTransfer = $currentProductConcretePriceTransfer->getCurrentProductPrice();
 
-        $priceProductTransfers = $this->priceProductStorageClient->getPriceProductConcreteTransfers(
-            $currentProductConcretePriceTransfer->getIdProductConcrete()
+        $priceProductTransfers = $this->priceProductStorageClient->getResolvedPriceProductConcreteTransfers(
+            $currentProductConcretePriceTransfer->getIdProductConcrete(),
+            $currentProductConcretePriceTransfer->getIdProductAbstract()
         );
 
         $priceProductFilterTransfer = $this->createPriceProductFilterTransferFromCurrentProductPriceTransfer($currentProductPriceTransfer);

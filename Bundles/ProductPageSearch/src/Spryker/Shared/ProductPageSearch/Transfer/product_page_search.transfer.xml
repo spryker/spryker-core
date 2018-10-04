@@ -48,6 +48,7 @@
     <transfer name="ProductConcretePageSearch">
         <property name="idProductConcretePageSearch" type="int" />
         <property name="fkProduct" type="int" />
+        <property name="fkProductAbstract" type="int" />
         <property name="abstractSku" type="int" />
         <property name="name" type="string" />
         <property name="sku" type="string" />

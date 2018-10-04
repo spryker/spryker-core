@@ -24,11 +24,12 @@ class QuickOrderToPriceProductStorageClientBridge implements QuickOrderToPricePr
 
     /**
      * @param int $idProductConcrete
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getPriceProductConcreteTransfers(int $idProductConcrete): array
+    public function getResolvedPriceProductConcreteTransfers(int $idProductConcrete, int $idProductAbstract): array
     {
-        return $this->priceProductStorageClient->getPriceProductConcreteTransfers($idProductConcrete);
+        return $this->priceProductStorageClient->getResolvedPriceProductConcreteTransfers($idProductConcrete, $idProductAbstract);
     }
 }
