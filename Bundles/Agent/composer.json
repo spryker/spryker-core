@@ -1,5 +1,6 @@
 {
   "name": "spryker/agent",
+  "type": "library",
   "description": "Agent module",
   "license": "proprietary",
   "require": {

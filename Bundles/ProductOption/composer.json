@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-option",
+  "type": "library",
   "description": "ProductOption module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/sales-quantity",
+  "type": "library",
   "description": "SalesQuantity module",
   "license": "proprietary",
   "require": {

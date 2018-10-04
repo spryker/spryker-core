@@ -1,5 +1,6 @@
 {
   "name": "spryker/elastica",
+  "type": "library",
   "description": "Elastica module",
   "license": "proprietary",
   "require": {
