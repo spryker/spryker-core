@@ -20,7 +20,7 @@ class CustomerForgottenPasswordResourceRoutePlugin extends AbstractPlugin implem
 {
     /**
      * {@inheritdoc}
-     *  - Configures available actions for customer forgotten resource.
+     *  - Configures available actions for customer-forgotten-password resource.
      *
      * @api
      *

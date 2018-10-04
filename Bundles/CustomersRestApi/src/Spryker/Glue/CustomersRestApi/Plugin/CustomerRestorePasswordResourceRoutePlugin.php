@@ -20,7 +20,7 @@ class CustomerRestorePasswordResourceRoutePlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritdoc}
-     *  - Configures available actions for customer restore password resource.
+     *  - Configures available actions for customer-restore-password resource.
      *
      * @api
      *

@@ -57,7 +57,8 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $customerTransfer = $this->customerRestorePasswordResourceMapper->mapCustomerRestorePasswordAttributesToCustomerTransfer($restCustomerRestorePasswordAttributesTransfer);
+        $customerTransfer = $this->customerRestorePasswordResourceMapper
+            ->mapCustomerRestorePasswordAttributesToCustomerTransfer($restCustomerRestorePasswordAttributesTransfer);
         $customerResponseTransfer = $this->customerClient->restorePassword($customerTransfer);
 
         if (!$customerResponseTransfer->getIsSuccess()) {
