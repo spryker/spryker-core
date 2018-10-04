@@ -73,12 +73,6 @@
         <property name="requests" type="ShoppingListAddToCartRequest[]" singular="request" />
     </transfer>
 
-    <transfer name="ProductView">
-        <property name="quantity" type="int" />
-        <property name="idShoppingListItem" type="int" />
-        <property name="shoppingListItem" type="ShoppingListItem" />
-    </transfer>
-
     <transfer name="ShoppingListShareRequest">
         <property name="idShoppingList" type="int" />
         <property name="idCompanyUser" type="int" />

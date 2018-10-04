@@ -63,7 +63,8 @@ class ShoppingListFactory extends AbstractFactory
             $this->getCartClient(),
             $this->createShoppingListStub(),
             $this->getMessengerClient(),
-            $this->getShoppingListItemToItemMapperPlugins()
+            $this->getShoppingListItemToItemMapperPlugins(),
+            $this->getQuoteItemToItemMapperPlugins()
         );
     }
 
@@ -73,7 +74,7 @@ class ShoppingListFactory extends AbstractFactory
     public function createShoppingListAddItemExpander(): ShoppingListAddItemExpanderInterface
     {
         return new ShoppingListAddItemExpander(
-            $this->getAddItemShoppingListItemExpanderPlugins()
+            $this->getAddItemShoppingListItemMapperPlugins()
         );
     }
 
@@ -134,10 +135,18 @@ class ShoppingListFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemExpanderPluginInterface[]
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapperPluginInterface[]
      */
-    public function getAddItemShoppingListItemExpanderPlugins(): array
+    public function getQuoteItemToItemMapperPlugins(): array
     {
-        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_EXPANDER);
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_QUOTE_ITEM_TO_ITEM_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface[]
+     */
+    public function getAddItemShoppingListItemMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER);
     }
 }

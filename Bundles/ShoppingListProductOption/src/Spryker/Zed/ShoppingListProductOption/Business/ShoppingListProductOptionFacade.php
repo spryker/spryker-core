@@ -60,11 +60,11 @@ class ShoppingListProductOptionFacade extends AbstractFacade implements Shopping
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getShoppingListItemProductOptionsByIdShoppingListItem(int $idShoppingListItem): ProductOptionCollectionTransfer
+    public function findShoppingListItemProductOptionsByIdShoppingListItem(int $idShoppingListItem): ProductOptionCollectionTransfer
     {
         return $this->getFactory()
             ->createShoppingListItemProductOptionReader()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem($idShoppingListItem);
+            ->findShoppingListItemProductOptionsByIdShoppingListItem($idShoppingListItem);
     }
 
     /**
@@ -76,11 +76,11 @@ class ShoppingListProductOptionFacade extends AbstractFacade implements Shopping
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    public function expandShoppingListItemWithProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->getFactory()
             ->createShoppingListItemExpander()
-            ->expandItem($shoppingListItemTransfer);
+            ->expandShoppingListItemWithProductOptions($shoppingListItemTransfer);
     }
 
     /**

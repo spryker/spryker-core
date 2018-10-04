@@ -8,27 +8,26 @@
 namespace Spryker\Client\ShoppingListProductOption;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ShoppingListProductOption\Dependency\Client\ShoppingListProductOptionToCartClientInterface;
+use Spryker\Client\ShoppingListProductOption\Mapper\QuoteItemToItemMapper;
+use Spryker\Client\ShoppingListProductOption\Mapper\QuoteItemToItemMapperInterface;
 use Spryker\Client\ShoppingListProductOption\Mapper\ShoppingListItemToItemMapper;
 use Spryker\Client\ShoppingListProductOption\Mapper\ShoppingListItemToItemMapperInterface;
 
 class ShoppingListProductOptionFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ShoppingListProductOption\Mapper\ShoppingListItemToItemMapperInterface
+     * @return \Spryker\Client\ShoppingListProductOption\Mapper\QuoteItemToItemMapperInterface
      */
-    public function getShoppingListItemToItemMapper(): ShoppingListItemToItemMapperInterface
+    public function createQuoteItemToItemMapper(): QuoteItemToItemMapperInterface
     {
-        return new ShoppingListItemToItemMapper(
-            $this->getCartClient()
-        );
+        return new QuoteItemToItemMapper();
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListProductOption\Dependency\Client\ShoppingListProductOptionToCartClientInterface
+     * @return \Spryker\Client\ShoppingListProductOption\Mapper\ShoppingListItemToItemMapperInterface
      */
-    public function getCartClient(): ShoppingListProductOptionToCartClientInterface
+    public function createShoppingListItemToItemMapper(): ShoppingListItemToItemMapperInterface
     {
-        return $this->getProvidedDependency(ShoppingListProductOptionDependencyProvider::CLIENT_CART);
+        return new ShoppingListItemToItemMapper();
     }
 }

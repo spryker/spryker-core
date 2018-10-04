@@ -18,7 +18,7 @@ class ShoppingListItemProductOptionExpanderPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritdoc}
-     * - Adds a product options to shopping list item.
+     * - Populates product options in shopping list item from persistence.
      *
      * @api
      *
@@ -29,6 +29,6 @@ class ShoppingListItemProductOptionExpanderPlugin extends AbstractPlugin impleme
     public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->getFacade()
-            ->expandItem($shoppingListItemTransfer);
+            ->expandShoppingListItemWithProductOptions($shoppingListItemTransfer);
     }
 }

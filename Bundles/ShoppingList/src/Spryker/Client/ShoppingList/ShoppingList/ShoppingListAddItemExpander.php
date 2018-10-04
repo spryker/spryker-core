@@ -12,16 +12,16 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 class ShoppingListAddItemExpander implements ShoppingListAddItemExpanderInterface
 {
     /**
-     * @var \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemExpanderPluginInterface[]
+     * @var \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface[]
      */
-    protected $shoppingListItemExpanderPlugins;
+    protected $shoppingListItemMapperPlugins;
 
     /**
-     * @param \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemExpanderPluginInterface[] $shoppingListItemExpanderPlugins
+     * @param \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface[] $shoppingListItemMapperPlugins
      */
-    public function __construct(array $shoppingListItemExpanderPlugins)
+    public function __construct(array $shoppingListItemMapperPlugins)
     {
-        $this->shoppingListItemExpanderPlugins = $shoppingListItemExpanderPlugins;
+        $this->shoppingListItemMapperPlugins = $shoppingListItemMapperPlugins;
     }
 
     /**
@@ -32,8 +32,8 @@ class ShoppingListAddItemExpander implements ShoppingListAddItemExpanderInterfac
      */
     public function expandShoppingListAddItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $params): ShoppingListItemTransfer
     {
-        foreach ($this->shoppingListItemExpanderPlugins as $shoppingListItemExpanderPlugin) {
-            $shoppingListItemTransfer = $shoppingListItemExpanderPlugin->expand($shoppingListItemTransfer, $params);
+        foreach ($this->shoppingListItemMapperPlugins as $shoppingListItemMapperPlugin) {
+            $shoppingListItemTransfer = $shoppingListItemMapperPlugin->map($shoppingListItemTransfer, $params);
         }
 
         return $shoppingListItemTransfer;

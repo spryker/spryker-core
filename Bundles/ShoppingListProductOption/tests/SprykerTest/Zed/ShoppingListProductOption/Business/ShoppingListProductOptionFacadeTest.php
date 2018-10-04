@@ -124,7 +124,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
 
         $actualResult = $this->tester
             ->getFacade()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem(
+            ->findShoppingListItemProductOptionsByIdShoppingListItem(
                 $this->shoppingListItemTransfer->getIdShoppingListItem()
             );
 
@@ -148,7 +148,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
     {
         $actualResult = $this->tester
             ->getFacade()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem(
+            ->findShoppingListItemProductOptionsByIdShoppingListItem(
                 $this->shoppingListItemTransfer->getIdShoppingListItem()
             );
 
@@ -178,7 +178,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
         $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
         $actualResult = $this->tester
             ->getFacade()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem(
+            ->findShoppingListItemProductOptionsByIdShoppingListItem(
                 $this->shoppingListItemTransfer->getIdShoppingListItem()
             );
 
@@ -206,7 +206,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
         $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
         $actualResult = $this->tester
             ->getFacade()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem(
+            ->findShoppingListItemProductOptionsByIdShoppingListItem(
                 $this->shoppingListItemTransfer->getIdShoppingListItem()
             );
 
@@ -240,7 +240,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
 
         $actualResult = $this->tester
             ->getFacade()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem(
+            ->findShoppingListItemProductOptionsByIdShoppingListItem(
                 $this->shoppingListItemTransfer->getIdShoppingListItem()
             );
 
@@ -368,7 +368,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
 
         $actualResult = $this->tester
             ->getFacade()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem(
+            ->findShoppingListItemProductOptionsByIdShoppingListItem(
                 $this->shoppingListItemTransfer->getIdShoppingListItem()
             );
 

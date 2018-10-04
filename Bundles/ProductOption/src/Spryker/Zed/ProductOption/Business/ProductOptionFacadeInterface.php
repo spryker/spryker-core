@@ -227,7 +227,7 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     * - Selects product option collection by criteria transfer.
+     * - Retrieves product options by provided product option IDs.
      *
      * @api
      *
@@ -235,5 +235,5 @@ interface ProductOptionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getProductOptionCollectionByCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
+    public function findProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
 }

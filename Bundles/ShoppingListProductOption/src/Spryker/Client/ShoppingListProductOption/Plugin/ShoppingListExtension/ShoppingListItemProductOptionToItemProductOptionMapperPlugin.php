@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ShoppingListProductOption\Plugin;
+namespace Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListExtension;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
@@ -20,7 +20,6 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPlugin extends Abstr
     /**
      * {@inheritdoc}
      * - Copies productOptions from ShoppingListItemTransfer to ItemTransfer.
-     * - Merges the item to the item existing in cart if they have the same productOptions.
      *
      * @api
      *
@@ -32,7 +31,7 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPlugin extends Abstr
     public function map(ShoppingListItemTransfer $shoppingListItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
     {
         return $this->getFactory()
-            ->getShoppingListItemToItemMapper()
+            ->createShoppingListItemToItemMapper()
             ->map($shoppingListItemTransfer, $itemTransfer);
     }
 }
