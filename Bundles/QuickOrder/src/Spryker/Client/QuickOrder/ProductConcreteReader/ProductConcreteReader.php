@@ -49,7 +49,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
      */
-    protected function findProductConcreteStorageTransfers(array $quickOrderItemTransfers)
+    protected function findProductConcreteStorageTransfers(array $quickOrderItemTransfers): array
     {
         $productConcreteStorageTransfers = [];
 
@@ -71,7 +71,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer|null
      */
-    protected function findProductConcreteStorageData(QuickOrderItemTransfer $quickOrderItemTransfer)
+    protected function findProductConcreteStorageData(QuickOrderItemTransfer $quickOrderItemTransfer): ?ProductConcreteStorageTransfer
     {
         $productConcreteStorageData = $this->productStorageClient->findProductConcreteStorageData(
             $quickOrderItemTransfer->getIdProductConcrete(),
@@ -90,7 +90,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer
      */
-    protected function createProductConcreteStorageTransfer(array $data)
+    protected function createProductConcreteStorageTransfer(array $data): ProductConcreteStorageTransfer
     {
         return (new ProductConcreteStorageTransfer())->fromArray($data, true);
     }
