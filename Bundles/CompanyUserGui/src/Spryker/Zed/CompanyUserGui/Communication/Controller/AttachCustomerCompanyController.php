@@ -16,11 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 class AttachCustomerCompanyController extends AbstractController
 {
     protected const REDIRECT_URL_DEFAULT = '/company-user-gui/list-company-user';
-    protected const REDIRECT_URL_CUSTOMER_LIST = '/customer';
 
     protected const MESSAGE_COMPANY_USER_CREATE_SUCCESS = 'Company user has been created.';
     protected const MESSAGE_COMPANY_USER_CREATE_ERROR = 'Company user has not been created.';
-    protected const MESSAGE_COMPANY_USER_ATTACH_ERROR = 'Company user for this customer already exists.';
 
     protected const PARAM_ID_CUSTOMER = 'id-customer';
 
@@ -31,7 +29,7 @@ class AttachCustomerCompanyController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCompanyUser = static::castId($request->query->get(static::PARAM_ID_CUSTOMER));
+        $idCompanyUser = $this->castId($request->query->get(static::PARAM_ID_CUSTOMER));
         $dataProvider = $this->getFactory()->createCustomerCompanyAttachFormDataProvider();
 
         $form = $this->getFactory()
@@ -49,15 +47,11 @@ class AttachCustomerCompanyController extends AbstractController
 
             if (!$companyUserResponseTransfer->getIsSuccessful()) {
                 $this->addErrorMessage(static::MESSAGE_COMPANY_USER_CREATE_ERROR);
+            } else {
+                $this->addSuccessMessage(static::MESSAGE_COMPANY_USER_CREATE_SUCCESS);
 
-                return $this->viewResponse([
-                    'form' => $form->createView(),
-                ]);
+                return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
             }
-
-            $this->addSuccessMessage(static::MESSAGE_COMPANY_USER_CREATE_SUCCESS);
-
-            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
 
         return $this->viewResponse([

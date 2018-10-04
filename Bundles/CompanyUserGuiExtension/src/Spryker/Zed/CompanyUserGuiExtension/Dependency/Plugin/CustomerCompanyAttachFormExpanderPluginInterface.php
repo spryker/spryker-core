@@ -13,7 +13,7 @@ interface CustomerCompanyAttachFormExpanderPluginInterface
 {
     /**
      * Specification:
-     *  - Expand CustomerCompanyAttachForm.
+     *  - Expands CustomerCompanyAttachForm.
      *
      * @api
      *

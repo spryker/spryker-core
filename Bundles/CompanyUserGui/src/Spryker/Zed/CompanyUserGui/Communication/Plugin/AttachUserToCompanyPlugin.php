@@ -25,7 +25,7 @@ class AttachUserToCompanyPlugin extends AbstractPlugin implements CustomerTableA
 
     /**
      * {@inheritdoc}
-     * - Add "Attach to company" button in actions for customer table
+     * - Add "Attaches to company" button in actions for customer table
      *
      * @api
      *

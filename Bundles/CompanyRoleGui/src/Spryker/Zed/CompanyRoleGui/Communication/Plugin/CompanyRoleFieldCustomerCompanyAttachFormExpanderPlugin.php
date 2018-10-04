@@ -18,7 +18,7 @@ class CompanyRoleFieldCustomerCompanyAttachFormExpanderPlugin extends AbstractPl
 {
     /**
      * {@inheritdoc}
-     *  - Expand CustomerCompanyAttachForm on choice of company roles form CompanyUserRoleChoiceFormType.
+     *  - Expands CustomerCompanyAttachForm on choice of company roles form CompanyUserRoleChoiceFormType.
      *
      * @api
      *

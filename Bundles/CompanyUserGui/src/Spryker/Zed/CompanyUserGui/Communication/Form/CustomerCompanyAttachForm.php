@@ -27,7 +27,7 @@ class CustomerCompanyAttachForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'company_user_to_company';
     }
@@ -89,8 +89,8 @@ class CustomerCompanyAttachForm extends AbstractType
      */
     protected function addPluginForms(FormBuilderInterface $builder): self
     {
-        foreach ($this->getFactory()->getCustomerCompanyAttachFormExpanderPlugins() as $formPlugin) {
-            $builder = $formPlugin->buildForm($builder);
+        foreach ($this->getFactory()->getCustomerCompanyAttachFormExpanderPlugins() as $customerCompanyAttachFormExpanderPlugin) {
+            $builder = $customerCompanyAttachFormExpanderPlugin->buildForm($builder);
         }
 
         return $this;

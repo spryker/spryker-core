@@ -182,8 +182,8 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerTableActionPluginExecutor(): CustomerTableActionExpanderPluginExecutorInterface
     {
-        return (new CustomerTableActionExpanderPluginExecutor(
+        return new CustomerTableActionExpanderPluginExecutor(
             $this->getCustomerTableActionExpanderPlugins()
-        ));
+        );
     }
 }
