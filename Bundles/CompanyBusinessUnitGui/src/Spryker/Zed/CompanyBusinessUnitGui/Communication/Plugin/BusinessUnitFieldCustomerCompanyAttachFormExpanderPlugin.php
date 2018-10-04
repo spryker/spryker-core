@@ -29,10 +29,10 @@ class BusinessUnitFieldCustomerCompanyAttachFormExpanderPlugin extends AbstractP
     public function buildForm(FormBuilderInterface $builder): FormBuilderInterface
     {
         $formType = $this->getFactory()
-            ->createCompanyUserBusinessUnitChoiceFormType();
+            ->createCompanyUserBusinessUnitForm();
 
         $dataProvider = $this->getFactory()
-            ->createCompanyUserBusinessUnitChoiceFormDataProvider();
+            ->createCompanyUserBusinessUnitFormDataProvider();
 
         $companyUserTransfer = $builder->getData();
         $dataProvider->getData($companyUserTransfer);

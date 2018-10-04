@@ -42,7 +42,6 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserTableConfigExpanderPlugins($container);
         $container = $this->addCompanyUserTablePrepareDataExpanderPlugins($container);
         $container = $this->addCompanyUserFormExpanderPlugins($container);
-        $container = $this->addCompanyUserEditFormExpanderPlugins($container);
         $container = $this->addCustomerCompanyAttachFormPlugins($container);
 
         return $container;
@@ -186,14 +185,6 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserFormExpanderPluginInterface[]
      */
     protected function getCompanyUserFormExpanderPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Communication\Plugin\CompanyUserFormExpanderPluginInterface[]
-     */
-    protected function getCompanyUserEditFormExpanderPlugins(): array
     {
         return [];
     }

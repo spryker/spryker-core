@@ -29,10 +29,10 @@ class CompanyRoleFieldCustomerCompanyAttachFormExpanderPlugin extends AbstractPl
     public function buildForm(FormBuilderInterface $builder): FormBuilderInterface
     {
         $formType = $this->getFactory()
-            ->createCompanyUserRoleChoiceFormType();
+            ->createCompanyUserRoleForm();
 
         $dataProvider = $this->getFactory()
-            ->createCompanyUserRoleChoiceFormDataProvider();
+            ->createCompanyUserRoleFormDataProvider();
 
         $companyUserTransfer = $builder->getData();
         $dataProvider->getData($companyUserTransfer);
