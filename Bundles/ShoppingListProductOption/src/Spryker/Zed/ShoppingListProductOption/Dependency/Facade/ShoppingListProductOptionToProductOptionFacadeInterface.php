@@ -17,5 +17,5 @@ interface ShoppingListProductOptionToProductOptionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function findProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
+    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
 }
