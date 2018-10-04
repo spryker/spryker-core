@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderComposite;
 use Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderCompositeInterface;
 use Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderInterface;
+use Spryker\Zed\SprykGui\Business\ChoiceLoader\Client\ClientMethodChoiceLoader;
+use Spryker\Zed\SprykGui\Business\ChoiceLoader\Service\ServiceMethodChoiceLoader;
 use Spryker\Zed\SprykGui\Business\ChoiceLoader\Zed\Business\Model\ZedBusinessModelChoiceLoader;
 use Spryker\Zed\SprykGui\Business\ChoiceLoader\Zed\Business\ZedFacadeMethodChoiceLoader;
 use Spryker\Zed\SprykGui\Business\ChoiceLoader\Zed\Communication\Controller\ZedCommunicationControllerChoiceLoader;
@@ -178,6 +180,8 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
             $this->createZedBusinessModelLoader(),
             $this->createZedControllerChoiceLoader(),
             $this->createZedFacadeMethodChoiceLoader(),
+            $this->createServiceMethodChoiceLoader(),
+            $this->createClientMethodChoiceLoader(),
         ]);
     }
 
@@ -203,5 +207,21 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
     public function createZedFacadeMethodChoiceLoader(): ChoiceLoaderInterface
     {
         return new ZedFacadeMethodChoiceLoader();
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderInterface
+     */
+    public function createServiceMethodChoiceLoader(): ChoiceLoaderInterface
+    {
+        return new ServiceMethodChoiceLoader();
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderInterface
+     */
+    public function createClientMethodChoiceLoader(): ChoiceLoaderInterface
+    {
+        return new ClientMethodChoiceLoader();
     }
 }
