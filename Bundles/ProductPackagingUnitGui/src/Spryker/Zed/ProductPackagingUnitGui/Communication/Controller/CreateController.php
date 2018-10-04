@@ -36,7 +36,7 @@ class CreateController extends AbstractProductPackagingUnitGuiController
             ->handleRequest($request);
 
         if ($productPackagingUnitTypeForm->isSubmitted() && $productPackagingUnitTypeForm->isValid()) {
-            return $this->createProductPackagingUnitType($request, $productPackagingUnitTypeForm);
+            return $this->createProductPackagingUnitType($request, $productPackagingUnitTypeForm, $availableLocales);
         }
 
         return $this->viewResponse([
@@ -48,10 +48,11 @@ class CreateController extends AbstractProductPackagingUnitGuiController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $productPackagingUnitTypeForm
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createProductPackagingUnitType(Request $request, FormInterface $productPackagingUnitTypeForm)
+    protected function createProductPackagingUnitType(Request $request, FormInterface $productPackagingUnitTypeForm, array $availableLocales)
     {
         $redirectUrl = $this->getRequestRedirectUrl($request);
         $productPackagingUnitTypeTransfer = $productPackagingUnitTypeForm->getData();
@@ -79,7 +80,10 @@ class CreateController extends AbstractProductPackagingUnitGuiController
                 $productPackagingUnitTypeTransfer->getName()
             ));
 
-            return $this->redirectResponse($redirectUrl);
+            return $this->viewResponse([
+                'availableLocales' => $availableLocales,
+                'productPackagingUnitTypeForm' => $productPackagingUnitTypeForm->createView(),
+            ]);
         }
 
         $this->addSuccessMessage(sprintf(
