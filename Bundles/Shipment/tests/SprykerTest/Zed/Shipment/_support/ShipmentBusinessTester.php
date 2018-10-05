@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\Shipment;
 
 use Codeception\Actor;
@@ -73,7 +79,7 @@ class ShipmentBusinessTester extends Actor
      *
      * @return void
      */
-    public function updateShipmentMethod(array $data, array $idFilter = null)
+    public function updateShipmentMethod(array $data, ?array $idFilter = null)
     {
         $shipmentMethodQuery = SpyShipmentMethodQuery::create();
 

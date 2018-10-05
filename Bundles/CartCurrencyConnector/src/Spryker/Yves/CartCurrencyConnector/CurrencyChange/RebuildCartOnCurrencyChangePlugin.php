@@ -11,6 +11,7 @@ use Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated use \Spryker\Client\CartCurrencyConnector\CurrencyChange\CartUpdateCurrencyOnCurrencyChangePlugin instead
  *
  * @method \Spryker\Yves\CartCurrencyConnector\CartCurrencyConnectorFactory getFactory()
  */

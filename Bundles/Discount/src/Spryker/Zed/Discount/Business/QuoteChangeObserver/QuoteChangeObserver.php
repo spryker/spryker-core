@@ -65,7 +65,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      * @param \Generated\Shared\Transfer\DiscountTransfer[] $indexSourceDiscountTransferCollection
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int[]
+     * @return string[]
      */
     protected function checkRemovedDiscountsItemsSku(array $indexResultDiscountTransferCollection, array $indexSourceDiscountTransferCollection, QuoteTransfer $quoteTransfer): array
     {
@@ -87,7 +87,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      * @param \Generated\Shared\Transfer\DiscountTransfer[] $indexSourceDiscountTransferCollection
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int[]
+     * @return string[]
      */
     protected function checkCurrentDiscountsDiffItemsSku(array $indexResultDiscountTransferCollection, array $indexSourceDiscountTransferCollection, QuoteTransfer $quoteTransfer): array
     {
@@ -125,7 +125,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idDiscount
      *
-     * @return int[]
+     * @return string[]
      */
     protected function findItemsWithAppliedDiscounts(QuoteTransfer $quoteTransfer, int $idDiscount): array
     {

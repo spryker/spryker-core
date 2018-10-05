@@ -147,7 +147,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     protected function isProductSellable(
         ItemTransfer $itemTransfer,
         $currentItemQuantity,
-        StoreTransfer $storeTransfer = null
+        ?StoreTransfer $storeTransfer = null
     ) {
         if ($storeTransfer) {
             return $this->availabilityFacade->isProductSellableForStore(
@@ -166,7 +166,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      *
      * @return int
      */
-    protected function calculateStockForProduct(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer = null)
+    protected function calculateStockForProduct(ItemTransfer $itemTransfer, ?StoreTransfer $storeTransfer = null)
     {
         if ($storeTransfer) {
             $this->availabilityFacade->calculateStockForProductWithStore($itemTransfer->getSku(), $storeTransfer);

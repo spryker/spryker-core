@@ -126,9 +126,9 @@ class NodeUrlManager implements NodeUrlManagerInterface
      */
     protected function updateChildrenUrls(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[] $children */
         $children = $this->categoryTreeReader->getPathChildren($categoryNodeTransfer->getIdCategoryNode());
         foreach ($children as $child) {
-            /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $child */
             if (!$this->hasCategoryNodeUrl($child->getFkCategoryNodeDescendant(), $localeTransfer)) {
                 continue;
             }
@@ -191,10 +191,10 @@ class NodeUrlManager implements NodeUrlManagerInterface
      */
     protected function generateChildUrl($idChild, LocaleTransfer $localeTransfer)
     {
-        $parentList = $this->categoryTreeReader->getPathParents($idChild, $localeTransfer->getIdLocale());
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[] $parents */
+        $parents = $this->categoryTreeReader->getPathParents($idChild, $localeTransfer->getIdLocale());
         $pathTokens = [];
-        foreach ($parentList as $parent) {
-            /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $parent */
+        foreach ($parents as $parent) {
             $pathTokens[] = $parent->toArray();
         }
 
@@ -215,7 +215,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return int
+     * @return bool
      */
     protected function hasCategoryNodeUrl($idCategoryNode, LocaleTransfer $localeTransfer)
     {

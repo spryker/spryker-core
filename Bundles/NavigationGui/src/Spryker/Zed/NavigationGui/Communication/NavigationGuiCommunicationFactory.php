@@ -37,22 +37,22 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
      * @deprecated Use `getNavigationForm()` instead.
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createNavigationForm(NavigationTransfer $data = null, array $options = [])
+    public function createNavigationForm(?NavigationTransfer $data = null, array $options = [])
     {
         return $this->getFormFactory()->create($this->createNavigationFormType(), $data, $options);
     }
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getNavigationForm(NavigationTransfer $data = null, array $options = [])
+    public function getNavigationForm(?NavigationTransfer $data = null, array $options = [])
     {
         return $this->createNavigationForm($data, $options);
     }
@@ -71,22 +71,22 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
      * @deprecated Use `getUpdateNavigationForm()` instead.
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createUpdateNavigationForm(NavigationTransfer $data = null, array $options = [])
+    public function createUpdateNavigationForm(?NavigationTransfer $data = null, array $options = [])
     {
         return $this->getFormFactory()->create($this->createUpdateNavigationFormType(), $data, $options);
     }
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getUpdateNavigationForm(NavigationTransfer $data = null, array $options = [])
+    public function getUpdateNavigationForm(?NavigationTransfer $data = null, array $options = [])
     {
         return $this->createUpdateNavigationForm($data, $options);
     }
@@ -117,7 +117,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createNavigationNodeForm(NavigationNodeTransfer $data = null, array $options = [])
+    public function createNavigationNodeForm(?NavigationNodeTransfer $data = null, array $options = [])
     {
         return $this->getFormFactory()->create($this->createNavigationNodeFormType(), $data, $options);
     }
@@ -128,7 +128,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getNavigationNodeForm(NavigationNodeTransfer $data = null, array $options = [])
+    public function getNavigationNodeForm(?NavigationNodeTransfer $data = null, array $options = [])
     {
         return $this->createNavigationNodeForm($data, $options);
     }

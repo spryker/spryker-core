@@ -18,8 +18,8 @@ use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridgeI
 
 class CartItemsAttributeMapper implements CartItemsMapperInterface
 {
-    const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
-    const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
+    public const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
+    public const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
     /**
      * @var \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridgeInterface
@@ -42,7 +42,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
      *
      * @return array
      */
@@ -86,7 +86,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
             }
 
             $variantNameValue = $this->getParentNode($attributeMapIterator);
-            list($variantName, $variantValue) = explode(':', $variantNameValue);
+            [$variantName, $variantValue] = explode(':', $variantNameValue);
 
             if ($this->isVariantNotSet($variantName, $productVariants, $variantValue)) {
                 $productVariants[$variantName][$variantValue][CartVariantConstants::AVAILABLE] = false;
@@ -191,7 +191,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     /**
      * @param \RecursiveIteratorIterator $attributeMapIterator
      *
-     * @return \RecursiveIterator
+     * @return string
      */
     protected function getParentNode(RecursiveIteratorIterator $attributeMapIterator)
     {

@@ -29,7 +29,7 @@ class ProductType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'constraints' => [
@@ -44,7 +44,7 @@ class ProductType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addSkuField($builder, $options)
@@ -57,7 +57,7 @@ class ProductType extends AbstractType
      *
      * @return $this
      */
-    protected function addSkuField(FormBuilderInterface $builder, array $options)
+    protected function addSkuField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_SKU, TextType::class, [
             'label' => 'SKU',
@@ -73,7 +73,7 @@ class ProductType extends AbstractType
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder, array $options)
+    protected function addQuantityField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
@@ -92,7 +92,7 @@ class ProductType extends AbstractType
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
-    protected function createNumberConstraint(array $options)
+    protected function createNumberConstraint(array $options): Regex
     {
         $validationGroup = $this->getValidationGroup($options);
 
@@ -108,7 +108,7 @@ class ProductType extends AbstractType
      *
      * @return string
      */
-    protected function getValidationGroup(array $options)
+    protected function getValidationGroup(array $options): string
     {
         $validationGroup = Constraint::DEFAULT_GROUP;
         if (!empty($options['validation_group'])) {
@@ -120,7 +120,7 @@ class ProductType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'product';
     }

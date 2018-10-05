@@ -17,14 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class GlossaryStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilSanitizeServiceInterface
-     */
-    public function getUtilSanitizeService()
-    {
-        return $this->getProvidedDependency(GlossaryStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
-    }
-
-    /**
      * @return \Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()

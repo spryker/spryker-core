@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\CompanyDataImport\Helper;
@@ -12,24 +12,6 @@ use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 
 class CompanyDataImportHelper extends Module
 {
-    /**
-     * @return void
-     */
-    public function ensureDatabaseTableIsEmpty(): void
-    {
-        $companyQuery = $this->getCompanyQuery();
-        foreach ($companyQuery->find() as $companyEntity) {
-            $companyEntity->getSpyCompanySupplierToProducts()->delete();
-            foreach ($companyEntity->getPriceProducts() as $priceProduct) {
-                $priceProduct->setFkCompany(null);
-                $priceProduct->save();
-            }
-            $companyEntity->getCompanyBusinessUnits()->delete();
-            $companyEntity->getCompanyUnitAddresses()->delete();
-            $companyEntity->delete();
-        }
-    }
-
     /**
      * @return void
      */

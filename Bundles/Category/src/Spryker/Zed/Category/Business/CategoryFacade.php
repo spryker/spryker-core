@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -189,7 +190,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return int
      */
-    public function createCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
+    public function createCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         return $this
             ->getFactory()
@@ -227,7 +228,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
+    public function updateCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $this
             ->getFactory()
@@ -339,7 +340,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return int
      */
-    public function createCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer = null, $createUrlPath = true)
+    public function createCategoryNode(NodeTransfer $nodeTransfer, ?LocaleTransfer $localeTransfer = null, $createUrlPath = true)
     {
         return $this
             ->getFactory()
@@ -357,7 +358,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer = null)
+    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $this
             ->getFactory()
@@ -407,7 +408,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @deprecated Will be removed with next major release
      *
-     * @return bool
+     * @return string|false
      */
     public function renderCategoryTreeVisual()
     {
@@ -463,7 +464,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getChildren($idNode, LocaleTransfer $localeTransfer)
     {
@@ -565,7 +566,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @deprecated Will be removed with next major release
      *
-     * @param array $categoryKey
+     * @param string $categoryKey
      * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
@@ -621,5 +622,53 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
         return $this->getFactory()
             ->createCategoryTemplateReader()
             ->findCategoryTemplateByName($name);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $name
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function hasFirstLevelChildrenByName(string $name, CategoryTransfer $categoryTransfer): bool
+    {
+        return $this->getFactory()
+            ->createCategoryNodeChecker()
+            ->hasFirstLevelChildrenByName($name, $categoryTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $name
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function checkSameLevelCategoryByNameExists(string $name, CategoryTransfer $categoryTransfer): bool
+    {
+        return $this->getFactory()
+            ->createCategoryNodeChecker()
+            ->checkSameLevelCategoryByNameExists($name, $categoryTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCategory()
+            ->getAllCategoryCollection($localeTransfer);
     }
 }

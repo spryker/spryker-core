@@ -55,7 +55,7 @@ interface ReaderInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return int
+     * @return int|null
      */
     public function getTimestamp($filesystemName, $path);
 

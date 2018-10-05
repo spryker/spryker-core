@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\NavigationStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\NavigationStorage\Dependency\Client\NavigationStorageToStorageClientInterface;
 use Spryker\Client\NavigationStorage\Dependency\Service\NavigationStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\NavigationStorage\NavigationStorageConstants;
 
 class NavigationStorage implements NavigationStorageInterface
@@ -83,16 +82,7 @@ class NavigationStorage implements NavigationStorageInterface
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setReference($keyName);
         $synchronizationDataTransfer->setLocale($localeName);
-        $synchronizationDataTransfer->setStore($this->getStoreName());
 
         return $this->synchronizationService->getStorageKeyBuilder(NavigationStorageConstants::RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return Store::getInstance()->getStoreName();
     }
 }

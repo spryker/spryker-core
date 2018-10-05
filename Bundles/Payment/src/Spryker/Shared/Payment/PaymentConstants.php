@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Payment;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface PaymentConstants
 {
     /**
@@ -14,5 +17,5 @@ interface PaymentConstants
      *
      * @api
      */
-    const PAYMENT_METHOD_STATEMACHINE_MAPPING = 'PAYMENT_METHOD_STATEMACHINE_MAPPING';
+    public const PAYMENT_METHOD_STATEMACHINE_MAPPING = 'PAYMENT_METHOD_STATEMACHINE_MAPPING';
 }

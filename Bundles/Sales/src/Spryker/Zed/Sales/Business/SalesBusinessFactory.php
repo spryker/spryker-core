@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Sales\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
+use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
@@ -17,16 +19,21 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
+use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
+use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
+use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
+ * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface getEntityManager()
  */
 class SalesBusinessFactory extends AbstractBusinessFactory
 {
@@ -68,6 +75,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
+            $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->createOrderItemMapper()
         );
@@ -85,6 +93,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
+            $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->createOrderItemMapper()
         );
@@ -106,6 +115,17 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydrator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader
+     */
+    public function createOrderRepositoryReader()
+    {
+        return new OrderRepositoryReader(
+            $this->createOrderHydrator(),
+            $this->getRepository()
         );
     }
 
@@ -163,7 +183,19 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderExpander()
     {
-        return new OrderExpander($this->getCalculationFacade());
+        return new OrderExpander(
+            $this->getCalculationFacade(),
+            $this->createOrderItemTransformer(),
+            $this->getItemTransformerStrategyPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface
+     */
+    public function createOrderItemTransformer(): OrderItemTransformerInterface
+    {
+        return new OrderItemTransformer();
     }
 
     /**
@@ -223,6 +255,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
+     */
+    public function getOrderExpanderPreSavePlugins()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::ORDER_EXPANDER_PRE_SAVE_PLUGINS);
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface
      */
     public function createSalesOrderSaverPluginExecutor()
@@ -246,5 +286,23 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderItemMapper()
     {
         return new SalesOrderItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface[]
+     */
+    public function getItemTransformerStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::ITEM_TRANSFORMER_STRATEGY_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface
+     */
+    public function createExpenseWriter(): ExpenseWriterInterface
+    {
+        return new ExpenseWriter(
+            $this->getEntityManager()
+        );
     }
 }

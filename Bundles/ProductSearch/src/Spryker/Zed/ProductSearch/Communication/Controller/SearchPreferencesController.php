@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SearchPreferencesController extends AbstractController
 {
-    const PARAM_ID = 'id';
+    public const PARAM_ID = 'id';
 
     /**
      * @return array
@@ -47,7 +47,7 @@ class SearchPreferencesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -81,7 +81,7 @@ class SearchPreferencesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editAction(Request $request)
     {

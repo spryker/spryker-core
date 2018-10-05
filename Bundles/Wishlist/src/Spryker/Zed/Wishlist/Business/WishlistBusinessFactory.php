@@ -16,6 +16,7 @@ use Spryker\Zed\Wishlist\WishlistDependencyProvider;
 /**
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Wishlist\WishlistConfig getConfig()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface getRepository()
  */
 class WishlistBusinessFactory extends AbstractBusinessFactory
 {
@@ -27,7 +28,8 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
         return new Reader(
             $this->getQueryContainer(),
             $this->getProductQueryContainer(),
-            $this->createTransferMapper()
+            $this->createTransferMapper(),
+            $this->getRepository()
         );
     }
 
@@ -39,7 +41,8 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
         return new Writer(
             $this->getQueryContainer(),
             $this->createReader(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
+            $this->getAddItemPreCheckPlugins()
         );
     }
 
@@ -75,5 +78,13 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
+     */
+    public function getAddItemPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_ADD_ITEM_PRE_CHECK);
     }
 }

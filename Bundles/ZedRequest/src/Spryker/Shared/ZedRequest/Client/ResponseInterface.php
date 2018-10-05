@@ -10,14 +10,17 @@ namespace Spryker\Shared\ZedRequest\Client;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
+/**
+ * @method array toArray()
+ */
 interface ResponseInterface
 {
-    const INFO_MESSAGES = 'infoMessages';
-    const ERROR_MESSAGES = 'errorMessages';
-    const SUCCESS_MESSAGES = 'successMessages';
-    const SUCCESS = 'success';
-    const TRANSFER_CLASSNAME = 'transferClassName';
-    const TRANSFER = 'transfer';
+    public const INFO_MESSAGES = 'infoMessages';
+    public const ERROR_MESSAGES = 'errorMessages';
+    public const SUCCESS_MESSAGES = 'successMessages';
+    public const SUCCESS = 'success';
+    public const TRANSFER_CLASSNAME = 'transferClassName';
+    public const TRANSFER = 'transfer';
 
     /**
      * @param array $values

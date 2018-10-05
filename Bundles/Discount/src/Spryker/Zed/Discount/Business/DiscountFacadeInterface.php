@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -212,7 +213,7 @@ interface DiscountFacadeInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return boolean
+     * @return bool
      */
     public function isTimeSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
@@ -427,7 +428,7 @@ interface DiscountFacadeInterface
      *
      * @param string[] $voucherCodes
      *
-     * @return bool
+     * @return int
      */
     public function releaseUsedVoucherCodes(array $voucherCodes);
 
@@ -440,7 +441,7 @@ interface DiscountFacadeInterface
      *
      * @param string[] $voucherCodes
      *
-     * @return bool
+     * @return int
      */
     public function useVoucherCodes(array $voucherCodes);
 

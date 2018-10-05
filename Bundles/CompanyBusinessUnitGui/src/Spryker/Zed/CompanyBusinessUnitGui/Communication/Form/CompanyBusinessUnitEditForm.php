@@ -11,14 +11,25 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @method \Spryker\Zed\CompanyGui\Communication\CompanyGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
  */
 class CompanyBusinessUnitEditForm extends CompanyBusinessUnitForm
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitEditForm
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     */
+    protected function addCompanyField(FormBuilderInterface $builder, array $choices): CompanyBusinessUnitForm
+    {
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
      */
     protected function addPluginForms(FormBuilderInterface $builder): AbstractType
     {

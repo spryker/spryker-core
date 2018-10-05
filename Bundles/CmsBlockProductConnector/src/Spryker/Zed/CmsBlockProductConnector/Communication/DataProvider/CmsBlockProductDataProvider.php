@@ -15,7 +15,7 @@ use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQue
 
 class CmsBlockProductDataProvider
 {
-    const PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME = 'name';
+    public const PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME = 'name';
 
     /**
      * @var \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface
@@ -92,9 +92,10 @@ class CmsBlockProductDataProvider
         $productAbstractArray = [];
 
         foreach ($productAbstracts as $spyProductAbstract) {
-            $productAbstractArray[$spyProductAbstract->getIdProductAbstract()] =
-                $spyProductAbstract->getVirtualColumn(static::PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME) .
-            ' (SKU: ' . $spyProductAbstract->getSku() . ')';
+            $label = $spyProductAbstract->getVirtualColumn(static::PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME) .
+                ' (SKU: ' . $spyProductAbstract->getSku() . ')';
+
+            $productAbstractArray[$label] = $spyProductAbstract->getIdProductAbstract();
         }
 
         return $productAbstractArray;

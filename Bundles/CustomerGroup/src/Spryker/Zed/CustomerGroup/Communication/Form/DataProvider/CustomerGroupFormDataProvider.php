@@ -41,6 +41,9 @@ class CustomerGroupFormDataProvider
             ->customerGroupQueryContainer
             ->queryCustomerGroupById($idCustomerGroup)
             ->findOne();
+        if (!$customerGroupEntity) {
+            return new CustomerGroupTransfer();
+        }
 
         $customerGroupTransfer = (new CustomerGroupTransfer())
             ->fromArray($customerGroupEntity->toArray(), true)

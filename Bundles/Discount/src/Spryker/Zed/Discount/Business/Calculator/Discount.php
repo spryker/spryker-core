@@ -149,7 +149,7 @@ class Discount implements DiscountInterface
      * @param string[] $voucherCodes
      * @param int $idStore
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes, $idStore)
     {
@@ -353,7 +353,7 @@ class Discount implements DiscountInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idDiscount
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function filterDiscountApplicableItems(QuoteTransfer $quoteTransfer, $idDiscount)
     {

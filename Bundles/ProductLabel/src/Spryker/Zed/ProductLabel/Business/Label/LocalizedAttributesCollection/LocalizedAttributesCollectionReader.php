@@ -47,7 +47,7 @@ class LocalizedAttributesCollectionReader implements LocalizedAttributesCollecti
     /**
      * @param int $idProductLabel
      *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes[]
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findEntitiesByIdProductLabel($idProductLabel)
     {

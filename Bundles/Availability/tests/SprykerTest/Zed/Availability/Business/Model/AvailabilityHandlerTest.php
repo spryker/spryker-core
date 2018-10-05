@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -33,7 +34,7 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
  */
 class AvailabilityHandlerTest extends Unit
 {
-    const PRODUCT_SKU = 'sku-123-321';
+    public const PRODUCT_SKU = 'sku-123-321';
 
     /**
      * @return void
@@ -92,12 +93,12 @@ class AvailabilityHandlerTest extends Unit
      * @return \Spryker\Zed\Availability\Business\Model\AvailabilityHandler
      */
     protected function createAvailabilityHandler(
-        SellableInterface $sellable = null,
-        AvailabilityToStockInterface $stockFacade = null,
-        AvailabilityToTouchInterface $touchFacade = null,
-        AvailabilityQueryContainerInterface $availabilityQueryContainer = null,
-        AvailabilityToProductInterface $availabilityToProductFacade = null,
-        AvailabilityToStoreFacadeInterface $availabilityToStoreFacade = null
+        ?SellableInterface $sellable = null,
+        ?AvailabilityToStockInterface $stockFacade = null,
+        ?AvailabilityToTouchInterface $touchFacade = null,
+        ?AvailabilityQueryContainerInterface $availabilityQueryContainer = null,
+        ?AvailabilityToProductInterface $availabilityToProductFacade = null,
+        ?AvailabilityToStoreFacadeInterface $availabilityToStoreFacade = null
     ) {
 
         if ($sellable === null) {

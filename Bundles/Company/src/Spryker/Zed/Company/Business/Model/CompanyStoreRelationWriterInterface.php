@@ -16,5 +16,5 @@ interface CompanyStoreRelationWriterInterface
      *
      * @return void
      */
-    public function save(StoreRelationTransfer $storeRelationTransfer = null): void;
+    public function save(?StoreRelationTransfer $storeRelationTransfer = null): void;
 }

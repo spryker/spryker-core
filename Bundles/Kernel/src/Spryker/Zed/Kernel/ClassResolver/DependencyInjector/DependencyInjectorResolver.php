@@ -14,8 +14,8 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollection;
 
 class DependencyInjectorResolver extends AbstractClassResolver
 {
-    const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Dependency\\Injector\\%4$sDependencyInjector';
-    const KEY_FROM_BUNDLE = '%fromBundle%';
+    public const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Dependency\\Injector\\%4$sDependencyInjector';
+    public const KEY_FROM_BUNDLE = '%fromBundle%';
 
     /**
      * @var string
@@ -50,11 +50,14 @@ class DependencyInjectorResolver extends AbstractClassResolver
     }
 
     /**
-     * @return object|\Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface
+     * @return \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface
      */
     protected function getResolvedClassInstance()
     {
-        return parent::getResolvedClassInstance();
+        /** @var \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface $class */
+        $class = parent::getResolvedClassInstance();
+
+        return $class;
     }
 
     /**

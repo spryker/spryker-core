@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class UpdateTranslationForm extends TranslationForm
 {
-    const TYPE_DATA_EMPTY = 'empty_data';
+    public const TYPE_DATA_EMPTY = 'empty_data';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -41,7 +41,7 @@ class UpdateTranslationForm extends TranslationForm
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $locales
      *
-     * @return \Spryker\Zed\Glossary\Communication\Form\UpdateTranslationForm
+     * @return $this
      */
     protected function addLocaleCollection(FormBuilderInterface $builder, array $locales)
     {

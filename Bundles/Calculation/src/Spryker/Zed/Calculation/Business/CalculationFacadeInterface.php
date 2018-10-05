@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -292,6 +293,18 @@ interface CalculationFacadeInterface
      * @return void
      */
     public function removeAllCalculatedDiscounts(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     * Specification:
+     *  - Sets canceled amount to zero for provided items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function removeCanceledAmount(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      *

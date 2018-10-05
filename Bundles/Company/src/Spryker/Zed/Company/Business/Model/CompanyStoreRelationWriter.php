@@ -39,7 +39,7 @@ class CompanyStoreRelationWriter implements CompanyStoreRelationWriterInterface
      *
      * @return void
      */
-    public function save(StoreRelationTransfer $storeRelationTransfer = null): void
+    public function save(?StoreRelationTransfer $storeRelationTransfer = null): void
     {
         if ($storeRelationTransfer === null) {
             return;
@@ -76,7 +76,7 @@ class CompanyStoreRelationWriter implements CompanyStoreRelationWriterInterface
     /**
      * @param int $idCompany
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return int[]
      */
     protected function getIdStoresByIdCompany($idCompany)
     {

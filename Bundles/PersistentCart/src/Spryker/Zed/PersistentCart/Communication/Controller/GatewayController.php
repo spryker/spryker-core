@@ -113,7 +113,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function deleteQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
@@ -123,7 +123,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function createQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
@@ -133,10 +133,20 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateQuoteAction(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->updateQuote($quoteUpdateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateAndReloadQuoteAction(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->updateAndReloadQuote($quoteUpdateRequestTransfer);
     }
 }

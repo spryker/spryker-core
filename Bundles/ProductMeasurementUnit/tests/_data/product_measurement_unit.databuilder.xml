@@ -17,4 +17,14 @@
         <property name="key" type="string" dataBuilderRule="isbn10" />
     </transfer>
 
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit" dataBuilderRule="=" />
+        <property name="conversion" type="float" dataBuilderRule="=1" />
+        <property name="precision" type="int" dataBuilderRule="=1000" />
+    </transfer>
+
+    <transfer name="ProductMeasurementUnit">
+        <property name="name" type="string" dataBuilderRule="unique()->sentence(1)" />
+    </transfer>
+
 </transfers>

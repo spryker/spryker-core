@@ -8,7 +8,7 @@
 namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Module;
-use PHPUnit_Framework_Assert;
+use PHPUnit\Framework\Assert;
 
 class SeeHelper extends Module
 {
@@ -38,7 +38,7 @@ class SeeHelper extends Module
      */
     public function seeMatches($pattern, $selector)
     {
-        PHPUnit_Framework_Assert::assertRegExp($pattern, $this->grabMultipleAsText($selector));
+        Assert::assertRegExp($pattern, $this->grabMultipleAsText($selector));
     }
 
     /**
@@ -49,7 +49,7 @@ class SeeHelper extends Module
      */
     public function dontSeeMatches($pattern, $selector)
     {
-        PHPUnit_Framework_Assert::assertNotRegExp($pattern, $this->grabMultipleAsText($selector));
+        Assert::assertNotRegExp($pattern, $this->grabMultipleAsText($selector));
     }
 
     /**

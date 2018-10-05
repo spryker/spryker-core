@@ -17,22 +17,22 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ProductMeasurementUnitStorageEntityManager extends AbstractEntityManager implements ProductMeasurementUnitStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntity
+     * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntityTransfer
      *
      * @return void
      */
-    public function saveProductMeasurementUnitStorageEntity(SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntity): void
+    public function saveProductMeasurementUnitStorageEntity(SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntityTransfer): void
     {
-        $productMeasurementUnitStorageEntity->requireFkProductMeasurementUnit();
+        $productMeasurementUnitStorageEntityTransfer->requireFkProductMeasurementUnit();
 
         $spyProductMeasurementUnitStorageEntity = $this->getFactory()
             ->createProductMeasurementUnitStorageQuery()
-            ->filterByFkProductMeasurementUnit($productMeasurementUnitStorageEntity->getFkProductMeasurementUnit())
+            ->filterByFkProductMeasurementUnit($productMeasurementUnitStorageEntityTransfer->getFkProductMeasurementUnit())
             ->findOneOrCreate();
 
         $this->getFactory()
             ->createProductMeasurementUnitStorageMapper()
-            ->hydrateSpyProductMeasurementUnitStorageEntity($spyProductMeasurementUnitStorageEntity, $productMeasurementUnitStorageEntity)
+            ->hydrateSpyProductMeasurementUnitStorageEntity($spyProductMeasurementUnitStorageEntity, $productMeasurementUnitStorageEntityTransfer)
             ->save();
     }
 
@@ -52,38 +52,39 @@ class ProductMeasurementUnitStorageEntityManager extends AbstractEntityManager i
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity
+     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntityTransfer
      *
      * @return void
      */
-    public function saveProductConcreteMeasurementUnitStorageEntity(SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity): void
+    public function saveProductConcreteMeasurementUnitStorageEntity(SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntityTransfer): void
     {
-        $productConcreteMeasurementUnitStorageEntity->requireFkProduct();
+        $productConcreteMeasurementUnitStorageEntityTransfer->requireFkProduct();
 
         $spyProductConcreteMeasurementUnitStorageEntity = $this->getFactory()
             ->createProductConcreteMeasurementUnitStorageQuery()
-            ->filterByFkProduct($productConcreteMeasurementUnitStorageEntity->getFkProduct())
+            ->filterByFkProduct($productConcreteMeasurementUnitStorageEntityTransfer->getFkProduct())
+            ->filterByStore($productConcreteMeasurementUnitStorageEntityTransfer->getStore())
             ->findOneOrCreate();
 
         $this->getFactory()
             ->createProductConcreteMeasurementUnitStorageMapper()
             ->hydrateSpyProductMeasurementUnitStorageEntity(
                 $spyProductConcreteMeasurementUnitStorageEntity,
-                $productConcreteMeasurementUnitStorageEntity
+                $productConcreteMeasurementUnitStorageEntityTransfer
             )
             ->save();
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idProductConcreteMeasurementUnitStorage
      *
      * @return void
      */
-    public function deleteProductConcreteMeasurementUnitStorage(int $idProduct): void
+    public function deleteProductConcreteMeasurementUnitStorage(int $idProductConcreteMeasurementUnitStorage): void
     {
         $spyProductConcreteMeasurementUnitStorageEntity = $this->getFactory()
             ->createProductConcreteMeasurementUnitStorageQuery()
-            ->filterByFkProduct($idProduct)
+            ->filterByIdProductConcreteMeasurementUnitStorage($idProductConcreteMeasurementUnitStorage)
             ->findOne();
 
         $spyProductConcreteMeasurementUnitStorageEntity->delete();

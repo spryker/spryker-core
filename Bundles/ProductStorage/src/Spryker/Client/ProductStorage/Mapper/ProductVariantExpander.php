@@ -109,7 +109,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     protected function findAvailableAttributes(array $selectedNode, array $filteredAttributes = [])
     {
         foreach (array_keys($selectedNode) as $attributePath) {
-            list($key, $value) = explode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $attributePath);
+            [$key, $value] = explode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $attributePath);
             $filteredAttributes[$key][] = $value;
             if (is_array($value)) {
                 return $this->findAvailableAttributes($value, $filteredAttributes);
@@ -173,7 +173,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     {
         $productConcreteIds = $productViewTransfer->getAttributeMap()->getProductConcreteIds();
         $idProductConcrete = array_shift($productConcreteIds);
-        $productConcreteStorageData = $this->productConcreteStorageReader->getProductConcreteStorageData($idProductConcrete, $locale);
+        $productConcreteStorageData = $this->productConcreteStorageReader->findProductConcreteStorageData($idProductConcrete, $locale);
 
         if (!$productConcreteStorageData) {
             return $productViewTransfer;
@@ -210,7 +210,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         }
 
         $idProductConcrete = $this->extractIdOfProductConcrete($selectedVariantNode);
-        $productConcreteStorageData = $this->productConcreteStorageReader->getProductConcreteStorageData($idProductConcrete, $locale);
+        $productConcreteStorageData = $this->productConcreteStorageReader->findProductConcreteStorageData($idProductConcrete, $locale);
 
         if (!$productConcreteStorageData) {
             return $productViewTransfer;

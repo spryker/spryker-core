@@ -1,0 +1,5 @@
+company_key,concrete_sku,store,currency,value_net,value_gross
+test-company,214_123,AT,CHF,8999,9999
+test-company,214_123,AT,EUR,8999,9999
+test-company,214_123,DE,EUR,8999,9999
+test-company,214_123,DE,USD,8999,9999

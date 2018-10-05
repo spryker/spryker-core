@@ -298,7 +298,7 @@ interface ProductSearchFacadeInterface
      *
      * @return bool
      */
-    public function isProductAbstractSearchable($idProductAbstract, LocaleTransfer $localeTransfer = null);
+    public function isProductAbstractSearchable($idProductAbstract, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:
@@ -312,5 +312,5 @@ interface ProductSearchFacadeInterface
      *
      * @return bool
      */
-    public function isProductConcreteSearchable($idProductConcrete, LocaleTransfer $localeTransfer = null);
+    public function isProductConcreteSearchable($idProductConcrete, ?LocaleTransfer $localeTransfer = null);
 }

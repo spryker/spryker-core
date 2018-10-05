@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
 
 class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeasurementUnitStorageReaderInterface
@@ -21,19 +22,27 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     protected $storageClient;
 
     /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
      * @var \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
     /**
      * @param \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface $storageClient
+     * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface $synchronizationService
      */
     public function __construct(
         ProductMeasurementUnitStorageToStorageClientInterface $storageClient,
+        Store $store,
         ProductMeasurementUnitStorageToSynchronizationServiceInterface $synchronizationService
     ) {
         $this->storageClient = $storageClient;
+        $this->store = $store;
         $this->synchronizationService = $synchronizationService;
     }
 
@@ -73,6 +82,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     protected function generateKey(int $idProduct): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
+            ->setStore($this->store->getStoreName())
             ->setReference($idProduct);
 
         return $this->synchronizationService

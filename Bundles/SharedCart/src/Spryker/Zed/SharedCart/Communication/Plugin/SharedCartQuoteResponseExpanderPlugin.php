@@ -18,13 +18,15 @@ use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteResponseExpanderP
 class SharedCartQuoteResponseExpanderPlugin extends AbstractPlugin implements QuoteResponseExpanderPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        if (!$quoteResponseTransfer->getQuoteTransfer()) {
+        if (!$quoteResponseTransfer->getCustomer()) {
             return $quoteResponseTransfer;
         }
 

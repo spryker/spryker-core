@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-search",
+  "type": "library",
   "description": "ProductSearch module",
   "license": "proprietary",
   "require": {
@@ -20,10 +21,11 @@
     "spryker/util-data-reader": "^1.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
+    "spryker/config": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {

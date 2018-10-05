@@ -21,6 +21,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -36,6 +38,8 @@ class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugin
     /**
      * Name of field as used in query string
      *
+     * @api
+     *
      * @return string
      */
     public function getFieldName()
@@ -44,6 +48,8 @@ class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugin
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function acceptedDataTypes()

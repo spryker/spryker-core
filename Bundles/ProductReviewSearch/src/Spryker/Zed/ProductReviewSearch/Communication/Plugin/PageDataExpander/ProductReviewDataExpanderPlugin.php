@@ -13,12 +13,17 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
 use Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainer;
 
 /**
+ * @deprecated Use \Spryker\Zed\ProductReviewSearch\Communication\Plugin\PageDataExpander\ProductReviewDataLoaderExpanderPlugin instead.
+ *
  * @method \Spryker\Zed\ProductReviewSearch\Communication\ProductReviewSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductReviewSearch\Business\ProductReviewSearchFacadeInterface getFacade()
  */
 class ProductReviewDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
+     * @api
+     *
      * @param array $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *

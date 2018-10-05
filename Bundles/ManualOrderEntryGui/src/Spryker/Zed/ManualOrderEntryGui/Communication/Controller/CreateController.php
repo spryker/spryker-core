@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -23,8 +24,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
-    protected const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+    public const PARAM_TYPE = 'type';
+    public const PARAM_REDIRECT_URL = 'redirect-url';
 
+    public const PREVIOUS_STEP_NAME = 'previous-step';
+    public const NEXT_STEP_NAME = 'next-step';
+
+    protected const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
     protected const SUCCESSFUL_MESSAGE_CUSTOMER_CREATED = 'Customer is registered successfully.';
     protected const SUCCESSFUL_MESSAGE_ORDER_CREATED = 'Order is created successfully.';
 
@@ -35,12 +41,13 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer = $this->getInitialQuote($request);
 
         $forms = [];
-        $validForms = true;
+        $allFormsAreValid = true;
         $allFormPlugins = $this->getFactory()->getManualOrderEntryFormPlugins();
-        $filteredFormPlugins = $this->getFactory()->getManualOrderEntryFilteredFormPlugins($request, $quoteTransfer);
+        $filteredFormPlugins = $this->getFactory()->getManualOrderEntryFilteredFormPlugins($allFormPlugins, $request, $quoteTransfer);
+        $skippedFormPlugins = $this->getFactory()->getManualOrderEntrySkippedFormPlugins($allFormPlugins, $request, $quoteTransfer);
 
         foreach ($filteredFormPlugins as $formPlugin) {
             $form = $formPlugin->createForm($request, $quoteTransfer);
@@ -55,20 +62,17 @@ class CreateController extends AbstractController
             if ($form->isValid()) {
                 $quoteTransfer = $formPlugin->handleData($quoteTransfer, $form, $request);
             } else {
-                $validForms = false;
+                $allFormsAreValid = false;
             }
 
             $forms[] = $form;
         }
 
-        if ($validForms
-            && count($allFormPlugins)
-            && count($allFormPlugins) == count($filteredFormPlugins)
-        ) {
+        if ($this->isReadyToCreateOrder($allFormsAreValid, $allFormPlugins, $filteredFormPlugins, $skippedFormPlugins)) {
             $checkoutResponseTransfer = $this->createOrder($quoteTransfer);
 
             if ($checkoutResponseTransfer->getIsSuccess()) {
-                $redirectUrl = $this->createRedirectUrlAfterOrderCreation($checkoutResponseTransfer->getSaveOrder());
+                $redirectUrl = $this->createRedirectUrlAfterOrderCreation($checkoutResponseTransfer->getSaveOrder(), $request);
 
                 return $this->redirectResponse($redirectUrl);
             }
@@ -81,7 +85,8 @@ class CreateController extends AbstractController
 
         return $this->viewResponse([
             'forms' => $formsView,
-            'nextStepName' => $this->getFactory()->getConfig()->getNextStepName(),
+            'previousStepName' => static::PREVIOUS_STEP_NAME,
+            'nextStepName' => static::NEXT_STEP_NAME,
             'quoteTransfer' => $quoteTransfer,
             'params' => $request->query->all(),
         ]);
@@ -131,7 +136,7 @@ class CreateController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    protected function createOrder(QuoteTransfer $quoteTransfer)
+    protected function createOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
     {
         $checkoutResponseTransfer = $this->getFactory()
             ->getCheckoutFacade()
@@ -151,7 +156,7 @@ class CreateController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    protected function registerCustomer(FormInterface $customerForm)
+    protected function registerCustomer(FormInterface $customerForm): CustomerResponseTransfer
     {
         $customerTransfer = $this->getCustomerTransferFromForm($customerForm);
 
@@ -167,7 +172,7 @@ class CreateController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function getCustomerTransferFromForm(FormInterface $customerForm)
+    protected function getCustomerTransferFromForm(FormInterface $customerForm): CustomerTransfer
     {
         /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
         $customerTransfer = $customerForm->getData();
@@ -183,7 +188,7 @@ class CreateController extends AbstractController
      *
      * @return string
      */
-    protected function createRedirectUrlAfterUserCreation(CustomerTransfer $customerTransfer, Request $request)
+    protected function createRedirectUrlAfterUserCreation(CustomerTransfer $customerTransfer, Request $request): string
     {
         $params = $request->query->all();
         $params[CustomersListType::FIELD_CUSTOMER] = $customerTransfer->getIdCustomer();
@@ -197,16 +202,22 @@ class CreateController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */
-    protected function createRedirectUrlAfterOrderCreation(SaveOrderTransfer $saveOrderTransfer)
+    protected function createRedirectUrlAfterOrderCreation(SaveOrderTransfer $saveOrderTransfer, Request $request): string
     {
+        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL);
+
+        if ($redirectUrl) {
+            return (string)$redirectUrl;
+        }
+
         return Url::generate(
             '/sales/detail',
             [SalesConfig::PARAM_ID_SALES_ORDER => $saveOrderTransfer->getIdSalesOrder()]
-        )
-            ->build();
+        )->build();
     }
 
     /**
@@ -214,10 +225,43 @@ class CreateController extends AbstractController
      *
      * @return void
      */
-    protected function processResponseErrors(CustomerResponseTransfer $customerResponseTransfer)
+    protected function processResponseErrors(CustomerResponseTransfer $customerResponseTransfer): void
     {
         foreach ($customerResponseTransfer->getErrors() as $errorTransfer) {
             $this->addErrorMessage($errorTransfer->getMessage());
         }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getInitialQuote(Request $request): QuoteTransfer
+    {
+        $quoteTransfer = new QuoteTransfer();
+
+        foreach ($this->getFactory()->getQuoteExpanderPlugins() as $quoteExpanderPlugin) {
+            $quoteTransfer = $quoteExpanderPlugin->expand($quoteTransfer, $request);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param bool $allFormsAreValid
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $allFormPlugins
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $filteredFormPlugins
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $skippedFormPlugins
+     *
+     * @return bool
+     */
+    protected function isReadyToCreateOrder($allFormsAreValid, $allFormPlugins, $filteredFormPlugins, $skippedFormPlugins): bool
+    {
+        $numberProcessedForms = count($filteredFormPlugins) + count($skippedFormPlugins);
+
+        return $allFormsAreValid
+            && !empty($allFormPlugins)
+            && count($allFormPlugins) === $numberProcessedForms;
     }
 }

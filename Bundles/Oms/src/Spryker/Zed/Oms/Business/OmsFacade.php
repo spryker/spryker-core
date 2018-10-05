@@ -315,7 +315,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku($sku, StoreTransfer $storeTransfer = null)
+    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
     {
         return $this->getFactory()
             ->createUtilReservation()
@@ -609,5 +609,50 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function getLastExportedReservationVersion()
     {
         return $this->getFactory()->createExportReservation()->getLastExportedVersion();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $processName
+     * @param string $stateName
+     *
+     * @return string[]
+     */
+    public function getStateFlags(string $processName, string $stateName): array
+    {
+        return $this->getFactory()->createOrderStateMachineFlagReader()->getStateFlags($processName, $stateName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $reservationQuantity
+     *
+     * @return void
+     */
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void
+    {
+        $this->getFactory()
+            ->createUtilReservation()
+            ->saveReservation($sku, $storeTransfer, $reservationQuantity);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getReservedStateNames(): array
+    {
+        return $this->getFactory()->createUtilReservation()->getReservedStateNames();
     }
 }

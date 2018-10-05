@@ -11,6 +11,8 @@ use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
+use Spryker\Zed\Customer\Business\Customer\CustomerReader;
+use Spryker\Zed\Customer\Business\Customer\CustomerReaderInterface;
 use Spryker\Zed\Customer\Business\Customer\EmailValidator;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOrderSaver;
@@ -23,6 +25,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
  * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface getRepository()
  */
 class CustomerBusinessFactory extends AbstractBusinessFactory
 {
@@ -41,10 +45,23 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getMailFacade(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
-            $this->createCustomerExpander()
+            $this->createCustomerExpander(),
+            $this->getPostCustomerRegistrationPlugins()
         );
 
         return $customer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Customer\CustomerReaderInterface
+     */
+    public function createCustomerReader(): CustomerReaderInterface
+    {
+        return new CustomerReader(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createAddress()
+        );
     }
 
     /**
@@ -194,6 +211,14 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     protected function getCustomerTransferExpanderPlugins()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     */
+    public function getPostCustomerRegistrationPlugins()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_POST_CUSTOMER_REGISTRATION);
     }
 
     /**

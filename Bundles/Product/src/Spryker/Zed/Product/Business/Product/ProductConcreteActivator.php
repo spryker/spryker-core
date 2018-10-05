@@ -163,7 +163,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
      *
      * @return void
      */
-    protected function assertProductConcrete($idProductConcrete, ProductConcreteTransfer $productConcrete = null)
+    protected function assertProductConcrete($idProductConcrete, ?ProductConcreteTransfer $productConcrete = null)
     {
         if (!$productConcrete) {
             throw new ProductConcreteNotFoundException(sprintf(
@@ -181,7 +181,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
      *
      * @return void
      */
-    protected function assertProductAbstract($idProductAbstract, ProductAbstractTransfer $productAbstract = null)
+    protected function assertProductAbstract($idProductAbstract, ?ProductAbstractTransfer $productAbstract = null)
     {
         if (!$productAbstract) {
             throw new ProductConcreteNotFoundException(sprintf(

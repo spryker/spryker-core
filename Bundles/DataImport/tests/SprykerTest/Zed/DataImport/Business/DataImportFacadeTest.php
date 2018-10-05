@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -25,9 +25,9 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
  */
 class DataImportFacadeTest extends Unit
 {
-    const IMPORT_TYPE_FULL_IMPORT = 'full';
-    const IMPORT_TYPE_SPECIFIC_A = 'specific-importer-a';
-    const IMPORT_TYPE_SPECIFIC_B = 'specific-importer-b';
+    public const IMPORT_TYPE_FULL_IMPORT = 'full';
+    public const IMPORT_TYPE_SPECIFIC_A = 'specific-importer-a';
+    public const IMPORT_TYPE_SPECIFIC_B = 'specific-importer-b';
 
     /**
      * @return void

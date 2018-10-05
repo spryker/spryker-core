@@ -15,7 +15,7 @@ interface CompanyStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function createCompany(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
 

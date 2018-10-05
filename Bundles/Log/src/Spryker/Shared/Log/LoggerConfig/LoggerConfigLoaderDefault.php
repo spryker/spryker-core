@@ -27,6 +27,6 @@ class LoggerConfigLoaderDefault implements LoggerConfigLoaderInterface
     {
         $loggerClassName = Config::get(LogConstants::LOGGER_CONFIG);
 
-        return new $loggerClassName;
+        return new $loggerClassName();
     }
 }

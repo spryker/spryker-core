@@ -15,7 +15,7 @@ interface ProductReviewEvents
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_REVIEW_PUBLISH = 'ProductReview.product_abstract_review.publish';
+    public const PRODUCT_ABSTRACT_REVIEW_PUBLISH = 'ProductReview.product_abstract_review.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface ProductReviewEvents
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_REVIEW_UNPUBLISH = 'ProductReview.product_abstract_review.unpublish';
+    public const PRODUCT_ABSTRACT_REVIEW_UNPUBLISH = 'ProductReview.product_abstract_review.unpublish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface ProductReviewEvents
      *
      * @api
      */
-    const PRODUCT_REVIEW_PUBLISH = 'ProductReview.product_review.publish';
+    public const PRODUCT_REVIEW_PUBLISH = 'ProductReview.product_review.publish';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface ProductReviewEvents
      *
      * @api
      */
-    const PRODUCT_REVIEW_UNPUBLISH = 'ProductReview.product_review.unpublish';
+    public const PRODUCT_REVIEW_UNPUBLISH = 'ProductReview.product_review.unpublish';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface ProductReviewEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_REVIEW_CREATE = 'Entity.spy_product_review.create';
+    public const ENTITY_SPY_PRODUCT_REVIEW_CREATE = 'Entity.spy_product_review.create';
 
     /**
      * Specification
@@ -55,7 +55,7 @@ interface ProductReviewEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_REVIEW_UPDATE = 'Entity.spy_product_review.update';
+    public const ENTITY_SPY_PRODUCT_REVIEW_UPDATE = 'Entity.spy_product_review.update';
 
     /**
      * Specification
@@ -63,5 +63,5 @@ interface ProductReviewEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_REVIEW_DELETE = 'Entity.spy_product_review.delete';
+    public const ENTITY_SPY_PRODUCT_REVIEW_DELETE = 'Entity.spy_product_review.delete';
 }

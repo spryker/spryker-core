@@ -23,8 +23,6 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
     protected $sharedCartRepository;
 
     /**
-     * QuoteReader constructor.
-     *
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
      */
     public function __construct(SharedCartRepositoryInterface $sharedCartRepository)
@@ -39,7 +37,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        $customerTransfer = $quoteResponseTransfer->getQuoteTransfer()->requireCustomer()->getCustomer();
+        $customerTransfer = $quoteResponseTransfer->requireCustomer()->getCustomer();
         if (!$quoteResponseTransfer->getCustomerQuotes() || !count($quoteResponseTransfer->getCustomerQuotes()->getQuotes())) {
             return $quoteResponseTransfer;
         }
@@ -49,7 +47,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
         if (count($companyUserTransferCollection)) {
             return $this->addShareInformation($quoteResponseTransfer, $companyUserTransferCollection);
         }
-        if ($this->isCustomerQuoteOwner($quoteResponseTransfer->getQuoteTransfer())) {
+        if ($quoteResponseTransfer->getQuoteTransfer() && $this->isCustomerQuoteOwner($quoteResponseTransfer->getQuoteTransfer())) {
             $quoteResponseTransfer->getQuoteTransfer()->setShareDetails(new ArrayObject());
         }
 
@@ -78,7 +76,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
                 );
             }
         }
-        if (!empty($groupedCompanyUserTransferCollection[$quoteResponseTransfer->getQuoteTransfer()->getIdQuote()])) {
+        if ($quoteResponseTransfer->getQuoteTransfer() && !empty($groupedCompanyUserTransferCollection[$quoteResponseTransfer->getQuoteTransfer()->getIdQuote()])) {
             $quoteResponseTransfer->getQuoteTransfer()->setShareDetails(
                 $this->createShareDetails(
                     $quoteResponseTransfer->getQuoteTransfer()->getIdQuote(),

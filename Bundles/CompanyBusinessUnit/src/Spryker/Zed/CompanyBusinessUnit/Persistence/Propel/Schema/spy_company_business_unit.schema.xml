@@ -12,11 +12,17 @@
 
         <column name="fk_company" type="INTEGER" required="true"/>
 
+        <column name="fk_parent_company_business_unit" type="INTEGER" required="false"/>
+
         <foreign-key name="spy_company_business_unit-fk_company" foreignTable="spy_company" phpName="Company" refPhpName="CompanyBusinessUnit">
             <reference local="fk_company" foreign="id_company"/>
         </foreign-key>
 
         <id-method-parameter value="spy_company_business_unit_pk_seq"/>
+
+        <foreign-key name="spy_company_business_unit-fk_parent_company_business_unit" foreignTable="spy_company_business_unit" phpName="ParentCompanyBusinessUnit" refPhpName="ChildrenCompanyBusinessUnits">
+             <reference local="fk_parent_company_business_unit" foreign="id_company_business_unit"/>
+        </foreign-key>
     </table>
 
 </database>

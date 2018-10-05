@@ -76,7 +76,10 @@ class SearchFactory extends AbstractFactory
      */
     public function getElasticsearchClient()
     {
-        return $this->createSearchClientProvider()->getInstance();
+        /** @var \Elastica\Client $client */
+        $client = $this->createSearchClientProvider()->getInstance();
+
+        return $client;
     }
 
     /**
@@ -110,7 +113,11 @@ class SearchFactory extends AbstractFactory
      */
     public function createFacetAggregationFactory()
     {
-        return new FacetAggregationFactory($this->createPageIndexMap(), $this->createAggregationBuilder());
+        return new FacetAggregationFactory(
+            $this->createPageIndexMap(),
+            $this->createAggregationBuilder(),
+            $this->getConfig()
+        );
     }
 
     /**

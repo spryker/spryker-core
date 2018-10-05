@@ -99,7 +99,7 @@ interface CmsToGlossaryInterface
      *
      * @return void
      */
-    public function touchTranslationForKeyId($idKey, LocaleTransfer $localeTransfer = null);
+    public function touchTranslationForKeyId($idKey, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param string $keyName

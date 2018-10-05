@@ -32,6 +32,9 @@ class PaymentStub implements PaymentStubInterface
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
-        return $this->zedRequestClient->call('/payment/gateway/get-available-methods', $quoteTransfer, null, true);
+        /** @var \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer */
+        $paymentMethodsTransfer = $this->zedRequestClient->call('/payment/gateway/get-available-methods', $quoteTransfer, null);
+
+        return $paymentMethodsTransfer;
     }
 }

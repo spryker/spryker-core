@@ -26,7 +26,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterfac
  */
 class SellableTest extends Unit
 {
-    const SKU_PRODUCT = 'sku-123-321';
+    public const SKU_PRODUCT = 'sku-123-321';
 
     /**
      * @return void
@@ -80,9 +80,9 @@ class SellableTest extends Unit
      * @return \Spryker\Zed\Availability\Business\Model\Sellable
      */
     protected function createSellable(
-        AvailabilityToOmsInterface $omsFacadeMock = null,
-        AvailabilityToStockInterface $stockFacadeMock = null,
-        AvailabilityToStoreFacadeInterface $storeFacade = null
+        ?AvailabilityToOmsInterface $omsFacadeMock = null,
+        ?AvailabilityToStockInterface $stockFacadeMock = null,
+        ?AvailabilityToStoreFacadeInterface $storeFacade = null
     ) {
 
         if ($omsFacadeMock === null) {

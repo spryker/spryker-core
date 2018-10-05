@@ -42,22 +42,13 @@ class CustomersListDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($quoteTransfer)
+    public function getOptions($quoteTransfer): array
     {
-        $value = null;
-
-        if (!$quoteTransfer->getIdCustomer()
-            && $this->request->query->has(CustomersListType::FIELD_CUSTOMER)
-        ) {
-            $value = $this->request->query->get(CustomersListType::FIELD_CUSTOMER);
-        }
-
         return [
             'data_class' => QuoteTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
             CustomersListType::OPTION_CUSTOMER_ARRAY => $this->getCustomerList(),
-            CustomersListType::OPTION_VALUE => $value,
         ];
     }
 
@@ -66,11 +57,19 @@ class CustomersListDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer)
+    public function getData($quoteTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getCustomer() === null) {
             $quoteTransfer->setCustomer(new CustomerTransfer());
         }
+
+        $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
+
+        if (!$idCustomer && $this->request->query->has(CustomersListType::FIELD_CUSTOMER)) {
+            $idCustomer = $this->request->query->get(CustomersListType::FIELD_CUSTOMER);
+        }
+
+        $quoteTransfer->getCustomer()->setIdCustomer($idCustomer);
 
         return $quoteTransfer;
     }
@@ -78,15 +77,15 @@ class CustomersListDataProvider implements FormDataProviderInterface
     /**
      * @return array
      */
-    protected function getCustomerList()
+    protected function getCustomerList(): array
     {
+        /** @var \Orm\Zed\Customer\Persistence\SpyCustomer[] $customerCollection */
         $customerCollection = $this->customerQueryContainer
             ->queryCustomers()
             ->find();
 
         $customerList = [];
 
-        /** @var \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity */
         foreach ($customerCollection as $customerEntity) {
             $customerFieldData = $customerEntity->getLastName()
                 . ' '

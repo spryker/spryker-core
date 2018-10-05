@@ -22,7 +22,7 @@ class StoreReader implements StoreReaderInterface
     /**
      * @deprecated Use StoreReader::store instead.
      *
-     * @var \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface
+     * @var \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
      */
     protected $storeConfigurationProvider;
 
@@ -169,5 +169,13 @@ class StoreReader implements StoreReaderInterface
         }
 
         return $stores;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCountries()
+    {
+        return $this->store->getCountries();
     }
 }

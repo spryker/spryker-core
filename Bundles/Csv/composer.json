@@ -1,0 +1,25 @@
+{
+  "name": "spryker/csv",
+  "type": "library",
+  "description": "Csv module",
+  "license": "proprietary",
+  "require": {
+    "league/csv": "^9.1",
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "abandoned": true
+}

@@ -1,3 +1,3 @@
 # {module} Changelog
 
-[Release Changelog](https://github.com/spryker/{moduleDashed}/releases)
+[Release Changelog](https://github.com/{namespaceDashed}/{moduleDashed}/releases)

@@ -65,7 +65,8 @@ class CartOperation implements CartOperationInterface
         $persistentCartChangeTransfer->requireCustomer();
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             (int)$persistentCartChangeTransfer->getIdQuote(),
-            $persistentCartChangeTransfer->getCustomer()
+            $persistentCartChangeTransfer->getCustomer(),
+            $persistentCartChangeTransfer->getQuoteUpdateRequestAttributes()
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -85,7 +86,8 @@ class CartOperation implements CartOperationInterface
         $persistentCartChangeTransfer->requireCustomer();
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             (int)$persistentCartChangeTransfer->getIdQuote(),
-            $persistentCartChangeTransfer->getCustomer()
+            $persistentCartChangeTransfer->getCustomer(),
+            $persistentCartChangeTransfer->getQuoteUpdateRequestAttributes()
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -272,7 +274,7 @@ class CartOperation implements CartOperationInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     protected function findItemInQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): ?ItemTransfer
     {

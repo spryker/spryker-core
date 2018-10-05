@@ -45,19 +45,19 @@ use SprykerTest\Service\FileSystem\Stub\FlysystemConfigStub;
  */
 class FileSystemServiceTest extends Unit
 {
-    const RESOURCE_FILE_NAME = 'fileName.jpg';
+    public const RESOURCE_FILE_NAME = 'fileName.jpg';
 
-    const FILE_SYSTEM_DOCUMENT = 'customerFileSystem';
-    const FILE_SYSTEM_PRODUCT_IMAGE = 'productFileSystem';
+    public const FILE_SYSTEM_DOCUMENT = 'customerFileSystem';
+    public const FILE_SYSTEM_PRODUCT_IMAGE = 'productFileSystem';
 
-    const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
-    const PATH_DOCUMENT = 'documents/';
-    const PATH_PRODUCT_IMAGE = 'images/product/';
+    public const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
+    public const PATH_DOCUMENT = 'documents/';
+    public const PATH_PRODUCT_IMAGE = 'images/product/';
 
-    const FILE_DOCUMENT = 'customer.txt';
-    const FILE_PRODUCT_IMAGE = 'image.png';
+    public const FILE_DOCUMENT = 'customer.txt';
+    public const FILE_PRODUCT_IMAGE = 'image.png';
 
-    const FILE_CONTENT = 'Hello World';
+    public const FILE_CONTENT = 'Hello World';
 
     /**
      * @var \Spryker\Service\FileSystem\FileSystemServiceInterface
@@ -539,8 +539,8 @@ class FileSystemServiceTest extends Unit
     }
 
     /**
-     * @param null|string $content
-     * @param null|string $modifiedTimestamp
+     * @param string|null $content
+     * @param string|null $modifiedTimestamp
      *
      * @return void
      */
@@ -563,8 +563,8 @@ class FileSystemServiceTest extends Unit
     }
 
     /**
-     * @param null|string $content
-     * @param null|string $modifiedTimestamp
+     * @param string|null $content
+     * @param string|null $modifiedTimestamp
      *
      * @return void
      */

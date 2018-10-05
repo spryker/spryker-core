@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\ClassResolver\Factory\FactoryResolver;
 abstract class AbstractPlugin
 {
     /**
-     * @var \Spryker\client\Kernel\AbstractFactory
+     * @var \Spryker\Client\Kernel\AbstractFactory
      */
     private $factory;
 

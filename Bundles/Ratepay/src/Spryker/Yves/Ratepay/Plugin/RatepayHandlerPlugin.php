@@ -37,12 +37,12 @@ class RatepayHandlerPlugin extends AbstractPlugin implements StepHandlerPluginWi
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer)
     {
-        $this->getFactory()->createRatepayHandler()->addPaymentToQuote($request, $quoteTransfer, $this->flashMessenger);
+        return $this->getFactory()->createRatepayHandler()->addPaymentToQuote($request, $quoteTransfer, $this->flashMessenger);
     }
 }

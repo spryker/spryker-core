@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\NewRelic;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface NewRelicConstants
 {
     /**
@@ -15,7 +18,7 @@ interface NewRelicConstants
      *
      * @api
      */
-    const NEWRELIC_API_KEY = 'NEWRELIC_API_KEY';
+    public const NEWRELIC_API_KEY = 'NEWRELIC_API_KEY';
 
     /**
      * Specification:
@@ -30,5 +33,5 @@ interface NewRelicConstants
      *
      * @api
      */
-    const IGNORABLE_TRANSACTIONS = 'IGNORABLE_TRANSACTIONS';
+    public const IGNORABLE_TRANSACTIONS = 'IGNORABLE_TRANSACTIONS';
 }

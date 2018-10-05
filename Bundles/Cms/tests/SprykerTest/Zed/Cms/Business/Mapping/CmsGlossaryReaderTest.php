@@ -78,9 +78,9 @@ class CmsGlossaryReaderTest extends CmsMocks
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReader
      */
     protected function createCmsGlossaryReaderMock(
-        CmsQueryContainerInterface $cmsQueryContainerMock = null,
-        CmsToLocaleInterface $localeFacadeMock = null,
-        CmsConfig $cmsConfigMock = null
+        ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
+        ?CmsToLocaleInterface $localeFacadeMock = null,
+        ?CmsConfig $cmsConfigMock = null
     ) {
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();

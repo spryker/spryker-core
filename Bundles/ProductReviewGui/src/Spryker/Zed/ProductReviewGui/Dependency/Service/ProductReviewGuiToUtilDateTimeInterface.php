@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductReviewGui\Dependency\Service;
 interface ProductReviewGuiToUtilDateTimeInterface
 {
     /**
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */

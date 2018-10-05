@@ -41,4 +41,14 @@
         <property name="priceToPay" type="int"/>
     </transfer>
 
+    <transfer name="Payment">
+        <property name="isLimitedAmount" type="bool" />
+        <property name="availableAmount" type="int" />
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="payment" type="Payment" />
+    </transfer>
+
 </transfers>

@@ -11,7 +11,10 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyBusinessUnitFacadeInterface
 {
@@ -108,4 +111,42 @@ interface CompanyBusinessUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
      */
     public function findDefaultBusinessUnitByCompanyId(int $idCompany): ?CompanyBusinessUnitTransfer;
+
+    /**
+     * Specification:
+     * - Assigns a default business unit to the company user in case there is none defined.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function assignDefaultBusinessUnitToCompanyUser(
+        CompanyUserResponseTransfer $companyUserResponseTransfer
+    ): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns customer references of company users related to business units.
+     *
+     * @api
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
+
+    /**
+     * Specification:
+     * - Returns hierarchy tree of company business units relation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
+     */
+    public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer;
 }

@@ -17,7 +17,7 @@ class ProductAbstractSearchReader extends AbstractProductSearchReader implements
      *
      * @return bool
      */
-    public function isProductAbstractSearchable($idProductAbstract, LocaleTransfer $localeTransfer = null)
+    public function isProductAbstractSearchable($idProductAbstract, ?LocaleTransfer $localeTransfer = null)
     {
         $idLocale = $this->getIdLocale($localeTransfer);
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\MultiCart;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 
 /**
@@ -17,7 +18,7 @@ class MultiCartConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getCustomerQuoteDefaultName()
+    public function getCustomerQuoteDefaultName(): string
     {
         return $this->getSharedConfig()->getCustomerQuoteDefaultName();
     }
@@ -25,7 +26,7 @@ class MultiCartConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getGuestQuoteDefaultName()
+    public function getGuestQuoteDefaultName(): string
     {
         return $this->getSharedConfig()->getGuestQuoteDefaultName();
     }
@@ -33,8 +34,37 @@ class MultiCartConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getDuplicatedQuoteNameSuffix()
+    public function getDuplicatedQuoteName(): string
     {
-        return $this->getSharedConfig()->getDuplicatedQuoteNameSuffix();
+        return $this->getSharedConfig()->getDuplicatedQuoteName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getReorderQuoteName(): string
+    {
+        return $this->getSharedConfig()->getReorderQuoteName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getQuickOrderQuoteName(): string
+    {
+        return $this->getSharedConfig()->getQuickOrderQuoteName();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getQuoteFieldsAllowedForQuoteDuplicate(): array
+    {
+        return [
+            QuoteTransfer::ITEMS,
+            QuoteTransfer::TOTALS,
+            QuoteTransfer::CURRENCY,
+            QuoteTransfer::PRICE_MODE,
+        ];
     }
 }

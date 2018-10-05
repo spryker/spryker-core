@@ -7,11 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
 use Symfony\Component\Form\FormInterface;
@@ -23,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
+     * @api
+     *
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface
      */
     protected $shipmentFacade;
@@ -33,6 +31,8 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -41,75 +41,58 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createShipmentForm($request, $dataTransfer);
+        return $this->getFactory()->createShipmentForm($request, $quoteTransfer);
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $idShipmentMethod = $quoteTransfer->getIdShipmentMethod();
-        if ($idShipmentMethod) {
-            $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
-            $shipmentTransfer = new ShipmentTransfer();
-            $shipmentTransfer->setMethod($shipmentMethodTransfer);
-
-            $quoteTransfer->setShipment($shipmentTransfer);
-
-            $expenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer);
-            $quoteTransfer->addExpense($expenseTransfer);
-        }
+        $quoteTransfer = $this->getFactory()
+            ->createShipmentFormHandler()
+            ->handle($quoteTransfer, $form, $request);
 
         return $quoteTransfer;
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isPreFilled($dataTransfer = null): bool
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
         return false;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @api
      *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer
-     */
-    protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer): ExpenseTransfer
-    {
-        $shipmentExpenseTransfer = new ExpenseTransfer();
-        $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
-        $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
-        $this->setPrice($shipmentExpenseTransfer, $shipmentMethodTransfer->getStoreCurrencyPrice());
-        $shipmentExpenseTransfer->setQuantity(1);
-
-        return $shipmentExpenseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $shipmentExpenseTransfer
-     * @param int $price
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return bool
      */
-    protected function setPrice(ExpenseTransfer $shipmentExpenseTransfer, $price): void
+    public function isFormSkipped(Request $request, QuoteTransfer $quoteTransfer): bool
     {
-        $shipmentExpenseTransfer->setUnitNetPrice(0);
-        $shipmentExpenseTransfer->setUnitGrossPrice($price);
+        return false;
     }
 }

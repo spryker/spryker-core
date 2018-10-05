@@ -7,12 +7,13 @@
 
 namespace Spryker\Yves\CmsBlock;
 
+use RuntimeException;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
 class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CMS_BLOCK_TWIG_CONTENT_RENDERER_PLUGIN = 'cms twig content renderer plugin';
+    public const CMS_BLOCK_TWIG_CONTENT_RENDERER_PLUGIN = 'cms twig content renderer plugin';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -29,9 +30,12 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @throws \RuntimeException
+     *
      * @return \Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface
      */
     protected function getCmsBlockTwigContentRendererPlugin()
     {
+        throw new RuntimeException('Implement getCmsBlockTwigContentRendererPlugin().');
     }
 }

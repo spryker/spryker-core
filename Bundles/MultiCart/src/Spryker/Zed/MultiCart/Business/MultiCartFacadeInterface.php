@@ -8,7 +8,10 @@
 namespace Spryker\Zed\MultiCart\Business;
 
 use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MultiCartFacadeInterface
 {
@@ -24,6 +27,19 @@ interface MultiCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function setDefaultQuote(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds customer quotes.
+     * - Mark first quote as default, if all customers quote are not default.
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return void
+     */
+    public function initDefaultCustomerQuote(string $customerReference): void;
 
     /**
      * Specification:
@@ -46,7 +62,33 @@ interface MultiCartFacadeInterface
      *
      * @param string $customerReference
      *
-     * @return mixed
+     * @return void
      */
-    public function resetQuoteDefaultFlagByCustomer(string $customerReference);
+    public function resetQuoteDefaultFlagByCustomer(string $customerReference): void;
+
+    /**
+     * Specification:
+     *  - Resolve quote name to make it unique for customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string
+     */
+    public function resolveQuoteName(QuoteTransfer $quoteTransfer): string;
+
+    /**
+     * Specification:
+     *  - Returns the quotes collection by provided criteria.
+     *  - Collection is filtered by customer reference.
+     *  - Pagination and ordering options can be passed to criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 }

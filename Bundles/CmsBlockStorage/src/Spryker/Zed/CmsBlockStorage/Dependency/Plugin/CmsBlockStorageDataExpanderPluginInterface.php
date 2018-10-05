@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsBlockStorage\Dependency\Plugin;
 interface CmsBlockStorageDataExpanderPluginInterface
 {
     /**
-     *
      * Specification:
      *  - Allows providing additional data before exporting to Yves data store
      *

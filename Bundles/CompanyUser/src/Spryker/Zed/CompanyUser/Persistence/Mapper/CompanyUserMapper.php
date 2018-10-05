@@ -8,10 +8,12 @@
 namespace Spryker\Zed\CompanyUser\Persistence\Mapper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SpyCompanyUserEntityTransfer;
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUser;
 
 class CompanyUserMapper implements CompanyUserMapperInterface
 {
@@ -24,7 +26,7 @@ class CompanyUserMapper implements CompanyUserMapperInterface
         CompanyUserTransfer $companyUserTransfer
     ): SpyCompanyUserEntityTransfer {
         $companyUserEntityTransfer = new SpyCompanyUserEntityTransfer();
-        $data = $companyUserTransfer->toArray();
+        $data = $companyUserTransfer->modifiedToArray();
         unset($data['customer']);
         $companyUserEntityTransfer->fromArray($data, true);
 
@@ -39,21 +41,22 @@ class CompanyUserMapper implements CompanyUserMapperInterface
     public function mapEntityTransferToCompanyUserTransfer(
         SpyCompanyUserEntityTransfer $companyUserEntityTransfer
     ): CompanyUserTransfer {
-        $data = $companyUserEntityTransfer->toArray();
-        $customerData = $data['customer'];
-        unset($data['customer'], $data['spy_company_role_to_company_users']);
-        $companyUserTransfer = new CompanyUserTransfer();
-        $companyUserTransfer->fromArray($data, true);
+        $companyUserTransfer = (new CompanyUserTransfer())->fromArray($companyUserEntityTransfer->modifiedToArray(), true);
 
-        if ($customerData !== null) {
-            $customerTransfer = new CustomerTransfer();
-            $customerTransfer->setIdCustomer($customerData['id_customer']);
-            $customerTransfer->setSalutation($customerData['salutation']);
-            $customerTransfer->setFirstName($customerData['first_name']);
-            $customerTransfer->setLastName($customerData['last_name']);
-            $customerTransfer->setEmail($customerData['email']);
-
+        if ($companyUserEntityTransfer->getCustomer()) {
+            $customerTransfer = (new CustomerTransfer())->fromArray(
+                $companyUserEntityTransfer->getCustomer()->modifiedToArray(),
+                true
+            );
             $companyUserTransfer->setCustomer($customerTransfer);
+        }
+
+        if ($companyUserEntityTransfer->getCompany()) {
+            $companyTransfer = (new CompanyTransfer())->fromArray(
+                $companyUserEntityTransfer->getCompany()->modifiedToArray(),
+                true
+            );
+            $companyUserTransfer->setCompany($companyTransfer);
         }
 
         return $companyUserTransfer;
@@ -76,5 +79,19 @@ class CompanyUserMapper implements CompanyUserMapperInterface
         $companyUserCollectionTransfer->setCompanyUsers($companyUsers);
 
         return $companyUserCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUser $companyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function mapCompanyUserEntityToCompanyUserTransfer(
+        SpyCompanyUser $companyUser
+    ): CompanyUserTransfer {
+        return (new CompanyUserTransfer())->fromArray(
+            $companyUser->toArray(),
+            true
+        );
     }
 }

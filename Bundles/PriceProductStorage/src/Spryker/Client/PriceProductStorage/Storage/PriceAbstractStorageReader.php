@@ -24,43 +24,96 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
     protected $priceStorageKeyGenerator;
 
     /**
+     * @var \Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface
+     */
+    protected $priceProductMapper;
+
+    /**
+     * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
+     */
+    protected $priceDimensionPlugins;
+
+    /**
+     * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[]
+     */
+    protected $priceProductExtractorPlugins;
+
+    /**
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface $storageClient
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator
+     * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface $priceProductMapper
+     * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[] $priceDimensionPlugins
+     * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[] $priceProductExtractorPlugins
      */
-    public function __construct(PriceProductStorageToStorageInterface $storageClient, PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator)
-    {
+    public function __construct(
+        PriceProductStorageToStorageInterface $storageClient,
+        PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator,
+        PriceProductMapperInterface $priceProductMapper,
+        array $priceDimensionPlugins,
+        array $priceProductExtractorPlugins
+    ) {
         $this->storageClient = $storageClient;
         $this->priceStorageKeyGenerator = $priceStorageKeyGenerator;
+        $this->priceProductMapper = $priceProductMapper;
+        $this->priceDimensionPlugins = $priceDimensionPlugins;
+        $this->priceProductExtractorPlugins = $priceProductExtractorPlugins;
     }
 
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPriceAbstractStorageTransfer($idProductAbstract)
+    public function findPriceProductAbstractTransfers(int $idProductAbstract): array
     {
-        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_ABSTRACT_RESOURCE_NAME, $idProductAbstract);
+        $priceProductTransfers = [];
 
-        return $this->findPriceProductStorageTransfer($key);
+        foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
+            $priceProductTransfers = array_merge($priceProductTransfers, $priceDimensionPlugin->findProductAbstractPrices($idProductAbstract));
+        }
+
+        $priceProductTransfers = array_merge($priceProductTransfers, $this->findDefaultPriceDimensionPriceProductTransfers($idProductAbstract));
+
+        return $priceProductTransfers;
     }
 
     /**
-     * @param string $key
+     * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function findPriceProductStorageTransfer($key)
+    protected function findDefaultPriceDimensionPriceProductTransfers(int $idProductAbstract): array
     {
+        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_ABSTRACT_RESOURCE_NAME, $idProductAbstract);
         $priceData = $this->storageClient->get($key);
 
         if (!$priceData) {
-            return null;
+            return [];
         }
 
         $priceProductStorageTransfer = new PriceProductStorageTransfer();
         $priceProductStorageTransfer->fromArray($priceData, true);
 
-        return $priceProductStorageTransfer;
+        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
+        $priceProductTransfers = $this->applyPriceProductExtractorPlugins($priceProductTransfers);
+
+        return $priceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function applyPriceProductExtractorPlugins(array $priceProductTransfers): array
+    {
+        foreach ($this->priceProductExtractorPlugins as $extractorPlugin) {
+            $priceProductTransfers = array_merge(
+                $priceProductTransfers,
+                $extractorPlugin->extractProductPricesForProductAbstract($priceProductTransfers)
+            );
+        }
+
+        return $priceProductTransfers;
     }
 }

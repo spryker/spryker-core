@@ -31,6 +31,7 @@
         <property name="fkRegion" type="int" />
         <property name="iso2Code" type="string" />
         <property name="anonymizedAt" type="string" />
+        <property name="country" type="Country" />
     </transfer>
 
     <transfer name="Addresses">
@@ -87,6 +88,12 @@
     <transfer name="Order">
         <property name="fkCustomer" type="int" />
         <property name="customer" type="Customer" />
+    </transfer>
+
+    <transfer name="CustomerCollection">
+        <property name="filter" type="Filter" />
+        <property name="customers" type="Customer[]" singular="customer" />
+        <property name="pagination" type="Pagination" />
     </transfer>
 
 </transfers>

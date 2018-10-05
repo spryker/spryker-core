@@ -22,7 +22,7 @@ interface ProductAbstractPagePublisherInterface
      *
      * @return void
      */
-    public function refresh(array $productAbstractIds, $pageDataExpanderPluginNames = []);
+    public function refresh(array $productAbstractIds, array $pageDataExpanderPluginNames = []);
 
     /**
      * @param array $productAbstractIds

@@ -30,7 +30,7 @@ class CustomerCartQuoteResponseExpanderPlugin extends AbstractPlugin implements 
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        if (!$quoteResponseTransfer->getQuoteTransfer()) {
+        if (!$quoteResponseTransfer->getCustomer()) {
             return $quoteResponseTransfer;
         }
 

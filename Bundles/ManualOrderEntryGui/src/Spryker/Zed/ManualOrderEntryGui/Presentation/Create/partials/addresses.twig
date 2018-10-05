@@ -3,20 +3,24 @@
 
     <table class="manualOrderAddresses" style="width:80%;">
         <tr>
-            <td valign="top">
-                <div class="callout">
+            <td valign="top" style="width: 50%">
                 <h4>{{ 'Shipping address' | trans }}</h4>
+            </td>
+            <td valign="top">
+                <h4>{{ 'Billing address' | trans }}</h4>
+            </td>
+        </tr>
 
+        <tr>
+            <td valign="top" style="width: 50%">
+                <div class="callout" id="manualOrderShippingAddress">
                 {% include '@ManualOrderEntryGui/create/partials/address-selection.twig' with {'addressForm': form.shippingAddress} %}
                 </div>
             </td>
             <td valign="top">
-                <div class="callout">
-                <h4>{{ 'Billing address' | trans }}</h4>
-
-                {{ form_widget(form.billingSameAsShipping, {'attr': {'class': '__toggler __inverted'}}) }}
-
-                <div class="__toggler-target">
+                <div class="callout" id="manualOrderBillingAddress">
+                    {{ form_widget(form.billingSameAsShipping, {'attr': {'class': '__toggler __inverted'}}) }}
+                <div class="__toggler-target-selection">
                     {% include '@ManualOrderEntryGui/create/partials/address-selection.twig' with {'addressForm': form.billingAddress} %}
                 </div>
                 </div>

@@ -73,4 +73,14 @@ interface StoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer);
+
+    /**
+     * Specification:
+     * - Returns store countries
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getCountries();
 }

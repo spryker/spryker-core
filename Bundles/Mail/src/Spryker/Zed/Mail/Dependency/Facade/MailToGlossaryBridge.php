@@ -31,7 +31,7 @@ class MailToGlossaryBridge implements MailToGlossaryInterface
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null)
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }
@@ -42,7 +42,7 @@ class MailToGlossaryBridge implements MailToGlossaryInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
     }

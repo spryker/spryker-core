@@ -14,17 +14,17 @@ use Symfony\Component\HttpFoundation\Request;
 class BaseStep extends AbstractBaseStep
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function preCondition(AbstractTransfer $dataTransfer)
+    public function preCondition(AbstractTransfer $quoteTransfer)
     {
         return true;
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return bool
      */
@@ -35,7 +35,7 @@ class BaseStep extends AbstractBaseStep
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return void
      */
@@ -44,7 +44,7 @@ class BaseStep extends AbstractBaseStep
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return bool
      */

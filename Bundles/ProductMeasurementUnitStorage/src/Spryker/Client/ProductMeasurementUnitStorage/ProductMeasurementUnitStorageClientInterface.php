@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductMeasurementUnitStorage;
 
 use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 
 interface ProductMeasurementUnitStorageClientInterface
 {
@@ -37,4 +38,40 @@ interface ProductMeasurementUnitStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
      */
     public function findProductConcreteMeasurementUnitStorage(int $idProduct): ?ProductConcreteMeasurementUnitStorageTransfer;
+
+    /**
+     * Specification:
+     * - Finds a product measurement unit within Storage with a given ID.
+     *
+     * @api
+     *
+     * @param int $idProductMeasurementUnit
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
+     */
+    public function findProductMeasurementUnit(int $idProductMeasurementUnit): ?ProductMeasurementUnitTransfer;
+
+    /**
+     * Specification:
+     * - Finds a product sales unit within Storage with a given product ID.
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null
+     */
+    public function findProductMeasurementSalesUnitByIdProduct(int $idProduct): ?array;
+
+    /**
+     * Specification:
+     * - Finds a product base unit within Storage with a given product ID.
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
+     */
+    public function findProductMeasurementBaseUnitByIdProduct(int $idProduct): ?ProductMeasurementUnitTransfer;
 }

@@ -7,33 +7,36 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer;
-
 interface ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
 {
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
-     */
-    public function getBaseUnitByIdProduct(int $idProduct): SpyProductMeasurementBaseUnitEntityTransfer;
-
-    /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getSalesUnitsByIdProduct(int $idProduct): array;
 
     /**
-     * @return string[]
+     * @param int[] $salesUnitsIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function getProductMeasurementUnitCodeMap(): array;
+    public function getSalesUnitsByIds(array $salesUnitsIds): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnits(): array;
 
     /**
      * @param int[] $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitEntities(array $productMeasurementUnitIds): array;
+    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function findAllProductMeasurementUnitTransfers(): array;
 }

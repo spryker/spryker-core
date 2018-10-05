@@ -84,7 +84,7 @@ class ErrorHandlerTest extends Unit
         $errorHandlerMock->expects($this->once())->method('cleanOutputBuffer');
         $errorHandlerMock->expects($this->once())->method('sendExitCode');
 
-        $errorHandlerMock->handleException(new Exception);
+        $errorHandlerMock->handleException(new Exception());
     }
 
     /**
@@ -103,7 +103,7 @@ class ErrorHandlerTest extends Unit
         $errorHandlerMock->expects($this->once())->method('cleanOutputBuffer');
         $errorHandlerMock->expects($this->never())->method('sendExitCode');
 
-        $errorHandlerMock->handleException(new Exception, false);
+        $errorHandlerMock->handleException(new Exception(), false);
     }
 
     /**

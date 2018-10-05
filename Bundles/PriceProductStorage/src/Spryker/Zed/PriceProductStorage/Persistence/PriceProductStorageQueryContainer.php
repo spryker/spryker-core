@@ -18,9 +18,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class PriceProductStorageQueryContainer extends AbstractQueryContainer implements PriceProductStorageQueryContainerInterface
 {
-    const ID_PRODUCT_ABSTRACT = 'idProductAbstract';
-    const ID_PRODUCT_CONCRETE = 'idProductConcrete';
-    const SKU = 'sku';
+    public const ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+    public const ID_PRODUCT_CONCRETE = 'idProductConcrete';
+    public const SKU = 'sku';
 
     /**
      * @api
@@ -132,17 +132,17 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function queryProductConcreteSkuByIds(array $productConcreteIds)
+    public function queryProductAbstractIdsByProductConcreteIds(array $productConcreteIds)
     {
         return $this->getFactory()
             ->getProductQueryContainer()
             ->queryProduct()
             ->filterByIdProduct_In($productConcreteIds)
             ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::ID_PRODUCT_CONCRETE)
-            ->withColumn(SpyProductTableMap::COL_SKU, static::SKU)
+            ->withColumn(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, static::ID_PRODUCT_ABSTRACT)
             ->select([
                 static::ID_PRODUCT_CONCRETE,
-                static::SKU,
+                static::ID_PRODUCT_ABSTRACT,
             ]);
     }
 

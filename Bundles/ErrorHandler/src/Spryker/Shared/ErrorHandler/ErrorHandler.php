@@ -8,14 +8,13 @@
 namespace Spryker\Shared\ErrorHandler;
 
 use ErrorException;
-use Exception;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 use Throwable;
 
 class ErrorHandler
 {
-    const ZED = 'ZED';
-    const EXIT_CODE_ERROR = -1;
+    public const ZED = 'ZED';
+    public const EXIT_CODE_ERROR = -1;
 
     /**
      * @var \Spryker\Shared\ErrorHandler\ErrorLoggerInterface
@@ -52,8 +51,6 @@ class ErrorHandler
             $this->cleanOutputBuffer();
             echo $this->errorRenderer->render($exception);
         } catch (Throwable $internalException) {
-            $this->errorLogger->log($internalException);
-        } catch (Exception $internalException) {
             $this->errorLogger->log($internalException);
         }
 

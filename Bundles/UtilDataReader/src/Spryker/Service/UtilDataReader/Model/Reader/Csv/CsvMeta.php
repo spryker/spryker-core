@@ -119,7 +119,7 @@ class CsvMeta implements CsvMetaInterface
     public function getDelimiter()
     {
         if ($this->delimiter === null) {
-            list($this->delimiter, $enclosure) = $this->csvFile->getCsvControl();
+            [$this->delimiter, $enclosure] = $this->csvFile->getCsvControl();
         }
 
         return $this->delimiter;
@@ -131,7 +131,7 @@ class CsvMeta implements CsvMetaInterface
     public function getEnclosure()
     {
         if ($this->enclosure === null) {
-            list($delimiter, $this->enclosure) = $this->csvFile->getCsvControl();
+            [$delimiter, $this->enclosure] = $this->csvFile->getCsvControl();
         }
 
         return $this->enclosure;

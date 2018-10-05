@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use ArrayObject;
-use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits\UniqueFlashMessagesTrait;
@@ -28,22 +26,20 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     protected const MESSAGE_SUCCESS = 'Voucher code \'%s\' has been applied';
 
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface
-     */
-    protected $cartFacade;
-
-    /**
+     * @api
+     *
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface
      */
     protected $messengerFacade;
 
     public function __construct()
     {
-        $this->cartFacade = $this->getFactory()->getCartFacade();
         $this->messengerFacade = $this->getFactory()->getMessengerFacade();
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -52,45 +48,47 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createVoucherForm($dataTransfer);
+        return $this->getFactory()->createVoucherForm($quoteTransfer);
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        if (strlen($quoteTransfer->getVoucherCode())) {
-            $discountTransfer = new DiscountTransfer();
-            $discountTransfer->setVoucherCode($quoteTransfer->getVoucherCode());
+        $voucherCode = $quoteTransfer->getManualOrder()->getVoucherCode();
 
-            $quoteTransfer->setVoucherDiscounts(new ArrayObject());
-            $quoteTransfer->addVoucherDiscount($discountTransfer);
+        if (!empty($voucherCode)) {
+            $quoteTransfer = $this->getFactory()
+                ->createVoucherFormHandler()
+                ->handle($quoteTransfer, $form, $request);
 
-            if (count($quoteTransfer->getItems())) {
-                $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
-            }
-
+            $message = static::MESSAGE_SUCCESS;
+            $isSuccessMessage = true;
             if (!count($quoteTransfer->getVoucherDiscounts())) {
-                $this->addMessage(sprintf(static::MESSAGE_ERROR, $quoteTransfer->getVoucherCode()), false);
+                $message = static::MESSAGE_ERROR;
+                $isSuccessMessage = false;
                 $quoteTransfer->setVoucherCode('');
 
                 $form = $this->createForm($request, $quoteTransfer);
                 $form->setData($quoteTransfer->toArray());
-            } else {
-                $this->addMessage(sprintf(static::MESSAGE_SUCCESS, $quoteTransfer->getVoucherCode()));
             }
+            $this->addMessage(sprintf($message, $voucherCode), $isSuccessMessage);
 
             $this->uniqueFlashMessages();
         }
@@ -99,11 +97,26 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isPreFilled($dataTransfer = null): bool
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
+    {
+        return false;
+    }
+
+    /**
+     * @api
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isFormSkipped(Request $request, QuoteTransfer $quoteTransfer): bool
     {
         return false;
     }

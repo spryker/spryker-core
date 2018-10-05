@@ -27,6 +27,7 @@ use Spryker\Zed\ProductManagement\Communication\Tabs\ProductConcreteFormEditTabs
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormAddTabs;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormEditTabs;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleInterface;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -229,6 +230,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleInterface
+     */
+    public function getProductBundleFacade(): ProductManagementToProductBundleInterface
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_BUNDLE);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface
      */
     public function getProductImageFacade()
@@ -427,7 +436,9 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductConcreteFormEditTabs()
     {
-        return new ProductConcreteFormEditTabs();
+        return new ProductConcreteFormEditTabs(
+            $this->getProductConcreteFormEditTabsExpanderPlugins()
+        );
     }
 
     /**
@@ -526,5 +537,13 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductFormTransferMapperExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface[]
+     */
+    public function getProductConcreteFormEditTabsExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER);
     }
 }

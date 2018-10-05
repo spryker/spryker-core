@@ -29,7 +29,7 @@ class NewsletterStub implements NewsletterStubInterface
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -39,7 +39,7 @@ class NewsletterStub implements NewsletterStubInterface
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -49,7 +49,7 @@ class NewsletterStub implements NewsletterStubInterface
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
@@ -59,7 +59,7 @@ class NewsletterStub implements NewsletterStubInterface
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -69,7 +69,7 @@ class NewsletterStub implements NewsletterStubInterface
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\PersistentCart\Dependency\Facade;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -82,5 +84,15 @@ class PersistentCartToQuoteFacadeBridge implements PersistentCartToQuoteFacadeIn
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->quoteFacade->deleteQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
+        return $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
     }
 }

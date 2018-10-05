@@ -1,0 +1,4 @@
+<span>{{ priceToPay | money(true, offer.quote.currency.code) }}</span>
+{% if (subtotal - priceToPay > 0) > 0 %}
+  <span {% if (subtotal - priceToPay > 0) %} class="discounted" {% endif %}>({{ subtotal | money(true, offer.quote.currency.code) }})</span>
+{% endif %}

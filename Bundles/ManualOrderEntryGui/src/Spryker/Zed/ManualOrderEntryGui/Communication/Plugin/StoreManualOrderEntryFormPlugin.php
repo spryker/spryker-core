@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Store\StoreType;
 use Symfony\Component\Form\FormInterface;
@@ -19,16 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface
-     */
-    protected $currencyFacade;
-
-    public function __construct()
-    {
-        $this->currencyFacade = $this->getFactory()->getCurrencyFacade();
-    }
-
-    /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -37,106 +29,64 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createStoreForm($request, $dataTransfer);
+        return $this->getFactory()->createStoreForm($request, $quoteTransfer);
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $storeCurrencyString = $quoteTransfer->getIdStoreCurrency();
-        if (!$this->isValidStoreCurrencyString($storeCurrencyString)) {
-            return $quoteTransfer;
-        }
-
-        list($idStore, $idCurrency) = explode(';', $storeCurrencyString);
-        $idStore = (int)$idStore;
-        $idCurrency = (int)$idCurrency;
-        $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
-
-        foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
-            if ($this->setStoreToQuote($quoteTransfer, $storeWithCurrencyTransfer, $idStore, $idCurrency)) {
-                break;
-            }
-        }
+        $quoteTransfer = $this->getFactory()
+            ->createStoreFormHandler()
+            ->handle($quoteTransfer, $form, $request);
 
         return $quoteTransfer;
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @api
      *
-     * @return bool
-     */
-    public function isPreFilled($dataTransfer = null): bool
-    {
-        return false;
-    }
-
-    /**
-     * @param string $storeCurrencyString
-     *
-     * @return bool
-     */
-    protected function isValidStoreCurrencyString($storeCurrencyString)
-    {
-        return strlen($storeCurrencyString)
-            && strpos($storeCurrencyString, ';') !== false;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer $storeWithCurrencyTransfer
-     * @param int $idStore
-     * @param int $idCurrency
      *
      * @return bool
      */
-    protected function setStoreToQuote($quoteTransfer, $storeWithCurrencyTransfer, $idStore, $idCurrency)
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
-        $storeTransfer = $storeWithCurrencyTransfer->getStore();
-        if ($idStore == $storeTransfer->getIdStore()) {
-            $quoteTransfer->setStore($storeTransfer);
-
-            foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                if ($this->setCurrencyToQuote($quoteTransfer, $idCurrency, $currencyTransfer)) {
-                    break;
-                }
-            }
-
-            return true;
+        if ($quoteTransfer->getStore()
+            && $quoteTransfer->getCurrency()
+        ) {
+            return $quoteTransfer->getStore()->getName() && $quoteTransfer->getCurrency()->getCode();
         }
 
         return false;
     }
 
     /**
+     * @api
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $idCurrency
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return bool
      */
-    protected function setCurrencyToQuote($quoteTransfer, $idCurrency, $currencyTransfer)
+    public function isFormSkipped(Request $request, QuoteTransfer $quoteTransfer): bool
     {
-        if ($idCurrency == $currencyTransfer->getIdCurrency()) {
-            $quoteTransfer->setCurrency($currencyTransfer);
-
-            return true;
-        }
-
         return false;
     }
 }

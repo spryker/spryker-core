@@ -19,7 +19,7 @@ class QuoteItemFinder implements QuoteItemFinderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    public function findItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null): ?ItemTransfer
+    public function findItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         $itemTransfer = null;
         if ($groupKey) {
@@ -78,7 +78,7 @@ class QuoteItemFinder implements QuoteItemFinderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null): ?ItemTransfer
+    protected function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (($itemTransfer->getSku() === $sku && $groupKey === null) ||

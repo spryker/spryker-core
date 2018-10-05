@@ -1,2 +1,2 @@
 {docBlock}
-    public function {methodName}({parameters});
+    public function {methodName}({parameters}){returnMethodTypeHint};

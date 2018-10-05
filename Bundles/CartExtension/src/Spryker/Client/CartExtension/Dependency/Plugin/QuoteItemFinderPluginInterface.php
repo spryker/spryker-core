@@ -14,7 +14,7 @@ interface QuoteItemFinderPluginInterface
 {
     /**
      * Specification:
-     * - Finds item in quote
+     * - Finds item in quote.
      *
      * @api
      *

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -24,11 +24,11 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface;
  */
 class DataImporterCollectionTest extends Unit
 {
-    const DATA_IMPORTER_TYPE_A = 'data-importer-type-a';
-    const DATA_IMPORTER_TYPE_B = 'data-importer-type-b';
+    public const DATA_IMPORTER_TYPE_A = 'data-importer-type-a';
+    public const DATA_IMPORTER_TYPE_B = 'data-importer-type-b';
 
-    const DATA_IMPORTER_PLUGIN_TYPE_A = 'data-importer-plugin-type-a';
-    const DATA_IMPORTER_PLUGIN_TYPE_B = 'data-importer-plugin-type-b';
+    public const DATA_IMPORTER_PLUGIN_TYPE_A = 'data-importer-plugin-type-a';
+    public const DATA_IMPORTER_PLUGIN_TYPE_B = 'data-importer-plugin-type-b';
 
     /**
      * @return void

@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\Transfer\Business\Model;
 
 use ArrayObject;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GeneratedTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
@@ -34,7 +34,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @group GeneratedTransferTest
  * Add your own group annotations below this line
  */
-class GeneratedTransferTest extends PHPUnit_Framework_TestCase
+class GeneratedTransferTest extends Unit
 {
     /**
      * @return void

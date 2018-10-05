@@ -26,7 +26,7 @@ abstract class AbstractSpyStateMachineTransitionLog extends BaseSpyStateMachineT
      *
      * @return bool
      */
-    public function preSave(ConnectionInterface $con = null)
+    public function preSave(?ConnectionInterface $con = null)
     {
         if ($this->getIsError() === null
             && $this->getEvent() === null

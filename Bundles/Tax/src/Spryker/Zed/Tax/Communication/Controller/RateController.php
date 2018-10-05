@@ -19,12 +19,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RateController extends AbstractController
 {
-    const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
+    public const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {

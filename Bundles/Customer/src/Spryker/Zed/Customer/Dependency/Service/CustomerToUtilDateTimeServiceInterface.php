@@ -10,7 +10,7 @@ namespace Spryker\Zed\Customer\Dependency\Service;
 interface CustomerToUtilDateTimeServiceInterface
 {
     /**
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */

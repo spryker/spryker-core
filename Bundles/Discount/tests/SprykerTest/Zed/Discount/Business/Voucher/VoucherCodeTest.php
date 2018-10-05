@@ -227,7 +227,7 @@ class VoucherCodeTest extends Unit
      * @return \Spryker\Zed\Discount\Business\Voucher\VoucherCode
      */
     protected function createVoucherCode(
-        DiscountQueryContainerInterface $discountQueryContainerMock = null
+        ?DiscountQueryContainerInterface $discountQueryContainerMock = null
     ) {
 
         if (!$discountQueryContainerMock) {

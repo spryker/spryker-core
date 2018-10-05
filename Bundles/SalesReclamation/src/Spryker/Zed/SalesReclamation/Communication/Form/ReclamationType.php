@@ -47,7 +47,7 @@ class ReclamationType extends AbstractType
      *
      * @return $this
      */
-    protected function addReclamationField(FormBuilderInterface $builder, string $value = null)
+    protected function addReclamationField(FormBuilderInterface $builder, ?string $value = null)
     {
         $builder->add(static::FIELD_RECLAMATION, TextType::class, [
             'label' => 'Reclamation Id',

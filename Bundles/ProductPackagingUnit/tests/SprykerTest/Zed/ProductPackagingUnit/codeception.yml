@@ -1,0 +1,34 @@
+namespace: SprykerTest\Zed\ProductPackagingUnit
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Business:
+        path: Business
+        class_name: ProductPackagingUnitBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitHelper
+                - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingLeadProductHelper
+                - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitTypeHelper
+                - \SprykerTest\Shared\ProductMeasurementUnit\Helper\ProductMeasurementUnitDataHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Zed\Sales\Helper\BusinessHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper

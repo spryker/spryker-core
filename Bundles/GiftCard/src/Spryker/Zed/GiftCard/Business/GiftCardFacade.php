@@ -133,7 +133,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function precheckSalesOrderGiftCards(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this
+        return $this
             ->getFactory()
             ->createSalesOrderPreChecker()
             ->precheckSalesOrderGiftCards($quoteTransfer, $checkoutResponse);

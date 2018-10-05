@@ -23,7 +23,7 @@ class TemplatePathMapBuilder implements TemplatePathMapBuilderInterface
     protected $templateNameBuilder;
 
     /**
-     * @var string
+     * @var string|array
      */
     protected $directory;
 

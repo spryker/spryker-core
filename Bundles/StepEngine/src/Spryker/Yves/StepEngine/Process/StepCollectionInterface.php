@@ -24,7 +24,7 @@ interface StepCollectionInterface extends IteratorAggregate
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $step
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return bool
      */
@@ -32,7 +32,7 @@ interface StepCollectionInterface extends IteratorAggregate
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
@@ -47,11 +47,11 @@ interface StepCollectionInterface extends IteratorAggregate
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
-    public function getPreviousStep(StepInterface $currentStep, AbstractTransfer $dataTransfer = null);
+    public function getPreviousStep(StepInterface $currentStep, ?AbstractTransfer $dataTransfer = null);
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
@@ -62,7 +62,7 @@ interface StepCollectionInterface extends IteratorAggregate
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return string
      */
@@ -70,11 +70,11 @@ interface StepCollectionInterface extends IteratorAggregate
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
      * @return string
      */
-    public function getPreviousUrl(StepInterface $currentStep, AbstractTransfer $dataTransfer = null);
+    public function getPreviousUrl(StepInterface $currentStep, ?AbstractTransfer $dataTransfer = null);
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep

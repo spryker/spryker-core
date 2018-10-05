@@ -15,7 +15,7 @@ use Spryker\Service\FileSystem\Dependency\Plugin\FileSystemReaderPluginInterface
 use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Service\Flysystem\FlysystemServiceInterface getService
+ * @method \Spryker\Service\Flysystem\FlysystemServiceInterface getService()
  */
 class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderPluginInterface
 {
@@ -53,7 +53,7 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string
+     * @return int|null
      */
     public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {

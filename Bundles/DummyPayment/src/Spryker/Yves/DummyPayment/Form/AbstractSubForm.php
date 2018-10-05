@@ -19,8 +19,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInterface, SubFormProviderNameInterface
 {
-    const FIELD_DATE_OF_BIRTH = 'date_of_birth';
-    const MIN_BIRTHDAY_DATE_STRING = '-18 years';
+    public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+    public const MIN_BIRTHDAY_DATE_STRING = '-18 years';
 
     /**
      * @return string
@@ -41,7 +41,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
             self::FIELD_DATE_OF_BIRTH,
             BirthdayType::class,
             [
-                'label' => false,
+                'label' => 'dummyPaymentInvoice.date_of_birth',
                 'required' => true,
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',

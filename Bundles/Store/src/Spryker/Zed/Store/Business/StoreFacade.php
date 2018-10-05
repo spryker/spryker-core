@@ -87,4 +87,18 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
             ->createStoreReader()
             ->getStoresWithSharedPersistence($storeTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getCountries()
+    {
+        return $this->getFactory()
+            ->createStoreReader()
+            ->getCountries();
+    }
 }

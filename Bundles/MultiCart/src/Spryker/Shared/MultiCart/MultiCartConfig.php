@@ -13,12 +13,14 @@ class MultiCartConfig extends AbstractSharedConfig
 {
     public const QUOTE_NAME_DEFAULT_GUEST = 'Guest shopping cart';
     public const QUOTE_NAME_DEFAULT_CUSTOMER = 'Shopping cart';
-    public const QUOTE_NAME_SUFFIX_DUPLICATE = ' Copied At';
+    public const QUOTE_NAME_DUPLICATE = '%s Copied At %s';
+    public const QUOTE_NAME_REORDER = 'Cart from order %s';
+    public const QUOTE_NAME_QUICK_ORDER = 'Quick order %s';
 
     /**
      * @return string
      */
-    public function getGuestQuoteDefaultName()
+    public function getGuestQuoteDefaultName(): string
     {
         return static::QUOTE_NAME_DEFAULT_GUEST;
     }
@@ -26,7 +28,7 @@ class MultiCartConfig extends AbstractSharedConfig
     /**
      * @return string
      */
-    public function getCustomerQuoteDefaultName()
+    public function getCustomerQuoteDefaultName(): string
     {
         return static::QUOTE_NAME_DEFAULT_CUSTOMER;
     }
@@ -34,8 +36,24 @@ class MultiCartConfig extends AbstractSharedConfig
     /**
      * @return string
      */
-    public function getDuplicatedQuoteNameSuffix()
+    public function getDuplicatedQuoteName(): string
     {
-        return static::QUOTE_NAME_SUFFIX_DUPLICATE;
+        return static::QUOTE_NAME_DUPLICATE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReorderQuoteName(): string
+    {
+        return static::QUOTE_NAME_REORDER;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQuickOrderQuoteName(): string
+    {
+        return static::QUOTE_NAME_QUICK_ORDER;
     }
 }

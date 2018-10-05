@@ -36,7 +36,7 @@ abstract class AbstractDataBuilder
     protected $dependencies = [];
 
     /**
-     * @var \Spryker\Shared\Testify\AbstractDataBuilder[]
+     * @var array
      */
     protected $nestedBuilders = [];
 
@@ -201,7 +201,7 @@ abstract class AbstractDataBuilder
 
     /**
      * @param string $field
-     * @param string $builder
+     * @param \Spryker\Shared\Testify\AbstractDataBuilder $builder
      * @param bool $randomize
      *
      * @return void
@@ -221,7 +221,7 @@ abstract class AbstractDataBuilder
     protected function generateDependencies(AbstractTransfer $transfer)
     {
         foreach ($this->nestedBuilders as $builderInfo) {
-            list($name, $dependencyBuilder, $randomize) = $builderInfo;
+            [$name, $dependencyBuilder, $randomize] = $builderInfo;
 
             if (!$randomize) { // add currently generated values
                 $dependencyBuilder->seed($this->seedData);

@@ -54,4 +54,14 @@ class ManualOrderEntryGuiToCustomerFacadeBridge implements ManualOrderEntryGuiTo
     {
         return $this->customerFacade->getAddress($addressTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomer(CustomerTransfer $customerTransfer)
+    {
+        return $this->customerFacade->getCustomer($customerTransfer);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -116,7 +117,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     }
 
     /**
-     * @param int|string|null $idProductOptionGroup
+     * @param int $idProductOptionGroup
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */

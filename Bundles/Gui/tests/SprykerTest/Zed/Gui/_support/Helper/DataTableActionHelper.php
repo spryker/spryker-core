@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -32,7 +32,7 @@ class DataTableActionHelper extends Module
 
     /**
      * @param int $rowPosition
-     * @param null|string $gridId
+     * @param string|null $gridId
      *
      * @return void
      */
@@ -43,7 +43,7 @@ class DataTableActionHelper extends Module
 
     /**
      * @param int $rowPosition
-     * @param null|string $gridId
+     * @param string|null $gridId
      *
      * @return void
      */
@@ -54,7 +54,7 @@ class DataTableActionHelper extends Module
 
     /**
      * @param int $rowPosition
-     * @param null|string $gridId
+     * @param string|null $gridId
      *
      * @return void
      */
@@ -84,7 +84,7 @@ class DataTableActionHelper extends Module
     /**
      * @param string $name
      * @param int $rowPosition
-     * @param null|string $gridId
+     * @param string|null $gridId
      *
      * @return void
      */
@@ -96,7 +96,7 @@ class DataTableActionHelper extends Module
     /**
      * @param string $name
      * @param int $rowPosition
-     * @param null|string $gridId
+     * @param string|null $gridId
      *
      * @return void
      */

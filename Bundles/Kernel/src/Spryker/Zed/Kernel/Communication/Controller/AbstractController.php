@@ -76,11 +76,14 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|\Spryker\Zed\Kernel\AbstractFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private function resolveFactory()
     {
-        return $this->getFactoryResolver()->resolve($this);
+        /** @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory $factory */
+        $factory = $this->getFactoryResolver()->resolve($this);
+
+        return $factory;
     }
 
     /**

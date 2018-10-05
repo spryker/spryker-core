@@ -108,9 +108,11 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
             foreach ($categoryNodeWithLocales as $localeName => $categoryNodeWithLocale) {
                 if (isset($spyCategoryNodeStorageEntities[$categoryNodeId][$localeName])) {
                     $this->storeDataSet($categoryNodeWithLocale, $localeName, $spyCategoryNodeStorageEntities[$categoryNodeId][$localeName]);
-                } else {
-                    $this->storeDataSet($categoryNodeWithLocale, $localeName);
+
+                    continue;
                 }
+
+                $this->storeDataSet($categoryNodeWithLocale, $localeName);
             }
         }
     }
@@ -122,7 +124,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      *
      * @return void
      */
-    protected function storeDataSet(CategoryNodeStorageTransfer $categoryNodeStorageTransfer, $localeName, SpyCategoryNodeStorage $spyCategoryNodeStorageEntity = null)
+    protected function storeDataSet(CategoryNodeStorageTransfer $categoryNodeStorageTransfer, $localeName, ?SpyCategoryNodeStorage $spyCategoryNodeStorageEntity = null)
     {
         if ($spyCategoryNodeStorageEntity === null) {
             $spyCategoryNodeStorageEntity = new SpyCategoryNodeStorage();
@@ -139,7 +141,6 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
         $categoryNodeNodeData = $this->utilSanitize->arrayFilterRecursive($categoryNodeStorageTransfer->toArray());
         $spyCategoryNodeStorageEntity->setFkCategoryNode($categoryNodeStorageTransfer->getNodeId());
         $spyCategoryNodeStorageEntity->setData($categoryNodeNodeData);
-        $spyCategoryNodeStorageEntity->setStore($this->store->getStoreName());
         $spyCategoryNodeStorageEntity->setLocale($localeName);
         $spyCategoryNodeStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyCategoryNodeStorageEntity->save();
@@ -249,7 +250,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     }
 
     /**
-     * @param int $fkCategoryNodeParent
+     * @param int|null $fkCategoryNodeParent
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[] $categoryNodes
      *
      * @return array

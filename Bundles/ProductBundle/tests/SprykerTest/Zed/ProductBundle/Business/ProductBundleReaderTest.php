@@ -31,7 +31,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleReaderTest extends Unit
 {
-    const ID_STORE = 1;
+    public const ID_STORE = 1;
     /**
      * @var array
      */
@@ -99,9 +99,9 @@ class ProductBundleReaderTest extends Unit
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createProductBundleReader(
-        ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
-        ProductBundleToAvailabilityQueryContainerInterface $productBundleToAvailabilityQueryContainerMock = null,
-        ProductBundleToStoreFacadeInterface $storeFacadeMock = null
+        ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
+        ?ProductBundleToAvailabilityQueryContainerInterface $productBundleToAvailabilityQueryContainerMock = null,
+        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
 
         if ($productBundleQueryContainerMock === null) {

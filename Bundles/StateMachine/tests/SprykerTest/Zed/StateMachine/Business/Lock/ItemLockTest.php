@@ -89,8 +89,8 @@ class ItemLockTest extends StateMachineMocks
      * @return \Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface
      */
     protected function createItemLock(
-        SpyStateMachineLock $stateMachineLockEntityMock = null,
-        StateMachineQueryContainerInterface $stateMachineQueryContainerMock = null
+        ?SpyStateMachineLock $stateMachineLockEntityMock = null,
+        ?StateMachineQueryContainerInterface $stateMachineQueryContainerMock = null
     ) {
 
         if ($stateMachineQueryContainerMock === null) {
@@ -120,7 +120,7 @@ class ItemLockTest extends StateMachineMocks
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineLockQuery
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
     protected function createStateMachineQueryMock()
     {

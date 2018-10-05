@@ -19,12 +19,12 @@ class DummyPaymentHandlerPlugin extends AbstractPlugin implements StepHandlerPlu
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer)
     {
-        $this->getFactory()->createDummyPaymentHandler()->addPaymentToQuote($quoteTransfer);
+        return $this->getFactory()->createDummyPaymentHandler()->addPaymentToQuote($quoteTransfer);
     }
 }

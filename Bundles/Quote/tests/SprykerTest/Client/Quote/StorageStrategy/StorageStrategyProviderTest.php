@@ -8,6 +8,7 @@
 namespace SprykerTest\Client\Quote\StorageStrategy;
 
 use Codeception\Test\Unit;
+use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
 use Spryker\Client\Quote\Exception\StorageStrategyNotFound;
 use Spryker\Client\Quote\QuoteConfig;
@@ -170,7 +171,7 @@ class StorageStrategyProviderTest extends Unit
         $sessionClient = new SessionClient();
         $sessionClient->setContainer($sessionContainer);
 
-        return new QuoteSession($sessionClient);
+        return new QuoteSession($sessionClient, $this->createCurrencyClientMock());
     }
 
     /**
@@ -188,6 +189,15 @@ class StorageStrategyProviderTest extends Unit
     protected function createQuoteZedStubMock()
     {
         return $this->getMockBuilder(QuoteStubInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface
+     */
+    protected function createCurrencyClientMock()
+    {
+        return $this->getMockBuilder(QuoteToCurrencyClientInterface::class)
             ->getMock();
     }
 }

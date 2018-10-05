@@ -1,7 +1,8 @@
 {
   "name": "spryker/company-unit-address-data-import",
+  "type": "library",
   "description": "CompanyUnitAddressDataImport module",
-  "license": "proprietary",
+  "license": "MIT",
   "require": {
     "php": ">=7.1",
     "spryker/company": "^1.0.0",
@@ -12,6 +13,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

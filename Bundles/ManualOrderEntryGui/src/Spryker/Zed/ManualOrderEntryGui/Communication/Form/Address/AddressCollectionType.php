@@ -34,7 +34,7 @@ class AddressCollectionType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         /** @var \Symfony\Component\OptionsResolver\OptionsResolver $resolver */
         $resolver->setDefaults([
@@ -60,7 +60,7 @@ class AddressCollectionType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addShippingAddressSubForm($builder, $options)
@@ -74,7 +74,7 @@ class AddressCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addShippingAddressSubForm(FormBuilderInterface $builder, array $options)
+    protected function addShippingAddressSubForm(FormBuilderInterface $builder, array $options): self
     {
         $options = [
             'data_class' => AddressTransfer::class,
@@ -102,7 +102,7 @@ class AddressCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addSameAsShipmentCheckbox(FormBuilderInterface $builder)
+    protected function addSameAsShipmentCheckbox(FormBuilderInterface $builder): self
     {
         $builder->add(
             static::FIELD_BILLING_SAME_AS_SHIPPING,
@@ -121,7 +121,7 @@ class AddressCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addBillingAddressSubForm(FormBuilderInterface $builder, array $options)
+    protected function addBillingAddressSubForm(FormBuilderInterface $builder, array $options): self
     {
         $options = [
             'data_class' => AddressTransfer::class,
@@ -151,7 +151,7 @@ class AddressCollectionType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return static::TYPE_NAME;
     }

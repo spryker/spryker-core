@@ -35,10 +35,6 @@ class SharedCartToCustomerClientBridge implements SharedCartToCustomerClientInte
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer()

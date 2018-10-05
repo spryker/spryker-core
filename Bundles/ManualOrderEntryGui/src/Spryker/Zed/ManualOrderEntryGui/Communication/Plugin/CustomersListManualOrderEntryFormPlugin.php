@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Symfony\Component\Form\FormInterface;
@@ -20,16 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface
-     */
-    protected $customerFacade;
-
-    public function __construct()
-    {
-        $this->customerFacade = $this->getFactory()->getCustomerFacade();
-    }
-
-    /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -38,40 +29,61 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createCustomersListForm($request, $dataTransfer);
+        return $this->getFactory()->createCustomersListForm($request, $quoteTransfer);
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setIdCustomer($quoteTransfer->getIdCustomer());
-
-        $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
-        $quoteTransfer->setCustomer($customerTransfer);
+        $quoteTransfer = $this->getFactory()
+            ->createCustomerFormHandler()
+            ->handle($quoteTransfer, $form, $request);
 
         return $quoteTransfer;
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isPreFilled($dataTransfer = null): bool
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
+    {
+        if ($quoteTransfer->getCustomer() && $quoteTransfer->getCustomer()->getIdCustomer()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @api
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isFormSkipped(Request $request, QuoteTransfer $quoteTransfer): bool
     {
         return false;
     }

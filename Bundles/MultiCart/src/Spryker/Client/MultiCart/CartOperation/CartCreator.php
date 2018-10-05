@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToCustomerClientInterface;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientInterface;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientInterface;
+use Spryker\Client\MultiCart\Dependency\Service\MultiCartToUtilDateTimeServiceInterface;
 use Spryker\Client\MultiCart\MultiCartConfig;
 
 class CartCreator implements CartCreatorInterface
@@ -37,21 +38,29 @@ class CartCreator implements CartCreatorInterface
     protected $multiCartConfig;
 
     /**
+     * @var \Spryker\Client\MultiCart\Dependency\Service\MultiCartToUtilDateTimeServiceInterface
+     */
+    protected $dateTimeService;
+
+    /**
      * @param \Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientInterface $persistentCartClient
      * @param \Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\MultiCart\Dependency\Client\MultiCartToCustomerClientInterface $customerClient
+     * @param \Spryker\Client\MultiCart\Dependency\Service\MultiCartToUtilDateTimeServiceInterface $dateTimeService
      * @param \Spryker\Client\MultiCart\MultiCartConfig $multiCartConfig
      */
     public function __construct(
         MultiCartToPersistentCartClientInterface $persistentCartClient,
         MultiCartToQuoteClientInterface $quoteClient,
         MultiCartToCustomerClientInterface $customerClient,
+        MultiCartToUtilDateTimeServiceInterface $dateTimeService,
         MultiCartConfig $multiCartConfig
     ) {
         $this->persistentCartClient = $persistentCartClient;
         $this->quoteClient = $quoteClient;
         $this->customerClient = $customerClient;
         $this->multiCartConfig = $multiCartConfig;
+        $this->dateTimeService = $dateTimeService;
     }
 
     /**
@@ -78,16 +87,34 @@ class CartCreator implements CartCreatorInterface
      */
     public function duplicateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = clone $quoteTransfer;
-        $quoteTransfer->setName(
-            $quoteTransfer->getName() . $this->multiCartConfig->getDuplicatedQuoteNameSuffix() . ' ' . date('Y-m-d H:i:s')
-        );
-        $quoteTransfer->setIdQuote(null);
-        $quoteTransfer->setIsDefault(true);
-        $quoteTransfer->setCustomer(
-            $this->customerClient->getCustomer()
-        );
+        $duplicateQuoteTransfer = (new QuoteTransfer())
+            ->fromArray($this->filterDisallowedQuoteData($quoteTransfer), true)
+            ->setName(
+                sprintf($this->multiCartConfig->getDuplicatedQuoteName(), $quoteTransfer->getName(), $this->dateTimeService->formatDateTime(date('Y-m-d H:i:s')))
+            )
+            ->setIsDefault(true)
+            ->setCustomer(
+                $this->customerClient->getCustomer()
+            );
 
-        return $this->persistentCartClient->createQuote($quoteTransfer);
+        return $this->persistentCartClient->createQuote($duplicateQuoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function filterDisallowedQuoteData(QuoteTransfer $quoteTransfer): array
+    {
+        $data = [];
+        $quoteData = $quoteTransfer->modifiedToArray(true, true);
+        foreach ($this->multiCartConfig->getQuoteFieldsAllowedForQuoteDuplicate() as $dataKey) {
+            if (isset($quoteData[$dataKey])) {
+                $data[$dataKey] = $quoteData[$dataKey];
+            }
+        }
+
+        return $data;
     }
 }

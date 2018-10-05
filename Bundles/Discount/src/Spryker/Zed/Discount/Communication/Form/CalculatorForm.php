@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -33,12 +34,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CalculatorForm extends AbstractType
 {
-    const FIELD_AMOUNT = 'amount';
-    const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
-    const FIELD_COLLECTOR_QUERY_STRING = 'collector_query_string';
-    const FIELD_COLLECTOR_TYPE_CHOICE = 'collector_type_choice';
+    public const FIELD_AMOUNT = 'amount';
+    public const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
+    public const FIELD_COLLECTOR_QUERY_STRING = 'collector_query_string';
+    public const FIELD_COLLECTOR_TYPE_CHOICE = 'collector_type_choice';
 
-    const OPTION_COLLECTOR_TYPE_CHOICES = 'collector_type_choices';
+    public const OPTION_COLLECTOR_TYPE_CHOICES = 'collector_type_choices';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

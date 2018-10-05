@@ -58,7 +58,7 @@ class TriggerController extends AbstractController
      * @param int $idOrder
      * @param array|null $itemsList
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection|mixed[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getOrderItemsToTriggerAction($idOrder, $itemsList = null)
     {

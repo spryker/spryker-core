@@ -78,7 +78,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * Specification:
+     * {@inheritdoc}
      *
      * @api
      *
@@ -92,7 +92,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * Specification:
+     * {@inheritdoc}
      *
      * @api
      *
@@ -106,7 +106,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * Specification:
+     * {@inheritdoc}
      *
      * @api
      *
@@ -202,5 +202,19 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteWriter()->createQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteWriter()->updateAndReloadQuote($quoteUpdateRequestTransfer);
     }
 }

@@ -1,5 +1,9 @@
 namespace: ProductQuantity
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/ProductQuantity
+
 paths:
     tests: tests
     log: tests/_output
@@ -14,6 +18,4 @@ settings:
     log: true
 coverage:
     enabled: true
-    whitelist:
-        include:
-            - 'src/*.php'
+    whitelist: { include: ['src/*.php'] }

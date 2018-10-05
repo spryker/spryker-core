@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -80,8 +80,7 @@ class QuoteShareTest extends Unit
         $quoteTransfer = $this->tester->createQuote($customerTransfer1);
 
         $customerTransfer2 = $this->tester->haveCustomer();
-        $companyUserTransfer = $this->tester->createCompanyUser($customerTransfer2);
-        $customerTransfer2->setCompanyUserTransfer($companyUserTransfer);
+        $this->tester->createCompanyUser($customerTransfer2);
 
         // Act
         $actualQuoteResponseTransfer = $this->tester->getLocator()->persistentCart()->facade()->findQuote($quoteTransfer->getIdQuote(), $customerTransfer2);
@@ -101,7 +100,6 @@ class QuoteShareTest extends Unit
 
         $customerTransfer2 = $this->tester->haveCustomer();
         $companyUserTransfer = $this->tester->createCompanyUser($customerTransfer2);
-        $customerTransfer2->setCompanyUserTransfer($companyUserTransfer);
 
         // Act
         $quoteTransfer->addShareDetail(
@@ -129,7 +127,6 @@ class QuoteShareTest extends Unit
 
         $customerTransfer2 = $this->tester->haveCustomer();
         $companyUserTransfer = $this->tester->createCompanyUser($customerTransfer2);
-        $customerTransfer2->setCompanyUserTransfer($companyUserTransfer);
 
         // Act
         $quoteTransfer->addShareDetail(

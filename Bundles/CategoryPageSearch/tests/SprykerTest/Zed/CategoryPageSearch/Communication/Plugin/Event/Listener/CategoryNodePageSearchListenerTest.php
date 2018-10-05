@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -11,8 +12,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery;
 use PHPUnit\Framework\SkippedTestError;
-use Propel\Runtime\Propel;
-use Silex\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
@@ -22,7 +21,6 @@ use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryN
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateSearchListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchListener;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchBridge;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerTest\Zed\CategoryPageSearch\Business\CategoryPageSearchBusinessFactoryMock;
 use SprykerTest\Zed\CategoryPageSearch\CategoryPageSearchConfigMock;
 
@@ -47,14 +45,10 @@ class CategoryNodePageSearchListenerTest extends Unit
      */
     protected function setUp()
     {
-        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbType !== 'pgsql') {
+        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+        if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
-
-        Propel::disableInstancePooling();
-        $propelServiceProvider = new PropelServiceProvider();
-        $propelServiceProvider->boot(new Application());
     }
 
     /**
@@ -172,7 +166,7 @@ class CategoryNodePageSearchListenerTest extends Unit
      */
     protected function assertCategoryPageSearch()
     {
-        $categoryPageSearchEntity = SpyCategoryNodePageSearchQuery::create()->findOneByFkCategoryNode(1);
+        $categoryPageSearchEntity = SpyCategoryNodePageSearchQuery::create()->orderByIdCategoryNodePageSearch()->findOneByFkCategoryNode(1);
         $this->assertNotNull($categoryPageSearchEntity);
         $data = $categoryPageSearchEntity->getStructuredData();
         $encodedData = json_decode($data, true);

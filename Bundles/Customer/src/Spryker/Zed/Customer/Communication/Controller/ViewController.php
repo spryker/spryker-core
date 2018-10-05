@@ -107,7 +107,7 @@ class ViewController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function renderCustomerDetailBlocks(Request $request, CustomerTransfer $customerTransfer)
     {

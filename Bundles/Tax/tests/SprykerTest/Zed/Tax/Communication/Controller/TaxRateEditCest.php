@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -43,7 +43,7 @@ class TaxRateEditCest
     {
         $i->listDataTable(TaxRateListPage::TABLE_DATA_URL);
         $i->clickDataTableEditButton();
-        
+
         $name = $i->grabValueFrom('[name="tax_rate[name]"]');
         $i->assertNotEmpty($name);
         $country = $i->grabValueFrom('[name="tax_rate[fkCountry]"]');

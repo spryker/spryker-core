@@ -41,4 +41,48 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     {
         $this->getFactory()->createProductConcreteMeasurementUnitStorageWriter()->publish($productIds);
     }
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findAllProductMeasurementUnitTransfers(): array
+    {
+        return $this->getFactory()->getProductMeasurementUnitFacade()->findAllProductMeasurementUnitTransfers();
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array
+    {
+        return $this->getFactory()->getProductMeasurementUnitFacade()->findProductMeasurementUnitTransfers($productMeasurementUnitIds);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function getSalesUnits(): array
+    {
+        return $this->getFactory()->getProductMeasurementUnitFacade()->getSalesUnits();
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $salesUnitsIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function getSalesUnitsByIds(array $salesUnitsIds): array
+    {
+        return $this->getFactory()->getProductMeasurementUnitFacade()->getSalesUnitsByIds($salesUnitsIds);
+    }
 }

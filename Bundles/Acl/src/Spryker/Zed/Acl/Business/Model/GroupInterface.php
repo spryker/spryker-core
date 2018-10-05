@@ -53,7 +53,7 @@ interface GroupInterface
     public function removeUser($idGroup, $idUser);
 
     /**
-     * @return \Generated\Shared\Transfer\GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getAllGroups();
 
@@ -169,7 +169,7 @@ interface GroupInterface
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getRoles($idGroup);
 }

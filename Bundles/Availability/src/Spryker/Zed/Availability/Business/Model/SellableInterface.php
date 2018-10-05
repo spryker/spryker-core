@@ -36,8 +36,15 @@ interface SellableInterface
     public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer);
 
     /**
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isProductConcreteAvailable(int $idProductConcrete): bool;
+
+    /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */

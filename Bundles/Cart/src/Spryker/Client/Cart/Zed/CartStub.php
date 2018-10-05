@@ -18,60 +18,78 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
     {
-        return $this->zedStub->call('/cart/gateway/add-valid-items', $cartChangeTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->zedStub->call('/cart/gateway/add-valid-items', $cartChangeTransfer);
+
+        return $quoteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addItem(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->zedStub->call('/cart/gateway/add-item', $cartChangeTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->zedStub->call('/cart/gateway/add-item', $cartChangeTransfer);
+
+        return $quoteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItem(CartChangeTransfer $changeTransfer)
     {
-        return $this->zedStub->call('/cart/gateway/remove-item', $changeTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->zedStub->call('/cart/gateway/remove-item', $changeTransfer);
+
+        return $quoteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function reloadItems(QuoteTransfer $quoteTransfer)
     {
-        return $this->zedStub->call('/cart/gateway/reload-items', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->zedStub->call('/cart/gateway/reload-items', $quoteTransfer);
+
+        return $quoteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeQuantityTransfer $cartChangeQuantityTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function changeItemQuantity(CartChangeQuantityTransfer $cartChangeQuantityTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/cart/gateway/change-item-quantity', $cartChangeQuantityTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/change-item-quantity', $cartChangeQuantityTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(QuoteTransfer $quoteTransfer)
     {
-        return $this->zedStub->call('/cart/gateway/validate-quote', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/validate-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 }

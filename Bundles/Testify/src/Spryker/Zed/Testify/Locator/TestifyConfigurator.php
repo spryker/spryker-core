@@ -35,7 +35,7 @@ class TestifyConfigurator implements TestifyConfiguratorInterface
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Zed\Kernel\Container|\Spryker\Shared\Testify\Container\TestifyContainerInterface
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function getContainer()
     {
@@ -43,7 +43,7 @@ class TestifyConfigurator implements TestifyConfiguratorInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return $this
      */

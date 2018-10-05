@@ -1,5 +1,6 @@
 {
   "name": "spryker/installer",
+  "type": "library",
   "description": "Installer module",
   "license": "proprietary",
   "require": {
@@ -7,9 +8,17 @@
     "spryker/kernel": "^3.0.0",
     "spryker/symfony": "^3.0.0"
   },
+  "require-dev": {
+    "spryker/testify": "*"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

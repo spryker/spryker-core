@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CollectorSearchExportConsole extends AbstractCollectorConsole
 {
-    const COMMAND_NAME = 'collector:search:export';
-    const COMMAND_DESCRIPTION = 'Collector export search';
+    public const COMMAND_NAME = 'collector:search:export';
+    public const COMMAND_DESCRIPTION = 'Collector export search';
 
     /**
      * @return void
@@ -34,7 +34,7 @@ class CollectorSearchExportConsole extends AbstractCollectorConsole
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null|void
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

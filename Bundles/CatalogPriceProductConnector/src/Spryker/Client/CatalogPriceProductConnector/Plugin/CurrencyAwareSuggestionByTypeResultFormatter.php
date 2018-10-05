@@ -43,14 +43,47 @@ class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearch
             return $results;
         }
 
+        if (!$this->isPriceProductDimensionEnabled()) {
+            return $this->formatSearchResultWithoutPriceDimensions($results);
+        }
+
         $priceProductClient = $this->getFactory()->getPriceProductClient();
+        $priceProductStorageClient = $this->getFactory()->getPriceProductStorageClient();
         foreach ($results['product_abstract'] as &$product) {
-            $currentProductPriceTransfer = $priceProductClient->resolveProductPrice($product['prices']);
+            $priceProductTransfersFromStorage = $priceProductStorageClient->getPriceProductAbstractTransfers($product['id_product_abstract']);
+            $currentProductPriceTransfer = $priceProductClient->resolveProductPriceTransfer($priceProductTransfersFromStorage);
             $product['price'] = $currentProductPriceTransfer->getPrice();
             $product['prices'] = $currentProductPriceTransfer->getPrices();
         }
 
         return $results;
+    }
+
+    /**
+     * Fallback method to work with PriceProduct module without price dimensions support.
+     *
+     * @param array $result
+     *
+     * @return mixed|array
+     */
+    protected function formatSearchResultWithoutPriceDimensions(array $result)
+    {
+        $priceProductClient = $this->getFactory()->getPriceProductClient();
+        foreach ($result as &$product) {
+            $currentProductPriceTransfer = $priceProductClient->resolveProductPrice($product['prices']);
+            $product['price'] = $currentProductPriceTransfer->getPrice();
+            $product['prices'] = $currentProductPriceTransfer->getPrices();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isPriceProductDimensionEnabled(): bool
+    {
+        return \defined('\Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DIMENSION_DEFAULT');
     }
 
     /**

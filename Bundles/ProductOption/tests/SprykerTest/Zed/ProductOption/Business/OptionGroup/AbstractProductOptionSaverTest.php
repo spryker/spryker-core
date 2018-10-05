@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -97,9 +98,9 @@ class AbstractProductOptionSaverTest extends MockProvider
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface
      */
     protected function createAbstractProductOptionSaver(
-        ProductOptionQueryContainerInterface $productOptionContainerMock = null,
-        ProductOptionToTouchFacadeInterface $touchFacadeMock = null,
-        ProductOptionToEventFacadeInterface $eventFacadeMock = null
+        ?ProductOptionQueryContainerInterface $productOptionContainerMock = null,
+        ?ProductOptionToTouchFacadeInterface $touchFacadeMock = null,
+        ?ProductOptionToEventFacadeInterface $eventFacadeMock = null
     ) {
 
         if (!$productOptionContainerMock) {

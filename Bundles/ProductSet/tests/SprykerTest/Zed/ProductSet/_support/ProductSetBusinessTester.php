@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\ProductSet;
 
 use Codeception\Actor;
@@ -35,7 +41,7 @@ class ProductSetBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function generateProductSetTransfer(array $productSetSeed = [], LocaleTransfer $localeTransfer = null)
+    public function generateProductSetTransfer(array $productSetSeed = [], ?LocaleTransfer $localeTransfer = null)
     {
         if (!$localeTransfer) {
             $localeTransfer = $this->haveLocale();

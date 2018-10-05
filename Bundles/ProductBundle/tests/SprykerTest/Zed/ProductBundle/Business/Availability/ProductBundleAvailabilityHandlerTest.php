@@ -32,7 +32,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleAvailabilityHandlerTest extends Unit
 {
-    const ID_STORE = 1;
+    public const ID_STORE = 1;
 
     /**
      * @return void
@@ -104,8 +104,8 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler
      */
     protected function createProductBundleAvailabilityHandler(
-        ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
-        ProductBundleToStoreFacadeInterface $storeFacadeMock = null
+        ?ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
+        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
         $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
         $availabilityQueryContainerMock = $this->createAvailabilityQueryContainerMock();

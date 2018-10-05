@@ -31,23 +31,23 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class AbstractProductFormDataProvider
 {
-    const LOCALE_NAME = 'locale_name';
+    public const LOCALE_NAME = 'locale_name';
 
-    const FORM_FIELD_ID = 'id';
-    const FORM_FIELD_VALUE = 'value';
-    const FORM_FIELD_NAME = 'name';
-    const FORM_FIELD_PRODUCT_SPECIFIC = 'product_specific';
-    const FORM_FIELD_LABEL = 'label';
-    const FORM_FIELD_SUPER = 'super';
-    const FORM_FIELD_INPUT_TYPE = 'input_type';
-    const FORM_FIELD_VALUE_DISABLED = 'value_disabled';
-    const FORM_FIELD_NAME_DISABLED = 'name_disabled';
-    const FORM_FIELD_ALLOW_INPUT = 'allow_input';
+    public const FORM_FIELD_ID = 'id';
+    public const FORM_FIELD_VALUE = 'value';
+    public const FORM_FIELD_NAME = 'name';
+    public const FORM_FIELD_PRODUCT_SPECIFIC = 'product_specific';
+    public const FORM_FIELD_LABEL = 'label';
+    public const FORM_FIELD_SUPER = 'super';
+    public const FORM_FIELD_INPUT_TYPE = 'input_type';
+    public const FORM_FIELD_VALUE_DISABLED = 'value_disabled';
+    public const FORM_FIELD_NAME_DISABLED = 'name_disabled';
+    public const FORM_FIELD_ALLOW_INPUT = 'allow_input';
 
-    const IMAGES = 'images';
+    public const IMAGES = 'images';
 
-    const DEFAULT_INPUT_TYPE = 'text';
-    const TEXT_AREA_INPUT_TYPE = 'textarea';
+    public const DEFAULT_INPUT_TYPE = 'text';
+    public const TEXT_AREA_INPUT_TYPE = 'textarea';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
@@ -135,7 +135,7 @@ class AbstractProductFormDataProvider
         array $attributeCollection,
         array $taxCollection,
         $imageUrlPrefix,
-        ProductManagementToStoreInterface $store = null
+        ?ProductManagementToStoreInterface $store = null
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
@@ -205,7 +205,7 @@ class AbstractProductFormDataProvider
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
-    protected function mapMoneyTransfer(CurrencyTransfer $currencyTransfer, StoreTransfer $storeTransfer = null)
+    protected function mapMoneyTransfer(CurrencyTransfer $currencyTransfer, ?StoreTransfer $storeTransfer = null)
     {
         $moneyValueTransfer = new MoneyValueTransfer();
         $moneyValueTransfer->setCurrency($currencyTransfer);
@@ -474,7 +474,7 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    protected function convertAbstractLocalizedAttributesToFormOptions(ProductAbstractTransfer $productAbstractTransfer = null, LocaleTransfer $localeTransfer = null)
+    protected function convertAbstractLocalizedAttributesToFormOptions(?ProductAbstractTransfer $productAbstractTransfer = null, ?LocaleTransfer $localeTransfer = null)
     {
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
@@ -522,7 +522,7 @@ class AbstractProductFormDataProvider
             if ($isDefined) {
                 continue;
             }
-            
+
             $isProductSpecificAttribute = true;
             $id = null;
             $isSuper = false;
@@ -592,7 +592,7 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    protected function convertVariantAttributesToFormOptions(ProductAbstractTransfer $productAbstractTransfer = null)
+    protected function convertVariantAttributesToFormOptions(?ProductAbstractTransfer $productAbstractTransfer = null)
     {
         $productAttributeKeys = [];
         if ($productAbstractTransfer) {

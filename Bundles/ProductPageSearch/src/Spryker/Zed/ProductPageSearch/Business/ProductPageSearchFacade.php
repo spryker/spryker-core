@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearchFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -29,6 +31,8 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -44,6 +48,8 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productAbstractIds

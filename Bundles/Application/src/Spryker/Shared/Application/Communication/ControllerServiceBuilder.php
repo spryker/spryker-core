@@ -28,7 +28,7 @@ class ControllerServiceBuilder
         AbstractControllerResolver $controllerResolver,
         RouteNameResolverInterface $routeNameResolver
     ) {
-        $serviceName = 'controller.service.' . str_replace('/', '.', $routeNameResolver->resolve());
+        $serviceName = 'controller.service.' . str_replace('/', '.', trim($routeNameResolver->resolve(), '/'));
         $service = function () use ($application, $controllerResolver, $bundleControllerAction) {
             $controller = $controllerResolver->resolve($bundleControllerAction);
             $controller->setApplication($application);

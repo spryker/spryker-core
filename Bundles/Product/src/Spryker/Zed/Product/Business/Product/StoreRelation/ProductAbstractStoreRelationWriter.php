@@ -61,11 +61,13 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
      */
     protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer)
     {
-        if ($storeRelationTransfer->getIdStores() === null) {
+        /** @var int[]|null $ids */
+        $ids = $storeRelationTransfer->getIdStores();
+        if ($ids === null) {
             return [];
         }
 
-        return $storeRelationTransfer->getIdStores();
+        return $ids;
     }
 
     /**
@@ -96,9 +98,13 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
             return;
         }
 
-        $this->productQueryContainer
+        $productAbstractStoreEntities = $this->productQueryContainer
             ->queryProductAbstractStoresByFkProductAbstractAndFkStores($idProductAbstract, $idStores)
-            ->delete();
+            ->find();
+
+        foreach ($productAbstractStoreEntities as $productAbstractStoreEntity) {
+            $productAbstractStoreEntity->delete();
+        }
     }
 
     /**
@@ -112,7 +118,7 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
             (new StoreRelationTransfer())
                 ->setIdEntity($idProductAbstract)
         );
-        
+
         return $storeRelation->getIdStores();
     }
 }

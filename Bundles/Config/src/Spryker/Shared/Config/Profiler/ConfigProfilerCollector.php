@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
 class ConfigProfilerCollector implements DataCollectorInterface, ConfigProfilerCollectorInterface
 {
-    const SPRYKER_CONFIG_PROFILER = 'spryker_config_profiler';
+    public const SPRYKER_CONFIG_PROFILER = 'spryker_config_profiler';
 
     /**
      * @var array
@@ -36,7 +36,7 @@ class ConfigProfilerCollector implements DataCollectorInterface, ConfigProfilerC
      *
      * @return void
      */
-    public function collect(Request $request, Response $response, Exception $exception = null)
+    public function collect(Request $request, Response $response, ?Exception $exception = null)
     {
     }
 

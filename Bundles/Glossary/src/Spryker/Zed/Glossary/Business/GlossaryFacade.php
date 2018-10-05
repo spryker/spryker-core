@@ -162,7 +162,7 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $locale = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null)
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 
@@ -282,13 +282,13 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      *
      * @param array $idKeys
      *
-     * @return bool
+     * @return void
      */
     public function deleteTranslationsByFkKeys(array $idKeys)
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 
-        return $translationManager->deleteTranslationsByFkKeys($idKeys);
+        $translationManager->deleteTranslationsByFkKeys($idKeys);
     }
 
     /**
@@ -300,7 +300,7 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null)
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 
@@ -344,7 +344,7 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      *
      * @return void
      */
-    public function touchTranslationForKeyId($idKey, LocaleTransfer $localeTransfer = null)
+    public function touchTranslationForKeyId($idKey, ?LocaleTransfer $localeTransfer = null)
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 

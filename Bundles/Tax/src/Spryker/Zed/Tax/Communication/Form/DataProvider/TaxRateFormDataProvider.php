@@ -27,7 +27,7 @@ class TaxRateFormDataProvider
      * @param \Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface $countryFacade
      * @param \Generated\Shared\Transfer\TaxRateTransfer|null $taxRateTransfer
      */
-    public function __construct(TaxToCountryBridgeInterface $countryFacade, TaxRateTransfer $taxRateTransfer = null)
+    public function __construct(TaxToCountryBridgeInterface $countryFacade, ?TaxRateTransfer $taxRateTransfer = null)
     {
         $this->countryFacade = $countryFacade;
         $this->taxRateTransfer = $taxRateTransfer;

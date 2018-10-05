@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\SharedCart\Business;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 
 interface SharedCartFacadeInterface
 {
@@ -108,4 +110,41 @@ interface SharedCartFacadeInterface
      * @return void
      */
     public function deleteShareForQuote(QuoteTransfer $quoteTransfer): void;
+
+    /**
+     * Specification:
+     *  - Add quote permissions for customer company user to customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function expandCustomer(CustomerTransfer $customerTransfer): CustomerTransfer;
+
+    /**
+     * Specification:
+     *  - Checks if shared cart default for company user.
+     *
+     * @api
+     *
+     * @param int $idQuote
+     * @param int $idCompanyUser
+     *
+     * @return bool
+     */
+    public function isSharedQuoteDefault(int $idQuote, int $idCompanyUser): bool;
+
+    /**
+     * Specification:
+     *  - Returns share details collection of quote by quote id.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    public function getShareDetailsByIdQuote(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer;
 }

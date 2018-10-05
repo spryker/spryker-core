@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StepEngine implements StepEngineInterface
 {
-    const TEMPLATE_VARIABLE_PREVIOUS_STEP_URL = 'previousStepUrl';
-    const TEMPLATE_VARIABLE_STEP_BREADCRUMBS = 'stepBreadcrumbs';
+    public const TEMPLATE_VARIABLE_PREVIOUS_STEP_URL = 'previousStepUrl';
+    public const TEMPLATE_VARIABLE_STEP_BREADCRUMBS = 'stepBreadcrumbs';
 
     /**
      * @var \Spryker\Yves\StepEngine\Process\StepCollectionInterface
@@ -30,7 +30,7 @@ class StepEngine implements StepEngineInterface
     protected $dataContainer;
 
     /**
-     * @var \Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface
+     * @var \Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface|null
      */
     protected $stepBreadcrumbGenerator;
 
@@ -42,7 +42,7 @@ class StepEngine implements StepEngineInterface
     public function __construct(
         StepCollectionInterface $stepCollection,
         DataContainerInterface $dataContainer,
-        StepBreadcrumbGeneratorInterface $stepBreadcrumbGenerator = null
+        ?StepBreadcrumbGeneratorInterface $stepBreadcrumbGenerator = null
     ) {
         $this->stepCollection = $stepCollection;
         $this->dataContainer = $dataContainer;
@@ -55,7 +55,7 @@ class StepEngine implements StepEngineInterface
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function process(Request $request, FormCollectionHandlerInterface $formCollection = null)
+    public function process(Request $request, ?FormCollectionHandlerInterface $formCollection = null)
     {
         $dataTransfer = $this->dataContainer->get();
         $response = $this->runProcess($request, $dataTransfer, $formCollection);
@@ -65,12 +65,12 @@ class StepEngine implements StepEngineInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function runProcess(Request $request, AbstractTransfer $dataTransfer, FormCollectionHandlerInterface $formCollection = null)
+    protected function runProcess(Request $request, AbstractTransfer $dataTransfer, ?FormCollectionHandlerInterface $formCollection = null)
     {
         $currentStep = $this->stepCollection->getCurrentStep($request, $dataTransfer);
 
@@ -125,7 +125,7 @@ class StepEngine implements StepEngineInterface
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return void
      */
@@ -139,8 +139,8 @@ class StepEngine implements StepEngineInterface
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $formTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $formTransfer
      *
      * @return void
      */
@@ -168,13 +168,15 @@ class StepEngine implements StepEngineInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
      * @return array
      */
-    protected function getTemplateVariables(StepInterface $currentStep, AbstractTransfer $dataTransfer, FormCollectionHandlerInterface $formCollection = null)
+    protected function getTemplateVariables(StepInterface $currentStep, AbstractTransfer $dataTransfer, ?FormCollectionHandlerInterface $formCollection = null)
     {
+        $templateVariables = [];
+
         $templateVariables[self::TEMPLATE_VARIABLE_PREVIOUS_STEP_URL] = $this->stepCollection->getPreviousUrl($currentStep, $dataTransfer);
         if ($this->stepBreadcrumbGenerator) {
             $templateVariables[self::TEMPLATE_VARIABLE_STEP_BREADCRUMBS] = $this->stepBreadcrumbGenerator->generateStepBreadcrumbs(

@@ -39,4 +39,20 @@ class CurrencyClient extends AbstractClient implements CurrencyClientInterface
     {
         return $this->getFactory()->createCurrencyBuilder()->getCurrent();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $currencyIsoCode
+     *
+     * @return void
+     */
+    public function setCurrentCurrencyIsoCode(string $currencyIsoCode): void
+    {
+        $this->getFactory()
+            ->createCurrencyUpdater()
+            ->setCurrentCurrencyIsoCode($currencyIsoCode);
+    }
 }

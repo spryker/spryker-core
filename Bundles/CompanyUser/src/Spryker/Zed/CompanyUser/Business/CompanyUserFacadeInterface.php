@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUser\Business;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
@@ -26,6 +27,18 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function create(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Creates an initial company user
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function createInitialCompanyUser(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer;
 
     /**
      * Specification:
@@ -95,6 +108,7 @@ interface CompanyUserFacadeInterface
     /**
      * Specification:
      * - Retrieves company user by id
+     * - Hydrates company field
      *
      * @api
      *
@@ -115,4 +129,57 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findInitialCompanyUserByCompanyId(int $idCompany): ?CompanyUserTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves count of company user information by customer ID
+     * - Checks activity flag in a related company
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return int
+     */
+    public function countActiveCompanyUsersByIdCustomer(CustomerTransfer $customerTransfer): int;
+
+    /**
+     * Specification:
+     * - Returns customer references of customers related to company users;
+     *
+     * @api
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
+
+    /**
+     * Specification:
+     * - Enables company user.
+     * - Uses idCompanyUser from company user transfer to find company user.
+     * - Sets company user's 'is_active' flag to true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Disables company user.
+     * - Uses idCompanyUser from company user transfer to find company user.
+     * - Sets company user's 'is_active' flag to false.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }

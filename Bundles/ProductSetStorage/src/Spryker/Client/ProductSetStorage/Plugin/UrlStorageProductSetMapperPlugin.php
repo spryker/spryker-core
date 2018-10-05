@@ -47,22 +47,11 @@ class UrlStorageProductSetMapperPlugin extends AbstractPlugin implements UrlStor
     protected function generateKey($idProductSet, $locale)
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setStore($this->getStoreName());
         $synchronizationDataTransfer->setLocale($locale);
         $synchronizationDataTransfer->setReference($idProductSet);
 
         return $this->getFactory()
             ->getSynchronizationService()
             ->getStorageKeyBuilder(ProductSetStorageConstants::PRODUCT_SET_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->getFactory()
-            ->getStore()
-            ->getStoreName();
     }
 }

@@ -28,6 +28,6 @@ class GiftCardPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckP
      */
     public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFacade()->precheckSalesOrderGiftCards($quoteTransfer, $checkoutResponse);
+        return $this->getFacade()->precheckSalesOrderGiftCards($quoteTransfer, $checkoutResponse);
     }
 }

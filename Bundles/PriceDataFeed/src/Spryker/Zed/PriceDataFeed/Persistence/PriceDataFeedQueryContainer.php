@@ -23,7 +23,7 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceDataFeed(PriceDataFeedTransfer $priceDataFeedTransfer = null)
+    public function queryPriceDataFeed(?PriceDataFeedTransfer $priceDataFeedTransfer = null)
     {
         $productPriceQuery = $this->getFactory()
             ->getPriceProductQueryContainer()
@@ -42,7 +42,7 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
      */
     protected function applyJoins(
         SpyPriceProductQuery $productPriceQuery,
-        PriceDataFeedTransfer $priceDataFeedTransfer = null
+        ?PriceDataFeedTransfer $priceDataFeedTransfer = null
     ) {
 
         if ($priceDataFeedTransfer !== null) {

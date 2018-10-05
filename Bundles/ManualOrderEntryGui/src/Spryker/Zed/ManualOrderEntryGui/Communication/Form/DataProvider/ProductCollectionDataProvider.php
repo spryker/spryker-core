@@ -8,7 +8,8 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ManualOrderProductTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ManualOrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollectionType;
 
@@ -19,15 +20,19 @@ class ProductCollectionDataProvider implements FormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer)
+    public function getData($quoteTransfer): QuoteTransfer
     {
-        $manualOrderProducts = new ArrayObject();
-        for ($i = 0; $i < static::NUMBER_PRODUCT_ROWS; $i++) {
-            $manualOrderProducts->append(new ManualOrderProductTransfer());
+        if ($quoteTransfer->getManualOrder() === null) {
+            $quoteTransfer->setManualOrder(new ManualOrderTransfer());
         }
-        $quoteTransfer->setManualOrderProducts($manualOrderProducts);
+
+        $products = new ArrayObject();
+        for ($i = 0; $i < static::NUMBER_PRODUCT_ROWS; $i++) {
+            $products->append(new ItemTransfer());
+        }
+        $quoteTransfer->getManualOrder()->setProducts($products);
 
         return $quoteTransfer;
     }
@@ -37,11 +42,11 @@ class ProductCollectionDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($quoteTransfer)
+    public function getOptions($quoteTransfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,
-            ProductCollectionType::OPTION_MANUAL_ORDER_PRODUCT_CLASS_COLLECTION => ManualOrderProductTransfer::class,
+            ProductCollectionType::OPTION_PRODUCT_CLASS_COLLECTION => ItemTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
         ];

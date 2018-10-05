@@ -21,8 +21,8 @@ use Throwable;
 
 class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 {
-    const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
-    const QUANTITY = 'quantity';
+    public const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+    public const QUANTITY = 'quantity';
 
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
@@ -134,7 +134,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     }
 
     /**
-     * @param mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $bundleItems
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
      *
      * @return array
      */
@@ -233,7 +233,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle|null
      */
     protected function findProductBundleBySku($sku)
     {
@@ -245,7 +245,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|mixed
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findBundledItemsByIdBundleProduct($idProductConcrete)
     {
@@ -289,7 +289,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param int $idProduct
      *
-     * @return mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
     protected function findProductStocks($idProduct)
     {

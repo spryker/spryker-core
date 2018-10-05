@@ -51,10 +51,6 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
 
             $calculatedDiscountTransfer = $groupedDiscounts[$salesOrderDiscountEntity->getDisplayName()];
 
-            $calculatedDiscountTransfer->setSumAmount(
-                $calculatedDiscountTransfer->getSumGrossAmount() + (int)$salesOrderDiscountEntity->getAmount()
-            );
-
             $groupedDiscounts[$salesOrderDiscountEntity->getDisplayName()] = $calculatedDiscountTransfer;
         }
 
@@ -73,6 +69,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
         return $this->discountQueryContainer
             ->querySalesDiscount()
             ->leftJoinWithExpense()
+            ->leftJoinWithOrderItem()
             ->joinWithOrder()
             ->filterByFkSalesOrder($idSalesOrder)
             ->find();
@@ -180,13 +177,47 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount($salesOrderDiscountEntity->getIdSalesDiscount());
         $calculatedDiscountTransfer->fromArray($salesOrderDiscountEntity->toArray(), true);
-        $calculatedDiscountTransfer->setUnitAmount($salesOrderDiscountEntity->getAmount());
-        $calculatedDiscountTransfer->setQuantity(1);
+        $calculatedDiscountTransfer->setSumAmount($salesOrderDiscountEntity->getAmount());
+        $calculatedDiscountTransfer->setQuantity($this->getCalculatedDiscountQuantity($salesOrderDiscountEntity));
+
+        $this->deriveCalculatedDiscountUnitAmounts($calculatedDiscountTransfer, $salesOrderDiscountEntity);
 
         foreach ($salesOrderDiscountEntity->getDiscountCodes() as $discountCodeEntity) {
             $calculatedDiscountTransfer->setVoucherCode($discountCodeEntity->getCode());
         }
 
         return $calculatedDiscountTransfer;
+    }
+
+    /**
+     * Unit amounts are populated for presentation purposes only. For further calculations use sum amounts or properly populated unit amounts.
+     *
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
+     *
+     * @return void
+     */
+    protected function deriveCalculatedDiscountUnitAmounts(CalculatedDiscountTransfer $calculatedDiscountTransfer, SpySalesDiscount $salesOrderDiscountEntity): void
+    {
+        $quantity = $this->getCalculatedDiscountQuantity($salesOrderDiscountEntity);
+
+        $calculatedDiscountTransfer->setUnitAmount((int)round($salesOrderDiscountEntity->getAmount() / $quantity));
+    }
+
+    /**
+     * Discount assigned to expense or sales order has a quantity of 1.
+     * Discount assigned to a sales order item has the same quantity as the item.
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
+     *
+     * @return int
+     */
+    protected function getCalculatedDiscountQuantity(SpySalesDiscount $salesOrderDiscountEntity)
+    {
+        if (!$salesOrderDiscountEntity->getOrderItem()) {
+            return 1;
+        }
+
+        return $salesOrderDiscountEntity->getOrderItem()->getQuantity();
     }
 }

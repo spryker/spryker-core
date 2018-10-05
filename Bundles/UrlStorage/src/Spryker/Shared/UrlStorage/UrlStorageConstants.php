@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\UrlStorage;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 class UrlStorageConstants
 {
     /**
@@ -15,7 +18,7 @@ class UrlStorageConstants
      *
      * @api
      */
-    const URL_SYNC_STORAGE_QUEUE = 'sync.storage.url';
+    public const URL_SYNC_STORAGE_QUEUE = 'sync.storage.url';
 
     /**
      * Specification:
@@ -23,7 +26,7 @@ class UrlStorageConstants
      *
      * @api
      */
-    const URL_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.url.error';
+    public const URL_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.url.error';
 
     /**
      * Specification:
@@ -31,7 +34,7 @@ class UrlStorageConstants
      *
      * @api
      */
-    const URL_RESOURCE_NAME = 'url';
+    public const URL_RESOURCE_NAME = 'url';
 
     /**
      * Specification:
@@ -39,5 +42,5 @@ class UrlStorageConstants
      *
      * @api
      */
-    const REDIRECT_RESOURCE_NAME = 'redirect';
+    public const REDIRECT_RESOURCE_NAME = 'redirect';
 }

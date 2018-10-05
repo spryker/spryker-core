@@ -9,6 +9,7 @@ namespace Spryker\Zed\PersistentCart\Business\Model;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
@@ -20,6 +21,7 @@ class QuoteDeleter implements QuoteDeleterInterface
     use PermissionAwareTrait;
 
     public const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    public const GLOSSARY_KEY_CAN_NOT_REMOVE_LAST_CART = 'persistent_cart.quote.remove.can_not_remove_last_cart';
     public const GLOSSARY_KEY_REMOVE_SUCCESS = 'persistent_cart.quote.remove.success';
 
     /**
@@ -59,7 +61,7 @@ class QuoteDeleter implements QuoteDeleterInterface
      */
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        if (!$this->isQuoteWriteAllowed($quoteTransfer, $quoteTransfer->getCustomer())) {
+        if (!$this->isQuoteDeleteAllowed($quoteTransfer, $quoteTransfer->getCustomer())) {
             $quoteResponseTransfer = new QuoteResponseTransfer();
             $quoteResponseTransfer->setIsSuccessful(false);
             $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
@@ -80,20 +82,24 @@ class QuoteDeleter implements QuoteDeleterInterface
      *
      * @return bool
      */
-    protected function isQuoteWriteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
+    protected function isQuoteDeleteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        if (strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0
-            || ($customerTransfer->getCompanyUserTransfer()
-                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
-            )
-        ) {
-            return true;
-        }
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue(static::GLOSSARY_KEY_PERMISSION_FAILED);
-        $this->messengerFacade->addErrorMessage($messageTransfer);
+        if (!$this->isDeleteAllowedForCustomer($quoteTransfer, $customerTransfer)) {
+            $messageTransfer = new MessageTransfer();
+            $messageTransfer->setValue(static::GLOSSARY_KEY_PERMISSION_FAILED);
+            $this->messengerFacade->addErrorMessage($messageTransfer);
 
-        return false;
+            return false;
+        }
+        if ($this->isLastCustomerQuote($quoteTransfer, $customerTransfer)) {
+            $messageTransfer = new MessageTransfer();
+            $messageTransfer->setValue(static::GLOSSARY_KEY_CAN_NOT_REMOVE_LAST_CART);
+            $this->messengerFacade->addErrorMessage($messageTransfer);
+
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -104,5 +110,42 @@ class QuoteDeleter implements QuoteDeleterInterface
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue(static::GLOSSARY_KEY_REMOVE_SUCCESS);
         $this->messengerFacade->addSuccessMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isLastCustomerQuote(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
+    {
+        $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
+        $quoteCriteriaFilterTransfer
+            ->setCustomerReference($customerTransfer->getCustomerReference());
+        $customerQuoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+
+        $customerQuoteQuantity = 0;
+        foreach ($customerQuoteCollectionTransfer->getQuotes() as $customerQuoteTransfer) {
+            if ($customerQuoteTransfer->getIdQuote() !== $quoteTransfer->getIdQuote()) {
+                $customerQuoteQuantity++;
+            }
+        }
+
+        return $customerQuoteQuantity === 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isDeleteAllowedForCustomer(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
+    {
+        return strcmp($quoteTransfer->getCustomerReference(), $customerTransfer->getCustomerReference()) === 0
+            || ($customerTransfer->getCompanyUserTransfer()
+                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
+            );
     }
 }

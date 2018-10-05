@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/ProductReviewStorage.svg)](https://travis-ci.org/spryker/ProductReviewStorage)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/ProductReviewStorage/badge.svg)](https://coveralls.io/github/spryker/ProductReviewStorage)
 
-{{ADD DESCRIPTION HERE}}
+Manages storage for product review entities.
 
 ## Installation
 

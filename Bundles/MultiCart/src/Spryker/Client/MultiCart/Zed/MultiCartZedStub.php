@@ -8,6 +8,8 @@
 namespace Spryker\Client\MultiCart\Zed;
 
 use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientInterface;
@@ -30,20 +32,42 @@ class MultiCartZedStub implements MultiCartZedStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteActivationRequestTransfer $quoteActivationRequestTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function setDefaultQuote(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer
     {
-        return $this->zedRequestClient->call('/multi-cart/gateway/set-default-quote', $quoteActivationRequestTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call('/multi-cart/gateway/set-default-quote', $quoteActivationRequestTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function duplicateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedRequestClient->call('/multi-cart/gateway/duplicate-quote', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call('/multi-cart/gateway/duplicate-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call(
+            '/multi-cart/gateway/get-quote-collection-by-criteria',
+            $quoteCriteriaFilterTransfer
+        );
+
+        return $quoteResponseTransfer;
     }
 }

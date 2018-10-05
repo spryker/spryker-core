@@ -10,11 +10,6 @@ namespace Spryker\Client\MultiCart\Dependency\Client;
 interface MultiCartToCustomerClientInterface
 {
     /**
-     * Specification:
-     * - Returns customer information from session.
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer();

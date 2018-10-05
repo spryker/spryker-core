@@ -19,9 +19,11 @@ use Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPlu
  */
 class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements PaymentSubFormPluginInterface
 {
-    const PAYMENT_PROVIDER = 'DummyPayment';
+    public const PAYMENT_PROVIDER = 'DummyPayment';
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
      */
     public function createSubForm(): AbstractType
@@ -30,6 +32,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPropertyPath(): string
@@ -38,6 +42,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -46,6 +52,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPaymentProvider(): string
@@ -54,6 +62,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPaymentMethod(): string
@@ -62,22 +72,26 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($dataTransfer): QuoteTransfer
+    public function getData($quoteTransfer): QuoteTransfer
     {
-        return $this->getFactory()->createInvoiceFormDataProvider()->getData($dataTransfer);
+        return $this->getFactory()->createInvoiceFormDataProvider()->getData($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function getOptions($dataTransfer): array
+    public function getOptions($quoteTransfer): array
     {
-        return $this->getFactory()->createInvoiceFormDataProvider()->getOptions($dataTransfer);
+        return $this->getFactory()->createInvoiceFormDataProvider()->getOptions($quoteTransfer);
     }
 }

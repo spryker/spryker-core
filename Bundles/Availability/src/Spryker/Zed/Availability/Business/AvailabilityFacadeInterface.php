@@ -47,6 +47,18 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
+     *  - Checks if product is available.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isProductConcreteAvailable(int $idProductConcrete): bool;
+
+    /**
+     * Specification:
      *  - Checks if product has stock in stock table for current store.
      *  - Checks if have placed orders where items have state machine state flagged as reserved.
      *  - Returns integer value which is Product stock - reserved state machine items.
@@ -201,7 +213,7 @@ interface AvailabilityFacadeInterface
      *
      * @param string $sku
      * @param int $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */

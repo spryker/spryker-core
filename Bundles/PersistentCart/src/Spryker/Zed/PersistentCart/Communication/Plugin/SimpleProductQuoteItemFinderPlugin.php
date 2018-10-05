@@ -14,13 +14,15 @@ use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginI
 class SimpleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
      * @param string|null $groupKey
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    public function findItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null): ?ItemTransfer
+    public function findItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (($itemTransfer->getSku() === $sku && $groupKey === null) ||

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Summary;
 
+use Generated\Shared\Transfer\ManualOrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,14 +21,14 @@ class SummaryType extends AbstractType
 {
     public const TYPE_NAME = 'summary';
 
-    public const FIELD_SUBMIT_ORDER = 'submit_order';
+    public const FIELD_IS_SUBMIT_ORDER = 'isSubmitOrder';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
     }
 
@@ -36,10 +38,10 @@ class SummaryType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addIsSummaryPostedField($builder, $options);
+            ->addIsSubmitOrderField($builder, $options);
     }
 
     /**
@@ -48,12 +50,13 @@ class SummaryType extends AbstractType
      *
      * @return $this
      */
-    protected function addIsSummaryPostedField(FormBuilderInterface $builder, array $options)
+    protected function addIsSubmitOrderField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(
-            static::FIELD_SUBMIT_ORDER,
+            static::FIELD_IS_SUBMIT_ORDER,
             CheckboxType::class,
             [
+                'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::IS_SUBMIT_ORDER,
                 'label' => 'Submit order',
                 'required' => true,
             ]
@@ -65,7 +68,7 @@ class SummaryType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return static::TYPE_NAME;
     }

@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -25,7 +27,7 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
     public function createCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
@@ -101,5 +103,21 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
         return $this->getFactory()
             ->createZedCompanyBusinessUnitStub()
             ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
+     */
+    public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->getCustomerCompanyBusinessUnitTree($customerTransfer);
     }
 }

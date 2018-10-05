@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -19,11 +20,20 @@ interface ReservationInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $reservationQuantity
+     *
+     * @return void
+     */
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void;
+
+    /**
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku($sku, StoreTransfer $storeTransfer = null);
+    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null);
 
     /**
      * @param string $sku
@@ -40,4 +50,9 @@ interface ReservationInterface
      * @return int
      */
     public function getReservationsFromOtherStores($sku, StoreTransfer $currentStoreTransfer);
+
+    /**
+     * @return string[]
+     */
+    public function getReservedStateNames();
 }

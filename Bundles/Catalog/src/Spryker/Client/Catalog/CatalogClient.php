@@ -100,7 +100,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      * @api
      *
      * @param string $mode
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Response $response
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

@@ -14,9 +14,9 @@ use Spryker\Service\UtilText\UtilTextService;
  */
 class Event implements EventInterface
 {
-    const FIELD_NAME = 'name';
+    public const FIELD_NAME = 'name';
 
-    const FIELD_EVENT_ID = '_event_id';
+    public const FIELD_EVENT_ID = '_event_id';
 
     /**
      * @var array
@@ -88,7 +88,7 @@ class Event implements EventInterface
             }
         }
 
-        return $check;
+        return (bool)$check;
     }
 
     /**

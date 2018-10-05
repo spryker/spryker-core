@@ -17,5 +17,5 @@ interface ProductAbstractSearchReaderInterface
      *
      * @return bool
      */
-    public function isProductAbstractSearchable($idProductAbstract, LocaleTransfer $localeTransfer = null);
+    public function isProductAbstractSearchable($idProductAbstract, ?LocaleTransfer $localeTransfer = null);
 }

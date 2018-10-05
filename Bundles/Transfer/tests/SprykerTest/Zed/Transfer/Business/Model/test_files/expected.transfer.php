@@ -15,21 +15,21 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class CatFaceTransfer extends AbstractTransfer
 {
-    const NAME = 'name';
+    public const NAME = 'name';
 
-    const ITEM = 'item';
+    public const ITEM = 'item';
 
-    const ITEMS = 'items';
+    public const ITEMS = 'items';
 
-    const TYPED_ARRAY = 'typedArray';
+    public const TYPED_ARRAY = 'typedArray';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $name;
 
     /**
-     * @var \Generated\Shared\Transfer\ItemTransfer
+     * @var \Generated\Shared\Transfer\ItemTransfer|null
      */
     protected $item;
 
@@ -41,7 +41,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @var string[]
      */
-    protected $typedArray;
+    protected $typedArray = [];
 
     /**
      * @var array
@@ -67,31 +67,35 @@ class CatFaceTransfer extends AbstractTransfer
             'name_underscore' => 'name',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'no',
         ],
         self::ITEM => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
             'name_underscore' => 'item',
             'is_collection' => false,
             'is_transfer' => true,
+            'rest_request_parameter' => 'no',
         ],
         self::ITEMS => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
             'name_underscore' => 'items',
             'is_collection' => true,
             'is_transfer' => true,
+            'rest_request_parameter' => 'no',
         ],
         self::TYPED_ARRAY => [
             'type' => 'string[]',
             'name_underscore' => 'typed_array',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'no',
         ],
     ];
 
     /**
      * @module Test
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return $this
      */
@@ -106,7 +110,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return string
+     * @return string|null
      */
     public function getName()
     {
@@ -143,7 +147,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     public function getItem()
     {

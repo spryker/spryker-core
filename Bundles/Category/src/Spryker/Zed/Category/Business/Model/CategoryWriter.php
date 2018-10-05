@@ -37,7 +37,7 @@ class CategoryWriter implements CategoryWriterInterface
      *
      * @return int
      */
-    public function create(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
+    public function create(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $categoryEntity = new SpyCategory();
         $categoryEntity->fromArray($categoryTransfer->toArray());
@@ -75,7 +75,7 @@ class CategoryWriter implements CategoryWriterInterface
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
+    public function update(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $categoryAttributeEntity = $this->queryContainer->queryAttributeByCategoryId($categoryTransfer->getIdCategory())
@@ -125,7 +125,7 @@ class CategoryWriter implements CategoryWriterInterface
      *
      * @return void
      */
-    protected function persistCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
+    protected function persistCategoryAttribute(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $categoryAttributeEntity = $this->queryContainer->queryAttributeByCategoryId($categoryTransfer->getIdCategory())
             ->filterByFkLocale($localeTransfer->getIdLocale())
@@ -164,10 +164,12 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
+     * @deprecated Not in use anymore.
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute|null
      */
     protected function getAttributeEntity($idCategory, LocaleTransfer $localeTransfer)
     {

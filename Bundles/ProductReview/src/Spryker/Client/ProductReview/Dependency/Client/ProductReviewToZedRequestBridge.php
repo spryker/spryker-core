@@ -17,7 +17,7 @@ class ProductReviewToZedRequestBridge implements ProductReviewToZedRequestInterf
     protected $zedRequestClient;
 
     /**
-     * @param \Spryker\Client\Storage\StorageClientInterface $zedRequestClient
+     * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestClient
      */
     public function __construct($zedRequestClient)
     {

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\Sales\Persistence"
+          package="src.Orm.Zed.Sales.Persistence">
+
+    <table name="spy_sales_order" phpName="SpySalesOrder">
+        <column name="fk_order_source" type="INTEGER"/>
+
+        <foreign-key name="spy_sales_order-fk_order_source" foreignTable="spy_order_source" phpName="OrderSource">
+            <reference local="fk_order_source" foreign="id_order_source"/>
+        </foreign-key>
+    </table>
+
+</database>

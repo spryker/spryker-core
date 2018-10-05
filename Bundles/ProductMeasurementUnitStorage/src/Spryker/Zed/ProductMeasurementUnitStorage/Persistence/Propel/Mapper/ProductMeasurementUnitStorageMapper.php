@@ -14,15 +14,15 @@ class ProductMeasurementUnitStorageMapper implements ProductMeasurementUnitStora
 {
     /**
      * @param \Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductMeasurementUnitStorage $spyProductMeasurementUnitStorageEntity
-     * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntity
+     * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntityTransfer
      *
      * @return \Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductMeasurementUnitStorage
      */
     public function hydrateSpyProductMeasurementUnitStorageEntity(
         SpyProductMeasurementUnitStorage $spyProductMeasurementUnitStorageEntity,
-        SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntity
+        SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntityTransfer
     ): SpyProductMeasurementUnitStorage {
-        $spyProductMeasurementUnitStorageEntity->fromArray($productMeasurementUnitStorageEntity->toArray());
+        $spyProductMeasurementUnitStorageEntity->fromArray($productMeasurementUnitStorageEntityTransfer->toArray());
 
         return $spyProductMeasurementUnitStorageEntity;
     }

@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\SalesReclamation\Communication\Plugin;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface;
 use Spryker\Zed\SalesReclamation\Communication\Form\ReclamationType;
+use Spryker\Zed\SalesReclamation\SalesReclamationConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,6 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
 class ReclamationOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -29,35 +32,62 @@ class ReclamationOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createReclamationForm($request, $dataTransfer);
+        return $this->getFactory()->createReclamationForm($request, $quoteTransfer);
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
         return $quoteTransfer;
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isPreFilled($dataTransfer = null): bool
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
         return true;
+    }
+
+    /**
+     * @api
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isFormSkipped(Request $request, QuoteTransfer $quoteTransfer): bool
+    {
+        $value = null;
+
+        if (!$quoteTransfer->getReclamationId()
+            && $request->query->has(SalesReclamationConfig::PARAM_ID_RECLAMATION)
+        ) {
+            $value = $request->query->get(SalesReclamationConfig::PARAM_ID_RECLAMATION);
+        }
+
+        return $value === null;
     }
 }

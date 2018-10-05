@@ -1,5 +1,9 @@
-namespace: CompanyRole
+namespace: SprykerTest
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/CompanyRole
+
 paths:
     tests: tests
     log: tests/_output

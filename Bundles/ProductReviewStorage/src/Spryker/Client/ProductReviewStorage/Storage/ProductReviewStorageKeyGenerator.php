@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductReviewStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductReviewStorage\Dependency\Service\ProductReviewStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 
 class ProductReviewStorageKeyGenerator implements ProductReviewStorageKeyGeneratorInterface
 {
@@ -19,18 +18,11 @@ class ProductReviewStorageKeyGenerator implements ProductReviewStorageKeyGenerat
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Client\ProductReviewStorage\Dependency\Service\ProductReviewStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(ProductReviewStorageToSynchronizationServiceInterface $synchronizationService, Store $store)
+    public function __construct(ProductReviewStorageToSynchronizationServiceInterface $synchronizationService)
     {
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
     }
 
     /**
@@ -43,7 +35,6 @@ class ProductReviewStorageKeyGenerator implements ProductReviewStorageKeyGenerat
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setStore($this->store->getStoreName())
             ->setReference($resourceId);
 
         return $this->synchronizationService->getStorageKeyBuilder($resourceName)->generateKey($synchronizationDataTransfer);

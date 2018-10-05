@@ -137,7 +137,7 @@ abstract class AbstractProductSetFormDataToTransferMapper
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer
      */
-    protected function setProductImageSets(FormInterface $imageSetFormCollection, ProductSetTransfer $productSetTransfer, LocaleTransfer $localeTransfer = null)
+    protected function setProductImageSets(FormInterface $imageSetFormCollection, ProductSetTransfer $productSetTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         foreach ($imageSetFormCollection as $imageSetForm) {
             $imageSetFormData = $imageSetForm->getData();

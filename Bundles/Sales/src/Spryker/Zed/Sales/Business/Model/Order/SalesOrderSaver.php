@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -59,6 +60,11 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $store;
 
     /**
+     * @var \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
+     */
+    protected $orderExpanderPreSavePlugins;
+
+    /**
      * @var \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface
      */
     protected $salesOrderSaverPluginExecutor;
@@ -75,6 +81,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[] $orderExpanderPreSavePlugins
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface $salesOrderItemMapper
      */
@@ -85,6 +92,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         SalesConfig $salesConfiguration,
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
+        $orderExpanderPreSavePlugins,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
         SalesOrderItemMapperInterface $salesOrderItemMapper
     ) {
@@ -94,6 +102,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->salesConfiguration = $salesConfiguration;
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
+        $this->orderExpanderPreSavePlugins = $orderExpanderPreSavePlugins;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->salesOrderItemMapper = $salesOrderItemMapper;
     }
@@ -242,6 +251,26 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderEntity->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
         $salesOrderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
         $salesOrderEntity->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));
+
+        $this->hydrateSalesOrderEntityFromPlugins($quoteTransfer, $salesOrderEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    protected function hydrateSalesOrderEntityFromPlugins(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity): void
+    {
+        $salesOrderEntityTransfer = new SpySalesOrderEntityTransfer();
+        $salesOrderEntityTransfer->fromArray($salesOrderEntity->toArray(), true);
+
+        foreach ($this->orderExpanderPreSavePlugins as $preSaveHydrateOrderPlugin) {
+            $salesOrderEntityTransfer = $preSaveHydrateOrderPlugin->expand($salesOrderEntityTransfer, $quoteTransfer);
+        }
+
+        $salesOrderEntity->fromArray($salesOrderEntityTransfer->modifiedToArray());
     }
 
     /**
@@ -299,23 +328,48 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $processEntity = $this->getProcessEntity($quoteTransfer, $itemTransfer);
         $initialStateEntity = $this->omsFacade->getInitialStateEntity();
 
+        $sanitizedItemTransfer = $this->sanitizeItemSumPrices(clone $itemTransfer);
+
         $salesOrderItemEntity->fromArray($itemTransfer->toArray());
         $salesOrderItemEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesOrderItemEntity->setFkOmsOrderItemState($initialStateEntity->getIdOmsOrderItemState());
-        $salesOrderItemEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
-        $salesOrderItemEntity->setNetPrice($itemTransfer->getUnitNetPrice());
-
-        $salesOrderItemEntity->setPrice($itemTransfer->getUnitPrice());
-        $salesOrderItemEntity->setPriceToPayAggregation($itemTransfer->getUnitPriceToPayAggregation());
-        $salesOrderItemEntity->setSubtotalAggregation($itemTransfer->getUnitSubtotalAggregation());
-        $salesOrderItemEntity->setProductOptionPriceAggregation($itemTransfer->getUnitProductOptionPriceAggregation());
-        $salesOrderItemEntity->setExpensePriceAggregation($itemTransfer->getUnitExpensePriceAggregation());
-        $salesOrderItemEntity->setTaxAmount($itemTransfer->getUnitTaxAmount());
-        $salesOrderItemEntity->setTaxAmountFullAggregation($itemTransfer->getUnitTaxAmountFullAggregation());
-        $salesOrderItemEntity->setDiscountAmountAggregation($itemTransfer->getUnitDiscountAmountAggregation());
-        $salesOrderItemEntity->setDiscountAmountFullAggregation($itemTransfer->getUnitDiscountAmountFullAggregation());
+        $salesOrderItemEntity->setGrossPrice($sanitizedItemTransfer->getSumGrossPrice());
+        $salesOrderItemEntity->setNetPrice($sanitizedItemTransfer->getSumNetPrice());
+        $salesOrderItemEntity->setPrice($sanitizedItemTransfer->getSumPrice());
+        $salesOrderItemEntity->setPriceToPayAggregation($sanitizedItemTransfer->getSumPriceToPayAggregation());
+        $salesOrderItemEntity->setSubtotalAggregation($sanitizedItemTransfer->getSumSubtotalAggregation());
+        $salesOrderItemEntity->setProductOptionPriceAggregation($sanitizedItemTransfer->getSumProductOptionPriceAggregation());
+        $salesOrderItemEntity->setExpensePriceAggregation($sanitizedItemTransfer->getSumExpensePriceAggregation());
+        $salesOrderItemEntity->setTaxAmount($sanitizedItemTransfer->getSumTaxAmount());
+        $salesOrderItemEntity->setTaxAmountFullAggregation($sanitizedItemTransfer->getSumTaxAmountFullAggregation());
+        $salesOrderItemEntity->setDiscountAmountAggregation($sanitizedItemTransfer->getSumDiscountAmountAggregation());
+        $salesOrderItemEntity->setDiscountAmountFullAggregation($sanitizedItemTransfer->getSumDiscountAmountFullAggregation());
         $salesOrderItemEntity->setRefundableAmount($itemTransfer->getRefundableAmount());
         $salesOrderItemEntity->setProcess($processEntity);
+    }
+
+    /**
+     * @deprecated For BC reasons the missing sum prices are mirrored from unit prices
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function sanitizeItemSumPrices(ItemTransfer $itemTransfer)
+    {
+        $itemTransfer->setSumGrossPrice($itemTransfer->getSumGrossPrice() ?? $itemTransfer->getUnitGrossPrice());
+        $itemTransfer->setSumNetPrice($itemTransfer->getSumNetPrice() ?? $itemTransfer->getUnitNetPrice());
+        $itemTransfer->setSumPrice($itemTransfer->getSumPrice() ?? $itemTransfer->getUnitPrice());
+        $itemTransfer->setSumPriceToPayAggregation($itemTransfer->getSumPriceToPayAggregation() ?? $itemTransfer->getUnitPriceToPayAggregation());
+        $itemTransfer->setSumSubtotalAggregation($itemTransfer->getSumSubtotalAggregation() ?? $itemTransfer->getUnitSubtotalAggregation());
+        $itemTransfer->setSumProductOptionPriceAggregation($itemTransfer->getSumProductOptionPriceAggregation() ?? $itemTransfer->getUnitProductOptionPriceAggregation());
+        $itemTransfer->setSumExpensePriceAggregation($itemTransfer->getSumExpensePriceAggregation() ?? $itemTransfer->getUnitExpensePriceAggregation());
+        $itemTransfer->setSumTaxAmount($itemTransfer->getSumTaxAmount() ?? $itemTransfer->getUnitTaxAmount());
+        $itemTransfer->setSumTaxAmountFullAggregation($itemTransfer->getSumTaxAmountFullAggregation() ?? $itemTransfer->getUnitTaxAmountFullAggregation());
+        $itemTransfer->setSumDiscountAmountAggregation($itemTransfer->getSumDiscountAmountAggregation() ?? $itemTransfer->getUnitDiscountAmountAggregation());
+        $itemTransfer->setSumDiscountAmountFullAggregation($itemTransfer->getSumDiscountAmountFullAggregation() ?? $itemTransfer->getUnitDiscountAmountFullAggregation());
+
+        return $itemTransfer;
     }
 
     /**
@@ -357,10 +411,6 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     protected function getSaveOrderTransfer(SaveOrderTransfer $saveOrderTransfer)
     {
-        if ($saveOrderTransfer === null) {
-            $saveOrderTransfer = $this->createSaveOrderTransfer();
-        }
-
         return $saveOrderTransfer;
     }
 

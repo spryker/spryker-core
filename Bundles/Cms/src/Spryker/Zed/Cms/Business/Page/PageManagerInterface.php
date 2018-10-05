@@ -47,7 +47,7 @@ interface PageManagerInterface
      *
      * @return void
      */
-    public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $localeTransfer = null);
+    public function touchPageActive(PageTransfer $pageTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer

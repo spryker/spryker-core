@@ -18,7 +18,7 @@ class WorkerProgressBar implements WorkerProgressBarInterface
     protected $output;
 
     /**
-     * @var \Symfony\Component\Console\Helper\ProgressBar
+     * @var \Symfony\Component\Console\Helper\ProgressBar|null
      */
     protected $progressBar;
 

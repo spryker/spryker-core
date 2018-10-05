@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\SharedCart\Persistence;
 
+use Generated\Shared\Transfer\PermissionTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SpyPermissionEntityTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
-use Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -19,59 +20,59 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class SharedCartEntityManager extends AbstractEntityManager implements SharedCartEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyPermissionEntityTransfer $permissionEntityTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPermissionEntityTransfer
+     * @return \Generated\Shared\Transfer\PermissionTransfer
      */
-    public function savePermissionEntity(SpyPermissionEntityTransfer $permissionEntityTransfer): SpyPermissionEntityTransfer
+    public function savePermission(PermissionTransfer $permissionTransfer): PermissionTransfer
     {
         $permissionEntity = $this->getFactory()
             ->createPermissionQuery()
-            ->filterByKey($permissionEntityTransfer->getKey())
+            ->filterByKey($permissionTransfer->getKey())
             ->findOneOrCreate();
 
-        $permissionEntity->fromArray($permissionEntityTransfer->modifiedToArray());
+        $permissionEntity->fromArray($permissionTransfer->modifiedToArray());
         $permissionEntity->save();
 
-        $permissionEntityTransfer->fromArray($permissionEntity->toArray(), true);
+        $permissionTransfer->fromArray($permissionEntity->toArray(), true);
 
-        return $permissionEntityTransfer;
+        return $permissionTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer
      */
-    public function saveQuotePermissionGroupEntity(SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer): SpyQuotePermissionGroupEntityTransfer
+    public function saveQuotePermissionGroup(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): QuotePermissionGroupTransfer
     {
         $quotePermissionGroupEntity = $this->getFactory()
             ->createQuotePermissionGroupQuery()
-            ->filterByName($quotePermissionGroupEntityTransfer->getName())
+            ->filterByName($quotePermissionGroupTransfer->getName())
             ->findOneOrCreate();
 
-        $quotePermissionGroupEntity->fromArray($quotePermissionGroupEntityTransfer->modifiedToArray());
+        $quotePermissionGroupEntity->fromArray($quotePermissionGroupTransfer->modifiedToArray());
         $quotePermissionGroupEntity->save();
 
-        $quotePermissionGroupEntityTransfer->fromArray($quotePermissionGroupEntity->toArray(), true);
+        $quotePermissionGroupTransfer->fromArray($quotePermissionGroupEntity->toArray(), true);
 
-        return $quotePermissionGroupEntityTransfer;
+        return $quotePermissionGroupTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer
-     * @param \Generated\Shared\Transfer\SpyPermissionEntityTransfer $permissionEntityTransfer
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
      * @return void
      */
-    public function saveQuotePermissionGroupToPermissionEntity(
-        SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer,
-        SpyPermissionEntityTransfer $permissionEntityTransfer
+    public function saveQuotePermissionGroupToPermission(
+        QuotePermissionGroupTransfer $quotePermissionGroupTransfer,
+        PermissionTransfer $permissionTransfer
     ): void {
         $this->getFactory()
             ->createQuotePermissionGroupToPermissionQuery()
-            ->filterByFkQuotePermissionGroup($quotePermissionGroupEntityTransfer->getIdQuotePermissionGroup())
-            ->filterByFkPermission($permissionEntityTransfer->getIdPermission())
+            ->filterByFkQuotePermissionGroup($quotePermissionGroupTransfer->getIdQuotePermissionGroup())
+            ->filterByFkPermission($permissionTransfer->getIdPermission())
             ->findOneOrCreate()
             ->save();
     }
@@ -138,5 +139,22 @@ class SharedCartEntityManager extends AbstractEntityManager implements SharedCar
             ->createQuoteCompanyUserQuery()
             ->filterByFkQuote($quoteTransfer->getIdQuote())
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     *
+     * @return void
+     */
+    public function updateCompanyUserQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer): void
+    {
+        $quotePermissionGroupTransfer = $shareDetailTransfer->getQuotePermissionGroup();
+
+        $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByIdQuoteCompanyUser($shareDetailTransfer->getIdQuoteCompanyUser())
+            ->update([
+                ucfirst(SpyQuoteCompanyUserEntityTransfer::FK_QUOTE_PERMISSION_GROUP) => $quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
+            ]);
     }
 }

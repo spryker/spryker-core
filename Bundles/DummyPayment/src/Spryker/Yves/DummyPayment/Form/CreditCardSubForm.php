@@ -17,17 +17,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CreditCardSubForm extends AbstractSubForm
 {
-    const PAYMENT_METHOD = 'credit_card';
+    public const PAYMENT_METHOD = 'credit_card';
 
-    const FIELD_CARD_TYPE = 'card_type';
-    const FIELD_CARD_NUMBER = 'card_number';
-    const FIELD_NAME_ON_CARD = 'name_on_card';
-    const FIELD_CARD_EXPIRES_MONTH = 'card_expires_month';
-    const FIELD_CARD_EXPIRES_YEAR = 'card_expires_year';
-    const FIELD_CARD_SECURITY_CODE = 'card_security_code';
+    public const FIELD_CARD_TYPE = 'card_type';
+    public const FIELD_CARD_NUMBER = 'card_number';
+    public const FIELD_NAME_ON_CARD = 'name_on_card';
+    public const FIELD_CARD_EXPIRES_MONTH = 'card_expires_month';
+    public const FIELD_CARD_EXPIRES_YEAR = 'card_expires_year';
+    public const FIELD_CARD_SECURITY_CODE = 'card_security_code';
 
-    const OPTION_CARD_EXPIRES_CHOICES_MONTH = 'month choices';
-    const OPTION_CARD_EXPIRES_CHOICES_YEAR = 'year choices';
+    public const OPTION_CARD_EXPIRES_CHOICES_MONTH = 'month choices';
+    public const OPTION_CARD_EXPIRES_CHOICES_YEAR = 'year choices';
 
     /**
      * @return string
@@ -105,7 +105,7 @@ class CreditCardSubForm extends AbstractSubForm
             ChoiceType::class,
             [
                 'choices' => ['Visa' => 'Visa', 'Master Card' => 'Master Card'],
-                'label' => false,
+                'label' => 'dummyPaymentCreditCard.card_type',
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
@@ -122,7 +122,7 @@ class CreditCardSubForm extends AbstractSubForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Yves\DummyPayment\Form\CreditCardSubForm
+     * @return $this
      */
     protected function addCardNumber(FormBuilderInterface $builder)
     {
@@ -130,7 +130,7 @@ class CreditCardSubForm extends AbstractSubForm
             self::FIELD_CARD_NUMBER,
             TextType::class,
             [
-                'label' => false,
+                'label' => 'dummyPaymentCreditCard.card_number',
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -144,7 +144,7 @@ class CreditCardSubForm extends AbstractSubForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Yves\DummyPayment\Form\CreditCardSubForm
+     * @return $this
      */
     protected function addNameOnCard(FormBuilderInterface $builder)
     {
@@ -152,7 +152,7 @@ class CreditCardSubForm extends AbstractSubForm
             self::FIELD_NAME_ON_CARD,
             TextType::class,
             [
-                'label' => false,
+                'label' => 'dummyPaymentCreditCard.name_on_card',
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -175,7 +175,7 @@ class CreditCardSubForm extends AbstractSubForm
             self::FIELD_CARD_EXPIRES_MONTH,
             ChoiceType::class,
             [
-                'label' => false,
+                'label' => 'dummyPaymentCreditCard.card_expires',
                 'choices' => array_flip($options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_MONTH]),
                 'choices_as_values' => true,
                 'required' => true,
@@ -219,7 +219,7 @@ class CreditCardSubForm extends AbstractSubForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Yves\DummyPayment\Form\CreditCardSubForm
+     * @return $this
      */
     protected function addCardSecurityCode(FormBuilderInterface $builder)
     {
@@ -227,7 +227,7 @@ class CreditCardSubForm extends AbstractSubForm
             self::FIELD_CARD_SECURITY_CODE,
             TextType::class,
             [
-                'label' => false,
+                'label' => 'dummyPaymentCreditCard.card_security_code',
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),

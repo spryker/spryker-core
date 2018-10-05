@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CmsBlockCategoryStorage\Communication\CmsBlockCategoryStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockCategoryStorage\Business\CmsBlockCategoryStorageFacadeInterface getFacade()
  */
 class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -29,16 +30,95 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_PUBLISH, new CmsBlockCategoryConnectorPublishStorageListener())
-            ->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH, new CmsBlockCategoryConnectorPublishStorageListener())
-            ->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_CREATE, new CmsBlockCategoryConnectorStorageListener())
-            ->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_UPDATE, new CmsBlockCategoryConnectorStorageListener())
-            ->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE, new CmsBlockCategoryConnectorStorageListener())
-            ->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_CREATE, new CmsBlockCategoryPositionStorageListener())
-            ->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_UPDATE, new CmsBlockCategoryPositionStorageListener())
-            ->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_DELETE, new CmsBlockCategoryPositionStorageListener());
+        $this->addCmsBlockCategoryConnectorPublishStorageListener($eventCollection);
+        $this->addCmsBlockCategoryConnectorUnpublishStorageListener($eventCollection);
+        $this->addCmsBlockCategoryConnectorCreateStorageListener($eventCollection);
+        $this->addCmsBlockCategoryConnectorUpdateStorageListener($eventCollection);
+        $this->addCmsBlockCategoryConnectorDeleteStorageListener($eventCollection);
+        $this->addCmsBlockCategoryPositionCreateStorageListener($eventCollection);
+        $this->addCmsBlockCategoryPositionUpdateStorageListener($eventCollection);
+        $this->addCmsBlockCategoryPositionDeleteStorageListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockCategoryConnectorPublishStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_PUBLISH, new CmsBlockCategoryConnectorPublishStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockCategoryConnectorUnpublishStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH, new CmsBlockCategoryConnectorPublishStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockCategoryConnectorCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_CREATE, new CmsBlockCategoryConnectorStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockCategoryConnectorUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_UPDATE, new CmsBlockCategoryConnectorStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockCategoryConnectorDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE, new CmsBlockCategoryConnectorStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockCategoryPositionCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_CREATE, new CmsBlockCategoryPositionStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockCategoryPositionUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_UPDATE, new CmsBlockCategoryPositionStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockCategoryPositionDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_DELETE, new CmsBlockCategoryPositionStorageListener());
     }
 }

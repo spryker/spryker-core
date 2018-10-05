@@ -6,12 +6,11 @@
 {% block section_title widget_title %}
 
 {% block content %}
-
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Order' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Order' } %}
         {% block widget_content %}
 
             {% if forms|length %}
-            {{ form_start(forms[0]) }}
+            {{ form_start(forms[0], {'attr': {'class': 'ManualOrderEntryForm'}}) }}
 
                 {% for form in forms %}
 
@@ -35,7 +34,7 @@
 
                 {% endfor %}
 
-                {% include '@ManualOrderEntryGui/create/partials/submit-buttons.twig' with {'form': forms|last, 'nextStepName': nextStepName} %}
+                {% include '@ManualOrderEntryGui/create/partials/submit-buttons.twig' with {'firstForm': forms|first, 'lastForm': forms|last} %}
 
             {{ form_end(forms[0]) }}
             {% endif %}

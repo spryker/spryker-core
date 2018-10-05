@@ -7,13 +7,16 @@
 
 namespace Spryker\Yves\Currency\CurrencyChange;
 
+/**
+ * @deprecated use \Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface instead
+ */
 interface CurrencyPostChangePluginExecutorInterface
 {
     /**
      * @param string $currencyIsoCode
      * @param string $previousCurrencyIsoCode
      *
-     * @return bool
+     * @return void
      */
     public function execute($currencyIsoCode, $previousCurrencyIsoCode);
 }

@@ -1,0 +1,4 @@
+{{ 'mail.company.user.invitation.body.text' | trans({
+    '%name%' : mail.getCompanyUserInvitation.getFirstName,
+    '%invitationLink%' : mail.getInvitationLink,
+}) | raw }}

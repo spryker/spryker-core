@@ -17,10 +17,11 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 /**
  * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetPageSearch\Communication\ProductSetPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacadeInterface getFacade()
  */
 class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInterface
 {
-    const FILTERED_KEYS = [
+    public const FILTERED_KEYS = [
         'locale',
         'store',
         'type',
@@ -65,6 +66,8 @@ class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInte
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()

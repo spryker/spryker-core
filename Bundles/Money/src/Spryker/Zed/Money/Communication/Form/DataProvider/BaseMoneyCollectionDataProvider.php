@@ -20,7 +20,7 @@ class BaseMoneyCollectionDataProvider
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
-    protected function mapMoneyTransfer(CurrencyTransfer $currencyTransfer, StoreTransfer $storeTransfer = null)
+    protected function mapMoneyTransfer(CurrencyTransfer $currencyTransfer, ?StoreTransfer $storeTransfer = null)
     {
         $moneyValueTransfer = new MoneyValueTransfer();
         $moneyValueTransfer->setCurrency($currencyTransfer);

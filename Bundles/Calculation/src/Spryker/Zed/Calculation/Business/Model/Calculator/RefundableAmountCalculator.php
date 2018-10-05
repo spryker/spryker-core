@@ -31,10 +31,10 @@ class RefundableAmountCalculator implements CalculatorInterface
     protected function calculateRefundableAmountForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
-            $itemTransfer->requireUnitPriceToPayAggregation();
+            $itemTransfer->requireSumPriceToPayAggregation();
 
             $itemTransfer->setRefundableAmount(
-                $itemTransfer->getUnitPriceToPayAggregation() - $itemTransfer->getCanceledAmount()
+                $itemTransfer->getSumPriceToPayAggregation() - $itemTransfer->getCanceledAmount()
             );
         }
     }
@@ -47,8 +47,10 @@ class RefundableAmountCalculator implements CalculatorInterface
     protected function calculateRefundableAmountForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
+            $expenseTransfer->requireSumPriceToPayAggregation();
+
             $expenseTransfer->setRefundableAmount(
-                $expenseTransfer->getUnitPriceToPayAggregation() - $expenseTransfer->getCanceledAmount()
+                $expenseTransfer->getSumPriceToPayAggregation() - $expenseTransfer->getCanceledAmount()
             );
         }
     }

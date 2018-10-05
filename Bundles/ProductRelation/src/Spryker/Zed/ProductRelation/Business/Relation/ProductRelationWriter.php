@@ -357,7 +357,7 @@ class ProductRelationWriter implements ProductRelationWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @return mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
     protected function findRuleMatchingProducts(ProductRelationTransfer $productRelationTransfer)
     {

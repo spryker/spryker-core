@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\CompanyUnitAddressLabelDataImport\Business;
@@ -25,7 +25,7 @@ class CompanyUnitAddressLabelDataImportFacade extends AbstractFacade implements 
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()->createCompanyUnitAddressLabelDataImport()->import($dataImporterConfigurationTransfer);
     }
@@ -39,7 +39,7 @@ class CompanyUnitAddressLabelDataImportFacade extends AbstractFacade implements 
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importAddressLabelRelation(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    public function importAddressLabelRelation(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()->createCompanyUnitAddressLabelRelationDataImport()->import($dataImporterConfigurationTransfer);
     }

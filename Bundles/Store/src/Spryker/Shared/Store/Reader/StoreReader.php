@@ -34,11 +34,14 @@ class StoreReader implements StoreReaderInterface
     {
         $storeTransfer = (new StoreTransfer())
             ->setName($storeName)
+            ->setQueuePools($this->store->getQueuePools())
             ->setSelectedCurrencyIsoCode($this->store->getCurrentStoreSelectedCurrencyIsoCode())
             ->setDefaultCurrencyIsoCode($this->store->getDefaultCurrencyFor($storeName))
             ->setAvailableCurrencyIsoCodes($this->store->getAvailableCurrenciesFor($storeName))
             ->setAvailableLocaleIsoCodes($this->store->getAvailableLocaleIsoCodesFor($storeName))
-            ->setStoresWithSharedPersistence($this->store->getStoresWithSharedPersistence());
+            ->setStoresWithSharedPersistence($this->store->getStoresWithSharedPersistence())
+            ->setCountries($this->store->getCountries())
+            ->setTimezone($this->store->getTimezone());
 
         return $storeTransfer;
     }

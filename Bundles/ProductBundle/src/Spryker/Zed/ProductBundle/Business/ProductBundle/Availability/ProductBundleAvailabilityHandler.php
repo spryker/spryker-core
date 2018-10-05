@@ -115,7 +115,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param int $idConcreteProduct
      *
-     * @return mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|mixed
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getBundleItemsByIdProduct($idConcreteProduct)
     {
@@ -131,7 +131,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param string $bundledProductSku
      *
-     * @return mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getBundlesUsingProductBySku($bundledProductSku)
     {
@@ -172,7 +172,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param string $bundleProductSku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle|null
      */
     protected function findBundleProductEntityBySku($bundleProductSku)
     {
@@ -185,7 +185,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      * @param string $bundledItemSku
      * @param int $idStore
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability|null
      */
     protected function findBundledItemAvailabilityEntityBySku($bundledItemSku, $idStore)
     {
@@ -230,37 +230,48 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $bundledProductAvailabilityEntity
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability|null $bundledProductAvailabilityEntity
      *
      * @return bool
      */
-    protected function isBundledItemUnavailable(SpyAvailability $bundledProductAvailabilityEntity)
+    protected function isBundledItemUnavailable(?SpyAvailability $bundledProductAvailabilityEntity)
     {
+        if (!$bundledProductAvailabilityEntity) {
+            return false;
+        }
+
         return ($bundledProductAvailabilityEntity->getQuantity() === 0 && !$bundledProductAvailabilityEntity->getIsNeverOutOfStock());
     }
 
     /**
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $bundledProductAvailabilityEntity
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability|null $bundledProductAvailabilityEntity
      *
      * @return bool
      */
-    protected function skipBundledItem(SpyAvailability $bundledProductAvailabilityEntity)
+    protected function skipBundledItem(?SpyAvailability $bundledProductAvailabilityEntity)
     {
-        return ($bundledProductAvailabilityEntity === null || $bundledProductAvailabilityEntity->getIsNeverOutOfStock());
+        if ($bundledProductAvailabilityEntity === null) {
+            return false;
+        }
+
+        return $bundledProductAvailabilityEntity->getIsNeverOutOfStock();
     }
 
     /**
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $bundledProductAvailabilityEntity
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability|null $bundledProductAvailabilityEntity
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $bundleItemEntity
      * @param int $bundleAvailabilityQuantity
      *
      * @return int
      */
     protected function calculateBundledItemQuantity(
-        SpyAvailability $bundledProductAvailabilityEntity,
+        ?SpyAvailability $bundledProductAvailabilityEntity,
         SpyProductBundle $bundleItemEntity,
         $bundleAvailabilityQuantity
     ) {
+        if (!$bundledProductAvailabilityEntity) {
+            return 0;
+        }
 
         $bundledItemQuantity = (int)floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
         if ($this->isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)) {

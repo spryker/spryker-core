@@ -47,9 +47,9 @@ class NoteForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CustomerNoteGui\Communication\Form\NoteForm
+     * @return $this
      */
-    protected function addNoteField(FormBuilderInterface $builder): NoteForm
+    protected function addNoteField(FormBuilderInterface $builder): self
     {
         $builder->add(SpyCustomerNoteEntityTransfer::MESSAGE, TextareaType::class, [
             'constraints' => [
@@ -65,9 +65,9 @@ class NoteForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CustomerNoteGui\Communication\Form\NoteForm
+     * @return $this
      */
-    protected function addFkCustomerField(FormBuilderInterface $builder): NoteForm
+    protected function addFkCustomerField(FormBuilderInterface $builder): self
     {
         $builder->add(SpyCustomerNoteEntityTransfer::FK_CUSTOMER, HiddenType::class);
 

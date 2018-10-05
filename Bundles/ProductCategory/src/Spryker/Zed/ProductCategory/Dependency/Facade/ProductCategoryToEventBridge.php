@@ -26,12 +26,12 @@ class ProductCategoryToEventBridge implements ProductCategoryToEventInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $eventTransfer)
+    public function trigger($eventName, TransferInterface $transfer)
     {
-        $this->eventFacade->trigger($eventName, $eventTransfer);
+        $this->eventFacade->trigger($eventName, $transfer);
     }
 }

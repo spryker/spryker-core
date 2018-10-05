@@ -16,9 +16,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductReviewStorageQueryContainer extends AbstractQueryContainer implements ProductReviewStorageQueryContainerInterface
 {
-    const FIELD_FK_PRODUCT_ABSTRACT = ProductReviewStorageTransfer::ID_PRODUCT_ABSTRACT;
-    const FIELD_AVERAGE_RATING = ProductReviewStorageTransfer::AVERAGE_RATING;
-    const FIELD_COUNT = ProductReviewStorageTransfer::REVIEW_COUNT;
+    public const FIELD_FK_PRODUCT_ABSTRACT = ProductReviewStorageTransfer::ID_PRODUCT_ABSTRACT;
+    public const FIELD_AVERAGE_RATING = ProductReviewStorageTransfer::AVERAGE_RATING;
+    public const FIELD_COUNT = ProductReviewStorageTransfer::REVIEW_COUNT;
 
     /**
      * @api
@@ -48,6 +48,27 @@ class ProductReviewStorageQueryContainer extends AbstractQueryContainer implemen
             ->getProductReviewQuery()
             ->queryProductReview()
             ->filterByFkProductAbstract_In($productAbstractIds)
+            ->filterByStatus(SpyProductReviewTableMap::COL_STATUS_APPROVED)
+            ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)
+            ->withColumn(sprintf('AVG(%s)', SpyProductReviewTableMap::COL_RATING), static::FIELD_AVERAGE_RATING)
+            ->withColumn(sprintf('COUNT(%s)', SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT), static::FIELD_COUNT)
+            ->select([static::FIELD_FK_PRODUCT_ABSTRACT, static::FIELD_AVERAGE_RATING, static::FIELD_COUNT])
+            ->groupBy(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $productReviewsIds
+     *
+     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
+     */
+    public function queryProductReviewsByIds(array $productReviewsIds)
+    {
+        return $this->getFactory()
+            ->getProductReviewQuery()
+            ->queryProductReview()
+            ->filterByIdProductReview_In($productReviewsIds)
             ->filterByStatus(SpyProductReviewTableMap::COL_STATUS_APPROVED)
             ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)
             ->withColumn(sprintf('AVG(%s)', SpyProductReviewTableMap::COL_RATING), static::FIELD_AVERAGE_RATING)

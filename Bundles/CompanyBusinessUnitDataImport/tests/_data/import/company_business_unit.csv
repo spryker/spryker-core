@@ -1,2 +1,3 @@
-company_key,business_unit_key,name,email,phone,external_url
-spryker,spryker-business-unit,Spryker business unit,test@spryker.com,1234567890,""
+company_key,business_unit_key,name,email,phone,external_url,parent_business_unit_key,parent_business_unit_key
+spryker,spryker-business-unit,Spryker business unit,test@spryker.com,1234567890,"","",""
+spryker,child-spryker-business-unit,Spryker business unit,test2@spryker.com,1234567890,"","",spryker-business-unit

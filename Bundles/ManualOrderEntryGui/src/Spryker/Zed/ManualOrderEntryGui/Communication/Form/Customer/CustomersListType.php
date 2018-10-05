@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,11 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CustomersListType extends AbstractType
 {
     public const TYPE_NAME = 'customers';
-
-    public const FIELD_CUSTOMER = 'id_customer';
-
+    public const FIELD_CUSTOMER = 'idCustomer';
     public const OPTION_CUSTOMER_ARRAY = 'option-category-array';
-    public const OPTION_VALUE = 'option-value';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -30,12 +29,11 @@ class CustomersListType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addCustomerField(
+        $this->addCustomerIdField(
             $builder,
-            $options[static::OPTION_CUSTOMER_ARRAY],
-            $options[static::OPTION_VALUE]
+            $options[static::OPTION_CUSTOMER_ARRAY]
         );
     }
 
@@ -44,30 +42,26 @@ class CustomersListType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver
-            ->setRequired(static::OPTION_CUSTOMER_ARRAY)
-            ->setDefault(static::OPTION_VALUE, null);
+        $resolver->setRequired(static::OPTION_CUSTOMER_ARRAY);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $customerList
-     * @param string|null $value
      *
      * @return $this
      */
-    protected function addCustomerField(FormBuilderInterface $builder, array $customerList, string $value = null)
+    protected function addCustomerIdField(FormBuilderInterface $builder, array $customerList): self
     {
         $builder->add(static::FIELD_CUSTOMER, Select2ComboBoxType::class, [
-            'property_path' => static::FIELD_CUSTOMER,
+            'property_path' => QuoteTransfer::CUSTOMER . '.' . CustomerTransfer::ID_CUSTOMER,
             'label' => 'Select Customer',
             'choices' => array_flip($customerList),
             'choices_as_values' => true,
             'multiple' => false,
             'required' => true,
-            'data' => $value,
         ]);
 
         return $this;
@@ -76,7 +70,7 @@ class CustomersListType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return static::TYPE_NAME;
     }

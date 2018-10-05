@@ -92,7 +92,7 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getProductCategoryFilterForm(array $data = null, array $options = [])
+    public function getProductCategoryFilterForm(?array $data = null, array $options = [])
     {
         return $this->getFormFactory()->create(ProductCategoryFilterForm::class, $data, $options);
     }
@@ -105,7 +105,7 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductCategoryFilterForm(array $data = null, array $options = [])
+    public function createProductCategoryFilterForm(?array $data = null, array $options = [])
     {
         return $this->getProductCategoryFilterForm($data, $options);
     }

@@ -119,6 +119,14 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     }
 
     /**
+     * @return array
+     */
+    public function getCountries()
+    {
+        return $this->store->getCountries();
+    }
+
+    /**
      * @param string $storeName
      *
      * @return array
@@ -126,5 +134,21 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     protected function getConfigurationForStore($storeName)
     {
         return $this->store->getConfigurationForStore($storeName);
+    }
+
+    /**
+     * @return array
+     */
+    public function getQueuePools()
+    {
+        return $this->store->getQueuePools();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimezone()
+    {
+        return $this->store->getContexts()['*']['timezone'] ?? '';
     }
 }
