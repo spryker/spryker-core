@@ -19,7 +19,7 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPlugin extends Abstr
 {
     /**
      * {@inheritdoc}
-     * - Copies productOptions from ShoppingListItemTransfer to ItemTransfer.
+     * - Copies product options from ShoppingListItemTransfer to ItemTransfer.
      *
      * @api
      *
