@@ -12,7 +12,7 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Customer\Communication\Table\CustomerTableExpanderPluginExecutor\CustomerTableExpanderPluginExecutorInterface;
+use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -42,14 +42,14 @@ class CustomerTable extends AbstractTable
     protected $utilDateTimeService;
 
     /**
-     * @var \Spryker\Zed\Customer\Communication\Table\CustomerTableExpanderPluginExecutor\CustomerTableExpanderPluginExecutorInterface
+     * @var \Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface
      */
     protected $customerTableExpanderPluginExecutor;
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
      * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface $utilDateTimeService
-     * @param \Spryker\Zed\Customer\Communication\Table\CustomerTableExpanderPluginExecutor\CustomerTableExpanderPluginExecutorInterface $customerTableExpanderPluginExecutor
+     * @param \Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface $customerTableExpanderPluginExecutor
      */
     public function __construct(
         CustomerQueryContainerInterface $customerQueryContainer,

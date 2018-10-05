@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin\CompanyBusinessUnit;
+namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin\CompanyUser;
 
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableConfigExpanderPluginInterface;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyRoleGui\Communication\CompanyRoleGuiCommunicationFactory getFactory()
  */
-class CompanyBusinessUnitCompanyUserTableConfigExpanderPlugin extends AbstractPlugin implements CompanyUserTableConfigExpanderPluginInterface
+class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin implements CompanyUserTableConfigExpanderPluginInterface
 {
-    public const COL_COMPANY_BUSINESS_UNIT_NAME = 'company_business_unit_name';
+    public const COL_COMPANY_ROLE_NAMES = 'company_role_names';
 
-    protected const TITLE_COMPANY_BUSINESS_UNIT_NAME = 'Company Business Unit';
+    protected const TITLE_COMPANY_ROLE_NAMES = 'Roles';
 
     /**
      * {@inheritdoc}
-     * - Expands config options of company user table with company business unit column.
+     * - Expands company user table with company role column.
      *
      * @api
      *
@@ -33,9 +33,11 @@ class CompanyBusinessUnitCompanyUserTableConfigExpanderPlugin extends AbstractPl
     public function expandConfig(TableConfiguration $config): TableConfiguration
     {
         $configHeader = $config->getHeader() + [
-            static::COL_COMPANY_BUSINESS_UNIT_NAME => static::TITLE_COMPANY_BUSINESS_UNIT_NAME,
+            static::COL_COMPANY_ROLE_NAMES => static::TITLE_COMPANY_ROLE_NAMES,
         ];
         $config->setHeader($configHeader);
+
+        $config->addRawColumn(static::COL_COMPANY_ROLE_NAMES);
 
         return $config;
     }

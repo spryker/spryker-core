@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin;
+namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin\CompanyUser;
 
-use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CustomerCompanyAttachFormExpanderPluginInterface;
+use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserAttachCustomerFormExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
  */
-class BusinessUnitFieldCustomerCompanyAttachFormExpanderPlugin extends AbstractPlugin implements CustomerCompanyAttachFormExpanderPluginInterface
+class CompanyBusinessUnitAttachCustomerFormExpanderPlugin extends AbstractPlugin implements CompanyUserAttachCustomerFormExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -26,7 +26,7 @@ class BusinessUnitFieldCustomerCompanyAttachFormExpanderPlugin extends AbstractP
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function buildForm(FormBuilderInterface $builder): FormBuilderInterface
+    public function expand(FormBuilderInterface $builder): FormBuilderInterface
     {
         $formType = $this->getFactory()
             ->createCompanyUserBusinessUnitForm();

@@ -134,11 +134,11 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CustomerCompanyAttachFormExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserAttachCustomerFormExpanderPluginInterface[]
      */
-    public function getCustomerCompanyAttachFormExpanderPlugins(): array
+    public function getCompanyUserAttachCustomerFormExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGINS_CUSTOMER_COMPANY_ATTACH_FORM_EXPANDER);
+        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGINS_COMPANY_USER_ATTACH_CUSTOMER_FORM_EXPANDER);
     }
 
     /**

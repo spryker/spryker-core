@@ -47,14 +47,14 @@ class CustomerCompanyAttachForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array $options
      *
      * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
-            ->executeCustomerCompanyAttachFormExpanderPlugins($builder);
+            ->executeAttachCustomerFormExpanderPlugins($builder);
     }
 
     /**
@@ -87,10 +87,10 @@ class CustomerCompanyAttachForm extends AbstractType
      *
      * @return $this
      */
-    protected function executeCustomerCompanyAttachFormExpanderPlugins(FormBuilderInterface $builder): self
+    protected function executeAttachCustomerFormExpanderPlugins(FormBuilderInterface $builder): self
     {
-        foreach ($this->getFactory()->getCustomerCompanyAttachFormExpanderPlugins() as $customerCompanyAttachFormExpanderPlugin) {
-            $builder = $customerCompanyAttachFormExpanderPlugin->buildForm($builder);
+        foreach ($this->getFactory()->getCompanyUserAttachCustomerFormExpanderPlugins() as $attachCustomerFormExpanderPlugin) {
+            $builder = $attachCustomerFormExpanderPlugin->expand($builder);
         }
 
         return $this;

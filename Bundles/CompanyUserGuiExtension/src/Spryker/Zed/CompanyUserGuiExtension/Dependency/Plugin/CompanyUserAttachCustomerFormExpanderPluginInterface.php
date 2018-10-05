@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface CustomerCompanyAttachFormExpanderPluginInterface
+interface CompanyUserAttachCustomerFormExpanderPluginInterface
 {
     /**
      * Specification:
@@ -21,5 +21,5 @@ interface CustomerCompanyAttachFormExpanderPluginInterface
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function buildForm(FormBuilderInterface $builder): FormBuilderInterface;
+    public function expand(FormBuilderInterface $builder): FormBuilderInterface;
 }
