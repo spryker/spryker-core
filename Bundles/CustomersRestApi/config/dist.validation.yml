@@ -1,0 +1,83 @@
+customers:
+  post:
+    email:
+      - NotBlank
+      - EmailConstraint
+    salutation:
+      - NotBlank
+      - Choice:
+        choices: [Mr, Mrs, Ms, Dr]
+    firstName:
+      - NotBlank
+    lastName:
+      - NotBlank
+    gender:
+      - NotBlank
+      - Choice:
+        choices: [Male, Female]
+  patch:
+    salutation:
+      - NotBlank
+      - Choice:
+        choices: [Mr, Mrs, Ms, Dr]
+    firstName:
+      - NotBlank
+    lastName:
+      - NotBlank
+    gender:
+      - NotBlank
+      - Choice:
+        choices: [Male, Female]
+    dateOfBirth:
+      - Date
+addresses:
+  post:
+    salutation:
+      - NotBlank
+      - Choice:
+        choices: [Mr, Mrs, Ms, Dr]
+    firstName:
+      - NotBlank
+    lastName:
+      - NotBlank
+    address1:
+      - NotBlank
+    address2:
+      - NotBlank
+    zipCode:
+      - NotBlank
+    city:
+      - NotBlank
+      - Length:
+        min: 3
+    country:
+      - Expression:
+        expression: 'this.iso2Code || value'
+    iso2Code:
+      - Expression:
+        expression: 'this.country || value'
+  patch:
+    salutation:
+      - NotBlank
+      - Choice:
+        choices: [Mr, Mrs, Ms, Dr]
+    firstName:
+      - NotBlank
+    lastName:
+      - NotBlank
+    address1:
+      - NotBlank
+    address2:
+      - NotBlank
+    zipCode:
+      - NotBlank
+    city:
+      - NotBlank
+      - Length:
+        min: 3
+    country:
+      - Expression:
+        expression: 'this.iso2Code || value'
+    iso2Code:
+      - Expression:
+        expression: 'this.country || value'
