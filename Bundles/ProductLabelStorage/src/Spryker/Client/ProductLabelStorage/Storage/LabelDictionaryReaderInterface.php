@@ -46,10 +46,10 @@ interface LabelDictionaryReaderInterface
     public function findLabelByName($labelName, $localeName);
 
     /**
-     * @param $labelKey
+     * @param string $labelKey
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByKey($labelKey, $localeName): ?ProductLabelDictionaryItemTransfer;
+    public function findLabelByKey(string $labelKey, string $localeName): ?ProductLabelDictionaryItemTransfer;
 }

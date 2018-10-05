@@ -79,7 +79,7 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByKey($labelKey, $localeName): ?ProductLabelDictionaryItemTransfer
+    public function findLabelByKey(string $labelKey, string $localeName): ?ProductLabelDictionaryItemTransfer
     {
         return $this
             ->getFactory()

@@ -45,6 +45,9 @@ class ProductLabelsRestApiFactory extends AbstractFactory
         );
     }
 
+    /**
+     * @return \Spryker\Glue\ProductLabelsRestApi\Processor\Mapper\ProductLabelMapperInterface
+     */
     public function createProductLabelMapper(): ProductLabelMapperInterface
     {
         return new ProductLabelMapper();

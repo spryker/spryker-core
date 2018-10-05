@@ -21,8 +21,8 @@ class ProductLabelMapper implements ProductLabelMapperInterface
         ProductLabelDictionaryItemTransfer $productLabelDictionaryItemTransfer
     ): RestProductLabelsAttributesTransfer {
         return (new RestProductLabelsAttributesTransfer())->fromArray(
-            $productLabelDictionaryItemTransfer->toArray(), true
+            $productLabelDictionaryItemTransfer->toArray(),
+            true
         );
     }
-
 }

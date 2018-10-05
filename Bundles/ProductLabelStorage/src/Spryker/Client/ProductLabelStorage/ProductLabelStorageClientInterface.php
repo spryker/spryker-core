@@ -38,12 +38,12 @@ interface ProductLabelStorageClientInterface
     public function findLabels(array $idProductLabels, $localeName);
 
     /**
-     * @deprecated Use findLabelByKey($labelKey, $localeName): ?ProductLabelDictionaryItemTransfer.
-     *
      * Specification:
      * - TODO: add specification
      *
      * @api
+     *
+     * @deprecated Use findLabelByKey($labelKey, $localeName): ?ProductLabelDictionaryItemTransfer.
      *
      * @param string $labelName
      * @param string $localeName
@@ -63,5 +63,5 @@ interface ProductLabelStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByKey($labelKey, $localeName): ?ProductLabelDictionaryItemTransfer;
+    public function findLabelByKey(string $labelKey, string $localeName): ?ProductLabelDictionaryItemTransfer;
 }

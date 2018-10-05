@@ -42,8 +42,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         ProductLabelsRestApiToProductLabelStorageClientInterface $productLabelStorageClient,
         ProductLabelMapperInterface $productLabelMapper,
         RestResourceBuilderInterface $restResourceBuilder
-    )
-    {
+    ) {
         $this->productLabelStorageClient = $productLabelStorageClient;
         $this->productLabelMapper = $productLabelMapper;
         $this->restResourceBuilder = $restResourceBuilder;
