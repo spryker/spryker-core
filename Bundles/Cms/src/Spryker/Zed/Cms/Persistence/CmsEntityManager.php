@@ -21,7 +21,7 @@ class CmsEntityManager extends AbstractEntityManager implements CmsEntityManager
      * @api
      *
      * @param array $idStores
-     * @param int $idCompany
+     * @param int $idCmsPage
      *
      * @return void
      */

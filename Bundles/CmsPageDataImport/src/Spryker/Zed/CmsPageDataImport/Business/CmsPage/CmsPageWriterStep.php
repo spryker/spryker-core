@@ -17,7 +17,6 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use Spryker\Zed\CmsPageDataImport\Business\DataSet\CmsPageDataSet;
-use Spryker\Zed\CmsPageDataImport\Dependency\Facade\CmsPageDataImportToCmsFacadeInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -28,19 +27,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 class CmsPageWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     public const BULK_SIZE = 100;
-
-    /**
-     * @var \Spryker\Zed\CmsPageDataImport\Dependency\Facade\CmsPageDataImportToCmsFacadeInterface
-     */
-    protected $cmsFacade;
-
-    /**
-     * @param \Spryker\Zed\CmsPageDataImport\Dependency\Facade\CmsPageDataImportToCmsFacadeInterface $cmsFacade
-     */
-    public function __construct(CmsPageDataImportToCmsFacadeInterface $cmsFacade)
-    {
-        $this->cmsFacade = $cmsFacade;
-    }
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -75,10 +61,6 @@ class CmsPageWriterStep extends PublishAwareStep implements DataImportStepInterf
             foreach ($placeholder as $key => $value) {
                 $this->addCmsPageGlossary($key, $cmsPageEntity, $idLocale, $value);
             }
-        }
-
-        if ((int)$dataSet[CmsPageDataSet::KEY_PUBLISH] === 1) {
-            $this->cmsFacade->publishWithVersion($cmsPageEntity->getIdCmsPage());
         }
     }
 
