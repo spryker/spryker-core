@@ -1,5 +1,6 @@
 {
   "name": "spryker/payment",
+  "type": "library",
   "description": "Payment module",
   "license": "proprietary",
   "require": {

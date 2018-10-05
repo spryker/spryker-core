@@ -1,5 +1,6 @@
 {
   "name": "spryker/shipment",
+  "type": "library",
   "description": "Shipment module",
   "license": "proprietary",
   "require": {

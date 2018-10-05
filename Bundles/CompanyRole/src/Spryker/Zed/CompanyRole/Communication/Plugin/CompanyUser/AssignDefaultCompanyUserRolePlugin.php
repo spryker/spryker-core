@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyRole\Communication\Plugin\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -20,6 +21,8 @@ class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements Compa
 {
     /**
      * {@inheritdoc}
+     * - Assigns default role to company user after it was created.
+     * - Company user will not be changed if it has at least one assigned company role.
      *
      * @api
      *
@@ -43,6 +46,10 @@ class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements Compa
             return $companyUserResponseTransfer->setIsSuccessful(false);
         }
 
+        if ($this->haveRoleAlready($companyUserResponseTransfer->getCompanyUser())) {
+            return $companyUserResponseTransfer;
+        }
+
         $defaultCompanyRoleTransfer = $this->getFacade()->findDefaultCompanyRoleByIdCompany(
             $companyUserResponseTransfer->getCompanyUser()->getFkCompany()
         );
@@ -58,9 +65,21 @@ class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements Compa
         }
 
         $companyUserTransfer->getCompanyRoleCollection()->addRole($defaultCompanyRoleTransfer);
+        $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
 
         $this->getFacade()->saveCompanyUser($companyUserTransfer);
 
         return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return bool
+     */
+    protected function haveRoleAlready(CompanyUserTransfer $companyUserTransfer)
+    {
+        return $companyUserTransfer->getCompanyRoleCollection() !== null &&
+            $companyUserTransfer->getCompanyRoleCollection()->getRoles()->count() > 0;
     }
 }

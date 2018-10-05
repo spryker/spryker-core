@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Business\Customer;
 use Exception;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
@@ -274,19 +275,26 @@ class Address implements AddressInterface
         $addressTransfer->fromArray($entity->toArray(), true);
         $addressTransfer->setIso2Code($entity->getCountry()->getIso2Code());
 
+        $countryTransfer = new CountryTransfer();
+        $countryTransfer->fromArray($entity->getCountry()->toArray());
+
+        $addressTransfer->setCountry($countryTransfer);
+
         return $addressTransfer;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $entities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Customer\Persistence\SpyCustomerAddress[] $entities
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
     protected function entityCollectionToTransferCollection(ObjectCollection $entities)
     {
         $addressTransferCollection = new AddressesTransfer();
-        foreach ($entities->getData() as $entity) {
-            $addressTransferCollection->addAddress($this->entityToAddressTransfer($entity));
+
+        foreach ($entities as $entity) {
+            $addressTransfer = $this->entityToAddressTransfer($entity);
+            $addressTransferCollection->addAddress($addressTransfer);
         }
 
         return $addressTransferCollection;

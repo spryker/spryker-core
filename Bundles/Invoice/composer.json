@@ -1,5 +1,6 @@
 {
   "name": "spryker/invoice",
+  "type": "library",
   "description": "Invoice module",
   "license": "proprietary",
   "require": {

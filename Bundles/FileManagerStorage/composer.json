@@ -1,5 +1,6 @@
 {
   "name": "spryker/file-manager-storage",
+  "type": "library",
   "description": "FileManagerStorage module",
   "license": "proprietary",
   "require": {
