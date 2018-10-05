@@ -169,7 +169,8 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
         return new ShoppingListShareDeleter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
+            $this->getEventFacade()
         );
     }
 

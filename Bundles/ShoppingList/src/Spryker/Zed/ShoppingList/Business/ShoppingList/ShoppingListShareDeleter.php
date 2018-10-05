@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShoppingList\Business\ShoppingList;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitBlacklistTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
@@ -17,6 +19,8 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
+use Spryker\Zed\ShoppingList\Dependency\ShoppingListEvents;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
@@ -40,18 +44,26 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
     protected $companyUserFacade;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface
+     */
+    protected $eventFacade;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface $companyUserFacade
+     * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface $eventFacade
      */
     public function __construct(
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
         ShoppingListRepositoryInterface $shoppingListRepository,
-        ShoppingListToCompanyUserFacadeInterface $companyUserFacade
+        ShoppingListToCompanyUserFacadeInterface $companyUserFacade,
+        ShoppingListToEventFacadeInterface $eventFacade
     ) {
         $this->shoppingListEntityManager = $shoppingListEntityManager;
         $this->shoppingListRepository = $shoppingListRepository;
         $this->companyUserFacade = $companyUserFacade;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -124,7 +136,8 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
      */
     protected function createShoppingListCompanyBusinessUnitBlacklist(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): bool
     {
-        $shoppingListCompanyBusinessUnitTransfer = $this->findShoppingListBusinessUnit($shoppingListDismissRequest);
+        $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListDismissRequest->getIdCompanyUser());
+        $shoppingListCompanyBusinessUnitTransfer = $this->findShoppingListBusinessUnit($shoppingListDismissRequest->getIdShoppingList(), $companyUserTransfer);
 
         if ($shoppingListCompanyBusinessUnitTransfer === null) {
             return false;
@@ -140,6 +153,7 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
         }
 
         $this->shoppingListEntityManager->createShoppingListCompanyBusinessUnitBlacklist($shoppingListCompanyBusinessUnitBlacklistTransfer);
+        $this->triggerShoppingListUnpublishEvent($shoppingListDismissRequest->getIdShoppingList(), $companyUserTransfer);
 
         return true;
     }
@@ -164,15 +178,15 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
+     * @param int $idShoppingList
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer|null
      */
-    protected function findShoppingListBusinessUnit(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ?ShoppingListCompanyBusinessUnitTransfer
+    protected function findShoppingListBusinessUnit(int $idShoppingList, CompanyUserTransfer $companyUserTransfer): ?ShoppingListCompanyBusinessUnitTransfer
     {
-        $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListDismissRequest->getIdCompanyUser());
         $shoppingListCompanyBusinessUnitCollectionTransfer = $this->shoppingListRepository->getShoppingListCompanyBusinessUnitsByShoppingListId(
-            (new ShoppingListTransfer())->setIdShoppingList($shoppingListDismissRequest->getIdShoppingList())
+            (new ShoppingListTransfer())->setIdShoppingList($idShoppingList)
         );
         $shoppingListCompanyBusinessUnitTransfer = $this->findShoppingListCompanyBusinessUnitByIdBusinessUnit(
             $shoppingListCompanyBusinessUnitCollectionTransfer,
@@ -180,5 +194,26 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
         );
 
         return $shoppingListCompanyBusinessUnitTransfer;
+    }
+
+    /**
+     * @param int $idShoppingList
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return void
+     */
+    protected function triggerShoppingListUnpublishEvent(int $idShoppingList, CompanyUserTransfer $companyUserTransfer): void
+    {
+        if ($companyUserTransfer->getCustomer() === null) {
+            return;
+        }
+        $eventTransfer = (new EventEntityTransfer())
+            ->setName(ShoppingListEvents::SHOPPING_LIST_UNPUBLISH)
+            ->setId($idShoppingList)
+            ->setEvent(ShoppingListEvents::SHOPPING_LIST_UNPUBLISH)
+            ->setModifiedColumns([
+                 $companyUserTransfer->getCustomer()->getCustomerReference() => ShoppingListTransfer::CUSTOMER_REFERENCE,
+            ]);
+        $this->eventFacade->trigger(ShoppingListEvents::SHOPPING_LIST_UNPUBLISH, $eventTransfer);
     }
 }
