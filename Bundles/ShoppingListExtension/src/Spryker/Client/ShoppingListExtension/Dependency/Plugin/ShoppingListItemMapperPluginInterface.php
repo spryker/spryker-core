@@ -17,10 +17,10 @@ interface ShoppingListItemMapperPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param array $params
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function map(ShoppingListItemTransfer $shoppingListItemTransfer, array $params): ShoppingListItemTransfer;
+    public function map(array $params, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 }

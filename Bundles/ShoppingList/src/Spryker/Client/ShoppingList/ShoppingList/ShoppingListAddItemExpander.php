@@ -33,7 +33,7 @@ class ShoppingListAddItemExpander implements ShoppingListAddItemExpanderInterfac
     public function expandShoppingListAddItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $params): ShoppingListItemTransfer
     {
         foreach ($this->shoppingListItemMapperPlugins as $shoppingListItemMapperPlugin) {
-            $shoppingListItemTransfer = $shoppingListItemMapperPlugin->map($shoppingListItemTransfer, $params);
+            $shoppingListItemTransfer = $shoppingListItemMapperPlugin->map($params, $shoppingListItemTransfer);
         }
 
         return $shoppingListItemTransfer;

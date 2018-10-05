@@ -9,9 +9,10 @@ namespace Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListExtension;
 
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface;
 
-class ShoppingListItemProductOptionRequestMapperPlugin implements ShoppingListItemMapperPluginInterface
+class ShoppingListItemProductOptionRequestMapperPlugin extends AbstractPlugin implements ShoppingListItemMapperPluginInterface
 {
     protected const REQUEST_PARAM_PRODUCT_OPTION = 'product-option';
 
@@ -22,14 +23,14 @@ class ShoppingListItemProductOptionRequestMapperPlugin implements ShoppingListIt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param array $params
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function map(ShoppingListItemTransfer $shoppingListItemTransfer, array $params): ShoppingListItemTransfer
+    public function map(array $params, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        foreach ($this->findProductOptionIds($params) as $idProductOption) {
+        foreach ($this->getProductOptionIds($params) as $idProductOption) {
             $shoppingListItemTransfer->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue($idProductOption)
             );
@@ -43,7 +44,7 @@ class ShoppingListItemProductOptionRequestMapperPlugin implements ShoppingListIt
      *
      * @return array
      */
-    protected function findProductOptionIds(array $params): array
+    protected function getProductOptionIds(array $params): array
     {
         if (isset($params[static::REQUEST_PARAM_PRODUCT_OPTION]) && is_array($params[static::REQUEST_PARAM_PRODUCT_OPTION])) {
             return array_filter($params[static::REQUEST_PARAM_PRODUCT_OPTION]);

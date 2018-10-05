@@ -111,6 +111,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer)
     {
+        $productOptionCriteriaTransfer->requireProductOptionIds();
+
         return $this->getFactory()
             ->createProductOptionValueQuery()
             ->filterByIdProductOptionValue_In($productOptionCriteriaTransfer->getProductOptionIds());

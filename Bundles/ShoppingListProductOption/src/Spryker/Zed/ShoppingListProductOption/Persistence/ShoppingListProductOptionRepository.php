@@ -20,7 +20,7 @@ class ShoppingListProductOptionRepository extends AbstractRepository implements 
      *
      * @return int[]
      */
-    public function findShoppingListItemProductOptionIdsByIdShoppingListItem(int $idShoppingListItem): array
+    public function getShoppingListItemProductOptionIdsByIdShoppingListItem(int $idShoppingListItem): array
     {
         return $this->getFactory()
             ->createSpyShoppingListProductOptionQuery()

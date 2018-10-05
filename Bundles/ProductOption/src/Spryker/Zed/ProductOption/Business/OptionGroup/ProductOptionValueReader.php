@@ -64,8 +64,6 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      */
     public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer
     {
-        $productOptionCriteriaTransfer->requireProductOptionIds();
-
         $productOptionValueEntities = $this->productOptionQueryContainer
             ->queryProductOptionByProductOptionCriteria($productOptionCriteriaTransfer)
             ->find();
