@@ -33,9 +33,6 @@ class CompanyRoleFromExpanderPlugin extends AbstractPlugin implements CompanyUse
         $dataProvider = $this->getFactory()
             ->createCompanyUserRoleFormDataProvider();
 
-        $companyUserTransfer = $builder->getData();
-        $dataProvider->getData($companyUserTransfer);
-
         $formType->buildForm(
             $builder,
             $dataProvider->getOptions()

@@ -34,9 +34,6 @@ class CompanyBusinessUnitAttachCustomerFormExpanderPlugin extends AbstractPlugin
         $dataProvider = $this->getFactory()
             ->createCompanyUserBusinessUnitFormDataProvider();
 
-        $companyUserTransfer = $builder->getData();
-        $dataProvider->getData($companyUserTransfer);
-
         $formType->buildForm(
             $builder,
             $dataProvider->getOptions()
