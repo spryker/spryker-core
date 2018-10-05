@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOptionConnector;
+use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOptionConnectorBusinessFactory;
@@ -110,57 +110,6 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetShoppingListItemProductOptionsByIdShoppingListItemWithExistOptions(): void
-    {
-        $shoppingListProductOption1 = (new SpyShoppingListProductOptionConnector())
-            ->setFkProductOptionValue($this->productOptionValueTransfer1->getIdProductOptionValue())
-            ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
-        $shoppingListProductOption1->save();
-
-        $shoppingListProductOption2 = (new SpyShoppingListProductOptionConnector())
-            ->setFkProductOptionValue($this->productOptionValueTransfer2->getIdProductOptionValue())
-            ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
-        $shoppingListProductOption2->save();
-
-        $actualResult = $this->tester
-            ->getFacade()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem(
-                $this->shoppingListItemTransfer->getIdShoppingListItem()
-            );
-
-        $expectedResult = [
-            $this->productOptionValueTransfer1->getIdProductOptionValue(),
-            $this->productOptionValueTransfer2->getIdProductOptionValue(),
-        ];
-
-        // Assert
-        foreach ($actualResult->getProductOptions() as $productOption) {
-            $this->assertContains($productOption->getIdProductOptionValue(), $expectedResult);
-        }
-
-        $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetShoppingListItemProductOptionsByIdShoppingListItemWithoutExistOptions(): void
-    {
-        $actualResult = $this->tester
-            ->getFacade()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem(
-                $this->shoppingListItemTransfer->getIdShoppingListItem()
-            );
-
-        $expectedResult = [];
-
-        // Assert
-        $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
     public function testSaveShoppingListItemProductOptionsSavesWithSetUpOptions(): void
     {
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
@@ -178,8 +127,8 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
         $actualResult = $this->tester
             ->getFacade()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem(
-                $this->shoppingListItemTransfer->getIdShoppingListItem()
+            ->expandShoppingListItemWithProductOptions(
+                $this->shoppingListItemTransfer
             );
 
         $expectedResult = [
@@ -206,8 +155,8 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
         $actualResult = $this->tester
             ->getFacade()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem(
-                $this->shoppingListItemTransfer->getIdShoppingListItem()
+            ->expandShoppingListItemWithProductOptions(
+                $this->shoppingListItemTransfer
             );
 
         // Assert
@@ -240,8 +189,8 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
 
         $actualResult = $this->tester
             ->getFacade()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem(
-                $this->shoppingListItemTransfer->getIdShoppingListItem()
+            ->expandShoppingListItemWithProductOptions(
+                $this->shoppingListItemTransfer
             );
 
         $expectedResult = [
@@ -331,12 +280,12 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
 
-        $shoppingListProductOption1 = (new SpyShoppingListProductOptionConnector())
+        $shoppingListProductOption1 = (new SpyShoppingListProductOption())
             ->setFkProductOptionValue($this->productOptionValueTransfer1->getIdProductOptionValue())
             ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
         $shoppingListProductOption1->save();
 
-        $shoppingListProductOption2 = (new SpyShoppingListProductOptionConnector())
+        $shoppingListProductOption2 = (new SpyShoppingListProductOption())
             ->setFkProductOptionValue($this->productOptionValueTransfer2->getIdProductOptionValue())
             ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
         $shoppingListProductOption2->save();
@@ -386,12 +335,12 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testRemoveShoppingListItemProductOptions(): void
     {
-        $shoppingListProductOption1 = (new SpyShoppingListProductOptionConnector())
+        $shoppingListProductOption1 = (new SpyShoppingListProductOption())
             ->setFkProductOptionValue($this->productOptionValueTransfer1->getIdProductOptionValue())
             ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
         $shoppingListProductOption1->save();
 
-        $shoppingListProductOption2 = (new SpyShoppingListProductOptionConnector())
+        $shoppingListProductOption2 = (new SpyShoppingListProductOption())
             ->setFkProductOptionValue($this->productOptionValueTransfer2->getIdProductOptionValue())
             ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
         $shoppingListProductOption2->save();
@@ -404,8 +353,8 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
 
         $actualResult = $this->tester
             ->getFacade()
-            ->getShoppingListItemProductOptionsByIdShoppingListItem(
-                $this->shoppingListItemTransfer->getIdShoppingListItem()
+            ->expandShoppingListItemWithProductOptions(
+                $this->shoppingListItemTransfer
             );
 
         $this->assertEmpty($actualResult->getProductOptions());

@@ -140,7 +140,7 @@ class CartHandler implements CartHandlerInterface
             ->setSku($shoppingListAddToCartRequestTransfer->getSku())
             ->setQuantity($shoppingListAddToCartRequestTransfer->getQuantity());
         $itemTransfer = $this->mapShoppingListItemToItem($shoppingListAddToCartRequestTransfer->getShoppingListItem(), $itemTransfer);
-        $itemTransfer = $this->mapQuoteItemToItem($itemTransfer, $this->findItemInQuote($itemTransfer));
+        $itemTransfer = $this->mapQuoteItemToItem($this->findItemInQuote($itemTransfer), $itemTransfer);
 
         return $itemTransfer;
     }
@@ -151,7 +151,7 @@ class CartHandler implements CartHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function mapShoppingListItemToItem(ShoppingListItemTransfer $shoppingListItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
+    protected function mapShoppingListItemToItem(ShoppingListItemTransfer $shoppingListItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
     {
         foreach ($this->shoppingListItemToItemMapperPlugins as $shoppingListItemToItemMapperPlugin) {
             $itemTransfer = $shoppingListItemToItemMapperPlugin->map($shoppingListItemTransfer, $itemTransfer);
@@ -161,12 +161,12 @@ class CartHandler implements CartHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer|null $quoteItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function mapQuoteItemToItem(ItemTransfer $itemTransfer, ?ItemTransfer $quoteItemTransfer): ItemTransfer
+    protected function mapQuoteItemToItem(?ItemTransfer $quoteItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
     {
         if (!$quoteItemTransfer) {
             return $itemTransfer;
