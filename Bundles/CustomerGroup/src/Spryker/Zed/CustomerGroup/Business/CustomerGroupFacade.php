@@ -125,7 +125,7 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
     public function getCustomerGroupCollectionByIdCustomer(int $idCustomer): CustomerGroupCollectionTransfer
     {
         return $this->getFactory()
-            ->createCustomerGroupFinder()
+            ->getRepository()
             ->getCustomerGroupCollectionByIdCustomer($idCustomer);
     }
 
