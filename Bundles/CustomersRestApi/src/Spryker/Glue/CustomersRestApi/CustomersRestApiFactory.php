@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -41,9 +42,7 @@ class CustomersRestApiFactory extends AbstractFactory
      */
     public function createCustomersResourceMapper(): CustomersResourceMapperInterface
     {
-        return new CustomersResourceMapper(
-            $this->getResourceBuilder()
-        );
+        return new CustomersResourceMapper();
     }
 
     /**
