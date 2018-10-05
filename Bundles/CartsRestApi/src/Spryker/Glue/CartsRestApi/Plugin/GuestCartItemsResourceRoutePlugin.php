@@ -16,6 +16,10 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
@@ -28,14 +32,22 @@ class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements Resour
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getResourceType(): string
     {
-        return 'guest-cart-items';
+        return CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS;
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getController(): string
@@ -44,6 +56,10 @@ class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements Resour
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getResourceAttributesClassName(): string

@@ -114,7 +114,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addQuoteCollectionReaderPlugin(Container $container): Container
     {
         $container[static::PLUGIN_QUOTE_COLLECTION_READER] = function (Container $container) {
-            return $this->createQuoteCollectionReaderPlugin();
+            return $this->getQuoteCollectionReaderPlugin();
         };
 
         return $container;
@@ -125,7 +125,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
      */
-    protected function createQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
+    protected function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
     {
         throw new CartRestApiNotImplementedException(static::EXCEPTION_MESSAGE_READER_NOT_IMPLEMENTED);
     }

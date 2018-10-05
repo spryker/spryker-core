@@ -21,6 +21,7 @@ class GuestCartControllerBeforeActionPlugin extends AbstractPlugin implements Co
 
     /**
      * {@inheritdoc}
+     * - Method substitutes customer cart for guest customer request by customer X-Anonymous-Customer-Unique-Id header.
      *
      * @api
      *
