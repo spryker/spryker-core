@@ -1,0 +1,55 @@
+{
+  "name": "spryker/sales-order-threshold",
+  "type": "library",
+  "description": "SalesOrderThreshold module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/calculation-extension": "^1.0.0",
+    "spryker/cart-extension": "^1.0.0 || ^2.0.0",
+    "spryker/checkout-extension": "^1.0.0",
+    "spryker/currency": "^3.0.0",
+    "spryker/glossary": "^3.1.0",
+    "spryker/kernel": "^3.17.0",
+    "spryker/messenger": "^3.1.0",
+    "spryker/money": "^2.0.0",
+    "spryker/sales": "^8.14.0",
+    "spryker/sales-order-threshold-extension": "^1.0.0",
+    "spryker/store": "^1.2.0",
+    "spryker/tax": "^5.0.0"
+  },
+  "require-dev": {
+    "spryker/checkout": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/installer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/calculation": "If you want to use Calculation plugins.",
+    "spryker/cart": "If you want to use Cart plugins: ^4.0.0.",
+    "spryker/checkout": "If you want to use Checkout plugins: ^3.0.0.",
+    "spryker/installer": "If you want to use Installer plugins: ^4.0.0."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\SalesOrderThreshold\\Helper\\": "tests/SprykerTest/Zed/SalesOrderThreshold/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
