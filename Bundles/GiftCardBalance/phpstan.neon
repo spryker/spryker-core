@@ -3,6 +3,7 @@ parameters:
 
     ignoreErrors:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
+    - '#Method .+GiftCardBalanceTable::prepareQuery\(\) should return .+SpyGiftCardBalanceLogQuery but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'#
 
 services:
     -

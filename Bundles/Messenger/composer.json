@@ -1,5 +1,6 @@
 {
   "name": "spryker/messenger",
+  "type": "library",
   "description": "Messenger module",
   "license": "proprietary",
   "require": {
@@ -9,9 +10,7 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider."

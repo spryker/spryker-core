@@ -70,10 +70,6 @@ class ProductPackagingUnitTypeDataProvider implements ProductPackagingUnitTypeDa
      */
     protected function addDefaultNameMissingTranslations(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer)
     {
-        if ($productPackagingUnitTypeTransfer->getTranslations() === null) {
-            return $productPackagingUnitTypeTransfer;
-        }
-
         $availableLocales = $this->localeFacade->getLocaleCollection();
         $availableNameLocalizations = $this->getAvailableNameLocalizations($productPackagingUnitTypeTransfer);
 
@@ -108,10 +104,6 @@ class ProductPackagingUnitTypeDataProvider implements ProductPackagingUnitTypeDa
     protected function getAvailableNameLocalizations(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): array
     {
         $availableNameLocalizations = [];
-
-        if ($productPackagingUnitTypeTransfer->getTranslations() === null) {
-            return $availableNameLocalizations;
-        }
 
         foreach ($productPackagingUnitTypeTransfer->getTranslations() as $translation) {
             $availableNameLocalizations[$translation->getLocaleCode()] = $translation->getLocaleCode();

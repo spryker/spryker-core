@@ -20,7 +20,7 @@ class ProductOptionStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getProductAbstractOptionSynchronizationPoolName(): ?string
     {

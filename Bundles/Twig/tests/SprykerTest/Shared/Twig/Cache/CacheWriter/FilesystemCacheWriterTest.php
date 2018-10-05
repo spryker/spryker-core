@@ -59,7 +59,7 @@ class FilesystemCacheWriterTest extends Unit
      */
     public function testCanBeInstantiatedWIthPathToCacheFile()
     {
-        $cacheWriter = new FilesystemCacheWriter($this->getCacheFile());
+        $cacheWriter = new FilesystemCacheWriter($this->getCacheFile(), 0777);
 
         $this->assertInstanceOf(CacheWriterInterface::class, $cacheWriter);
     }
@@ -71,7 +71,7 @@ class FilesystemCacheWriterTest extends Unit
     {
         $this->assertFalse(is_dir($this->getCacheDirectory()), 'Cache directory exists, make sure you cleanup before test');
 
-        $cacheWriter = new FilesystemCacheWriter($this->getCacheFile());
+        $cacheWriter = new FilesystemCacheWriter($this->getCacheFile(), 0777);
         $cacheWriter->write(['foo']);
 
         $this->assertTrue(is_dir($this->getCacheDirectory()), 'Cache directory was not created');

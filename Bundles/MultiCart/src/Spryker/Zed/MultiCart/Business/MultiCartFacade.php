@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MultiCart\Business;
 
 use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -30,6 +32,22 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     public function setDefaultQuote(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteActivator()->setDefaultQuote($quoteActivationRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return void
+     */
+    public function initDefaultCustomerQuote(string $customerReference): void
+    {
+        $this->getFactory()
+            ->createQuoteWriter()
+            ->initDefaultCustomerQuote($customerReference);
     }
 
     /**
@@ -72,5 +90,19 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     public function resolveQuoteName(QuoteTransfer $quoteTransfer): string
     {
         return $this->getFactory()->createQuoteNameResolver()->resolveCustomerQuoteName($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
+        return $this->getFactory()->createQuoteCollectionReader()->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
     }
 }

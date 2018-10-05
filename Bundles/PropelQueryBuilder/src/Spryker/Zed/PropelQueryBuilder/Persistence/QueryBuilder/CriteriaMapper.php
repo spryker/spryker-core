@@ -175,7 +175,7 @@ class CriteriaMapper implements CriteriaMapperInterface
      * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      * @param \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface $operator
      *
-     * @return null|\Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null
      */
     protected function createCriterion(
         ModelCriteria $criteria,
@@ -203,7 +203,7 @@ class CriteriaMapper implements CriteriaMapperInterface
      * @param \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface $operator
      * @param array $mappings
      *
-     * @return null|\Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null
      */
     protected function createCombinedCriterion(
         ModelCriteria $criteria,
@@ -274,7 +274,7 @@ class CriteriaMapper implements CriteriaMapperInterface
     /**
      * @param string $value
      *
-     * @return string
+     * @return bool
      */
     protected function isOrCondition($value)
     {

@@ -20,7 +20,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getProductAbstractRelationSynchronizationPoolName(): ?string
     {

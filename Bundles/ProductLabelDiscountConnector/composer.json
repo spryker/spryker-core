@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-label-discount-connector",
+  "type": "library",
   "description": "ProductLabelDiscountConnector module",
   "license": "proprietary",
   "require": {
@@ -10,6 +11,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

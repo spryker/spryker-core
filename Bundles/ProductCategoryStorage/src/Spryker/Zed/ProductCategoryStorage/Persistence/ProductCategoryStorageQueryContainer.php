@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
+use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -18,7 +22,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implements ProductCategoryStorageQueryContainerInterface
 {
-    const FK_CATEGORY = 'fkCategory';
+    public const FK_CATEGORY = 'fkCategory';
 
     /**
      * @api
@@ -174,5 +178,81 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
             ->queryAllCategoryNodes()
             ->filterByIdCategoryNode_In($nodeIds)
             ->select(SpyCategoryNodeTableMap::COL_FK_CATEGORY);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoriesWithAttributesAndOrderByDescendant()
+    {
+        $nodeQuery = $this->getFactory()->getCategoryQueryContainer()->queryAllCategoryNodes();
+        $nodeQuery->addJoin(
+            SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
+            SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
+            Criteria::LEFT_JOIN
+        );
+
+        $nodeQuery->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ' . SpyCategoryAttributeTableMap::COL_FK_LOCALE);
+
+        $nodeQuery
+            ->useClosureTableQuery()
+            ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+            ->orderByDepth(Criteria::DESC)
+            ->filterByDepth(null, Criteria::NOT_EQUAL)
+            ->endUse()
+            ->useCategoryQuery()
+            ->useAttributeQuery()
+            ->endUse()
+            ->endUse();
+
+        $nodeQuery->filterByIsRoot(0);
+
+        $nodeQuery
+            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, 'fk_category')
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
+            ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, 'fk_category_node_descendant')
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
+            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'category_key')
+            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, 'fk_locale')
+            ->withColumn(SpyUrlTableMap::COL_URL, 'url');
+
+        $nodeQuery->setFormatter(new PropelArraySetFormatter());
+
+        return $nodeQuery;
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoryNodes()
+    {
+        return $this->getFactory()->getCategoryQueryContainer()->queryAllCategoryNodes();
+    }
+
+    /**
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoryWithCategoryNodes(array $productAbstractIds)
+    {
+        return $this->getFactory()->getProductCategoryQueryContainer()
+            ->queryProductCategoryMappings()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->innerJoinSpyCategory()
+            ->addAnd(
+                SpyCategoryTableMap::COL_IS_ACTIVE,
+                true,
+                Criteria::EQUAL
+            )
+            ->joinWithSpyCategory()
+            ->joinWith('SpyCategory.Node')
+            ->orderByProductOrder();
     }
 }

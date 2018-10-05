@@ -8,6 +8,7 @@
     </transfer>
 
     <transfer name="ProductView">
+        <property name="quantity" type="int" />
         <property name="price" type="int"/>
         <property name="prices" type="array"/>
     </transfer>

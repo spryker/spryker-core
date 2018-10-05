@@ -38,30 +38,21 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     }
 
     /**
-     * @param string $module
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
-     * @return string[]
+     * @return array
      */
-    public function getForeignColumnNames(string $module): array
+    public function getForeignColumnNames(SplFileInfo $fileInfo): array
     {
-        $moduleSchemaFilePath = $this->config->getPathToCore() . $module . '/src/Spryker/Zed/' . $module . '/Persistence/Propel/Schema/';
-        if (!is_dir($moduleSchemaFilePath)) {
-            return [];
-        }
-
-        $finder = new Finder();
-        $finder->in($moduleSchemaFilePath);
-
         $foreignReferenceColumnNames = [];
-        foreach ($finder as $splFileInfo) {
-            $simpleXmlElement = simplexml_load_file($splFileInfo->getPathname());
-            $foreignReferences = $simpleXmlElement->xpath('//table/foreign-key/reference');
-            foreach ($foreignReferences as $foreignReference) {
-                $parentNode = $foreignReference->xpath('parent::*')[0];
-                $foreignTableName = (string)$parentNode['foreignTable'];
-                $foreignReferenceName = (string)$foreignReference['foreign'];
-                $foreignReferenceColumnNames[] = $foreignTableName . '.' . $foreignReferenceName;
-            }
+
+        $simpleXmlElement = simplexml_load_file($fileInfo->getPathname());
+        $foreignReferences = $simpleXmlElement->xpath('//table/foreign-key/reference');
+        foreach ($foreignReferences as $foreignReference) {
+            $parentNode = $foreignReference->xpath('parent::*')[0];
+            $foreignTableName = (string)$parentNode['foreignTable'];
+            $foreignReferenceName = (string)$foreignReference['foreign'];
+            $foreignReferenceColumnNames[] = $foreignTableName . '.' . $foreignReferenceName;
         }
 
         return $foreignReferenceColumnNames;

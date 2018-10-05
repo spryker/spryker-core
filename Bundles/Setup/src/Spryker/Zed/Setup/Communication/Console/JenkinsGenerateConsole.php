@@ -17,8 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class JenkinsGenerateConsole extends Console
 {
-    const COMMAND_NAME = 'setup:jenkins:generate';
-    const DESCRIPTION = 'Generate Jenkins jobs configuration';
+    public const COMMAND_NAME = 'setup:jenkins:generate';
+    public const DESCRIPTION = 'Generate Jenkins jobs configuration';
 
     /**
      * @return void

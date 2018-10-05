@@ -10,6 +10,9 @@ namespace Spryker\Zed\CustomerNote\Persistence;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
+/**
+ * @method \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer save(\Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer $customerNoteEntityTransfer)
+ */
 class CustomerNoteEntityManager extends AbstractEntityManager implements CustomerNoteEntityManagerInterface
 {
     /**

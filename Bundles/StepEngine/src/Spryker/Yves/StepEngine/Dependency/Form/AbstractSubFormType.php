@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormView;
 
 abstract class AbstractSubFormType extends AbstractType
 {
-    const TEMPLATE_PATH = 'template_path';
+    public const TEMPLATE_PATH = 'template_path';
 
     /**
      * @return string

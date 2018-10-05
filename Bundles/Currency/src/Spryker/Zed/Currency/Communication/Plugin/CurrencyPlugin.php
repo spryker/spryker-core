@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
 {
     /**
+     * @api
+     *
      * @param string $isoCode
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
@@ -25,6 +27,8 @@ class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent()

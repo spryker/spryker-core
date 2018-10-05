@@ -1,5 +1,6 @@
 {
   "name": "spryker/category",
+  "type": "library",
   "description": "Category module",
   "license": "proprietary",
   "require": {
@@ -18,10 +19,13 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {

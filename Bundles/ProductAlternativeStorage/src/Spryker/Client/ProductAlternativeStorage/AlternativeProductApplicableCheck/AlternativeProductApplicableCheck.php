@@ -50,7 +50,7 @@ class AlternativeProductApplicableCheck implements AlternativeProductApplicableC
             return false;
         }
         foreach ($attributeMap->getProductConcreteIds() as $concreteSku => $IdProductConcrete) {
-            $concreteProductViewTransfer = (new ProductViewTransfer)->fromArray($productViewTransfer->modifiedToArray(), true)
+            $concreteProductViewTransfer = (new ProductViewTransfer())->fromArray($productViewTransfer->modifiedToArray(), true)
                 ->setIdProductConcrete($IdProductConcrete)
                 ->setSku($concreteSku);
             if (!$this->executeAlternativeProductApplicableCheckCheckPlugins($concreteProductViewTransfer)) {

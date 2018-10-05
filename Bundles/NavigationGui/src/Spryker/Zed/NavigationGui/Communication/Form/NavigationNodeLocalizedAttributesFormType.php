@@ -30,18 +30,18 @@ use Symfony\Component\Validator\Constraints\Url;
  */
 class NavigationNodeLocalizedAttributesFormType extends AbstractType
 {
-    const FIELD_TITLE = 'title';
-    const FIELD_FK_LOCALE = 'fk_locale';
-    const FIELD_LINK = 'link';
-    const FIELD_EXTERNAL_URL = 'external_url';
-    const FIELD_CMS_PAGE_URL = 'cms_page_url';
-    const FIELD_CATEGORY_URL = 'category_url';
-    const FIELD_CSS_CLASS = 'css_class';
+    public const FIELD_TITLE = 'title';
+    public const FIELD_FK_LOCALE = 'fk_locale';
+    public const FIELD_LINK = 'link';
+    public const FIELD_EXTERNAL_URL = 'external_url';
+    public const FIELD_CMS_PAGE_URL = 'cms_page_url';
+    public const FIELD_CATEGORY_URL = 'category_url';
+    public const FIELD_CSS_CLASS = 'css_class';
 
-    const GROUP_CMS = 'cms_page';
-    const GROUP_CATEGORY = 'category';
-    const GROUP_LINK = 'link';
-    const GROUP_EXTERNAL_URL = 'external_url';
+    public const GROUP_CMS = 'cms_page';
+    public const GROUP_CATEGORY = 'category';
+    public const GROUP_LINK = 'link';
+    public const GROUP_EXTERNAL_URL = 'external_url';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

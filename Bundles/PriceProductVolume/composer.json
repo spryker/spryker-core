@@ -1,5 +1,6 @@
 {
   "name": "spryker/price-product-volume",
+  "type": "library",
   "description": "PriceProductVolume module",
   "license": "proprietary",
   "require": {
@@ -15,6 +16,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

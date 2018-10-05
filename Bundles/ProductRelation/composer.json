@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-relation",
+  "type": "library",
   "description": "ProductRelation module",
   "license": "proprietary",
   "require": {
@@ -26,12 +27,11 @@
     "spryker/util-text": "^1.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
-    "spryker/twig": "*"
+    "spryker/twig": "*",
+    "spryker/zed-navigation": "*"
   },
   "suggest": {
     "spryker/event": "Required to listen for changes affecting product relations.",

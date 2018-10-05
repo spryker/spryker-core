@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-quantity",
+  "type": "library",
   "description": "ProductQuantity module",
   "license": "proprietary",
   "require": {
@@ -11,6 +12,7 @@
   "require-dev": {
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

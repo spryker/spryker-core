@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-search-config-storage",
+  "type": "library",
   "description": "ProductSearchConfigStorage module",
   "license": "proprietary",
   "require": {
@@ -12,10 +13,15 @@
     "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/event": "*",
     "spryker/product": "*",
+    "spryker/propel": "*",
     "spryker/propel-orm": "*",
-    "spryker/search": "*"
+    "spryker/propel-query-builder": "*",
+    "spryker/search": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",

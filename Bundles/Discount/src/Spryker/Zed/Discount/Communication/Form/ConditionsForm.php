@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -20,7 +21,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ConditionsForm extends AbstractType
 {
-    const FIELD_DECISION_RULE_QUERY_STRING = 'decision_rule_query_string';
+    public const FIELD_DECISION_RULE_QUERY_STRING = 'decision_rule_query_string';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

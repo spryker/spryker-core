@@ -1,5 +1,6 @@
 {
   "name": "spryker/persistent-cart",
+  "type": "library",
   "description": "PersistentCart module",
   "license": "proprietary",
   "require": {
@@ -15,8 +16,7 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

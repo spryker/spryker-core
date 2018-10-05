@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\Development\Business\Dependency\ModuleParser;
 
+use Symfony\Component\Finder\SplFileInfo;
+
 interface UseStatementParserInterface
 {
     /**
-     * @param string $module
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
      * @return array
      */
-    public function getUseStatements(string $module): array;
+    public function getUseStatements(SplFileInfo $fileInfo): array;
 }

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CompanyBusinessUnitDataImport;
 
 use Codeception\Actor;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 
 /**
  * Inherited Methods
@@ -31,4 +32,20 @@ class CompanyBusinessUnitDataImportCommunicationTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return void
+     */
+    public function truncateCompanyBusinessUnitRelations(): void
+    {
+        $this->truncateTableRelations($this->getCompanyBusinessUnitQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
+     */
+    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
+    {
+        return SpyCompanyBusinessUnitQuery::create();
+    }
 }

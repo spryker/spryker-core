@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-unit-address-label",
+  "type": "library",
   "description": "CompanyUnitAddressLabel module",
   "license": "proprietary",
   "require": {
@@ -14,7 +15,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/country": "*",
+    "spryker/locale": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*",
+    "spryker/touch": "*"
   },
   "autoload": {
     "psr-4": {

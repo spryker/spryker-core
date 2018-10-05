@@ -53,7 +53,7 @@ class ProductGroupStorageReader implements ProductGroupStorageReaderInterface
             ->generateKey($synchronizationDataTransfer);
 
         $productGroupData = $this->storageClient->get($key);
-        $productAbstractGroupStorageTransfer = new ProductAbstractGroupStorageTransfer;
+        $productAbstractGroupStorageTransfer = new ProductAbstractGroupStorageTransfer();
 
         if ($productGroupData) {
             $productAbstractGroupStorageTransfer->fromArray($productGroupData, true);

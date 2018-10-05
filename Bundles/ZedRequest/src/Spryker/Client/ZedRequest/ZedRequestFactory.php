@@ -19,7 +19,7 @@ use Spryker\Client\ZedRequest\Messenger\MessengerInterface;
 class ZedRequestFactory extends AbstractFactory
 {
     /**
-     * @var \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface
+     * @var \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface|null
      */
     private static $zedClient;
 

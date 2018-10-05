@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-measurement-unit-storage",
+  "type": "library",
   "description": "ProductMeasurementUnitStorage module",
   "license": "proprietary",
   "require": {
@@ -14,7 +15,10 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
     "spryker/propel-orm": "*",
+    "spryker/queue": "*",
     "spryker/testify": "*"
   },
   "suggest": {
