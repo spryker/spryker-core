@@ -18,7 +18,7 @@ class ShoppingListItemProductOptionRequestMapperPlugin implements ShoppingListIt
     /**
      * {@inheritdoc}
      * - Maps ShoppingListItemTransfer with product option IDs.
-     * - Expects an array of product option IDs in `product-option` key of "params".
+     * - Expects an array of product option IDs in "product-option" key of "params".
      *
      * @api
      *
