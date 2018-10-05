@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 interface ShoppingListProductOptionConnectorFacadeInterface
@@ -37,18 +36,6 @@ interface ShoppingListProductOptionConnectorFacadeInterface
      * @return void
      */
     public function removeShoppingListItemProductOptions(int $idShoppingListItem): void;
-
-    /**
-     * Specification:
-     * - Finds shopping list product options for shopping list item.
-     *
-     * @api
-     *
-     * @param int $idShoppingListItem
-     *
-     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
-     */
-    public function getShoppingListItemProductOptionsByIdShoppingListItem(int $idShoppingListItem): ProductOptionCollectionTransfer;
 
     /**
      * Specification:
