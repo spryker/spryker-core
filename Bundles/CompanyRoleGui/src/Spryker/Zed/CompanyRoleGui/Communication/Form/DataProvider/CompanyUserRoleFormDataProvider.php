@@ -42,11 +42,13 @@ class CompanyUserRoleFormDataProvider
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions(CompanyUserTransfer $companyUserTransfer): array
     {
-        [$choicesValues, $choicesAttributes] = $this->prepareCompanyRoleAttributeMap();
+        [$choicesValues, $choicesAttributes] = $this->prepareCompanyRoleAttributeMap($companyUserTransfer);
 
         return [
             CompanyUserRoleForm::OPTION_VALUES_ROLES_CHOICES => $choicesValues,
@@ -57,10 +59,12 @@ class CompanyUserRoleFormDataProvider
     /**
      * Retrieves the list of roles for the same company.
      *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
      * @return array [[roleKey => idRole], [roleKey => ['data-id-company' => idCompany]]]
      *                Where roleKey: "<idRole> - <RoleName>"
      */
-    protected function prepareCompanyRoleAttributeMap(): array
+    protected function prepareCompanyRoleAttributeMap(CompanyUserTransfer $companyUserTransfer): array
     {
         $values = [];
         $attributes = [];
@@ -68,12 +72,17 @@ class CompanyUserRoleFormDataProvider
             (new CompanyRoleCriteriaFilterTransfer())
         );
 
+        $defaultRoleIsSet = false;
         foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {
             $roleKey = $this->generateCompanyRoleName($companyRoleTransfer);
 
             $companyRoleAttributes = [static::OPTION_ATTRIBUTE_DATA => $companyRoleTransfer->getFkCompany()];
-            if ($companyRoleTransfer->getIsDefault()) {
+            if (!$defaultRoleIsSet
+                && $companyRoleTransfer->getIsDefault()
+                && $companyUserTransfer->getCompanyRoleCollection() === null
+            ) {
                 $companyRoleAttributes[static::OPTION_IS_DEFAULT] = true;
+                $defaultRoleIsSet = true;
             }
 
             $values[$roleKey] = $companyRoleTransfer->getIdCompanyRole();
