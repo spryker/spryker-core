@@ -39,15 +39,15 @@ class CreateController extends AbstractController
             return $this->showForm($orderTransfer);
         }
 
-        $idsOrderItem = $request->request->getDigits(SalesReclamationGuiConfig::PARAM_IDS_SALES_ORDER_ITEMS);
+        $idsOrderItem = (array)$request->request->getDigits(SalesReclamationGuiConfig::PARAM_IDS_SALES_ORDER_ITEMS);
 
-        if (!$idsOrderItem) {
+        if (empty($idsOrderItem)) {
             $this->addErrorMessage('No order items provided');
 
             return $this->showForm($orderTransfer);
         }
 
-        $reclamationTransfer = $this->createReclamation($orderTransfer, ...$idsOrderItem);
+        $reclamationTransfer = $this->createReclamation($orderTransfer, $idsOrderItem);
 
         if ($reclamationTransfer) {
             $this->addSuccessMessage(sprintf(
@@ -85,17 +85,17 @@ class CreateController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int ...$idsOrderItem
+     * @param array $idsOrderItem
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
-    protected function createReclamation(OrderTransfer $orderTransfer, int ... $idsOrderItem): ?ReclamationTransfer
+    protected function createReclamation(OrderTransfer $orderTransfer, array $idsOrderItem): ?ReclamationTransfer
     {
         $reclamationCreateRequestTransfer = new ReclamationCreateRequestTransfer();
         $reclamationCreateRequestTransfer->setOrder($orderTransfer);
 
         foreach ($idsOrderItem as $idOrderItem) {
-            $orderItemsTransfer = $this->getOrderItemById($orderTransfer, $idOrderItem);
+            $orderItemsTransfer = $this->getOrderItemById($orderTransfer, (int)$idOrderItem);
 
             if (!$orderItemsTransfer) {
                 $this->addErrorMessage(sprintf(

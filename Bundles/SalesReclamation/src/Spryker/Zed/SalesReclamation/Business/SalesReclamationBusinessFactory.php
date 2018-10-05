@@ -8,8 +8,6 @@
 namespace Spryker\Zed\SalesReclamation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesReclamation\Business\Order\OrderExpander;
-use Spryker\Zed\SalesReclamation\Business\Order\OrderExpanderInterface;
 use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaver;
 use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaverInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\Hydrator;

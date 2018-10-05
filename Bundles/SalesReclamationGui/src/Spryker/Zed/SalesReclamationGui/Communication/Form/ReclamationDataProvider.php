@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesReclamationGui\Communication\Form;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface;
 use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
