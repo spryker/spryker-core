@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin\CompanyUser;
 
-use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserFormExpanderPluginInterface;
+use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserAttachCustomerFormExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\CompanyRoleGui\Communication\CompanyRoleGuiCommunicationFactory getFactory()
  */
-class CompanyRoleFromExpanderPlugin extends AbstractPlugin implements CompanyUserFormExpanderPluginInterface
+class CompanyRoleAttachCustomerFormExpanderPlugin extends AbstractPlugin implements CompanyUserAttachCustomerFormExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
+     *  - Expands CustomerCompanyAttachForm with choice field of company roles form CompanyUserRoleChoiceFormType.
      *
      * @api
      *

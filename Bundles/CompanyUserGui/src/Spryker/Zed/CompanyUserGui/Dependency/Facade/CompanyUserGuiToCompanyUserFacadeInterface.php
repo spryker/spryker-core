@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyUserGuiToCompanyUserFacadeInterface
 {
@@ -26,16 +27,14 @@ interface CompanyUserGuiToCompanyUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function update(
-        CompanyUserTransfer $companyUserTransfer
-    ): CompanyUserResponseTransfer;
+    public function create(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function create(
+    public function update(
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserResponseTransfer;
 
@@ -70,4 +69,11 @@ interface CompanyUserGuiToCompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return int
+     */
+    public function countActiveCompanyUsersByIdCustomer(CustomerTransfer $customerTransfer): int;
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleForm;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
 
@@ -28,16 +27,6 @@ class CompanyUserRoleFormDataProvider
     public function __construct(CompanyRoleGuiToCompanyRoleFacadeInterface $companyRoleFacade)
     {
         $this->companyRoleFacade = $companyRoleFacade;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
-    public function getData(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
-    {
-        return $companyUserTransfer;
     }
 
     /**

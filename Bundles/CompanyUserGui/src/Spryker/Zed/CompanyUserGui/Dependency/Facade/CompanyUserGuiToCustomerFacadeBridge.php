@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUserGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class CompanyUserGuiToCustomerFacadeBridge implements CompanyUserGuiToCustomerFacadeInterface
 {
     /**
@@ -30,5 +32,15 @@ class CompanyUserGuiToCustomerFacadeBridge implements CompanyUserGuiToCustomerFa
     public function hasEmail($email)
     {
         return $this->customerFacade->hasEmail($email);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerById(CustomerTransfer $customerTransfer)
+    {
+        return $this->customerFacade->findCustomerById($customerTransfer);
     }
 }

@@ -11,7 +11,9 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserEditForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm;
+use Spryker\Zed\CompanyUserGui\Communication\Form\CustomerCompanyAttachForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider\CompanyUserFormDataProvider;
+use Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider\CustomerCompanyAttachFormDataProvider;
 use Spryker\Zed\CompanyUserGui\Communication\Table\CompanyUserTable;
 use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutor;
 use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
@@ -74,6 +76,18 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider\CustomerCompanyAttachFormDataProvider
+     */
+    public function createCustomerCompanyAttachFormDataProvider(): CustomerCompanyAttachFormDataProvider
+    {
+        return new CustomerCompanyAttachFormDataProvider(
+            $this->getCompanyUserFacade(),
+            $this->getCompanyFacade(),
+            $this->getCustomerFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeInterface
      */
     public function getCustomerFacade(): CompanyUserGuiToCustomerFacadeInterface
@@ -106,6 +120,25 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCompanyUserTableConfigExpanderPlugins(),
             $this->getCompanyUserTablePrepareDataExpanderPlugins()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCustomerCompanyAttachForm(?CompanyUserTransfer $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(CustomerCompanyAttachForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserAttachCustomerFormExpanderPluginInterface[]
+     */
+    public function getCompanyUserAttachCustomerFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGINS_COMPANY_USER_ATTACH_CUSTOMER_FORM_EXPANDER);
     }
 
     /**

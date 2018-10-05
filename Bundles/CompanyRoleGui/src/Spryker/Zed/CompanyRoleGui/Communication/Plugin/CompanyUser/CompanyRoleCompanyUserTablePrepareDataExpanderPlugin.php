@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin\CompanyRole;
+namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface;

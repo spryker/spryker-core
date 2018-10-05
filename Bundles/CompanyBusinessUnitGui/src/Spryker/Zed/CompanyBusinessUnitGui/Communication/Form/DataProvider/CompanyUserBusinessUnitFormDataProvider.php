@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
 
@@ -28,16 +27,6 @@ class CompanyUserBusinessUnitFormDataProvider
     public function __construct(CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade)
     {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
-    public function getData(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
-    {
-        return $companyUserTransfer;
     }
 
     /**
