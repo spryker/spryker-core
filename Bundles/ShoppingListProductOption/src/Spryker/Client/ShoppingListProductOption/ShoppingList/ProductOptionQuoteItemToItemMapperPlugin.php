@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListExtension;
+namespace Spryker\Client\ShoppingListProductOption\ShoppingList;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -14,7 +14,7 @@ use Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapper
 /**
  * @method \Spryker\Client\ShoppingListProductOption\ShoppingListProductOptionFactory getFactory()
  */
-class ProductOptionQuoteItemToItemMapperPluginInterfacePlugin extends AbstractPlugin implements QuoteItemToItemMapperPluginInterface
+class ProductOptionQuoteItemToItemMapperPlugin extends AbstractPlugin implements QuoteItemToItemMapperPluginInterface
 {
     /**
      * {@inheritdoc}

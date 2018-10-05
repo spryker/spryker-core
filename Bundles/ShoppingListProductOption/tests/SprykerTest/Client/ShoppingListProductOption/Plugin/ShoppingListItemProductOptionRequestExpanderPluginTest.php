@@ -9,7 +9,7 @@ namespace SprykerTest\Client\ShoppingListProductOption\Plugin;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListExtension\ShoppingListItemProductOptionRequestMapperPlugin;
+use Spryker\Client\ShoppingListProductOption\ShoppingList\ShoppingListItemProductOptionRequestMapperPlugin;
 
 /**
  * Auto-generated group annotations
