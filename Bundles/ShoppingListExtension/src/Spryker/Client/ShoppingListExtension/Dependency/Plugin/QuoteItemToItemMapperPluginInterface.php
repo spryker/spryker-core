@@ -12,7 +12,7 @@ interface QuoteItemToItemMapperPluginInterface
 {
     /**
      * Specification:
-     * - Maps Quote ItemTransfer properties to ItemTransfer object.
+     * - Maps QuoteItemTransfer properties to ItemTransfer.
      *
      * @api
      *
