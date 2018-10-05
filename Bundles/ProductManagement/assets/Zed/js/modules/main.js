@@ -281,36 +281,4 @@ $(document).ready(function() {
                 hidden.val(inputValue);
         });
     });
-
-    showOrHideAddVariantsButton();
-
-    window.addEventListener("hashchange", function (e) {
-        showOrHideAddVariantsButton();
-    });
-
-    function showOrHideAddVariantsButton() {
-        const target = window.location.hash; // activated tab
-
-        if (isVariantsTab(target)) {
-            showAddVariantButton();
-        } else {
-            hideAddVariantButton();
-        }
-    }
-
-    function isVariantsTab(href) {
-        return href === '#tab-content-variants';
-    }
-
-    function getAddVariantButton() {
-        return $('.add-variant-button');
-    }
-
-    function showAddVariantButton() {
-        getAddVariantButton().removeClass('hide');
-    }
-
-    function hideAddVariantButton() {
-        getAddVariantButton().addClass('hide');
-    }
 });

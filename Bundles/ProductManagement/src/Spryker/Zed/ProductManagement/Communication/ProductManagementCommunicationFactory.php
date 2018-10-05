@@ -18,6 +18,8 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductAttributeHelper;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductAttributeHelperInterface;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelper;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelper;
@@ -597,5 +599,16 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createProductConcreteSuperAttributeFilterHelper(): ProductConcreteSuperAttributeFilterHelperInterface
     {
         return new ProductConcreteSuperAttributeFilterHelper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductAttributeHelperInterface
+     */
+    public function createProductAttributeHelper(): ProductAttributeHelperInterface
+    {
+        return new ProductAttributeHelper(
+            $this->getProductFacade(),
+            $this->getProductQueryContainer()
+        );
     }
 }
