@@ -18,19 +18,19 @@ use Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePluginException
 
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGINS = 'PLUGINS';
-    const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
-    const PRICE_PLUGINS = 'PRICE_PLUGINS';
-    const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
-    const MONEY_COLLECTION_FORM_TYPE_PLUGIN = 'MONEY_COLLECTION_FORM_TYPE_PLUGIN';
+    public const PLUGINS = 'PLUGINS';
+    public const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
+    public const PRICE_PLUGINS = 'PRICE_PLUGINS';
+    public const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
+    public const MONEY_COLLECTION_FORM_TYPE_PLUGIN = 'MONEY_COLLECTION_FORM_TYPE_PLUGIN';
 
-    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+    public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
-    const FACADE_MONEY = 'FACADE_MONEY';
-    const FACADE_CURRENCY = 'FACADE_CURRENCY';
-    const FACADE_STORE = 'FACADE_STORE';
-    const FACADE_TAX = 'FACADE_TAX';
-    const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
+    public const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_TAX = 'FACADE_TAX';
+    public const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -14,8 +14,8 @@ use Spryker\Zed\Messenger\Communication\Plugin\TranslationPlugin;
 
 class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SESSION = 'session';
-    const PLUGIN_TRANSLATION = 'translation plugin';
+    public const SESSION = 'session';
+    public const PLUGIN_TRANSLATION = 'translation plugin';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

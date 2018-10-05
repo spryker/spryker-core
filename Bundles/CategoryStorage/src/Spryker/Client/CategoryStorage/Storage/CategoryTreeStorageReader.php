@@ -52,7 +52,7 @@ class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
         $categoryTreeStorageTransfer = new CategoryTreeStorageTransfer();
         $categoryTreeStorageTransfer->fromArray($categories, true);
 
-        return $categoryTreeStorageTransfer->getCategoryNodesStorage() ?: new ArrayObject();
+        return $categoryTreeStorageTransfer->getCategoryNodesStorage();
     }
 
     /**

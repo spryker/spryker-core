@@ -168,16 +168,16 @@ class FileManagerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRead()
+    public function testReadsLatestVersionOfFile()
     {
         $fileManagerDataTransfer = $this->facade->findFileByIdFile($this->tester->getIdFile());
-        $this->assertEquals('first version of the file', $fileManagerDataTransfer->getContent());
+        $this->assertEquals('second version of the file', $fileManagerDataTransfer->getContent());
         $this->assertEquals('customer.txt', $fileManagerDataTransfer->getFile()->getFileName());
         $this->assertEquals($this->tester->getIdFile(), $fileManagerDataTransfer->getFile()->getIdFile());
-        $this->assertEquals('customer_v1.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
+        $this->assertEquals('customer_v2.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
         $this->assertEquals('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
-        $this->assertEquals('1', $fileManagerDataTransfer->getFileInfo()->getVersion());
-        $this->assertEquals('v. 1', $fileManagerDataTransfer->getFileInfo()->getVersionName());
+        $this->assertEquals('2', $fileManagerDataTransfer->getFileInfo()->getVersion());
+        $this->assertEquals('v. 2', $fileManagerDataTransfer->getFileInfo()->getVersionName());
         $this->assertEquals(10, $fileManagerDataTransfer->getFileInfo()->getSize());
     }
 

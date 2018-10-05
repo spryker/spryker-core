@@ -208,7 +208,7 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
     /**
      * @param string $code
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher|null
      */
     protected function getDiscountVoucherEntityByCode($code)
     {

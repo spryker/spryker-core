@@ -26,7 +26,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterfac
  */
 class SellableTest extends Unit
 {
-    const SKU_PRODUCT = 'sku-123-321';
+    public const SKU_PRODUCT = 'sku-123-321';
 
     /**
      * @return void

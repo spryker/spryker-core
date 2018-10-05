@@ -1,5 +1,6 @@
 {
   "name": "spryker/sql-criteria-builder",
+  "type": "library",
   "description": "SqlCriteriaBuilder module",
   "license": "proprietary",
   "require": {

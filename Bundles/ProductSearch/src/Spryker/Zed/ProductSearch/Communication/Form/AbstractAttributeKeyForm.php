@@ -24,13 +24,13 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 abstract class AbstractAttributeKeyForm extends AbstractType
 {
-    const FIELD_KEY = 'key';
+    public const FIELD_KEY = 'key';
 
-    const OPTION_FILTER_TYPE_CHOICES = 'filter_type_choices';
-    const OPTION_IS_UPDATE = 'is_update';
-    const OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS = 'attribute_translation_collection_options';
+    public const OPTION_FILTER_TYPE_CHOICES = 'filter_type_choices';
+    public const OPTION_IS_UPDATE = 'is_update';
+    public const OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS = 'attribute_translation_collection_options';
 
-    const GROUP_UNIQUE_KEY = 'unique_key_group';
+    public const GROUP_UNIQUE_KEY = 'unique_key_group';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

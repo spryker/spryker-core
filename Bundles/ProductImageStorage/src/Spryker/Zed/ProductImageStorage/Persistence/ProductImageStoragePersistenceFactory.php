@@ -35,6 +35,22 @@ class ProductImageStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
+     */
+    public function getProductLocalizedAttributesQuery()
+    {
+        return $this->getProvidedDependency(ProductImageStorageDependencyProvider::PROPEL_QUERY_PRODUCT_LOCALIZED_ATTRIBUTES);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function getProductImageSetQuery()
+    {
+        return $this->getProvidedDependency(ProductImageStorageDependencyProvider::PROPEL_QUERY_PRODUCT_IMAGE_SET);
+    }
+
+    /**
      * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery
      */
     public function createSpyProductAbstractImageStorageQuery()

@@ -22,4 +22,11 @@ interface ShoppingListToProductFacadeInterface
      * @return int|null
      */
     public function findProductConcreteIdBySku($sku): ?int;
+
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findProductConcretesBySkus(array $skus): array;
 }

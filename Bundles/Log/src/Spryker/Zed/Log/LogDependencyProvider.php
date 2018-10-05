@@ -13,12 +13,12 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_QUEUE = 'queue client';
-    const FILESYSTEM = 'filesystem';
+    public const CLIENT_QUEUE = 'queue client';
+    public const FILESYSTEM = 'filesystem';
 
-    const LOG_PROCESSORS = 'LOG_PROCESSORS';
-    const LOG_LISTENERS = 'LOG_LISTENERS';
-    const LOG_HANDLERS = 'LOG_HANDLERS';
+    public const LOG_PROCESSORS = 'LOG_PROCESSORS';
+    public const LOG_LISTENERS = 'LOG_LISTENERS';
+    public const LOG_HANDLERS = 'LOG_HANDLERS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

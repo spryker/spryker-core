@@ -14,12 +14,12 @@ use Spryker\Zed\Kernel\Container;
 
 class CollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'locale facade';
-    const QUERY_CONTAINER_TOUCH = 'touch query container';
-    const SEARCH_PLUGINS = 'search plugins';
-    const STORAGE_PLUGINS = 'storage plugins';
-    const FACADE_PROPEL = 'propel facade';
-    const FACADE_STORE = 'store facade';
+    public const FACADE_LOCALE = 'locale facade';
+    public const QUERY_CONTAINER_TOUCH = 'touch query container';
+    public const SEARCH_PLUGINS = 'search plugins';
+    public const STORAGE_PLUGINS = 'storage plugins';
+    public const FACADE_PROPEL = 'propel facade';
+    public const FACADE_STORE = 'store facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

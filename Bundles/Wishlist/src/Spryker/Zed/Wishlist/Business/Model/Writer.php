@@ -23,7 +23,7 @@ class Writer implements WriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
-    const DEFAULT_NAME = 'default';
+    public const DEFAULT_NAME = 'default';
 
     /**
      * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
@@ -88,7 +88,7 @@ class Writer implements WriterInterface
         $wishlistEntity->fromArray($wishlistTransfer->toArray());
         $wishlistEntity->save();
 
-        $wishlistTransfer->setIdWishlist($wishlistEntity->getIdWishlist());
+        $wishlistTransfer->fromArray($wishlistEntity->toArray(), true);
 
         return $wishlistTransfer;
     }

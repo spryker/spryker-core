@@ -11,7 +11,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class NotContains extends Contains
 {
-    const TYPE = 'not_contains';
+    public const TYPE = 'not_contains';
 
     /**
      * @return string
