@@ -43,6 +43,8 @@ class ProductAttributeUniqueCombination extends Constraint
         int $idProductAbstract,
         ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelper
     ) {
+        parent::__construct();
+
         $this->idProductAbstract = $idProductAbstract;
         $this->productFacade = $productFace;
         $this->productConcreteSuperAttributeFilterHelper = $productConcreteSuperAttributeFilterHelper;
