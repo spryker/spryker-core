@@ -32,6 +32,7 @@
 
     <transfer name="Order">
         <property name="reclamation" type="Reclamation"/>
+        <property name="fkSalesReclamation" type="int"/>
     </transfer>
 
     <transfer name="OrderCollection">

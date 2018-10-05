@@ -84,8 +84,6 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int ...$idsOrderItem
      *

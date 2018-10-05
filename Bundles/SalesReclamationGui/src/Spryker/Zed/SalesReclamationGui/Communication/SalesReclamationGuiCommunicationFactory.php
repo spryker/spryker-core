@@ -45,9 +45,9 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @return \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery
      */
-    public function getSalesReclamationQuery(): SpySalesReclamationQuery
+    public function getSalesReclamationPropelQuery(): SpySalesReclamationQuery
     {
-        return $this->getProvidedDependency(SalesReclamationGuiDependencyProvider::QUERY_SALES_RECLAMATION);
+        return $this->getProvidedDependency(SalesReclamationGuiDependencyProvider::PROPEL_QUERY_SALES_RECLAMATION);
     }
 
     /**
@@ -56,7 +56,7 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createReclamationTable(): ReclamationTable
     {
         return new ReclamationTable(
-            $this->getSalesReclamationQuery(),
+            $this->getSalesReclamationPropelQuery(),
             $this->getDateTimeService()
         );
     }

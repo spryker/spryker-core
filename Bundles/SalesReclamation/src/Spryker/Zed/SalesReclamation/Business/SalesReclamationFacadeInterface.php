@@ -12,13 +12,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 
 interface SalesReclamationFacadeInterface
 {
     /**
      * Specification:
-     * - Create new Reclamation by SalesOrder and SalesOrderItemIds
+     * - Creates new Reclamation by SalesOrder and SalesOrderItemIds
      * - If incoming data inconsistent - return null
      *
      * @api
@@ -31,7 +31,7 @@ interface SalesReclamationFacadeInterface
 
     /**
      * Specification:
-     * - Update existing sales reclamation entity.
+     * - Updates existing sales reclamation entity.
      *
      * @api
      *
@@ -43,7 +43,7 @@ interface SalesReclamationFacadeInterface
 
     /**
      * Specification:
-     * - Update existing sales reclamation item entity.
+     * - Updates existing sales reclamation item entity.
      *
      * @api
      *
@@ -55,9 +55,9 @@ interface SalesReclamationFacadeInterface
 
     /**
      * Specification:
-     * - Get Reclamation by id from database
-     * - Hydrate Reclamation with data from database
-     * - Hydrate Reclamation items with data from database
+     * - Gets Reclamation by id from database
+     * - Hydrates Reclamation with data from database
+     * - Hydrates Reclamation items with data from database
      *
      * @api
      *
@@ -69,8 +69,8 @@ interface SalesReclamationFacadeInterface
 
     /**
      * Specification:
-     * - Hydrate Reclamation with data from order
-     * - Hydrate Reclamation items with data from order items
+     * - Hydrates Reclamation with data from order
+     * - Hydrates Reclamation items with data from order items
      *
      * @api
      *
@@ -82,19 +82,16 @@ interface SalesReclamationFacadeInterface
 
     /**
      * Specification:
-     * - Expands SpySalesOrderEntityTransfer with reclamation id before order created.
+     * - Updates sales order with reclamation id.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
+     * @return void
      */
-    public function expandSalesOrderEntity(
-        SpySalesOrderEntityTransfer $salesOrderEntityTransfer,
-        QuoteTransfer $quoteTransfer
-    ): SpySalesOrderEntityTransfer;
+    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 
     /**
      * Specification:

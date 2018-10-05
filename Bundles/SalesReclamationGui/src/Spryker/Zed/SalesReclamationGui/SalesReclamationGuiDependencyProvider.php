@@ -19,7 +19,7 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_SALES_RECLAMATION = 'FACADE_SALES_RECLAMATION';
     public const FACADE_SALES = 'FACADE_SALES';
 
-    public const QUERY_SALES_RECLAMATION = 'QUERY_SALES_RECLAMATION';
+    public const PROPEL_QUERY_SALES_RECLAMATION = 'PROPEL_QUERY_SALES_RECLAMATION';
 
     public const SERVICE_DATETIME = 'SERVICE_DATETIME';
 
@@ -32,7 +32,7 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $this->addSalesFacade($container);
         $this->addSalesReclamationFacade($container);
-        $this->addSalesReclamationQuery($container);
+        $this->addSalesReclamationPropelQuery($container);
         $this->addDateTimeService($container);
 
         return $container;
@@ -73,9 +73,9 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesReclamationQuery(Container $container): Container
+    protected function addSalesReclamationPropelQuery(Container $container): Container
     {
-        $container[static::QUERY_SALES_RECLAMATION] = function (Container $container) {
+        $container[static::PROPEL_QUERY_SALES_RECLAMATION] = function (Container $container) {
             return SpySalesReclamationQuery::create();
         };
 

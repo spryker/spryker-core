@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesReclamation\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesReclamation\Business\Order\OrderExpander;
 use Spryker\Zed\SalesReclamation\Business\Order\OrderExpanderInterface;
+use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaver;
+use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaverInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\Hydrator;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\HydratorInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationReader;
@@ -58,11 +60,11 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesReclamation\Business\Order\OrderExpanderInterface
+     * @return \Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaverInterface
      */
-    public function createReclamationOrderExpander(): OrderExpanderInterface
+    public function createReclamationSaver(): ReclamationSaverInterface
     {
-        return new OrderExpander(
+        return new ReclamationSaver(
             $this->getSalesFacade()
         );
     }

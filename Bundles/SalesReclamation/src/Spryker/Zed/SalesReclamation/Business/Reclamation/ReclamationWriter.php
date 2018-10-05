@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
@@ -52,18 +53,9 @@ class ReclamationWriter implements ReclamationWriterInterface
             ->requireLastName()
             ->requireSalutation();
 
-        $salutation = $orderTransfer->getSalutation();
-
-        $customerName = sprintf(
-            '%s%s %s',
-            $salutation ? $salutation . ' ' : '',
-            $orderTransfer->getFirstName(),
-            $orderTransfer->getLastName()
-        );
-
         $reclamationTransfer = new ReclamationTransfer();
         $reclamationTransfer->setOrder($orderTransfer);
-        $reclamationTransfer->setCustomerName($customerName);
+        $reclamationTransfer->setCustomerName($this->getCustomerNameFromOrder($orderTransfer));
         $reclamationTransfer->setCustomerReference($orderTransfer->getCustomerReference());
         $reclamationTransfer->setCustomerEmail($orderTransfer->getEmail());
         $reclamationTransfer->setState(SalesReclamationEntityManager::RECLAMATION_STATE_OPEN);
@@ -96,6 +88,16 @@ class ReclamationWriter implements ReclamationWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
+     */
+    public function updateReclamationItem(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer
+    {
+        return $this->salesReclamationEntityManager->saveReclamationItem($reclamationItemTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer
@@ -112,12 +114,19 @@ class ReclamationWriter implements ReclamationWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
+     * @return string
      */
-    public function updateReclamationItem(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer
+    protected function getCustomerNameFromOrder(OrderTransfer $orderTransfer): string
     {
-        return $this->salesReclamationEntityManager->saveReclamationItem($reclamationItemTransfer);
+        $salutation = $orderTransfer->getSalutation();
+
+        return sprintf(
+            '%s%s %s',
+            $salutation ? $salutation . ' ' : '',
+            $orderTransfer->getFirstName(),
+            $orderTransfer->getLastName()
+        );
     }
 }

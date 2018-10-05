@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReclamation\Dependency\Facade;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
@@ -26,4 +27,12 @@ interface SalesReclamationToSalesFacadeInterface
      * @return void
      */
     public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function updateOrder(OrderTransfer $orderTransfer, int $idSalesOrder): void;
 }

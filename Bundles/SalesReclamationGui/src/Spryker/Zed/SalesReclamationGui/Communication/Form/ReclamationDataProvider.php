@@ -32,9 +32,9 @@ class ReclamationDataProvider implements FormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): AbstractTransfer
+    public function getData($quoteTransfer): QuoteTransfer
     {
         return $quoteTransfer;
     }
