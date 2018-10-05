@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Session\Communication;
 
+use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 use Spryker\Shared\Session\Model\SessionStorage;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptions;
@@ -88,7 +89,15 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createSessionHandlerFactory()
     {
-        return new SessionHandlerFactory($this->getConfig()->getSessionLifeTime());
+        return new SessionHandlerFactory($this->getConfig()->getSessionLifeTime(), $this->getMonitoringService());
+    }
+
+    /**
+     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
+     */
+    public function getMonitoringService(): SessionToMonitoringServiceInterface
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
     }
 
     /**

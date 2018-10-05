@@ -5,48 +5,32 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Session;
+namespace Spryker\Yves\Session;
 
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceBridge;
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Container;
+use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Yves\Kernel\Container;
 
 class SessionDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SESSION_CLIENT = 'SESSION_CLIENT';
     public const MONITORING_SERVICE = 'monitoring service';
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideDependencies(Container $container)
     {
-        $container = $this->addSessionClient($container);
         $container = $this->addMonitoringService($container);
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addSessionClient(Container $container)
-    {
-        $container[static::SESSION_CLIENT] = function () use ($container) {
-            return $container->getLocator()->session()->client();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addMonitoringService(Container $container)
     {

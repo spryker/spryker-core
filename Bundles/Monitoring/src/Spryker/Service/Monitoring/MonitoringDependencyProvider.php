@@ -9,7 +9,6 @@ namespace Spryker\Service\Monitoring;
 
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
-use Spryker\Service\NewRelicApi\Plugin\NewRelicMonitoringExtensionPlugin;
 
 class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -46,8 +45,6 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getMonitoringExtensions(): array
     {
-        return [
-            new NewRelicMonitoringExtensionPlugin(),
-        ];
+        return [];
     }
 }
