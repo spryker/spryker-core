@@ -189,15 +189,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer,
         array $sharedShoppingListCompanyUserIds
     ): void {
-        $isExists = array_key_exists($shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser(), $sharedShoppingListCompanyUserIds);
-
-        if (!$isExists && !$shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()) {
-            return;
-        }
-
-        if ($isExists && $sharedShoppingListCompanyUserIds[$shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser()] ===
-            $shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()
-        ) {
+        if (!$this->checkExistingBeforeUpdateCompanyUser($shoppingListCompanyUserTransfer, $sharedShoppingListCompanyUserIds)) {
             return;
         }
 
@@ -210,6 +202,31 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
+     * @param array $sharedShoppingListCompanyUserIds
+     *
+     * @return bool
+     */
+    protected function checkExistingBeforeUpdateCompanyUser(
+        ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer,
+        array $sharedShoppingListCompanyUserIds
+    ): bool {
+        $isExists = array_key_exists($shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser(), $sharedShoppingListCompanyUserIds);
+
+        if (!$isExists && !$shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()) {
+            return false;
+        }
+
+        if ($isExists && $sharedShoppingListCompanyUserIds[$shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser()] ===
+            $shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
      * @param array $sharedShoppingListCompanyBusinessUnitIds
      *
@@ -219,15 +236,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer,
         array $sharedShoppingListCompanyBusinessUnitIds
     ): void {
-        $isExists = array_key_exists($shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit(), $sharedShoppingListCompanyBusinessUnitIds);
-
-        if (!$isExists && !$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()) {
-            return;
-        }
-
-        if ($isExists && $sharedShoppingListCompanyBusinessUnitIds[$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] ===
-            $shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()
-        ) {
+        if (!$this->checkExistingBeforeUpdateCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer, $sharedShoppingListCompanyBusinessUnitIds)) {
             return;
         }
 
@@ -238,6 +247,34 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         }
 
         $this->shoppingListEntityManager->saveShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
+     * @param array $sharedShoppingListCompanyBusinessUnitIds
+     *
+     * @return bool
+     */
+    protected function checkExistingBeforeUpdateCompanyBusinessUnit(
+        ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer,
+        array $sharedShoppingListCompanyBusinessUnitIds
+    ): bool {
+        $isExists = array_key_exists(
+            $shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit(),
+            $sharedShoppingListCompanyBusinessUnitIds
+        );
+
+        if (!$isExists && !$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()) {
+            return false;
+        }
+
+        if ($isExists && $sharedShoppingListCompanyBusinessUnitIds[$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] ===
+            $shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

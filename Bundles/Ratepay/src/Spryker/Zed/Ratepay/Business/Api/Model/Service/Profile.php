@@ -15,5 +15,5 @@ class Profile extends Base
     /**
      * Profile operation.
      */
-    const OPERATION = Constants::REQUEST_MODEL_PROFILE;
+    public const OPERATION = Constants::REQUEST_MODEL_PROFILE;
 }

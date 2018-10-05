@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-catalog",
+  "type": "library",
   "description": "CustomerCatalog module",
   "license": "proprietary",
   "require": {

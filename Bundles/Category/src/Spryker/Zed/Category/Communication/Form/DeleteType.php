@@ -18,8 +18,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class DeleteType extends AbstractType
 {
-    const FIELD_PK_CATEGORY_NODE = 'id_category_node';
-    const FIELD_FK_NODE_CATEGORY = 'fk_category';
+    public const FIELD_PK_CATEGORY_NODE = 'id_category_node';
+    public const FIELD_FK_NODE_CATEGORY = 'fk_category';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

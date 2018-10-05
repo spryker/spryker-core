@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
+use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -29,7 +30,13 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
     public function getFileByIdFile(int $idFile)
     {
         $query = $this->getFactory()->createFileQuery();
-        $fileEntity = $query->findOneByIdFile($idFile);
+        $query
+            ->joinWithSpyFileInfo()
+            ->addDescendingOrderByColumn(SpyFileInfoTableMap::COL_VERSION);
+
+        $query->filterByIdFile($idFile);
+
+        $fileEntity = $query->find()->getFirst();
 
         if ($fileEntity === null) {
             return $fileEntity;

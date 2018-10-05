@@ -8,6 +8,8 @@
 namespace Spryker\Client\SharedCart;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\SharedCart\CartDeleteChecker\CartDeleteChecker;
+use Spryker\Client\SharedCart\CartDeleteChecker\CartDeleteCheckerInterface;
 use Spryker\Client\SharedCart\CartSharer\CartSharer;
 use Spryker\Client\SharedCart\CartSharer\CartSharerInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCartClientInterface;
@@ -100,5 +102,16 @@ class SharedCartFactory extends AbstractFactory
     public function getZedRequestClient(): ZedRequestClientInterface
     {
         return $this->getProvidedDependency(SharedCartDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\SharedCart\CartDeleteChecker\CartDeleteCheckerInterface
+     */
+    public function createCartDeleteChecker(): CartDeleteCheckerInterface
+    {
+        return new CartDeleteChecker(
+            $this->getMultiCartClient(),
+            $this->getCustomerClient()
+        );
     }
 }

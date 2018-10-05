@@ -10,6 +10,7 @@ namespace Spryker\Zed\Sales\Business;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -53,6 +54,22 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createOrderReader()
             ->findOrderByIdSalesOrderItem($idSalesOrderItem);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createOrderRepositoryReader()
+            ->getCustomerOrderByOrderReference($orderTransfer);
     }
 
     /**
@@ -252,5 +269,21 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createOrderExpander()
             ->expandSalesOrder($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer
+    {
+        return $this->getFactory()
+            ->createExpenseWriter()
+            ->createSalesExpense($expenseTransfer);
     }
 }

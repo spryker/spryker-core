@@ -11,7 +11,7 @@ use Elastica\Aggregation\AbstractTermsAggregation;
 
 abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
 {
-    const AGGREGATION_PARAM_SIZE = 'size';
+    public const AGGREGATION_PARAM_SIZE = 'size';
 
     /**
      * @deprecated Use FacetConfigTransfer::setAggregationParams() instead

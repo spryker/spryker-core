@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-label-search",
+  "type": "library",
   "description": "ProductLabelSearch module",
   "license": "proprietary",
   "require": {
@@ -7,7 +8,8 @@
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.21.0",
     "spryker/product-label": "^2.4.0",
-    "spryker/product-page-search": "^0.1.0 || ^1.0.0 || ^2.0.0",
+    "spryker/product-page-search": "^0.1.0 || ^1.0.0 || ^2.2.0",
+    "spryker/product-page-search-extension": "^1.0.0",
     "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {

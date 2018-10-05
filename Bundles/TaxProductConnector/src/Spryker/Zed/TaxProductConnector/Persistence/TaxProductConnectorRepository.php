@@ -22,6 +22,7 @@ class TaxProductConnectorRepository extends AbstractRepository implements TaxPro
      */
     public function findTaxSetByProductAbstractSku(string $productAbstractSku): ?TaxSetTransfer
     {
+        /** @var \Orm\Zed\Tax\Persistence\SpyTaxSet|null $taxSet */
         $taxSet = $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
                 ->filterBySku($productAbstractSku)

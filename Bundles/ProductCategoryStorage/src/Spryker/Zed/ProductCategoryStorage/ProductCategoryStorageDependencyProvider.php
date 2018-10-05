@@ -17,11 +17,11 @@ use Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer\ProductCategory
 
 class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
-    const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
-    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
-    const FACADE_CATEGORY = 'FACADE_CATEGORY';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
+    public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

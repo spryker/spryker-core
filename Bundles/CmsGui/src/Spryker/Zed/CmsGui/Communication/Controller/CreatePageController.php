@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreatePageController extends AbstractController
 {
-    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Page was not created.';
-    const MESSAGE_PAGE_CREATE_SUCCESS = 'Page was created successfully.';
+    public const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Page was not created.';
+    public const MESSAGE_PAGE_CREATE_SUCCESS = 'Page was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

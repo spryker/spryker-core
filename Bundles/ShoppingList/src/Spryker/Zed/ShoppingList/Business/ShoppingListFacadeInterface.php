@@ -53,7 +53,11 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
+     *  - Remove all items related to shipping list.
+     *  - Remove all shared with company user relations of shopping list.
+     *  - Remove all shared with company business unit relations of shopping list.
      *  - Remove shopping list.
+     *  - Executes ShoppingListEvents::SHOPPING_LIST_UNPUBLISH event after removing.
      *
      * @api
      *
@@ -175,6 +179,8 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
+     *  - Finds shopping list by id if exists.
+     *  - Finds or creates shopping list by name if shopping list id absent.
      *  - Push items from quote to shopping list.
      *
      * @api
