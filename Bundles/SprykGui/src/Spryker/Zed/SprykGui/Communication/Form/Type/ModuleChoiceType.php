@@ -59,7 +59,12 @@ class ModuleChoiceType extends AbstractType
         return ChoiceType::class;
     }
 
-    protected function getFilteredModules(array $moduleFilter)
+    /**
+     * @param array $moduleFilter
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    protected function getFilteredModules(array $moduleFilter): array
     {
         $moduleFilterTransfer = new ModuleFilterTransfer();
         if (isset($moduleFilter['organization'])) {
@@ -77,8 +82,6 @@ class ModuleChoiceType extends AbstractType
             $moduleTransfer->setName($moduleFilter['module']);
             $moduleFilterTransfer->setModule($moduleTransfer);
         }
-
-        $result = $this->getFacade()->getModules($moduleFilterTransfer);
 
         return $this->getFacade()->getModules($moduleFilterTransfer);
     }
