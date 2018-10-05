@@ -123,12 +123,12 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer|array|null $data
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getCustomerCompanyAttachForm($data = null, array $options = []): FormInterface
+    public function getCustomerCompanyAttachForm(?CompanyUserTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(CustomerCompanyAttachForm::class, $data, $options);
     }
