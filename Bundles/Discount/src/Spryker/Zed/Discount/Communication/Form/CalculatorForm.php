@@ -110,9 +110,6 @@ class CalculatorForm extends AbstractType
         }
 
         $calculatorPlugin = $this->getCalculatorPlugin($data[static::FIELD_CALCULATOR_PLUGIN]);
-        if (!$calculatorPlugin) {
-            return;
-        }
 
         $amountField = $form->get(static::FIELD_AMOUNT);
         $constraints = $amountField->getConfig()->getOption('constraints');
@@ -271,15 +268,14 @@ class CalculatorForm extends AbstractType
     protected function getCalculatorPlugin($pluginName)
     {
         $calculatorPlugins = $this->getFactory()->getCalculatorPlugins();
-        if (isset($calculatorPlugins[$pluginName])) {
-            return $calculatorPlugins[$pluginName];
+        if (!isset($calculatorPlugins[$pluginName])) {
+            throw new CalculatorException(sprintf(
+                'Calculator plugin with name "%s" not found. Have you added it to DiscountDependencyProvider::getAvailableCalculatorPlugins() plugin stack?',
+                $pluginName
+            ));
         }
 
-        throw new CalculatorException(sprintf(
-            'Calculator plugin with name "%s" not found.
-            Have you added it to DiscountDependencyProvider::getAvailableCalculatorPlugins plugin stack?',
-            $pluginName
-        ));
+        return $calculatorPlugins[$pluginName];
     }
 
     /**
