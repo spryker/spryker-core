@@ -20,6 +20,11 @@ const roleFieldPath = 'company-user_company_role_collection';
  * @type {string}
  */
 const attributeIdCompany = 'id_company';
+/**
+ * @see \Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleFormDataProvider::OPTION_IS_DEFAULT
+ * @type {string}
+ */
+const attributeIsDefault = 'is_default';
 
 function initialize() {
 
@@ -52,6 +57,10 @@ function CompanyFieldHandler() {
         const $roleOption = $(item);
 
         if ($roleOption.data(attributeIdCompany) === companyId) {
+            if ($roleOption.data(attributeIsDefault)) {
+                $roleOption.attr("checked", true);
+            }
+
             $roleOption.parent().show();
         } else {
             $roleOption.removeAttr("checked");
