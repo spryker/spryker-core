@@ -19,29 +19,29 @@ use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainer;
  */
 interface ProductReviewTableConstants
 {
-    const TABLE_IDENTIFIER = 'product-review-table';
+    public const TABLE_IDENTIFIER = 'product-review-table';
 
-    const SORT_DESC = TableConfiguration::SORT_DESC;
+    public const SORT_DESC = TableConfiguration::SORT_DESC;
 
-    const PARAM_ID = UpdateController::PARAM_ID;
+    public const PARAM_ID = UpdateController::PARAM_ID;
 
-    const COL_ID_PRODUCT_REVIEW = 'id_product_review';
-    const COL_CREATED = ProductReviewGuiQueryContainer::FIELD_CREATED;
-    const COL_CUSTOMER_NAME = 'customer_name';
-    const COL_NICK_NAME = 'nickname';
-    const COL_PRODUCT_NAME = ProductReviewGuiQueryContainer::FIELD_PRODUCT_NAME;
-    const COL_RATING = 'rating';
-    const COL_STATUS = 'status';
-    const COL_ACTIONS = 'actions';
-    const COL_SHOW_DETAILS = 'show_details';
-    const COL_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_NAME = SpyProductAbstractLocalizedAttributesTableMap::COL_NAME;
-    const COL_CUSTOMER_FIRST_NAME = SpyCustomerTableMap::COL_FIRST_NAME;
-    const COL_CUSTOMER_LAST_NAME = SpyCustomerTableMap::COL_LAST_NAME;
-    const COL_PRODUCT_REVIEW_STATUS_REJECTED = SpyProductReviewTableMap::COL_STATUS_REJECTED;
-    const COL_PRODUCT_REVIEW_STATUS_APPROVED = SpyProductReviewTableMap::COL_STATUS_APPROVED;
-    const COL_PRODUCT_REVIEW_STATUS_PENDING = SpyProductReviewTableMap::COL_STATUS_PENDING;
-    const COL_PRODUCT_REVIEW_GUI_ID_CUSTOMER = ProductReviewGuiQueryContainer::FIELD_ID_CUSTOMER;
-    const COL_PRODUCT_REVIEW_GUI_FIRST_NAME = ProductReviewGuiQueryContainer::FIELD_CUSTOMER_FIRST_NAME;
-    const COL_PRODUCT_REVIEW_GUI_LAST_NAME = ProductReviewGuiQueryContainer::FIELD_CUSTOMER_LAST_NAME;
-    const EXTRA_DETAILS = 'details';
+    public const COL_ID_PRODUCT_REVIEW = 'id_product_review';
+    public const COL_CREATED = ProductReviewGuiQueryContainer::FIELD_CREATED;
+    public const COL_CUSTOMER_NAME = 'customer_name';
+    public const COL_NICK_NAME = 'nickname';
+    public const COL_PRODUCT_NAME = ProductReviewGuiQueryContainer::FIELD_PRODUCT_NAME;
+    public const COL_RATING = 'rating';
+    public const COL_STATUS = 'status';
+    public const COL_ACTIONS = 'actions';
+    public const COL_SHOW_DETAILS = 'show_details';
+    public const COL_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_NAME = SpyProductAbstractLocalizedAttributesTableMap::COL_NAME;
+    public const COL_CUSTOMER_FIRST_NAME = SpyCustomerTableMap::COL_FIRST_NAME;
+    public const COL_CUSTOMER_LAST_NAME = SpyCustomerTableMap::COL_LAST_NAME;
+    public const COL_PRODUCT_REVIEW_STATUS_REJECTED = SpyProductReviewTableMap::COL_STATUS_REJECTED;
+    public const COL_PRODUCT_REVIEW_STATUS_APPROVED = SpyProductReviewTableMap::COL_STATUS_APPROVED;
+    public const COL_PRODUCT_REVIEW_STATUS_PENDING = SpyProductReviewTableMap::COL_STATUS_PENDING;
+    public const COL_PRODUCT_REVIEW_GUI_ID_CUSTOMER = ProductReviewGuiQueryContainer::FIELD_ID_CUSTOMER;
+    public const COL_PRODUCT_REVIEW_GUI_FIRST_NAME = ProductReviewGuiQueryContainer::FIELD_CUSTOMER_FIRST_NAME;
+    public const COL_PRODUCT_REVIEW_GUI_LAST_NAME = ProductReviewGuiQueryContainer::FIELD_CUSTOMER_LAST_NAME;
+    public const EXTRA_DETAILS = 'details';
 }

@@ -22,7 +22,10 @@ class CartStub extends ZedRequestStub implements CartStubInterface
      */
     public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
     {
-        return $this->zedStub->call('/cart/gateway/add-valid-items', $cartChangeTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->zedStub->call('/cart/gateway/add-valid-items', $cartChangeTransfer);
+
+        return $quoteTransfer;
     }
 
     /**
@@ -32,7 +35,10 @@ class CartStub extends ZedRequestStub implements CartStubInterface
      */
     public function addItem(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->zedStub->call('/cart/gateway/add-item', $cartChangeTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->zedStub->call('/cart/gateway/add-item', $cartChangeTransfer);
+
+        return $quoteTransfer;
     }
 
     /**
@@ -42,7 +48,10 @@ class CartStub extends ZedRequestStub implements CartStubInterface
      */
     public function removeItem(CartChangeTransfer $changeTransfer)
     {
-        return $this->zedStub->call('/cart/gateway/remove-item', $changeTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->zedStub->call('/cart/gateway/remove-item', $changeTransfer);
+
+        return $quoteTransfer;
     }
 
     /**
@@ -52,7 +61,10 @@ class CartStub extends ZedRequestStub implements CartStubInterface
      */
     public function reloadItems(QuoteTransfer $quoteTransfer)
     {
-        return $this->zedStub->call('/cart/gateway/reload-items', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->zedStub->call('/cart/gateway/reload-items', $quoteTransfer);
+
+        return $quoteTransfer;
     }
 
     /**
@@ -62,7 +74,10 @@ class CartStub extends ZedRequestStub implements CartStubInterface
      */
     public function changeItemQuantity(CartChangeQuantityTransfer $cartChangeQuantityTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/cart/gateway/change-item-quantity', $cartChangeQuantityTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/change-item-quantity', $cartChangeQuantityTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -72,6 +87,9 @@ class CartStub extends ZedRequestStub implements CartStubInterface
      */
     public function validateQuote(QuoteTransfer $quoteTransfer)
     {
-        return $this->zedStub->call('/cart/gateway/validate-quote', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/validate-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 }

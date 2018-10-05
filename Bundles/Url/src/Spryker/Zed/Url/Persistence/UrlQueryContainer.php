@@ -16,15 +16,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContainerInterface
 {
-    const TO_URL = 'toUrl';
-    const STATUS = 'status';
+    public const TO_URL = 'toUrl';
+    public const STATUS = 'status';
 
     /**
      * @api
      *
      * @param string $url
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrl($url)
     {
@@ -123,7 +123,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     /**
      * @api
      *
-     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function joinLocales()
     {

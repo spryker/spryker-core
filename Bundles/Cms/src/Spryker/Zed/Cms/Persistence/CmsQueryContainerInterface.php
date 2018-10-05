@@ -10,6 +10,10 @@ namespace Spryker\Zed\Cms\Persistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
+/**
+ * @method \Orm\Zed\Cms\Persistence\SpyCmsPageQuery queryPagesWithTemplates()
+ * @method \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery queryNodeByCategoryName(string $categoryName, int $idLocale)
+ */
 interface CmsQueryContainerInterface extends QueryContainerInterface
 {
     /**
@@ -129,7 +133,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function queryLocaleById($idLocale);
 

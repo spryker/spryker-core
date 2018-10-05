@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Wishlist\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 class WishlistToProductBridge implements WishlistToProductInterface
 {
     /**
@@ -50,5 +52,15 @@ class WishlistToProductBridge implements WishlistToProductInterface
     public function hasProductConcrete($sku)
     {
         return $this->productFacade->hasProductConcrete($sku);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return bool
+     */
+    public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool
+    {
+         return $this->productFacade->isProductConcreteActive($productConcreteTransfer);
     }
 }

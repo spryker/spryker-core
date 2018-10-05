@@ -20,6 +20,8 @@ class ProductOptionTaxRateCalculatorPlugin extends AbstractPlugin implements Cal
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

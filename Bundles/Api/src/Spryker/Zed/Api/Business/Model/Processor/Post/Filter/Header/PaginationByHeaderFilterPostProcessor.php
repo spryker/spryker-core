@@ -13,8 +13,8 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 
 class PaginationByHeaderFilterPostProcessor implements PostProcessorInterface
 {
-    const HEADER_ACCEPT_RANGES = 'Accept-Ranges';
-    const HEADER_CONTENT_RANGE = 'Content-Range';
+    public const HEADER_ACCEPT_RANGES = 'Accept-Ranges';
+    public const HEADER_CONTENT_RANGE = 'Content-Range';
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer

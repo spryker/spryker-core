@@ -1,5 +1,6 @@
 {
   "name": "spryker/catalog-price-product-connector",
+  "type": "library",
   "description": "CatalogPriceProductConnector module",
   "license": "proprietary",
   "require": {

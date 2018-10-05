@@ -21,6 +21,8 @@ class ProductListCategoryDataImportPlugin extends AbstractPlugin implements Data
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -32,6 +34,8 @@ class ProductListCategoryDataImportPlugin extends AbstractPlugin implements Data
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @return string
      */

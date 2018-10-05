@@ -22,7 +22,7 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabil
 
 class PreCheckMocks extends Unit
 {
-    const ID_STORE = 1;
+    public const ID_STORE = 1;
     /**
      * @var array
      */

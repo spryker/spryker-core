@@ -13,8 +13,8 @@ use Spryker\Shared\Kernel\Store;
 
 class Config
 {
-    const CONFIG_FILE_PREFIX = '/config/Shared/config_';
-    const CONFIG_FILE_SUFFIX = '.php';
+    public const CONFIG_FILE_PREFIX = '/config/Shared/config_';
+    public const CONFIG_FILE_SUFFIX = '.php';
 
     /**
      * @var \ArrayObject|null

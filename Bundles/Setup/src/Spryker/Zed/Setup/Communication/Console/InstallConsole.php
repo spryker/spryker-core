@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InstallConsole extends Console
 {
-    const COMMAND_NAME = 'setup:install';
-    const DESCRIPTION = 'Setup the application';
+    public const COMMAND_NAME = 'setup:install';
+    public const DESCRIPTION = 'Setup the application';
 
     /**
      * @return void

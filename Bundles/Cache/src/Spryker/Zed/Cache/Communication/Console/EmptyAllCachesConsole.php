@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class EmptyAllCachesConsole extends Console
 {
-    const COMMAND_NAME = 'cache:empty-all';
+    public const COMMAND_NAME = 'cache:empty-all';
 
     /**
      * @return void
