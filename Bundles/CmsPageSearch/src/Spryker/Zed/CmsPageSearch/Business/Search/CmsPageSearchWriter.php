@@ -100,8 +100,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      */
     public function unpublish(array $cmsPageIds): void
     {
-        $cmsPageSearchEntities = $this->findCmsPageSearchEntities($cmsPageIds);
-        $this->deleteSearchEntities($cmsPageSearchEntities);
+        $this->deleteSearchEntities($cmsPageIds);
     }
 
     /**
@@ -137,15 +136,17 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch[] $cmsPageSearchEntities
+     * @param array $cmsPageIds
      *
      * @return void
      */
-    protected function deleteSearchEntities(array $cmsPageSearchEntities): void
+    protected function deleteSearchEntities(array $cmsPageIds): void
     {
-        foreach ($cmsPageSearchEntities as $cmsPageSearchEntity) {
-            $cmsPageSearchEntity->delete();
+        if (empty($cmsPageIds)) {
+            return;
         }
+
+        $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->delete();
     }
 
     /**

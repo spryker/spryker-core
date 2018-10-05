@@ -9,8 +9,8 @@ namespace Spryker\Zed\CmsPageSearch\Persistence;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchPersistenceFactory getFactory()
