@@ -70,7 +70,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param array $cmsPageIds
+     * @param int[] $cmsPageIds
      *
      * @return void
      */
@@ -83,7 +83,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param array $cmsPageIds
+     * @param int[] $cmsPageIds
      *
      * @return void
      */
@@ -143,7 +143,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
             return;
         }
 
-        $localeCmsPageDataTransfer = $this->getLocalCmsPageDataTransfer($cmsPageEntity, $localeName);
+        $localeCmsPageDataTransfer = $this->getLocaleCmsPageDataTransfer($cmsPageEntity, $localeName);
 
         $cmsPageStorageEntity->setData($localeCmsPageDataTransfer->toArray());
         $cmsPageStorageEntity->setFkCmsPage($cmsPageEntity->getIdCmsPage());
@@ -154,7 +154,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param array $cmsPageIds
+     * @param int[] $cmsPageIds
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage[]
      */
@@ -164,15 +164,15 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param array $cmsPageIds
+     * @param int[] $cmsPageIds
      *
      * @return array
      */
     protected function findCmsStorageEntities(array $cmsPageIds): array
     {
-        $spyCmsStorageEntities = $this->queryContainer->queryCmsPageStorageEntities($cmsPageIds)->find();
+        $cmsStorageEntities = $this->queryContainer->queryCmsPageStorageEntities($cmsPageIds)->find();
         $cmsPageStorageEntitiesByIdAndLocale = [];
-        foreach ($spyCmsStorageEntities as $entity) {
+        foreach ($cmsStorageEntities as $entity) {
             $cmsPageStorageEntitiesByIdAndLocale[$entity->getFkCmsPage()][$entity->getLocale()][$entity->getStore()] = $entity;
         }
 
@@ -202,7 +202,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
-    protected function getLocalCmsPageDataTransfer(SpyCmsPage $cmsPageEntity, $localeName): LocaleCmsPageDataTransfer
+    protected function getLocaleCmsPageDataTransfer(SpyCmsPage $cmsPageEntity, $localeName): LocaleCmsPageDataTransfer
     {
         $url = $this->extractUrlByLocales($cmsPageEntity->getSpyUrls()
             ->getData(), $localeName);
@@ -264,9 +264,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
      */
     protected function deleteStorageEntity(SpyCmsPageStorage $cmsPageStorageEntity): void
     {
-        if (!$cmsPageStorageEntity->isNew()) {
-            $cmsPageStorageEntity->delete();
-        }
+        $cmsPageStorageEntity->delete();
     }
 
     /**

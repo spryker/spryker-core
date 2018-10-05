@@ -22,6 +22,9 @@ class CmsPageStoreSearchListener extends AbstractPlugin implements EventBulkHand
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * {@inheritdoc}
+     *  - Saves new store relation on cms page store table changes.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
