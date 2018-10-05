@@ -292,9 +292,9 @@ interface ShoppingListClientInterface
     /**
      * Specification:
      *  - Makes zed request.
-     *  - Returns success if at least one of next actions was executed:
-     *      - Removes shopping list to company user relation if exists.
-     *      - Adds shopping list to company user blacklist if company user business unit has access to shopping list.
+     *  - Removes shopping list to company user relation if exists.
+     *  - Adds shopping list to company user blacklist if company user business unit has access to shopping list.
+     *  - Returns success if at least one action was executed.
      *  - Updates customer permissions.
      *
      * @api
