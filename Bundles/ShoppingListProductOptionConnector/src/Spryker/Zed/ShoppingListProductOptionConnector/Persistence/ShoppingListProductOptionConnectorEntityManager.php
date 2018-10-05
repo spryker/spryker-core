@@ -24,7 +24,7 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
     public function saveShoppingListItemProductOption(int $idShoppingListItem, int $idProductOption): void
     {
         $this->getFactory()
-            ->createSpyShoppingListProductOptionConnector()
+            ->createSpyShoppingListProductOption()
             ->setFkShoppingListItem($idShoppingListItem)
             ->setFkProductOptionValue($idProductOption)
             ->save();
@@ -46,7 +46,7 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
     }
 
     /**
-     * @param \Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOptionConnector[]|\Propel\Runtime\Collection\ObjectCollection $shoppingListProductOptionEntities
+     * @param \Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption[]|\Propel\Runtime\Collection\ObjectCollection $shoppingListProductOptionEntities
      *
      * @return void
      */

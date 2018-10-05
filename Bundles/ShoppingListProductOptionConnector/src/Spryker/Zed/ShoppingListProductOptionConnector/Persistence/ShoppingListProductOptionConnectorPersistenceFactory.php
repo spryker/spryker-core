@@ -27,7 +27,7 @@ class ShoppingListProductOptionConnectorPersistenceFactory extends AbstractPersi
     /**
      * @return \Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption
      */
-    public function createSpyShoppingListProductOptionConnector(): SpyShoppingListProductOption
+    public function createSpyShoppingListProductOption(): SpyShoppingListProductOption
     {
         return new SpyShoppingListProductOption();
     }
