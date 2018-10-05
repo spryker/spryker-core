@@ -267,7 +267,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
 
-        $actualResult = $this->tester->getFacade()->expandItem($shoppingListItemTransfer);
+        $actualResult = $this->tester->getFacade()->expandShoppingListItemWithProductOptions($shoppingListItemTransfer);
 
         $expectedResult = [
             $this->productOptionValueTransfer1->getIdProductOptionValue(),
@@ -292,7 +292,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
 
-        $actualResult = $this->tester->getFacade()->expandItem($shoppingListItemTransfer);
+        $actualResult = $this->tester->getFacade()->expandShoppingListItemWithProductOptions($shoppingListItemTransfer);
 
         $expectedResult = [
             $this->productOptionValueTransfer1->getIdProductOptionValue(),
@@ -314,11 +314,47 @@ class ShoppingListProductOptionFacadeTest extends Unit
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
 
-        $actualResult = $this->tester->getFacade()->expandItem($shoppingListItemTransfer);
+        $actualResult = $this->tester->getFacade()->expandShoppingListItemWithProductOptions($shoppingListItemTransfer);
 
         // Assert
         foreach ($actualResult->getProductOptions() as $productOptions) {
             $this->assertEmpty($productOptions);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandShoppingListItemWithProductOptions(): void
+    {
+        // Prepare
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+
+        $shoppingListProductOption1 = (new SpyShoppingListProductOption())
+            ->setFkProductOptionValue($this->productOptionValueTransfer1->getIdProductOptionValue())
+            ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+        $shoppingListProductOption1->save();
+
+        $shoppingListProductOption2 = (new SpyShoppingListProductOption())
+            ->setFkProductOptionValue($this->productOptionValueTransfer2->getIdProductOptionValue())
+            ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+        $shoppingListProductOption2->save();
+
+        // Action
+        $actualResult = $this->tester->getFacade()->expandShoppingListItemWithProductOptions(
+            $shoppingListItemTransfer
+        );
+
+        $expectedProductOptionValueIds = [
+            $this->productOptionValueTransfer1->getIdProductOptionValue(),
+            $this->productOptionValueTransfer2->getIdProductOptionValue(),
+        ];
+
+        // Assert
+        $this->assertCount(2, $actualResult->getProductOptions());
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $expectedProductOptionValueIds));
         }
     }
 
