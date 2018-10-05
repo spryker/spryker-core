@@ -40,6 +40,8 @@ class SettingsFormDataProvider
      */
     public function getOptions(): array
     {
+        $options = [];
+
         $options[SettingsForm::OPTION_TAX_SETS] = $this->createTaxSetsList();
 
         return $options;

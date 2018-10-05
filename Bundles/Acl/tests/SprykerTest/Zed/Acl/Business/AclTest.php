@@ -63,6 +63,8 @@ class AclTest extends Unit
      */
     private function mockGroupData()
     {
+        $data = [];
+
         $data['name'] = sprintf('name-%s', rand(100, 999));
 
         return $data;
@@ -73,6 +75,8 @@ class AclTest extends Unit
      */
     private function mockRoleData()
     {
+        $data = [];
+
         $data['name'] = sprintf('name-%s', rand(100, 999));
 
         return $data;
@@ -86,6 +90,8 @@ class AclTest extends Unit
      */
     private function mockRuleData($type, $idRole)
     {
+        $data = [];
+
         $data['bundle'] = sprintf('bundle-%s', rand(100, 999));
         $data['controller'] = sprintf('controller-%s', rand(100, 999));
         $data['action'] = sprintf('action-%s', rand(100, 999));
@@ -100,6 +106,8 @@ class AclTest extends Unit
      */
     private function mockUserData()
     {
+        $data = [];
+
         $data['firstName'] = sprintf('firstName-%s', rand(100, 999));
         $data['lastName'] = sprintf('lastName-%s', rand(100, 999));
         $data['username'] = sprintf('username-%s', rand(100, 999));
@@ -303,6 +311,7 @@ class AclTest extends Unit
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
 
+        $ruleData = [];
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
         $ruleData[] = $this->mockRuleData('deny', $roleDto->getIdAclRole());
 
@@ -327,11 +336,10 @@ class AclTest extends Unit
      */
     public function testGetRulesFromRoles()
     {
-        $groupData = $this->mockGroupData();
-        $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
 
+        $ruleData = [];
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
         $ruleData[] = $this->mockRuleData('deny', $roleDto->getIdAclRole());
 
@@ -360,6 +368,7 @@ class AclTest extends Unit
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
 
+        $ruleData = [];
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
         $ruleData[] = $this->mockRuleData('deny', $roleDto->getIdAclRole());
 
@@ -383,11 +392,10 @@ class AclTest extends Unit
      */
     public function testRemoveRule()
     {
-        $groupData = $this->mockGroupData();
-        $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
 
+        $ruleData = [];
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
         $ruleData[] = $this->mockRuleData('deny', $roleDto->getIdAclRole());
 
@@ -431,6 +439,7 @@ class AclTest extends Unit
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
 
+        $ruleData = [];
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
         $ruleData[] = $this->mockRuleData('deny', $roleDto->getIdAclRole());
 
