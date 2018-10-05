@@ -112,8 +112,8 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     *  - Remove all expired guest carts from database
-     *  - Guest cart lifetime is configured on application level
+     *  - Removes all expired guest carts from database.
+     *  - Guest cart lifetime is configured on application level.
      *
      * @api
      *

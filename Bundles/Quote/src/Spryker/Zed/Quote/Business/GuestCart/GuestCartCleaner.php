@@ -40,7 +40,8 @@ class GuestCartCleaner implements GuestCartCleanerInterface
     public function cleanExpiredGuestCart(): void
     {
         $lifetime = $this->config->getGuestCartLifetime();
-        $lifetimeLimitDate = (new DateTime())->sub(new DateInterval($lifetime));
+        $lifetimeInterval = new DateInterval($lifetime);
+        $lifetimeLimitDate = (new DateTime())->sub($lifetimeInterval);
 
         $this->entityManager->cleanExpiredGuestCart($lifetimeLimitDate);
     }
