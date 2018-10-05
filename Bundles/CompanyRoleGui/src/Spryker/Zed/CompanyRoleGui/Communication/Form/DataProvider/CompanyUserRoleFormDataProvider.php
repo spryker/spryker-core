@@ -72,17 +72,14 @@ class CompanyUserRoleFormDataProvider
             (new CompanyRoleCriteriaFilterTransfer())
         );
 
-        $defaultRoleIsSet = false;
         foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {
             $roleKey = $this->generateCompanyRoleName($companyRoleTransfer);
 
             $companyRoleAttributes = [static::OPTION_ATTRIBUTE_DATA => $companyRoleTransfer->getFkCompany()];
-            if (!$defaultRoleIsSet
-                && $companyRoleTransfer->getIsDefault()
+            if ($companyRoleTransfer->getIsDefault()
                 && $companyUserTransfer->getCompanyRoleCollection() === null
             ) {
                 $companyRoleAttributes[static::OPTION_IS_DEFAULT] = true;
-                $defaultRoleIsSet = true;
             }
 
             $values[$roleKey] = $companyRoleTransfer->getIdCompanyRole();
