@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-packaging-unit-gui",
+  "type": "library",
   "description": "ProductPackagingUnitGui module",
   "license": "proprietary",
   "require": {

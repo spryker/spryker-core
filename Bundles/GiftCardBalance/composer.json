@@ -1,5 +1,6 @@
 {
   "name": "spryker/gift-card-balance",
+  "type": "library",
   "description": "GiftCardBalance module",
   "license": "proprietary",
   "require": {

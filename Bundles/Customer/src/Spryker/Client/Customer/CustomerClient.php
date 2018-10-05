@@ -8,6 +8,7 @@
 namespace Spryker\Client\Customer;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -461,5 +462,21 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         $this->getFactory()
             ->createSessionCustomerSession()
             ->markCustomerAsDirty();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedCustomerStub()
+            ->findCustomerByReference($customerTransfer);
     }
 }
