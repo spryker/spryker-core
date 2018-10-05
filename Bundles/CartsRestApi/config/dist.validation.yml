@@ -1,0 +1,31 @@
+carts:
+  post:
+    priceMode:
+      - NotNull
+      - Choice:
+        choices: [NET_MODE, GROSS_MODE]
+    currency:
+      - NotBlank
+    store:
+      - NotBlank
+items:
+  post:
+    sku:
+      - NotBlank
+    quantity:
+      - NotBlank
+      - Type:
+        type: numeric
+    amount:
+      - Type:
+        type: numeric
+  patch:
+    sku:
+      - NotBlank
+    quantity:
+      - NotBlank
+      - Type:
+        type: numeric
+    amount:
+      - Type:
+        type: numeric
