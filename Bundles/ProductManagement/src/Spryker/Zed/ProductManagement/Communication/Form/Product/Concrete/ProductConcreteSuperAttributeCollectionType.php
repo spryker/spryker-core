@@ -68,7 +68,7 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
      */
     protected function prepareProductConcreteSuperAttributeFormConstraints(FormBuilderInterface $builder, array $options): array
     {
-        if (!$builder->getOption(static::CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES)) {
+        if (!$builder->getOption(static::OPTION_SUPER_ATTRIBUTES)) {
             return [];
         }
 
@@ -77,7 +77,6 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
             new ProductAttributeUniqueCombination(
                 $this->getFactory()->getProductFacade(),
                 (int)$options[static::OPTION_ID_PRODUCT_ABSTRACT],
-                $options,
                 $this->getFactory()->createProductConcreteSuperAttributeFilterHelper()
             ),
         ];
