@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SprykGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\ModuleFilterTransfer;
+
 class SprykGuiToDevelopmentFacadeBridge implements SprykGuiToDevelopmentFacadeInterface
 {
     /**
@@ -23,10 +25,12 @@ class SprykGuiToDevelopmentFacadeBridge implements SprykGuiToDevelopmentFacadeIn
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function getModules(): array
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
-        return $this->developmentFacade->getModules();
+        return $this->developmentFacade->getModules($moduleFilterTransfer);
     }
 }

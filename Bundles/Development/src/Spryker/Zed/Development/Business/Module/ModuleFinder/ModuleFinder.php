@@ -209,12 +209,12 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleNameDashed = $this->dasherize($moduleName);
 
         $organizationTransfer = $this->buildOrganizationTransfer($organizationName, $organizationNameDashed);
-        $applicationTransfer = $this->buildApplicationTransfer($directoryInfo);
 
         $moduleTransfer = $this->buildModuleTransfer($moduleName, $moduleNameDashed, $directoryInfo);
         $moduleTransfer
-            ->setOrganization($organizationTransfer)
-            ->setApplication($applicationTransfer);
+            ->setOrganization($organizationTransfer);
+
+        $moduleTransfer = $this->addApplications($moduleTransfer);
 
         return $moduleTransfer;
     }
@@ -235,12 +235,35 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleName = $this->camelCase($moduleNameDashed);
 
         $organizationTransfer = $this->buildOrganizationTransfer($organizationName, $organizationNameDashed);
-        $applicationTransfer = $this->buildApplicationTransfer($directoryInfo);
 
         $moduleTransfer = $this->buildModuleTransfer($moduleName, $moduleNameDashed, $directoryInfo);
         $moduleTransfer
-            ->setOrganization($organizationTransfer)
-            ->setApplication($applicationTransfer);
+            ->setOrganization($organizationTransfer);
+
+        $moduleTransfer = $this->addApplications($moduleTransfer);
+
+        return $moduleTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    protected function addApplications(ModuleTransfer $moduleTransfer): ModuleTransfer
+    {
+        $lookupDirectory = sprintf('%s/src/%s/', $moduleTransfer->getPath(), $moduleTransfer->getOrganization()->getName());
+        if (!is_dir($lookupDirectory)) {
+            return $moduleTransfer;
+        }
+        $applicationFinder = new Finder();
+        $applicationFinder->in($lookupDirectory)->depth('== 0');
+
+        foreach ($applicationFinder as $applicationDirectoryInfo) {
+            $applicationTransfer = new ApplicationTransfer();
+            $applicationTransfer->setName($applicationDirectoryInfo->getRelativePathname());
+            $moduleTransfer->addApplication($applicationTransfer);
+        }
 
         return $moduleTransfer;
     }
@@ -415,7 +438,7 @@ class ModuleFinder implements ModuleFinderInterface
         if (!$this->matchesOrganization($moduleFilterTransfer, $moduleTransfer->getOrganization())) {
             $accepted = false;
         }
-        if (!$this->matchesApplication($moduleFilterTransfer, $moduleTransfer->getApplication())) {
+        if (!$this->matchesApplication($moduleFilterTransfer, $moduleTransfer)) {
             $accepted = false;
         }
         if (!$this->matchesModule($moduleFilterTransfer, $moduleTransfer)) {
@@ -441,18 +464,28 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
+     * Modules can hold several applications. We return true of one of the applications in the current module
+     * matches the requested one.
+     *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
-     * @param \Generated\Shared\Transfer\ApplicationTransfer $applicationTransfer
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
      * @return bool
      */
-    protected function matchesApplication(ModuleFilterTransfer $moduleFilterTransfer, ApplicationTransfer $applicationTransfer): bool
+    protected function matchesApplication(ModuleFilterTransfer $moduleFilterTransfer, ModuleTransfer $moduleTransfer): bool
     {
         if ($moduleFilterTransfer->getApplication() === null) {
             return true;
         }
 
-        return $this->match($moduleFilterTransfer->getApplication()->getName(), $applicationTransfer->getName());
+        $applicationMatches = false;
+        foreach ($moduleTransfer->getApplications() as $applicationTransfer) {
+            if ($this->match($moduleFilterTransfer->getApplication()->getName(), $applicationTransfer->getName())) {
+                $applicationMatches = true;
+            }
+        }
+
+        return $applicationMatches;
     }
 
     /**

@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\SprykGui\Communication\Form\Type;
 
+use Generated\Shared\Transfer\ApplicationTransfer;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\Options;
@@ -20,8 +23,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ModuleChoiceType extends AbstractType
 {
-    public const MODULE_TRANSFER_COLLECTION = 'moduleTransferCollection';
-
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -29,13 +30,15 @@ class ModuleChoiceType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired([
-            static::MODULE_TRANSFER_COLLECTION,
-        ]);
+        $resolver->setDefault('moduleFilter', []);
 
         $resolver->setDefaults([
             'choices' => function (Options $options) {
-                return $options[static::MODULE_TRANSFER_COLLECTION];
+                if ($options->offsetExists('moduleFilter')) {
+                    return $this->getFilteredModules($options->offsetGet('moduleFilter'));
+                }
+
+                return $this->getFacade()->getModules();
             },
             'choice_label' => function (ModuleTransfer $moduleTransfer) {
                 return $moduleTransfer->getName();
@@ -54,5 +57,29 @@ class ModuleChoiceType extends AbstractType
     public function getParent(): string
     {
         return ChoiceType::class;
+    }
+
+    protected function getFilteredModules(array $moduleFilter)
+    {
+        $moduleFilterTransfer = new ModuleFilterTransfer();
+        if (isset($moduleFilter['organization'])) {
+            $organizationTransfer = new OrganizationTransfer();
+            $organizationTransfer->setName($moduleFilter['organization']);
+            $moduleFilterTransfer->setOrganization($organizationTransfer);
+        }
+        if (isset($moduleFilter['application'])) {
+            $applicationTransfer = new ApplicationTransfer();
+            $applicationTransfer->setName($moduleFilter['application']);
+            $moduleFilterTransfer->setApplication($applicationTransfer);
+        }
+        if (isset($moduleFilter['module'])) {
+            $moduleTransfer = new ModuleTransfer();
+            $moduleTransfer->setName($moduleFilter['module']);
+            $moduleFilterTransfer->setModule($moduleTransfer);
+        }
+
+        $result = $this->getFacade()->getModules($moduleFilterTransfer);
+
+        return $this->getFacade()->getModules($moduleFilterTransfer);
     }
 }

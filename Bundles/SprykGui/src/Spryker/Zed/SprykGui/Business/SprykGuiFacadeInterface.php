@@ -9,6 +9,7 @@ namespace Spryker\Zed\SprykGui\Business;
 
 use Generated\Shared\Transfer\AccessibleTransferCollection;
 use Generated\Shared\Transfer\ClassInformationTransfer;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationCollectionTransfer;
 
@@ -69,9 +70,11 @@ interface SprykGuiFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function getModules(): array;
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 
     /**
      * Specification

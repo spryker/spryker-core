@@ -66,16 +66,19 @@ class SprykMainForm extends AbstractType
             return;
         }
 
-        $moduleTransferCollection = $this->getFacade()->getModules();
+        $moduleOptions = [];
+        if (isset($sprykDefinition['arguments'][static::MODULE]['moduleFilter'])) {
+            $moduleOptions['moduleFilter'] = $sprykDefinition['arguments'][static::MODULE]['moduleFilter'];
+        }
 
-        $builder->add(static::MODULE, ModuleChoiceType::class, [
-            ModuleChoiceType::MODULE_TRANSFER_COLLECTION => $moduleTransferCollection,
-        ]);
+        $builder->add(static::MODULE, ModuleChoiceType::class, $moduleOptions);
 
         if (array_key_exists(static::DEPENDENT_MODULE, $sprykDefinition['arguments'])) {
-            $builder->add(static::DEPENDENT_MODULE, ModuleChoiceType::class, [
-                ModuleChoiceType::MODULE_TRANSFER_COLLECTION => $moduleTransferCollection,
-            ]);
+            $dependentModuleOptions = [];
+            if (isset($sprykDefinition['arguments'][static::DEPENDENT_MODULE]['moduleFilter'])) {
+                $dependentModuleOptions['moduleFilter'] = $sprykDefinition['arguments'][static::DEPENDENT_MODULE]['moduleFilter'];
+            }
+            $builder->add(static::DEPENDENT_MODULE, ModuleChoiceType::class, $dependentModuleOptions);
 
             $typeToAddListenerTo = static::DEPENDENT_MODULE;
         }
