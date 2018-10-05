@@ -13,7 +13,7 @@ interface ShoppingListItemMapperPluginInterface
 {
     /**
      * Specification:
-     * - Maps ShoppingListItemTransfer with the given params.
+     * - Hydrates provided params into ShoppingListItemTransfer.
      *
      * @api
      *
