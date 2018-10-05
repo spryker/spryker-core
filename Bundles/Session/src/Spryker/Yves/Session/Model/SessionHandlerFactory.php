@@ -39,4 +39,12 @@ class SessionHandlerFactory extends SessionFactory
     {
         return $this->sessionLifeTime;
     }
+
+    /**
+     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
+     */
+    public function getMonitoringService(): SessionToMonitoringServiceInterface
+    {
+        return $this->monitoringService;
+    }
 }
