@@ -13,11 +13,25 @@
         <property name="numberOfItems" type="int" />
         <property name="owner" type="string" />
         <property name="idCompanyUser" type="int" />
+        <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]" />
+        <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" />
         <property name="items" type="ShoppingListItem[]" />
     </transfer>
 
     <transfer name="ShoppingListCollection">
         <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList" />
+    </transfer>
+
+    <transfer name="ShoppingListCompanyUserCollection">
+        <property name="shoppingListCompanyUsers" type="ShoppingListCompanyUser[]" singular="shoppingListCompanyUser" />
+    </transfer>
+
+    <transfer name="ShoppingListCompanyBusinessUnitCollection">
+        <property name="shoppingListCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" singular="shoppingListCompanyBusinessUnit" />
+    </transfer>
+
+    <transfer name="ShoppingListPermissionGroupCollection">
+        <property name="permissionGroups" type="ShoppingListPermissionGroup[]" singular="permissionGroup" />
     </transfer>
 
     <transfer name="ShoppingListItem">
@@ -93,17 +107,20 @@
 
     <transfer name="ShoppingListFromCartRequest">
         <property name="shoppingListName" type="string" />
+        <property name="idShoppingList" type="int" />
         <property name="idQuote" type="int" />
         <property name="customer" type="Customer" />
     </transfer>
 
     <transfer name="ShoppingListCompanyBusinessUnit">
+        <property name="idShoppingListCompanyBusinessUnit" type="int" />
         <property name="idShoppingList" type="int" />
         <property name="idShoppingListPermissionGroup" type="int" />
         <property name="idCompanyBusinessUnit" type="int" />
     </transfer>
 
     <transfer name="ShoppingListCompanyUser">
+        <property name="idShoppingListCompanyUser" type="int" />
         <property name="idShoppingList" type="int" />
         <property name="idShoppingListPermissionGroup" type="int" />
         <property name="idCompanyUser" type="int" />

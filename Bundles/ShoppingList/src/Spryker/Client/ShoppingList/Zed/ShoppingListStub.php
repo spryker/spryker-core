@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
@@ -242,6 +243,20 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
+     */
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer */
+        $shoppingListPermissionGroupCollectionTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/get-shopping-list-permission-group-collection',
+            new ShoppingListPermissionGroupCollectionTransfer()
+        );
+
+        return $shoppingListPermissionGroupCollectionTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
@@ -271,6 +286,22 @@ class ShoppingListStub implements ShoppingListStubInterface
         );
 
         return $shoppingListShareResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListResponseTransfer */
+        $shoppingListResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/update-shopping-list-shared-entities',
+            $shoppingListTransfer
+        );
+
+        return $shoppingListResponseTransfer;
     }
 
     /**
