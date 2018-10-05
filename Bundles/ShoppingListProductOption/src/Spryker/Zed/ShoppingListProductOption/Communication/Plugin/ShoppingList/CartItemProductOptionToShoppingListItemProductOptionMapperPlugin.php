@@ -19,7 +19,7 @@ class CartItemProductOptionToShoppingListItemProductOptionMapperPlugin extends A
 {
     /**
      * {@inheritdoc}
-     * - Maps Item Product Options to Shopping List Item Product Options.
+     * - Maps ItemTransfer product options to ShoppingListItemTransfer product options.
      *
      * @api
      *
