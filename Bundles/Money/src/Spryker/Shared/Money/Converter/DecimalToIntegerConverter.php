@@ -11,7 +11,7 @@ use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
 
 class DecimalToIntegerConverter implements DecimalToIntegerConverterInterface
 {
-    const PRICE_PRECISION = 100;
+    public const PRICE_PRECISION = 100;
 
     /**
      * @param float $value

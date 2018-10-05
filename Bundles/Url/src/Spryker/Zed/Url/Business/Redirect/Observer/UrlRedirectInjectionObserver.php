@@ -100,7 +100,7 @@ class UrlRedirectInjectionObserver implements UrlCreatorAfterSaveObserverInterfa
     /**
      * @param string $sourceUrl
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect|null
      */
     protected function findUrlRedirectEntityBySourceUrl($sourceUrl)
     {

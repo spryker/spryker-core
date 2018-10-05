@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block-product-storage",
+  "type": "library",
   "description": "CmsBlockProductStorage module",
   "license": "proprietary",
   "require": {

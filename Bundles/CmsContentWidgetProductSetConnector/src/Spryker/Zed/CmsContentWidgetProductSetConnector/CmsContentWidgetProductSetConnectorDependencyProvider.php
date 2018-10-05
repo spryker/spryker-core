@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsContentWidgetProductSetConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_PRODUCT_SET = 'PRODUCT SET QUERY CONTAINER';
+    public const QUERY_CONTAINER_PRODUCT_SET = 'PRODUCT SET QUERY CONTAINER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

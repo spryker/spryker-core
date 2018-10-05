@@ -5,7 +5,7 @@
      * @deprecated {{ constant.deprecationDescription }}
      */
     {% endif -%}
-    const {{ constant.name }} = '{{ constant.value }}';
+    public const {{ constant.name }} = '{{ constant.value }}';
 
 {% endmacro %}
 
@@ -21,6 +21,7 @@
             'name_underscore' => '{{ property.name_underscore }}',
             'is_collection' => {{ property.is_collection ? 'true' : 'false' }},
             'is_transfer' => {{ property.is_transfer ? 'true' : 'false' }},
+            'rest_request_parameter' => '{{ property.restRequestParameter is defined ? property.restRequestParameter : 'no' }}',
         ],
     {% endfor -%}
 ];
@@ -31,7 +32,7 @@
     /**
      * @var {{ property.type }}
      */
-    protected ${{ property.name }}{% if property.type == 'array' %} = []{% endif %};
+    protected ${{ property.name }}{% if property.type == 'array' or property.is_typed_array %} = []{% endif %};
 {% endmacro %}
 
 {# propertyNamesMap #}

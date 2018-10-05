@@ -1,5 +1,6 @@
 {
   "name": "spryker/price-product-storage",
+  "type": "library",
   "description": "PriceProductStorage module",
   "license": "proprietary",
   "require": {

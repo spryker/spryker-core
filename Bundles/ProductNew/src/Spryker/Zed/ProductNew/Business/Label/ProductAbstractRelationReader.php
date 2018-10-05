@@ -67,7 +67,6 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     protected function getProductLabelNewEntity()
     {
         $labelNewName = $this->productNewConfig->getLabelNewName();
-        /** @var \Orm\Zed\ProductLabel\Persistence\SpyProductLabel|null $productLabelNewEntity */
         $productLabelNewEntity = $this->productNewQueryContainer
             ->queryProductLabelByName($labelNewName)
             ->findOne();

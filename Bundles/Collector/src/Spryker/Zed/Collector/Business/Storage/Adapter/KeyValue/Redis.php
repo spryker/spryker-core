@@ -81,7 +81,7 @@ abstract class Redis
     }
 
     /**
-     * @param resource $resource
+     * @param \Predis\Client $resource
      *
      * @return $this
      */
@@ -93,7 +93,7 @@ abstract class Redis
     }
 
     /**
-     * @return mixed
+     * @return \Predis\Client
      */
     protected function getResource()
     {

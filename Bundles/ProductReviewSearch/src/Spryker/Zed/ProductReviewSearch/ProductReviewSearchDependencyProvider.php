@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductReviewSearch;
 
+use Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -17,11 +18,12 @@ use Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtil
 
 class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    const STORE = 'STORE';
+    public const QUERY_CONTAINER_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const STORE = 'STORE';
+    public const PROPEL_QUERY_PRODUCT_REVIEW = 'PROPEL_QUERY_PRODUCT_REVIEW';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -68,6 +70,22 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::QUERY_CONTAINER_PRODUCT_REVIEW] = function (Container $container) {
             return new ProductReviewSearchToProductReviewQueryContainerBridge($container->getLocator()->productReview()->queryContainer());
+        };
+
+        $container = $this->addPropelProductReviewQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPropelProductReviewQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_PRODUCT_REVIEW] = function (): SpyProductReviewQuery {
+            return SpyProductReviewQuery::create();
         };
 
         return $container;

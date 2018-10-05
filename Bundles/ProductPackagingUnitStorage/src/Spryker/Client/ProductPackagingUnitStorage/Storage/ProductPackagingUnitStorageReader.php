@@ -61,7 +61,7 @@ class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageRe
     {
         $productAbstractPackagingStorageTransfer = $this->findProductAbstractPackagingById($idProductAbstract);
 
-        if (!$productAbstractPackagingStorageTransfer || $productAbstractPackagingStorageTransfer->getTypes() === null) {
+        if (!$productAbstractPackagingStorageTransfer) {
             return null;
         }
 

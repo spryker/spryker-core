@@ -53,6 +53,10 @@ class ModuleDependencyParser implements ModuleDependencyParserInterface
     {
         $dependencyContainer = $this->dependencyContainer->initialize($moduleTransfer);
 
+        if (!$this->moduleFileFinder->hasFiles($moduleTransfer)) {
+            return $dependencyContainer->getDependencyCollection();
+        }
+
         $moduleFiles = $this->moduleFileFinder->find($moduleTransfer);
 
         foreach ($moduleFiles as $moduleFile) {

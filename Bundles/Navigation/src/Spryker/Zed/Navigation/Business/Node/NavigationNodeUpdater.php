@@ -153,7 +153,7 @@ class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
         if (!$navigationNodeLocalizedAttributesEntity) {
             throw new NavigationNodeLocalizedAttributesNotFoundException(sprintf(
                 'Navigation node localized attributes entity not found with ID %d.',
-                $navigationNodeLocalizedAttributesEntity->getIdNavigationNodeLocalizedAttributes()
+                $navigationNodeLocalizedAttributesTransfer->getIdNavigationNodeLocalizedAttributes()
             ));
         }
 

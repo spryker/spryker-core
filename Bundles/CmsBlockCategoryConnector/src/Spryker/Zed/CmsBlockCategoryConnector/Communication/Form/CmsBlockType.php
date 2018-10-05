@@ -21,16 +21,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsBlockType extends AbstractType
 {
-    const FIELD_CATEGORIES = 'id_categories';
+    public const FIELD_CATEGORIES = 'id_categories';
 
-    const OPTION_CATEGORY_ARRAY = 'option-category-array';
-    const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
-    const OPTION_WRONG_TEMPLATE_CATEGORY_LIST = 'option-wring-template-category-list';
+    public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+    public const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
+    public const OPTION_WRONG_TEMPLATE_CATEGORY_LIST = 'option-wring-template-category-list';
 
     /**
      * @var array
      */
-    const SUPPORTED_CATEGORY_TEMPLATE_LIST = [
+    public const SUPPORTED_CATEGORY_TEMPLATE_LIST = [
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_WITH_CMS_BLOCK,
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_ONLY_CMS_BLOCK,
     ];

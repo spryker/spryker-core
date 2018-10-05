@@ -20,6 +20,8 @@ class OfferQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPl
     public const PARAM_ID_OFFER = 'id-offer';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

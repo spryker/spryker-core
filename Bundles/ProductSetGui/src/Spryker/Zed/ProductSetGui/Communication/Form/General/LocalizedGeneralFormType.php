@@ -29,16 +29,16 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class LocalizedGeneralFormType extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_URL = 'url';
-    const FIELD_URL_PREFIX = 'url_prefix';
-    const FIELD_ORIGINAL_URL = 'original_url';
-    const FIELD_DESCRIPTION = 'description';
-    const FIELD_FK_LOCALE = 'fk_locale';
+    public const FIELD_NAME = 'name';
+    public const FIELD_URL = 'url';
+    public const FIELD_URL_PREFIX = 'url_prefix';
+    public const FIELD_ORIGINAL_URL = 'original_url';
+    public const FIELD_DESCRIPTION = 'description';
+    public const FIELD_FK_LOCALE = 'fk_locale';
 
-    const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
+    public const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
-    const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
+    public const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
