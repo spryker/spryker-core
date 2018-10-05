@@ -5,22 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ShoppingListExtension\Dependency\Plugin;
+namespace Spryker\Zed\ShoppingListProductOptionConnector\Business\Mapper;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
-interface ShoppingListItemMapperPluginInterface
+interface CartItemToShoppingListItemMapperInterface
 {
     /**
-     * Specification:
-     * - Hydrates provided params into ShoppingListItemTransfer.
-     *
-     * @api
-     *
-     * @param array $params
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function map(array $params, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+    public function map(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 }
