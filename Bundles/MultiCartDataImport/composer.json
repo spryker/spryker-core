@@ -1,5 +1,6 @@
 {
   "name": "spryker/multi-cart-data-import",
+  "type": "library",
   "description": "MultiCartDataImport module",
   "license": "MIT",
   "require": {

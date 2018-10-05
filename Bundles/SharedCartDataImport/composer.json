@@ -1,5 +1,6 @@
 {
   "name": "spryker/shared-cart-data-import",
+  "type": "library",
   "description": "SharedCartDataImport module",
   "license": "MIT",
   "require": {

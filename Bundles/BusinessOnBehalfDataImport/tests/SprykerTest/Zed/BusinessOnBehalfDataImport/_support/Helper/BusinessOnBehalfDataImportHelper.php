@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Map\RelationMap;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
