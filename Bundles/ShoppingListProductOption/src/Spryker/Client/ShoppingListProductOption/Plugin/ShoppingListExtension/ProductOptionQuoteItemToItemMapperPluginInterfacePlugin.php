@@ -18,7 +18,7 @@ class ProductOptionQuoteItemToItemMapperPluginInterfacePlugin extends AbstractPl
 {
     /**
      * {@inheritdoc}
-     * - Merges the item to the item existing in cart if they have the same productOptions.
+     * - Sets group key of "itemTransfer" as the provided "quoteItemTransfer" group key if they have the same set of product options.
      *
      * @api
      *
