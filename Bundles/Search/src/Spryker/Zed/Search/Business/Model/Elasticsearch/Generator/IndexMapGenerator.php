@@ -14,19 +14,19 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class IndexMapGenerator implements IndexMapGeneratorInterface
 {
-    const TWIG_TEMPLATES_LOCATION = '/Templates/';
+    public const TWIG_TEMPLATES_LOCATION = '/Templates/';
 
-    const CLASS_NAME_SUFFIX = 'IndexMap';
+    public const CLASS_NAME_SUFFIX = 'IndexMap';
 
-    const CLASS_EXTENSION = '.php';
+    public const CLASS_EXTENSION = '.php';
 
-    const PROPERTIES = 'properties';
+    public const PROPERTIES = 'properties';
 
-    const PROPERTY_PATH_SEPARATOR = '.';
+    public const PROPERTY_PATH_SEPARATOR = '.';
 
-    const TEMPLATE_VARIABLE_CLASS_NAME = 'className';
-    const TEMPLATE_VARIABLE_CONSTANTS = 'constants';
-    const TEMPLATE_VARIABLE_METADATA = 'metadata';
+    public const TEMPLATE_VARIABLE_CLASS_NAME = 'className';
+    public const TEMPLATE_VARIABLE_CONSTANTS = 'constants';
+    public const TEMPLATE_VARIABLE_METADATA = 'metadata';
 
     /**
      * @var string

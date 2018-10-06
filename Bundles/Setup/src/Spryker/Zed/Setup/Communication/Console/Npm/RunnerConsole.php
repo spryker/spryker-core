@@ -15,21 +15,21 @@ use Symfony\Component\Process\Process;
 
 class RunnerConsole extends Console
 {
-    const COMMAND_NAME = 'application:npm';
+    public const COMMAND_NAME = 'application:npm';
 
-    const NPM_COMMAND_TPL = 'npm run %s';
+    public const NPM_COMMAND_TPL = 'npm run %s';
 
-    const OPTION_TASK_BUILD_ALL = 'build-all';
-    const OPTION_TASK_BUILD_ALL_SHORT = 'a';
+    public const OPTION_TASK_BUILD_ALL = 'build-all';
+    public const OPTION_TASK_BUILD_ALL_SHORT = 'a';
 
-    const OPTION_TASK_BUILD_CORE = 'build-core';
-    const OPTION_TASK_BUILD_CORE_SHORT = 'c';
+    public const OPTION_TASK_BUILD_CORE = 'build-core';
+    public const OPTION_TASK_BUILD_CORE_SHORT = 'c';
 
-    const OPTION_TASK_BUILD_YVES = 'build-yves';
-    const OPTION_TASK_BUILD_YVES_SHORT = 'y';
+    public const OPTION_TASK_BUILD_YVES = 'build-yves';
+    public const OPTION_TASK_BUILD_YVES_SHORT = 'y';
 
-    const OPTION_TASK_BUILD_ZED = 'build-zed';
-    const OPTION_TASK_BUILD_ZED_SHORT = 'z';
+    public const OPTION_TASK_BUILD_ZED = 'build-zed';
+    public const OPTION_TASK_BUILD_ZED_SHORT = 'z';
 
     /**
      * @var array

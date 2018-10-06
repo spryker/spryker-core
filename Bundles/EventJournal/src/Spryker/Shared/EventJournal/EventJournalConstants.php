@@ -12,20 +12,20 @@ namespace Spryker\Shared\EventJournal;
  */
 interface EventJournalConstants
 {
-    const TYPE = 'file';
+    public const TYPE = 'file';
 
-    const OPTION_LOG_PATH = 'log_path';
-    const WRITERS = 'EVENT_JOURNAL_WRITERS';
-    const COLLECTORS = 'EVENT_JOURNAL_COLLECTORS';
-    const FILTERS = 'EVENT_JOURNAL_FILTERS';
-    const WRITER_OPTIONS = 'EVENT_JOURNAL_WRITER_OPTIONS';
-    const COLLECTOR_OPTIONS = 'EVENT_JOURNAL_COLLECTOR_OPTIONS';
-    const FILTER_OPTIONS = 'EVENT_JOURNAL_FILTER_OPTIONS';
-    const LOCK_OPTIONS = 'LOCK_OPTIONS';
-    const NO_LOCK = 'NO_LOCK';
+    public const OPTION_LOG_PATH = 'log_path';
+    public const WRITERS = 'EVENT_JOURNAL_WRITERS';
+    public const COLLECTORS = 'EVENT_JOURNAL_COLLECTORS';
+    public const FILTERS = 'EVENT_JOURNAL_FILTERS';
+    public const WRITER_OPTIONS = 'EVENT_JOURNAL_WRITER_OPTIONS';
+    public const COLLECTOR_OPTIONS = 'EVENT_JOURNAL_COLLECTOR_OPTIONS';
+    public const FILTER_OPTIONS = 'EVENT_JOURNAL_FILTER_OPTIONS';
+    public const LOCK_OPTIONS = 'LOCK_OPTIONS';
+    public const NO_LOCK = 'NO_LOCK';
 
     /**
      * @deprecated This is only used to disable EventJournal in all new Shops until it gets removed from ZedRequest bundle
      */
-    const DISABLE_EVENT_JOURNAL = 'DISABLE_EVENT_JOURNAL';
+    public const DISABLE_EVENT_JOURNAL = 'DISABLE_EVENT_JOURNAL';
 }

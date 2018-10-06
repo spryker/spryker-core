@@ -20,16 +20,16 @@ use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncoding
 
 class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'locale facade';
-    const FACADE_TOUCH = 'touch facade';
-    const FACADE_MONEY = 'money facade';
-    const FACADE_PRODUCT = 'product facade';
-    const FACADE_PRICE_PRODUCT = 'price product facade';
+    public const FACADE_LOCALE = 'locale facade';
+    public const FACADE_TOUCH = 'touch facade';
+    public const FACADE_MONEY = 'money facade';
+    public const FACADE_PRODUCT = 'product facade';
+    public const FACADE_PRICE_PRODUCT = 'price product facade';
 
-    const QUERY_CONTAINER_PRODUCT = 'product query container';
-    const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'query propel rule container';
+    public const QUERY_CONTAINER_PRODUCT = 'product query container';
+    public const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'query propel rule container';
 
-    const SERVICE_UTIL_ENCODING = 'util encoding service';
+    public const SERVICE_UTIL_ENCODING = 'util encoding service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

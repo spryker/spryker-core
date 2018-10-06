@@ -25,24 +25,24 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class AddressForm extends AbstractType
 {
-    const OPTION_SALUTATION_CHOICES = 'salutation_choices';
-    const OPTION_COUNTRY_CHOICES = 'country_choices';
-    const OPTION_PREFERRED_COUNTRY_CHOICES = 'preferred_country_choices';
+    public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+    public const OPTION_COUNTRY_CHOICES = 'country_choices';
+    public const OPTION_PREFERRED_COUNTRY_CHOICES = 'preferred_country_choices';
 
-    const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
-    const FIELD_FK_CUSTOMER = 'fk_customer';
-    const FIELD_SALUTATION = 'salutation';
-    const FIELD_FIRST_NAME = 'first_name';
-    const FIELD_LAST_NAME = 'last_name';
-    const FIELD_ADDRESS_1 = 'address1';
-    const FIELD_ADDRESS_2 = 'address2';
-    const FIELD_ADDRESS_3 = 'address3';
-    const FIELD_CITY = 'city';
-    const FIELD_ZIP_CODE = 'zip_code';
-    const FIELD_FK_COUNTRY = 'fk_country';
-    const FIELD_PHONE = 'phone';
-    const FIELD_COMPANY = 'company';
-    const FIELD_COMMENT = 'comment';
+    public const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
+    public const FIELD_FK_CUSTOMER = 'fk_customer';
+    public const FIELD_SALUTATION = 'salutation';
+    public const FIELD_FIRST_NAME = 'first_name';
+    public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_ADDRESS_1 = 'address1';
+    public const FIELD_ADDRESS_2 = 'address2';
+    public const FIELD_ADDRESS_3 = 'address3';
+    public const FIELD_CITY = 'city';
+    public const FIELD_ZIP_CODE = 'zip_code';
+    public const FIELD_FK_COUNTRY = 'fk_country';
+    public const FIELD_PHONE = 'phone';
+    public const FIELD_COMPANY = 'company';
+    public const FIELD_COMMENT = 'comment';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

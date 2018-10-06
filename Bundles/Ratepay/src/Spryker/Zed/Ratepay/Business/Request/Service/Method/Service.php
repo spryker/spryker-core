@@ -18,7 +18,7 @@ class Service extends AbstractMethod implements MethodInterface
     /**
      * @const Payment method code.
      */
-    const METHOD = RatepayConstants::METHOD_SERVICE;
+    public const METHOD = RatepayConstants::METHOD_SERVICE;
 
     /**
      * @return string

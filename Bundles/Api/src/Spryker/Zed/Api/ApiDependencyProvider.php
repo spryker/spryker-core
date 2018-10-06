@@ -17,6 +17,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_API_VALIDATOR = 'PLUGINS_API_VALIDATOR';
     public const PLUGINS_API_REQUEST_TRANSFER_FILTER = 'PLUGINS_API_REQUEST_TRANSFER_FILTER';
 
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

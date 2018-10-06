@@ -13,8 +13,8 @@ use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface;
 
 class ZedNavigationBuilder
 {
-    const MENU = 'menu';
-    const PATH = 'path';
+    public const MENU = 'menu';
+    public const PATH = 'path';
 
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface

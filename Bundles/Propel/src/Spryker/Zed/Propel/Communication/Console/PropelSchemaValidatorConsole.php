@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PropelSchemaValidatorConsole extends Console
 {
-    const COMMAND_NAME = 'propel:schema:validate';
+    public const COMMAND_NAME = 'propel:schema:validate';
 
     /**
      * @return void

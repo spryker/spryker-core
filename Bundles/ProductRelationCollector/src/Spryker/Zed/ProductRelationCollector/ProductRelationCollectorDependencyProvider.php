@@ -16,14 +16,14 @@ use Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelati
 
 class ProductRelationCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
-    const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
 
-    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
-    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
-    const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
-    const QUERY_CONTAINER_PRODUCT_RELATION = 'QUERY_CONTAINER_PRODUCT_RELATION';
+    public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+    public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+    public const QUERY_CONTAINER_PRODUCT_RELATION = 'QUERY_CONTAINER_PRODUCT_RELATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
