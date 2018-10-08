@@ -16,6 +16,7 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterfac
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -104,34 +105,58 @@ class AddressReader implements AddressReaderInterface
             return $this->restApiError->addAddressNotFoundError($restResponse);
         }
 
-        $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource(
+        $restAddressAttributesTransfer = $this->addressesResourceMapper->mapAddressTransferToRestAddressAttributesTransfer(
             $addressTransfer,
             $customerResponseTransfer->getCustomerTransfer()
         );
 
-        return $restResponse->addResource($addressesResource);
+        $restResource = $this->restResourceBuilder->createRestResource(
+            CustomersRestApiConfig::RESOURCE_ADDRESSES,
+            $addressTransfer->getUuid(),
+            $restAddressAttributesTransfer
+        );
+
+        $restResource->addLink(
+            RestResourceInterface::RESOURCE_LINKS_SELF,
+            $this->createSelfLink($customerTransfer, $addressTransfer)
+        );
+
+        return $restResponse->addResource($restResource);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
+     * @param \Generated\Shared\Transfer\AddressesTransfer $addressTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     protected function getAllAddresses(
-        AddressesTransfer $addressesTransfer,
+        AddressesTransfer $addressTransfer,
         CustomerTransfer $customerTransfer,
         RestResponseInterface $restResponse
     ): RestResponseInterface {
-        foreach ($addressesTransfer->getAddresses() as $address) {
-            $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource(
-                $address,
-                $customerTransfer
+        foreach ($addressTransfer->getAddresses() as $addressTransfer) {
+            $restAddressAttributesTransfer = $this->addressesResourceMapper
+                ->mapAddressTransferToRestAddressAttributesTransfer(
+                    $addressTransfer,
+                    $customerTransfer
+                );
+
+            $restResource = $this->restResourceBuilder->createRestResource(
+                CustomersRestApiConfig::RESOURCE_ADDRESSES,
+                $addressTransfer->getUuid(),
+                $restAddressAttributesTransfer
             );
 
-            $restResponse->addResource($addressesResource);
+            $restResource->addLink(
+                RestResourceInterface::RESOURCE_LINKS_SELF,
+                $this->createSelfLink($customerTransfer, $addressTransfer)
+            );
+
+            $restResponse->addResource($restResource);
         }
+
         return $restResponse;
     }
 
@@ -153,5 +178,22 @@ class AddressReader implements AddressReaderInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function createSelfLink(CustomerTransfer $customerTransfer, AddressTransfer $addressTransfer): string
+    {
+        return sprintf(
+            CustomersRestApiConfig::FORMAT_SELF_LINK_ADDRESS_RESOURCE,
+            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
+            $customerTransfer->getCustomerReference(),
+            CustomersRestApiConfig::RESOURCE_ADDRESSES,
+            $addressTransfer->getUuid()
+        );
     }
 }

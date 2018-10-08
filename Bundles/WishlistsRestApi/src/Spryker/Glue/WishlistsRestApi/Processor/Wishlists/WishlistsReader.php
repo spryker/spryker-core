@@ -118,7 +118,15 @@ class WishlistsReader implements WishlistsReaderInterface
         $customerWishlists = $customerWishlistCollectionTransfer->getWishlists();
 
         foreach ($customerWishlists as $wishlistTransfer) {
-            $wishlistResource = $this->wishlistsResourceMapper->mapWishlistTransferToRestResource($wishlistTransfer);
+            $restWishlistsAttributes = $this->wishlistsResourceMapper
+                ->mapWishlistTransferToRestWishlistsAttributes($wishlistTransfer);
+
+            $wishlistResource = $this->restResourceBuilder->createRestResource(
+                WishlistsRestApiConfig::RESOURCE_WISHLISTS,
+                $restWishlistsAttributes->getName(),
+                $restWishlistsAttributes
+            );
+
             $response[] = $wishlistResource;
         }
 
