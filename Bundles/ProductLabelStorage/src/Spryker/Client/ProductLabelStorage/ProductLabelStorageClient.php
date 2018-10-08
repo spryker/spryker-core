@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductLabelStorage;
 
+use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -66,5 +67,23 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
             ->getFactory()
             ->createLabelDictionaryReader()
             ->findLabelByName($labelName, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $labelKey
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
+     */
+    public function findLabelByKey(string $labelKey, string $localeName): ?ProductLabelDictionaryItemTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createLabelDictionaryReader()
+            ->findLabelByKey($labelKey, $localeName);
     }
 }
