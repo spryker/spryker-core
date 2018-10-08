@@ -87,7 +87,7 @@ class CategoryReader implements CategoryReaderInterface
             return $this->createInvalidNodeIdResponse($restResponse);
         }
 
-        return $this->getCategoryNode($nodeId, $restRequest->getMetadata()->getLocale(), $restResponse);
+        return $this->getCategoryNode((int)$nodeId, $restRequest->getMetadata()->getLocale(), $restResponse);
     }
 
     /**
@@ -107,15 +107,15 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
-     * @param string $nodeId
+     * @param int $nodeId
      * @param string $locale
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getCategoryNode(string $nodeId, string $locale, RestResponseInterface $restResponse): RestResponseInterface
+    protected function getCategoryNode(int $nodeId, string $locale, RestResponseInterface $restResponse): RestResponseInterface
     {
-        $restResource = $this->findCategoryNodeById((int)$nodeId, $locale);
+        $restResource = $this->findCategoryNodeById($nodeId, $locale);
         if (!$restResource) {
             return $this->createErrorResponse($restResponse);
         }
