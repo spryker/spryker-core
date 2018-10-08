@@ -41,6 +41,24 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Returns persisted order information stored into OrderTransfer
+     *  - Hydrates order by calling HydrateOrderPlugin's registered in project dependency provider.
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
+    {
+        return $this->getFactory()
+            ->createOrderReader()
+            ->findOrderByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api

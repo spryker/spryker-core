@@ -125,11 +125,19 @@ class OrderHydrator implements OrderHydratorInterface
         $criteria = new Criteria();
         $criteria->addDescendingOrderByColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM);
 
-        $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems($criteria));
+        return $this->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+    }
 
-        $orderTransfer = $this->createOrderTransfer($orderEntity);
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateOrderTransferFromPersistenceBySalesOrder(SpySalesOrder $orderEntity): OrderTransfer
+    {
+        $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems());
 
-        return $orderTransfer;
+        return $this->createOrderTransfer($orderEntity);
     }
 
     /**
