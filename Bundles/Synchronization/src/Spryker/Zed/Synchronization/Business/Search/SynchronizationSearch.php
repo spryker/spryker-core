@@ -15,11 +15,11 @@ use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientI
 
 class SynchronizationSearch implements SynchronizationInterface
 {
-    const KEY = 'key';
-    const VALUE = 'value';
-    const TYPE = 'type';
-    const INDEX = 'index';
-    const TIMESTAMP = '_timestamp';
+    public const KEY = 'key';
+    public const VALUE = 'value';
+    public const TYPE = 'type';
+    public const INDEX = 'index';
+    public const TIMESTAMP = '_timestamp';
 
     /**
      * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface

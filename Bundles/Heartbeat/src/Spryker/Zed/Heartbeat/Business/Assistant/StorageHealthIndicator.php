@@ -14,9 +14,9 @@ use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
 class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {
-    const HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE = 'Unable to write to storage';
-    const HEALTH_MESSAGE_UNABLE_TO_READ_FROM_STORAGE = 'Unable to read from storage';
-    const KEY_HEARTBEAT = 'heartbeat';
+    public const HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE = 'Unable to write to storage';
+    public const HEALTH_MESSAGE_UNABLE_TO_READ_FROM_STORAGE = 'Unable to read from storage';
+    public const KEY_HEARTBEAT = 'heartbeat';
 
     /**
      * @var \Predis\Client

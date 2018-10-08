@@ -12,6 +12,6 @@ namespace Spryker\Shared\Nopayment;
  */
 interface NopaymentConstants
 {
-    const NO_PAYMENT_METHODS = 'NO_PAYMENT_METHODS';
-    const WHITELIST_PAYMENT_METHODS = 'WHITELIST_PAYMENT_METHODS';
+    public const NO_PAYMENT_METHODS = 'NO_PAYMENT_METHODS';
+    public const WHITELIST_PAYMENT_METHODS = 'WHITELIST_PAYMENT_METHODS';
 }

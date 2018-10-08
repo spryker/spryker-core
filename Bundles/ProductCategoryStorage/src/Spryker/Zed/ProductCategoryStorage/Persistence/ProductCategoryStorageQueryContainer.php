@@ -22,7 +22,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implements ProductCategoryStorageQueryContainerInterface
 {
-    const FK_CATEGORY = 'fkCategory';
+    public const FK_CATEGORY = 'fkCategory';
 
     /**
      * @api

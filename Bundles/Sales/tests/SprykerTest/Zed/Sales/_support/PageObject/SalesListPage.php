@@ -11,9 +11,9 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
 
 class SalesListPage
 {
-    const URL = '/sales';
+    public const URL = '/sales';
 
-    const SELECTOR_ID_SALES_ORDER_ROWS = '//tbody/tr/td[1]';
+    public const SELECTOR_ID_SALES_ORDER_ROWS = '//tbody/tr/td[1]';
 
     /**
      * @var \SprykerTest\Zed\Sales\SalesPresentationTester

@@ -15,7 +15,7 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH = 'ProductLabel.product_abstract_label.publish';
+    public const PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH = 'ProductLabel.product_abstract_label.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const PRODUCT_LABEL_PRODUCT_ABSTRACT_UNPUBLISH = 'ProductLabel.product_abstract_label.unpublish';
+    public const PRODUCT_LABEL_PRODUCT_ABSTRACT_UNPUBLISH = 'ProductLabel.product_abstract_label.unpublish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const PRODUCT_LABEL_DICTIONARY_PUBLISH = 'ProductLabel.product_label_dictionary.publish';
+    public const PRODUCT_LABEL_DICTIONARY_PUBLISH = 'ProductLabel.product_label_dictionary.publish';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const PRODUCT_LABEL_DICTIONARY_UNPUBLISH = 'ProductLabel.product_label_dictionary.unpublish';
+    public const PRODUCT_LABEL_DICTIONARY_UNPUBLISH = 'ProductLabel.product_label_dictionary.unpublish';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_label_product_abstract.create';
+    public const ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_label_product_abstract.create';
 
     /**
      * Specification
@@ -55,7 +55,7 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE = 'Entity.spy_product_label_product_abstract.update';
+    public const ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE = 'Entity.spy_product_label_product_abstract.update';
 
     /**
      * Specification
@@ -63,7 +63,7 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE = 'Entity.spy_product_label_product_abstract.delete';
+    public const ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE = 'Entity.spy_product_label_product_abstract.delete';
 
     /**
      * Specification
@@ -71,7 +71,7 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_LABEL_CREATE = 'Entity.spy_product_label.create';
+    public const ENTITY_SPY_PRODUCT_LABEL_CREATE = 'Entity.spy_product_label.create';
 
     /**
      * Specification
@@ -79,7 +79,7 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_LABEL_UPDATE = 'Entity.spy_product_label.update';
+    public const ENTITY_SPY_PRODUCT_LABEL_UPDATE = 'Entity.spy_product_label.update';
 
     /**
      * Specification
@@ -87,7 +87,7 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_LABEL_DELETE = 'Entity.spy_product_label.delete';
+    public const ENTITY_SPY_PRODUCT_LABEL_DELETE = 'Entity.spy_product_label.delete';
 
     /**
      * Specification
@@ -95,7 +95,7 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_CREATE = 'Entity.spy_product_label_localized_attributes.create';
+    public const ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_CREATE = 'Entity.spy_product_label_localized_attributes.create';
 
     /**
      * Specification
@@ -103,7 +103,7 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_UPDATE = 'Entity.spy_product_label_localized_attributes.update';
+    public const ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_UPDATE = 'Entity.spy_product_label_localized_attributes.update';
 
     /**
      * Specification
@@ -111,5 +111,5 @@ interface ProductLabelEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE = 'Entity.spy_product_label_localized_attributes.delete';
+    public const ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE = 'Entity.spy_product_label_localized_attributes.delete';
 }

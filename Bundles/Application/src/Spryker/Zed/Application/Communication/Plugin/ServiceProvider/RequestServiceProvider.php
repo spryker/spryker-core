@@ -19,13 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RequestServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const BUNDLE = 'module';
-    const CONTROLLER = 'controller';
-    const ACTION = 'action';
+    public const BUNDLE = 'module';
+    public const CONTROLLER = 'controller';
+    public const ACTION = 'action';
 
-    const DEFAULT_BUNDLE = 'application';
-    const DEFAULT_CONTROLLER = 'index';
-    const DEFAULT_ACTION = 'index';
+    public const DEFAULT_BUNDLE = 'application';
+    public const DEFAULT_CONTROLLER = 'index';
+    public const DEFAULT_ACTION = 'index';
 
     /**
      * @param \Silex\Application $app

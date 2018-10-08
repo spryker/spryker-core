@@ -14,12 +14,12 @@ use Spryker\Zed\NavigationCollector\Dependency\Facade\NavigationCollectorToNavig
 
 class NavigationCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
-    const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
+    public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    public const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
 
-    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
-    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+    public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

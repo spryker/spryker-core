@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueUrl extends SymfonyConstraint
 {
-    const OPTION_URL_FACADE = 'urlFacade';
-    const OPTION_CMS_FACADE = 'cmsFacade';
+    public const OPTION_URL_FACADE = 'urlFacade';
+    public const OPTION_CMS_FACADE = 'cmsFacade';
 
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlInterface

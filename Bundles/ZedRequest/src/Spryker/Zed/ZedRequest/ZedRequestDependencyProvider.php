@@ -17,8 +17,8 @@ use Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToStoreBridge;
 
 class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_MESSENGER = 'messenger facade';
-    const STORE = 'STORE';
+    public const FACADE_MESSENGER = 'messenger facade';
+    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

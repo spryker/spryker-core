@@ -24,7 +24,7 @@ use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
  */
 class SkuGroupKeyPluginTest extends Unit
 {
-    const SKU = 'sku';
+    public const SKU = 'sku';
 
     /**
      * @return void

@@ -1,5 +1,6 @@
 {
   "name": "spryker/shipment-discount-connector",
+  "type": "library",
   "description": "ShipmentDiscountConnector module",
   "license": "proprietary",
   "require": {

@@ -19,7 +19,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterf
 
 class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInterface
 {
-    const DEFAULT_PRICE = null;
+    public const DEFAULT_PRICE = null;
 
     /**
      * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface

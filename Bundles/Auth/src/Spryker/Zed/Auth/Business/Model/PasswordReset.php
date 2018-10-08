@@ -21,7 +21,7 @@ use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 class PasswordReset
 {
-    const LENGTH = 22;
+    public const LENGTH = 22;
 
     /**
      * @var \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface

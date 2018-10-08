@@ -25,7 +25,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
  */
 class CategoryQueryContainerTest extends Unit
 {
-    const ID_CATEGORY_NODE = 23;
+    public const ID_CATEGORY_NODE = 23;
 
     /**
      * @return void

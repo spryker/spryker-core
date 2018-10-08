@@ -11,7 +11,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class NotIn extends In
 {
-    const TYPE = 'not_in';
+    public const TYPE = 'not_in';
 
     /**
      * @return string

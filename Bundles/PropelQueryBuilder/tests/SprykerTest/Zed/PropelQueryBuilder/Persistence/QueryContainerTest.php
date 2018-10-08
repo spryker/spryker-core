@@ -35,12 +35,12 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainer;
  */
 class QueryContainerTest extends Unit
 {
-    const LIMIT = 10;
-    const PAGE = 2;
+    public const LIMIT = 10;
+    public const PAGE = 2;
 
-    const EXPECTED_COUNT = 8;
-    const EXPECTED_OFFSET = 10;
-    const EXPECTED_SKU_COLLECTION = [
+    public const EXPECTED_COUNT = 8;
+    public const EXPECTED_OFFSET = 10;
+    public const EXPECTED_SKU_COLLECTION = [
         'test_concrete_sku_1',
         'test_concrete_sku_2',
         'test_concrete_sku_3',

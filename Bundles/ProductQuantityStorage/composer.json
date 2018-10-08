@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-quantity-storage",
+  "type": "library",
   "description": "ProductQuantityStorage module",
   "license": "proprietary",
   "require": {

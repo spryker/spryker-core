@@ -15,7 +15,7 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class TimeDecisionRule implements DecisionRuleInterface
 {
-    const TIME_FORMAT = 'H:i';
+    public const TIME_FORMAT = 'H:i';
 
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
