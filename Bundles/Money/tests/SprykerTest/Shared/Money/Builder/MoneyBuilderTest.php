@@ -28,11 +28,11 @@ use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
  */
 class MoneyBuilderTest extends Unit
 {
-    const DEFAULT_CURRENCY = 'EUR';
-    const AMOUNT_INTEGER = 1000;
-    const AMOUNT_FLOAT = 10.00;
-    const AMOUNT_STRING = '1000';
-    const OTHER_CURRENCY = 'USD';
+    public const DEFAULT_CURRENCY = 'EUR';
+    public const AMOUNT_INTEGER = 1000;
+    public const AMOUNT_FLOAT = 10.00;
+    public const AMOUNT_STRING = '1000';
+    public const OTHER_CURRENCY = 'USD';
 
     /**
      * @return void

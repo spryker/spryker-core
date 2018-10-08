@@ -118,6 +118,7 @@ class ProductSupplierTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $productSupplierCollection */
         $productSupplierCollection = $this->runQuery(
             $this->prepareQuery(),
             $config,
@@ -146,14 +147,13 @@ class ProductSupplierTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $spyProductCollection
+     * @param \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $spyProductCollection
      *
      * @return array
      */
     public function format(ObjectCollection $spyProductCollection): array
     {
         $productSuppliers = [];
-        /** @var \Orm\Zed\Product\Persistence\SpyProduct $item */
         foreach ($spyProductCollection as $spyProductEntity) {
             $productTransfer = new ProductConcreteTransfer();
             $productTransfer->fromArray($spyProductEntity->toArray(), true);
@@ -218,7 +218,7 @@ class ProductSupplierTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $priceProductCollection
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection $priceProductCollection
      *
      * @return string
      */
@@ -226,7 +226,6 @@ class ProductSupplierTable extends AbstractTable
     {
         $prices = [];
         if ($priceProductCollection->count() > 0) {
-            /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductEntity */
             foreach ($priceProductCollection as $priceProductEntity) {
                 $prices[] = sprintf(
                     static::PRICE_FORMAT,

@@ -24,7 +24,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function addItem(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/add-item', $persistentCartChangeTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/add-item', $persistentCartChangeTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -34,7 +37,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function addValidItems(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/add-valid-items', $persistentCartChangeTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/add-valid-items', $persistentCartChangeTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -44,7 +50,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function removeItem(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/remove-item', $persistentCartChangeTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/remove-item', $persistentCartChangeTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -54,7 +63,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function reloadItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/reload-items', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/reload-items', $quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -64,7 +76,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function changeItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/change-item-quantity', $persistentCartChangeQuantityTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/change-item-quantity', $persistentCartChangeQuantityTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -74,7 +89,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function decreaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/decrease-item-quantity', $persistentCartChangeQuantityTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/decrease-item-quantity', $persistentCartChangeQuantityTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -84,7 +102,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function increaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/increase-item-quantity', $persistentCartChangeQuantityTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/increase-item-quantity', $persistentCartChangeQuantityTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -94,7 +115,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/sync-storage-quote', $quoteSyncRequestTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/sync-storage-quote', $quoteSyncRequestTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -104,7 +128,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function validateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/validate-quote', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/validate-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -114,7 +141,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/delete-quote', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/delete-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -124,7 +154,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/persist-quote', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/persist-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -134,7 +167,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/create-quote', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/create-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -144,7 +180,10 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/update-quote', $quoteUpdateRequestTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/update-quote', $quoteUpdateRequestTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -154,6 +193,9 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/update-and-reload-quote', $quoteUpdateRequestTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/update-and-reload-quote', $quoteUpdateRequestTransfer);
+
+        return $quoteResponseTransfer;
     }
 }

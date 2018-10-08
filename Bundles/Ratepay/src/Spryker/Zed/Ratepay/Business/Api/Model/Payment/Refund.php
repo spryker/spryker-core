@@ -17,12 +17,12 @@ class Refund extends Base
     /**
      * @const Method operation.
      */
-    const OPERATION = Constants::REQUEST_MODEL_PAYMENT_CHANGE;
+    public const OPERATION = Constants::REQUEST_MODEL_PAYMENT_CHANGE;
 
     /**
      * @const Method operation subtype.
      */
-    const OPERATION_SUBTYPE = 'return';
+    public const OPERATION_SUBTYPE = 'return';
 
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Builder\ShoppingBasket

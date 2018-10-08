@@ -18,6 +18,8 @@ use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
 class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface, StockUpdateHandlerPluginInterface
 {
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return void

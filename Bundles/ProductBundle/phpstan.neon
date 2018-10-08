@@ -1,7 +1,5 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
-    ignoreErrors:
-        - '#Method .+ProductBundleGrouper::getBundleOptions\(\) should return .+ProductOptionTransfer> but returns array<int, null>#'
 
 services:
     -

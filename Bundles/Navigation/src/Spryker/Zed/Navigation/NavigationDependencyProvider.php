@@ -13,7 +13,7 @@ use Spryker\Zed\Navigation\Dependency\Facade\NavigationToTouchBridge;
 
 class NavigationDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -53,9 +53,12 @@ class ResponseBuilder implements ResponseBuilderInterface
         RestResponseInterface $restResponse,
         RestRequestInterface $restRequest
     ): array {
+        $response = [];
+
         if (count($restResponse->getResources()) === 0) {
             $response[RestResponseInterface::RESPONSE_DATA] = [];
             $response[RestResponseInterface::RESPONSE_LINKS] = $this->buildCollectionLink($restRequest);
+
             return $response;
         }
 
@@ -169,7 +172,7 @@ class ResponseBuilder implements ResponseBuilderInterface
     {
         $formattedLinks = [];
         foreach ($links as $key => $link) {
-            if (\is_array($link)) {
+            if (is_array($link)) {
                 $link['href'] = $this->domainName . '/' . $link['href'];
                 $formattedLinks[$key] = $link;
                 continue;
@@ -189,9 +192,16 @@ class ResponseBuilder implements ResponseBuilderInterface
     {
         $method = $restRequest->getMetadata()->getMethod();
         $idResource = $restRequest->getResource()->getId();
+
         if ($method === Request::METHOD_GET && $idResource === null) {
+            $linkParts = [];
+            foreach ($restRequest->getParentResources() as $parentResource) {
+                $linkParts[] = $parentResource->getType();
+                $linkParts[] = $parentResource->getId();
+            }
+            $linkParts[] = $restRequest->getResource()->getType();
             return $this->formatLinks([
-                RestResourceInterface::RESOURCE_LINKS_SELF => $restRequest->getResource()->getType(),
+                RestResourceInterface::RESOURCE_LINKS_SELF => implode('/', $linkParts),
             ]);
         }
         return [];

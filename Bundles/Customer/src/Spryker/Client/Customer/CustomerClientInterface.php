@@ -8,6 +8,7 @@
 namespace Spryker\Client\Customer;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerClientInterface
@@ -359,4 +360,16 @@ interface CustomerClientInterface
      * @return void
      */
     public function markCustomerAsDirty();
+
+    /**
+     * Specification:
+     * - Retrieves customer information using provided customer reference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
 }

@@ -52,6 +52,13 @@ interface ProductConcreteManagerInterface
     public function findProductConcreteIdBySku($sku);
 
     /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findProductConcretesBySkus(array $skus): array;
+
+    /**
      * @param string $concreteSku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException

@@ -25,9 +25,9 @@ use SprykerTest\Client\ZedRequest\Client\Fixture\TestTransfer;
  */
 class ResponseTest extends Unit
 {
-    const MESSAGE_SUCCESS = 'success';
-    const MESSAGE_INFO = 'info';
-    const MESSAGE_ERROR = 'error';
+    public const MESSAGE_SUCCESS = 'success';
+    public const MESSAGE_INFO = 'info';
+    public const MESSAGE_ERROR = 'error';
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer

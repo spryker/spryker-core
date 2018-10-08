@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-unit-address-data-import",
+  "type": "library",
   "description": "CompanyUnitAddressDataImport module",
   "license": "MIT",
   "require": {

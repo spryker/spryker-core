@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AssignController extends AbstractController
 {
-    const PARAM_ID_CATEGORY = 'id-category';
+    public const PARAM_ID_CATEGORY = 'id-category';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -7,49 +7,38 @@
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
+use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\RestFacetSearchResultAttributesTransfer;
+use Generated\Shared\Transfer\RestPriceProductAttributesTransfer;
 use Generated\Shared\Transfer\RestRangeSearchResultAttributesTransfer;
-use Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @uses \Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin::NAME
      */
-    protected $restResourceBuilder;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
-        $this->restResourceBuilder = $restResourceBuilder;
-    }
+    protected const NAME = 'facets';
 
     /**
      * @param array $restSearchResponse
      * @param string $currency
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
-    public function mapSearchResponseAttributesTransferToRestResponse(array $restSearchResponse, string $currency): RestResourceInterface
+    public function mapSearchResponseAttributesTransferToRestAttributesTransfer(array $restSearchResponse, string $currency): RestCatalogSearchAttributesTransfer
     {
         $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($restSearchResponse, true);
-        $restSearchAttributesTransfer = $this->mapPrices($restSearchAttributesTransfer);
         $restSearchAttributesTransfer->setCurrency($currency);
-        if (isset($restSearchResponse['facets'])) {
-            $restSearchAttributesTransfer = $this->mapSearchResponseFacetTransfersToSearchAttributesTransfer($restSearchResponse['facets'], $restSearchAttributesTransfer);
+        if (isset($restSearchResponse[static::NAME])) {
+            $restSearchAttributesTransfer = $this->mapSearchResponseFacetTransfersToSearchAttributesTransfer(
+                $restSearchResponse[static::NAME],
+                $restSearchAttributesTransfer
+            );
         }
 
-        return $this->restResourceBuilder->createRestResource(
-            CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH,
-            null,
-            $restSearchAttributesTransfer
-        );
+        return $restSearchAttributesTransfer;
     }
 
     /**
@@ -79,19 +68,51 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
 
     /**
      * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
+     * @param \Generated\Shared\Transfer\PriceModeConfigurationTransfer $priceModeInformation
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
-    protected function mapPrices(RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer): RestCatalogSearchAttributesTransfer
-    {
+    public function mapPrices(
+        RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer,
+        PriceModeConfigurationTransfer $priceModeInformation
+    ): RestCatalogSearchAttributesTransfer {
         foreach ($restSearchAttributesTransfer->getProducts() as $product) {
             $prices = [];
             foreach ($product->getPrices() as $priceType => $price) {
-                $prices[] = [$priceType => $price];
+                $priceData = $this
+                    ->getPriceTransfer($priceType, $price, $priceModeInformation)
+                    ->modifiedToArray(true, true);
+
+                $prices[] = $priceData + [$priceType => $price];
             }
             $product->setPrices($prices);
         }
 
         return $restSearchAttributesTransfer;
+    }
+
+    /**
+     * @param string $priceType
+     * @param int $price
+     * @param \Generated\Shared\Transfer\PriceModeConfigurationTransfer $priceModeInformation
+     *
+     * @return \Generated\Shared\Transfer\RestPriceProductAttributesTransfer
+     */
+    protected function getPriceTransfer(
+        string $priceType,
+        int $price,
+        PriceModeConfigurationTransfer $priceModeInformation
+    ): RestPriceProductAttributesTransfer {
+        $restPriceProductAttributes = new RestPriceProductAttributesTransfer();
+        $restPriceProductAttributes->setPriceTypeName($priceType);
+        if ($priceModeInformation->getCurrentPriceMode() === $priceModeInformation->getGrossModeIdentifier()) {
+            return $restPriceProductAttributes->setGrossAmount($price);
+        }
+
+        if ($priceModeInformation->getCurrentPriceMode() === $priceModeInformation->getNetModeIdentifier()) {
+            return $restPriceProductAttributes->setNetAmount($price);
+        }
+
+        return $restPriceProductAttributes;
     }
 }

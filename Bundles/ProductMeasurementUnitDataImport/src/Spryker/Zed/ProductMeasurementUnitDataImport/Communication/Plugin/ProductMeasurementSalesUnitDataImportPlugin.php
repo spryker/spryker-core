@@ -19,6 +19,8 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImpor
 class ProductMeasurementSalesUnitDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -29,6 +31,8 @@ class ProductMeasurementSalesUnitDataImportPlugin extends AbstractPlugin impleme
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getImportType(): string

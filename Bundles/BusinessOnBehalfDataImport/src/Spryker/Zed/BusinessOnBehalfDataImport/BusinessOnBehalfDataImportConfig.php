@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class BusinessOnBehalfDataImportConfig extends DataImportConfig
 {
-    public const IMPORT_TYPE_COMPANY_USER = 'company-user';
+    public const IMPORT_TYPE_COMPANY_USER = 'company-user-on-behalf';
     protected const IMPORT_FILE = 'company_user.csv';
 
     /**

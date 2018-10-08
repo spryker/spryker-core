@@ -17,9 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ValidatorConsole extends Console
 {
-    const COMMAND_NAME = 'transfer:validate';
-    const COMMAND_DESCRIPTION = 'Validates transfer XML definition files';
-    const OPTION_BUNDLE = 'bundle';
+    public const COMMAND_NAME = 'transfer:validate';
+    public const COMMAND_DESCRIPTION = 'Validates transfer XML definition files';
+    public const OPTION_BUNDLE = 'bundle';
 
     /**
      * @return void

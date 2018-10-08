@@ -21,7 +21,7 @@ use Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContai
 
 class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
 {
-    const COL_ID_PRODUCT_SET = 'id_product_set';
+    public const COL_ID_PRODUCT_SET = 'id_product_set';
 
     /**
      * @var \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface
