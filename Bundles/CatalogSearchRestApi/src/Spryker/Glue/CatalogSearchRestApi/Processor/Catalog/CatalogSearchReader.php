@@ -97,7 +97,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
             ->mapSearchResultToRestAttributesTransfer($searchResult, $this->store->getCurrencyIsoCode());
 
         $this->catalogSearchResourceMapper
-            ->mapPrices($restSearchAttributesTransfer, $this->getPriceModeInformationTransfer());
+            ->mapPrices($restSearchAttributesTransfer, $this->getPriceModeConfigurationTransfer());
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH,
@@ -261,9 +261,9 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
      */
     protected function createInvalidCurrencyResponse(): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
-
-        return $response->addError((new RestErrorMessageTransfer())
+        return  $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError((new RestErrorMessageTransfer())
             ->setCode(CatalogSearchRestApiConfig::RESPONSE_CODE_INVALID_CURRENCY)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CatalogSearchRestApiConfig::RESPONSE_DETAIL_INVALID_CURRENCY));
@@ -274,9 +274,9 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
      */
     protected function createInvalidPriceModeResponse(): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
-
-        return $response->addError((new RestErrorMessageTransfer())
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError((new RestErrorMessageTransfer())
             ->setCode(CatalogSearchRestApiConfig::RESPONSE_CODE_INVALID_PRICE_MODE)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CatalogSearchRestApiConfig::RESPONSE_DETAIL_INVALID_PRICE_MODE));
@@ -285,7 +285,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
     /**
      * @return \Generated\Shared\Transfer\PriceModeConfigurationTransfer
      */
-    protected function getPriceModeInformationTransfer(): PriceModeConfigurationTransfer
+    protected function getPriceModeConfigurationTransfer(): PriceModeConfigurationTransfer
     {
         $priceModeConfiguration = new PriceModeConfigurationTransfer();
 
