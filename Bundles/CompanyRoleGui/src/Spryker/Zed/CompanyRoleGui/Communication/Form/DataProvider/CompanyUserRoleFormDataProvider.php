@@ -9,12 +9,14 @@ namespace Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleForm;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
 
 class CompanyUserRoleFormDataProvider
 {
     protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
+    protected const OPTION_IS_DEFAULT = 'data-is_default';
 
     /**
      * @var \Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface
@@ -30,11 +32,23 @@ class CompanyUserRoleFormDataProvider
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getData(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    {
+        return $companyUserTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions(CompanyUserTransfer $companyUserTransfer): array
     {
-        [$choicesValues, $choicesAttributes] = $this->prepareCompanyRoleAttributeMap();
+        [$choicesValues, $choicesAttributes] = $this->prepareCompanyRoleAttributeMap($companyUserTransfer);
 
         return [
             CompanyUserRoleForm::OPTION_VALUES_ROLES_CHOICES => $choicesValues,
@@ -45,10 +59,12 @@ class CompanyUserRoleFormDataProvider
     /**
      * Retrieves the list of roles for the same company.
      *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
      * @return array [[roleKey => idRole], [roleKey => ['data-id-company' => idCompany]]]
      *                Where roleKey: "<idRole> - <RoleName>"
      */
-    protected function prepareCompanyRoleAttributeMap(): array
+    protected function prepareCompanyRoleAttributeMap(CompanyUserTransfer $companyUserTransfer): array
     {
         $values = [];
         $attributes = [];
@@ -59,8 +75,15 @@ class CompanyUserRoleFormDataProvider
         foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {
             $roleKey = $this->generateCompanyRoleName($companyRoleTransfer);
 
+            $companyRoleAttributes = [static::OPTION_ATTRIBUTE_DATA => $companyRoleTransfer->getFkCompany()];
+            if ($companyRoleTransfer->getIsDefault()
+                && $companyUserTransfer->getCompanyRoleCollection() === null
+            ) {
+                $companyRoleAttributes[static::OPTION_IS_DEFAULT] = true;
+            }
+
             $values[$roleKey] = $companyRoleTransfer->getIdCompanyRole();
-            $attributes[$roleKey] = [static::OPTION_ATTRIBUTE_DATA => $companyRoleTransfer->getFkCompany()];
+            $attributes[$roleKey] = $companyRoleAttributes;
         }
 
         return [$values, $attributes];
