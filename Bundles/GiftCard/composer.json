@@ -1,5 +1,6 @@
 {
   "name": "spryker/gift-card",
+  "type": "library",
   "description": "GiftCard module",
   "license": "proprietary",
   "require": {

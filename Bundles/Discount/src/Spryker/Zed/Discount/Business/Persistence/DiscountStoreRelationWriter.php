@@ -58,7 +58,7 @@ class DiscountStoreRelationWriter implements DiscountStoreRelationWriterInterfac
      */
     protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer)
     {
-        if ($storeRelationTransfer->getIdStores() === null) {
+        if (!$storeRelationTransfer->getIdStores()) {
             return [];
         }
 

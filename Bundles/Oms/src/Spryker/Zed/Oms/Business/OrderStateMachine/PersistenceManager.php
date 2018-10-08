@@ -52,7 +52,7 @@ class PersistenceManager implements PersistenceManagerInterface
             $stateEntity->save();
         }
 
-        $stateBuffer[$stateName] = $stateEntity;
+        //self::$stateEntityBuffer[$stateName] = $stateEntity;
 
         return $stateEntity;
     }
@@ -85,7 +85,7 @@ class PersistenceManager implements PersistenceManagerInterface
             $processEntity->save();
         }
 
-        $processBuffer[$processName] = $processEntity;
+        //self::$processEntityBuffer[$processName] = $processEntity;
 
         return $processEntity;
     }

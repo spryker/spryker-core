@@ -12,7 +12,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class Contains extends AbstractOperator
 {
-    const TYPE = 'contains';
+    public const TYPE = 'contains';
 
     /**
      * @return string

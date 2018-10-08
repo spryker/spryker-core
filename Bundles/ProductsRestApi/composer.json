@@ -1,5 +1,6 @@
 {
   "name": "spryker/products-rest-api",
+  "type": "library",
   "description": "ProductsRestApi module",
   "license": "proprietary",
   "require": {

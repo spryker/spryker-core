@@ -17,7 +17,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_CATEGORY_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_ABSTRACT_CATEGORY_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -25,7 +25,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_CATEGORY_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+    public const PRODUCT_ABSTRACT_CATEGORY_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
     /**
      * Specification:
@@ -33,5 +33,5 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_CATEGORY_RESOURCE_NAME = 'product_abstract_category';
+    public const PRODUCT_ABSTRACT_CATEGORY_RESOURCE_NAME = 'product_abstract_category';
 }

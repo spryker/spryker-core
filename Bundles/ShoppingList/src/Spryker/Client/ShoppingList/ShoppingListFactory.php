@@ -60,7 +60,8 @@ class ShoppingListFactory extends AbstractFactory
         return new CartHandler(
             $this->getCartClient(),
             $this->createShoppingListStub(),
-            $this->getMessengerClient()
+            $this->getMessengerClient(),
+            $this->getShoppingListItemToItemMapperPlugins()
         );
     }
 
@@ -110,5 +111,13 @@ class ShoppingListFactory extends AbstractFactory
     public function createPermissionUpdater(): PermissionUpdaterInterface
     {
         return new PermissionUpdater($this->getCustomerClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
+     */
+    public function getShoppingListItemToItemMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER);
     }
 }

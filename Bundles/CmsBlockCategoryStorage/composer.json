@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block-category-storage",
+  "type": "library",
   "description": "CmsBlockCategoryStorage module",
   "license": "proprietary",
   "require": {

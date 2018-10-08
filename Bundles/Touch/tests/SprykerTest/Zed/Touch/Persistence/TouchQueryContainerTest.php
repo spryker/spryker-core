@@ -24,13 +24,13 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
  */
 class TouchQueryContainerTest extends Unit
 {
-    const ITEM_TYPE = 'test.item';
-    const ITEM_ID_1 = 1;
-    const ITEM_ID_2 = 2;
-    const ITEM_ID_3 = 3;
-    const ITEM_ID_4 = 4;
-    const ITEM_ID_5 = 5;
-    const ITEM_ID_6 = 6;
+    public const ITEM_TYPE = 'test.item';
+    public const ITEM_ID_1 = 1;
+    public const ITEM_ID_2 = 2;
+    public const ITEM_ID_3 = 3;
+    public const ITEM_ID_4 = 4;
+    public const ITEM_ID_5 = 5;
+    public const ITEM_ID_6 = 6;
 
     /**
      * @return void

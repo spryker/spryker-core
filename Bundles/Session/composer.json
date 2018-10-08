@@ -1,5 +1,6 @@
 {
   "name": "spryker/session",
+  "type": "library",
   "description": "Session module",
   "license": "proprietary",
   "require": {

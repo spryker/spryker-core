@@ -29,11 +29,11 @@ use Spryker\Zed\Kernel\Container;
 
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_ENCODING = 'util encoding service';
-    const SERVICE_PROVIDER = 'SERVICE_PROVIDER';
-    const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
-    const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
-    const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
+    public const SERVICE_ENCODING = 'util encoding service';
+    public const SERVICE_PROVIDER = 'SERVICE_PROVIDER';
+    public const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
+    public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
+    public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -22,12 +22,12 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class CmsPageLocalizedAttributesForm extends AbstractType
 {
-    const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'id_cms_page_localized_attributes';
-    const FIELD_FK_CMS_PAGE = 'fk_cms_page';
-    const FIELD_NAME = 'name';
-    const FIELD_META_TITLE = 'meta_title';
-    const FIELD_META_KEYWORDS = 'meta_keywords';
-    const FIELD_META_DESCRIPTION = 'meta_description';
+    public const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'id_cms_page_localized_attributes';
+    public const FIELD_FK_CMS_PAGE = 'fk_cms_page';
+    public const FIELD_NAME = 'name';
+    public const FIELD_META_TITLE = 'meta_title';
+    public const FIELD_META_KEYWORDS = 'meta_keywords';
+    public const FIELD_META_DESCRIPTION = 'meta_description';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
