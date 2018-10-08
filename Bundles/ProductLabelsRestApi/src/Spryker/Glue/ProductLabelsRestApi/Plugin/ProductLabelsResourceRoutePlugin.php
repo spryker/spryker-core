@@ -13,7 +13,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductLabelsRestApi\ProductLabelsRestApiConfig;
 
-class ProductLabelsResourceResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class ProductLabelsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -26,7 +26,7 @@ class ProductLabelsResourceResourceRoutePlugin extends AbstractPlugin implements
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        return $resourceRouteCollection->addGet('get', false);
+        return $resourceRouteCollection->addGet(ProductLabelsRestApiConfig::ACTION_PRODUCT_LABELS_GET, false);
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductLabelsResourceResourceRoutePlugin extends AbstractPlugin implements
      */
     public function getController(): string
     {
-        return 'product-labels-resource';
+        return ProductLabelsRestApiConfig::CONTROLLER_PRODUCT_LABELS;
     }
 
     /**

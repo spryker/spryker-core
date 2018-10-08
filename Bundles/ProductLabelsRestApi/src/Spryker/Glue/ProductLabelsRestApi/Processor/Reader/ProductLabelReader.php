@@ -58,7 +58,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restRequest->getResource()->getId()) {
-            return $this->createProductLabelNotFoundError($restResponse);
+            return $this->createProductLabelMissingError($restResponse);
         }
 
         $labelTransfer = $this->productLabelStorageClient->findLabelByKey(
@@ -94,6 +94,21 @@ class ProductLabelReader implements ProductLabelReaderInterface
             ->setCode(ProductLabelsRestApiConfig::RESPONSE_CODE_CANT_FIND_PRODUCT_LABEL)
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(ProductLabelsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_PRODUCT_LABEL);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createProductLabelMissingError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductLabelsRestApiConfig::RESPONSE_CODE_PRODUCT_LABEL_KYE_IS_MISSING)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(ProductLabelsRestApiConfig::RESPONSE_DETAIL_PRODUCT_LABEL_KYE_IS_MISSING);
 
         return $restResponse->addError($restErrorTransfer);
     }
