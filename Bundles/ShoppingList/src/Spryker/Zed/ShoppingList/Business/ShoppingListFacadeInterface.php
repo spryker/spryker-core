@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
@@ -200,18 +199,6 @@ interface ShoppingListFacadeInterface
      * @return void
      */
     public function installShoppingListPermissions(): void;
-
-    /**
-     * Specification:
-     *  - Get shopping list permission group.
-     *
-     * @api
-     *
-     * @deprecated Use getShoppingListPermissionGroups() instead
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
-     */
-    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer;
 
     /**
      * Specification:

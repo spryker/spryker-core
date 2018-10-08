@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
@@ -227,20 +226,6 @@ class ShoppingListStub implements ShoppingListStubInterface
         );
 
         return $shoppingListTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
-     */
-    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
-    {
-        /** @var \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer */
-        $shoppingListPermissionGroupTransfer = $this->zedRequestClient->call(
-            '/shopping-list/gateway/get-shopping-list-permission-group',
-            new ShoppingListPermissionGroupTransfer()
-        );
-
-        return $shoppingListPermissionGroupTransfer;
     }
 
     /**
