@@ -43,7 +43,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
      * @param array $resources
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
-     * @return null|array
+     * @return array|null
      */
     public function load(string $resourceType, array $resources, Request $httpRequest): ?array
     {
@@ -220,7 +220,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface[] $resourcePlugins
      *
-     * @return null|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface|null
      */
     protected function findNewestPluginVersion(array $resourcePlugins): ?ResourceVersionableInterface
     {

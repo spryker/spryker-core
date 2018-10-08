@@ -24,9 +24,9 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
  */
 class MailProviderCollectionTest extends Unit
 {
-    const TYPE_A = 'type a';
-    const TYPE_B = 'type b';
-    const MAIL_TYPE_ALL = '*';
+    public const TYPE_A = 'type a';
+    public const TYPE_B = 'type b';
+    public const MAIL_TYPE_ALL = '*';
 
     /**
      * @return void

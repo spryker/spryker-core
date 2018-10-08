@@ -163,10 +163,6 @@ class OffersTable extends AbstractTable
 
         $customer = $this->sanitizeService->escapeHtml($customer);
 
-        if (!$customerTransfer) {
-            return $customer;
-        }
-
         if ($customerExists) {
             $url = Url::generate('/customer/view', [
                 'id-customer' => $customerTransfer->getIdCustomer(),
@@ -213,7 +209,7 @@ class OffersTable extends AbstractTable
     /**
      * @param int $value
      * @param bool $includeSymbol
-     * @param null|string $currencyIsoCode
+     * @param string|null $currencyIsoCode
      *
      * @return string
      */

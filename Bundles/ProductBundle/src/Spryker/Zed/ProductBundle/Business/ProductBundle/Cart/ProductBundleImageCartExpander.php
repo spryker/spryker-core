@@ -16,7 +16,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageInter
 
 class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterface
 {
-    const DEFAULT_IMAGE_SET_NAME = 'default';
+    public const DEFAULT_IMAGE_SET_NAME = 'default';
 
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageInterface
@@ -83,17 +83,14 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
      */
     protected function getProductImages(array $imageSets)
     {
-        $firstProductImageSetImages = new ArrayObject();
         foreach ($imageSets as $imageSet) {
             if ($imageSet->getName() === static::DEFAULT_IMAGE_SET_NAME) {
                 return $imageSet->getProductImages();
             }
 
-            if (!$firstProductImageSetImages) {
-                $firstProductImageSetImages = $imageSet->getProductImages();
-            }
+            return $imageSet->getProductImages();
         }
 
-        return $firstProductImageSetImages;
+        return new ArrayObject();
     }
 }

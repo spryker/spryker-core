@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-alternative-data-import",
+  "type": "library",
   "description": "ProductAlternativeDataImport module",
   "license": "MIT",
   "require": {
@@ -11,6 +12,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

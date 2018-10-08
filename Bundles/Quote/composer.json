@@ -1,5 +1,6 @@
 {
   "name": "spryker/quote",
+  "type": "library",
   "description": "Quote module",
   "license": "proprietary",
   "require": {
@@ -16,6 +17,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

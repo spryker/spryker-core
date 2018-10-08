@@ -39,6 +39,20 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
+     * - Retrieves a current Store specific ProductAbstract resource from Storage using specified mapping.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string $identifier
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
+
+    /**
+     * Specification:
      * - Retrieves a current Store specific ProductConcrete resource from Storage.
      *
      * @api
@@ -67,9 +81,23 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
+     * - Retrieves a current Store specific ProductConcrete resource from Storage using specified mapping.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string $identifier
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
+
+    /**
+     * Specification:
      * - Maps raw product data to StorageProductTransfer for the current locale.
      * - Based on the super attributes and the selected attributes of the product the result might be abstract or concrete product.
-     * - Executes a stack of \Spryker\Client\ProductStorage\Dependency\Plugin\StorageProductExpanderPluginInterface plugins that
+     * - Executes a stack of Spryker\Client\ProductStorage\Dependency\Plugin\StorageProductExpanderPluginInterface plugins that
      * can expand the result with extra data.
      *
      * @api

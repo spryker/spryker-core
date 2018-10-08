@@ -4,4 +4,7 @@
         <property name="name" type="string" />
         <property name="bla" type="int" />
     </transfer>
+
+    <transfer name="AnEmptyOne">
+    </transfer>
 </transfers>

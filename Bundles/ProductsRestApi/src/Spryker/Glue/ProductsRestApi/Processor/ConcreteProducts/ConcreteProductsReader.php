@@ -12,17 +12,19 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductResourceAliasStorageClientInterface;
+use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapperInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class ConcreteProductsReader implements ConcreteProductsReaderInterface
 {
+    protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+
     /**
-     * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductResourceAliasStorageClientInterface
+     * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
      */
-    protected $productResourceAliasStorageClient;
+    protected $productStorageClient;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -35,16 +37,16 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     protected $concreteProductsResourceMapper;
 
     /**
-     * @param \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductResourceAliasStorageClientInterface $productResourceAliasStorageClient
+     * @param \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper
      */
     public function __construct(
-        ProductsRestApiToProductResourceAliasStorageClientInterface $productResourceAliasStorageClient,
+        ProductsRestApiToProductStorageClientInterface $productStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
         ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper
     ) {
-        $this->productResourceAliasStorageClient = $productResourceAliasStorageClient;
+        $this->productStorageClient = $productStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->concreteProductsResourceMapper = $concreteProductsResourceMapper;
     }
@@ -66,8 +68,9 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             return $response->addError($restErrorTransfer);
         }
 
-        $concreteProductData = $this->productResourceAliasStorageClient
-            ->findProductConcreteStorageDataBySku(
+        $concreteProductData = $this->productStorageClient
+            ->findProductConcreteStorageDataByMapping(
+                static::PRODUCT_CONCRETE_MAPPING_TYPE,
                 $resourceIdentifier,
                 $restRequest->getMetadata()->getLocale()
             );
@@ -107,15 +110,16 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     }
 
     /**
-     * @param string $productConcreteSku
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    protected function findOneByProductConcrete(string $productConcreteSku, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findOneByProductConcrete(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $concreteProductData = $this->productResourceAliasStorageClient->findProductConcreteStorageDataBySku(
-            $productConcreteSku,
+        $concreteProductData = $this->productStorageClient->findProductConcreteStorageDataByMapping(
+            static::PRODUCT_CONCRETE_MAPPING_TYPE,
+            $sku,
             $restRequest->getMetadata()->getLocale()
         );
 

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-label-storage",
+  "type": "library",
   "description": "ProductLabelStorage module",
   "license": "proprietary",
   "require": {
@@ -15,8 +16,13 @@
   },
   "require-dev": {
     "spryker/catalog": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/event": "*",
-    "spryker/search": "*"
+    "spryker/propel": "*",
+    "spryker/propel-query-builder": "*",
+    "spryker/search": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0",

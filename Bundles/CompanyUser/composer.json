@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-user",
+  "type": "library",
   "description": "CompanyUser module",
   "license": "proprietary",
   "require": {
@@ -15,7 +16,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/permission": "^1.0.0",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

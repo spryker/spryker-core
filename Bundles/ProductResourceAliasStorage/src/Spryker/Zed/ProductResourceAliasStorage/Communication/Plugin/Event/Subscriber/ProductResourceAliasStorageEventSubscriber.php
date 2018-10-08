@@ -43,8 +43,8 @@ class ProductResourceAliasStorageEventSubscriber extends AbstractPlugin implemen
     protected function addProductAbstractMappingResourceStorageListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new ProductAbstractMappingResourceStorageListener());
-        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_AFTER_CREATE, new ProductAbstractMappingResourceStorageListener());
-        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_AFTER_UPDATE, new ProductAbstractMappingResourceStorageListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new ProductAbstractMappingResourceStorageListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductAbstractMappingResourceStorageListener());
     }
 
     /**
@@ -55,7 +55,7 @@ class ProductResourceAliasStorageEventSubscriber extends AbstractPlugin implemen
     protected function addProductConcreteMappingResourceStorageListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_PUBLISH, new ProductConcreteMappingResourceStorageListener());
-        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_AFTER_CREATE, new ProductConcreteMappingResourceStorageListener());
-        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_AFTER_UPDATE, new ProductConcreteMappingResourceStorageListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductConcreteMappingResourceStorageListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductConcreteMappingResourceStorageListener());
     }
 }

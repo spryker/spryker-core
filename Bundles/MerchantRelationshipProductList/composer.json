@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-relationship-product-list",
+  "type": "library",
   "description": "MerchantRelationshipProductList module",
   "license": "proprietary",
   "require": {
@@ -10,7 +11,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company-business-unit": "*",
     "spryker/customer": "*",
+    "spryker/merchant": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

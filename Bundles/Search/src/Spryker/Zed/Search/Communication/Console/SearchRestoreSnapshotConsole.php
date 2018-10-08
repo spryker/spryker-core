@@ -17,11 +17,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchRestoreSnapshotConsole extends Console
 {
-    const COMMAND_NAME = 'search:snapshot:restore';
-    const DESCRIPTION = 'This command will restore a snapshot.';
+    public const COMMAND_NAME = 'search:snapshot:restore';
+    public const DESCRIPTION = 'This command will restore a snapshot.';
 
-    const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
-    const ARGUMENT_SNAPSHOT_NAME = 'snapshot-name';
+    public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
+    public const ARGUMENT_SNAPSHOT_NAME = 'snapshot-name';
 
     /**
      * @return void

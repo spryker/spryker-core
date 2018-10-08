@@ -75,7 +75,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
      *
-     * @return null|\Generated\Shared\Transfer\ProductConcreteMeasurementBaseUnitTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementBaseUnitTransfer|null
      */
     protected function extractProductConcreteMeasurementBaseUnitTransfer(array $productMeasurementSalesUnitTransfers): ?ProductConcreteMeasurementBaseUnitTransfer
     {

@@ -35,7 +35,8 @@ class CompanyGuiToCompanyFacadeBridge implements CompanyGuiToCompanyFacadeInterf
         return $this->companyFacade->update($companyTransfer);
     }
 
-    /** @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */

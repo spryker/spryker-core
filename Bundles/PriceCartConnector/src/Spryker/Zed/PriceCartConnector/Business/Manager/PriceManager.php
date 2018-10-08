@@ -189,9 +189,9 @@ class PriceManager implements PriceManagerInterface
         PriceProductFilterTransfer $priceProductFilterTransfer,
         $priceMode
     ) {
-        $price = $this->priceProductFacade->findPriceFor($priceProductFilterTransfer);
+        $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
-        if ($price === null) {
+        if ($priceProductTransfer === null) {
             throw new PriceMissingException(
                 sprintf(
                     'Cart item "%s" can not be priced.',
@@ -200,15 +200,17 @@ class PriceManager implements PriceManagerInterface
             );
         }
 
+        $itemTransfer->setPriceProduct($priceProductTransfer);
+
         if ($priceMode === $this->getNetPriceModeIdentifier()) {
-            $itemTransfer->setOriginUnitNetPrice($price);
+            $itemTransfer->setOriginUnitNetPrice($priceProductTransfer->getMoneyValue()->getNetAmount());
             $itemTransfer->setOriginUnitGrossPrice(0);
             $itemTransfer->setSumGrossPrice(0);
             return;
         }
 
         $itemTransfer->setOriginUnitNetPrice(0);
-        $itemTransfer->setOriginUnitGrossPrice($price);
+        $itemTransfer->setOriginUnitGrossPrice($priceProductTransfer->getMoneyValue()->getGrossAmount());
         $itemTransfer->setSumNetPrice(0);
     }
 
@@ -279,7 +281,7 @@ class PriceManager implements PriceManagerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findStoreName(QuoteTransfer $quoteTransfer): ?string
     {

@@ -17,7 +17,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryCreateDataProvider
 {
-    const DATA_CLASS = 'data_class';
+    public const DATA_CLASS = 'data_class';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface

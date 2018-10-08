@@ -7,9 +7,6 @@
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
-use Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestionsResourceMapperInterface
 {
@@ -26,19 +23,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     protected const SEARCH_RESPONSE_IMAGE_URL_SMALL_KEY = 'external_url_small';
     protected const SEARCH_RESPONSE_IMAGE_URL_LARGE_KEY = 'external_url_large';
     protected const SEARCH_RESPONSE_NAME_KEY = 'name';
-
-    /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
-        $this->restResourceBuilder = $restResourceBuilder;
-    }
 
     /**
      * @return array
@@ -59,9 +43,9 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
      * @param array $restSearchResponse
      * @param string $currency
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer
      */
-    public function mapSuggestionsResponseAttributesTransferToRestResponse(array $restSearchResponse, string $currency): RestResourceInterface
+    public function mapSuggestionsResponseAttributesTransferToRestAttributesTransfer(array $restSearchResponse, string $currency): RestCatalogSearchSuggestionsAttributesTransfer
     {
         $restSuggestionsAttributesTransfer = new RestCatalogSearchSuggestionsAttributesTransfer();
         $restSuggestionsAttributesTransfer->fromArray($restSearchResponse, true);
@@ -69,11 +53,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
 
         $restSuggestionsAttributesTransfer = $this->mapCustomFields($restSuggestionsAttributesTransfer, $restSearchResponse);
 
-        return $this->restResourceBuilder->createRestResource(
-            CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH_SUGGESTIONS,
-            null,
-            $restSuggestionsAttributesTransfer
-        );
+        return $restSuggestionsAttributesTransfer;
     }
 
     /**

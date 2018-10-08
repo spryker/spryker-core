@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-discontinued-product-label-connector",
+  "type": "library",
   "description": "ProductDiscontinuedProductLabelConnector module",
   "license": "proprietary",
   "require": {
@@ -14,6 +15,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {
