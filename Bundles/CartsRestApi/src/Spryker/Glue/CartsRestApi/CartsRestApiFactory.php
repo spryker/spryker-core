@@ -85,7 +85,8 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getZedRequestClient(),
             $this->getQuoteClient(),
-            $this->createCartReader()
+            $this->createCartReader(),
+            $this->createCartItemsResourceMapper()
         );
     }
 
@@ -191,7 +192,8 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getZedRequestClient(),
             $this->getQuoteClient(),
             $this->createCartReader(),
-            $this->createGuestCartCreator()
+            $this->createGuestCartCreator(),
+            $this->createCartItemsResourceMapper()
         );
     }
 

@@ -18,4 +18,11 @@ interface CartItemsResourceMapperInterface
      * @return \Generated\Shared\Transfer\RestCartItemsAttributesTransfer
      */
     public function mapCartItemAttributes(ItemTransfer $itemTransfer): RestCartItemsAttributesTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function mapItemAttributesToItemTransfer(RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer): ItemTransfer;
 }
