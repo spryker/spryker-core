@@ -12,6 +12,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ResponsePagination implements ResponsePaginationInterface
 {
+    protected const KEY_PAGE = 'page';
+
     /**
      * @var string
      */
@@ -47,7 +49,11 @@ class ResponsePagination implements ResponsePaginationInterface
             return [];
         }
 
-        $domain = sprintf($this->domainName . '/%s?page[offset]=', $restRequest->getResource()->getType());
+        $queryString = $restRequest->getQueryString([static::KEY_PAGE]);
+        if (strlen($queryString)) {
+            $queryString .= '&';
+        }
+        $domain = sprintf($this->domainName . '/%s?%spage[offset]=', $restRequest->getResource()->getType(), $queryString);
 
         $limit = '';
         if ($pageOffsetsTransfer->getLimit()) {
@@ -55,12 +61,16 @@ class ResponsePagination implements ResponsePaginationInterface
         }
 
         $offsetLinks = [
-            'next' => $domain . $pageOffsetsTransfer->getNextOffset() . $limit,
-            'prev' => $domain . $pageOffsetsTransfer->getPrevOffset() . $limit,
             'last' => $domain . $pageOffsetsTransfer->getLastOffset() . $limit,
             'first' => $domain . 0 . $limit,
         ];
 
+        if ($restRequest->getPage()->getOffset() > 0) {
+            $offsetLinks['prev'] = $domain . $pageOffsetsTransfer->getPrevOffset() . $limit;
+        }
+        if ($pageOffsetsTransfer->getNextOffset() < $restResponse->getTotals()) {
+            $offsetLinks['next'] = $domain . $pageOffsetsTransfer->getNextOffset() . $limit;
+        }
         return array_merge(
             $offsetLinks,
             $restResponse->getLinks()
@@ -88,7 +98,7 @@ class ResponsePagination implements ResponsePaginationInterface
         $totalPages = $this->calculateTotalPages($restResponse, $limit);
         $prevOffset = $this->calculatePreviousOffset($offset, $limit);
         $nextOffset = $this->calculateNextOffset($offset, $limit, $totalPages);
-        $lastOffset = $this->calculateLastOffset($restResponse, $limit);
+        $lastOffset = $this->calculateLastOffset($limit, $totalPages);
 
         return (new RestPageOffsetsTransfer())
             ->setLimit($limit)
@@ -123,7 +133,7 @@ class ResponsePagination implements ResponsePaginationInterface
     protected function calculateNextOffset(int $offset, int $limit, int $totalPages): int
     {
         $nextOffset = $offset + $limit;
-        if ($nextOffset > $totalPages) {
+        if ($nextOffset > $totalPages * $limit) {
             $nextOffset = (int)(($totalPages / $limit) * $limit);
         }
         return $nextOffset;
@@ -150,19 +160,19 @@ class ResponsePagination implements ResponsePaginationInterface
      *
      * @return int
      */
-    protected function calculateTotalPages(RestResponseInterface $restResponse, $limit): int
+    protected function calculateTotalPages(RestResponseInterface $restResponse, int $limit): int
     {
-        return (int)($restResponse->getTotals() / $limit);
+        return ceil($restResponse->getTotals() / $limit);
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      * @param int $limit
+     * @param int $totalPages
      *
      * @return int
      */
-    protected function calculateLastOffset(RestResponseInterface $restResponse, $limit): int
+    protected function calculateLastOffset(int $limit, int $totalPages): int
     {
-        return $restResponse->getTotals() - $limit;
+        return $limit * ($totalPages - 1);
     }
 }
