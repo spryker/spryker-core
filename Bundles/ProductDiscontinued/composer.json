@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-discontinued",
+  "type": "library",
   "description": "ProductDiscontinued module",
   "license": "proprietary",
   "require": {

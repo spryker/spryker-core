@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-label-search",
+  "type": "library",
   "description": "ProductLabelSearch module",
   "license": "proprietary",
   "require": {

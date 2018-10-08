@@ -34,7 +34,8 @@ class SharedCartFactory extends AbstractFactory
             $this->createZedSharedCartStub(),
             $this->getMultiCartClient(),
             $this->getPersistentCartClient(),
-            $this->getMessengerClient()
+            $this->getMessengerClient(),
+            $this->getCustomerClient()
         );
     }
 
