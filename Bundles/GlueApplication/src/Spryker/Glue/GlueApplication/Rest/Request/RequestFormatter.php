@@ -134,18 +134,7 @@ class RequestFormatter implements RequestFormatterInterface
         HttpRequest $httpRequest,
         MetadataInterface $metadata
     ): ?RestResourceInterface {
-
-        $requestData = $this->readRequestData($httpRequest, $metadata);
-        if (!$requestData) {
-            return null;
-        }
-
-        $data = $requestData[RestResourceInterface::RESOURCE_DATA];
-
-        if (!isset($data[RestResourceInterface::RESOURCE_TYPE]) ||
-            !isset($data[RestResourceInterface::RESOURCE_ATTRIBUTES])) {
-            return null;
-        }
+        $data = $this->getPostRequestData($httpRequest, $metadata);
 
         return $this->restResourceBuilder->createRestResource(
             $data[RestResourceInterface::RESOURCE_TYPE],
@@ -353,5 +342,28 @@ class RequestFormatter implements RequestFormatterInterface
     protected function createRequestResourceBuilder(RestResourceInterface $resource): RequestBuilderInterface
     {
         return new RequestBuilder($resource);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
+     *
+     * @return array|null
+     */
+    protected function getPostRequestData(HttpRequest $httpRequest, MetadataInterface $metadata): ?array
+    {
+        $requestData = $this->readRequestData($httpRequest, $metadata);
+        if (!$requestData) {
+            return null;
+        }
+
+        $data = $requestData[RestResourceInterface::RESOURCE_DATA];
+
+        if (!isset($data[RestResourceInterface::RESOURCE_TYPE]) ||
+            !isset($data[RestResourceInterface::RESOURCE_ATTRIBUTES])) {
+            return null;
+        }
+
+        return $data;
     }
 }
