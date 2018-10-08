@@ -15,6 +15,17 @@ customers:
       - NotBlank
       - Choice:
         choices: [Male, Female]
+    password:
+      - NotBlank
+    passwordConfirmation:
+      - NotBlank
+      - IdenticalTo:
+        propertyPath: password
+    acceptedTerms:
+      - NotBlank
+      - Type:
+        type: bool
+
   patch:
     salutation:
       - NotBlank
