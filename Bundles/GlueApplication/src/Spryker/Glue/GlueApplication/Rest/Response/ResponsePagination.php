@@ -49,16 +49,8 @@ class ResponsePagination implements ResponsePaginationInterface
             return [];
         }
 
-        $queryString = $restRequest->getQueryString([static::KEY_PAGE]);
-        if (strlen($queryString)) {
-            $queryString .= '&';
-        }
-        $domain = sprintf($this->domainName . '/%s?%spage[offset]=', $restRequest->getResource()->getType(), $queryString);
-
-        $limit = '';
-        if ($pageOffsetsTransfer->getLimit()) {
-            $limit = '&page[limit]=' . $pageOffsetsTransfer->getLimit();
-        }
+        $domain = $this->buildDomainLink($restRequest);
+        $limit = $this->buildLimitParameter($pageOffsetsTransfer);
 
         $offsetLinks = [
             'last' => $domain . $pageOffsetsTransfer->getLastOffset() . $limit,
@@ -71,6 +63,7 @@ class ResponsePagination implements ResponsePaginationInterface
         if ($pageOffsetsTransfer->getNextOffset() < $restResponse->getTotals()) {
             $offsetLinks['next'] = $domain . $pageOffsetsTransfer->getNextOffset() . $limit;
         }
+
         return array_merge(
             $offsetLinks,
             $restResponse->getLinks()
@@ -136,6 +129,7 @@ class ResponsePagination implements ResponsePaginationInterface
         if ($nextOffset > $totalPages * $limit) {
             $nextOffset = (int)(($totalPages / $limit) * $limit);
         }
+
         return $nextOffset;
     }
 
@@ -151,6 +145,7 @@ class ResponsePagination implements ResponsePaginationInterface
         if ($prevOffset < 0) {
             $prevOffset = 0;
         }
+
         return $prevOffset;
     }
 
@@ -174,5 +169,36 @@ class ResponsePagination implements ResponsePaginationInterface
     protected function calculateLastOffset(int $limit, int $totalPages): int
     {
         return $limit * ($totalPages - 1);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return string
+     */
+    protected function buildDomainLink(RestRequestInterface $restRequest): string
+    {
+        $queryString = $restRequest->getQueryString([static::KEY_PAGE]);
+        if (strlen($queryString)) {
+            $queryString .= '&';
+        }
+        $domain = sprintf($this->domainName . '/%s?%spage[offset]=', $restRequest->getResource()->getType(), $queryString);
+
+        return $domain;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestPageOffsetsTransfer $pageOffsetsTransfer
+     *
+     * @return string
+     */
+    protected function buildLimitParameter($pageOffsetsTransfer): string
+    {
+        $limit = '';
+        if ($pageOffsetsTransfer->getLimit()) {
+            $limit = '&page[limit]=' . $pageOffsetsTransfer->getLimit();
+        }
+
+        return $limit;
     }
 }
