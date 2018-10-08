@@ -81,4 +81,25 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
             ->createProductPriceResolver()
             ->resolveProductPriceTransferByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function calculateProductSumPrice(
+        CurrentProductPriceTransfer $currentProductPriceTransfer,
+        PriceProductFilterTransfer $priceProductFilterTransfer,
+        array $priceProductTransfers
+    ): CurrentProductPriceTransfer {
+        return $this->getFactory()
+            ->createProductSumPriceCalculator()
+            ->calculateProductSumPrice($currentProductPriceTransfer, $priceProductFilterTransfer, $priceProductTransfers);
+    }
 }

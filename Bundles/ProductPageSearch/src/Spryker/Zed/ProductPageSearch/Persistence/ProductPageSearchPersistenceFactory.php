@@ -7,8 +7,14 @@
 
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
+use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface;
+use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapper;
+use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
 /**
@@ -31,6 +37,38 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractPageSearch()
     {
         return SpyProductAbstractPageSearchQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery
+     */
+    public function createProductConcretePageSearchQuery(): SpyProductConcretePageSearchQuery
+    {
+        return SpyProductConcretePageSearchQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function createProductQuery(): SpyProductQuery
+    {
+        return SpyProductQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
+     */
+    public function createProductLocalizedAttributesQuery(): SpyProductLocalizedAttributesQuery
+    {
+        return SpyProductLocalizedAttributesQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface
+     */
+    public function createProductPageSearchMapper(): ProductPageSearchMapperInterface
+    {
+        return new ProductPageSearchMapper($this->getSearchFacade());
     }
 
     /**
@@ -71,5 +109,13 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     public function getCategoryAttributeQuery()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::QUERY_CONTAINER_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface
+     */
+    public function getSearchFacade(): ProductPageSearchToSearchInterface
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_SEARCH);
     }
 }

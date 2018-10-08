@@ -7,7 +7,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/search": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/search": "If you want to use expander plugins"
   },
   "autoload": {
     "psr-4": {

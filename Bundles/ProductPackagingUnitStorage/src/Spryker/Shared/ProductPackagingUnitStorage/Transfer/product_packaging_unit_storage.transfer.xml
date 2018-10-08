@@ -21,4 +21,15 @@
         <property name="key" type="string" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="idProductAbstract" type="int"/>
+        <property name="leadProduct" type="int"/>
+        <property name="amount" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="productConcrete" type="ProductConcrete"/>
+        <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="types" type="ProductConcretePackagingStorage[]"/>
+    </transfer>
+
 </transfers>

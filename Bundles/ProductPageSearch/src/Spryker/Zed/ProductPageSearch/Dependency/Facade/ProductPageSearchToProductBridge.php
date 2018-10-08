@@ -54,4 +54,32 @@ class ProductPageSearchToProductBridge implements ProductPageSearchToProductInte
     {
         return $this->productFacade->generateAttributePermutations($superAttributes, $idProductConcrete);
     }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByIdProductAbstract(int $idProductAbstract)
+    {
+        return $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findProductConcretesByProductConcreteIds(array $productConcreteIds): array
+    {
+        return $this->productFacade->findProductConcretesByProductConcreteIds($productConcreteIds);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findAllProductConcretes(): array
+    {
+        return $this->productFacade->findAllProductConcretes();
+    }
 }

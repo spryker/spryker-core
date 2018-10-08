@@ -12,6 +12,8 @@ use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientIn
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
 use Spryker\Client\PriceProduct\ProductPriceResolver\ProductPriceResolver;
+use Spryker\Client\PriceProduct\ProductSumPriceCalculator\ProductSumPriceCalculator;
+use Spryker\Client\PriceProduct\ProductSumPriceCalculator\ProductSumPriceCalculatorInterface;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 
 /**
@@ -31,6 +33,14 @@ class PriceProductFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->getPriceProductService()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProduct\ProductSumPriceCalculator\ProductSumPriceCalculator
+     */
+    public function createProductSumPriceCalculator(): ProductSumPriceCalculatorInterface
+    {
+        return new ProductSumPriceCalculator($this->createProductPriceResolver());
     }
 
     /**

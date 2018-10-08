@@ -681,7 +681,7 @@ interface ProductFacadeInterface
      * - Returns an associative array of attribute key - attribute value pairs of the persisted concrete product.
      * - The result is a combination of the concrete product's attributes and its abstract product's attributes.
      * - Includes localized abstract product and concrete products attribute keys when $localeTransfer is provided.
-
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -814,4 +814,27 @@ interface ProductFacadeInterface
      * @return array
      */
     public function getProductConcreteSkusByConcreteIds(array $productIds): array;
+
+    /**
+     * Specification:
+     * - Finds concrete products by given ids.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findProductConcretesByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * Specification:
+     * - Finds all concrete products.
+     * - Returns array of ProductConcreteTransfer without any relations.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findAllProductConcretes(): array;
 }

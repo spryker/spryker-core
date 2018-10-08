@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductMeasurementUnitStorage;
 
 use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 
@@ -65,13 +66,13 @@ interface ProductMeasurementUnitStorageClientInterface
 
     /**
      * Specification:
-     * - Finds a product base unit within Storage with a given product ID.
+     * - Expands ProductConcreteTransfer with base measurement unit data using given product ID.
      *
      * @api
      *
-     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function findProductMeasurementBaseUnitByIdProduct(int $idProduct): ?ProductMeasurementUnitTransfer;
+    public function expandProductConcreteTransferWithMeasurementBaseUnit(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

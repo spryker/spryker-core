@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ShoppingList;
 
+use Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
@@ -82,6 +83,21 @@ interface ShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
+     *  - Add items to shopping list.
+     *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function addItems(ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer): ShoppingListResponseTransfer;
 
     /**
      * Specification:

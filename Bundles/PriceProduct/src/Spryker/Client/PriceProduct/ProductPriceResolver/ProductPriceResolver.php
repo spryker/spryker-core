@@ -171,9 +171,14 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             $prices[$priceProductOnePriceTypeTransfer->getPriceTypeName()] = $this->getPriceValueByPriceMode($priceProductOnePriceTypeTransfer->getMoneyValue(), $priceMode);
         }
 
+        $currencyTransfer = $this->currencyClient->getCurrent();
+
         return $currentProductPriceTransfer
             ->setPrice($price)
-            ->setPrices($prices);
+            ->setPrices($prices)
+            ->setCurrency($currencyTransfer)
+            ->setQuantity($priceProductFilter->getQuantity())
+            ->setPriceMode($priceMode);
     }
 
     /**
