@@ -14,7 +14,7 @@ interface CurrencyClientInterface
 {
     /**
      * Specification:
-     *  - Reads currency data for given iso code, it does not make zed call so it wont have foreign keys to currency table.
+     *  - Reads currency data for given ISO code, it does not make Zed call so it wont have foreign keys to currency table.
      *
      * @api
      *
