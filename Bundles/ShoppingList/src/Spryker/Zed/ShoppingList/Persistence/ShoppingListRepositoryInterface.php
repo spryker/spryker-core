@@ -8,9 +8,12 @@
 namespace Spryker\Zed\ShoppingList\Persistence;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
@@ -81,6 +84,11 @@ interface ShoppingListRepositoryInterface
     public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer;
 
     /**
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
+     */
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer;
+
+    /**
      * @param int $idShoppingList
      * @param int $idCompanyBusinessUnit
      *
@@ -104,11 +112,27 @@ interface ShoppingListRepositoryInterface
     public function findCompanyBusinessUnitSharedShoppingListsIds(int $idCompanyBusinessUnit);
 
     /**
+     * @param int $idCompanyBusinessUnit
+     * @param string $shoppingListPermissionGroupName
+     *
+     * @return int[]
+     */
+    public function getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(int $idCompanyBusinessUnit, string $shoppingListPermissionGroupName): array;
+
+    /**
      * @param int $idCompanyUser
      *
      * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]
      */
     public function findCompanyUserSharedShoppingListsIds(int $idCompanyUser);
+
+    /**
+     * @param int $idCompanyUser
+     * @param string $shoppingListPermissionGroupName
+     *
+     * @return int[]
+     */
+    public function getCompanyUserSharedShoppingListIdsByPermissionGroupName(int $idCompanyUser, string $shoppingListPermissionGroupName): array;
 
     /**
      * @param int $idCompanyUser
@@ -123,4 +147,18 @@ interface ShoppingListRepositoryInterface
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function findCompanyBusinessUnitSharedShoppingLists(int $idCompanyBusinessUnit): ShoppingListCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
+     */
+    public function getShoppingListCompanyBusinessUnitsByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
+     */
+    public function getShoppingListCompanyUsersByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer;
 }

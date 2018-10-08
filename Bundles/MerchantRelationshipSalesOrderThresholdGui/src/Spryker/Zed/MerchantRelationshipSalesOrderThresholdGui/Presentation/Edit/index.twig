@@ -1,0 +1,78 @@
+{% extends '@MerchantRelationshipSalesOrderThresholdGui/_layout/layout.twig' %}
+
+{% set widget_title = 'Edit Merchant Relationhip Threshold: ' ~ form.vars.value.idMerchantRelationship %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton(url('/merchant-relationship-sales-order-threshold-gui'), 'Back to Merchant Relationship Thresholds' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            {{ form_start(form) }}
+            {{ form_row(form.storeCurrency) }}
+
+            <h3>{{ 'Hard Threshold' | trans }}</h3>
+
+            {{ form_row(form.hardThreshold) }}
+
+            {% for localeTransfer in localeCollection %}
+                {% set formKey = 'hard_' ~ localeTransfer.localeName %}
+                {% if form[formKey] is defined %}
+                    {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+                        {% block content %}
+                            {% for input in form[formKey] %}
+                                <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_label(input) }}
+                                    {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
+                                    {{ form_errors(input) }}
+                                </div>
+                            {% endfor %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endif %}
+            {% endfor %}
+
+            <hr/>
+            <h3>{{ 'Soft Threshold' | trans }}</h3>
+
+            {{ form_row(form.softStrategy) }}
+            {{ form_row(form.softThreshold) }}
+            {{ form_row(form.softFixedFee) }}
+            {{ form_row(form.softFlexibleFee) }}
+
+            {% for localeTransfer in localeCollection %}
+                {% set formKey = 'soft_' ~ localeTransfer.localeName %}
+                {% if form[formKey] is defined %}
+                    {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+                        {% block content %}
+                            {% for input in form[formKey] %}
+                                <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_label(input) }}
+                                    {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
+                                    {{ form_errors(input) }}
+                                </div>
+                            {% endfor %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endif %}
+            {% endfor %}
+
+
+            {{ form_widget(form) }}
+
+            <div class="well well-sm">
+                {{ 'You can use the the placeholders <b>{{threshold}}</b> <b>{{fee}}</b>' | raw }}
+            </div>
+
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+
+            {{ form_end(form) }}
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}

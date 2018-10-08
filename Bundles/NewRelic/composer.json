@@ -1,5 +1,6 @@
 {
   "name": "spryker/new-relic",
+  "type": "library",
   "description": "NewRelic module",
   "license": "proprietary",
   "require": {
@@ -41,5 +42,6 @@
   },
   "config": {
     "sort-packages": true
-  }
+  },
+  "abandoned": true
 }

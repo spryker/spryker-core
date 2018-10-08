@@ -1,5 +1,6 @@
 {
   "name": "spryker/multi-cart",
+  "type": "library",
   "description": "MultiCart module",
   "license": "proprietary",
   "require": {

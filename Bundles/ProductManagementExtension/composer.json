@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-management-extension",
+  "type": "library",
   "description": "ProductManagementExtension module",
   "license": "proprietary",
   "require": {

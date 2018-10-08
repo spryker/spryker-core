@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-review-collector",
+  "type": "library",
   "description": "ProductReviewCollector module",
   "license": "proprietary",
   "require": {

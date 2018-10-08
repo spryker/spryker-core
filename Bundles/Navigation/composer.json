@@ -1,5 +1,6 @@
 {
   "name": "spryker/navigation",
+  "type": "library",
   "description": "Navigation module",
   "license": "proprietary",
   "require": {
