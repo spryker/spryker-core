@@ -14,8 +14,8 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPlu
  */
 class CheckoutPlaceOrderGrantTotalXPermissionPlugin implements ExecutablePermissionPluginInterface
 {
-    const KEY = 'permission.checkout.placeOrder.grantTotal.x';
-    const OPTION_CART_MAX_GRAND_TOTAL = 1000;
+    public const KEY = 'permission.checkout.placeOrder.grantTotal.x';
+    public const OPTION_CART_MAX_GRAND_TOTAL = 1000;
 
     /**
      * @param array $configuration

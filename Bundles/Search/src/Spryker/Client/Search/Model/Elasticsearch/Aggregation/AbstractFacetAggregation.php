@@ -16,10 +16,10 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 abstract class AbstractFacetAggregation implements FacetAggregationInterface
 {
-    const FACET_VALUE = 'facet-value';
-    const FACET_NAME = 'facet-name';
-    const NAME_SUFFIX = '-name';
-    const PATH_SEPARATOR = '.';
+    public const FACET_VALUE = 'facet-value';
+    public const FACET_NAME = 'facet-name';
+    public const NAME_SUFFIX = '-name';
+    public const PATH_SEPARATOR = '.';
 
     /**
      * @param string $fieldName

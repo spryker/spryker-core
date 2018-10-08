@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-label-collector",
+  "type": "library",
   "description": "ProductLabelCollector module",
   "license": "proprietary",
   "require": {

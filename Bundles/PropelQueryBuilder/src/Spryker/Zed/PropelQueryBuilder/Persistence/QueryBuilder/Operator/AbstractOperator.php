@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 
 abstract class AbstractOperator implements OperatorInterface
 {
-    const TYPE = null;
+    public const TYPE = null;
 
     /**
      * @return string

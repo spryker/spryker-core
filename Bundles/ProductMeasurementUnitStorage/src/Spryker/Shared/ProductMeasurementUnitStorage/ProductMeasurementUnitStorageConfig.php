@@ -17,7 +17,7 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_MEASUREMENT_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_MEASUREMENT_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -25,7 +25,7 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_MEASUREMENT_UNIT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+    public const PRODUCT_MEASUREMENT_UNIT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
     /**
      * Specification:

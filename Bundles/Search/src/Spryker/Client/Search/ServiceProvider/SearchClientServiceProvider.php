@@ -14,7 +14,7 @@ use Spryker\Shared\Kernel\ContainerGlobals;
 
 class SearchClientServiceProvider implements ServiceProviderInterface
 {
-    const CLIENT_SEARCH = 'search client';
+    public const CLIENT_SEARCH = 'search client';
 
     /**
      * @param \Silex\Application $app

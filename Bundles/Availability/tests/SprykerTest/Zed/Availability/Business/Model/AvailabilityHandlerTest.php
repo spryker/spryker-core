@@ -34,7 +34,7 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
  */
 class AvailabilityHandlerTest extends Unit
 {
-    const PRODUCT_SKU = 'sku-123-321';
+    public const PRODUCT_SKU = 'sku-123-321';
 
     /**
      * @return void

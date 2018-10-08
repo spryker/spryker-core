@@ -17,13 +17,13 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class Drawer implements DrawerInterface
 {
-    const ATTRIBUTE_FONT_SIZE = 'fontsize';
+    public const ATTRIBUTE_FONT_SIZE = 'fontsize';
 
-    const EDGE_UPPER_HALF = 'upper half';
-    const EDGE_LOWER_HALF = 'lower half';
-    const EDGE_FULL = 'edge full';
-    const HIGHLIGHT_COLOR = '#FFFFCC';
-    const HAPPY_PATH_COLOR = '#70ab28';
+    public const EDGE_UPPER_HALF = 'upper half';
+    public const EDGE_LOWER_HALF = 'lower half';
+    public const EDGE_FULL = 'edge full';
+    public const HIGHLIGHT_COLOR = '#FFFFCC';
+    public const HAPPY_PATH_COLOR = '#70ab28';
 
     /**
      * @var array

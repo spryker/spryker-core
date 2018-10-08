@@ -19,10 +19,10 @@ use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInt
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
 {
-    const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'PRODUCT_ABSTRACT_LOCALIZED_ENTITY';
-    const PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY = 'PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY';
-    const STORE_NAME = 'STORE_NAME';
-    const LOCALE_NAME = 'LOCALE_NAME';
+    public const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'PRODUCT_ABSTRACT_LOCALIZED_ENTITY';
+    public const PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY = 'PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY';
+    public const STORE_NAME = 'STORE_NAME';
+    public const LOCALE_NAME = 'LOCALE_NAME';
 
     /**
      * @var \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface

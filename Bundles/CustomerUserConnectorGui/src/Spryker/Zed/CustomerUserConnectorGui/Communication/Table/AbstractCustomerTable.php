@@ -17,20 +17,20 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 abstract class AbstractCustomerTable extends AbstractTable
 {
-    const COL_ID = 'id_customer';
-    const COL_FIRST_NAME = 'first_name';
-    const COL_LAST_NAME = 'last_name';
-    const COL_GENDER = 'gender';
-    const COL_EMAIL = 'email';
-    const COL_ASSIGNED_USER = 'assigned_zed_user';
-    const COL_CHECKBOX = 'checkbox';
+    public const COL_ID = 'id_customer';
+    public const COL_FIRST_NAME = 'first_name';
+    public const COL_LAST_NAME = 'last_name';
+    public const COL_GENDER = 'gender';
+    public const COL_EMAIL = 'email';
+    public const COL_ASSIGNED_USER = 'assigned_zed_user';
+    public const COL_CHECKBOX = 'checkbox';
 
-    const GENDER_MAP = [
+    public const GENDER_MAP = [
         0 => 'Male',
         1 => 'Female',
     ];
 
-    const IS_CHECKBOX_SET_BY_DEFAULT = true;
+    public const IS_CHECKBOX_SET_BY_DEFAULT = true;
 
     /**
      * @var \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface

@@ -22,12 +22,12 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQueryContainerInterface
 {
-    const ALIAS_COL_ID_DISCOUNT = 'id_discount';
-    const ALIAS_COL_AMOUNT = 'amount';
-    const ALIAS_COL_TYPE = 'type';
-    const ALIAS_COL_DESCRIPTION = 'description';
-    const ALIAS_COL_VOUCHER_CODE = 'VoucherCode';
-    const ALIAS_VOUCHER_POOL_NAME = 'voucher_pool';
+    public const ALIAS_COL_ID_DISCOUNT = 'id_discount';
+    public const ALIAS_COL_AMOUNT = 'amount';
+    public const ALIAS_COL_TYPE = 'type';
+    public const ALIAS_COL_DESCRIPTION = 'description';
+    public const ALIAS_COL_VOUCHER_CODE = 'VoucherCode';
+    public const ALIAS_VOUCHER_POOL_NAME = 'voucher_pool';
 
     /**
      * @api

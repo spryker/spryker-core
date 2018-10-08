@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Wishlist\Business\Model;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
@@ -23,7 +24,7 @@ class Writer implements WriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
-    const DEFAULT_NAME = 'default';
+    public const DEFAULT_NAME = 'default';
 
     /**
      * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
@@ -272,7 +273,15 @@ class Writer implements WriterInterface
     {
         $this->assertWishlistItemUpdateRequest($wishlistItemTransfer);
 
-        if (!$this->preAddItemCheck($wishlistItemTransfer) || ($this->productFacade && !$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku()))) {
+        $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($wishlistItemTransfer->getSku());
+
+        if ($this->productFacade
+            && (!$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku())
+                || !$this->productFacade->isProductConcreteActive($productConcreteTransfer))) {
+            return $wishlistItemTransfer;
+        }
+
+        if (!$this->preAddItemCheck($wishlistItemTransfer)) {
             return $wishlistItemTransfer;
         }
 

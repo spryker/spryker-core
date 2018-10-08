@@ -27,7 +27,7 @@ abstract class InstallmentAbstractTest extends AbstractFacadeTest
     /**
      * @const Payment method code.
      */
-    const PAYMENT_METHOD = RatepayConstants::INSTALLMENT;
+    public const PAYMENT_METHOD = RatepayConstants::INSTALLMENT;
 
     /**
      * @return \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer

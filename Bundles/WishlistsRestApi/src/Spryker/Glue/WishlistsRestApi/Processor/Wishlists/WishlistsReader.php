@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\WishlistsRestApi\Processor\Wishlists;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
@@ -91,6 +92,28 @@ class WishlistsReader implements WishlistsReaderInterface
         }
 
         return $this->getWishlistOverviewWithoutProductDetails($wishlistTransfer);
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getWishlistsByCustomerReference(string $customerReference): array
+    {
+        $response = [];
+
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
+        $customerWishlistCollectionTransfer = $this->wishlistClient->getWishlistCollection($customerTransfer);
+
+        $customerWishlists = $customerWishlistCollectionTransfer->getWishlists();
+
+        foreach ($customerWishlists as $wishlistTransfer) {
+            $wishlistResource = $this->wishlistsResourceMapper->mapWishlistTransferToRestResource($wishlistTransfer);
+            $response[] = $wishlistResource;
+        }
+
+        return $response;
     }
 
     /**

@@ -41,7 +41,7 @@ class NewRelicMonitoringExtensionPlugin implements MonitoringExtensionPluginInte
             return;
         }
 
-        \newrelic_notice_error($message, $exception);
+        newrelic_notice_error($message, $exception);
     }
 
     /**
@@ -59,7 +59,7 @@ class NewRelicMonitoringExtensionPlugin implements MonitoringExtensionPluginInte
 
         $this->application = $application . '-' . $store . ' (' . $environment . ')';
 
-        \newrelic_set_appname($this->application);
+        newrelic_set_appname($this->application);
     }
 
     /**
@@ -73,7 +73,7 @@ class NewRelicMonitoringExtensionPlugin implements MonitoringExtensionPluginInte
             return;
         }
 
-        \newrelic_name_transaction($name);
+        newrelic_name_transaction($name);
     }
 
     /**
@@ -85,7 +85,7 @@ class NewRelicMonitoringExtensionPlugin implements MonitoringExtensionPluginInte
             return;
         }
 
-        \newrelic_start_transaction($this->application);
+        newrelic_start_transaction($this->application);
     }
 
     /**
@@ -97,7 +97,7 @@ class NewRelicMonitoringExtensionPlugin implements MonitoringExtensionPluginInte
             return;
         }
 
-        \newrelic_end_transaction();
+        newrelic_end_transaction();
     }
 
     /**
@@ -109,7 +109,7 @@ class NewRelicMonitoringExtensionPlugin implements MonitoringExtensionPluginInte
             return;
         }
 
-        \newrelic_ignore_transaction();
+        newrelic_ignore_transaction();
     }
 
     /**
@@ -121,7 +121,7 @@ class NewRelicMonitoringExtensionPlugin implements MonitoringExtensionPluginInte
             return;
         }
 
-        \newrelic_background_job(true);
+        newrelic_background_job(true);
     }
 
     /**
@@ -136,7 +136,7 @@ class NewRelicMonitoringExtensionPlugin implements MonitoringExtensionPluginInte
             return;
         }
 
-        \newrelic_add_custom_parameter($key, $value);
+        newrelic_add_custom_parameter($key, $value);
     }
 
     /**
@@ -150,6 +150,6 @@ class NewRelicMonitoringExtensionPlugin implements MonitoringExtensionPluginInte
             return;
         }
 
-        \newrelic_add_custom_tracer($tracer);
+        newrelic_add_custom_tracer($tracer);
     }
 }

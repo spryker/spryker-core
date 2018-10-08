@@ -15,10 +15,16 @@ use Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroupQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroupToPermissionQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListCompanyBusinessUnitMapper;
+use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListCompanyBusinessUnitMapperInterface;
+use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListCompanyUserMapper;
+use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListCompanyUserMapperInterface;
 use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemMapper;
 use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemMapperInterface;
 use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapper;
 use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapperInterface;
+use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListPermissionGroupMapper;
+use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListPermissionGroupMapperInterface;
 
 /**
  * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
@@ -95,5 +101,29 @@ class ShoppingListPersistenceFactory extends AbstractPersistenceFactory
     public function createShoppingListItemMapper(): ShoppingListItemMapperInterface
     {
         return new ShoppingListItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListPermissionGroupMapperInterface
+     */
+    public function createShoppingListPermissionGroupMapper(): ShoppingListPermissionGroupMapperInterface
+    {
+        return new ShoppingListPermissionGroupMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListCompanyBusinessUnitMapperInterface
+     */
+    public function createShoppingListCompanyBusinessUnitMapper(): ShoppingListCompanyBusinessUnitMapperInterface
+    {
+        return new ShoppingListCompanyBusinessUnitMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListCompanyUserMapperInterface
+     */
+    public function createShoppingListCompanyUserMapper(): ShoppingListCompanyUserMapperInterface
+    {
+        return new ShoppingListCompanyUserMapper();
     }
 }

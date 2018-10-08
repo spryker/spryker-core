@@ -18,8 +18,8 @@ use Twig_SimpleFunction;
  */
 class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const NO_SYMBOL_FOUND = '-';
-    const CURRENCY_SYMBOL_FUNCTION_NAME = 'currencySymbol';
+    public const NO_SYMBOL_FOUND = '-';
+    public const CURRENCY_SYMBOL_FUNCTION_NAME = 'currencySymbol';
 
     /**
      * Registers services on the given app.
