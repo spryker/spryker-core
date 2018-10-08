@@ -9,6 +9,7 @@ namespace Spryker\Glue\CategoriesRestApi\Processor\Reader;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface CategoryReaderInterface
 {
@@ -20,12 +21,11 @@ interface CategoryReaderInterface
     public function getCategoryTree(string $locale): RestResponseInterface;
 
     /**
-     * @param string|null $nodeId
-     * @param string $locale
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCategoryNode(?string $nodeId, string $locale): RestResponseInterface;
+    public function readCategoryNode(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
      * @param int $nodeId
