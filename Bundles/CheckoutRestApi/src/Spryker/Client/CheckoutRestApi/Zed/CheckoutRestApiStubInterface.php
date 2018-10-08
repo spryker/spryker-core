@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CheckoutRestApi\Dependency\Facade;
+namespace Spryker\Client\CheckoutRestApi\Zed;
 
+use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutRestApiToPaymentFacadeInterface
+interface CheckoutRestApiStubInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
+    public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer;
 }

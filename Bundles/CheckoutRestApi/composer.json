@@ -8,7 +8,8 @@
     "spryker/customer": "^1.0.0",
     "spryker/kernel": "^3.22.0",
     "spryker/payment": "^1.0.0",
-    "spryker/shipment": "^1.0.0"
+    "spryker/shipment": "^1.0.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

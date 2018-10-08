@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface;
@@ -52,6 +55,48 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer
     {
-        return new CheckoutDataTransfer();
+        $shipmentMethodsTransfer = $this->getShipmentMethodsTransfer($quoteTransfer);
+        $paymentMethodsTransfer = $this->getPaymentMethodsTransfer($quoteTransfer);
+        $addressesTransfer = $this->getAddressesTransfer($quoteTransfer);
+
+        return (new CheckoutDataTransfer())
+            ->setShipmentMethods($shipmentMethodsTransfer)
+            ->setPaymentMethods($paymentMethodsTransfer)
+            ->setAddresses($addressesTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     */
+    protected function getShipmentMethodsTransfer(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
+    {
+        return $this->shipmentFacade->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    protected function getPaymentMethodsTransfer(QuoteTransfer $quoteTransfer): PaymentMethodsTransfer
+    {
+        return $this->paymentFacade->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressesTransfer
+     */
+    protected function getAddressesTransfer(QuoteTransfer $quoteTransfer): AddressesTransfer
+    {
+        $customerTransfer = $quoteTransfer->getCustomer();
+        if ($customerTransfer->getIsGuest()) {
+            return new AddressesTransfer();
+        }
+
+        return $this->customerFacade->getAddresses($customerTransfer);
     }
 }
