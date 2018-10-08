@@ -11,12 +11,12 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class AddressResourceMapper implements AddressResourceMapperInterface
 {
-    protected const RESOURCE_LINKS_SELF = 'self';
     protected const SELF_LINK_FORMAT = '%s/%s/%s/%s';
 
     /**
@@ -54,7 +54,7 @@ class AddressResourceMapper implements AddressResourceMapperInterface
             $restAddressAttributesTransfer
         );
 
-        $restResource->addLink(static::RESOURCE_LINKS_SELF, $this->createSelfLink($customerTransfer, $addressTransfer));
+        $restResource->addLink(RestLinkInterface::LINK_SELF, $this->createSelfLink($customerTransfer, $addressTransfer));
 
         return $restResource;
     }
