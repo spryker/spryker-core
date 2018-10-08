@@ -1,5 +1,6 @@
 {
   "name": "spryker/shopping-list-product-option-connector",
+  "type": "library",
   "description": "ShoppingListProductOptionConnector module",
   "license": "proprietary",
   "require": {
