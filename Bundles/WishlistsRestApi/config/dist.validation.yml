@@ -1,0 +1,14 @@
+wishlists:
+  post:
+    name:
+      - NotBlank
+      - Length:
+        max: 256
+  patch:
+    - NotBlank
+    - Length:
+      max: 256
+wishlist-items:
+  post:
+    sku:
+      - NotBlank
