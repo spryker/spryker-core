@@ -34,9 +34,10 @@ class CompanyRoleAttachCustomerFormExpanderPlugin extends AbstractPlugin impleme
         $dataProvider = $this->getFactory()
             ->createCompanyUserRoleFormDataProvider();
 
+        $companyUserTransfer = $builder->getData();
         $formType->buildForm(
             $builder,
-            $dataProvider->getOptions()
+            $dataProvider->getOptions($companyUserTransfer)
         );
 
         return $builder;
