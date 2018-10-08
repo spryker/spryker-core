@@ -73,20 +73,22 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
-     * @param string $nodeId
+     * @param string|null $nodeId
      * @param string $locale
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCategoryNode(string $nodeId, string $locale): RestResponseInterface
+    public function getCategoryNode(?string $nodeId, string $locale): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
+
         if (!$this->isNodeIdValid($nodeId)) {
             return $this->createInvalidNodeIdResponse($restResponse);
         }
+
         $restResource = $this->findCategoryNodeById((int)$nodeId, $locale);
         if (!$restResource) {
-            $this->createErrorResponse($restResponse);
+            return $this->createErrorResponse($restResponse);
         }
 
         return $restResponse->addResource($restResource);
@@ -123,25 +125,18 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
-     * @param string $nodeId
+     * @param string|null $nodeId
      *
      * @return bool
      */
-    protected function isNodeIdValid(string $nodeId): bool
+    protected function isNodeIdValid(?string $nodeId): bool
     {
+        if (!$nodeId) {
+            return false;
+        }
+
         $convertedToInt = (int)$nodeId;
         return $nodeId === (string)$convertedToInt;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
-    protected function createRestErrorTransfer(): RestErrorMessageTransfer
-    {
-        return (new RestErrorMessageTransfer())
-            ->setCode(CategoriesRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CategoriesRestApiConfig::RESPONSE_DETAILS_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING);
     }
 
     /**
