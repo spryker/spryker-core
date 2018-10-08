@@ -5,7 +5,7 @@
           package="src.Orm.Zed.Quote.Persistence"
 >
 
-    <table name="spy_quote">
+    <table name="spy_quote" identifierQuoting="true">
         <column name="key" type="VARCHAR" size="255" description="Key is used for DataImport as identifier for existing entities. This should never be changed."/>
     </table>
 
