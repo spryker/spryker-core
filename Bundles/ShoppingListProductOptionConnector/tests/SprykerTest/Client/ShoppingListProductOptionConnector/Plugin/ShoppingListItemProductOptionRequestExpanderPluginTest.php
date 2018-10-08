@@ -38,7 +38,7 @@ class ShoppingListItemProductOptionRequestExpanderPluginTest extends Unit
 
         // Action
         $shoppingListItemMapperPlugin = new ShoppingListItemProductOptionRequestMapperPlugin();
-        $shoppingListItemMapperPlugin->map($shoppingListItemTransfer, $params);
+        $shoppingListItemMapperPlugin->map($params, $shoppingListItemTransfer);
 
         // Assert
         $idProductOptions = [];
@@ -63,7 +63,7 @@ class ShoppingListItemProductOptionRequestExpanderPluginTest extends Unit
 
         // Action
         $shoppingListItemMapperPlugin = new ShoppingListItemProductOptionRequestMapperPlugin();
-        $shoppingListItemMapperPlugin->map($shoppingListItemTransfer, $params);
+        $shoppingListItemMapperPlugin->map($params, $shoppingListItemTransfer);
 
         // Assert
         $this->assertEmpty($shoppingListItemTransfer->getProductOptions());

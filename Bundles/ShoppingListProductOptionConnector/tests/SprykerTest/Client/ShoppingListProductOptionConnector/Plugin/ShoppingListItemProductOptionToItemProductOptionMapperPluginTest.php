@@ -11,13 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Spryker\Client\Kernel\Container;
-use Spryker\Client\ShoppingListProductOptionConnector\Dependency\Client\ShoppingListProductOptionConnectorToCartClientInterface;
 use Spryker\Client\ShoppingListProductOptionConnector\ShoppingList\ShoppingListItemProductOptionToItemProductOptionMapperPlugin;
-use Spryker\Client\ShoppingListProductOptionConnector\ShoppingListProductOptionConnectorDependencyProvider;
-use Spryker\Client\ShoppingListProductOptionConnector\ShoppingListProductOptionConnectorFactory;
 
 /**
  * Auto-generated group annotations
@@ -54,20 +49,8 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
         }
         $itemTransfer = (new ItemTransfer())->setSku('sku_sample');
 
-        $container = new Container();
-        $cartMock = $this->getCartMock();
-
-        $cartMock->method('getQuote')
-            ->will($this->returnValue(new QuoteTransfer()));
-        $cartMock->method('findQuoteItem')
-            ->will($this->returnValue(null));
-
-        $container[ShoppingListProductOptionConnectorDependencyProvider::CLIENT_CART] = function (Container $container) use ($cartMock) {
-            return $cartMock;
-        };
-
         // Action
-        $shoppingListItemProductOptionMapperPlugin = $this->getShoppingListItemProductOptionToItemProductOptionMapperPlugin($container);
+        $shoppingListItemProductOptionMapperPlugin = $this->createShoppingListItemProductOptionToItemProductOptionMapperPlugin();
         $actualResult = $shoppingListItemProductOptionMapperPlugin->map(
             $shoppingListItemTransfer,
             $itemTransfer
@@ -92,11 +75,9 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
     {
         // Prepare
         $sku = 'sku_sample';
-        $groupKey = 'sample_group_key';
         $productTransfer = $this->tester->haveProduct();
         $productOptionGroupTransfer = $this->tester->createProductOptionGroupTransfer($productTransfer->getSku());
         $itemTransfer = (new ItemTransfer())->setSku($sku);
-        $itemTransferInCart = (new ItemTransfer())->setSku($sku)->setGroupKey($groupKey);
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())->setSku($sku);
         foreach ($productOptionGroupTransfer->getProductOptionValues() as $productOptionValueTransfer) {
             $productOptionTransfer = (new ProductOptionTransfer())
@@ -104,23 +85,10 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
                 ->setValue($productOptionValueTransfer->getValue());
 
             $shoppingListItemTransfer->addProductOption($productOptionTransfer);
-            $itemTransferInCart->addProductOption($productOptionTransfer);
         }
 
-        $container = new Container();
-        $cartMock = $this->getCartMock();
-
-        $cartMock->method('getQuote')
-            ->will($this->returnValue((new QuoteTransfer())->addItem($itemTransferInCart)));
-        $cartMock->method('findQuoteItem')
-            ->will($this->returnValue($itemTransferInCart));
-
-        $container[ShoppingListProductOptionConnectorDependencyProvider::CLIENT_CART] = function (Container $container) use ($cartMock) {
-            return $cartMock;
-        };
-
         // Action
-        $shoppingListItemProductOptionMapperPlugin = $this->getShoppingListItemProductOptionToItemProductOptionMapperPlugin($container);
+        $shoppingListItemProductOptionMapperPlugin = $this->createShoppingListItemProductOptionToItemProductOptionMapperPlugin();
         $actualResult = $shoppingListItemProductOptionMapperPlugin->map(
             $shoppingListItemTransfer,
             $itemTransfer
@@ -128,7 +96,6 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
 
         // Assert
         $this->assertCount(1, $actualResult->getProductOptions());
-        $this->assertSame($actualResult->getGroupKey(), $groupKey);
         foreach ($actualResult->getProductOptions() as $productOptionTransfer) {
             $this->assertContains(
                 $productOptionTransfer->getValue(),
@@ -140,29 +107,10 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\ShoppingListProductOptionConnector\Dependency\Client\ShoppingListProductOptionConnectorToCartClientInterface
-     */
-    protected function getCartMock()
-    {
-        return $this->getMockBuilder(ShoppingListProductOptionConnectorToCartClientInterface::class)->setMethods([
-            'getQuote',
-            'findQuoteItem',
-        ])->disableOriginalConstructor()->getMock();
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
      * @return \Spryker\Client\ShoppingListProductOptionConnector\ShoppingList\ShoppingListItemProductOptionToItemProductOptionMapperPlugin
      */
-    protected function getShoppingListItemProductOptionToItemProductOptionMapperPlugin(Container $container): ShoppingListItemProductOptionToItemProductOptionMapperPlugin
+    protected function createShoppingListItemProductOptionToItemProductOptionMapperPlugin(): ShoppingListItemProductOptionToItemProductOptionMapperPlugin
     {
-        $shoppingListItemProductOptionClientFactory = new ShoppingListProductOptionConnectorFactory();
-        $shoppingListItemProductOptionClientFactory->setContainer($container);
-
-        $shoppingListItemProductOptionMapperPlugin = new ShoppingListItemProductOptionToItemProductOptionMapperPlugin();
-        $shoppingListItemProductOptionMapperPlugin->setFactory($shoppingListItemProductOptionClientFactory);
-
-        return $shoppingListItemProductOptionMapperPlugin;
+        return new ShoppingListItemProductOptionToItemProductOptionMapperPlugin();
     }
 }
