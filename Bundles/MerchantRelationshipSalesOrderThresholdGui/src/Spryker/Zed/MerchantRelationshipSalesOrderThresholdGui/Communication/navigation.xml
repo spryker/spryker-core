@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <threshold>
+        <pages>
+            <sales-order-threshold-merchant-relationship>
+                <label>Merchant relationships</label>
+                <title>Merchant relationships</title>
+                <uri>/merchant-relationship-sales-order-threshold-gui</uri>
+                <icon>fa-angle-double-right</icon>
+            </sales-order-threshold-merchant-relationship>
+            <sales-order-threshold-merchant-relationship-edit>
+                <label>Edit Merchant Relationhip Threshold</label>
+                <title>Edit Merchant Relationhip Threshold</title>
+                <uri>/merchant-relationship-sales-order-threshold-gui/edit</uri>
+                <visible>0</visible>
+            </sales-order-threshold-merchant-relationship-edit>
+        </pages>
+    </threshold>
+</config>
+

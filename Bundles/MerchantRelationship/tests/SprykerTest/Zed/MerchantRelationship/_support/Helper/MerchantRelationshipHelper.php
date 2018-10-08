@@ -12,11 +12,13 @@ use Generated\Shared\DataBuilder\MerchantRelationshipBuilder;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class MerchantRelationshipHelper extends Module
 {
     use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
 
     /**
      * @param array $seedData
@@ -25,10 +27,61 @@ class MerchantRelationshipHelper extends Module
      */
     public function haveMerchantRelationship(array $seedData): MerchantRelationshipTransfer
     {
-        $merchantRelationship = (new MerchantRelationshipBuilder($seedData))->build();
-        $merchantRelationship->setIdMerchantRelationship(null);
+        $merchantRelationshipTransfer = (new MerchantRelationshipBuilder($seedData))->build();
+        $merchantRelationshipTransfer->setIdMerchantRelationship(null);
 
-        return $this->getLocator()->merchantRelationship()->facade()->createMerchantRelationship($merchantRelationship);
+        $merchantRelationshipTransfer = $this->createOrUpdateMerchantRelationship($merchantRelationshipTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantRelationshipTransfer) {
+            $this->cleanupMerchantRelationship($merchantRelationshipTransfer);
+        });
+
+        return $merchantRelationshipTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    protected function createOrUpdateMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    {
+        $foundMerchantRelationshipTransfer = $this->getLocator()
+            ->merchantRelationship()
+            ->facade()
+            ->findMerchantRelationshipByKey($merchantRelationshipTransfer);
+
+        if ($foundMerchantRelationshipTransfer) {
+            $merchantRelationshipTransfer->setIdMerchantRelationship(
+                $foundMerchantRelationshipTransfer->getIdMerchantRelationship()
+            );
+
+            return $this->getLocator()
+                ->merchantRelationship()
+                ->facade()
+                ->updateMerchantRelationship($merchantRelationshipTransfer);
+        }
+
+        return $this->getLocator()
+            ->merchantRelationship()
+            ->facade()
+            ->createMerchantRelationship($merchantRelationshipTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return void
+     */
+    protected function cleanupMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer
+    ): void {
+        $this->debug(sprintf('Deleting Merchant Relationship: %d', $merchantRelationshipTransfer->getIdMerchantRelationship()));
+
+        $this->getLocator()
+            ->merchantRelationship()
+            ->facade()
+            ->deleteMerchantRelationship($merchantRelationshipTransfer);
     }
 
     /**
