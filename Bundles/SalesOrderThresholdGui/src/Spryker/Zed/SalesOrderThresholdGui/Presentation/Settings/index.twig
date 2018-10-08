@@ -1,0 +1,30 @@
+{% extends '@SalesOrderThresholdGui/_layout/layout.twig' %}
+
+{% set widget_title = 'Edit Threshold Settings' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <div class="row">
+
+                <div class="col-sm-6 b-r">
+                    <h3 class="m-t-none m-b">{{ 'Threshold' | trans }}</h3>
+
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+
+                    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

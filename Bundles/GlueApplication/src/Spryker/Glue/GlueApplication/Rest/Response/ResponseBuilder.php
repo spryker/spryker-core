@@ -55,6 +55,8 @@ class ResponseBuilder implements ResponseBuilderInterface
         RestResponseInterface $restResponse,
         RestRequestInterface $restRequest
     ): array {
+        $response = [];
+
         if (count($restResponse->getResources()) === 0) {
             $response[RestResponseInterface::RESPONSE_DATA] = [];
             $response[RestResponseInterface::RESPONSE_LINKS] = $this->buildCollectionLink($restRequest);

@@ -1,5 +1,6 @@
 {
   "name": "spryker/carts-rest-api",
+  "type": "library",
   "description": "CartsRestApi module",
   "license": "proprietary",
   "require": {

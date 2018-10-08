@@ -1,5 +1,6 @@
 {
   "name": "spryker/setup-frontend",
+  "type": "library",
   "description": "SetupFrontend module",
   "license": "proprietary",
   "require": {
