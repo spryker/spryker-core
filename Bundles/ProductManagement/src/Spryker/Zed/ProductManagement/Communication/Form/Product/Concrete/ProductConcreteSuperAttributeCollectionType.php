@@ -25,6 +25,7 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
     public const OPTION_SUPER_ATTRIBUTES = 'option_super_attributes';
     public const OPTION_ID_PRODUCT_ABSTRACT = 'option_id_product_abstract';
     public const CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'container_product_concrete_super_attributes';
+    public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL_CLASS = 'super_attributes_label';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -53,6 +54,7 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
             [
                 'compound' => true,
                 'label' => static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL,
+                'label_attr' => ['class' => static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL_CLASS],
                 'constraints' => $this->prepareProductConcreteSuperAttributeFormConstraints($builder, $options),
             ]
         );
