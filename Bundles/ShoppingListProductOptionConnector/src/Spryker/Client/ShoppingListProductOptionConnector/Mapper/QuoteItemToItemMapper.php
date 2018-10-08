@@ -20,7 +20,7 @@ class QuoteItemToItemMapper implements QuoteItemToItemMapperInterface
      */
     public function map(ItemTransfer $quoteItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
     {
-        if ($quoteItemTransfer && $this->haveSameProductOptions($quoteItemTransfer, $itemTransfer)) {
+        if ($this->haveSameProductOptions($quoteItemTransfer, $itemTransfer)) {
             $itemTransfer->setGroupKey($quoteItemTransfer->getGroupKey());
         }
 
