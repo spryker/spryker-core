@@ -49,7 +49,8 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
 
         $availableAttributes = $this->getAvailableAttributes(
             $productViewTransfer->getAvailableAttributes(),
-            $productViewTransfer->getAttributeMap()->getAttributeVariants()
+            $productViewTransfer->getAttributeMap()->getAttributeVariants(),
+            $productViewTransfer->getSelectedAttributes()
         );
         $productViewTransfer->setAvailableAttributes($availableAttributes);
 
@@ -119,18 +120,53 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     /**
      * @param array $attributes
      * @param array $nonRestrictedAttributeVariants
+     * @param array $selectedAttributes
      *
      * @return array
      */
-    protected function getAvailableAttributes(array $attributes, array $nonRestrictedAttributeVariants): array
+    protected function getAvailableAttributes(array $attributes, array $nonRestrictedAttributeVariants, array $selectedAttributes = []): array
     {
-        $availableAttributes = [];
+        $availableAttributes = $this->getAvailableAttributesPerSelectedOptions($nonRestrictedAttributeVariants, $selectedAttributes);
 
         foreach ($attributes as $attributeKey => $attributeValues) {
-            $availableAttributes[$attributeKey] = $this->getAvailableAttributeValues($attributeKey, $attributeValues, $nonRestrictedAttributeVariants);
+            $availableValues = $this->getAvailableAttributeValues($attributeKey, $attributeValues, $nonRestrictedAttributeVariants);
+
+            if (isset($availableAttributes[$attributeKey])) {
+                $availableAttributes[$attributeKey] = array_intersect($availableAttributes[$attributeKey], $availableValues);
+                continue;
+            }
+
+            $availableAttributes[$attributeKey] = $availableValues;
         }
 
         return $availableAttributes;
+    }
+
+    /**
+     * @param array $nonRestrictedAttributeVariants
+     * @param array $selectedAttributes
+     *
+     * @return array
+     */
+    protected function getAvailableAttributesPerSelectedOptions($nonRestrictedAttributeVariants, array $selectedAttributes = []): array
+    {
+        $availableAttributes = $availableAttributesCollection = [];
+
+        foreach ($selectedAttributes as $key => $selectedAttribute) {
+            $selectedAttributeKey = $this->getAttributeKeyValue($key, $selectedAttributes[$key]);
+
+            if (isset($nonRestrictedAttributeVariants[$selectedAttributeKey])) {
+                $availableAttributeKeys = $nonRestrictedAttributeVariants[$selectedAttributeKey];
+                $availableAttributes = array_merge($availableAttributes, array_keys($availableAttributeKeys));
+            }
+        }
+
+        foreach ($availableAttributes as $availableAttribute) {
+            $availableAttribute = explode(':', $availableAttribute);
+            $availableAttributesCollection[$availableAttribute[0]][] = $availableAttribute[1];
+        }
+
+        return $availableAttributesCollection;
     }
 
     /**

@@ -78,9 +78,8 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
 
         if ($productListProductConcreteStorageTransfer) {
             $isProductInBlacklist = count(array_intersect($productListProductConcreteStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
-            $isProductInWhitelist = count(array_intersect($productListProductConcreteStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
 
-            return $isProductInBlacklist || !$isProductInWhitelist;
+            return $isProductInBlacklist;
         }
 
         return (bool)count($customerWhitelistIds);
