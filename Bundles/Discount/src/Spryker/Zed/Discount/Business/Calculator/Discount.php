@@ -358,7 +358,7 @@ class Discount implements DiscountInterface
     protected function filterDiscountApplicableItems(QuoteTransfer $quoteTransfer, $idDiscount)
     {
         if (count($this->discountApplicableFilterPlugins) === 0) {
-            $quoteTransfer->getItems();
+            return (array)$quoteTransfer->getItems();
         }
 
         $discountApplicableItems = (array)$quoteTransfer->getItems();
