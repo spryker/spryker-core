@@ -107,13 +107,13 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
-     * @param string|null $nodeId
+     * @param string $nodeId
      * @param string $locale
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getCategoryNode(?string $nodeId, string $locale, RestResponseInterface $restResponse): RestResponseInterface
+    protected function getCategoryNode(string $nodeId, string $locale, RestResponseInterface $restResponse): RestResponseInterface
     {
         $restResource = $this->findCategoryNodeById((int)$nodeId, $locale);
         if (!$restResource) {
