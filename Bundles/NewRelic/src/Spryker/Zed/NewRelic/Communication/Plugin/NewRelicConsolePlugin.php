@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {
-    const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
+    public const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
 
     /**
      * @api

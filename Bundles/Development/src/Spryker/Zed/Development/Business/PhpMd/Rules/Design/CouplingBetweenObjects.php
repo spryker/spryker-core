@@ -13,8 +13,8 @@ use PHPMD\Rule\ClassAware;
 
 class CouplingBetweenObjects extends AbstractRule implements ClassAware
 {
-    const COUPLING_BETWEEN_OBJECTS = 'cbo';
-    const THRESHOLD = 'minimum';
+    public const COUPLING_BETWEEN_OBJECTS = 'cbo';
+    public const THRESHOLD = 'minimum';
 
     /**
      * This method should implement the violation analysis algorithm of concrete

@@ -97,14 +97,13 @@ class WishlistsWriter implements WishlistsWriterInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
+        if (!$restRequest->getResource()->getId()) {
+            return $this->createWishlistNotFoundError($response);
+        }
+
         $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid($restRequest->getResource()->getId());
         if ($wishlistTransfer === null) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NOT_FOUND);
-
-            return $response->addError($restErrorTransfer);
+            return $this->createWishlistNotFoundError($response);
         }
         $wishlistTransfer = $this->wishlistsResourceMapper->mapWishlistAttributesToWishlistTransfer($wishlistTransfer, $attributesTransfer);
 
@@ -136,12 +135,7 @@ class WishlistsWriter implements WishlistsWriterInterface
         $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid($wishlistUuid);
 
         if ($wishlistTransfer === null) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NOT_FOUND);
-
-            return $response->addError($restErrorTransfer);
+            return $this->createWishlistNotFoundError($response);
         }
 
         $this->wishlistClient->removeWishlist($wishlistTransfer);
@@ -176,5 +170,20 @@ class WishlistsWriter implements WishlistsWriterInterface
         }
 
         return $restResponse;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createWishlistNotFoundError(RestResponseInterface $response): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NOT_FOUND);
+
+        return $response->addError($restErrorTransfer);
     }
 }

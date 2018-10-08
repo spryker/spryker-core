@@ -18,8 +18,8 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsRedirectTable extends AbstractTable
 {
-    const ACTIONS = 'Actions';
-    const REQUEST_ID_URL = 'id-url';
+    public const ACTIONS = 'Actions';
+    public const REQUEST_ID_URL = 'id-url';
 
     /**
      * @var \Orm\Zed\Url\Persistence\SpyUrlQuery

@@ -17,9 +17,6 @@ use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
  */
 class SynchronizationStorageQueueMessageProcessorPlugin extends AbstractPlugin implements QueueMessageProcessorPluginInterface
 {
-    const WRITE_TYPE = 'write';
-    const DELETE_TYPE = 'delete';
-
     /**
      * @api
      *
@@ -29,21 +26,8 @@ class SynchronizationStorageQueueMessageProcessorPlugin extends AbstractPlugin i
      */
     public function processMessages(array $queueMessageTransfers)
     {
-        foreach ($queueMessageTransfers as $queueMessageTransfer) {
-            $message = $this->getFactory()->getUtilEncodingService()->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
-
-            if (isset($message[static::WRITE_TYPE])) {
-                $this->getFacade()->storageWrite($message[static::WRITE_TYPE], $queueMessageTransfer->getQueueName());
-            }
-
-            if (isset($message[static::DELETE_TYPE])) {
-                $this->getFacade()->storageDelete($message[static::DELETE_TYPE], $queueMessageTransfer->getQueueName());
-            }
-
-            $queueMessageTransfer->setAcknowledge(true);
-        }
-
-        return $queueMessageTransfers;
+        return $this->getFacade()
+            ->processStorageMessages($queueMessageTransfers);
     }
 
     /**

@@ -11,9 +11,9 @@ use Spryker\Zed\Ratepay\Business\Api\Builder\Head;
 
 abstract class Base extends AbstractRequest
 {
-    const ROOT_TAG = 'request';
+    public const ROOT_TAG = 'request';
 
-    const OPERATION = '';
+    public const OPERATION = '';
 
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Builder\Head

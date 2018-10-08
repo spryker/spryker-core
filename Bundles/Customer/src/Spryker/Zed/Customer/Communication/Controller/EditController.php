@@ -19,8 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-    const MESSAGE_CUSTOMER_UPDATE_ERROR = 'Customer was not updated.';
-    const MESSAGE_CUSTOMER_UPDATE_SUCCESS = 'Customer was updated successfully.';
+    public const MESSAGE_CUSTOMER_UPDATE_ERROR = 'Customer was not updated.';
+    public const MESSAGE_CUSTOMER_UPDATE_SUCCESS = 'Customer was updated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

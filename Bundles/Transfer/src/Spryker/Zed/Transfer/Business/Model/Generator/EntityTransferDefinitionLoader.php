@@ -11,11 +11,11 @@ use Zend\Config\Factory;
 
 class EntityTransferDefinitionLoader extends TransferDefinitionLoader
 {
-    const KEY_TABLE = 'table';
-    const ENTITY_SCHEMA_SUFFIX = '.schema.xml';
-    const ENTITY_PREFIX = 'spy_';
-    const PREFIX_LENGTH = 4;
-    const ENTITY_NAMESPACE = 'entity-namespace';
+    public const KEY_TABLE = 'table';
+    public const ENTITY_SCHEMA_SUFFIX = '.schema.xml';
+    public const ENTITY_PREFIX = 'spy_';
+    public const PREFIX_LENGTH = 4;
+    public const ENTITY_NAMESPACE = 'entity-namespace';
 
     /**
      * @return void

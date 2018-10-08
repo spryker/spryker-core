@@ -186,8 +186,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
-     * @param int $currentQuantity
-     * @param int $quantityWithReservedItems
+     * @param int|null $currentQuantity
+     * @param int|null $quantityWithReservedItems
      *
      * @return bool
      */
@@ -212,7 +212,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
      */
     protected function querySpyAvailabilityBySku($sku, StoreTransfer $storeTransfer)
     {
@@ -290,6 +290,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function findOrCreateSpyAvailabilityAbstract($sku, StoreTransfer $storeTransfer)
     {
+        /** @var string|null $abstractSku */
         $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
 
         if ($abstractSku === null) {

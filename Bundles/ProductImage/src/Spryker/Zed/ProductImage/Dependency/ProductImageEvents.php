@@ -15,7 +15,7 @@ interface ProductImageEvents
      *
      * @api
      */
-    const PRODUCT_IMAGE_PRODUCT_ABSTRACT_PUBLISH = 'ProductImage.product_abstract_image.publish';
+    public const PRODUCT_IMAGE_PRODUCT_ABSTRACT_PUBLISH = 'ProductImage.product_abstract_image.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface ProductImageEvents
      *
      * @api
      */
-    const PRODUCT_IMAGE_PRODUCT_ABSTRACT_UNPUBLISH = 'ProductImage.product_abstract_image.unpublish';
+    public const PRODUCT_IMAGE_PRODUCT_ABSTRACT_UNPUBLISH = 'ProductImage.product_abstract_image.unpublish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface ProductImageEvents
      *
      * @api
      */
-    const PRODUCT_IMAGE_PRODUCT_CONCRETE_PUBLISH = 'ProductImage.product_concrete_image.publish';
+    public const PRODUCT_IMAGE_PRODUCT_CONCRETE_PUBLISH = 'ProductImage.product_concrete_image.publish';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface ProductImageEvents
      *
      * @api
      */
-    const PRODUCT_IMAGE_PRODUCT_CONCRETE_UNPUBLISH = 'ProductImage.product_concrete_image.unpublish';
+    public const PRODUCT_IMAGE_PRODUCT_CONCRETE_UNPUBLISH = 'ProductImage.product_concrete_image.unpublish';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface ProductImageEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_IMAGE_CREATE = 'Entity.spy_product_image.create';
+    public const ENTITY_SPY_PRODUCT_IMAGE_CREATE = 'Entity.spy_product_image.create';
 
     /**
      * Specification
@@ -55,7 +55,7 @@ interface ProductImageEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_IMAGE_UPDATE = 'Entity.spy_product_image.update';
+    public const ENTITY_SPY_PRODUCT_IMAGE_UPDATE = 'Entity.spy_product_image.update';
 
     /**
      * Specification
@@ -63,7 +63,7 @@ interface ProductImageEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_IMAGE_DELETE = 'Entity.spy_product_image.delete';
+    public const ENTITY_SPY_PRODUCT_IMAGE_DELETE = 'Entity.spy_product_image.delete';
 
     /**
      * Specification
@@ -71,7 +71,7 @@ interface ProductImageEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE = 'Entity.spy_product_image_set.create';
+    public const ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE = 'Entity.spy_product_image_set.create';
 
     /**
      * Specification
@@ -79,7 +79,7 @@ interface ProductImageEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE = 'Entity.spy_product_image_set.update';
+    public const ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE = 'Entity.spy_product_image_set.update';
 
     /**
      * Specification
@@ -87,7 +87,7 @@ interface ProductImageEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE = 'Entity.spy_product_image_set.delete';
+    public const ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE = 'Entity.spy_product_image_set.delete';
 
     /**
      * Specification
@@ -95,7 +95,7 @@ interface ProductImageEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE = 'Entity.spy_product_image_set_to_product_image.create';
+    public const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE = 'Entity.spy_product_image_set_to_product_image.create';
 
     /**
      * Specification
@@ -103,7 +103,7 @@ interface ProductImageEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE = 'Entity.spy_product_image_set_to_product_image.update';
+    public const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE = 'Entity.spy_product_image_set_to_product_image.update';
 
     /**
      * Specification
@@ -111,5 +111,5 @@ interface ProductImageEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE = 'Entity.spy_product_image_set_to_product_image.delete';
+    public const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE = 'Entity.spy_product_image_set_to_product_image.delete';
 }

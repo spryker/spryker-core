@@ -13,11 +13,11 @@ use League\Flysystem\AwsS3v3\AwsS3Adapter;
 
 class Aws3v3AdapterBuilder implements AdapterBuilderInterface
 {
-    const KEY = 'key';
-    const SECRET = 'secret';
-    const REGION = 'region';
-    const VERSION = 'version';
-    const CREDENTIALS = 'credentials';
+    public const KEY = 'key';
+    public const SECRET = 'secret';
+    public const REGION = 'region';
+    public const VERSION = 'version';
+    public const CREDENTIALS = 'credentials';
 
     /**
      * @var \League\Flysystem\AwsS3v3\AwsS3Adapter

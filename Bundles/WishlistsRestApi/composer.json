@@ -1,15 +1,16 @@
 {
   "name": "spryker/wishlists-rest-api",
+  "type": "library",
   "description": "WishlistsRestApi module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/glue-application": "^1.0.0",
+    "spryker/glue-application": "^1.3.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.22.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/wishlist": "^6.1.1"
+    "spryker/wishlist": "^6.2.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

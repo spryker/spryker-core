@@ -1,5 +1,6 @@
 {
   "name": "spryker/country",
+  "type": "library",
   "description": "Country module",
   "license": "proprietary",
   "require": {

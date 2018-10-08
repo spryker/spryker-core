@@ -13,7 +13,7 @@ interface DiscountConfigurationExpanderPluginInterface
 {
     /**
      *  Specification:
-     *   - This plugin is used to add additional data to DiscountConfigurationTransfer, which is then mapped to zed discount form.
+     *   - This plugin is used to add additional data to DiscountConfigurationTransfer, which is then mapped to Zed discount form.
      *
      * @api
      *

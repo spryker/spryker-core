@@ -13,9 +13,9 @@ use Spryker\Zed\Kernel\Container;
 
 class AuthDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_USER = 'facade user';
-    const PASSWORD_RESET_SENDER = 'Password reset sender';
-    const CLIENT_SESSION = 'session client';
+    public const FACADE_USER = 'facade user';
+    public const PASSWORD_RESET_SENDER = 'Password reset sender';
+    public const CLIENT_SESSION = 'session client';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

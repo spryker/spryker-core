@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 class QueuePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
+     * @return \Orm\Zed\Queue\Persistence\SpyQueueProcessQuery
      */
     public function createSpyQueueProcessQuery()
     {
