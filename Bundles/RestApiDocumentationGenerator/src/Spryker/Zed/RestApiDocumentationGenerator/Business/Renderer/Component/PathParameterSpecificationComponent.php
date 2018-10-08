@@ -46,6 +46,8 @@ class PathParameterSpecificationComponent implements SpecificationComponentInter
      */
     public function toArray(): array
     {
+        $result = [];
+
         $result[static::KEY_NAME] = $this->name;
         $result[static::KEY_IN] = $this->in;
         $result[static::KEY_REQUIRED] = $this->required;
