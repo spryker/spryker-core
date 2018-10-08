@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RestRequestValidator implements RestRequestValidatorInterface
 {
-    const EXCEPTION_MESSAGE_POST_DATA_IS_INVALID = 'Post data is invalid.';
+    protected const EXCEPTION_MESSAGE_POST_DATA_IS_INVALID = 'Post data is invalid.';
 
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
