@@ -58,7 +58,7 @@ function CompanyFieldHandler() {
 
         if ($roleOption.data(attributeIdCompany) === companyId) {
             if ($roleOption.data(attributeIsDefault)) {
-                $roleOption.attr("checked", true);
+                $roleOption.prop("checked", true);
             }
 
             $roleOption.parent().show();
