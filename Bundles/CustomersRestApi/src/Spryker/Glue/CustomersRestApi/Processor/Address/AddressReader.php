@@ -125,18 +125,18 @@ class AddressReader implements AddressReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressesTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     protected function getAllAddresses(
-        AddressesTransfer $addressTransfer,
+        AddressesTransfer $addressesTransfer,
         CustomerTransfer $customerTransfer,
         RestResponseInterface $restResponse
     ): RestResponseInterface {
-        foreach ($addressTransfer->getAddresses() as $addressTransfer) {
+        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
             $restAddressAttributesTransfer = $this->addressesResourceMapper
                 ->mapAddressTransferToRestAddressAttributesTransfer(
                     $addressTransfer,

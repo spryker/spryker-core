@@ -48,14 +48,13 @@ class CustomerAddressReader implements CustomerAddressReaderInterface
     }
 
     /**
-     * @param string $customerReference
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function getAddressesByCustomerReference(string $customerReference, RestResourceInterface $restResource): RestResourceInterface
+    public function getAddressesByCustomerReference(RestResourceInterface $restResource): RestResourceInterface
     {
-        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restResource->getId());
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerResponseTransfer->getHasCustomer()) {

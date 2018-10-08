@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
@@ -23,7 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WishlistItemsWriter implements WishlistItemsWriterInterface
 {
-    protected const SELF_LINK_NAME = 'self';
     protected const SELF_LINK_FORMAT_PATTERN = '%s/%s/%s/%s';
 
     /**
@@ -211,7 +211,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
     protected function createSelfLinkForWishlistItem(string $wishlistResourceId, string $wishlistItemResourceId): string
     {
         return sprintf(
-            static::SELF_LINK_FORMAT_PATTERN,
+            RestResourceInterface::RESOURCE_LINKS_SELF,
             WishlistsRestApiConfig::RESOURCE_WISHLISTS,
             $wishlistResourceId,
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
