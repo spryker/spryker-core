@@ -59,10 +59,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListWriter(
             $this->getEntityManager(),
-            $this->getProductFacade(),
             $this->getRepository(),
-            $this->getConfig(),
-            $this->getMessengerFacade(),
             $this->getEventFacade(),
             $this->createShoppingListItemOperation(),
             $this->createShoppingListReader(),
@@ -119,6 +116,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteToShoppingListConverter(
             $this->createShoppingListResolver(),
+            $this->getRepository(),
             $this->getPersistentCartFacade(),
             $this->createShoppingListItemOperation(),
             $this->getQuoteItemExpanderPlugins(),
