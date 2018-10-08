@@ -57,10 +57,9 @@ class ProductConcretePriceReader implements ProductConcretePriceReaderInterface
 
         $priceProductFilterTransfer = $this->createPriceProductFilterTransferFromCurrentProductPriceTransfer($currentProductPriceTransfer);
 
-        $currentProductPriceTransfer = $this->priceProductClient->calculateProductSumPrice(
-            $currentProductPriceTransfer,
-            $priceProductFilterTransfer,
-            $priceProductTransfers
+        $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
+            $priceProductTransfers,
+            $priceProductFilterTransfer
         );
 
         return $currentProductConcretePriceTransfer->setCurrentProductPrice($currentProductPriceTransfer);

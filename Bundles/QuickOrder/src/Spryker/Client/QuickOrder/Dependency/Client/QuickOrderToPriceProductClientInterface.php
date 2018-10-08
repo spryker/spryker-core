@@ -13,15 +13,13 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 interface QuickOrderToPriceProductClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function calculateProductSumPrice(
-        CurrentProductPriceTransfer $currentProductPriceTransfer,
-        PriceProductFilterTransfer $priceProductFilterTransfer,
-        array $priceProductTransfers
+    public function resolveProductPriceTransferByPriceProductFilter(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
     ): CurrentProductPriceTransfer;
 }

@@ -178,7 +178,8 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             ->setPrices($prices)
             ->setCurrency($currencyTransfer)
             ->setQuantity($priceProductFilter->getQuantity())
-            ->setPriceMode($priceMode);
+            ->setPriceMode($priceMode)
+            ->setSumPrice($price * $priceProductFilter->getQuantity());
     }
 
     /**

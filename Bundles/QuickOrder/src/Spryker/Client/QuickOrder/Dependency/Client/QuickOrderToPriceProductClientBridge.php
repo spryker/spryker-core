@@ -26,17 +26,15 @@ class QuickOrderToPriceProductClientBridge implements QuickOrderToPriceProductCl
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function calculateProductSumPrice(
-        CurrentProductPriceTransfer $currentProductPriceTransfer,
-        PriceProductFilterTransfer $priceProductFilterTransfer,
-        array $priceProductTransfers
+    public function resolveProductPriceTransferByPriceProductFilter(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
     ): CurrentProductPriceTransfer {
-        return $this->priceProductClient->calculateProductSumPrice($currentProductPriceTransfer, $priceProductFilterTransfer, $priceProductTransfers);
+        return $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
     }
 }
