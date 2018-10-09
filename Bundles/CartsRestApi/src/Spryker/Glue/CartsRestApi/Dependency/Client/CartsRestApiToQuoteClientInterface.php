@@ -19,11 +19,6 @@ interface CartsRestApiToQuoteClientInterface
     public function setQuote(QuoteTransfer $quoteTransfer);
 
     /**
-     * @return string
-     */
-    public function getStorageStrategy();
-
-    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getQuote();
