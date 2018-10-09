@@ -97,7 +97,7 @@ interface ProductStorageClientInterface
      * Specification:
      * - Maps raw product data to StorageProductTransfer for the current locale.
      * - Based on the super attributes and the selected attributes of the product the result might be abstract or concrete product.
-     * - Executes a stack of \Spryker\Client\ProductStorage\Dependency\Plugin\StorageProductExpanderPluginInterface plugins that
+     * - Executes a stack of Spryker\Client\ProductStorage\Dependency\Plugin\StorageProductExpanderPluginInterface plugins that
      * can expand the result with extra data.
      *
      * @api

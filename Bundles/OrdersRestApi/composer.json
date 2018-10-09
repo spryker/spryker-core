@@ -1,5 +1,6 @@
 {
   "name": "spryker/orders-rest-api",
+  "type": "library",
   "description": "OrdersRestApi module",
   "license": "proprietary",
   "require": {
