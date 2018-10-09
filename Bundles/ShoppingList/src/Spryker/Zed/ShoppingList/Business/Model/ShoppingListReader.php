@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Shared\ShoppingList\ShoppingListConfig;
@@ -76,9 +77,22 @@ class ShoppingListReader implements ShoppingListReaderInterface
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
+
         if (!$shoppingListTransfer || !$this->checkReadPermission($shoppingListTransfer)) {
             return new ShoppingListTransfer();
         }
+
+        $shoppingListCompanyBusinessUnits = $this->shoppingListRepository
+            ->getShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer)
+            ->getShoppingListCompanyBusinessUnits();
+
+        $shoppingListCompanyUsers = $this->shoppingListRepository
+            ->getShoppingListCompanyUsersByShoppingListId($shoppingListTransfer)
+            ->getShoppingListCompanyUsers();
+
+        $shoppingListTransfer
+            ->setSharedCompanyUsers($shoppingListCompanyUsers)
+            ->setSharedCompanyBusinessUnits($shoppingListCompanyBusinessUnits);
 
         $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
         $shoppingListItemCollectionTransfer = $this->expandProducts($shoppingListItemCollectionTransfer);
@@ -136,7 +150,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
             ->getCustomerReference();
 
         $customerOwnShoppingLists = $this->getCustomerShoppingListCollectionByReference($customerReference);
-
         $customerSharedShoppingLists = new ShoppingListCollectionTransfer();
         $businessUnitSharedShoppingLists = new ShoppingListCollectionTransfer();
 
@@ -200,6 +213,14 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
+     */
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
+    {
+        return $this->shoppingListRepository->getShoppingListPermissionGroups();
+    }
+
+    /**
      * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
@@ -220,9 +241,22 @@ class ShoppingListReader implements ShoppingListReaderInterface
             )
         );
 
+        $companyUserSharedShoppingListIds = $this->shoppingListRepository->getCompanyUserSharedShoppingListIdsByPermissionGroupName(
+            $companyUserTransfer->getIdCompanyUser(),
+            ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
+        );
+        $companyBusinessUnitSharedShoppingListIds = $this->shoppingListRepository->getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(
+            $companyUserTransfer->getFkCompanyBusinessUnit(),
+            ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
+        );
+
         $companyUserPermissionCollectionTransfer = $this->addWritePermissionToPermissionCollectionTransfer(
             $companyUserPermissionCollectionTransfer,
-            $companyUserOwnShoppingListIds
+            array_merge(
+                $companyUserSharedShoppingListIds,
+                $companyBusinessUnitSharedShoppingListIds,
+                $companyUserOwnShoppingListIds
+            )
         );
 
         return $companyUserPermissionCollectionTransfer;

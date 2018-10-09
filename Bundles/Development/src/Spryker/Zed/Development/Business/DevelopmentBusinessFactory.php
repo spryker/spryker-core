@@ -1359,6 +1359,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         $updaterComposite = new ComposerUpdaterComposite();
         $updaterComposite
+            ->addUpdater($this->createComposerJsonTypeUpdater())
             ->addUpdater($this->createComposerJsonDescriptionUpdater())
             ->addUpdater($this->createComposerJsonLicenseUpdater())
             ->addUpdater($this->createComposerJsonRequireUpdater())

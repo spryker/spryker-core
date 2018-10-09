@@ -86,7 +86,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     ): void {
         $numberOfItems = [];
         foreach ($shoppingListEntityTransfer->getSpyShoppingListItems() as $shoppingListItem) {
-            $numberOfItems[$shoppingListItem->getSku()] = 1;
+            $numberOfItems[$shoppingListItem->getSku()] = $shoppingListItem->getQuantity();
         }
 
         $shoppingListTransfer->setNumberOfItems(array_sum($numberOfItems));
