@@ -98,7 +98,13 @@ class Reader implements ReaderInterface
     {
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaWithDefaultValues($priceTypeName);
 
-        return $this->findProductPrice($sku, $priceProductCriteriaTransfer);
+        $priceProductTransfer = $this->findProductPrice($sku, $priceProductCriteriaTransfer);
+
+        if ($priceProductTransfer === null) {
+            return null;
+        }
+
+        return $this->getPriceByPriceMode($priceProductTransfer->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
     }
 
     /**
@@ -107,6 +113,24 @@ class Reader implements ReaderInterface
      * @return int|null
      */
     public function findPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer)
+    {
+        $priceProductTransfer = $this->findPriceProductFor($priceProductFilterTransfer);
+
+        if ($priceProductTransfer === null) {
+            return null;
+        }
+
+        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
+
+        return $this->getPriceByPriceMode($priceProductTransfer->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function findPriceProductFor(PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer
     {
         $priceProductFilterTransfer->requireSku();
 
@@ -343,15 +367,15 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    protected function findProductPrice(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?int
+    protected function findProductPrice(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
     {
         $priceProductConcrete = $this->priceProductConcreteReader
             ->findPriceForProductConcrete($sku, $priceProductCriteriaTransfer);
 
         if ($priceProductConcrete !== null) {
-            return $this->getPriceByPriceMode($priceProductConcrete->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
+            return $priceProductConcrete;
         }
 
         if ($this->productFacade->hasProductConcrete($sku)) {
@@ -365,7 +389,7 @@ class Reader implements ReaderInterface
             return null;
         }
 
-        return $this->getPriceByPriceMode($priceProductAbstract->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
+        return $priceProductAbstract;
     }
 
     /**
