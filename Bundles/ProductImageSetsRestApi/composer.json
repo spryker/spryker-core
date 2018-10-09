@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-image-sets-rest-api",
+  "type": "library",
   "description": "ProductImageSetsRestApi module",
   "license": "proprietary",
   "require": {

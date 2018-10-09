@@ -73,6 +73,18 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
+     *  - Retrieves category whitelists by product abstract id.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * Specification:
      *  - Retrieves product concrete whitelists by product abstract id.
      *
      * @api

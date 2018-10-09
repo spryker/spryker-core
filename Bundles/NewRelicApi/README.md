@@ -4,6 +4,11 @@
 
 NewRelicApi is a wrapper for the official NewRelic API.
 
+**This module is not continued at this point.**
+
+To be able to use NewRelic as Monitoring, please use `spryker/monitoring` and the NewRelic extension module `spryker-eco/new-relic`.
+
+
 ## Installation
 
 ```

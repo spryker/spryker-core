@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-discontinued-product-bundle-connector",
+  "type": "library",
   "description": "ProductDiscontinuedProductBundleConnector module",
   "license": "proprietary",
   "require": {

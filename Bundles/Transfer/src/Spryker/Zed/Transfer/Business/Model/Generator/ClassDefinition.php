@@ -13,7 +13,7 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class ClassDefinition implements ClassDefinitionInterface
 {
-    const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
+    public const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
 
     /**
      * @var string

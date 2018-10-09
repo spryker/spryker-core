@@ -10,7 +10,7 @@ use Spryker\Zed\Ratepay\Business\Api\Constants;
 
 class Head extends AbstractBuilder implements BuilderInterface
 {
-    const ROOT_TAG = 'head';
+    public const ROOT_TAG = 'head';
 
     /**
      * @return array

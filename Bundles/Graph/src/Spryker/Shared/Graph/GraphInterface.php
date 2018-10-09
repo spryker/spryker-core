@@ -9,7 +9,7 @@ namespace Spryker\Shared\Graph;
 
 interface GraphInterface
 {
-    const DEFAULT_GROUP = 'default';
+    public const DEFAULT_GROUP = 'default';
 
     /**
      * @param string $name

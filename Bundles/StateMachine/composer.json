@@ -1,5 +1,6 @@
 {
   "name": "spryker/state-machine",
+  "type": "library",
   "description": "StateMachine module",
   "license": "proprietary",
   "require": {

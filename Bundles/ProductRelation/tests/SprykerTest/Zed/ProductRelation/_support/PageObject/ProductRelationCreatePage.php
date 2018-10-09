@@ -9,5 +9,5 @@ namespace SprykerTest\Zed\ProductRelation\PageObject;
 
 class ProductRelationCreatePage
 {
-    const URL = '/product-relation/create';
+    public const URL = '/product-relation/create';
 }

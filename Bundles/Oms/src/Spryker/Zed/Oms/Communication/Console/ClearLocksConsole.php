@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ClearLocksConsole extends Console
 {
-    const COMMAND_NAME = 'oms:clear-locks';
-    const COMMAND_DESCRIPTION = 'Clear OMS state machine expired locks from lock table';
+    public const COMMAND_NAME = 'oms:clear-locks';
+    public const COMMAND_DESCRIPTION = 'Clear OMS state machine expired locks from lock table';
 
     /**
      * @return void

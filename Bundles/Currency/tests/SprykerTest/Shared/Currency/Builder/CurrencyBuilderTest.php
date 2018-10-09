@@ -25,7 +25,7 @@ use Symfony\Component\Intl\Intl;
  */
 class CurrencyBuilderTest extends Unit
 {
-    const DEFAULT_CURRENCY = 'EUR';
+    public const DEFAULT_CURRENCY = 'EUR';
 
     /**
      * @return void

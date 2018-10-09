@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-barcode",
+  "type": "library",
   "description": "ProductBarcode module",
   "license": "proprietary",
   "require": {

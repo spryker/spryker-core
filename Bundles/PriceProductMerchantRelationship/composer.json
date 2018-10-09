@@ -1,5 +1,6 @@
 {
   "name": "spryker/price-product-merchant-relationship",
+  "type": "library",
   "description": "PriceProductMerchantRelationship module",
   "license": "proprietary",
   "require": {

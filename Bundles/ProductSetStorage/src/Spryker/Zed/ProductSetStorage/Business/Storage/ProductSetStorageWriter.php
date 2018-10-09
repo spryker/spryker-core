@@ -16,7 +16,7 @@ use Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInt
 
 class ProductSetStorageWriter implements ProductSetStorageWriterInterface
 {
-    const COL_ID_PRODUCT_SET = 'id_product_set';
+    public const COL_ID_PRODUCT_SET = 'id_product_set';
 
     /**
      * @var \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface

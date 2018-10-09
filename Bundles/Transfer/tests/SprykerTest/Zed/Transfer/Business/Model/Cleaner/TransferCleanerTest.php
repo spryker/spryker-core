@@ -23,7 +23,7 @@ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
  */
 class TransferCleanerTest extends Unit
 {
-    const TEST_FILE_NAME = 'TestTransfer.php';
+    public const TEST_FILE_NAME = 'TestTransfer.php';
 
     /**
      * @return void

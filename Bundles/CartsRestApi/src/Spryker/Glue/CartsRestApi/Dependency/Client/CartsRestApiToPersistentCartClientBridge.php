@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -24,6 +24,16 @@ class CartsRestApiToPersistentCartClientBridge implements CartsRestApiToPersiste
     public function __construct($persistentCartClient)
     {
         $this->persistentCartClient = $persistentCartClient;
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return string
+     */
+    public function generateGuestCartCustomerReference(string $customerReference): string
+    {
+        return $this->persistentCartClient->generateGuestCartCustomerReference($customerReference);
     }
 
     /**

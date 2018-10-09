@@ -63,8 +63,8 @@ use SprykerTest\Zed\ProductPageSearch\ProductPageSearchConfigMock;
  */
 class ProductPageSearchListenerTest extends Unit
 {
-    const NUMBER_OF_LOCALES = 2;
-    const NUMBER_OF_STORES = 3;
+    public const NUMBER_OF_LOCALES = 2;
+    public const NUMBER_OF_STORES = 3;
 
     /**
      * @throws \PHPUnit\Framework\SkippedTestError
