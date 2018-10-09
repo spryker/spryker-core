@@ -71,7 +71,7 @@
         <column name="fk_shopping_list_company_business_unit" required="true" type="INTEGER"/>
         <column name="fk_company_user" required="true" type="INTEGER"/>
 
-        <foreign-key name="spy_shopping_list_company_business_unit_blacklist-fk_shopping_list_company_business_unit" foreignTable="spy_shopping_list_company_business_unit">
+        <foreign-key name="spy_shopping_list_business_unit_blacklist-fk_shopping_list_unit" foreignTable="spy_shopping_list_company_business_unit">
             <reference local="fk_shopping_list_company_business_unit" foreign="id_shopping_list_company_business_unit"/>
         </foreign-key>
 
