@@ -79,14 +79,14 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productIds
      *
      * @return void
      */
-    public function publish(array $productConcreteIds): void
+    public function publish(array $productIds): void
     {
-        $productConcreteTransfers = $this->productFacade->findProductConcretesByProductConcreteIds($productConcreteIds);
-        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->findProductConcretePageSearchTransfersByProductConcreteIdsGrouppedByStoreAndLocale($productConcreteIds);
+        $productConcreteTransfers = $this->productFacade->getProductConcreteTransfersByProductIds($productIds);
+        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->findProductConcretePageSearchTransfersByProductConcreteIdsGrouppedByStoreAndLocale($productIds);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfers, $productConcretePageSearchTransfers) {
             $this->executePublishTransaction($productConcreteTransfers, $productConcretePageSearchTransfers);
@@ -94,13 +94,13 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return void
      */
-    public function unpublish(array $productConcreteIds): void
+    public function unpublish(array $productIds): void
     {
-        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->findProductConcretePageSearchTransfersByProductConcreteIdsGrouppedByStoreAndLocale($productConcreteIds);
+        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->findProductConcretePageSearchTransfersByProductConcreteIdsGrouppedByStoreAndLocale($productIds);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfers) {
             $this->executeUnpublishTransaction($productConcretePageSearchTransfers);

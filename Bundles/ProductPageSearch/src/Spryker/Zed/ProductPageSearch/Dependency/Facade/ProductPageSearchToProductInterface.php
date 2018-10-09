@@ -41,14 +41,9 @@ interface ProductPageSearchToProductInterface
     public function findProductConcreteIdsByIdProductAbstract(int $idProductAbstract);
 
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findProductConcretesByProductConcreteIds(array $productConcreteIds): array;
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
-     */
-    public function findAllProductConcretes(): array;
+    public function getProductConcreteTransfersByProductIds(array $productIds): array;
 }

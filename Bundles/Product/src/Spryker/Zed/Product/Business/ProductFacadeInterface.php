@@ -829,24 +829,13 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Finds concrete products by given ids.
+     * - Retrieves products by given ids.
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findProductConcretesByProductConcreteIds(array $productConcreteIds): array;
-
-    /**
-     * Specification:
-     * - Finds all concrete products.
-     * - Returns array of ProductConcreteTransfer without any relations.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
-     */
-    public function findAllProductConcretes(): array;
+    public function getProductConcreteTransfersByProductIds(array $productIds): array;
 }

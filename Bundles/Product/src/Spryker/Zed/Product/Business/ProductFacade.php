@@ -959,28 +959,14 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findProductConcretesByProductConcreteIds(array $productConcreteIds): array
+    public function getProductConcreteTransfersByProductIds(array $productIds): array
     {
         return $this->getFactory()
-            ->createProductConcreteReader()
-            ->findProductConcretesByProductConcreteIds($productConcreteIds);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
-     */
-    public function findAllProductConcretes(): array
-    {
-        return $this->getFactory()
-            ->createProductConcreteReader()
-            ->findAllProductConcretes();
+            ->getRepository()
+            ->getProductConcreteTransfersByProductIds($productIds);
     }
 }
