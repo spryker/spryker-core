@@ -94,7 +94,6 @@ class RequestFormatterTest extends Unit
     ): RequestFormatterInterface {
         return new RequestFormatter(
             $this->createRequestMetaDataExtractorMock(),
-            $restResourceBuilderMock,
             new RequestResourceExtractor($restResourceBuilderMock, $this->createDecoderMatcherMock()),
             []
         );
