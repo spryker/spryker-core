@@ -1,5 +1,6 @@
 {
   "name": "spryker/graphviz",
+  "type": "library",
   "description": "Graphviz module",
   "license": "proprietary",
   "require": {

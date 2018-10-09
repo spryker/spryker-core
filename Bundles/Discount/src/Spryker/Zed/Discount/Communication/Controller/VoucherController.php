@@ -22,13 +22,13 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class VoucherController extends AbstractController
 {
-    const URL_PARAM_ID_POOL = 'id-pool';
-    const URL_PARAM_ID_DISCOUNT = 'id-discount';
-    const URL_PARAM_ID_VOUCHER = 'id-voucher';
+    public const URL_PARAM_ID_POOL = 'id-pool';
+    public const URL_PARAM_ID_DISCOUNT = 'id-discount';
+    public const URL_PARAM_ID_VOUCHER = 'id-voucher';
+    public const CSV_FILENAME = 'vouchers.csv';
     protected const URL_DISCOUNT_EDIT_PAGE = '/discount/index/edit';
     protected const URL_DISCOUNT_VIEW_PAGE = '/discount/index/view';
     protected const REQUEST_HEADER_REFERER = 'referer';
-    const CSV_FILENAME = 'vouchers.csv';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

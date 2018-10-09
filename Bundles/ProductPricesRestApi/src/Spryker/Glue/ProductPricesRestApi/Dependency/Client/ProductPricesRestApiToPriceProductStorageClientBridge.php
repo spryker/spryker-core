@@ -41,4 +41,20 @@ class ProductPricesRestApiToPriceProductStorageClientBridge implements ProductPr
     {
         return $this->priceProductStorageClient->getPriceProductConcreteTransfers($idProductConcrete);
     }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function resolvePriceProductConcrete(int $idProductConcrete, int $idProductAbstract): array
+    {
+        return $this
+            ->priceProductStorageClient
+            ->getResolvedPriceProductConcreteTransfers(
+                $idProductConcrete,
+                $idProductAbstract
+            );
+    }
 }

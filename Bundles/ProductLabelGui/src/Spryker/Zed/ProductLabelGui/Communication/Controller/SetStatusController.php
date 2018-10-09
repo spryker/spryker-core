@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SetStatusController extends AbstractController
 {
-    const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
-    const PARAM_REDIRECT_URL = 'redirect-url';
+    public const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
+    public const PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -14,7 +14,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterface
 {
-    const FILE_EXTENSION = 'php';
+    public const FILE_EXTENSION = 'php';
 
     /**
      * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface

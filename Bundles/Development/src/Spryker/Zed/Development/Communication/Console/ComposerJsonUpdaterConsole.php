@@ -17,10 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ComposerJsonUpdaterConsole extends Console
 {
-    const COMMAND_NAME = 'dev:composer:update-json-files';
-    const OPTION_MODULE = 'module';
-    const OPTION_DRY_RUN = 'dry-run';
-    const VERBOSE = 'verbose';
+    public const COMMAND_NAME = 'dev:composer:update-json-files';
+    public const OPTION_MODULE = 'module';
+    public const OPTION_DRY_RUN = 'dry-run';
+    public const VERBOSE = 'verbose';
 
     /**
      * @return void

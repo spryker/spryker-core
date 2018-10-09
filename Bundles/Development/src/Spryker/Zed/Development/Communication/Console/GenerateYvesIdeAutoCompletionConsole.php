@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateYvesIdeAutoCompletionConsole extends Console
 {
-    const COMMAND_NAME = 'dev:ide:generate-yves-auto-completion';
+    public const COMMAND_NAME = 'dev:ide:generate-yves-auto-completion';
 
     /**
      * @return void

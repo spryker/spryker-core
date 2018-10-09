@@ -39,6 +39,7 @@
         <property name="idCompanyUser" type="int"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
+        <property name="companyBusinessUnitIds" type="array"/>
     </transfer>
 
     <transfer name="Filter">
@@ -58,6 +59,16 @@
         <property name="lastIndex" type="int"/>
         <property name="firstPage" type="int"/>
         <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitTreeNode">
+        <property name="children" type="CompanyBusinessUnitTreeNode[]"/>
+        <property name="level" type="int"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitTreeNodeCollection">
+        <property name="companyBusinessUnitTreeNodes" type="CompanyBusinessUnitTreeNode[]"/>
     </transfer>
 
     <transfer name="ResponseMessage">

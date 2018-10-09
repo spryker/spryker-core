@@ -14,8 +14,8 @@ use Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterSt
 
 class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorageWriterInterface
 {
-    const FK_CATEGORY = 'fkCategory';
-    const FILTER_DATA = 'filterData';
+    public const FK_CATEGORY = 'fkCategory';
+    public const FILTER_DATA = 'filterData';
 
     /**
      * @var \Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainerInterface

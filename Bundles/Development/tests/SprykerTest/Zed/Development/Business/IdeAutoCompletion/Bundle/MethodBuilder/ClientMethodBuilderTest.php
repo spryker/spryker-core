@@ -27,8 +27,8 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class ClientMethodBuilderTest extends Unit
 {
-    const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
-    const BUNDLE_DIRECTORY = '/foo/bar/baz/FooBundle/src/Spryker/Client/';
+    public const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
+    public const BUNDLE_DIRECTORY = '/foo/bar/baz/FooBundle/src/Spryker/Client/';
 
     /**
      * @return void
