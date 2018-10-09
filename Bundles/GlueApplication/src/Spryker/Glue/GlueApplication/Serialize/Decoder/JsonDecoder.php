@@ -31,7 +31,7 @@ class JsonDecoder implements DecoderInterface
      */
     public function decode($data): array
     {
-        $decodedData =$this->utilEncodingService->decodeJson($data, true);
+        $decodedData = $this->utilEncodingService->decodeJson($data, true);
         if (!$decodedData) {
             return [];
         }
