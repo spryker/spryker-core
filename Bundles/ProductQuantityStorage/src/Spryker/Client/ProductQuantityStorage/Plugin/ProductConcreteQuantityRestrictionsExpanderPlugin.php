@@ -26,7 +26,7 @@ class ProductConcreteQuantityRestrictionsExpanderPlugin extends AbstractPlugin i
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expand(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getClient()->expandProductConcreteTransferWithQuantityRestrictions($productConcreteTransfer);
     }

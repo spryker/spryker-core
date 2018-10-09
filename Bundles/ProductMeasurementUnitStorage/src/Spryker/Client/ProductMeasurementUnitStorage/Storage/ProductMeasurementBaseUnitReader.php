@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductMeasurementUnitStorage\Storage;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 
 class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitReaderInterface
@@ -50,5 +51,21 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
         return $this->productMeasurementUnitReader->findProductMeasurementUnit(
             $productConcreteMeasurementUnitStorageTransfer->getBaseUnit()->getIdProductMeasurementUnit()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function expandProductConcreteTransferWithBaseMeasurementUnit(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        $productMeasurementUnitTransfer = $this->findProductMeasurementBaseUnitByIdProduct($productConcreteTransfer->getIdProductConcrete());
+
+        if ($productMeasurementUnitTransfer === null) {
+            return $productConcreteTransfer;
+        }
+
+        return $productConcreteTransfer->setBaseMeasurementUnit($productMeasurementUnitTransfer);
     }
 }

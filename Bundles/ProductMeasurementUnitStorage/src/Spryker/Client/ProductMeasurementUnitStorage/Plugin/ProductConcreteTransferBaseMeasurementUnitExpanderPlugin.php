@@ -15,15 +15,21 @@ use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpander
  * @method \Spryker\Client\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageClientInterface getClient()
  * @method \Spryker\Client\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageFactory getFactory()
  */
-class ProductConcreteMeasurementUnitExpanderPlugin extends AbstractPlugin implements ProductConcreteExpanderPluginInterface
+class ProductConcreteTransferBaseMeasurementUnitExpanderPlugin extends AbstractPlugin implements ProductConcreteExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Expands provided ProductConcreteTransfer with base measurement unit information if available for product.
+     * - Returns the unchanged provided ProductConcreteTransfer when no base measurement unit is defined for the product.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expand(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        return $this->getClient()->expandProductConcreteTransferWithMeasurementBaseUnit($productConcreteTransfer);
+        return $this->getClient()->expandProductConcreteTransferWithBaseMeasurementUnit($productConcreteTransfer);
     }
 }

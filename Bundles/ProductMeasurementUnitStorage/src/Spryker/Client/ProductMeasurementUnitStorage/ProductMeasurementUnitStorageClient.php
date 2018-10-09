@@ -83,6 +83,23 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
     }
 
     /**
+     * Specification:
+     * - Finds a product base unit within Storage with a given product ID.
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
+     */
+    public function findProductMeasurementBaseUnitByIdProduct(int $idProduct): ?ProductMeasurementUnitTransfer
+    {
+        return $this->getFactory()
+            ->createProductMeasurementBaseUnitReader()
+            ->findProductMeasurementBaseUnitByIdProduct($idProduct);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api
@@ -91,10 +108,10 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteTransferWithMeasurementBaseUnit(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expandProductConcreteTransferWithBaseMeasurementUnit(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getFactory()
-            ->createProductConcreteExpander()
-            ->expandProductConcreteTransferWithMeasurementBaseUnit($productConcreteTransfer);
+            ->createProductMeasurementBaseUnitReader()
+            ->expandProductConcreteTransferWithBaseMeasurementUnit($productConcreteTransfer);
     }
 }

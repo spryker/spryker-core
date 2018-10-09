@@ -8,12 +8,8 @@
 namespace Spryker\Client\ProductMeasurementUnitStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToGlossaryStorageClientInterface;
-use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToLocaleClientInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductMeasurementUnitStorage\ProductConcreteExpander\ProductConcreteExpander;
-use Spryker\Client\ProductMeasurementUnitStorage\ProductConcreteExpander\ProductConcreteExpanderInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReader;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReaderInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductMeasurementBaseUnitReader;
@@ -83,39 +79,11 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteExpanderInterface
-     */
-    public function createProductConcreteExpander(): ProductConcreteExpanderInterface
-    {
-        return new ProductConcreteExpander(
-            $this->createProductMeasurementBaseUnitReader(),
-            $this->getGlossaryStorageClient(),
-            $this->getLocaleClient()
-        );
-    }
-
-    /**
      * @return \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface
      */
     public function getStorageClient(): ProductMeasurementUnitStorageToStorageClientInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::CLIENT_STORAGE);
-    }
-
-    /**
-     * @return \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToGlossaryStorageClientInterface
-     */
-    public function getGlossaryStorageClient(): ProductMeasurementUnitStorageToGlossaryStorageClientInterface
-    {
-        return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
-    }
-
-    /**
-     * @return \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToLocaleClientInterface
-     */
-    public function getLocaleClient(): ProductMeasurementUnitStorageToLocaleClientInterface
-    {
-        return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::CLIENT_LOCALE);
     }
 
     /**

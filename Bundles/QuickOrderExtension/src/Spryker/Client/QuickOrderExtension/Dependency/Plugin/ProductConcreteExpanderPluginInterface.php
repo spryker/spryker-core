@@ -22,5 +22,5 @@ interface ProductConcreteExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function expand(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

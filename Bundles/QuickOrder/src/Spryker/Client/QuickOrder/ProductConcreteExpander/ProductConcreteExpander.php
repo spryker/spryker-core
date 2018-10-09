@@ -42,7 +42,7 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
     protected function expandProductConcreteTransferWithPlugins(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         foreach ($this->productConcreteExpanderPlugins as $productConcreteExpanderPlugin) {
-            $productConcreteTransfer = $productConcreteExpanderPlugin->expandProductConcreteTransfer($productConcreteTransfer);
+            $productConcreteTransfer = $productConcreteExpanderPlugin->expand($productConcreteTransfer);
         }
 
         return $productConcreteTransfer;

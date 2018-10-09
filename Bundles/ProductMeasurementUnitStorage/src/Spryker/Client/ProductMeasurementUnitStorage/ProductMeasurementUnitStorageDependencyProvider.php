@@ -9,8 +9,6 @@ namespace Spryker\Client\ProductMeasurementUnitStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToGlossaryStorageStorageClientBridge;
-use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToLocaleClientBridge;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientBridge;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceBridge;
 use Spryker\Shared\Kernel\Store;
@@ -18,8 +16,6 @@ use Spryker\Shared\Kernel\Store;
 class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
-    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const STORE = 'STORE';
 
@@ -31,8 +27,6 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependency
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addStorageClient($container);
-        $container = $this->addGlossaryStorageClient($container);
-        $container = $this->addLocaleClient($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addStore($container);
 
@@ -48,38 +42,6 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependency
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new ProductMeasurementUnitStorageToStorageClientBridge($container->getLocator()->storage()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addGlossaryStorageClient($container): Container
-    {
-        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
-            return new ProductMeasurementUnitStorageToGlossaryStorageStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addLocaleClient($container): Container
-    {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
-            return new ProductMeasurementUnitStorageToLocaleClientBridge(
-                $container->getLocator()->locale()->client()
-            );
         };
 
         return $container;
