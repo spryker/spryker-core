@@ -57,6 +57,7 @@ interface UserFacadeInterface
     /**
      * Specification:
      * - get user transfer for existing user or null
+     * 
      * @api
      *
      * @param int $idUser
