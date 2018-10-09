@@ -129,6 +129,36 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
 
     /**
      * @param int $idProductConcrete
+     * @param int[] $blackListIds
+     *
+     * @return bool
+     */
+    public function isConcreteProductBlacklisted(int $idProductConcrete, array $blackListIds): bool
+    {
+        return $this->isConcreteProductWhiteOrBlacklisted(
+            $idProductConcrete,
+            SpyProductListTableMap::COL_TYPE_BLACKLIST,
+            $blackListIds
+        );
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int[] $whiteListIds
+     *
+     * @return bool
+     */
+    public function isConcreteProductWhitelisted(int $idProductConcrete, array $whiteListIds): bool
+    {
+        return $this->isConcreteProductWhiteOrBlacklisted(
+            $idProductConcrete,
+            SpyProductListTableMap::COL_TYPE_WHITELIST,
+            $whiteListIds
+        );
+    }
+
+    /**
+     * @param int $idProductConcrete
      * @param string $listType
      *
      * @return int[]
@@ -148,6 +178,25 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->groupByFkProductList()
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $listType
+     * @param array $listIds
+     *
+     * @return bool
+     */
+    protected function isConcreteProductWhiteOrBlacklisted(int $idProductConcrete, string $listType, array $listIds): bool
+    {
+        return $this->getFactory()
+            ->createProductListProductConcreteQuery()
+            ->filterByFkProduct($idProductConcrete)
+            ->filterByFkProductList_In($listIds)
+            ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
+                ->filterByType($listType)
+            ->endUse()
+            ->exists();
     }
 
     /**

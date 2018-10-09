@@ -62,9 +62,9 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?: [];
         $customerBlacklistIds = $customerProductListCollectionTransfer->getBlacklistIds() ?: [];
 
-        foreach ($cartChangeTransfer->getItems() as $item) {
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $this->validateItem(
-                $item,
+                $itemTransfer,
                 $responseTransfer,
                 $customerWhitelistIds,
                 $customerBlacklistIds
@@ -75,7 +75,7 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      * @param int[] $customerWhitelistIds
      * @param int[] $customerBlacklistIds
@@ -83,49 +83,17 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
      * @return void
      */
     protected function validateItem(
-        ItemTransfer $item,
+        ItemTransfer $itemTransfer,
         CartPreCheckResponseTransfer $responseTransfer,
         array $customerWhitelistIds,
         array $customerBlacklistIds
     ): void {
-        $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($item->getSku());
-        if ($this->isProductAbstractRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds)) {
-            $this->addViolation($item->getSku(), $responseTransfer);
-            return;
-        }
+        $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($itemTransfer->getSku());
 
-        $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($item->getSku());
         if ($this->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds)) {
-            $this->addViolation($item->getSku(), $responseTransfer);
+            $this->addViolation($itemTransfer->getSku(), $responseTransfer);
             return;
         }
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param int[] $customerWhitelistIds
-     * @param int[] $customerBlacklistIds
-     *
-     * @return bool
-     */
-    public function isProductAbstractRestricted(
-        int $idProductAbstract,
-        array $customerWhitelistIds,
-        array $customerBlacklistIds
-    ): bool {
-        if (!$customerBlacklistIds && !$customerWhitelistIds) {
-            return false;
-        }
-
-        $productAbstractBlacklistIds = $this->productListReader
-            ->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
-        $isProductInBlacklist = !empty(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
-
-        $productAbstractWhitelistIds = $this->productListReader
-            ->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
-        $isProductInWhitelist = !empty(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
-
-        return $isProductInBlacklist || !(empty($productAbstractWhitelistIds) || $isProductInWhitelist);
     }
 
     /**
@@ -141,15 +109,13 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
             return false;
         }
 
-        $productAbstractBlacklistIds = $this->productListReader
-            ->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete);
-        $isProductInBlacklist = !empty(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
+        $isProductInBlacklist = $this->productListReader
+            ->isConcreteProductBlacklisted($idProductConcrete, $customerBlacklistIds);
 
-        $productAbstractWhitelistIds = $this->productListReader
-            ->getProductAbstractWhitelistIdsByIdProductConcrete($idProductConcrete);
-        $isProductInWhitelist = !empty(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
+        $isProductInWhitelist = $this->productListReader
+            ->isConcreteProductWhitelisted($idProductConcrete, $customerWhitelistIds);
 
-        return $isProductInBlacklist || !(empty($productAbstractWhitelistIds) || $isProductInWhitelist);
+        return !(!$isProductInBlacklist || $isProductInWhitelist || (!$isProductInWhitelist && !$isProductInBlacklist));
     }
 
     /**

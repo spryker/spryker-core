@@ -77,33 +77,46 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
      */
     protected function removeRestrictedItemsFromQuote(
         QuoteTransfer $quoteTransfer,
-        $customerBlacklistIds,
-        $customerWhitelistIds
+        array $customerBlacklistIds,
+        array $customerWhitelistIds
     ): void {
         if (!$customerBlacklistIds && !$customerWhitelistIds) {
             return;
         }
-        foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
-            $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($itemTransfer->getSku());
-            $isProductConcreteRestricted = $this->productListRestrictionValidator
-                ->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds);
-            if ($isProductConcreteRestricted) {
-                $quoteTransfer->getItems()->offsetUnset($key);
+
+        $allowedItems = [];
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $idProductConcrete = $itemTransfer->getId();
+
+            if (!$idProductConcrete) {
+                $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($itemTransfer->getSku());
+            }
+
+            if ($this->isProductConcreteRestricted($idProductConcrete, $customerBlacklistIds, $customerWhitelistIds)) {
                 $this->addFilterMessage($itemTransfer->getSku());
                 continue;
             }
 
-            $isProductAbstractRestricted = $this->productListRestrictionValidator->isProductAbstractRestricted(
-                $itemTransfer->getIdProductAbstract(),
-                $customerWhitelistIds,
-                $customerBlacklistIds
-            );
-            if ($isProductAbstractRestricted) {
-                $quoteTransfer->getItems()->offsetUnset($key);
-                $this->addFilterMessage($itemTransfer->getSku());
-                continue;
-            }
+            $allowedItems[] = $itemTransfer;
         }
+
+        $quoteTransfer->getItems()->exchangeArray($allowedItems);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param array $customerBlacklistIds
+     * @param array $customerWhitelistIds
+     *
+     * @return bool
+     */
+    protected function isProductConcreteRestricted(
+        int $idProductConcrete,
+        array $customerBlacklistIds,
+        array $customerWhitelistIds
+    ): bool {
+        return $this->productListRestrictionValidator
+            ->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds);
     }
 
     /**

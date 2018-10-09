@@ -54,6 +54,22 @@ interface ProductListReaderInterface
     public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
 
     /**
+     * @param int $idProductConcrete
+     * @param int[] $blackListIds
+     *
+     * @return bool
+     */
+    public function isConcreteProductBlacklisted(int $idProductConcrete, array $blackListIds): bool;
+
+    /**
+     * @param int $idProductConcrete
+     * @param int[] $whiteListIds
+     *
+     * @return bool
+     */
+    public function isConcreteProductWhitelisted(int $idProductConcrete, array $whiteListIds): bool;
+
+    /**
      * @param int[] $productListIds
      *
      * @return int[]

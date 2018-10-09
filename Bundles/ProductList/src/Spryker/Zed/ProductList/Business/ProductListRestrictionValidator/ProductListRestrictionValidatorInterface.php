@@ -20,19 +20,6 @@ interface ProductListRestrictionValidatorInterface
     public function validateItemAddition(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 
     /**
-     * @param int $idProductAbstract
-     * @param int[] $customerWhitelistIds
-     * @param int[] $customerBlacklistIds
-     *
-     * @return bool
-     */
-    public function isProductAbstractRestricted(
-        int $idProductAbstract,
-        array $customerWhitelistIds,
-        array $customerBlacklistIds
-    ): bool;
-
-    /**
      * @param int $idProductConcrete
      * @param int[] $customerWhitelistIds
      * @param int[] $customerBlacklistIds

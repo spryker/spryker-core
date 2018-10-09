@@ -97,6 +97,28 @@ class ProductListReader implements ProductListReaderInterface
     }
 
     /**
+     * @param int $idProductConcrete
+     * @param int[] $blackListIds
+     *
+     * @return bool
+     */
+    public function isConcreteProductBlacklisted(int $idProductConcrete, array $blackListIds): bool
+    {
+        return $this->productListRepository->isConcreteProductBlacklisted($idProductConcrete, $blackListIds);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int[] $whiteListIds
+     *
+     * @return bool
+     */
+    public function isConcreteProductWhitelisted(int $idProductConcrete, array $whiteListIds): bool
+    {
+        return $this->productListRepository->isConcreteProductWhitelisted($idProductConcrete, $whiteListIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
