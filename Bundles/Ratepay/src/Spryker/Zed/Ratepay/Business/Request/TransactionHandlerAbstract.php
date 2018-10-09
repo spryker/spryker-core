@@ -18,7 +18,7 @@ abstract class TransactionHandlerAbstract implements TransactionHandlerInterface
 {
     use LoggerTrait;
 
-    const TRANSACTION_TYPE = null;
+    public const TRANSACTION_TYPE = null;
 
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Adapter\AdapterInterface

@@ -11,12 +11,12 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Map\RelationMap;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class MerchantHelper extends Module
 {
+    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -29,38 +29,31 @@ class MerchantHelper extends Module
         $merchantTransfer = (new MerchantBuilder($seedData))->build();
         $merchantTransfer->setIdMerchant(null);
 
-        return $this->getLocator()->merchant()->facade()->createMerchant($merchantTransfer);
+        $merchantTransfer = $this->getLocator()
+            ->merchant()
+            ->facade()
+            ->createMerchant($merchantTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantTransfer) {
+            $this->cleanupMerchant($merchantTransfer);
+        });
+
+        return $merchantTransfer;
     }
 
     /**
-     * @return void
-     */
-    public function ensureDatabaseTableIsEmpty(): void
-    {
-        $this->cleanTableRelations($this->getMerchantQuery());
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param array $processedEntities
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return void
      */
-    protected function cleanTableRelations(ModelCriteria $query, array $processedEntities = []): void
+    protected function cleanupMerchant(MerchantTransfer $merchantTransfer): void
     {
-        $relations = $query->getTableMap()->getRelations();
+        $this->debug(sprintf('Deleting Merchant: %d', $merchantTransfer->getIdMerchant()));
 
-        foreach ($relations as $relationMap) {
-            $relationType = $relationMap->getType();
-            $fullyQualifiedQueryModel = $relationMap->getLocalTable()->getClassname() . 'Query';
-            if ($relationType == RelationMap::ONE_TO_MANY && !in_array($fullyQualifiedQueryModel, $processedEntities)) {
-                $processedEntities[] = $fullyQualifiedQueryModel;
-                $fullyQualifiedQueryModelObject = $fullyQualifiedQueryModel::create();
-                $this->cleanTableRelations($fullyQualifiedQueryModelObject, $processedEntities);
-            }
-        }
-
-        $query->deleteAll();
+        $this->getLocator()
+            ->merchant()
+            ->facade()
+            ->deleteMerchant($merchantTransfer);
     }
 
     /**

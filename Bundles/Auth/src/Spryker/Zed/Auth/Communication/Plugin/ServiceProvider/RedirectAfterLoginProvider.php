@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const REFERER = 'referer';
+    public const REFERER = 'referer';
 
     /**
      * @param \Silex\Application $app

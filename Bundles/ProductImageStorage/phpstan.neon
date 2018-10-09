@@ -3,6 +3,7 @@ parameters:
 
     ignoreErrors:
         - '#Method .+ProductImageStorageQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\Criteria#'
+        - '#Call to an undefined method .+ModelCriteria::innerJoinWithSpyProduct\(\)#'
 
 services:
     -

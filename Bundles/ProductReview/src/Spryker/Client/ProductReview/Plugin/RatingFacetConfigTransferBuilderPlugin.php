@@ -15,8 +15,8 @@ use Spryker\Shared\Search\SearchConfig;
 
 class RatingFacetConfigTransferBuilderPlugin extends AbstractPlugin implements FacetConfigTransferBuilderPluginInterface
 {
-    const NAME = 'rating';
-    const PARAMETER_NAME = 'rating';
+    public const NAME = 'rating';
+    public const PARAMETER_NAME = 'rating';
 
     /**
      * @return \Generated\Shared\Transfer\FacetConfigTransfer

@@ -31,21 +31,21 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CustomerForm extends AbstractType
 {
-    const OPTION_SALUTATION_CHOICES = 'salutation_choices';
-    const OPTION_GENDER_CHOICES = 'gender_choices';
-    const OPTION_LOCALE_CHOICES = 'locale_choices';
+    public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+    public const OPTION_GENDER_CHOICES = 'gender_choices';
+    public const OPTION_LOCALE_CHOICES = 'locale_choices';
 
-    const FIELD_EMAIL = 'email';
-    const FIELD_SALUTATION = 'salutation';
-    const FIELD_FIRST_NAME = 'first_name';
-    const FIELD_LAST_NAME = 'last_name';
-    const FIELD_GENDER = 'gender';
-    const FIELD_SEND_PASSWORD_TOKEN = 'send_password_token';
-    const FIELD_ID_CUSTOMER = 'id_customer';
-    const FIELD_COMPANY = 'company';
-    const FIELD_PHONE = 'phone';
-    const FIELD_DATE_OF_BIRTH = 'date_of_birth';
-    const FIELD_LOCALE = 'locale';
+    public const FIELD_EMAIL = 'email';
+    public const FIELD_SALUTATION = 'salutation';
+    public const FIELD_FIRST_NAME = 'first_name';
+    public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_GENDER = 'gender';
+    public const FIELD_SEND_PASSWORD_TOKEN = 'send_password_token';
+    public const FIELD_ID_CUSTOMER = 'id_customer';
+    public const FIELD_COMPANY = 'company';
+    public const FIELD_PHONE = 'phone';
+    public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+    public const FIELD_LOCALE = 'locale';
 
     /**
      * @return string

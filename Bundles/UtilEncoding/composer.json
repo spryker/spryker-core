@@ -1,5 +1,6 @@
 {
   "name": "spryker/util-encoding",
+  "type": "library",
   "description": "UtilEncoding module",
   "license": "proprietary",
   "require": {

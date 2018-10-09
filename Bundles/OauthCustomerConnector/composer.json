@@ -1,5 +1,6 @@
 {
   "name": "spryker/oauth-customer-connector",
+  "type": "library",
   "description": "OauthCustomerConnector module",
   "license": "proprietary",
   "require": {

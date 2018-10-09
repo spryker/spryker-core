@@ -9,5 +9,5 @@ namespace SprykerTest\Zed\Glossary\PageObject;
 
 class GlossaryCreatePage
 {
-    const URL = '/glossary/add';
+    public const URL = '/glossary/add';
 }

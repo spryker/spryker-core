@@ -11,7 +11,7 @@ use Exception;
 
 class UrlUniqueException extends Exception
 {
-    const ERROR_MESSAGE = 'The URL "%s" is already used in the Menu!';
+    public const ERROR_MESSAGE = 'The URL "%s" is already used in the Menu!';
 
     /**
      * @param string $url

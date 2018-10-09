@@ -17,20 +17,20 @@ use Spryker\Zed\Kernel\Container;
 
 class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CATEGORY_QUERY_CONTAINER = 'category query container';
+    public const CATEGORY_QUERY_CONTAINER = 'category query container';
 
-    const FACADE_TOUCH = 'touch facade';
-    const FACADE_LOCALE = 'locale facade';
-    const FACADE_URL = 'url facade';
-    const FACADE_EVENT = 'facade event';
+    public const FACADE_TOUCH = 'touch facade';
+    public const FACADE_LOCALE = 'locale facade';
+    public const FACADE_URL = 'url facade';
+    public const FACADE_EVENT = 'facade event';
 
-    const PLUGIN_GRAPH = 'graph plugin';
-    const PLUGIN_STACK_RELATION_DELETE = 'delete relation plugin stack';
-    const PLUGIN_STACK_RELATION_READ = 'read relation plugin stack';
-    const PLUGIN_STACK_RELATION_UPDATE = 'update relation plugin stack';
-    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
-    const PLUGIN_CATEGORY_FORM_PLUGINS = 'PLUGIN_CATEGORY_FORM_PLUGINS';
-    const PLUGINS_CATEGORY_URL_PATH = 'PLUGINS_CATEGORY_URL_PATH';
+    public const PLUGIN_GRAPH = 'graph plugin';
+    public const PLUGIN_STACK_RELATION_DELETE = 'delete relation plugin stack';
+    public const PLUGIN_STACK_RELATION_READ = 'read relation plugin stack';
+    public const PLUGIN_STACK_RELATION_UPDATE = 'update relation plugin stack';
+    public const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+    public const PLUGIN_CATEGORY_FORM_PLUGINS = 'PLUGIN_CATEGORY_FORM_PLUGINS';
+    public const PLUGINS_CATEGORY_URL_PATH = 'PLUGINS_CATEGORY_URL_PATH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

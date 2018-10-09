@@ -15,10 +15,10 @@ use Spryker\Zed\Kernel\Container;
 
 class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
-    const QUERY_CONTAINER_USER = 'QUERY_CONTAINER_USER';
+    public const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
+    public const QUERY_CONTAINER_USER = 'QUERY_CONTAINER_USER';
 
-    const FACADE_CUSTOMER_USER_CONNECTOR = 'FACADE_CUSTOMER_USER_CONNECTOR';
+    public const FACADE_CUSTOMER_USER_CONNECTOR = 'FACADE_CUSTOMER_USER_CONNECTOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

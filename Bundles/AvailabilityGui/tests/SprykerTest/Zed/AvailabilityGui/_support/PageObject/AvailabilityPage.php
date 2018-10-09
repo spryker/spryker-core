@@ -9,18 +9,18 @@ namespace SprykerTest\Zed\AvailabilityGui\PageObject;
 
 class AvailabilityPage
 {
-    const AVAILABILITY_ID = 107;
-    const AVAILABILITY_SKU = '828188-1';
-    const AVAILABILITY_ABSTRACT_PRODUCT_ID = 107;
-    const AVAILABILITY_ID_STORE = 1;
+    public const AVAILABILITY_ID = 107;
+    public const AVAILABILITY_SKU = '828188-1';
+    public const AVAILABILITY_ABSTRACT_PRODUCT_ID = 107;
+    public const AVAILABILITY_ID_STORE = 1;
 
-    const AVAILABILITY_LIST_URL = '/availability-gui';
-    const AVAILABILITY_VIEW_URL = '/availability-gui/index/view?id-product=%d&id-store=%s';
-    const AVAILABILITY_EDIT_STOCK_URL = 'availability-gui/index/edit?id-product=%d&sku=%s&id-abstract=%d&id-store=%s';
+    public const AVAILABILITY_LIST_URL = '/availability-gui';
+    public const AVAILABILITY_VIEW_URL = '/availability-gui/index/view?id-product=%d&id-store=%s';
+    public const AVAILABILITY_EDIT_STOCK_URL = 'availability-gui/index/edit?id-product=%d&sku=%s&id-abstract=%d&id-store=%s';
 
-    const SUCCESS_MESSAGE = 'Stock successfully updated';
+    public const SUCCESS_MESSAGE = 'Stock successfully updated';
 
-    const PAGE_AVAILABILITY_VIEW_HEADER = 'Product availability';
-    const PAGE_AVAILABILITY_LIST_HEADER = 'Availability list';
-    const PAGE_AVAILABILITY_EDIT_HEADER = 'Edit Stock';
+    public const PAGE_AVAILABILITY_VIEW_HEADER = 'Product availability';
+    public const PAGE_AVAILABILITY_LIST_HEADER = 'Availability list';
+    public const PAGE_AVAILABILITY_EDIT_HEADER = 'Edit Stock';
 }
