@@ -26,7 +26,7 @@ class GuestCartItemsResourceController extends AbstractController
     public function postAction(RestRequestInterface $request, RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCartItemAdder()
+            ->createGuestCartItemAdder()
             ->addItem($request, $restCartItemsAttributesTransfer);
     }
 }

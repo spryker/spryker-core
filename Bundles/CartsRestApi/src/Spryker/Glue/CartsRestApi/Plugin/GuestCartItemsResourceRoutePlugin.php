@@ -11,32 +11,43 @@ use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
-class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addPost(CartsRestApiConfig::ACTION_GUEST_CART_ITEMS_POST);
+        $resourceRouteCollection->addPost(CartsRestApiConfig::ACTION_GUEST_CART_ITEMS_POST, false);
 
         return $resourceRouteCollection;
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getResourceType(): string
     {
-        return CartsRestApiConfig::RESOURCE_CART_ITEMS;
+        return CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS;
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getController(): string
@@ -45,18 +56,14 @@ class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements Resour
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getResourceAttributesClassName(): string
     {
         return RestCartItemsAttributesTransfer::class;
-    }
-
-    /**
-     * @return string
-     */
-    public function getParentResourceType(): string
-    {
-        return CartsRestApiConfig::RESOURCE_GUEST_CARTS;
     }
 }
