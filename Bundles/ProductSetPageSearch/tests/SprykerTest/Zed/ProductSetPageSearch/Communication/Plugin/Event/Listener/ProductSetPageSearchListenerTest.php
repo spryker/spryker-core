@@ -202,6 +202,9 @@ class ProductSetPageSearchListenerTest extends Unit
      */
     public function testProductSetPageProductImageSearchListenerStoreData()
     {
+        $this->markTestSkipped(
+            'These tests need to be re-written in CC-940'
+        );
         $productSetPageQueryContainer = new ProductSetPageSearchQueryContainer();
         $productSetIds = $productSetPageQueryContainer->queryProductSetIdsByProductImageIds([209])->find()->getData();
         SpyProductSetPageSearchQuery::create()->filterByFkProductSet_In($productSetIds)->delete();
@@ -227,6 +230,9 @@ class ProductSetPageSearchListenerTest extends Unit
      */
     public function testProductSetPageProductImageSetImageSearchListenerStoreData()
     {
+        $this->markTestSkipped(
+            'These tests need to be re-written in CC-940'
+        );
         $productSetPageQueryContainer = new ProductSetPageSearchQueryContainer();
         $productSetIds = $productSetPageQueryContainer->queryProductSetIdsByProductImageSetToProductImageIds([1021])->find()->getData();
         SpyProductSetPageSearchQuery::create()->filterByFkProductSet_In($productSetIds)->delete();
