@@ -98,8 +98,14 @@
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">
-        <property name="RestAddressesResponseData" type="RestAddress"/>
-        <property name="RestPaymentMethodsResponseData" type="RestShipmentMethodAttributes"/>
+        <property name="RestAddressesResponseData" type="RestAddress[]"/>
+        <property name="RestPaymentMethodsResponseData" type="RestPaymentMethodAttributes[]"/>
+        <property name="RestShipmentMethodsResponseData" type="RestShipmentMethodAttributes[]"/>
+    </transfer>
+
+    <transfer name="RestPaymentMethodAttributes">
+        <property name="methodName" type="string"/>
+        <property name="requiredResponseData" type="bool"/>
     </transfer>
 
     <transfer name="RestShipmentMethodAttributes">

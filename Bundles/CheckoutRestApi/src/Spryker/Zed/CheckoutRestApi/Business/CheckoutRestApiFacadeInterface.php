@@ -10,7 +10,7 @@ namespace Spryker\Zed\CheckoutRestApi\Business;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutRestApiBusinessFacadeInterface
+interface CheckoutRestApiFacadeInterface
 {
     /**
      * Specification:

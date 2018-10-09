@@ -5,9 +5,13 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/checkout-rest-api-extension": "^1.0.0.",
     "spryker/customer": "^1.0.0",
+    "spryker/glue-application": "^1.0.0.",
+    "spryker/glue-application-extension": "^1.0.0.",
     "spryker/kernel": "^3.22.0",
     "spryker/payment": "^1.0.0",
+    "spryker/quote": "^1.0.0.",
     "spryker/shipment": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },

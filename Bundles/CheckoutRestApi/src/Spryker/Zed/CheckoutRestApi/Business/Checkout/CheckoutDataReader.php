@@ -93,7 +93,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected function getAddressesTransfer(QuoteTransfer $quoteTransfer): AddressesTransfer
     {
         $customerTransfer = $quoteTransfer->getCustomer();
-        if ($customerTransfer->getIsGuest()) {
+        if (!$customerTransfer || $customerTransfer->getIsGuest()) {
             return new AddressesTransfer();
         }
 
