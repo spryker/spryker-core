@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-user-gui-extension",
+  "type": "library",
   "description": "CompanyUserGuiExtension module",
   "license": "proprietary",
   "require": {

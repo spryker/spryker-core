@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-role-gui",
+  "type": "library",
   "description": "CompanyRoleGui module",
   "license": "proprietary",
   "require": {
