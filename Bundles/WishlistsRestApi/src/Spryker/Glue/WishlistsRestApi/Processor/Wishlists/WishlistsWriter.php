@@ -149,6 +149,10 @@ class WishlistsWriter implements WishlistsWriterInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
+        if (!$restRequest->getResource()->getId()) {
+            return $this->createWishlistNotFoundError($response);
+        }
+
         $wishlistUuid = $restRequest->getResource()->getId();
         $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid($wishlistUuid);
 
