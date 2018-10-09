@@ -19,7 +19,11 @@ class WishlistsResourceMapper implements WishlistsResourceMapperInterface
      */
     public function mapWishlistTransferToRestWishlistsAttributes(WishlistTransfer $wishlistTransfer): RestWishlistsAttributesTransfer
     {
-        return (new RestWishlistsAttributesTransfer())->fromArray($wishlistTransfer->toArray(), true);
+        $restWishlistsAttributesTransfer = (new RestWishlistsAttributesTransfer())
+            ->fromArray($wishlistTransfer->toArray(), true);
+        $restWishlistsAttributesTransfer->setNumberOfItems($wishlistTransfer->getNumberOfItems() ?? 0);
+
+        return $restWishlistsAttributesTransfer;
     }
 
     /**

@@ -29,8 +29,8 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
             ->useSpyCustomerQuery()
                 ->filterByCustomerReference($customerReference)
             ->endUse()
-            ->joinWithSpyWishlistItem()
-            ->joinSpyWishlistItem(WishlistTransfer::NUMBER_OF_ITEMS)
+            ->leftJoinWithSpyWishlistItem()
+            ->leftJoinSpyWishlistItem(WishlistTransfer::NUMBER_OF_ITEMS)
             ->withColumn('COUNT(' . WishlistTransfer::NUMBER_OF_ITEMS . ')', WishlistTransfer::NUMBER_OF_ITEMS)
             ->groupByIdWishlist()
             ->find();
