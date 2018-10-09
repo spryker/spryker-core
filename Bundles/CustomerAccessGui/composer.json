@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-access-gui",
+  "type": "library",
   "description": "CustomerAccessGui module",
   "license": "proprietary",
   "require": {
