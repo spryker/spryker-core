@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/translator.svg)](https://travis-ci.org/spryker/translator)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/translator/badge.svg)](https://coveralls.io/github/spryker/translator)
 
-{{ADD DESCRIPTION HERE}}
+Zed translation module
 
 ## Installation
 
