@@ -17,7 +17,7 @@ class ProductQuantityStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_QUANTITY_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_QUANTITY_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -25,7 +25,7 @@ class ProductQuantityStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_QUANTITY_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+    public const PRODUCT_QUANTITY_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
     /**
      * Specification:

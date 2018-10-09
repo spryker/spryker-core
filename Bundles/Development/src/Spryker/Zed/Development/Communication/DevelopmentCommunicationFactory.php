@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Communication;
 
+use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Development\Communication\Form\BundlesFormType;
 use Spryker\Zed\Development\Communication\Form\DataProvider\BundleFormDataProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -31,15 +32,15 @@ class DevelopmentCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
      * @return \Spryker\Zed\Development\Communication\Form\DataProvider\BundleFormDataProvider
      */
-    public function createBundleFormDataProvider(Request $request, $module)
+    public function createBundleFormDataProvider(Request $request, ModuleTransfer $moduleTransfer)
     {
         $bundleFormDataProvider = new BundleFormDataProvider(
             $request,
-            $this->getFacade()->showOutgoingDependenciesForModule($module)
+            $this->getFacade()->showOutgoingDependenciesForModule($moduleTransfer)
         );
 
         return $bundleFormDataProvider;

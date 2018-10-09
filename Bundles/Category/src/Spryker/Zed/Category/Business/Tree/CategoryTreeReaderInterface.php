@@ -143,7 +143,7 @@ interface CategoryTreeReaderInterface
     /**
      * @param int $idNode
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode|null
      */
     public function getNodeById($idNode);
 

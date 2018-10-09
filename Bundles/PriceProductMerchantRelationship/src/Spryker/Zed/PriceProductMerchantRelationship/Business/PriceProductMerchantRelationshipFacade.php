@@ -77,4 +77,20 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
             ->createPriceProductDimensionExpander()
             ->expand($priceProductDimensionTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idPriceProductStore
+     *
+     * @return void
+     */
+    public function deletePriceProductMerchantRelationshipByIdPriceProductStore(int $idPriceProductStore): void
+    {
+        $this->getFactory()
+            ->createMerchantRelationshipPriceWriter()
+            ->deleteByIdPriceProductStore($idPriceProductStore);
+    }
 }

@@ -103,6 +103,7 @@ class GlossaryStorage implements GlossaryStorageInterface
      */
     protected function getTranslation($key)
     {
+        /** @var array|null $translation */
         $translation = $this->storageClient->get($key);
         if ($translation === null) {
             return null;
@@ -113,7 +114,7 @@ class GlossaryStorage implements GlossaryStorageInterface
 
     /**
      * @param string $keyName
-     * @param string $translation
+     * @param string|null $translation
      *
      * @return void
      */

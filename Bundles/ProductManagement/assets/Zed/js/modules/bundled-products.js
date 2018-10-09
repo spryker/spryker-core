@@ -93,7 +93,7 @@ $(document).ready(function() {
         }
     });
 
-    $('form[name=ProductConcreteFormEdit]').on('submit', function() {
+    $('form[name=product_concrete_form_edit]').on('submit', function() {
         var elementsToRemove = '';
         var size = bundledItemsToBeRemoved.length;
         bundledItemsToBeRemoved.forEach(function(element, index) {
@@ -103,7 +103,7 @@ $(document).ready(function() {
                 elementsToRemove += ',';
             }
         });
-        $('#ProductConcreteFormEdit_product_bundles_to_be_removed').val(elementsToRemove);
+        $('#product_concrete_form_edit_product_bundles_to_be_removed').val(elementsToRemove);
     });
 
 });

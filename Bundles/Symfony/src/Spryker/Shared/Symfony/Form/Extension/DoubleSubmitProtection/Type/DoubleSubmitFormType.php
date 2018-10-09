@@ -22,11 +22,11 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class DoubleSubmitFormType extends AbstractTypeExtension
 {
-    const OPTION_KEY_ERROR_MESSAGE = 'double_submit_error';
-    const OPTION_KEY_TOKEN_FIELD_NAME = 'token_field_name';
+    public const OPTION_KEY_ERROR_MESSAGE = 'double_submit_error';
+    public const OPTION_KEY_TOKEN_FIELD_NAME = 'token_field_name';
 
-    const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
-    const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
+    public const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
+    public const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
 
     /**
      * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $tokenProvider

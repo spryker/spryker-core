@@ -296,7 +296,7 @@ class RequestFormatter implements RequestFormatterInterface
     ): void {
 
         if (!isset($queryParameters[RequestConstantsInterface::QUERY_FIELDS]) ||
-            !\is_array($queryParameters[RequestConstantsInterface::QUERY_FIELDS])) {
+            !is_array($queryParameters[RequestConstantsInterface::QUERY_FIELDS])) {
             return;
         }
 
@@ -331,7 +331,7 @@ class RequestFormatter implements RequestFormatterInterface
      */
     protected function setFilterFields(RequestBuilderInterface $requestBuilder, array $queryParameters): void
     {
-        if (!isset($queryParameters[RequestConstantsInterface::QUERY_FILTER]) || !\is_array($queryParameters[RequestConstantsInterface::QUERY_FILTER])) {
+        if (!isset($queryParameters[RequestConstantsInterface::QUERY_FILTER]) || !is_array($queryParameters[RequestConstantsInterface::QUERY_FILTER])) {
             return;
         }
 

@@ -17,10 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class StorageImportRdbConsole extends Console
 {
-    const COMMAND_NAME = 'storage:redis:import';
-    const DESCRIPTION = 'This command will import a rdb file.';
+    public const COMMAND_NAME = 'storage:redis:import';
+    public const DESCRIPTION = 'This command will import a rdb file.';
 
-    const ARGUMENT_SOURCE = 'source';
+    public const ARGUMENT_SOURCE = 'source';
 
     /**
      * @return void

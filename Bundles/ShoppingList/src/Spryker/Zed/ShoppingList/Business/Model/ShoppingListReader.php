@@ -7,18 +7,22 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Shared\ShoppingList\ShoppingListConfig;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
@@ -33,11 +37,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected $shoppingListRepository;
 
     /**
-     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
-     */
-    protected $itemExpanderPlugins;
-
-    /**
      * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface
      */
     protected $productFacade;
@@ -48,21 +47,26 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected $companyUserFacade;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface
+     */
+    protected $pluginExecutor;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface $customerFacade
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
      */
     public function __construct(
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListToProductFacadeInterface $productFacade,
         ShoppingListToCompanyUserFacadeInterface $customerFacade,
-        array $itemExpanderPlugins
+        ShoppingListItemPluginExecutorInterface $pluginExecutor
     ) {
         $this->shoppingListRepository = $shoppingListRepository;
-        $this->itemExpanderPlugins = $itemExpanderPlugins;
         $this->productFacade = $productFacade;
         $this->companyUserFacade = $customerFacade;
+        $this->pluginExecutor = $pluginExecutor;
     }
 
     /**
@@ -73,9 +77,26 @@ class ShoppingListReader implements ShoppingListReaderInterface
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
-        if (!$this->checkReadPermission($shoppingListTransfer)) {
+
+        if (!$shoppingListTransfer || !$this->checkReadPermission($shoppingListTransfer)) {
             return new ShoppingListTransfer();
         }
+
+        $shoppingListCompanyBusinessUnits = $this->shoppingListRepository
+            ->getShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer)
+            ->getShoppingListCompanyBusinessUnits();
+
+        $shoppingListCompanyUsers = $this->shoppingListRepository
+            ->getShoppingListCompanyUsersByShoppingListId($shoppingListTransfer)
+            ->getShoppingListCompanyUsers();
+
+        $shoppingListTransfer
+            ->setSharedCompanyUsers($shoppingListCompanyUsers)
+            ->setSharedCompanyBusinessUnits($shoppingListCompanyBusinessUnits);
+
+        $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
+        $shoppingListItemCollectionTransfer = $this->expandProducts($shoppingListItemCollectionTransfer);
+        $shoppingListTransfer->setItems($shoppingListItemCollectionTransfer->getItems());
 
         return $shoppingListTransfer;
     }
@@ -103,7 +124,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         $shoppingListOverviewRequestTransfer->setShoppingList($shoppingListTransfer);
         $shoppingListOverviewResponseTransfer = $this->shoppingListRepository->findShoppingListPaginatedItems($shoppingListOverviewRequestTransfer);
-        $shoppingListOverviewResponseTransfer = $this->expandProducts($shoppingListOverviewResponseTransfer);
+        $this->expandProducts($shoppingListOverviewResponseTransfer->getItemsCollection());
 
         $customerTransfer = new CustomerTransfer();
         $requestCompanyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListOverviewRequestTransfer->getShoppingList()->getIdCompanyUser());
@@ -129,7 +150,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
             ->getCustomerReference();
 
         $customerOwnShoppingLists = $this->getCustomerShoppingListCollectionByReference($customerReference);
-
         $customerSharedShoppingLists = new ShoppingListCollectionTransfer();
         $businessUnitSharedShoppingLists = new ShoppingListCollectionTransfer();
 
@@ -161,7 +181,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
             }
         }
 
-        return $this->shoppingListRepository->findCustomerShoppingListsItemsByIds($shoppingListIds);
+        $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findCustomerShoppingListsItemsByIds($shoppingListIds);
+
+        return $this->expandProducts($shoppingListItemCollectionTransfer);
     }
 
     /**
@@ -177,7 +199,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $shoppingListItemIds[] = $shoppingListItemTransfer->getIdShoppingListItem();
         }
 
-        return $this->shoppingListRepository->findShoppingListItemsByIds($shoppingListItemIds);
+        $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIds($shoppingListItemIds);
+
+        return $this->expandProducts($shoppingListItemCollectionTransfer);
     }
 
     /**
@@ -186,6 +210,14 @@ class ShoppingListReader implements ShoppingListReaderInterface
     public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
     {
         return $this->shoppingListRepository->getShoppingListPermissionGroup();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
+     */
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
+    {
+        return $this->shoppingListRepository->getShoppingListPermissionGroups();
     }
 
     /**
@@ -209,9 +241,22 @@ class ShoppingListReader implements ShoppingListReaderInterface
             )
         );
 
+        $companyUserSharedShoppingListIds = $this->shoppingListRepository->getCompanyUserSharedShoppingListIdsByPermissionGroupName(
+            $companyUserTransfer->getIdCompanyUser(),
+            ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
+        );
+        $companyBusinessUnitSharedShoppingListIds = $this->shoppingListRepository->getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(
+            $companyUserTransfer->getFkCompanyBusinessUnit(),
+            ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
+        );
+
         $companyUserPermissionCollectionTransfer = $this->addWritePermissionToPermissionCollectionTransfer(
             $companyUserPermissionCollectionTransfer,
-            $companyUserOwnShoppingListIds
+            array_merge(
+                $companyUserSharedShoppingListIds,
+                $companyBusinessUnitSharedShoppingListIds,
+                $companyUserOwnShoppingListIds
+            )
         );
 
         return $companyUserPermissionCollectionTransfer;
@@ -270,24 +315,79 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * TODO: switch from loop -> query to SKU IN query (create facade function + add to bridge)
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
-     * @param \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    protected function expandProducts(ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer): ShoppingListOverviewResponseTransfer
+    protected function expandProducts(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
     {
-        foreach ($shoppingListOverviewResponseTransfer->getItemsCollection()->getItems() as $item) {
-            $idProduct = $this->productFacade->findProductConcreteIdBySku($item->getSku());
-            $item->setIdProduct($idProduct);
+        $shoppingListItemsSkus = $this->getShoppingListItemsSkus($shoppingListItemCollectionTransfer);
 
-            foreach ($this->itemExpanderPlugins as $itemExpanderPlugin) {
-                $item = $itemExpanderPlugin->expandItem($item);
-            }
+        if (empty($shoppingListItemsSkus)) {
+            return $shoppingListItemCollectionTransfer;
         }
 
-        return $shoppingListOverviewResponseTransfer;
+        $expandedShoppingListItemCollection = new ShoppingListItemCollectionTransfer();
+        $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus($shoppingListItemsSkus);
+        $keyedProductConcreteTransfers = $this->getKeyedProductConcreteTransfers($productConcreteTransfers);
+        $shoppingListItems = $this->mapProductConcreteIdToShoppingListItem($shoppingListItemCollectionTransfer->getItems(), $keyedProductConcreteTransfers);
+
+        foreach ($shoppingListItems as $shoppingListItem) {
+            $expandedShoppingListItemCollection->addItem(
+                $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItem)
+            );
+        }
+
+        return $expandedShoppingListItemCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return string[]
+     */
+    protected function getShoppingListItemsSkus(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): array
+    {
+        $shoppingListItemTransfers = (array)$shoppingListItemCollectionTransfer->getItems();
+
+        return array_map(function (ShoppingListItemTransfer $shoppingListItemTransfer) {
+            return $shoppingListItemTransfer[ShoppingListItemTransfer::SKU];
+        }, $shoppingListItemTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function getKeyedProductConcreteTransfers(array $productConcreteTransfers): array
+    {
+        $keyedProductConcreteTransfers = [];
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $keyedProductConcreteTransfers[$productConcreteTransfer->getSku()] = $productConcreteTransfer;
+        }
+
+        return $keyedProductConcreteTransfers;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcreteTransfers
+     *
+     * @return \ArrayObject
+     */
+    protected function mapProductConcreteIdToShoppingListItem(ArrayObject $shoppingListItemTransfers, array $keyedProductConcreteTransfers): ArrayObject
+    {
+        foreach ($shoppingListItemTransfers as $shoppingListItemTransfer) {
+            if (!isset($keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()])) {
+                continue;
+            }
+            $idProduct = $keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()]->getIdProductConcrete();
+            $shoppingListItemTransfer->setIdProduct($idProduct);
+        }
+
+        return $shoppingListItemTransfers;
     }
 
     /**

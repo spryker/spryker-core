@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SprykGui\Business;
 
 use Generated\Shared\Transfer\AccessibleTransferCollection;
-use Generated\Shared\Transfer\ClassInformationCollectionTransfer;
 use Generated\Shared\Transfer\ClassInformationTransfer;
 use Generated\Shared\Transfer\ModuleCollectionTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
@@ -111,18 +110,6 @@ interface SprykGuiFacadeInterface
     public function getFactoryInformation(string $className): ClassInformationTransfer;
 
     /**
-     * Specification
-     * - Returns a list with all methods and their return type.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     *
-     * @return \Generated\Shared\Transfer\ClassInformationCollectionTransfer
-     */
-    public function getZedBusinessModels(ModuleTransfer $moduleTransfer): ClassInformationCollectionTransfer;
-
-    /**
      * Specification:
      * - Returns an array with the Spryk definition.
      *
@@ -147,4 +134,18 @@ interface SprykGuiFacadeInterface
      * @return \Generated\Shared\Transfer\ModuleTransfer
      */
     public function buildOptions(ModuleTransfer $moduleTransfer): ModuleTransfer;
+
+    /**
+     * Specification:
+     * - Finds attached choiceLoader by passed choiceLoader name.
+     * - Loads elements for a choice field type with found ChoiceLoaderInterface.
+     *
+     * @api
+     *
+     * @param string $choiceLoaderName
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return array
+     */
+    public function loadChoices(string $choiceLoaderName, ModuleTransfer $moduleTransfer): array;
 }

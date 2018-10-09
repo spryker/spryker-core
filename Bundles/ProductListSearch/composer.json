@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-list-search",
+  "type": "library",
   "description": "ProductListSearch module",
   "license": "proprietary",
   "require": {
@@ -8,8 +9,9 @@
     "spryker/kernel": "^3.17.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-category": "^4.0.0",
-    "spryker/product-list": "^1.0.0",
-    "spryker/product-page-search": "^2.0.0"
+    "spryker/product-list": "^1.1.0",
+    "spryker/product-page-search": "^2.2.0",
+    "spryker/product-page-search-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/category": "*",

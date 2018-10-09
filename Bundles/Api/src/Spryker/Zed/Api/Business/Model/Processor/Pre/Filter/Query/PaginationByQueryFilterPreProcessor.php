@@ -13,8 +13,8 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
 {
-    const LIMIT = 'limit';
-    const PAGE = 'page';
+    public const LIMIT = 'limit';
+    public const PAGE = 'page';
 
     /**
      * @var \Spryker\Zed\Api\ApiConfig

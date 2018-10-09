@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-discontinued-product-label-connector",
+  "type": "library",
   "description": "ProductDiscontinuedProductLabelConnector module",
   "license": "proprietary",
   "require": {

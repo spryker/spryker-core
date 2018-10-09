@@ -18,7 +18,7 @@ class CmsStorageConstants
      *
      * @api
      */
-    const CMS_SYNC_STORAGE_QUEUE = 'sync.storage.cms';
+    public const CMS_SYNC_STORAGE_QUEUE = 'sync.storage.cms';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ class CmsStorageConstants
      *
      * @api
      */
-    const CMS_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.cms.error';
+    public const CMS_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.cms.error';
 
     /**
      * Specification:
@@ -34,5 +34,5 @@ class CmsStorageConstants
      *
      * @api
      */
-    const CMS_PAGE_RESOURCE_NAME = 'cms_page';
+    public const CMS_PAGE_RESOURCE_NAME = 'cms_page';
 }

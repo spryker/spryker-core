@@ -10,7 +10,7 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class ResourceLocatorMatcher implements LocatorMatcherInterface
 {
-    const METHOD_PREFIX = 'resource';
+    public const METHOD_PREFIX = 'resource';
 
     /**
      * @api

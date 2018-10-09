@@ -13,8 +13,8 @@ use Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceBri
 
 class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const MONITORING_SERVICE = 'monitoring service';
-    const SERVICE_NETWORK = 'util network service';
+    public const MONITORING_SERVICE = 'monitoring service';
+    public const SERVICE_NETWORK = 'util network service';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

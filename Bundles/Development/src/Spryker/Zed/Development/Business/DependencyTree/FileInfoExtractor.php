@@ -13,7 +13,7 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class FileInfoExtractor
 {
-    const LAYER = 'Default';
+    public const LAYER = 'Default';
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo

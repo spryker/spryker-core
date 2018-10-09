@@ -26,9 +26,9 @@ use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 class TranslationManager implements TranslationManagerInterface
 {
-    const TOUCH_TRANSLATION = 'translation';
-    const GLOSSARY_KEY = 'glossary_key';
-    const LOCALE_PREFIX = 'locale_';
+    public const TOUCH_TRANSLATION = 'translation';
+    public const GLOSSARY_KEY = 'glossary_key';
+    public const LOCALE_PREFIX = 'locale_';
 
     /**
      * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface

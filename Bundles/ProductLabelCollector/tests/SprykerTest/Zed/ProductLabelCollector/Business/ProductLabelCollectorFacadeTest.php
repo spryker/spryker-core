@@ -21,7 +21,7 @@ use Spryker\Shared\ProductLabel\ProductLabelConstants;
  */
 class ProductLabelCollectorFacadeTest extends Unit
 {
-    const METHOD_FOR_RELATION_COLLECTION = 'runProductAbstractRelationStorageCollector';
+    public const METHOD_FOR_RELATION_COLLECTION = 'runProductAbstractRelationStorageCollector';
 
     /**
      * @var \SprykerTest\Zed\ProductLabelCollector\ProductLabelCollectorBusinessTester

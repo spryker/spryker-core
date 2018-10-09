@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 interface FormCollectionHandlerInterface
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface[]
      */
@@ -21,7 +21,7 @@ interface FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return bool
      */
@@ -29,14 +29,14 @@ interface FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface|null
      */
     public function handleRequest(Request $request, AbstractTransfer $dataTransfer);
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return void
      */

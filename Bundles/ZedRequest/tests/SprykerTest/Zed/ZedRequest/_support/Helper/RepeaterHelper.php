@@ -20,9 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RepeaterHelper extends Module
 {
-    const BUNDLE = 'module';
-    const CONTROLLER = 'controller';
-    const ACTION = 'action';
+    public const BUNDLE = 'module';
+    public const CONTROLLER = 'controller';
+    public const ACTION = 'action';
 
     /**
      * @param \Codeception\TestInterface $test
