@@ -110,7 +110,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
             $restWishlistItemsAttributesTransfer
         );
         $wishlistItemResource->addLink(
-            static::SELF_LINK_NAME,
+            RestResourceInterface::RESOURCE_LINKS_SELF,
             $this->createSelfLinkForWishlistItem($wishlistUuid, $restWishlistItemsAttributesTransfer->getSku())
         );
 
@@ -211,7 +211,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
     protected function createSelfLinkForWishlistItem(string $wishlistResourceId, string $wishlistItemResourceId): string
     {
         return sprintf(
-            RestResourceInterface::RESOURCE_LINKS_SELF,
+            static::SELF_LINK_FORMAT_PATTERN,
             WishlistsRestApiConfig::RESOURCE_WISHLISTS,
             $wishlistResourceId,
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
