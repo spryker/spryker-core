@@ -43,6 +43,9 @@ class ModuleChoiceType extends AbstractType
             'choice_label' => function (ModuleTransfer $moduleTransfer) {
                 return $moduleTransfer->getName();
             },
+            'choice_value' => function (ModuleTransfer $moduleTransfer) {
+                return $moduleTransfer->getName();
+            },
             'group_by' => function (ModuleTransfer $moduleTransfer) {
                 return $moduleTransfer->getOrganization()->getName();
             },
