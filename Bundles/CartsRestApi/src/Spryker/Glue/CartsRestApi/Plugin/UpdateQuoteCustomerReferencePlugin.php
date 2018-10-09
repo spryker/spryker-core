@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Shared\Quote\QuoteConfig;
 
 /**
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
@@ -31,10 +30,6 @@ class UpdateQuoteCustomerReferencePlugin extends AbstractPlugin implements Custo
      */
     public function postRegister(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        if ($this->getFactory()->getQuoteClient()->getStorageStrategy() !== QuoteConfig::STORAGE_STRATEGY_DATABASE) {
-            return $customerTransfer;
-        }
-
         $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
             ->setCustomerReference($customerTransfer->getCustomerReference());
         $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
