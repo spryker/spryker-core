@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
+use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
@@ -606,6 +607,66 @@ class ShoppingListFacadeTest extends Unit
 
         // Assert
         $this->assertSame(0, $shoppingListItemResponseTransfer->getItems()->count(), 'Shared company user with read only permission can not add item to shopping list.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testDismissShoppingListSharingCompanyUserCanDismissSharingShoppingListWithCompanyUser(): void
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
+                ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
+                ->setShoppingListOwnerId($this->ownerCompanyUserTransfer->getIdCompanyUser())
+                ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+                ->setIdShoppingListPermissionGroup($this->readOnlyPermissionGroup->getIdShoppingListPermissionGroup());
+        $this->tester->getFacade()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
+
+        // Act
+        $shoppingListShareResponseTransfer = $this->tester->getFacade()->dismissShoppingListSharing(
+            (new ShoppingListDismissRequestTransfer())
+                ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+                ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
+        );
+        $sharedShoppingListTransfer = (new ShoppingListTransfer())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser());
+        $sharedShoppingListTransfer = $this->tester->getFacade()->getShoppingList($sharedShoppingListTransfer);
+
+        // Assert
+        $this->assertTrue($shoppingListShareResponseTransfer->getIsSuccess());
+        $this->assertNull($sharedShoppingListTransfer->getIdShoppingList());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDismissShoppingListSharingCompanyUserCanDismissSharingShoppingListWithBusinessUnit(): void
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
+                ->setIdCompanyBusinessUnit($this->otherCompanyUserTransfer->getFkCompanyBusinessUnit())
+                ->setShoppingListOwnerId($this->ownerCompanyUserTransfer->getIdCompanyUser())
+                ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+                ->setIdShoppingListPermissionGroup($this->fullAccessPermissionGroup->getIdShoppingListPermissionGroup());
+        $this->tester->getFacade()->shareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
+
+        // Act
+        $shoppingListShareResponseTransfer = $this->tester->getFacade()->dismissShoppingListSharing(
+            (new ShoppingListDismissRequestTransfer())
+                ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+                ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
+        );
+        $sharedShoppingListTransfer = (new ShoppingListTransfer())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser());
+        $sharedShoppingListTransfer = $this->tester->getFacade()->getShoppingList($sharedShoppingListTransfer);
+
+        // Assert
+        $this->assertTrue($shoppingListShareResponseTransfer->getIsSuccess());
+        $this->assertNull($sharedShoppingListTransfer->getIdShoppingList());
     }
 
     /**
