@@ -34,6 +34,19 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container = $this->addSessionClient($container);
+        $container = $this->addMonitoringService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addSessionClient(Container $container)
     {
         $container[static::SESSION_CLIENT] = function () use ($container) {

@@ -8,12 +8,14 @@
 namespace Spryker\Zed\Session\Business;
 
 use Predis\Client;
+use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Session\Business\Lock\Redis\RedisSessionLockReader;
 use Spryker\Zed\Session\Business\Lock\SessionLockReleaser;
 use Spryker\Zed\Session\Business\Lock\SessionLockReleaser\SessionLockReleaserPool;
 use Spryker\Zed\Session\Business\Model\SessionFactory;
+use Spryker\Zed\Session\SessionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Session\SessionConfig getConfig()
@@ -114,7 +116,15 @@ class SessionBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSessionHandlerFactory()
     {
-        return new SessionFactory();
+        return new SessionFactory($this->getMonitoringService());
+    }
+
+    /**
+     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
+     */
+    public function getMonitoringService(): SessionToMonitoringServiceInterface
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
     }
 
     /**
