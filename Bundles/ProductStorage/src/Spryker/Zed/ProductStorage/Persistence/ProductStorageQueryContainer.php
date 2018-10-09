@@ -69,6 +69,7 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
                 ->joinWithSpyProductAbstract()
             ->endUse()
             ->filterByFkProduct_In($productIds)
+            ->orderByFkLocale(Criteria::DESC)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         $query

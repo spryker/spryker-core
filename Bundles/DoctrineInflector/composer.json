@@ -1,5 +1,6 @@
 {
   "name": "spryker/doctrine-inflector",
+  "type": "library",
   "description": "DoctrineInflector module",
   "license": "proprietary",
   "require": {

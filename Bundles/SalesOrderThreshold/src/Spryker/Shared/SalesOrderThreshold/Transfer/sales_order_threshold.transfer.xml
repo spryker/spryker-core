@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="SalesOrderThresholdType">
+        <property name="idSalesOrderThresholdType" type="int"/>
+        <property name="key" type="string"/>
+        <property name="thresholdGroup" type="string"/>
+    </transfer>
+
+    <transfer name="SalesOrderThresholdValue">
+        <property name="threshold" type="int"/>
+        <property name="value" type="int" description="to be compared with threshold"/>
+        <property name="fee" type="int"/>
+        <property name="messageGlossaryKey" type="string"/>
+        <property name="salesOrderThresholdType" type="SalesOrderThresholdType"/>
+    </transfer>
+
+    <transfer name="SalesOrderThreshold">
+        <property name="idSalesOrderThreshold" type="int"/>
+        <property name="salesOrderThresholdValue" type="SalesOrderThresholdValue"/>
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+        <property name="localizedMessages" type="SalesOrderThresholdLocalizedMessage[]" singular="localizedMessage" />
+    </transfer>
+
+    <transfer name="SalesOrderThresholdLocalizedMessage">
+        <property name="message" type="string" />
+        <property name="localeCode" type="string" />
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="originalQuote" type="Quote" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals" />
+        <property name="priceMode" type="string" />
+        <property name="store" type="Store" />
+        <property name="currency" type="Currency" />
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="idSalesExpense" type="int" />
+        <property name="type" type="string" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
+        <property name="name" type="string" />
+        <property name="taxRate" type="float" />
+        <property name="quantity" type="int" />
+
+        <property name="unitNetPrice" type="int" />
+        <property name="sumNetPrice" type="int" />
+
+        <property name="unitPrice" type="int" />
+        <property name="sumPrice" type="int" />
+
+        <property name="unitPriceToPayAggregation" type="int" />
+        <property name="sumPriceToPayAggregation" type="int" />
+
+        <property name="fkSalesOrder" type="int" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="unitGrossPrice" type="int" />
+        <property name="unitNetPrice" type="int" />
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="errorCode" type="int" />
+        <property name="message" type="string" />
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="errors" type="CheckoutError[]" singular="error" />
+    </transfer>
+</transfers>

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Spryk\SprykFacade;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\SprykGui\Communication\Form\Type\ArgumentCollectionType;
-use Spryker\Zed\SprykGui\Communication\Form\Type\ClassNameChoiceType;
 use Spryker\Zed\SprykGui\Communication\Form\Type\OutputChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -99,14 +98,6 @@ class SprykDetailsForm extends AbstractType
     protected function addArgumentsToForm(FormBuilderInterface $builder, array $arguments, array $options): void
     {
         foreach ($arguments as $argumentName => $argumentDefinition) {
-            if ($argumentName === 'className' && ($argumentDefinition !== null && isset($argumentDefinition['isChoice']))) {
-                $classNameChoiceTypeOptions = ['classNameChoices' => $options['classNameChoices']];
-                unset($options['classNameChoices']);
-                $builder->add($argumentName, ClassNameChoiceType::class, $classNameChoiceTypeOptions);
-
-                continue;
-            }
-
             if (isset($argumentDefinition['type'])) {
                 $typeOptions = $this->getFormTypeOptions($options, $argumentDefinition);
                 if (isset($argumentDefinition['isOptional'])) {
@@ -154,7 +145,12 @@ class SprykDetailsForm extends AbstractType
         }
         $typeOptions = [];
         foreach ($argumentDefinition['typeOptions'] as $typeOptionName) {
-            $typeOptions[$typeOptionName] = $options[$typeOptionName];
+            if (isset($argumentDefinition[$typeOptionName])) {
+                $typeOptions[$typeOptionName] = $argumentDefinition[$typeOptionName];
+            }
+            if (isset($options[$typeOptionName])) {
+                $typeOptions[$typeOptionName] = $options[$typeOptionName];
+            }
         }
 
         return $typeOptions;
