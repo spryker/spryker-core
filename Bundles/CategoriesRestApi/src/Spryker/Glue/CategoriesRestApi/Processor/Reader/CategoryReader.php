@@ -74,20 +74,36 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
+     * @param string $nodeId
+     * @param string $locale
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getCategoryNode(string $nodeId, string $locale): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        $restResource = $this->findCategoryNodeById((int)$nodeId, $locale);
+        if (!$restResource) {
+            return $this->createErrorResponse($restResponse);
+        }
+
+        return $restResponse->addResource($restResource);
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function readCategoryNode(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
         $nodeId = $restRequest->getResource()->getId();
         if (!$this->isNodeIdValid($nodeId)) {
-            return $this->createInvalidNodeIdResponse($restResponse);
+            return $this->createInvalidNodeIdResponse($this->restResourceBuilder->createRestResponse());
         }
 
-        return $this->getCategoryNode((int)$nodeId, $restRequest->getMetadata()->getLocale(), $restResponse);
+        return $this->getCategoryNode($nodeId, $restRequest->getMetadata()->getLocale());
     }
 
     /**
@@ -104,23 +120,6 @@ class CategoryReader implements CategoryReaderInterface
         }
 
         return $this->buildProductCategoryResource($categoryNodeStorageTransfer);
-    }
-
-    /**
-     * @param int $nodeId
-     * @param string $locale
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function getCategoryNode(int $nodeId, string $locale, RestResponseInterface $restResponse): RestResponseInterface
-    {
-        $restResource = $this->findCategoryNodeById($nodeId, $locale);
-        if (!$restResource) {
-            return $this->createErrorResponse($restResponse);
-        }
-
-        return $restResponse->addResource($restResource);
     }
 
     /**
