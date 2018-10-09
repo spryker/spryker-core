@@ -12,12 +12,12 @@ use Symfony\Component\Finder\Finder;
 class InstallPathFinder implements PathFinderInterface
 {
     /**
-     * @var string
+     * @var array
      */
     protected $pathPattern;
 
     /**
-     * @param string $pathPattern
+     * @param array $pathPattern
      */
     public function __construct($pathPattern)
     {
