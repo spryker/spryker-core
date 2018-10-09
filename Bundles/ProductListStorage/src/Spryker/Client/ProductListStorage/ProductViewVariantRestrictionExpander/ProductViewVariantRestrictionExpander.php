@@ -148,9 +148,9 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
      *
      * @return array
      */
-    protected function getAvailableAttributesPerSelectedOptions($nonRestrictedAttributeVariants, array $selectedAttributes = []): array
+    protected function getAvailableAttributesPerSelectedOptions(array $nonRestrictedAttributeVariants, array $selectedAttributes = []): array
     {
-        $availableAttributes = $availableAttributesCollection = [];
+        $availableAttributes = $availableAttributesPerSelectedOptions = [];
 
         foreach ($selectedAttributes as $key => $selectedAttribute) {
             $selectedAttributeKey = $this->getAttributeKeyValue($key, $selectedAttributes[$key]);
@@ -161,12 +161,14 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
             }
         }
 
+        $availableAttributes = array_unique($availableAttributes);
+
         foreach ($availableAttributes as $availableAttribute) {
             $availableAttribute = explode(':', $availableAttribute);
-            $availableAttributesCollection[$availableAttribute[0]][] = $availableAttribute[1];
+            $availableAttributesPerSelectedOptions[$availableAttribute[0]][] = $availableAttribute[1];
         }
 
-        return $availableAttributesCollection;
+        return $availableAttributesPerSelectedOptions;
     }
 
     /**
