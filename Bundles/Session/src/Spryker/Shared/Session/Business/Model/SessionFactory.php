@@ -28,7 +28,6 @@ abstract class SessionFactory
     public const PASSWORD = 'password';
     public const USER = 'user';
 
-
     /**
      * @param string $savePath e.g. '10.10.10.1:8091;10.10.10.2:8091'
      *
@@ -195,6 +194,11 @@ abstract class SessionFactory
     abstract protected function getSessionLifetime();
 
     /**
+     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
+     */
+    abstract public function getMonitoringService(): SessionToMonitoringServiceInterface;
+
+    /**
      * @param \SessionHandlerInterface $handler
      *
      * @return void
@@ -267,9 +271,4 @@ abstract class SessionFactory
 
         return $hosts;
     }
-
-    /**
-     * @return SessionToMonitoringServiceInterface
-     */
-    abstract public function getMonitoringService(): SessionToMonitoringServiceInterface;
 }

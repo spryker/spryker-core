@@ -9,9 +9,9 @@ namespace Spryker\Shared\Session\Business\Handler;
 
 use PDO;
 use SessionHandlerInterface;
-use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 
 class SessionHandlerMysql implements SessionHandlerInterface
 {
@@ -55,18 +55,18 @@ class SessionHandlerMysql implements SessionHandlerInterface
     protected $port = 3306;
 
     /**
-     * @var \Spryker\Service\Monitoring\MonitoringServiceInterface
+     * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
      */
     protected $monitoringService;
 
     /**
-     * @param \Spryker\Service\Monitoring\MonitoringServiceInterface $monitoringService
+     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
      * @param array $hosts
      * @param string|null $user
      * @param string|null $password
      * @param int $lifetime
      */
-    public function __construct(MonitoringServiceInterface $monitoringService, $hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
+    public function __construct(SessionToMonitoringServiceInterface $monitoringService, $hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
     {
         $host = $hosts[0];
         if (strpos($host, ':')) {
@@ -173,7 +173,10 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $key = $this->keyPrefix . $sessionId;
 
         $startTime = microtime(true);
-        $this->connection->delete($key);
+
+        $query = sprintf('DELETE FROM session WHERE key = "%s"', $key);
+
+        $this->connection->exec($query);
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
         return true;
