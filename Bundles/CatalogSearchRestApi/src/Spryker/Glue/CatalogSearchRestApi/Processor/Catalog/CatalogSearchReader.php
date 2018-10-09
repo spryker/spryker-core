@@ -261,7 +261,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
      */
     protected function createInvalidCurrencyResponse(): RestResponseInterface
     {
-        return  $this->restResourceBuilder
+        return $this->restResourceBuilder
             ->createRestResponse()
             ->addError((new RestErrorMessageTransfer())
             ->setCode(CatalogSearchRestApiConfig::RESPONSE_CODE_INVALID_CURRENCY)
