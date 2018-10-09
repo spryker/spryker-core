@@ -102,6 +102,9 @@ interface AclFacadeInterface
     public function getRoleById($id);
 
     /**
+     * Specification:
+     * - get role transfer for existing role or null
+     *
      * @api
      *
      * @param int $id
