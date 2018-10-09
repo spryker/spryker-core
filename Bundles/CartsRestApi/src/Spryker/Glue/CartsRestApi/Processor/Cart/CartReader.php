@@ -1,25 +1,26 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Processor\Carts;
+namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToMultiCartClientInterface;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class CartsReader implements CartsReaderInterface
+class CartReader implements CartReaderInterface
 {
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
@@ -32,23 +33,31 @@ class CartsReader implements CartsReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToMultiCartClientInterface
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
      */
-    protected $multiCartClient;
+    protected $quoteCollectionReader;
+
+    /**
+     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface
+     */
+    protected $customerClient;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToMultiCartClientInterface $multiCartClient
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReader
+     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface $customerClient
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CartsResourceMapperInterface $cartsResourceMapper,
-        CartsRestApiToMultiCartClientInterface $multiCartClient
+        QuoteCollectionReaderPluginInterface $quoteCollectionReader,
+        CartsRestApiToCustomerClientInterface $customerClient
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->cartsResourceMapper = $cartsResourceMapper;
-        $this->multiCartClient = $multiCartClient;
+        $this->quoteCollectionReader = $quoteCollectionReader;
+        $this->customerClient = $customerClient;
     }
 
     /**
@@ -81,7 +90,7 @@ class CartsReader implements CartsReaderInterface
      */
     public function readCurrentCustomerCarts(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
+        $quoteCollectionTransfer = $this->getCustomerQuotes();
 
         $restResponse = $this->restResourceBuilder->createRestResponse(count($quoteCollectionTransfer->getQuotes()));
         if (count($quoteCollectionTransfer->getQuotes()) === 0) {
@@ -104,7 +113,7 @@ class CartsReader implements CartsReaderInterface
      */
     public function getQuoteTransferByUuid(string $uuidQuote, RestRequestInterface $restRequest): QuoteResponseTransfer
     {
-        $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
+        $quoteCollectionTransfer = $this->getCustomerQuotes();
 
         if ($quoteCollectionTransfer->getQuotes()->count() === 0) {
             return (new QuoteResponseTransfer())
@@ -124,15 +133,13 @@ class CartsReader implements CartsReaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    protected function getCustomerQuotes(RestRequestInterface $restRequest): QuoteCollectionTransfer
+    public function getCustomerQuotes(): QuoteCollectionTransfer
     {
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
-        $quoteCriteriaFilterTransfer->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
-        $quoteCollectionTransfer = $this->multiCartClient->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
+        $quoteCriteriaFilterTransfer->setCustomerReference($this->customerClient->getCustomer()->getCustomerReference());
+        $quoteCollectionTransfer = $this->quoteCollectionReader->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
 
         return $quoteCollectionTransfer;
     }

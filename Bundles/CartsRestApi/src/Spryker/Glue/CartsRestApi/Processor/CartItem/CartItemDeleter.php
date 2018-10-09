@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Processor\CartItems;
+namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
@@ -13,15 +13,13 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
-use Spryker\Glue\CartsRestApi\Processor\Carts\CartsReaderInterface;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class CartItemsWriter implements CartItemsWriterInterface
+class CartItemDeleter implements CartItemDeleterInterface
 {
     /**
      * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface
@@ -29,19 +27,9 @@ class CartItemsWriter implements CartItemsWriterInterface
     protected $cartClient;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface
-     */
-    protected $cartItemsResourceMapper;
-
-    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
-
-    /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface
-     */
-    protected $zedRequestClient;
 
     /**
      * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
@@ -49,129 +37,45 @@ class CartItemsWriter implements CartItemsWriterInterface
     protected $quoteClient;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Carts\CartsReaderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
      */
-    protected $cartsReader;
+    protected $cartReader;
 
     /**
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface $cartClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface $quoteClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Carts\CartsReaderInterface $cartsReader
+     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
      */
     public function __construct(
         CartsRestApiToCartClientInterface $cartClient,
-        CartItemsResourceMapperInterface $cartItemsResourceMapper,
         RestResourceBuilderInterface $restResourceBuilder,
-        CartsRestApiToZedRequestClientInterface $zedRequestClient,
         CartsRestApiToQuoteClientInterface $quoteClient,
-        CartsReaderInterface $cartsReader
+        CartReaderInterface $cartReader
     ) {
         $this->cartClient = $cartClient;
-        $this->cartItemsResourceMapper = $cartItemsResourceMapper;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->zedRequestClient = $zedRequestClient;
         $this->quoteClient = $quoteClient;
-        $this->cartsReader = $cartsReader;
+        $this->cartReader = $cartReader;
     }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addItem(
-        RestRequestInterface $restRequest,
-        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-    ): RestResponseInterface {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        $idQuote = $this->getCartIdentifier($restRequest);
-        if ($idQuote === null) {
-            return $this->createQuoteIdMissingError();
-        }
-        $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
-        if (!$quoteResponseTransfer->getIsSuccessful() || $quoteResponseTransfer->getQuoteTransfer() === null) {
-            return $this->createQuoteNotFoundError($idQuote);
-        }
-
-        $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
-        $quoteTransfer = $this->cartClient->addItem(
-            $this->prepareItemTransfer($restCartItemsAttributesTransfer)
-        );
-
-        $errors = $this->zedRequestClient->getLastResponseErrorMessages();
-        if (count($errors) > 0) {
-            return $this->returnWithError($errors, $restResponse);
-        }
-
-        return $this->cartsReader->readByIdentifier($quoteTransfer->getUuid(), $restRequest);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function updateItemQuantity(
-        RestRequestInterface $restRequest,
-        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-    ): RestResponseInterface {
+    public function deleteItem(RestRequestInterface $restRequest): RestResponseInterface
+    {
         $sku = '';
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $idQuote = $this->getCartIdentifier($restRequest);
+        $idQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
         if ($this->isRequestValid($idQuote, $itemIdentifier)) {
             return $this->createMissingRequiredParameterError();
         }
 
-        $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createQuoteNotFoundError($idQuote);
-        }
-
-        if ($this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier) === null) {
-            return $this->createQuoteItemNotFoundError($itemIdentifier);
-        }
-
-        $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
-        $quoteTransfer = $this->cartClient->changeItemQuantity(
-            $sku,
-            $itemIdentifier,
-            $restCartItemsAttributesTransfer->getQuantity()
-        );
-
-        $errors = $this->zedRequestClient->getLastResponseErrorMessages();
-        if (count($errors) > 0) {
-            return $this->returnWithError($errors, $restResponse);
-        }
-
-        return $this->cartsReader->readByIdentifier($quoteTransfer->getUuid(), $restRequest);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function deleteItem(
-        RestRequestInterface $restRequest
-    ): RestResponseInterface {
-        $sku = '';
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        $idQuote = $this->getCartIdentifier($restRequest);
-        $itemIdentifier = $restRequest->getResource()->getId();
-        if ($this->isRequestValid($idQuote, $itemIdentifier)) {
-            return $this->createMissingRequiredParameterError();
-        }
-
-        $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
+        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idQuote, $restRequest);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createQuoteNotFoundError($idQuote);
@@ -229,7 +133,7 @@ class CartItemsWriter implements CartItemsWriterInterface
      *
      * @return string|null
      */
-    protected function getCartIdentifier(RestRequestInterface $restRequest): ?string
+    protected function findCartIdentifier(RestRequestInterface $restRequest): ?string
     {
         $cartsResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS);
         if ($cartsResource !== null) {

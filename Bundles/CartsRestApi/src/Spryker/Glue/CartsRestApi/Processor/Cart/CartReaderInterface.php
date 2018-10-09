@@ -1,17 +1,18 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Processor\Carts;
+namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CartsReaderInterface
+interface CartReaderInterface
 {
     /**
      * @param string $uuidQuote
@@ -35,4 +36,9 @@ interface CartsReaderInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function getQuoteTransferByUuid(string $uuidQuote, RestRequestInterface $restRequest): QuoteResponseTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function getCustomerQuotes(): QuoteCollectionTransfer;
 }
