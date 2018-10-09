@@ -163,8 +163,8 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
         $availableAttributes = array_unique($availableAttributes);
 
         foreach ($availableAttributes as $availableAttribute) {
-            $availableAttribute = explode(':', $availableAttribute);
-            $availableAttributesPerSelectedOptions[$availableAttribute[0]][] = $availableAttribute[1];
+            [$availableAttributeKey, $availableAttributeValue] = explode(':', $availableAttribute);
+            $availableAttributesPerSelectedOptions[$availableAttributeKey][] = $availableAttributeValue;
         }
 
         return $availableAttributesPerSelectedOptions;
