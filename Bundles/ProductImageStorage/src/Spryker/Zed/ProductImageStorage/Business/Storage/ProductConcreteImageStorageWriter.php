@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteImageStorageTransfer;
 use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage;
 use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface;
@@ -199,12 +198,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     {
         $productLocalizedAttributes = $this->repository->getProductLocalizedAttributesWithProductByIdProductIn($productIds);
         $productFks = array_column($productLocalizedAttributes, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);
-        $productAbstractFks = array_column($productLocalizedAttributes, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
         $productImageSets = $this->repository->getProductImageSetsByFkProductIn($productFks);
-        if (empty($productImageSets)) {
-            $productImageSets = $this->repository->getProductImageSetsByFkAbstractProductIn($productAbstractFks);
-        }
-
         $productImageSetsIndexedByFkProduct = $this->indexImageSetsByProduct($productImageSets);
 
         $imageSets = [];
@@ -240,13 +234,6 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
             $imageSet->append($item);
         }
 
-        if (empty((array)$imageSet)) {
-            $colFkProductAbstract = $productLocalizedAttribute[SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT];
-            foreach ($productImageSetsIndexedByFkProduct[$colFkProductAbstract][$colFkLocale] ?? [] as $item) {
-                $imageSet->append($item);
-            }
-        }
-
         return $imageSet;
     }
 
@@ -265,10 +252,6 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
         foreach ($productImageSets as $productImageSet) {
             if ($productImageSet->getFkProduct()) {
                 $productImageSetsIndexedByFkProduct[$productImageSet->getFkProduct()][$productImageSet->getFkLocale()][] = $productImageSet;
-            }
-
-            if (!$productImageSet->getFkProduct() && $productImageSet->getFkProductAbstract()) {
-                $productImageSetsIndexedByFkProduct[$productImageSet->getFkProductAbstract()][$productImageSet->getFkLocale()][] = $productImageSet;
             }
         }
 
