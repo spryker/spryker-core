@@ -9,9 +9,12 @@ namespace Spryker\Zed\ShoppingList\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
@@ -203,6 +206,19 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
+     */
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
+    {
+        $shoppingListPermissionGroupQuery = $this->getFactory()->createShoppingListPermissionGroupQuery();
+        $permissionGroupEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListPermissionGroupQuery)->find();
+
+        return $this->getFactory()
+            ->createShoppingListPermissionGroupMapper()
+            ->mapShoppingListPermissionGroupEntitiesToShoppingListPermissionTransfers($permissionGroupEntityTransferCollection, new ShoppingListPermissionGroupCollectionTransfer());
+    }
+
+    /**
      * @param int $idShoppingList
      * @param int $idCompanyBusinessUnit
      *
@@ -250,6 +266,27 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @module Customer
+     *
+     * @param int $idCompanyBusinessUnit
+     * @param string $shoppingListPermissionGroupName
+     *
+     * @return int[]
+     */
+    public function getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(int $idCompanyBusinessUnit, string $shoppingListPermissionGroupName): array
+    {
+        return $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitQuery()
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->select(SpyShoppingListCompanyBusinessUnitTableMap::COL_FK_SHOPPING_LIST)
+            ->useSpyShoppingListPermissionGroupQuery()
+            ->filterByName($shoppingListPermissionGroupName)
+            ->endUse()
+            ->find()
+            ->toArray();
+    }
+
+    /**
      * @param int $idCompanyUser
      *
      * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]
@@ -267,6 +304,25 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @module Customer
      *
+     * @param int $idCompanyUser
+     * @param string $shoppingListPermissionGroupName
+     *
+     * @return int[]
+     */
+    public function getCompanyUserSharedShoppingListIdsByPermissionGroupName(int $idCompanyUser, string $shoppingListPermissionGroupName): array
+    {
+        return $this->getFactory()
+            ->createShoppingListCompanyUserQuery()
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->select(SpyShoppingListCompanyUserTableMap::COL_FK_SHOPPING_LIST)
+            ->useSpyShoppingListPermissionGroupQuery()
+            ->filterByName($shoppingListPermissionGroupName)
+            ->endUse()
+            ->find()
+            ->toArray();
+    }
+
+    /**
      * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
@@ -314,6 +370,52 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
         return $this->getFactory()
             ->createShoppingListMapper()
             ->mapCollectionTransfer($shoppingListsEntityTransferCollection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
+     */
+    public function getShoppingListCompanyBusinessUnitsByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer
+    {
+        $shoppingListsCompanyBusinessUnits = $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitQuery()
+            ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->find();
+
+        $shoppingListCompanyBusinessUnitCollection = new ShoppingListCompanyBusinessUnitCollectionTransfer();
+
+        if ($shoppingListsCompanyBusinessUnits !== null) {
+            return $this->getFactory()
+                ->createShoppingListCompanyBusinessUnitMapper()
+                ->mapCompanyBusinessUnitEntitiesToShoppingListCompanyBusinessUnitCollection($shoppingListsCompanyBusinessUnits, $shoppingListCompanyBusinessUnitCollection);
+        }
+
+        return $shoppingListCompanyBusinessUnitCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
+     */
+    public function getShoppingListCompanyUsersByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer
+    {
+        $shoppingListsCompanyUsers = $this->getFactory()
+            ->createShoppingListCompanyUserQuery()
+            ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->find();
+
+        $shoppingListCompanyUserCollection = new ShoppingListCompanyUserCollectionTransfer();
+
+        if ($shoppingListsCompanyUsers !== null) {
+            return $this->getFactory()
+                ->createShoppingListCompanyUserMapper()
+                ->mapCompanyUserEntitiesToShoppingListCompanyUserCollection($shoppingListsCompanyUsers, $shoppingListCompanyUserCollection);
+        }
+
+        return $shoppingListCompanyUserCollection;
     }
 
     /**
