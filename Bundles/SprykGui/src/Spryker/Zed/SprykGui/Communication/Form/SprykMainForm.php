@@ -25,13 +25,7 @@ class SprykMainForm extends AbstractType
 {
     protected const SPRYK = 'spryk';
     protected const MODULE = 'module';
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    const DEPENDENT_MODULE = 'dependentModule';
+    protected const DEPENDENT_MODULE = 'dependentModule';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
