@@ -206,12 +206,12 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      */
     protected function isVoucherUsableForCurrentCurrency(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer): bool
     {
-        $grossModeEnabled = $quoteTransfer->getPriceMode() === DiscountConfig::PRICE_MODE_GROSS;
-        $netModeEnabled = $quoteTransfer->getPriceMode() === DiscountConfig::PRICE_MODE_NET;
-
         if ($discountTransfer->getCalculatorPlugin() === DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE) {
             return true;
         }
+
+        $grossModeEnabled = $quoteTransfer->getPriceMode() === DiscountConfig::PRICE_MODE_GROSS;
+        $netModeEnabled = $quoteTransfer->getPriceMode() === DiscountConfig::PRICE_MODE_NET;
 
         foreach ($discountTransfer->getMoneyValueCollection() as $moneyValueTransfer) {
             if ($moneyValueTransfer->getCurrency()->getCode() !== $quoteTransfer->getCurrency()->getCode()) {
