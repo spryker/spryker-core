@@ -75,7 +75,7 @@
             <reference local="fk_shopping_list_company_business_unit" foreign="id_shopping_list_company_business_unit"/>
         </foreign-key>
 
-        <foreign-key name="spy_shopping_list_company_business_unit_blacklist-fk_company_user" foreignTable="spy_company_user">
+        <foreign-key name="spy_shopping_list_business_unit_blacklist-fk_company_user" foreignTable="spy_company_user">
             <reference local="fk_company_user" foreign="id_company_user"/>
         </foreign-key>
 
