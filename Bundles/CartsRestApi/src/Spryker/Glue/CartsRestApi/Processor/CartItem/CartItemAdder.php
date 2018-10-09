@@ -88,7 +88,7 @@ class CartItemAdder implements CartItemAdderInterface
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $idQuote = $this->getCartIdentifier($restRequest);
+        $idQuote = $this->findCartIdentifier($restRequest);
         if ($idQuote === null) {
             return $this->createQuoteIdMissingError();
         }
@@ -135,7 +135,7 @@ class CartItemAdder implements CartItemAdderInterface
      *
      * @return string|null
      */
-    protected function getCartIdentifier(RestRequestInterface $restRequest): ?string
+    protected function findCartIdentifier(RestRequestInterface $restRequest): ?string
     {
         $cartsResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS);
         if ($cartsResource !== null) {

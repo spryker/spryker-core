@@ -51,9 +51,7 @@ interface PersistentCartClientInterface
 
     /**
      * Specification:
-     * - Prepares quote transfer for guest cart.
-     * - Prepends customer transfer customer reference with anonymous prefix from configuration.
-     * - Returns prepared QuoteTransfer.
+     * - Prepends customer reference with anonymous prefix from configuration.
      *
      * @api
      *

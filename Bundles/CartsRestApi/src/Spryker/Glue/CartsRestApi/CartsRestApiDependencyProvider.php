@@ -149,7 +149,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addStore(Container $container)
+    protected function addStore(Container $container): Container
     {
         $container[static::STORE] = function () {
             return Store::getInstance();

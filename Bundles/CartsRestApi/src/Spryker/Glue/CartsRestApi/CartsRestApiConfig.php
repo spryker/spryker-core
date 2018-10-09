@@ -51,4 +51,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_QUOTE_NOT_FOUND = 'Cart with id \'%s\' not found.';
 
     public const DEFAULT_PRICE_MODE = 'GROSS_MODE';
+
+    public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 }

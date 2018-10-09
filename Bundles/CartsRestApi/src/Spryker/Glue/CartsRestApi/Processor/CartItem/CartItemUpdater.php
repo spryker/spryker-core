@@ -80,7 +80,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
         $sku = '';
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $idQuote = $this->getCartIdentifier($restRequest);
+        $idQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
         if ($this->isRequestValid($idQuote, $itemIdentifier)) {
             return $this->createMissingRequiredParameterError();
@@ -135,7 +135,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
      *
      * @return string|null
      */
-    protected function getCartIdentifier(RestRequestInterface $restRequest): ?string
+    protected function findCartIdentifier(RestRequestInterface $restRequest): ?string
     {
         $cartsResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS);
         if ($cartsResource !== null) {
