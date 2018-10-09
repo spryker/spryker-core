@@ -267,7 +267,6 @@ class CustomerWriter implements CustomerWriterInterface
         return $customerAttributes;
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
