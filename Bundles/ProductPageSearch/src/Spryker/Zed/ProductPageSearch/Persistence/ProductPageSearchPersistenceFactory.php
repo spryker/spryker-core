@@ -79,7 +79,7 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
-    public function createProductAbstractByIdsQuery(array $productAbstractIds): SpyProductAbstractLocalizedAttributesQuery
+    public function getProductAbstractByIdsQuery(array $productAbstractIds): SpyProductAbstractLocalizedAttributesQuery
     {
         return $this->getQueryContainer()->queryProductAbstractByIds($productAbstractIds);
     }

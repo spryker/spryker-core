@@ -14,5 +14,5 @@ interface ProductPageSearchRepositoryInterface
      *
      * @return array
      */
-    public function getProductAbstractLocalizedEntitiesByIds(array $productAbstractIds): array;
+    public function findProductAbstractLocalizedEntitiesByIds(array $productAbstractIds): array;
 }

@@ -19,9 +19,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @return array
      */
-    public function getProductAbstractLocalizedEntitiesByIds(array $productAbstractIds): array
+    public function findProductAbstractLocalizedEntitiesByIds(array $productAbstractIds): array
     {
-        return $this->getFactory()->createProductAbstractByIdsQuery($productAbstractIds)
+        return $this->getFactory()->getProductAbstractByIdsQuery($productAbstractIds)
             ->joinWith('SpyProduct.SpyProductSearch')
             ->find()
             ->getData();

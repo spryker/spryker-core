@@ -148,7 +148,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $productPageLoadTransfer = $productPageDataLoaderPlugin->expandProductPageDataTransfer($productPageLoadTransfer);
         }
 
-        $productAbstractLocalizedEntities = $this->repository->getProductAbstractLocalizedEntitiesByIds($productAbstractIds);
+        $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
 
         if (!$productAbstractLocalizedEntities) {
@@ -391,6 +391,16 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $pairs = $this->pairRemainingProductAbstractPageSearchEntities($mappedProductAbstractPageSearchEntities, $pairs);
 
         return $pairs;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
+    {
+        return $this->repository->findProductAbstractLocalizedEntitiesByIds($productAbstractIds);
     }
 
     /**
