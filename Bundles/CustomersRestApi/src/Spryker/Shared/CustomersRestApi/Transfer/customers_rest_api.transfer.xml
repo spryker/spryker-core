@@ -36,7 +36,7 @@
     <transfer name="RestCustomerRestorePasswordAttributes">
         <property name="restorePasswordKey" type="string" />
         <property name="password" type="string" />
-        <property name="passwordConfirmation" type="string" />
+        <property name="confirmPassword" type="string" />
     </transfer>
 
 </transfers>
