@@ -19,7 +19,7 @@
     "spryker/manual-order-entry-gui": "^0.5.0"
   },
   "suggest": {
-    "spryker/manual-order-entry-gui": "Required because ManualOrderEntryForm expanding with reclamations"
+    "spryker/manual-order-entry-gui": "If you want to use ManualOrderEntryForm plugin."
   },
   "autoload": {
     "psr-4": {
