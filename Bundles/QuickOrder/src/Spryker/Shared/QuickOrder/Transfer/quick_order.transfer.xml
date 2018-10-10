@@ -5,7 +5,7 @@
 
     <transfer name="ProductConcrete">
         <property name="baseMeasurementUnit" type="ProductMeasurementUnit" />
-        <property name="productQuantity" type="ProductQuantityStorage" />
+        <property name="productQuantity" type="ProductQuantity" />
     </transfer>
 
     <transfer name="CurrentProductConcretePrice">
