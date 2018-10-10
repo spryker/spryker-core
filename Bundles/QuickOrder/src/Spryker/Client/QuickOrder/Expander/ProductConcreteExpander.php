@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\QuickOrder\ProductConcreteExpander;
+namespace Spryker\Client\QuickOrder\Expander;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
@@ -29,17 +29,7 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
-    {
-        return $this->expandProductConcreteTransferWithPlugins($productConcreteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function expandProductConcreteTransferWithPlugins(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expand(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         foreach ($this->productConcreteExpanderPlugins as $productConcreteExpanderPlugin) {
             $productConcreteTransfer = $productConcreteExpanderPlugin->expand($productConcreteTransfer);

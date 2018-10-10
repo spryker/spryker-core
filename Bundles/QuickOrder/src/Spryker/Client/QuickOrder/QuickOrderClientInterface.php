@@ -17,7 +17,7 @@ interface QuickOrderClientInterface
 {
     /**
      * Specification:
-     * - Returns ProductConcreteTransfer filled with data provided by plugins.
+     * - Expands ProductConcreteTransfer with additional data using pre-configured plugins.
      *
      * @api
      *
@@ -25,7 +25,7 @@ interface QuickOrderClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function expandProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 
     /**
      * Specification:

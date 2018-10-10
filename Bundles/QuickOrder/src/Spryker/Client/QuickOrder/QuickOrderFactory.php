@@ -13,8 +13,8 @@ use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductClientIn
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToPriceProductStorageClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityStorageClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface;
-use Spryker\Client\QuickOrder\ProductConcreteExpander\ProductConcreteExpander;
-use Spryker\Client\QuickOrder\ProductConcreteExpander\ProductConcreteExpanderInterface;
+use Spryker\Client\QuickOrder\Expander\ProductConcreteExpander;
+use Spryker\Client\QuickOrder\Expander\ProductConcreteExpanderInterface;
 use Spryker\Client\QuickOrder\ProductConcreteReader\ProductConcreteReader;
 use Spryker\Client\QuickOrder\ProductConcreteReader\ProductConcreteReaderInterface;
 use Spryker\Client\QuickOrder\ProductQuantityRestrictionsValidator\ProductQuantityRestrictionsValidator;
@@ -25,7 +25,7 @@ use Spryker\Client\QuickOrder\Reader\ProductPriceReaderInterface;
 class QuickOrderFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\QuickOrder\ProductConcreteExpander\ProductConcreteExpanderInterface
+     * @return \Spryker\Client\QuickOrder\Expander\ProductConcreteExpanderInterface
      */
     public function createProductConcreteExpander(): ProductConcreteExpanderInterface
     {

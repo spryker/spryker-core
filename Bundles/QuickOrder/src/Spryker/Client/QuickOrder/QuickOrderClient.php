@@ -28,11 +28,11 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expandProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getFactory()
             ->createProductConcreteExpander()
-            ->expandProductConcreteTransfer($productConcreteTransfer);
+            ->expand($productConcreteTransfer);
     }
 
     /**
