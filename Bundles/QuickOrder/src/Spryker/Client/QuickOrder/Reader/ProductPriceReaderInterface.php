@@ -17,5 +17,5 @@ interface ProductPriceReaderInterface
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function getCurrentProductPriceTransfer(ItemTransfer $itemTransfer): CurrentProductPriceTransfer;
+    public function getCurrentProductPrice(ItemTransfer $itemTransfer): CurrentProductPriceTransfer;
 }

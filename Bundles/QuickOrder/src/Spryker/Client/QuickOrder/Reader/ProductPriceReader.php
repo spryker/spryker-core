@@ -42,7 +42,7 @@ class ProductPriceReader implements ProductPriceReaderInterface
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function getCurrentProductPriceTransfer(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
+    public function getCurrentProductPrice(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
     {
         $currentProductPriceTransfer = (new CurrentProductPriceTransfer())->setQuantity($itemTransfer->getQuantity());
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setQuantity($itemTransfer->getQuantity());

@@ -44,11 +44,11 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function getCurrentProductPriceTransfer(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
+    public function getCurrentProductPrice(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
     {
         return $this->getFactory()
             ->createProductPriceReader()
-            ->getCurrentProductPriceTransfer($itemTransfer);
+            ->getCurrentProductPrice($itemTransfer);
     }
 
     /**
