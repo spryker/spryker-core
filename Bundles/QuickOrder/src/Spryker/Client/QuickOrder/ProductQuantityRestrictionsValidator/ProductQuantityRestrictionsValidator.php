@@ -12,30 +12,21 @@ use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
-use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityStorageClientInterface;
 
 class ProductQuantityRestrictionsValidator implements ProductQuantityRestrictionsValidatorInterface
 {
-    /**
-     * @var \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityClientInterface
-     */
-    protected $productQuantityClient;
-
     /**
      * @var \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityStorageClientInterface
      */
     protected $productQuantityStorageClient;
 
     /**
-     * @param \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityClientInterface $productQuantityClient
      * @param \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityStorageClientInterface $productQuantityStorageClient
      */
     public function __construct(
-        QuickOrderToProductQuantityClientInterface $productQuantityClient,
         QuickOrderToProductQuantityStorageClientInterface $productQuantityStorageClient
     ) {
-        $this->productQuantityClient = $productQuantityClient;
         $this->productQuantityStorageClient = $productQuantityStorageClient;
     }
 
@@ -58,8 +49,13 @@ class ProductQuantityRestrictionsValidator implements ProductQuantityRestriction
             return $this->createValidationResponse(true);
         }
 
-        return $this->productQuantityClient->validateProductQuantityRestrictions(
-            (int)$quickOrderItemTransfer->getQty(),
+        // TODO refactor
+        if ($quickOrderItemTransfer->getQty() === null) {
+            return (new ProductQuantityValidationResponseTransfer())->setIsValid(true);
+        }
+
+        return $this->productQuantityStorageClient->validateProductQuantity(
+            $quickOrderItemTransfer->getQty(),
             $this->createProductQuantityTransferFromProductQuantityStorageTransfer($productQuantityStorageTransfer)
         );
     }

@@ -14,7 +14,7 @@ use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpander
 /**
  * @method \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageClientInterface getClient()
  */
-class ProductConcreteTransferQuantityRestrictionsExpanderPlugin extends AbstractPlugin implements ProductConcreteExpanderPluginInterface
+class ProductConcreteTransferProductQuantityExpanderPlugin extends AbstractPlugin implements ProductConcreteExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -28,6 +28,6 @@ class ProductConcreteTransferQuantityRestrictionsExpanderPlugin extends Abstract
      */
     public function expand(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        return $this->getClient()->expandProductConcreteTransferWithQuantityRestrictions($productConcreteTransfer);
+        return $this->getClient()->expandProductConcreteTransferWithProductQuantity($productConcreteTransfer);
     }
 }

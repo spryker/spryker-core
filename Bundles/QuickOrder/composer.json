@@ -7,8 +7,7 @@
     "spryker/locale": "^3.0.0",
     "spryker/price-product": "^2.0.0",
     "spryker/price-product-storage": "^2.0.0",
-    "spryker/product-quantity": "^1.0.0",
-    "spryker/product-quantity-storage": "^1.0.0",
+    "spryker/product-quantity-storage": "^1.1.0",
     "spryker/product-storage": "^1.0.0",
     "spryker/quick-order-extension": "^1.0.0"
   },

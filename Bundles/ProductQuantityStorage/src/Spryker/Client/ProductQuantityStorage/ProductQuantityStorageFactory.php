@@ -14,6 +14,8 @@ use Spryker\Client\ProductQuantityStorage\Expander\ProductConcreteTransferExpand
 use Spryker\Client\ProductQuantityStorage\Expander\ProductConcreteTransferExpanderInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReader;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
+use Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityValidator;
+use Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityValidatorInterface;
 
 class ProductQuantityStorageFactory extends AbstractFactory
 {
@@ -52,5 +54,13 @@ class ProductQuantityStorageFactory extends AbstractFactory
     public function getSynchronizationService(): ProductQuantityStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ProductQuantityStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityValidatorInterface
+     */
+    public function createProductQuantityValidator(): ProductQuantityValidatorInterface
+    {
+        return new ProductQuantityValidator();
     }
 }

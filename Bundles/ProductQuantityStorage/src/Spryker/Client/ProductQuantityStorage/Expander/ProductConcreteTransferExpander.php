@@ -32,7 +32,7 @@ class ProductConcreteTransferExpander implements ProductConcreteTransferExpander
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandWithQuantityRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expandWithProductQuantity(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         $idProduct = $productConcreteTransfer->getIdProductConcrete();
         if (empty($idProduct)) {

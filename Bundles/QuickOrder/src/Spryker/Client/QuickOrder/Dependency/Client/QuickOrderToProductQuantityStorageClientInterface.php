@@ -8,6 +8,8 @@
 namespace Spryker\Client\QuickOrder\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
+use Generated\Shared\Transfer\ProductQuantityTransfer;
+use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
 
 interface QuickOrderToProductQuantityStorageClientInterface
 {
@@ -17,4 +19,12 @@ interface QuickOrderToProductQuantityStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
     public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer;
+
+    /**
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
+     */
+    public function validateProductQuantity(int $quantity, ProductQuantityTransfer $productQuantityTransfer): ProductQuantityValidationResponseTransfer;
 }

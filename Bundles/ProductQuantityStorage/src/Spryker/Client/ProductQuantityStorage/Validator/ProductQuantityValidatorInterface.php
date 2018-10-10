@@ -5,23 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductQuantity;
+namespace Spryker\Client\ProductQuantityStorage\Validator;
 
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
 
-interface ProductQuantityClientInterface
+interface ProductQuantityValidatorInterface
 {
     /**
-     * Specification:
-     * - Validates given product quantity against its quantity restrictions.
-     *
-     * @api
-     *
      * @param int $quantity
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
      */
-    public function validateProductQuantityRestrictions(int $quantity, ProductQuantityTransfer $productQuantityTransfer): ProductQuantityValidationResponseTransfer;
+    public function validate(int $quantity, ProductQuantityTransfer $productQuantityTransfer): ProductQuantityValidationResponseTransfer;
 }

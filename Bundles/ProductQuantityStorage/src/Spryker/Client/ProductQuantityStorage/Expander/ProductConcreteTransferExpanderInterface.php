@@ -16,5 +16,5 @@ interface ProductConcreteTransferExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandWithQuantityRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function expandWithProductQuantity(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }
