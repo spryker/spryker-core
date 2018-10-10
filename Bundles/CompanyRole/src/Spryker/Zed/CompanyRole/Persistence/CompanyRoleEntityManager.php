@@ -134,7 +134,7 @@ class CompanyRoleEntityManager extends AbstractEntityManager implements CompanyR
             ->findOne();
 
         if ($spyCompanyRoleToPermission !== null) {
-            $spyCompanyRoleToPermission->setConfiguration(\json_encode($permissionTransfer->getConfiguration()));
+            $spyCompanyRoleToPermission->setConfiguration(json_encode($permissionTransfer->getConfiguration()));
             $spyCompanyRoleToPermission->save();
         }
     }
@@ -153,7 +153,7 @@ class CompanyRoleEntityManager extends AbstractEntityManager implements CompanyR
             ->filterByFkPermission($permissionTransfer->getIdPermission())
             ->findOneOrCreate();
 
-        $spyCompanyRoleToPermission->setConfiguration(\json_encode($permissionTransfer->getConfiguration()));
+        $spyCompanyRoleToPermission->setConfiguration(json_encode($permissionTransfer->getConfiguration()));
         $spyCompanyRoleToPermission->save();
     }
 

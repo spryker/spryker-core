@@ -25,6 +25,35 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
     public const COL_ID_PRODUCT_LIST = 'col_id_product_list';
 
     /**
+     * @return int
+     */
+    public function getValueForWhitelistType(): int
+    {
+        return $this->getEnumValueForListType(SpyProductListTableMap::COL_TYPE_WHITELIST);
+    }
+
+    /**
+     * @return int
+     */
+    public function getValueForBlacklistType(): int
+    {
+        return $this->getEnumValueForListType(SpyProductListTableMap::COL_TYPE_BLACKLIST);
+    }
+
+    /**
+     * @param string $listType
+     *
+     * @return int
+     */
+    protected function getEnumValueForListType(string $listType): int
+    {
+        return array_search(
+            $listType,
+            SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE)
+        );
+    }
+
+    /**
      * @uses SpyProductQuery
      *
      * @param int[] $concreteIds

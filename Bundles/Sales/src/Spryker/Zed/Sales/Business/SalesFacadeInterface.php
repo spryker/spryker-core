@@ -162,7 +162,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Returns the order for the given sales oder id.
+     * - Returns the order for the given sales order id.
      *
      * @api
      *
@@ -171,6 +171,18 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder);
+
+    /**
+     * Specification:
+     * - Returns the order for the given sales order id.
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer;
 
     /**
      * Specification:

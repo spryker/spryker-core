@@ -124,7 +124,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      */
     protected function jsonDecode($value)
     {
-        $decodedValue = \json_decode($value, true);
+        $decodedValue = json_decode($value, true);
 
         if (json_last_error() === \JSON_ERROR_NONE) {
             return $decodedValue;
