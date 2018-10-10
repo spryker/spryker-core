@@ -41,7 +41,9 @@
     </transfer>
 
     <transfer name="RestApiDocumentationPathAnnotations">
-        <property name="get" type="RestApiDocumentationAnnotation" />
+        <property name="getCollection" type="RestApiDocumentationAnnotation" />
+        <property name="getResourceById" type="RestApiDocumentationAnnotation" />
+        <property name="getResource" type="RestApiDocumentationAnnotation" />
         <property name="post" type="RestApiDocumentationAnnotation" />
         <property name="patch" type="RestApiDocumentationAnnotation" />
         <property name="delete" type="RestApiDocumentationAnnotation" />
