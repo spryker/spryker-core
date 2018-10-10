@@ -11,8 +11,8 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToProductMeasurementUnitStorageClientInterface;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageClientInterface;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Service\ProductPackagingUnitStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductPackagingUnitStorage\ItemTransferPackagingUnitExpander\ItemTransferPackagingUnitExpander;
-use Spryker\Client\ProductPackagingUnitStorage\ItemTransferPackagingUnitExpander\ItemTransferPackagingUnitExpanderInterface;
+use Spryker\Client\ProductPackagingUnitStorage\Expander\ItemTransferExpander;
+use Spryker\Client\ProductPackagingUnitStorage\Expander\ItemTransferExpanderInterface;
 use Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageKeyGenerator;
 use Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageKeyGeneratorInterface;
 use Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageReader;
@@ -29,11 +29,14 @@ class ProductPackagingUnitStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductPackagingUnitStorage\ItemTransferPackagingUnitExpander\ItemTransferPackagingUnitExpanderInterface
+     * @return \Spryker\Client\ProductPackagingUnitStorage\Expander\ItemTransferExpanderInterface
      */
-    public function createItemTransferPackagingUnitExpander(): ItemTransferPackagingUnitExpanderInterface
+    public function createItemTransferExpander(): ItemTransferExpanderInterface
     {
-        return new ItemTransferPackagingUnitExpander($this->getProductMeasurementUnitStorageClient());
+        return new ItemTransferExpander(
+            $this->createProductPackagingUnitStorageReader(),
+            $this->getProductMeasurementUnitStorageClient()
+        );
     }
 
     /**

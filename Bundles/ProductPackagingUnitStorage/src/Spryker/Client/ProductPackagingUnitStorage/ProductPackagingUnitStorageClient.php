@@ -62,10 +62,7 @@ class ProductPackagingUnitStorageClient extends AbstractClient implements Produc
     public function expandItemTransferWithPackagingUnit(ItemTransfer $itemTransfer): ItemTransfer
     {
         return $this->getFactory()
-            ->createItemTransferPackagingUnitExpander()
-            ->expand(
-                $itemTransfer,
-                $this->findProductAbstractPackagingById((int)$itemTransfer->getIdProductAbstract())
-            );
+            ->createItemTransferExpander()
+            ->expand($itemTransfer);
     }
 }

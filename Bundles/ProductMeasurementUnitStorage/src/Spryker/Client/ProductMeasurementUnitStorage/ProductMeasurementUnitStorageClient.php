@@ -83,8 +83,7 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
     }
 
     /**
-     * Specification:
-     * - Finds a product base unit within Storage with a given product ID.
+     * {@inheritdoc}
      *
      * @api
      *

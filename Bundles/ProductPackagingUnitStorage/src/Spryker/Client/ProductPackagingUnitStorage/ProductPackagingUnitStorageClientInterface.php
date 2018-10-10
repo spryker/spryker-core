@@ -40,7 +40,8 @@ interface ProductPackagingUnitStorageClientInterface
 
     /**
      * Specification:
-     * - Expands ItemTransfer with packaging unit data.
+     * - Expands ItemTransfer with packaging unit data if available.
+     * - Leaves ItemTransfer unchanged if no packaging unit data is available.
      *
      * @api
      *

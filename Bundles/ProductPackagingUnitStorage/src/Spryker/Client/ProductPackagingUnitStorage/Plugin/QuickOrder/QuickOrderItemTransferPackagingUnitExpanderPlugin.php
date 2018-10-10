@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductPackagingUnitStorage\Plugin\QuickOrderPage;
+namespace Spryker\Client\ProductPackagingUnitStorage\Plugin\QuickOrder;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;

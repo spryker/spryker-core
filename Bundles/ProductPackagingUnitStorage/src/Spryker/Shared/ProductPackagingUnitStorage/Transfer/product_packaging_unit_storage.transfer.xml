@@ -23,13 +23,16 @@
 
     <transfer name="Item">
         <property name="idProductAbstract" type="int"/>
-        <property name="leadProduct" type="int"/>
-        <property name="amount" type="int"/>
-        <property name="quantity" type="int"/>
         <property name="productConcrete" type="ProductConcrete"/>
-        <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="quantity" type="int"/>
         <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
-        <property name="types" type="ProductConcretePackagingStorage[]"/>
+        <property name="productPackagingUnit" type="ProductPackagingUnit"/>
+        <property name="amount" type="int"/>
+        <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="amountLeadProduct" type="ProductPackagingLeadProduct"/>
     </transfer>
 
 </transfers>
+
+
+
