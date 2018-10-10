@@ -27,7 +27,7 @@ interface ProductQuantityStorageClientInterface
 
     /**
      * Specification:
-     * - Expands ProductConcreteTransfer with quantity restrictions data if exists.
+     * - Expands ProductConcreteTransfer with quantity restrictions if exists.
      *
      * @api
      *

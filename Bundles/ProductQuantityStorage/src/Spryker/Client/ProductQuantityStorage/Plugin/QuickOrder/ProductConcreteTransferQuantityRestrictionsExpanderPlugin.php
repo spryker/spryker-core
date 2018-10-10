@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductQuantityStorage\Plugin;
+namespace Spryker\Client\ProductQuantityStorage\Plugin\QuickOrder;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -14,11 +14,11 @@ use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpander
 /**
  * @method \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageClientInterface getClient()
  */
-class ProductConcreteQuantityRestrictionsExpanderPlugin extends AbstractPlugin implements ProductConcreteExpanderPluginInterface
+class ProductConcreteTransferQuantityRestrictionsExpanderPlugin extends AbstractPlugin implements ProductConcreteExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Expands ProductConcreteTransfer with quantity restrictions data for given product.
+     * - Expands ProductConcreteTransfer with quantity restrictions for given product.
      *
      * @api
      *

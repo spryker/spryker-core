@@ -44,7 +44,7 @@ class ProductQuantityStorageClient extends AbstractClient implements ProductQuan
     public function expandProductConcreteTransferWithQuantityRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getFactory()
-            ->createProductConcreteExpander()
-            ->expandProductConcreteTransferWithQuantityRestrictions($productConcreteTransfer);
+            ->createProductConcreteTransferExpander()
+            ->expandWithQuantityRestrictions($productConcreteTransfer);
     }
 }

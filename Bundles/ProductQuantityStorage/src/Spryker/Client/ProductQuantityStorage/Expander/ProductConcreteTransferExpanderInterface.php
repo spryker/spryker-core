@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductQuantityStorage\ProductConcreteExpander;
+namespace Spryker\Client\ProductQuantityStorage\Expander;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface ProductConcreteExpanderInterface
+interface ProductConcreteTransferExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteTransferWithQuantityRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function expandWithQuantityRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }
