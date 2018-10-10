@@ -30,6 +30,7 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPag
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductConcreteSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductImageSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageUrlSearchListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductSearchListener;
 use Spryker\Zed\ProductSearch\Dependency\ProductSearchEvents;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
@@ -72,6 +73,11 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
         $this->addPriceProductEvents($eventCollection);
         $this->addProductImageEvents($eventCollection);
         $this->addProductCategoryEvents($eventCollection);
+
+        $eventCollection
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_SEARCH_CREATE, new ProductSearchListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_SEARCH_UPDATE, new ProductSearchListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_SEARCH_DELETE, new ProductSearchListener());
 
         return $eventCollection;
     }

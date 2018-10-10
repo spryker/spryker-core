@@ -17,6 +17,8 @@ use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEnco
 
 class ProductPageSearchMapper implements ProductPageSearchMapperInterface
 {
+    protected const KEY_SPY_PRODUCT_SEARCHES = 'SpyProductSearches';
+
     /**
      * @var \Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttributeInterface
      */
@@ -74,6 +76,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         $productPageSearchTransfer->setType(ProductPageSearchConstants::PRODUCT_ABSTRACT_RESOURCE_NAME);
         $productPageSearchTransfer->setLocale($productAbstractLocalizedData['Locale']['locale_name']);
         $productPageSearchTransfer->setAttributes($attributes);
+        $productPageSearchTransfer->setIsSearchable($concreteData['isSearchable']);
 
         return $productPageSearchTransfer;
     }
@@ -141,7 +144,15 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         $concreteLocalizedAttributes = [];
         $concreteDescriptions = [];
 
+        $isSearchable = false;
+
         foreach ($concreteProducts as $concreteProduct) {
+            if (!$this->isSearchable($concreteProduct[static::KEY_SPY_PRODUCT_SEARCHES], $idLocale)) {
+                continue;
+            }
+
+            $isSearchable = true;
+
             $concreteSkus[] = $concreteProduct['sku'];
             $concreteAttributes[] = $concreteProduct['attributes'];
             $this->setConcreteLocalizedProductData(
@@ -159,6 +170,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
             'concreteAttributes' => implode(', ', $concreteAttributes),
             'concreteLocalizedAttributes' => implode(', ', $concreteLocalizedAttributes),
             'concreteDescriptions' => implode(', ', $concreteDescriptions),
+            'isSearchable' => $isSearchable,
         ];
     }
 
@@ -181,5 +193,22 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
                 $concreteLocalizedAttributes[] = $concreteProductLocalizedAttribute['attributes'];
             }
         }
+    }
+
+    /**
+     * @param array $productSearches
+     * @param int $idLocale
+     *
+     * @return bool
+     */
+    protected function isSearchable(array $productSearches, int $idLocale): bool
+    {
+        foreach ($productSearches as $productSearch) {
+            if ($productSearch['fk_locale'] === $idLocale && $productSearch['is_searchable']) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

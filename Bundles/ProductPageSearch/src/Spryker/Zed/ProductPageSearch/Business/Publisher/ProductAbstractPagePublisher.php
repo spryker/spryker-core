@@ -16,6 +16,7 @@ use Spryker\Zed\ProductPageSearch\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface;
+use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface;
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
 {
@@ -50,25 +51,32 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected $productPageSearchWriter;
 
     /**
+     * @var \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface
+     */
+    protected $repository;
+
+    /**
      * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[] $productPageDataLoaderPlugins
      * @param \Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface $productPageSearchMapper
      * @param \Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface $productPageSearchWriter
+     * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface $repository
      */
     public function __construct(
         ProductPageSearchQueryContainerInterface $queryContainer,
         array $pageDataExpanderPlugins,
         array $productPageDataLoaderPlugins,
         ProductPageSearchMapperInterface $productPageSearchMapper,
-        ProductPageSearchWriterInterface $productPageSearchWriter
+        ProductPageSearchWriterInterface $productPageSearchWriter,
+        ProductPageSearchRepositoryInterface $repository
     ) {
-
         $this->queryContainer = $queryContainer;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
         $this->productPageDataLoaderPlugins = $productPageDataLoaderPlugins;
         $this->productPageSearchMapper = $productPageSearchMapper;
         $this->productPageSearchWriter = $productPageSearchWriter;
+        $this->repository = $repository;
     }
 
     /**
@@ -140,7 +148,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $productPageLoadTransfer = $productPageDataLoaderPlugin->expandProductPageDataTransfer($productPageLoadTransfer);
         }
 
-        $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
+        $productAbstractLocalizedEntities = $this->repository->getProductAbstractLocalizedEntitiesByIds($productAbstractIds);
         $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
 
         if (!$productAbstractLocalizedEntities) {
@@ -230,6 +238,12 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $productAbstractPageSearchEntity,
             $isRefresh
         );
+
+        if (!$productPageSearchTransfer->getIsSearchable()) {
+            $this->deleteProductAbstractPageSearchEntity($productAbstractPageSearchEntity);
+
+            return;
+        }
 
         $productPageSearchTransfer->setStore($storeName);
         $productPageSearchTransfer->setLocale($localeName);
@@ -377,16 +391,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $pairs = $this->pairRemainingProductAbstractPageSearchEntities($mappedProductAbstractPageSearchEntities, $pairs);
 
         return $pairs;
-    }
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return array
-     */
-    protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
-    {
-        return $this->queryContainer->queryProductAbstractByIds($productAbstractIds)->find()->getData();
     }
 
     /**
