@@ -15,12 +15,12 @@ use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityStora
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface;
 use Spryker\Client\QuickOrder\ProductConcreteExpander\ProductConcreteExpander;
 use Spryker\Client\QuickOrder\ProductConcreteExpander\ProductConcreteExpanderInterface;
-use Spryker\Client\QuickOrder\ProductConcretePriceReader\ProductConcretePriceReader;
-use Spryker\Client\QuickOrder\ProductConcretePriceReader\ProductConcretePriceReaderInterface;
 use Spryker\Client\QuickOrder\ProductConcreteReader\ProductConcreteReader;
 use Spryker\Client\QuickOrder\ProductConcreteReader\ProductConcreteReaderInterface;
 use Spryker\Client\QuickOrder\ProductQuantityRestrictionsValidator\ProductQuantityRestrictionsValidator;
 use Spryker\Client\QuickOrder\ProductQuantityRestrictionsValidator\ProductQuantityRestrictionsValidatorInterface;
+use Spryker\Client\QuickOrder\Reader\ProductPriceReader;
+use Spryker\Client\QuickOrder\Reader\ProductPriceReaderInterface;
 
 class QuickOrderFactory extends AbstractFactory
 {
@@ -33,11 +33,11 @@ class QuickOrderFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuickOrder\ProductConcretePriceReader\ProductConcretePriceReaderInterface
+     * @return \Spryker\Client\QuickOrder\Reader\ProductPriceReaderInterface
      */
-    public function createProductConcretePriceReader(): ProductConcretePriceReaderInterface
+    public function createProductPriceReader(): ProductPriceReaderInterface
     {
-        return new ProductConcretePriceReader(
+        return new ProductPriceReader(
             $this->getPriceProductClient(),
             $this->getPriceProductStorageClient()
         );

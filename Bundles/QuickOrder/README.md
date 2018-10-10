@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/quick-order.svg)](https://travis-ci.org/spryker/quick-order)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/quick-order/badge.svg)](https://coveralls.io/github/spryker/quick-order)
 
-QuickOrder module provides Client layer functionality to access from SprykerShop.
+QuickOrder module provides quick order related functionality.
 
 ## Installation
 
