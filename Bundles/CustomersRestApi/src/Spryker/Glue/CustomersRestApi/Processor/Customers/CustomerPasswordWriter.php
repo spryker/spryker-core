@@ -67,7 +67,9 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
 
         $restResource = $this->restResourceBuilder->createRestResource(CustomersRestApiConfig::RESOURCE_CUSTOMER_RESTORE_PASSWORD);
 
-        return $response->addResource($restResource)->setStatus(Response::HTTP_NO_CONTENT);
+        return $response
+            ->addResource($restResource)
+            ->setStatus(Response::HTTP_NO_CONTENT);
     }
 
     /**

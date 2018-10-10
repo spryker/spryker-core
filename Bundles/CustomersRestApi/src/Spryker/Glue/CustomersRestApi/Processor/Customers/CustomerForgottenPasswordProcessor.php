@@ -62,6 +62,8 @@ class CustomerForgottenPasswordProcessor implements CustomerForgottenPasswordPro
 
         $restResource = $this->restResourceBuilder->createRestResource(CustomersRestApiConfig::RESOURCE_FORGOTTEN_PASSWORD);
 
-        return $response->addResource($restResource)->setStatus(Response::HTTP_NO_CONTENT);
+        return $response
+            ->addResource($restResource)
+            ->setStatus(Response::HTTP_NO_CONTENT);
     }
 }
