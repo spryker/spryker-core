@@ -18,6 +18,7 @@ class ReclamationOrderSaverPlugin extends AbstractPlugin implements CheckoutDoSa
 {
     /**
      * {@inheritdoc}
+     * - Updates order with sales reclamation id.
      *
      * @api
      *
