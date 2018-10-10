@@ -3,6 +3,7 @@ parameters:
         - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::#'
         - '#Method .+DiscountQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria#'
         - '#Method .+DiscountQueryContainer::queryVoucherPoolByVoucherCodes\(\) should return .+SpyDiscountVoucherQuery but returns \$this\(.+SpyDiscountVoucherQuery\).#'
+        - '#Casting to .+ something that.+s already .+.#'
 
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 

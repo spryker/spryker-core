@@ -26,7 +26,7 @@ use Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacade;
  */
 class ShipmentCartConnectorFacadeTest extends Unit
 {
-    const CURRENCY_ISO_CODE = 'USD';
+    public const CURRENCY_ISO_CODE = 'USD';
 
     /**
      * @var \SprykerTest\Zed\ShipmentCartConnector\ShipmentCartConnectorBusinessTester

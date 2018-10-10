@@ -9,14 +9,14 @@ namespace SprykerTest\Zed\Category\PageObject;
 
 class CategoryListPage
 {
-    const URL = '/category/root';
+    public const URL = '/category/root';
 
-    const SELECTOR_TABLE = 'dataTables_wrapper';
-    const SELECTOR_CATEGORIES_LIST = 'categories-list';
+    public const SELECTOR_TABLE = 'dataTables_wrapper';
+    public const SELECTOR_CATEGORIES_LIST = 'categories-list';
 
-    const BUTTON_CREATE_CATEGORY = '//div[@class="title-action"]/a';
+    public const BUTTON_CREATE_CATEGORY = '//div[@class="title-action"]/a';
 
-    const SELECTOR_TREE_LIST = '#category-tree > div.dd > ol.dd-list';
+    public const SELECTOR_TREE_LIST = '#category-tree > div.dd > ol.dd-list';
 
     /**
      * @param int $position

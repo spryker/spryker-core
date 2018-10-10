@@ -17,17 +17,17 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
-    const RELATION_CMS_BLOCK_STORES = 'SpyCmsBlockStores';
-    const RELATION_STORE = 'SpyStore';
-    const COLUMN_ID_CMS_BLOCK = 'id_cms_block';
-    const COLUMN_STORE_NAME = 'name';
-    const COLUMN_CMS_BLOCK_NAME = 'name';
-    const COLUMN_CMS_BLOCK_IS_ACTIVE = 'is_active';
+    public const RELATION_CMS_BLOCK_STORES = 'SpyCmsBlockStores';
+    public const RELATION_STORE = 'SpyStore';
+    public const COLUMN_ID_CMS_BLOCK = 'id_cms_block';
+    public const COLUMN_STORE_NAME = 'name';
+    public const COLUMN_CMS_BLOCK_NAME = 'name';
+    public const COLUMN_CMS_BLOCK_IS_ACTIVE = 'is_active';
 
-    const CMS_BLOCK_ENTITY = 'CMS_BLOCK_ENTITY';
-    const CMS_BLOCK_STORAGE_ENTITY = 'CMS_BLOCK_STORAGE_ENTITY';
-    const LOCALE_NAME = 'LOCALE_NAME';
-    const STORE_NAME = 'STORE_NAME';
+    public const CMS_BLOCK_ENTITY = 'CMS_BLOCK_ENTITY';
+    public const CMS_BLOCK_STORAGE_ENTITY = 'CMS_BLOCK_STORAGE_ENTITY';
+    public const LOCALE_NAME = 'LOCALE_NAME';
+    public const STORE_NAME = 'STORE_NAME';
 
     /**
      * @var \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface

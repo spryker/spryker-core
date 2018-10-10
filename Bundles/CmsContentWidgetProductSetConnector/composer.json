@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-content-widget-product-set-connector",
+  "type": "library",
   "description": "CmsContentWidgetProductSetConnector module",
   "license": "proprietary",
   "require": {

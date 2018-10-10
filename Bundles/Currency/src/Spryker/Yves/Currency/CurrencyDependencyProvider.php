@@ -18,14 +18,14 @@ use Symfony\Component\Intl\Intl;
 
 class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const STORE = 'store';
-    const INTERNATIONALIZATION = 'internationalization';
+    public const STORE = 'store';
+    public const INTERNATIONALIZATION = 'internationalization';
 
-    const CLIENT_SESSION = 'CLIENT_SESSION';
-    const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
-    const PLUGINS_CURRENCY_POST_CHANGE = 'CURRENCY_POST_CHANGE_PLUGINS';
+    public const PLUGINS_CURRENCY_POST_CHANGE = 'CURRENCY_POST_CHANGE_PLUGINS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

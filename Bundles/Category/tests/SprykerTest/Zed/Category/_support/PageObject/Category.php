@@ -9,22 +9,22 @@ namespace SprykerTest\Zed\Category\PageObject;
 
 class Category
 {
-    const FORM_FIELD_CATEGORY_KEY = 'category[category_key]';
-    const FORM_FIELD_CATEGORY_PARENT = 'category[parent_category_node]';
-    const FORM_FIELD_CATEGORY_TEMPLATE = 'category[fk_category_template]';
-    const FORM_FIELD_CATEGORY_IS_ACTIVE = 'category[is_active]';
-    const FORM_FIELD_CATEGORY_IS_IN_MENU = 'category[is_in_menu]';
-    const FORM_FIELD_CATEGORY_IS_MAIN = 'category[is_main]';
-    const FORM_FIELD_CATEGORY_IS_CLICKABLE = 'category[is_clickable]';
-    const FORM_FIELD_CATEGORY_IS_SEARCHABLE = 'category[is_searchable]';
+    public const FORM_FIELD_CATEGORY_KEY = 'category[category_key]';
+    public const FORM_FIELD_CATEGORY_PARENT = 'category[parent_category_node]';
+    public const FORM_FIELD_CATEGORY_TEMPLATE = 'category[fk_category_template]';
+    public const FORM_FIELD_CATEGORY_IS_ACTIVE = 'category[is_active]';
+    public const FORM_FIELD_CATEGORY_IS_IN_MENU = 'category[is_in_menu]';
+    public const FORM_FIELD_CATEGORY_IS_MAIN = 'category[is_main]';
+    public const FORM_FIELD_CATEGORY_IS_CLICKABLE = 'category[is_clickable]';
+    public const FORM_FIELD_CATEGORY_IS_SEARCHABLE = 'category[is_searchable]';
 
-    const FORM_FIELD_CATEGORY_NAME_PATTERN = 'category[localized_attributes][%d][name]';
-    const FORM_FIELD_CATEGORY_TITLE_PATTERN = 'category[localized_attributes][%d][meta_title]';
-    const FORM_FIELD_CATEGORY_DESCRIPTION_PATTERN = 'category[localized_attributes][%d][meta_description]';
-    const FORM_FIELD_CATEGORY_KEYWORDS_PATTERN = 'category[localized_attributes][%d][meta_keywords]';
+    public const FORM_FIELD_CATEGORY_NAME_PATTERN = 'category[localized_attributes][%d][name]';
+    public const FORM_FIELD_CATEGORY_TITLE_PATTERN = 'category[localized_attributes][%d][meta_title]';
+    public const FORM_FIELD_CATEGORY_DESCRIPTION_PATTERN = 'category[localized_attributes][%d][meta_description]';
+    public const FORM_FIELD_CATEGORY_KEYWORDS_PATTERN = 'category[localized_attributes][%d][meta_keywords]';
 
-    const CATEGORY_A = 'category-a';
-    const CATEGORY_B = 'category-b';
+    public const CATEGORY_A = 'category-a';
+    public const CATEGORY_B = 'category-b';
 
     /**
      * @param string $categoryKey

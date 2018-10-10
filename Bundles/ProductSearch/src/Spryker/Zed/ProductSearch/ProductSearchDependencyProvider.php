@@ -18,14 +18,14 @@ use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchBridge;
 
 class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRODUCT = 'product facade';
-    const FACADE_LOCALE = 'locale facade';
-    const FACADE_GLOSSARY = 'glossary facade';
-    const FACADE_TOUCH = 'touch facade';
-    const FACADE_EVENT = 'FACADE_EVENT';
-    const FACADE_COLLECTOR = 'collector facade';
-    const QUERY_CONTAINER_TOUCH = 'touch query container';
-    const SERVICE_DATA = 'util data service';
+    public const FACADE_PRODUCT = 'product facade';
+    public const FACADE_LOCALE = 'locale facade';
+    public const FACADE_GLOSSARY = 'glossary facade';
+    public const FACADE_TOUCH = 'touch facade';
+    public const FACADE_EVENT = 'FACADE_EVENT';
+    public const FACADE_COLLECTOR = 'collector facade';
+    public const QUERY_CONTAINER_TOUCH = 'touch query container';
+    public const SERVICE_DATA = 'util data service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

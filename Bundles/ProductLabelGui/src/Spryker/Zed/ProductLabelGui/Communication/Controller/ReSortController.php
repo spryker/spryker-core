@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ReSortController extends AbstractController
 {
-    const PARAM_SORT_ORDER_DATA = 'sort-order-data';
+    public const PARAM_SORT_ORDER_DATA = 'sort-order-data';
 
     /**
      * @return array
