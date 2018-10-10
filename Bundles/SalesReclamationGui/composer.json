@@ -6,7 +6,6 @@
     "php": ">=7.1",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/manual-order-entry-gui": "^0.5.0",
     "spryker/sales": "^7.0.0 || ^8.0.0",
     "spryker/sales-extension": "^1.0.0",
     "spryker/sales-reclamation": "^0.0.0 || ^1.0.0",
@@ -16,7 +15,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/manual-order-entry-gui": "^0.5.0"
+  },
+  "suggest": {
+    "spryker/manual-order-entry-gui": "Required because ManualOrderEntryForm expanding with reclamations"
   },
   "autoload": {
     "psr-4": {

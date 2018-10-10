@@ -10,7 +10,6 @@ namespace Spryker\Zed\SalesReclamationGui\Communication;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface;
 use Spryker\Zed\SalesReclamationGui\Communication\Form\ReclamationDataProvider;
 use Spryker\Zed\SalesReclamationGui\Communication\Form\ReclamationType;
 use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
@@ -73,7 +72,6 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
 
         return $this->getFormFactory()->create(
             ReclamationType::class,
-            $dataProvider->getData($quoteTransfer),
             $dataProvider->getOptions($quoteTransfer)
         );
     }
@@ -81,9 +79,9 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface
+     * @return \Spryker\Zed\SalesReclamationGui\Communication\Form\ReclamationDataProvider
      */
-    public function createReclamationDataProvider(Request $request): FormDataProviderInterface
+    public function createReclamationDataProvider(Request $request): ReclamationDataProvider
     {
         return new ReclamationDataProvider(
             $request

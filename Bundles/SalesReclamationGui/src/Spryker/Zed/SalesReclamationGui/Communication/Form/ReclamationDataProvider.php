@@ -8,11 +8,10 @@
 namespace Spryker\Zed\SalesReclamationGui\Communication\Form;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface;
 use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
-class ReclamationDataProvider implements FormDataProviderInterface
+class ReclamationDataProvider
 {
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -26,16 +25,6 @@ class ReclamationDataProvider implements FormDataProviderInterface
         Request $request
     ) {
         $this->request = $request;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getData($quoteTransfer): QuoteTransfer
-    {
-        return $quoteTransfer;
     }
 
     /**
