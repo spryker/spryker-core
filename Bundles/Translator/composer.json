@@ -4,9 +4,9 @@
   "description": "Translator module",
   "license": "proprietary",
   "require": {
-    "spryker/application-extension": "*",
-    "spryker/kernel": "*",
-    "spryker/symfony": "*"
+    "spryker/application-extension": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
