@@ -17,6 +17,8 @@ use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttribute;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParents;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeChecker;
+use Spryker\Zed\Category\Business\Model\CategoryPluginExecutor;
+use Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface;
 use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateReader;
 use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSync;
 use Spryker\Zed\Category\Business\Model\CategoryToucher;
@@ -123,6 +125,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getRelationDeletePluginStack(),
             $this->getRelationUpdatePluginStack(),
+            $this->createPluginExecutor(),
             $this->getEventFacade()
         );
     }
@@ -363,5 +366,41 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryHydrator(): CategoryHydratorInterface
     {
         return new CategoryHydrator($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface[]
+     */
+    protected function getCategoryPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_CATEGORY_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface[]
+     */
+    protected function getCategoryPostUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_CATEGORY_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface[]
+     */
+    protected function getCategoryPostReadPlugins(): array
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_CATEGORY_READ);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface
+     */
+    protected function createPluginExecutor(): CategoryPluginExecutorInterface
+    {
+        return new CategoryPluginExecutor(
+            $this->getCategoryPostCreatePlugins(),
+            $this->getCategoryPostUpdatePlugins(),
+            $this->getCategoryPostReadPlugins()
+        );
     }
 }

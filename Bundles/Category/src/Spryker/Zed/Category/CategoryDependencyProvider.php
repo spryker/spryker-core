@@ -31,6 +31,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
     public const PLUGIN_CATEGORY_FORM_PLUGINS = 'PLUGIN_CATEGORY_FORM_PLUGINS';
     public const PLUGINS_CATEGORY_URL_PATH = 'PLUGINS_CATEGORY_URL_PATH';
+    public const PLUGIN_STACK_CATEGORY_CREATE = 'PLUGIN_STACK_CATEGORY_CREATE';
+    public const PLUGIN_STACK_CATEGORY_UPDATE = 'PLUGIN_STACK_CATEGORY_UPDATE';
+    public const PLUGIN_STACK_CATEGORY_READ = 'PLUGIN_STACK_CATEGORY_READ';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -47,6 +50,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRelationDeletePluginStack($container);
         $container = $this->addRelationUpdatePluginStack($container);
         $container = $this->addCategoryUrlPathPlugins($container);
+        $container = $this->addCategoryPostCreatePluginStack($container);
+        $container = $this->addCategoryPostUpdatePluginStack($container);
+        $container = $this->addCategoryPostReadPluginStack($container);
 
         return $container;
     }
@@ -230,6 +236,48 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryPostCreatePluginStack(Container $container): Container
+    {
+        $container[static::PLUGIN_STACK_CATEGORY_CREATE] = Container::share(function () {
+            return $this->getCategoryPostCreatePluginStack();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryPostUpdatePluginStack(Container $container): Container
+    {
+        $container[static::PLUGIN_STACK_CATEGORY_UPDATE] = Container::share(function () {
+            return $this->getCategoryPostUpdatePluginStack();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryPostReadPluginStack(Container $container): Container
+    {
+        $container[static::PLUGIN_STACK_CATEGORY_READ] = Container::share(function () {
+            return $this->getCategoryPostReadPluginStack();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface[]
      */
     protected function getRelationReadPluginStack()
@@ -249,6 +297,30 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryUrlPathPluginInterface[]
      */
     protected function getCategoryUrlPathPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface[]
+     */
+    protected function getCategoryPostCreatePluginStack(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface[]
+     */
+    protected function getCategoryPostUpdatePluginStack(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface[]
+     */
+    protected function getCategoryPostReadPluginStack(): array
     {
         return [];
     }

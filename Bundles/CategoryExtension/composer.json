@@ -1,0 +1,34 @@
+{
+  "name": "spryker/category-extension",
+  "type": "library",
+  "description": "CategoryExtension module",
+  "license": "proprietary",
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "suggest": {
+    "spryker/symfony": "ADD SUGGEST DESCRIPTION"
+  }
+}
