@@ -16,14 +16,14 @@ interface ProductListReaderInterface
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
+    public function getProductWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract
@@ -44,14 +44,14 @@ interface ProductListReaderInterface
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array;
+    public function getProductBlacklistIdsByIdProductConcrete(int $idProductConcrete): array;
 
     /**
      * @param int $idProductConcrete
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
+    public function getProductWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
 
     /**
      * @param int $idProductConcrete
