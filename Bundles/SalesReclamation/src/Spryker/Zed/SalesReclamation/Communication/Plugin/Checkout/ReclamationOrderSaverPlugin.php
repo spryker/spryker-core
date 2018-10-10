@@ -27,7 +27,7 @@ class ReclamationOrderSaverPlugin extends AbstractPlugin implements CheckoutDoSa
      *
      * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $this->getFacade()->saveOrderReclamation($quoteTransfer, $saveOrderTransfer);
     }
