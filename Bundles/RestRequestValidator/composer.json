@@ -1,5 +1,6 @@
 {
   "name": "spryker/rest-request-validator",
+  "type": "library",
   "description": "RestRequestValidator module",
   "license": "proprietary",
   "require": {
