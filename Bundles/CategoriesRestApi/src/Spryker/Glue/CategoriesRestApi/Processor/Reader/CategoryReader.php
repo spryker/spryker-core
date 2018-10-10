@@ -164,6 +164,7 @@ class CategoryReader implements CategoryReaderInterface
         }
 
         $convertedToInt = (int)$nodeId;
+
         return $nodeId === (string)$convertedToInt;
     }
 
