@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CartsRestApi\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -17,10 +18,9 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  */
 class GuestCartControllerBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface
 {
-    protected const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
-
     /**
      * {@inheritdoc}
+     * - Method substitutes customer cart for guest customer request by customer X-Anonymous-Customer-Unique-Id header.
      *
      * @api
      *
@@ -35,7 +35,7 @@ class GuestCartControllerBeforeActionPlugin extends AbstractPlugin implements Co
             return;
         }
 
-        $customerReference = $restRequest->getHttpRequest()->headers->get(static::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID);
+        $customerReference = $restRequest->getHttpRequest()->headers->get(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID);
 
         if (empty($customerReference)) {
             return;

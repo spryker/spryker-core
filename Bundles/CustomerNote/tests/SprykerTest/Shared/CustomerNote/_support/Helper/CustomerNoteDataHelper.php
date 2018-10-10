@@ -15,8 +15,8 @@ class CustomerNoteDataHelper extends Module
 {
     use LocatorHelperTrait;
 
-    const TEST_NOTE_AUTHOR = 'test_author';
-    const TEST_NOTE_MESSAGE = 'test_message';
+    public const TEST_NOTE_AUTHOR = 'test_author';
+    public const TEST_NOTE_MESSAGE = 'test_message';
 
     /**
      * @return \Spryker\Zed\CustomerNote\Business\CustomerNoteFacadeInterface

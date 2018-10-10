@@ -1,5 +1,6 @@
 {
   "name": "spryker/log",
+  "type": "library",
   "description": "Log module",
   "license": "proprietary",
   "require": {

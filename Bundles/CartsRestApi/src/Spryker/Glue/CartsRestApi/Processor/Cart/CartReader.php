@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -135,7 +135,7 @@ class CartReader implements CartReaderInterface
     /**
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    protected function getCustomerQuotes(): QuoteCollectionTransfer
+    public function getCustomerQuotes(): QuoteCollectionTransfer
     {
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
         $quoteCriteriaFilterTransfer->setCustomerReference($this->customerClient->getCustomer()->getCustomerReference());

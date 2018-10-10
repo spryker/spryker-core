@@ -1,5 +1,6 @@
 {
   "name": "spryker/price-product-merchant-relationship-data-import",
+  "type": "library",
   "description": "PriceProductMerchantRelationshipDataImport module",
   "license": "MIT",
   "require": {
@@ -18,7 +19,6 @@
     "spryker/company-business-unit": "*",
     "spryker/merchant": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "autoload": {

@@ -30,13 +30,13 @@ use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
  */
 class DiscountOrderSaverTest extends Unit
 {
-    const DISCOUNT_DISPLAY_NAME = 'discount';
-    const DISCOUNT_AMOUNT = 100;
-    const DISCOUNT_ACTION = 'action';
+    public const DISCOUNT_DISPLAY_NAME = 'discount';
+    public const DISCOUNT_AMOUNT = 100;
+    public const DISCOUNT_ACTION = 'action';
 
-    const ID_SALES_ORDER = 1;
-    const USED_CODE_1 = 'used code 1';
-    const USED_CODE_2 = 'used code 2';
+    public const ID_SALES_ORDER = 1;
+    public const USED_CODE_1 = 'used code 1';
+    public const USED_CODE_2 = 'used code 2';
 
     /**
      * @return void

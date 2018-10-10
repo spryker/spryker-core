@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StepEngine implements StepEngineInterface
 {
-    const TEMPLATE_VARIABLE_PREVIOUS_STEP_URL = 'previousStepUrl';
-    const TEMPLATE_VARIABLE_STEP_BREADCRUMBS = 'stepBreadcrumbs';
+    public const TEMPLATE_VARIABLE_PREVIOUS_STEP_URL = 'previousStepUrl';
+    public const TEMPLATE_VARIABLE_STEP_BREADCRUMBS = 'stepBreadcrumbs';
 
     /**
      * @var \Spryker\Yves\StepEngine\Process\StepCollectionInterface

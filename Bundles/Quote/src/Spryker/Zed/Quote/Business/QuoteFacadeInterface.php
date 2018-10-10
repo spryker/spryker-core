@@ -109,4 +109,15 @@ interface QuoteFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     *  - Removes all expired guest carts from database.
+     *  - Guest cart lifetime is configured on application level.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function cleanExpiredGuestCart(): void;
 }

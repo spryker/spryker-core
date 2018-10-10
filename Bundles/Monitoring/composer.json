@@ -1,5 +1,6 @@
 {
   "name": "spryker/monitoring",
+  "type": "library",
   "description": "Monitoring module",
   "license": "proprietary",
   "require": {

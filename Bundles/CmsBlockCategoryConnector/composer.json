@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block-category-connector",
+  "type": "library",
   "description": "CmsBlockCategoryConnector module",
   "license": "proprietary",
   "require": {

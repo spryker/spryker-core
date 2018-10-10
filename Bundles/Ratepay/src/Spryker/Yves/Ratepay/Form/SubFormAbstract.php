@@ -16,11 +16,11 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 abstract class SubFormAbstract extends AbstractSubFormType implements SubFormInterface
 {
-    const FIELD_DATE_OF_BIRTH = 'date_of_birth';
-    const FIELD_PHONE = 'phone';
-    const FIELD_ALLOW_CREDIT_INQUIRY = 'customer_allow_credit_inquiry';
+    public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+    public const FIELD_PHONE = 'phone';
+    public const FIELD_ALLOW_CREDIT_INQUIRY = 'customer_allow_credit_inquiry';
 
-    const MIN_BIRTHDAY_DATE_STRING = '-18 years';
+    public const MIN_BIRTHDAY_DATE_STRING = '-18 years';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

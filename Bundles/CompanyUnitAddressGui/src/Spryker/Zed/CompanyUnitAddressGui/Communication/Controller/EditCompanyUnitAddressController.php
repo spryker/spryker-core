@@ -17,12 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditCompanyUnitAddressController extends AbstractController
 {
-    const URL_PARAM_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
+    public const URL_PARAM_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
 
-    const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';
-    const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR = 'Company unit address update failed.';
+    public const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';
+    public const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR = 'Company unit address update failed.';
 
-    const HEADER_REFERER = 'referer';
+    public const HEADER_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

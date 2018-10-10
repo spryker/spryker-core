@@ -1,5 +1,6 @@
 {
   "name": "spryker/categories-rest-api",
+  "type": "library",
   "description": "CategoriesRestApi module",
   "license": "proprietary",
   "require": {

@@ -14,8 +14,8 @@ use Spryker\Client\ProductGroup\Dependency\Client\ProductGroupToStorageBridge;
 
 class ProductGroupDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

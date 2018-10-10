@@ -16,14 +16,14 @@ use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface
 
 class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterface
 {
-    const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
-    const COL_FK_LOCALE = 'fk_locale';
+    public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+    public const COL_FK_LOCALE = 'fk_locale';
 
-    const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'PRODUCT_ABSTRACT_LOCALIZED_ENTITY';
-    const PRODUCT_ABSTRACT_STORAGE_ENTITY = 'PRODUCT_ABSTRACT_STORAGE_ENTITY';
-    const LOCALE_NAME = 'LOCALE_NAME';
-    const STORE_NAME = 'STORE_NAME';
+    public const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'PRODUCT_ABSTRACT_LOCALIZED_ENTITY';
+    public const PRODUCT_ABSTRACT_STORAGE_ENTITY = 'PRODUCT_ABSTRACT_STORAGE_ENTITY';
+    public const LOCALE_NAME = 'LOCALE_NAME';
+    public const STORE_NAME = 'STORE_NAME';
 
     /**
      * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface

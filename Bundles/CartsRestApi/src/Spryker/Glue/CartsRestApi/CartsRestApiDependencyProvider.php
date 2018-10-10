@@ -16,6 +16,7 @@ use Spryker\Glue\CartsRestApi\Exception\CartRestApiNotImplementedException;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Shared\Kernel\Store;
 
 class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -25,6 +26,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const PLUGIN_QUOTE_COLLECTION_READER = 'PLUGIN_QUOTE_COLLECTION_READER';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const STORE = 'STORE';
 
     protected const EXCEPTION_MESSAGE_READER_NOT_IMPLEMENTED = 'Reader not implemented on project level';
 
@@ -43,6 +45,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPersistentCartClient($container);
         $container = $this->addQuoteCollectionReaderPlugin($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addStore($container);
 
         return $container;
     }
@@ -111,7 +114,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addQuoteCollectionReaderPlugin(Container $container): Container
     {
         $container[static::PLUGIN_QUOTE_COLLECTION_READER] = function (Container $container) {
-            return $this->createQuoteCollectionReaderPlugin();
+            return $this->getQuoteCollectionReaderPlugin();
         };
 
         return $container;
@@ -122,7 +125,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
      */
-    protected function createQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
+    protected function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
     {
         throw new CartRestApiNotImplementedException(static::EXCEPTION_MESSAGE_READER_NOT_IMPLEMENTED);
     }
@@ -136,6 +139,20 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new CartsRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addStore(Container $container): Container
+    {
+        $container[static::STORE] = function () {
+            return Store::getInstance();
         };
 
         return $container;

@@ -24,15 +24,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class GeneralForm extends AbstractType
 {
-    const FIELD_STORE_RELATION = 'store_relation';
-    const FIELD_DISCOUNT_TYPE = 'discount_type';
-    const FIELD_DISPLAY_NAME = 'display_name';
-    const FIELD_DESCRIPTION = 'description';
-    const FIELD_VALID_FROM = 'valid_from';
-    const FIELD_VALID_TO = 'valid_to';
-    const FIELD_IS_EXCLUSIVE = 'is_exclusive';
-    const NON_EXCLUSIVE = 'Non-Exclusive';
-    const EXCLUSIVE = 'Exclusive';
+    public const FIELD_STORE_RELATION = 'store_relation';
+    public const FIELD_DISCOUNT_TYPE = 'discount_type';
+    public const FIELD_DISPLAY_NAME = 'display_name';
+    public const FIELD_DESCRIPTION = 'description';
+    public const FIELD_VALID_FROM = 'valid_from';
+    public const FIELD_VALID_TO = 'valid_to';
+    public const FIELD_IS_EXCLUSIVE = 'is_exclusive';
+    public const NON_EXCLUSIVE = 'Non-Exclusive';
+    public const EXCLUSIVE = 'Exclusive';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

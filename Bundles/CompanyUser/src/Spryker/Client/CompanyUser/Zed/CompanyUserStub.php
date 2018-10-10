@@ -124,4 +124,36 @@ class CompanyUserStub implements CompanyUserStubInterface
 
         return $companyUserResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer */
+        $companyUserResponseTransfer = $this->zedRequestClient->call(
+            '/company-user/gateway/enable-company-user',
+            $companyUserTransfer
+        );
+
+        return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer */
+        $companyUserResponseTransfer = $this->zedRequestClient->call(
+            '/company-user/gateway/disable-company-user',
+            $companyUserTransfer
+        );
+
+        return $companyUserResponseTransfer;
+    }
 }

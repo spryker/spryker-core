@@ -17,12 +17,12 @@ use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 
 class UsersTable extends AbstractTable
 {
-    const ACTION = 'Action';
-    const UPDATE_USER_URL = '/user/edit/update';
-    const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
-    const ACTIVATE_USER_URL = '/user/edit/activate-user';
-    const DELETE_USER_URL = '/user/edit/delete';
-    const PARAM_ID_USER = 'id-user';
+    public const ACTION = 'Action';
+    public const UPDATE_USER_URL = '/user/edit/update';
+    public const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
+    public const ACTIVATE_USER_URL = '/user/edit/activate-user';
+    public const DELETE_USER_URL = '/user/edit/delete';
+    public const PARAM_ID_USER = 'id-user';
 
     /**
      * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface

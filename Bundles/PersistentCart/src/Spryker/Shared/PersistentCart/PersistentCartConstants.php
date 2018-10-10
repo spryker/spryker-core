@@ -14,7 +14,7 @@ interface PersistentCartConstants
 {
     /**
      * Specification:
-     * - The persistent cart anonymous prefix.
+     * - Persistent cart anonymous prefix.
      *
      * @api
      */

@@ -1,5 +1,6 @@
 {
   "name": "spryker/key-builder",
+  "type": "library",
   "description": "KeyBuilder module",
   "license": "proprietary",
   "require": {

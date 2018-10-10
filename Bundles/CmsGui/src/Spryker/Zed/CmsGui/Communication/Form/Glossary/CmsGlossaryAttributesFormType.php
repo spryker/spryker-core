@@ -28,17 +28,17 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsGlossaryAttributesFormType extends AbstractType
 {
-    const FIELD_PLACEHOLDER = 'placeholder';
-    const FIELD_FK_PAGE = 'fkPage';
-    const FIELD_FK_GLOSSARY_MAPPING = 'fkCmsGlossaryMapping';
-    const FIELD_TEMPLATE_NAME = 'templateName';
-    const FIELD_SEARCH_OPTION = 'searchOption';
-    const FIELD_TRANSLATIONS = 'translations';
-    const FIELD_TRANSLATION_KEY = 'translationKey';
+    public const FIELD_PLACEHOLDER = 'placeholder';
+    public const FIELD_FK_PAGE = 'fkPage';
+    public const FIELD_FK_GLOSSARY_MAPPING = 'fkCmsGlossaryMapping';
+    public const FIELD_TEMPLATE_NAME = 'templateName';
+    public const FIELD_SEARCH_OPTION = 'searchOption';
+    public const FIELD_TRANSLATIONS = 'translations';
+    public const FIELD_TRANSLATION_KEY = 'translationKey';
 
-    const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
+    public const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
 
-    const OPTION_GLOSSARY_KEY_SEARCH_OPTIONS = 'glossaryKeySearchOptions';
+    public const OPTION_GLOSSARY_KEY_SEARCH_OPTIONS = 'glossaryKeySearchOptions';
 
     use ArrayObjectTransformerTrait;
 

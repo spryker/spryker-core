@@ -12,9 +12,9 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class CompanyBusinessUnitDataImportConfig extends DataImportConfig
 {
-    const IMPORT_TYPE_COMPANY_BUSINESS_UNIT = 'company-business-unit';
-    const IMPORT_TYPE_COMPANY_BUSINESS_UNIT_USER = 'company-business-unit-user';
-    const IMPORT_TYPE_COMPANY_BUSINESS_UNIT_ADDRESS = 'company-business-unit-address';
+    public const IMPORT_TYPE_COMPANY_BUSINESS_UNIT = 'company-business-unit';
+    public const IMPORT_TYPE_COMPANY_BUSINESS_UNIT_USER = 'company-business-unit-user';
+    public const IMPORT_TYPE_COMPANY_BUSINESS_UNIT_ADDRESS = 'company-business-unit-address';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer

@@ -23,6 +23,6 @@ class GuestCartsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createGuestCartReader()->readCurrentCustomerCarts($restRequest);
+        return $this->getFactory()->createCartReader()->readCurrentCustomerCarts($restRequest);
     }
 }

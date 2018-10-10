@@ -1,5 +1,6 @@
 {
   "name": "spryker/glossary-storage",
+  "type": "library",
   "description": "GlossaryStorage module",
   "license": "proprietary",
   "require": {
