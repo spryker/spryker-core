@@ -13,8 +13,8 @@ interface ProductConcreteExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Returns ProductConcreteTransfer filled with additional data.
-     * - Will be executed on product searching at quick order page.
+     * - Expands provided ProductConcreteTransfer with additional data.
+     * - Executed on quick order product search result.
      *
      * @api
      *

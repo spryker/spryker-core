@@ -9,12 +9,12 @@ namespace Spryker\Client\QuickOrderExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ItemTransfer;
 
-interface QuickOrderItemTransferExpanderPluginInterface
+interface QuickOrderItemExpanderPluginInterface
 {
     /**
      * Specification:
      * - Expands provided ItemTransfer with additional data.
-     * - Will be executed before adding items into cart.
+     * - Executed before adding items into cart.
      *
      * @api
      *
@@ -22,5 +22,5 @@ interface QuickOrderItemTransferExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function expandItemTransfer(ItemTransfer $itemTransfer): ItemTransfer;
+    public function expandItem(ItemTransfer $itemTransfer): ItemTransfer;
 }
