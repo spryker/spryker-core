@@ -14,7 +14,7 @@ interface ProductConcretePageDataExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands the provided ProductConcretePageSearchTransfer object and returns modified one.
+     * - Expands the provided ProductConcretePageSearchTransfer object and returns the modified version.
      *
      * @api
      *

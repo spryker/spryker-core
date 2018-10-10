@@ -12,7 +12,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/search": "If you want to use expander plugins"
+    "spryker/search": "If you want to use ProductConcretePageMapExpanderPluginInterface: ^1.0.0."
   },
   "autoload": {
     "psr-4": {

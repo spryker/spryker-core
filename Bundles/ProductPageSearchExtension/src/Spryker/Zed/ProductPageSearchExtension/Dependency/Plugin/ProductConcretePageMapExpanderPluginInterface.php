@@ -15,7 +15,7 @@ interface ProductConcretePageMapExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands the provided PageMap transfer object and returns modified one.
+     * - Expands the provided PageMap transfer object and returns the modified version.
      *
      * @api
      *
