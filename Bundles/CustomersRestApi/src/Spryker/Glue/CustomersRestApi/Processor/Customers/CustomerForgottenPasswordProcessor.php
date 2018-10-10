@@ -13,6 +13,7 @@ use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerCl
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerForgottenPasswordResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class CustomerForgottenPasswordProcessor implements CustomerForgottenPasswordProcessorInterface
 {
@@ -61,6 +62,6 @@ class CustomerForgottenPasswordProcessor implements CustomerForgottenPasswordPro
 
         $restResource = $this->restResourceBuilder->createRestResource(CustomersRestApiConfig::RESOURCE_FORGOTTEN_PASSWORD);
 
-        return $response->addResource($restResource);
+        return $response->addResource($restResource)->setStatus(Response::HTTP_NO_CONTENT);
     }
 }
