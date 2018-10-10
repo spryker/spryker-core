@@ -30,6 +30,7 @@ use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcre
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteProductAbstractStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteProductAbstractUrlStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteStorageListener;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 use SprykerTest\Zed\ProductStorage\ProductStorageConfigMock;
 
@@ -292,7 +293,7 @@ class ProductStorageListenerTest extends Unit
         $afterCount = SpyProductAbstractStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $afterCount);
         $spyProductAbstractStorage = SpyProductAbstractStorageQuery::create()
-            ->orderByIdProductAbstractStorage()
+            ->orderByIdProductAbstractStorage(Criteria::ASC)
             ->findOneByFkProductAbstract(1);
         $this->assertNotNull($spyProductAbstractStorage);
         $data = $spyProductAbstractStorage->getData();
@@ -311,7 +312,7 @@ class ProductStorageListenerTest extends Unit
         $afterCount = SpyProductConcreteStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $afterCount);
         $spyProductConcreteStorage = SpyProductConcreteStorageQuery::create()
-            ->orderByIdProductConcreteStorage()
+            ->orderByIdProductConcreteStorage(Criteria::DESC)
             ->findOneByFkProduct(1);
         $this->assertNotNull($spyProductConcreteStorage);
         $data = $spyProductConcreteStorage->getData();

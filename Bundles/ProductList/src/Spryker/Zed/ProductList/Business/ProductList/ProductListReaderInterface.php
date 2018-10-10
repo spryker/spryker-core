@@ -26,6 +26,13 @@ interface ProductListReaderInterface
     public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer

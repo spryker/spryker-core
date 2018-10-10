@@ -79,7 +79,7 @@ class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsea
      */
     protected function isPriceProductDimensionEnabled(): bool
     {
-        return \defined('\Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DIMENSION_DEFAULT');
+        return defined('\Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DIMENSION_DEFAULT');
     }
 
     /**
