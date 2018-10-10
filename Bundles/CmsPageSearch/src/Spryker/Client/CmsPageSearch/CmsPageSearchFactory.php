@@ -11,10 +11,10 @@ use Spryker\Client\CmsPageSearch\Config\CmsPagePaginationConfigBuilder;
 use Spryker\Client\CmsPageSearch\Config\CmsPageSortConfigBuilder;
 use Spryker\Client\CmsPageSearch\Config\PaginationConfigBuilderInterface;
 use Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface;
+use Spryker\Client\CmsPageSearch\Dependency\Client\CmsPageSearchToSearchBridgeInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Client\Search\SearchClientInterface;
 
 /**
  * @method \Spryker\Client\CmsPageSearch\CmsPageSearchConfig getConfig()
@@ -22,25 +22,34 @@ use Spryker\Client\Search\SearchClientInterface;
 class CmsPageSearchFactory extends AbstractFactory
 {
     /**
+     * @param \Spryker\Client\CmsPageSearch\Dependency\Client\CmsPageSearchToSearchBridgeInterface $searchClient
      * @param string $searchString
+     * @param array $requestParameters
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[] $queryExpanderPlugins
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    public function createCmsPageSearchQuery(string $searchString): QueryInterface
-    {
+    public function createCmsPageSearchQuery(
+        CmsPageSearchToSearchBridgeInterface $searchClient,
+        string $searchString,
+        array $requestParameters,
+        array $queryExpanderPlugins
+    ): QueryInterface {
         $searchQuery = $this->getCmsPageSearchQueryPlugin();
 
         if ($searchQuery instanceof SearchStringSetterInterface) {
             $searchQuery->setSearchString($searchString);
         }
 
+        $searchQuery = $searchClient->expandQuery($searchQuery, $queryExpanderPlugins, $requestParameters);
+
         return $searchQuery;
     }
 
     /**
-     * @return \Spryker\Client\Search\SearchClientInterface
+     * @return \Spryker\Client\CmsPageSearch\Dependency\Client\CmsPageSearchToSearchBridgeInterface
      */
-    public function getSearchClient(): SearchClientInterface
+    public function getSearchClient(): CmsPageSearchToSearchBridgeInterface
     {
         return $this->getProvidedDependency(CmsPageSearchDependencyProvider::CLIENT_SEARCH);
     }
@@ -72,25 +81,13 @@ class CmsPageSearchFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface
      */
-    public function getCmsPageSortConfig(): SortConfigBuilderInterface
-    {
-        return $this->getConfig()->buildCmsPageSortConfig($this->createSortConfigBuilder());
-    }
-
-    /**
-     * @return \Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface
-     */
     public function createSortConfigBuilder(): SortConfigBuilderInterface
     {
-        return new CmsPageSortConfigBuilder();
-    }
+        $cmsPageSortConfigBuilder = new CmsPageSortConfigBuilder();
+        $cmsPageSortConfigBuilder->addSort($this->getConfig()->getAscendingNameSortConfigTransfer());
+        $cmsPageSortConfigBuilder->addSort($this->getConfig()->getDescendingNameSortConfigTransfer());
 
-    /**
-     * @return \Spryker\Client\CmsPageSearch\Config\PaginationConfigBuilderInterface
-     */
-    public function getCmsPagePaginationConfig(): PaginationConfigBuilderInterface
-    {
-        return $this->getConfig()->buildCmsPagePaginationConfig($this->createPaginationConfigBuilder());
+        return $cmsPageSortConfigBuilder;
     }
 
     /**
@@ -98,7 +95,10 @@ class CmsPageSearchFactory extends AbstractFactory
      */
     public function createPaginationConfigBuilder(): PaginationConfigBuilderInterface
     {
-        return new CmsPagePaginationConfigBuilder();
+        $cmsPaginationConfigBuilder = new CmsPagePaginationConfigBuilder();
+        $cmsPaginationConfigBuilder->setPaginationConfigTransfer($this->getConfig()->getCmsPagePaginationConfigTransfer());
+
+        return $cmsPaginationConfigBuilder;
     }
 
     /**

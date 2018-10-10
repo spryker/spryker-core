@@ -29,12 +29,17 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     /**
      * @var string
      */
-    protected $searchString;
+    protected $searchString = '';
 
     /**
      * @var \Elastica\Query
      */
     protected $query;
+
+    public function __construct()
+    {
+        $this->query = $this->createSearchQuery();
+    }
 
     /**
      * @return \Elastica\Query
@@ -124,7 +129,6 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
         $baseQuery->setQuery($this->createBoolQuery($matchQuery));
 
         $this->setTypeFilter($baseQuery->getQuery());
-        $this->setSuggestion($baseQuery);
 
         return $baseQuery;
     }

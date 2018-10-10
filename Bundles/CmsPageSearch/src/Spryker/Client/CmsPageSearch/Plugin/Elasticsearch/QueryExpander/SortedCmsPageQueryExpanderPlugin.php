@@ -46,7 +46,7 @@ class SortedCmsPageQueryExpanderPlugin extends AbstractPlugin implements QueryEx
      */
     protected function addSortingToQuery(Query $query, array $requestParameters): void
     {
-        $sortConfig = $this->getFactory()->getCmsPageSortConfig();
+        $sortConfig = $this->getFactory()->createSortConfigBuilder();
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
         $sortConfigTransfer = $sortConfig->getSortConfigTransfer($sortParamName);
 

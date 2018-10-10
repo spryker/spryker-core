@@ -36,7 +36,7 @@ class PaginatedCmsPageResultFormatterPlugin extends AbstractElasticsearchResultF
     {
         $paginationConfig = $this
             ->getFactory()
-            ->getCmsPagePaginationConfig();
+            ->createPaginationConfigBuilder();
 
         $itemsPerPage = $paginationConfig->getCurrentItemsPerPage($requestParameters);
         $maxPage = (int)ceil($searchResult->getTotalHits() / $itemsPerPage);

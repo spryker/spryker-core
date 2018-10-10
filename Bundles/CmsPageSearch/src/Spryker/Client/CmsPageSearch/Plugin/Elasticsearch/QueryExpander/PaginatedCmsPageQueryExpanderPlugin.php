@@ -43,7 +43,7 @@ class PaginatedCmsPageQueryExpanderPlugin extends AbstractPlugin implements Quer
      */
     protected function addPaginationToQuery(Query $query, array $requestParameters): void
     {
-        $paginationConfig = $this->getFactory()->getCmsPagePaginationConfig();
+        $paginationConfig = $this->getFactory()->createPaginationConfigBuilder();
         $currentPage = $paginationConfig->getCurrentPage($requestParameters);
         $itemsPerPage = $paginationConfig->getCurrentItemsPerPage($requestParameters);
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CmsPageSearch;
 
+use Spryker\Client\CmsPageSearch\Dependency\Client\CmsPageSearchToSearchBridge;
 use Spryker\Client\CmsPageSearch\Plugin\Elasticsearch\Query\CmsPageSearchQueryPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
@@ -18,7 +19,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
     public const PLUGIN_CMS_PAGE_SEARCH_QUERY = 'PLUGIN_CMS_PAGE_SEARCH_QUERY';
     public const PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER = 'PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER';
     public const PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER = 'PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER';
-    public const PLUGINS_CMS_PAGE_SEARCH_COUNT_QUERY_EXPANDER = 'PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER';
+    public const PLUGINS_CMS_PAGE_SEARCH_COUNT_QUERY_EXPANDER = 'PLUGINS_CMS_PAGE_SEARCH_COUNT_QUERY_EXPANDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -33,6 +34,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
         $container = $this->addCmsPageSearchQueryPlugin($container);
         $container = $this->addCmsPageSearchResultFormatterPlugins($container);
         $container = $this->addCmsPageSearchQueryExpanderPlugins($container);
+        $container = $this->addCmsPageSearchQueryCountExpanderPlugins($container);
 
         return $container;
     }
@@ -45,7 +47,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
     protected function addSearchClient(Container $container): Container
     {
         $container[static::CLIENT_SEARCH] = function (Container $container) {
-            return $container->getLocator()->search()->client();
+            return new CmsPageSearchToSearchBridge($container->getLocator()->search()->client());
         };
 
         return $container;

@@ -8,8 +8,6 @@
 namespace Spryker\Client\CmsPageSearch;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Client\Search\SearchClientInterface;
 
 /**
  * @method \Spryker\Client\CmsPageSearch\CmsPageSearchFactory getFactory()
@@ -34,7 +32,7 @@ class CmsPageSearchClient extends AbstractClient implements CmsPageSearchClientI
 
         $queryExpanderPlugins = $this->getFactory()->getCmsPageSearchQueryExpanderPlugins();
 
-        $searchQuery = $this->buildSearchQuery($searchClient, $searchString, $requestParameters, $queryExpanderPlugins);
+        $searchQuery = $this->getFactory()->createCmsPageSearchQuery($searchClient, $searchString, $requestParameters, $queryExpanderPlugins);
 
         $resultFormatters = $this
             ->getFactory()
@@ -61,31 +59,8 @@ class CmsPageSearchClient extends AbstractClient implements CmsPageSearchClientI
 
         $queryExpanderPlugins = $this->getFactory()->getCmsPageSearchCountQueryExpanderPlugins();
 
-        $searchQuery = $this->buildSearchQuery($searchClient, $searchString, $requestParameters, $queryExpanderPlugins);
+        $searchQuery = $this->getFactory()->createCmsPageSearchQuery($searchClient, $searchString, $requestParameters, $queryExpanderPlugins);
 
         return $searchClient->search($searchQuery, [], $requestParameters)->getTotalHits();
-    }
-
-    /**
-     * @param \Spryker\Client\Search\SearchClientInterface $searchClient
-     * @param string $searchString
-     * @param array $requestParameters
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[] $queryExpanderPlugins
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
-     */
-    protected function buildSearchQuery(
-        SearchClientInterface $searchClient,
-        string $searchString,
-        array $requestParameters,
-        array $queryExpanderPlugins
-    ): QueryInterface {
-        $searchQuery = $this
-            ->getFactory()
-            ->createCmsPageSearchQuery($searchString);
-
-        $searchQuery = $searchClient->expandQuery($searchQuery, $queryExpanderPlugins, $requestParameters);
-
-        return $searchQuery;
     }
 }

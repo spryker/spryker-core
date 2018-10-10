@@ -36,7 +36,7 @@ class SortedCmsPageSearchResultFormatterPlugin extends AbstractElasticsearchResu
     {
         $sortConfig = $this
             ->getFactory()
-            ->getCmsPageSortConfig();
+            ->createSortConfigBuilder();
 
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
 
