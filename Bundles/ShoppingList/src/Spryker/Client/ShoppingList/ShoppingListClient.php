@@ -9,6 +9,7 @@ namespace Spryker\Client\ShoppingList;
 
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
@@ -16,7 +17,6 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
@@ -290,18 +290,6 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
-     */
-    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
-    {
-        return $this->getZedStub()->getShoppingListPermissionGroup();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
     public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
@@ -342,6 +330,24 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
     {
         return $this->getZedStub()->updateShoppingListSharedEntities($shoppingListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer
+    {
+        $shoppingListShareResponseTransfer = $this->getZedStub()->dismissShoppingListSharing($shoppingListDismissRequest);
+
+        $this->updatePermissions();
+
+        return $shoppingListShareResponseTransfer;
     }
 
     /**
