@@ -43,7 +43,7 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function expand(ItemTransfer $itemTransfer): ItemTransfer
+    public function expandWithDefaultPackagingUnit(ItemTransfer $itemTransfer): ItemTransfer
     {
         if (!$this->isApplicable($itemTransfer)) {
             return $itemTransfer;

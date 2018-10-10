@@ -15,7 +15,7 @@ use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferE
  * @method \Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageClientInterface getClient()
  * @method \Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageFactory getFactory()
  */
-class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin implements QuickOrderItemTransferExpanderPluginInterface
+class QuickOrderItemTransferDefaultPackagingUnitExpanderPlugin extends AbstractPlugin implements QuickOrderItemTransferExpanderPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -24,6 +24,6 @@ class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin i
      */
     public function expandItemTransfer(ItemTransfer $itemTransfer): ItemTransfer
     {
-        return $this->getClient()->expandItemTransferWithPackagingUnit($itemTransfer);
+        return $this->getClient()->expandItemTransferWithDefaultPackagingUnit($itemTransfer);
     }
 }
