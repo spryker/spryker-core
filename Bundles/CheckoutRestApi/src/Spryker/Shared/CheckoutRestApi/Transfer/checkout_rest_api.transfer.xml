@@ -117,5 +117,9 @@
         <property name="shipmentDeliveryTime" type="int"/>
     </transfer>
 
+    <transfer name="RestCheckoutResponseAttributes">
+        <property name="orderReference" type="string"/>
+    </transfer>
+
 </transfers>
 
