@@ -14,6 +14,7 @@ use Spryker\Zed\Translator\Business\Cache\CacheClearerInterface;
 use Spryker\Zed\Translator\Business\Finder\TranslationFinder;
 use Spryker\Zed\Translator\Business\Finder\TranslationFinderInterface;
 use Spryker\Zed\Translator\Business\Translator\Translator;
+use Spryker\Zed\Translator\Business\Translator\TranslatorInterface;
 use Spryker\Zed\Translator\TranslatorDependencyProvider;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -46,7 +47,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Translator\Business\Translator\TranslatorInterface
      */
-    public function createTranslator()
+    public function createTranslator(): TranslatorInterface
     {
         $translator = new Translator(
             $this->getApplication()['locale'],

@@ -11,7 +11,7 @@ interface TranslatorFacadeInterface
 {
     /**
      * Specification:
-     *  - Generates translation cache for Zed for all store's locales
+     *  - Generates translation cache for Zed for all store's locales.
      *
      * @api
      *
@@ -21,7 +21,7 @@ interface TranslatorFacadeInterface
 
     /**
      * Specification:
-     *  - Clears Zed's translation cache
+     *  - Clears Zed's translation cache.
      *
      * @api
      *
