@@ -110,7 +110,7 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
      *
      * @return void
      */
-    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $this->getFactory()->createReclamationSaver()->saveOrder($quoteTransfer, $saveOrderTransfer);
     }

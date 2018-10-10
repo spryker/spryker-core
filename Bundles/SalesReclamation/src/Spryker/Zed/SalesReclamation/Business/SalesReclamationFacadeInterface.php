@@ -91,7 +91,7 @@ interface SalesReclamationFacadeInterface
      *
      * @return void
      */
-    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
+    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 
     /**
      * Specification:

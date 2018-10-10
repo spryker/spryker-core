@@ -33,7 +33,7 @@ class ReclamationSaver implements ReclamationSaverInterface
      *
      * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         if (!$quoteTransfer->getReclamationId()) {
             return;
