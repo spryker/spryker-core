@@ -177,7 +177,7 @@ class ResponseBuilder implements ResponseBuilderInterface
         $formattedLinks = [];
 
         foreach ($links as $key => $link) {
-            if (\is_array($link)) {
+            if (is_array($link)) {
                 $formattedLinks[$key] = $this->domainName . '/' . $link[$key];
 
                 continue;
