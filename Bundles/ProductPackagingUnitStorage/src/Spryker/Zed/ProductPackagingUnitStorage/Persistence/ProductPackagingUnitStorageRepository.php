@@ -51,7 +51,6 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
                 ->filterByIsActive(true)
             ->innerJoinWithSpyProductAbstract()
             ->innerJoinWithSpyProductPackagingUnit()
-            ->leftJoinWithSpyProductPackagingLeadProduct()
             ->useSpyProductPackagingUnitQuery()
                 ->leftJoinWithSpyProductPackagingUnitAmount()
                 ->innerJoinWithProductPackagingUnitType()
