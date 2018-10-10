@@ -92,7 +92,7 @@ class SkuGeneratorTest extends FacadeTestAbstract
 
         $formattedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
 
-        $this->assertTrue(\strlen($formattedSku) <= SkuGenerator::SKU_MAX_LENGTH);
+        $this->assertTrue(strlen($formattedSku) <= SkuGenerator::SKU_MAX_LENGTH);
     }
 
     /**

@@ -48,7 +48,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function validateRequest(RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
         $method = $restRequest->getMetadata()->getMethod();
-        if (!\in_array($method, [Request::METHOD_POST, Request::METHOD_PATCH], true)) {
+        if (!in_array($method, [Request::METHOD_POST, Request::METHOD_PATCH], true)) {
             return null;
         }
 

@@ -120,12 +120,14 @@ class CompanyBusinessUnitTreeBuilderTest extends Unit
     {
         $companyBusinessUnitTreeNodes = [];
         foreach ($customerCompanyBusinessUnitTreeNodes as $companyBusinessUnitTreeNode) {
+            $companyBusinessUnitTreeNodeArray = [];
+
             $companyBusinessUnitTreeNodeArray[static::LEVEL] = $companyBusinessUnitTreeNode->getLevel();
 
             $children = $this->mapTreeToArray($companyBusinessUnitTreeNode->getChildren());
-
             $idCompanyBusinessUnit = $companyBusinessUnitTreeNode->getCompanyBusinessUnit()->getIdCompanyBusinessUnit();
-            $companyBusinessUnitTreeNodeArray[static::CHILDREN] = $children ? $children : null;
+
+            $companyBusinessUnitTreeNodeArray[static::CHILDREN] = $children ?: null;
             $companyBusinessUnitTreeNodes[$idCompanyBusinessUnit] = $companyBusinessUnitTreeNodeArray;
         }
 
