@@ -7,16 +7,15 @@
 
 namespace Spryker\Client\ProductQuantityStorage\Validator;
 
-use Generated\Shared\Transfer\ProductQuantityTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
 
 interface ProductQuantityValidatorInterface
 {
     /**
-     * @param int $quantity
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
      */
-    public function validate(int $quantity, ProductQuantityTransfer $productQuantityTransfer): ProductQuantityValidationResponseTransfer;
+    public function validate(ItemTransfer $itemTransfer): ProductQuantityValidationResponseTransfer;
 }

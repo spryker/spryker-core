@@ -20,6 +20,11 @@
         <property name="quantityInterval" type="int" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="id" type="int" />
+        <property name="quantity" type="int" />
+    </transfer>
+
     <transfer name="ProductQuantityValidationResponse">
         <property name="isValid" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>

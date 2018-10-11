@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\ProductQuantityStorage;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
-use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
 
 interface ProductQuantityStorageClientInterface
@@ -45,10 +45,9 @@ interface ProductQuantityStorageClientInterface
      *
      * @api
      *
-     * @param int $quantity
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
      */
-    public function validateProductQuantity(int $quantity, ProductQuantityTransfer $productQuantityTransfer): ProductQuantityValidationResponseTransfer;
+    public function validateProductQuantity(ItemTransfer $itemTransfer): ProductQuantityValidationResponseTransfer;
 }

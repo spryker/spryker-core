@@ -61,6 +61,8 @@ class ProductQuantityStorageFactory extends AbstractFactory
      */
     public function createProductQuantityValidator(): ProductQuantityValidatorInterface
     {
-        return new ProductQuantityValidator();
+        return new ProductQuantityValidator(
+            $this->createProductQuantityStorageReader()
+        );
     }
 }

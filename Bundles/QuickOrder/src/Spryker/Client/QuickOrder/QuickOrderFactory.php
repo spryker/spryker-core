@@ -17,8 +17,6 @@ use Spryker\Client\QuickOrder\Expander\ProductConcreteExpander;
 use Spryker\Client\QuickOrder\Expander\ProductConcreteExpanderInterface;
 use Spryker\Client\QuickOrder\ProductConcreteReader\ProductConcreteReader;
 use Spryker\Client\QuickOrder\ProductConcreteReader\ProductConcreteReaderInterface;
-use Spryker\Client\QuickOrder\ProductQuantityRestrictionsValidator\ProductQuantityRestrictionsValidator;
-use Spryker\Client\QuickOrder\ProductQuantityRestrictionsValidator\ProductQuantityRestrictionsValidatorInterface;
 use Spryker\Client\QuickOrder\Reader\ProductPriceReader;
 use Spryker\Client\QuickOrder\Reader\ProductPriceReaderInterface;
 
@@ -40,16 +38,6 @@ class QuickOrderFactory extends AbstractFactory
         return new ProductPriceReader(
             $this->getPriceProductClient(),
             $this->getPriceProductStorageClient()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\QuickOrder\ProductQuantityRestrictionsValidator\ProductQuantityRestrictionsValidatorInterface
-     */
-    public function createProductQuantityRestrictionsValidator(): ProductQuantityRestrictionsValidatorInterface
-    {
-        return new ProductQuantityRestrictionsValidator(
-            $this->getProductQuantityStorageClient()
         );
     }
 

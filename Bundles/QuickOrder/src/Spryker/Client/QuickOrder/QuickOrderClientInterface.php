@@ -10,8 +10,6 @@ namespace Spryker\Client\QuickOrder;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
-use Generated\Shared\Transfer\QuickOrderItemTransfer;
 
 interface QuickOrderClientInterface
 {
@@ -38,18 +36,6 @@ interface QuickOrderClientInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function getCurrentProductPrice(ItemTransfer $itemTransfer): CurrentProductPriceTransfer;
-
-    /**
-     * Specification:
-     * - Validates given product quantity against its quantity restrictions if present.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
-     */
-    public function validateQuantityRestrictions(QuickOrderItemTransfer $quickOrderItemTransfer): ProductQuantityValidationResponseTransfer;
 
     /**
      * Specification:

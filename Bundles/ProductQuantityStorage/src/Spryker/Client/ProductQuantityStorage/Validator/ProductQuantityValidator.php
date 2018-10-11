@@ -7,9 +7,11 @@
 
 namespace Spryker\Client\ProductQuantityStorage\Validator;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ProductQuantityTransfer;
+use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
+use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
 class ProductQuantityValidator implements ProductQuantityValidatorInterface
 {
@@ -18,25 +20,69 @@ class ProductQuantityValidator implements ProductQuantityValidatorInterface
     protected const ERROR_QUANTITY_INTERVAL_NOT_FULFILLED = 'product-quantity.errors.quantity.interval.failed';
 
     /**
-     * @param int $quantity
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
+     * @var \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface
+     */
+    protected $productQuantityStorageReader;
+
+    /**
+     * @param \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface $productQuantityStorageReader
+     */
+    public function __construct(ProductQuantityStorageReaderInterface $productQuantityStorageReader)
+    {
+        $this->productQuantityStorageReader = $productQuantityStorageReader;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
      */
-    public function validate(int $quantity, ProductQuantityTransfer $productQuantityTransfer): ProductQuantityValidationResponseTransfer
+    public function validate(ItemTransfer $itemTransfer): ProductQuantityValidationResponseTransfer
     {
-        $quantityMin = $productQuantityTransfer->getQuantityMin();
-        $quantityMax = $productQuantityTransfer->getQuantityMax();
-        $quantityInterval = $productQuantityTransfer->getQuantityInterval();
+        $itemTransfer->requireId();
 
         $response = (new ProductQuantityValidationResponseTransfer())
             ->setIsValid(true);
+
+        if (!$this->isApplicable($itemTransfer)) {
+            return $response;
+        }
+
+        $productQuantityStorageTransfer = $this->findProductQuantityStorageTransfer($itemTransfer);
+        if ($productQuantityStorageTransfer === null) {
+            return $response;
+        }
+
+        $quantity = $itemTransfer->getQuantity();
+        $quantityMin = $productQuantityStorageTransfer->getQuantityMin();
+        $quantityMax = $productQuantityStorageTransfer->getQuantityMax();
+        $quantityInterval = $productQuantityStorageTransfer->getQuantityInterval();
 
         $this->validateQuantityMin($quantity, $quantityMin, $response);
         $this->validateQuantityInterval($quantity, $quantityMin, $quantityInterval, $response);
         $this->validateQuantityMax($quantity, $quantityMax, $response);
 
         return $response;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isApplicable(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getQuantity() !== null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
+     */
+    protected function findProductQuantityStorageTransfer(ItemTransfer $itemTransfer): ?ProductQuantityStorageTransfer
+    {
+        return $this->productQuantityStorageReader->findProductQuantityStorage($itemTransfer->getId());
     }
 
     /**
