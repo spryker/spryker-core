@@ -64,7 +64,11 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
             $this->applyChangesToEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
             $productPageSearchEntity->save();
         } catch (PropelException $e) {
-            $productPageSearchEntity = SpyProductAbstractPageSearchQuery::create()->findOneByFkProductAbstract($productPageSearchEntity->getFkProductAbstract());
+            $productPageSearchEntity = SpyProductAbstractPageSearchQuery::create()
+                ->filterByFkProductAbstract()
+                ->filterByLocale($productPageSearchTransfer->getStore())
+                ->filterByStore($productPageSearchTransfer->getLocale())
+                ->findOne();
             $this->applyChangesToEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
             $productPageSearchEntity->save();
         }
