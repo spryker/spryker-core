@@ -14,6 +14,12 @@
     "spryker/symfony": "^3.0.0",
     "spryker/util-text": "^1.2.0"
   },
+  "require-dev": {
+    "spryker/company-user-gui": "*"
+  },
+  "suggest": {
+    "spryker/company-user-gui": "If you want to use CompanyUserGui plugins."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -28,11 +34,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "require-dev": {
-    "spryker/company-user-gui": "*"
-  },
-  "suggest": {
-    "spryker/company-user-gui": "If you want to use CompanyUserGui plugins."
   }
 }
