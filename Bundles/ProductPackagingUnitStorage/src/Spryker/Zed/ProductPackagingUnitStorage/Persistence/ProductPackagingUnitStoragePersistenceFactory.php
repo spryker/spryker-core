@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery;
 use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
@@ -24,14 +23,6 @@ class ProductPackagingUnitStoragePersistenceFactory extends AbstractPersistenceF
     public function createSpyProductAbstractPackagingStorageQuery(): SpyProductAbstractPackagingStorageQuery
     {
         return SpyProductAbstractPackagingStorageQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery
-     */
-    public function createSpyProductPackagingLeadProductQuery(): SpyProductPackagingLeadProductQuery
-    {
-        return SpyProductPackagingLeadProductQuery::create();
     }
 
     /**
