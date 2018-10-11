@@ -71,6 +71,10 @@ class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements Resour
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getParentResourceType(): string
