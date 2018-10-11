@@ -66,7 +66,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
 
             if (!empty($packageProductConcreteEntityTransfers)) {
                 [$packageProductConcreteEntityTransfer] = $packageProductConcreteEntityTransfers;
-                [$productPackagingLeadProduct] = $packageProductConcreteEntityTransfer->getSpyProductPackagingLeadProducts();
+                [$productPackagingLeadProduct] = $packageProductConcreteEntityTransfer->getSpyProductAbstract()->getSpyProductPackagingLeadProducts();
                 $productAbstractPackagingStoreTransfers[] = $this->hydrateProductAbstractPackagingStoreTransfer(
                     $idProductAbstract,
                     $productPackagingLeadProduct,
@@ -112,9 +112,9 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
         SpyProductPackagingLeadProductEntityTransfer $productPackagingLeadProductEntityTransfer,
         array $packageProductConcreteEntityTransfers
     ): ProductAbstractPackagingStorageTransfer {
-
         $idProduct = $productPackagingLeadProductEntityTransfer->getFkProduct();
         $productAbstractPackagingTypes = $this->getProductAbstractPackagingTypes($packageProductConcreteEntityTransfers);
+
         $productAbstractPackagingStorageTransfer = $this->createProductAbstractPackagingStorageTransfer($idProductAbstract, $idProduct, $productAbstractPackagingTypes);
 
         return $productAbstractPackagingStorageTransfer;
