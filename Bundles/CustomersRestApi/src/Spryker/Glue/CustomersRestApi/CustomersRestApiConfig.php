@@ -21,9 +21,6 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const CONTROLLER_CUSTOMER_RESTORE_PASSWORD = 'customer-restore-password-resource';
 
     public const RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS = '400';
-    public const RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER = '401';
-    public const RESPONSE_CODE_RESTORE_PASSWORD_KEY_INVALID = '415';
-
     public const RESPONSE_MESSAGE_CUSTOMER_ALREADY_EXISTS = 'Customer with this email already exists.';
 
     public const RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER = '401';
@@ -65,5 +62,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_NOT_VALID_GENDER = '414';
     public const RESPONSE_DETAILS_NOT_VALID_GENDER = 'Gender is not valid.';
+
+    public const RESPONSE_CODE_RESTORE_PASSWORD_KEY_INVALID = '415';
     public const RESPONSE_DETAILS_RESTORE_PASSWORD_KEY_INVALID = 'Restore password key is not valid.';
 }

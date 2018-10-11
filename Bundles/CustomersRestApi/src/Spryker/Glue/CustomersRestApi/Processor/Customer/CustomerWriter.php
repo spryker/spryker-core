@@ -18,6 +18,7 @@ use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class CustomerWriter implements CustomerWriterInterface
 {
@@ -193,7 +194,9 @@ class CustomerWriter implements CustomerWriterInterface
             CustomersRestApiConfig::RESOURCE_CUSTOMER_PASSWORD
         );
 
-        return $restResponse->addResource($restResource);
+        return $restResponse
+            ->addResource($restResource)
+            ->setStatus(Response::HTTP_NO_CONTENT);
     }
 
     /**
