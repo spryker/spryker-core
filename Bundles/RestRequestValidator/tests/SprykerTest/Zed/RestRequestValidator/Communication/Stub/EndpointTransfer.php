@@ -11,9 +11,9 @@ use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
 class EndpointTransfer extends AbstractTransfer
 {
-    const EMAIL_FIELD = 'emailField';
-    const STRING_FIELD = 'stringField';
-    const INTEGER_FIELD = 'integerField';
+    public const EMAIL_FIELD = 'emailField';
+    public const STRING_FIELD = 'stringField';
+    public const INTEGER_FIELD = 'integerField';
 
     /**
      * @var string

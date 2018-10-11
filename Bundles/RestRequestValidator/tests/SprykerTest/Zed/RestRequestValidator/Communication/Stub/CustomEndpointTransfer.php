@@ -11,7 +11,7 @@ use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
 class CustomEndpointTransfer extends AbstractTransfer
 {
-    const CURRENCY_CODE = 'currencyCode';
+    public const CURRENCY_CODE = 'currencyCode';
 
     /**
      * @var string
