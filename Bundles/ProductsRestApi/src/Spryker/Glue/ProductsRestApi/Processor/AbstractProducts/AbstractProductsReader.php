@@ -93,8 +93,15 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
 
             return $response->addError($restErrorTransfer);
         }
-        $restResource = $this->abstractProductsResourceMapper
-            ->mapAbstractProductsResponseAttributesTransferToRestResponse($abstractProductData);
+
+        $restAbstractProductsAttributesTransfer = $this->abstractProductsResourceMapper
+            ->mapAbstractProductsDataToAbstractProductsRestAttributes($abstractProductData);
+
+        $restResource = $this->restResourceBuilder->createRestResource(
+            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            $restAbstractProductsAttributesTransfer->getSku(),
+            $restAbstractProductsAttributesTransfer
+        );
         $restResource = $this->addConcreteProducts($restResource, $restRequest);
 
         return $response->addResource($restResource);
@@ -119,8 +126,14 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             return null;
         }
 
-        return $this->abstractProductsResourceMapper
-            ->mapAbstractProductsResponseAttributesTransferToRestResponse($abstractProductData);
+        $restAbstractProductsAttributesTransfer = $this->abstractProductsResourceMapper
+            ->mapAbstractProductsDataToAbstractProductsRestAttributes($abstractProductData);
+
+        return $this->restResourceBuilder->createRestResource(
+            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            $restAbstractProductsAttributesTransfer->getSku(),
+            $restAbstractProductsAttributesTransfer
+        );
     }
 
     /**
