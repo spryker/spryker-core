@@ -19,26 +19,22 @@ use Spryker\Glue\CustomersRestApi\Processor\Customer\CustomerWriter;
 use Spryker\Glue\CustomersRestApi\Processor\Customer\CustomerWriterInterface;
 use Spryker\Glue\CustomersRestApi\Processor\CustomerAddress\CustomerAddressReader;
 use Spryker\Glue\CustomersRestApi\Processor\CustomerAddress\CustomerAddressReaderInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapper;
-use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapper;
-use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiError;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidator;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomerForgottenPasswordProcessor;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomerForgottenPasswordProcessorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomerPasswordWriter;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomerPasswordWriterInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriter;
-use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapper;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerForgottenPasswordResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerForgottenPasswordResourceMapperInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapper;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapper;
-use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiError;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidator;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CustomersRestApiFactory extends AbstractFactory
@@ -51,7 +47,7 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomerReader(
             $this->getResourceBuilder(),
             $this->getCustomerClient(),
-            $this->createCustomersResourceMapper(),
+            $this->createCustomerResourceMapper(),
             $this->createRestApiError(),
             $this->createRestApiValidator()
         );
@@ -66,7 +62,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->createCustomerReader(),
             $this->getResourceBuilder(),
-            $this->createCustomersResourceMapper(),
+            $this->createCustomerResourceMapper(),
             $this->createRestApiError(),
             $this->createRestApiValidator()
         );
@@ -161,11 +157,11 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface
      */
-    public function createCustomersResourceMapper(): CustomersResourceMapperInterface
+    public function createCustomerResourceMapper(): CustomerResourceMapperInterface
     {
-        return new CustomersResourceMapper(
+        return new CustomerResourceMapper(
             $this->getResourceBuilder()
         );
     }
