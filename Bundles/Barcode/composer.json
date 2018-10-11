@@ -1,5 +1,6 @@
 {
   "name": "spryker/barcode",
+  "type": "library",
   "description": "Barcode module",
   "license": "proprietary",
   "require": {

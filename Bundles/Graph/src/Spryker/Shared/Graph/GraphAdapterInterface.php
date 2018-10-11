@@ -9,12 +9,12 @@ namespace Spryker\Shared\Graph;
 
 interface GraphAdapterInterface extends GraphInterface
 {
-    const GRAPH = 'graph';
-    const GRAPH_STRICT = 'strict graph';
-    const DIRECTED_GRAPH = 'digraph';
-    const DIRECTED_GRAPH_STRICT = 'strict digraph';
-    const SUB_GRAPH = 'subgraph';
-    const SUB_GRAPH_STRICT = 'strict subgraph';
+    public const GRAPH = 'graph';
+    public const GRAPH_STRICT = 'strict graph';
+    public const DIRECTED_GRAPH = 'digraph';
+    public const DIRECTED_GRAPH_STRICT = 'strict digraph';
+    public const SUB_GRAPH = 'subgraph';
+    public const SUB_GRAPH_STRICT = 'strict subgraph';
 
     /**
      * @param string $name

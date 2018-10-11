@@ -18,7 +18,7 @@ interface PropelConstants
      *
      * @api
      */
-    const PROPEL = 'PROPEL';
+    public const PROPEL = 'PROPEL';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ interface PropelConstants
      *
      * @api
      */
-    const PROPEL_DEBUG = 'PROPEL_DEBUG';
+    public const PROPEL_DEBUG = 'PROPEL_DEBUG';
 
     /**
      * @deprecated Use Spryker\Shared\PropelOrm\PropelOrmConstants::PROPEL_SHOW_EXTENDED_EXCEPTION instead.
@@ -37,7 +37,7 @@ interface PropelConstants
      *
      * @api
      */
-    const PROPEL_SHOW_EXTENDED_EXCEPTION = 'PROPEL_SHOW_EXTENDED_EXCEPTION';
+    public const PROPEL_SHOW_EXTENDED_EXCEPTION = 'PROPEL_SHOW_EXTENDED_EXCEPTION';
 
     /**
      * Specification:
@@ -45,7 +45,7 @@ interface PropelConstants
      *
      * @api
      */
-    const ZED_DB_DATABASE = 'ZED_DB_DATABASE';
+    public const ZED_DB_DATABASE = 'ZED_DB_DATABASE';
 
     /**
      * Specification:
@@ -53,7 +53,7 @@ interface PropelConstants
      *
      * @api
      */
-    const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
+    public const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
 
     /**
      * Specification:
@@ -61,7 +61,7 @@ interface PropelConstants
      *
      * @api
      */
-    const ZED_DB_HOST = 'ZED_DB_HOST';
+    public const ZED_DB_HOST = 'ZED_DB_HOST';
 
     /**
      * Specification:
@@ -69,7 +69,7 @@ interface PropelConstants
      *
      * @api
      */
-    const ZED_DB_PORT = 'ZED_DB_PORT';
+    public const ZED_DB_PORT = 'ZED_DB_PORT';
 
     /**
      * Specification:
@@ -77,7 +77,7 @@ interface PropelConstants
      *
      * @api
      */
-    const ZED_DB_USERNAME = 'ZED_DB_USERNAME';
+    public const ZED_DB_USERNAME = 'ZED_DB_USERNAME';
 
     /**
      * Specification:
@@ -85,7 +85,7 @@ interface PropelConstants
      *
      * @api
      */
-    const ZED_DB_PASSWORD = 'ZED_DB_PASSWORD';
+    public const ZED_DB_PASSWORD = 'ZED_DB_PASSWORD';
 
     /**
      * Specification:
@@ -93,7 +93,7 @@ interface PropelConstants
      *
      * @api
      */
-    const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
+    public const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
 
     /**
      * Specification:
@@ -101,7 +101,7 @@ interface PropelConstants
      *
      * @api
      */
-    const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
+    public const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
 
     /**
      * Specification:
@@ -109,7 +109,7 @@ interface PropelConstants
      *
      * @api
      */
-    const ZED_DB_SUPPORTED_ENGINES = 'ZED_DB_SUPPORTED_ENGINES';
+    public const ZED_DB_SUPPORTED_ENGINES = 'ZED_DB_SUPPORTED_ENGINES';
 
     /**
      * Specification:
@@ -117,7 +117,7 @@ interface PropelConstants
      *
      * @api
      */
-    const USE_SUDO_TO_MANAGE_DATABASE = 'USE_SUDO_TO_MANAGE_DATABASE';
+    public const USE_SUDO_TO_MANAGE_DATABASE = 'USE_SUDO_TO_MANAGE_DATABASE';
 
     /**
      * Specification:
@@ -126,5 +126,5 @@ interface PropelConstants
      *
      * @api
      */
-    const SCHEMA_FILE_PATH_PATTERN = 'SCHEMA_FILE_PATH_PATTERN';
+    public const SCHEMA_FILE_PATH_PATTERN = 'SCHEMA_FILE_PATH_PATTERN';
 }

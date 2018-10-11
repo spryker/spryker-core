@@ -29,8 +29,8 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
  */
 class EventDispatcherTest extends Unit
 {
-    const TEST_EVENT_NAME = 'trigger.before.save';
-    const LISTENER_NAME = 'Test/Listener';
+    public const TEST_EVENT_NAME = 'trigger.before.save';
+    public const LISTENER_NAME = 'Test/Listener';
 
     /**
      * @return void
@@ -58,6 +58,33 @@ class EventDispatcherTest extends Unit
      * @return void
      */
     public function testTriggerWhenAsynchronousEventTriggeredShouldWriteToQueue()
+    {
+        $transferMocks = [];
+        $transferMocks[] = $this->createTransferMock();
+        $transferMocks[] = $this->createTransferMock();
+
+        $eventCollection = $this->createEventCollection();
+        $eventListerMock = $this->createEventListenerMock();
+
+        $eventListerMock
+            ->expects($this->never())
+            ->method('handle');
+
+        $eventCollection->addListenerQueued(static::TEST_EVENT_NAME, $eventListerMock);
+
+        $queueProducerMock = $this->createQueueProducerMock();
+        $queueProducerMock->expects($this->once())
+            ->method('enqueueListenerBulk');
+
+        $eventDispatcher = $this->createEventDispatcher($eventCollection, $queueProducerMock);
+
+        $eventDispatcher->triggerBulk(static::TEST_EVENT_NAME, $transferMocks);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerBulkWhenAsynchronousEventTriggeredShouldWriteToQueue()
     {
         $eventCollection = $this->createEventCollection();
         $transferMock = $this->createTransferMock();

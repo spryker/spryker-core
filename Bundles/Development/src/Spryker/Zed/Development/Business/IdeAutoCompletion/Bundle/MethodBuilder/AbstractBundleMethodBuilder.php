@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -13,7 +14,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterface
 {
-    const FILE_EXTENSION = 'php';
+    public const FILE_EXTENSION = 'php';
 
     /**
      * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface

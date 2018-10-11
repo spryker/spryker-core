@@ -23,7 +23,7 @@ use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 class CompanyUserInvitationStub implements CompanyUserInvitationStubInterface
 {
     /**
-     * @var \Spryker\Client\ZedRequest\ZedRequestClient
+     * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
     protected $zedRequestClient;
 

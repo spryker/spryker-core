@@ -24,7 +24,7 @@ class Calculator implements CalculatorInterface
 {
     use LoggerTrait;
 
-    const DISCOUNT_SUCCESSFULLY_APPLIED_KEY = 'discount.successfully.applied';
+    public const DISCOUNT_SUCCESSFULLY_APPLIED_KEY = 'discount.successfully.applied';
 
     /**
      * @var array
@@ -86,7 +86,11 @@ class Calculator implements CalculatorInterface
         $collectedDiscounts = $this->calculateDiscountAmount($discounts, $quoteTransfer);
         $collectedDiscounts = $this->filterExclusiveDiscounts($collectedDiscounts);
         $this->distributeDiscountAmount($collectedDiscounts);
-        $this->addNewCartRuleDiscountsAppliedMessage($collectedDiscounts, $quoteTransfer->getCartRuleDiscounts());
+        $this->addDiscountsAppliedMessage(
+            $collectedDiscounts,
+            $quoteTransfer->getCartRuleDiscounts(),
+            $quoteTransfer->getVoucherDiscounts()
+        );
 
         return $collectedDiscounts;
     }
@@ -173,10 +177,6 @@ class Calculator implements CalculatorInterface
      */
     protected function setSuccessfulDiscountAddMessage(DiscountTransfer $discountTransfer)
     {
-        if (!empty($discountTransfer->getVoucherCode())) {
-            return;
-        }
-
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue(self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY);
         $messageTransfer->setParameters([
@@ -296,32 +296,40 @@ class Calculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscountTransferCollection
-     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $oldCartRuleDiscountTransferCollection
+     * @param \ArrayObject $oldCartRuleDiscountTransferCollection
+     * @param \ArrayObject $oldVoucherDiscountTransferCollection
      *
      * @return void
      */
-    protected function addNewCartRuleDiscountsAppliedMessage(array $collectedDiscountTransferCollection, ArrayObject $oldCartRuleDiscountTransferCollection): void
-    {
-        $oldCartRulesIds = $this->getCartRulesDiscountIds($oldCartRuleDiscountTransferCollection);
-        foreach ($collectedDiscountTransferCollection as $discountTransfer) {
-            if (!in_array($discountTransfer->getDiscount()->getIdDiscount(), $oldCartRulesIds)) {
-                $this->setSuccessfulDiscountAddMessage($discountTransfer->getDiscount());
+    protected function addDiscountsAppliedMessage(
+        array $collectedDiscountTransferCollection,
+        ArrayObject $oldCartRuleDiscountTransferCollection,
+        ArrayObject $oldVoucherDiscountTransferCollection
+    ): void {
+        $discountIds = array_merge(
+            $this->getDiscountIds($oldCartRuleDiscountTransferCollection),
+            $this->getDiscountIds($oldVoucherDiscountTransferCollection)
+        );
+        foreach ($collectedDiscountTransferCollection as $collectedDiscountTransfer) {
+            if (!in_array($collectedDiscountTransfer->getDiscount()->getIdDiscount(), $discountIds)) {
+                $this->setSuccessfulDiscountAddMessage($collectedDiscountTransfer->getDiscount());
             }
         }
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $cartRuleDiscountTransferCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransferCollection
      *
      * @return array
      */
-    protected function getCartRulesDiscountIds(ArrayObject $cartRuleDiscountTransferCollection): array
+    protected function getDiscountIds(ArrayObject $discountTransferCollection): array
     {
-        $cartRulesIds = [];
-        foreach ($cartRuleDiscountTransferCollection as $discountTransfer) {
-            $cartRulesIds[] = $discountTransfer->getIdDiscount();
+        $discountIds = [];
+
+        foreach ($discountTransferCollection as $discountTransfer) {
+            $discountIds[] = $discountTransfer->getIdDiscount();
         }
 
-        return $cartRulesIds;
+        return $discountIds;
     }
 }

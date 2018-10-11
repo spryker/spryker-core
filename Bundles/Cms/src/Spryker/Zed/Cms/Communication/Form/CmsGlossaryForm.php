@@ -29,21 +29,21 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsGlossaryForm extends AbstractType
 {
-    const FIELD_FK_PAGE = 'fkPage';
-    const FIELD_PLACEHOLDER = 'placeholder';
-    const FIELD_GLOSSARY_KEY = 'glossary_key';
-    const FIELD_ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
-    const FIELD_TEMPLATE_NAME = 'templateName';
-    const FIELD_SEARCH_OPTION = 'search_option';
-    const FIELD_TRANSLATION = 'translation';
+    public const FIELD_FK_PAGE = 'fkPage';
+    public const FIELD_PLACEHOLDER = 'placeholder';
+    public const FIELD_GLOSSARY_KEY = 'glossary_key';
+    public const FIELD_ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
+    public const FIELD_TEMPLATE_NAME = 'templateName';
+    public const FIELD_SEARCH_OPTION = 'search_option';
+    public const FIELD_TRANSLATION = 'translation';
 
-    const TYPE_GLOSSARY_NEW = 'New glossary';
-    const TYPE_GLOSSARY_FIND = 'Find glossary';
-    const TYPE_AUTO_GLOSSARY = 'Auto';
-    const TYPE_FULLTEXT_SEARCH = 'Full text';
+    public const TYPE_GLOSSARY_NEW = 'New glossary';
+    public const TYPE_GLOSSARY_FIND = 'Find glossary';
+    public const TYPE_AUTO_GLOSSARY = 'Auto';
+    public const TYPE_FULLTEXT_SEARCH = 'Full text';
 
-    const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
-    const FIELD_FK_LOCALE = 'fk_locale';
+    public const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
+    public const FIELD_FK_LOCALE = 'fk_locale';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

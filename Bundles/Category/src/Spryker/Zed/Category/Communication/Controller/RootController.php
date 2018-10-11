@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class RootController extends AbstractController
 {
-    const PARAM_ID_CATEGORY_NODE = 'id-category-node';
+    public const PARAM_ID_CATEGORY_NODE = 'id-category-node';
 
     /**
      * @return array

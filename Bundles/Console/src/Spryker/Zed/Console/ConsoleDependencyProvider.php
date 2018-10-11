@@ -12,12 +12,12 @@ use Spryker\Zed\Kernel\Container;
 
 class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const COMMANDS = 'commands';
-    const EVENT_SUBSCRIBER = 'event_subscriber';
-    const SERVICE_PROVIDERS = 'service providers';
+    public const COMMANDS = 'commands';
+    public const EVENT_SUBSCRIBER = 'event_subscriber';
+    public const SERVICE_PROVIDERS = 'service providers';
 
-    const PLUGINS_CONSOLE_PRE_RUN_HOOK = 'PLUGINS_CONSOLE_PRE_RUN_HOOK';
-    const PLUGINS_CONSOLE_POST_RUN_HOOK = 'PLUGINS_CONSOLE_POST_RUN_HOOK';
+    public const PLUGINS_CONSOLE_PRE_RUN_HOOK = 'PLUGINS_CONSOLE_PRE_RUN_HOOK';
+    public const PLUGINS_CONSOLE_POST_RUN_HOOK = 'PLUGINS_CONSOLE_POST_RUN_HOOK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -26,13 +26,13 @@ class BuildControllerCest
      *
      * @return void
      */
-//    public function openBuildSpryk(SprykGuiCommunicationTester $i)
-//    {
-//        $i->amOnPage('/spryk-gui/build?spryk=AddZedBusinessFacadeMethod');
-//        $i->seeResponseCodeIs(200);
-//        $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Spryks / Build Spryk');
-//        $i->see('Spryk', 'h2');
-//    }
+    public function openBuildSpryk(SprykGuiCommunicationTester $i)
+    {
+        $i->amOnPage('/spryk-gui/build?spryk=AddZedBusinessFacadeMethod');
+        $i->seeResponseCodeIs(200);
+        $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Build Spryk');
+        $i->see('Spryk', 'h2');
+    }
 
     /**
      * @param \SprykerTest\Zed\SprykGui\SprykGuiCommunicationTester $i
@@ -43,7 +43,7 @@ class BuildControllerCest
     {
         $i->amOnPage('/spryk-gui/build?spryk=AddZedBusinessFacadeMethod');
         $i->seeResponseCodeIs(200);
-        $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Spryks / Build Spryk');
+        $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Build Spryk');
         $i->see('Spryk', 'h2');
 
         $input = [];

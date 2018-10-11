@@ -26,8 +26,8 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
  */
 class ProductAbstractAssertionTest extends Unit
 {
-    const SKU = 'sku';
-    const ID_PRODUCT_ABSTRACT = 1;
+    public const SKU = 'sku';
+    public const ID_PRODUCT_ABSTRACT = 1;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface|\PHPUnit_Framework_MockObject_MockObject

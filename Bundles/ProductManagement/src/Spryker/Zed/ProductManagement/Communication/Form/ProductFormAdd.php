@@ -21,6 +21,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductPriceNotBlank;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -28,6 +29,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -42,37 +44,38 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ProductFormAdd extends AbstractType
 {
-    const FIELD_SKU = 'sku';
-    const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const FIELD_PRICES = 'prices';
-    const FIELD_TAX_RATE = 'tax_rate';
-    const FIELD_NEW_FROM = 'new_from';
-    const FIELD_NEW_TO = 'new_to';
+    public const FIELD_SKU = 'sku';
+    public const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const FIELD_PRICES = 'prices';
+    public const FIELD_TAX_RATE = 'tax_rate';
+    public const FIELD_NEW_FROM = 'new_from';
+    public const FIELD_NEW_TO = 'new_to';
 
-    const FORM_ATTRIBUTE_ABSTRACT = 'attribute_abstract';
-    const FORM_ATTRIBUTE_SUPER = 'attribute_super';
-    const FORM_GENERAL = 'general';
-    const FORM_PRICE_AND_TAX = 'price_and_tax';
-    const FORM_PRICE_AND_STOCK = 'price_and_stock';
-    const FORM_TAX_SET = 'tax_set';
-    const FORM_SEO = 'seo';
-    const FORM_STORE_RELATION = 'store_relation';
-    const FORM_IMAGE_SET = 'image_set';
+    public const FORM_ATTRIBUTE_ABSTRACT = 'attribute_abstract';
+    public const FORM_ATTRIBUTE_SUPER = 'attribute_super';
+    public const FORM_GENERAL = 'general';
+    public const FORM_PRICE_AND_TAX = 'price_and_tax';
+    public const FORM_PRICE_AND_STOCK = 'price_and_stock';
+    public const FORM_TAX_SET = 'tax_set';
+    public const FORM_SEO = 'seo';
+    public const FORM_STORE_RELATION = 'store_relation';
+    public const FORM_IMAGE_SET = 'image_set';
 
-    const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
-    const OPTION_ATTRIBUTE_SUPER = 'option_attribute_super';
-    const OPTION_ID_LOCALE = 'option_id_locale';
-    const OPTION_TAX_RATES = 'option_tax_rates';
-    const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
+    public const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
+    public const OPTION_ATTRIBUTE_SUPER = 'option_attribute_super';
+    public const OPTION_ID_LOCALE = 'option_id_locale';
+    public const OPTION_TAX_RATES = 'option_tax_rates';
+    public const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
 
-    const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
-    const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
-    const VALIDATION_GROUP_ATTRIBUTE_SUPER = 'validation_group_attribute_super';
-    const VALIDATION_GROUP_GENERAL = 'validation_group_general';
-    const VALIDATION_GROUP_PRICE_AND_TAX = 'validation_group_price_and_tax';
-    const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
-    const VALIDATION_GROUP_SEO = 'validation_group_seo';
-    const VALIDATION_GROUP_IMAGE_SET = 'validation_group_image';
+    public const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
+    public const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
+    public const VALIDATION_GROUP_ATTRIBUTE_SUPER = 'validation_group_attribute_super';
+    public const VALIDATION_GROUP_GENERAL = 'validation_group_general';
+    public const VALIDATION_GROUP_PRICE_AND_TAX = 'validation_group_price_and_tax';
+    public const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
+    public const VALIDATION_GROUP_SEO = 'validation_group_seo';
+    public const VALIDATION_GROUP_IMAGE_SET = 'validation_group_image';
+    public const VALIDATION_GROUP_PRICE_SOURCE = 'validation_group_price_source';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -114,7 +117,9 @@ class ProductFormAdd extends AbstractType
         $resolver->setDefaults([
             'constraints' => new Valid(),
             'required' => false,
-            'validation_groups' => function () use ($validationGroups) {
+            'validation_groups' => function (FormInterface $form) use ($validationGroups) {
+                $validationGroups = $this->prepareDefaultsValidationGroups($validationGroups, $form);
+
                 return $validationGroups;
             },
             'compound' => true,
@@ -137,6 +142,7 @@ class ProductFormAdd extends AbstractType
             static::VALIDATION_GROUP_ATTRIBUTE_SUPER,
             static::VALIDATION_GROUP_SEO,
             static::VALIDATION_GROUP_IMAGE_SET,
+            static::VALIDATION_GROUP_PRICE_SOURCE,
         ];
     }
 
@@ -484,6 +490,11 @@ class ProductFormAdd extends AbstractType
                     'data_class' => PriceProductTransfer::class,
                 ],
                 'entry_type' => ProductMoneyType::class,
+                'constraints' => [
+                    new ProductPriceNotBlank([
+                        'groups' => [self::VALIDATION_GROUP_PRICE_SOURCE],
+                    ]),
+                ],
             ]
         );
 
@@ -673,5 +684,16 @@ class ProductFormAdd extends AbstractType
                 return $value;
             }
         );
+    }
+
+    /**
+     * @param array $validationGroups
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return array
+     */
+    protected function prepareDefaultsValidationGroups(array $validationGroups, FormInterface $form): array
+    {
+        return $validationGroups;
     }
 }

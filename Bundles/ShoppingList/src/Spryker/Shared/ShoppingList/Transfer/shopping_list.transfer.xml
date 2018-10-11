@@ -13,10 +13,25 @@
         <property name="numberOfItems" type="int" />
         <property name="owner" type="string" />
         <property name="idCompanyUser" type="int" />
+        <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]" />
+        <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" />
+        <property name="items" type="ShoppingListItem[]" />
     </transfer>
 
     <transfer name="ShoppingListCollection">
         <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList" />
+    </transfer>
+
+    <transfer name="ShoppingListCompanyUserCollection">
+        <property name="shoppingListCompanyUsers" type="ShoppingListCompanyUser[]" singular="shoppingListCompanyUser" />
+    </transfer>
+
+    <transfer name="ShoppingListCompanyBusinessUnitCollection">
+        <property name="shoppingListCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" singular="shoppingListCompanyBusinessUnit" />
+    </transfer>
+
+    <transfer name="ShoppingListPermissionGroupCollection">
+        <property name="permissionGroups" type="ShoppingListPermissionGroup[]" singular="permissionGroup" />
     </transfer>
 
     <transfer name="ShoppingListItem">
@@ -63,16 +78,12 @@
     <transfer name="ShoppingListAddToCartRequest">
         <property name="sku" type="string" />
         <property name="quantity" type="int" />
-        <property name="idShoppingListItem" type="int" />
+        <property name="idShoppingListItem" type="int" deprecated="use shoppingListItem->idShoppingListItem instead" />
+        <property name="shoppingListItem" type="ShoppingListItem" />
     </transfer>
 
     <transfer name="ShoppingListAddToCartRequestCollection">
         <property name="requests" type="ShoppingListAddToCartRequest[]" singular="request" />
-    </transfer>
-
-    <transfer name="ProductView">
-        <property name="quantity" type="int" />
-        <property name="idShoppingListItem" type="int" />
     </transfer>
 
     <transfer name="ShoppingListShareRequest">
@@ -83,9 +94,20 @@
         <property name="shoppingListOwnerId" type="int" />
     </transfer>
 
+    <transfer name="ShoppingListDismissRequest">
+        <property name="idShoppingList" type="int" />
+        <property name="idCompanyUser" type="int" />
+    </transfer>
+
     <transfer name="ShoppingListShareResponse">
         <property name="isSuccess" type="bool" />
         <property name="error" type="string" />
+    </transfer>
+
+    <transfer name="ShoppingListCompanyBusinessUnitBlacklist">
+        <property name="idShoppingListCompanyBusinessUnitBlacklist" type="int" />
+        <property name="fkShoppingListCompanyBusinessUnit" type="int" />
+        <property name="fkCompanyUser" type="int" />
     </transfer>
 
     <transfer name="ShoppingListPermissionGroup">
@@ -96,17 +118,20 @@
 
     <transfer name="ShoppingListFromCartRequest">
         <property name="shoppingListName" type="string" />
+        <property name="idShoppingList" type="int" />
         <property name="idQuote" type="int" />
         <property name="customer" type="Customer" />
     </transfer>
 
     <transfer name="ShoppingListCompanyBusinessUnit">
+        <property name="idShoppingListCompanyBusinessUnit" type="int" />
         <property name="idShoppingList" type="int" />
         <property name="idShoppingListPermissionGroup" type="int" />
         <property name="idCompanyBusinessUnit" type="int" />
     </transfer>
 
     <transfer name="ShoppingListCompanyUser">
+        <property name="idShoppingListCompanyUser" type="int" />
         <property name="idShoppingList" type="int" />
         <property name="idShoppingListPermissionGroup" type="int" />
         <property name="idCompanyUser" type="int" />

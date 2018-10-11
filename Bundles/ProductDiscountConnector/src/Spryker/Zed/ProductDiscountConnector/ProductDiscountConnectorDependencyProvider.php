@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -14,11 +15,11 @@ use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnec
 
 class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
-    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

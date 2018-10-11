@@ -18,9 +18,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {
-    const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
+    public const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
      * @return void
@@ -50,6 +52,8 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public static function getSubscribedEvents()
