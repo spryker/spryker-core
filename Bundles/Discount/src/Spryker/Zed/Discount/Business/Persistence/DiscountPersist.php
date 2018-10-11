@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -236,8 +237,10 @@ class DiscountPersist implements DiscountPersistInterface
      */
     protected function saveVoucherPool(SpyDiscount $discountEntity)
     {
-        if ($discountEntity->getVoucherPool()) {
-            return $discountEntity->getVoucherPool();
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool|null $discountVoucherPoolEntity */
+        $discountVoucherPoolEntity = $discountEntity->getVoucherPool();
+        if ($discountVoucherPoolEntity) {
+            return $discountVoucherPoolEntity;
         }
 
         $discountVoucherPoolEntity = $this->createVoucherPoolEntity();

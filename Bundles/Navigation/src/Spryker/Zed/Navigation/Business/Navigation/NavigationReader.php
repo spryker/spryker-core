@@ -57,7 +57,7 @@ class NavigationReader implements NavigationReaderInterface
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
-     * @return \Orm\Zed\Navigation\Persistence\SpyNavigation
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigation|null
      */
     protected function findNavigationEntity(NavigationTransfer $navigationTransfer)
     {

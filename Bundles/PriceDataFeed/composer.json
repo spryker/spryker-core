@@ -1,5 +1,6 @@
 {
   "name": "spryker/price-data-feed",
+  "type": "library",
   "description": "PriceDataFeed module",
   "license": "proprietary",
   "require": {

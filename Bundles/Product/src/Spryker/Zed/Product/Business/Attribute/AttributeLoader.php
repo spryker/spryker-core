@@ -225,7 +225,7 @@ class AttributeLoader implements AttributeLoaderInterface
     /**
      * @param int[] $productIds
      *
-     * @return array|mixed|\Propel\Runtime\Collection\ObjectCollection
+     * @return array|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getProductAbstractEntitiesFromIds($productIds)
     {

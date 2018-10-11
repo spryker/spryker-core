@@ -25,8 +25,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AddController
 {
-    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    const PARAM_ID_PRODUCT = 'id-product';
+    public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const PARAM_ID_PRODUCT = 'id-product';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -62,6 +62,7 @@ class ViewController extends AddController
         $productGroupTable = $this->getFactory()
             ->createProductGroupTable($idProductAbstract);
 
+        $attributes = [];
         $attributes[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $productAbstractTransfer->getAttributes();
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();
@@ -133,6 +134,7 @@ class ViewController extends AddController
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
+        $attributes = [];
         $attributes[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $productTransfer->getAttributes();
         foreach ($productTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();

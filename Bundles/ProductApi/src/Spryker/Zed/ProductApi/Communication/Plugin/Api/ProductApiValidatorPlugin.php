@@ -29,6 +29,8 @@ class ProductApiValidatorPlugin extends AbstractPlugin implements ApiValidatorPl
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]

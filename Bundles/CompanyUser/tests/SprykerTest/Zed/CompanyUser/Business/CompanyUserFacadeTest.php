@@ -27,6 +27,10 @@ use TypeError;
  */
 class CompanyUserFacadeTest extends Test
 {
+    protected const CUSTOMER_COLUMN_COMPANY_USER = 'customer';
+    protected const FK_COMPANY_COLUMN_COMPANY_USER = 'fk_company';
+    protected const IS_ACTIVE_COLUMN_COMPANY_USER = 'is_active';
+
     /**
      * @var \SprykerTest\Zed\CompanyUser\CompanyUserBusinessTester
      */
@@ -275,6 +279,87 @@ class CompanyUserFacadeTest extends Test
 
         //Assert
         $this->tester->assertEquals($expectedCompanyUserAmount, $actualCompanyUserAmount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testEnableCompanyUserShouldEnableInactiveUser(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->getCompanyUserTransfer(false);
+
+        // Act
+        $companyUserResponseTransfer = $this->getFacade()
+            ->enableCompanyUser($companyUserTransfer);
+
+        // Assert
+        $this->assertTrue($companyUserResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testEnableCompanyUserShouldNotEnableActiveUser(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->getCompanyUserTransfer();
+
+        // Act
+        $companyUserResponseTransfer = $this->getFacade()
+            ->enableCompanyUser($companyUserTransfer);
+
+        // Assert
+        $this->assertFalse($companyUserResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDisableCompanyUserShouldDisableActiveUser(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->getCompanyUserTransfer();
+
+        // Act
+        $companyUserResponseTransfer = $this->getFacade()
+            ->disableCompanyUser($companyUserTransfer);
+
+        // Assert
+        $this->assertTrue($companyUserResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDisableCompanyUserShouldNotDisableInactiveUser(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->getCompanyUserTransfer(false);
+
+        // Act
+        $companyUserResponseTransfer = $this->getFacade()
+            ->disableCompanyUser($companyUserTransfer);
+
+        // Assert
+        $this->assertFalse($companyUserResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @param bool $isActive
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    protected function getCompanyUserTransfer(bool $isActive = true): CompanyUserTransfer
+    {
+        $companyTransfer = $this->tester->haveCompany();
+        $customerTransfer = $this->tester->haveCustomer();
+
+        return $this->tester->haveCompanyUser([
+            static::CUSTOMER_COLUMN_COMPANY_USER => $customerTransfer,
+            static::FK_COMPANY_COLUMN_COMPANY_USER => $companyTransfer->getIdCompany(),
+            static::IS_ACTIVE_COLUMN_COMPANY_USER => $isActive,
+        ]);
     }
 
     /**

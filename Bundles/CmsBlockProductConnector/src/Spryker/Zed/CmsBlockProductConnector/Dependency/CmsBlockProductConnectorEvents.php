@@ -15,7 +15,7 @@ interface CmsBlockProductConnectorEvents
      *
      * @api
      */
-    const CMS_BLOCK_PRODUCT_CONNECTOR_PUBLISH = 'CmsBlockProduct.connector.publish';
+    public const CMS_BLOCK_PRODUCT_CONNECTOR_PUBLISH = 'CmsBlockProduct.connector.publish';
 
     /**
      * Specification
@@ -23,14 +23,14 @@ interface CmsBlockProductConnectorEvents
      *
      * @api
      */
-    const CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH = 'CmsBlockProduct.connector.unpublish';
+    public const CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH = 'CmsBlockProduct.connector.unpublish';
     /**
      * Specification
      * - This events will be used for spy_cms_block_product_connector entity creation
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_CREATE = 'Entity.spy_cms_block_product_connector.create';
+    public const ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_CREATE = 'Entity.spy_cms_block_product_connector.create';
 
     /**
      * Specification
@@ -38,7 +38,7 @@ interface CmsBlockProductConnectorEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_UPDATE = 'Entity.spy_cms_block_product_connector.update';
+    public const ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_UPDATE = 'Entity.spy_cms_block_product_connector.update';
 
     /**
      * Specification
@@ -46,5 +46,5 @@ interface CmsBlockProductConnectorEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_DELETE = 'Entity.spy_cms_block_product_connector.delete';
+    public const ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_DELETE = 'Entity.spy_cms_block_product_connector.delete';
 }

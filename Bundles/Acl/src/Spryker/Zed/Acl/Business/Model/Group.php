@@ -287,6 +287,10 @@ class Group implements GroupInterface
         $groupEntity = $this->queryContainer->queryGroupByName($name)->findOne();
 
         $groupTransfer = new GroupTransfer();
+        if (!$groupEntity) {
+            return $groupTransfer;
+        }
+
         $groupTransfer->fromArray($groupEntity->toArray(), true);
 
         return $groupTransfer;

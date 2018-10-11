@@ -26,15 +26,15 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class ProductOptionValueForm extends AbstractType
 {
-    const FIELD_VALUE = 'value';
-    const FIELD_SKU = 'sku';
-    const FIELD_PRICES = 'prices';
-    const FIELD_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
-    const FIELD_OPTION_HASH = 'optionHash';
+    public const FIELD_VALUE = 'value';
+    public const FIELD_SKU = 'sku';
+    public const FIELD_PRICES = 'prices';
+    public const FIELD_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
+    public const FIELD_OPTION_HASH = 'optionHash';
 
-    const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
+    public const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 
-    const ALPHA_NUMERIC_PATTERN = '/^[a-z0-9\.\_]+$/';
+    public const ALPHA_NUMERIC_PATTERN = '/^[a-z0-9\.\_]+$/';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

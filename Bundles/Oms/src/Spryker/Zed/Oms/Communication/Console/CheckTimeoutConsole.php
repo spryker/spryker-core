@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CheckTimeoutConsole extends Console
 {
-    const COMMAND_NAME = 'oms:check-timeout';
-    const COMMAND_DESCRIPTION = 'Check timeouts';
+    public const COMMAND_NAME = 'oms:check-timeout';
+    public const COMMAND_DESCRIPTION = 'Check timeouts';
 
     /**
      * @return void

@@ -84,7 +84,7 @@ class ProductOptionBusinessTester extends Actor
     /**
      * @param int $idProductOptionValue
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice|null
      */
     public function getFirstProductOptionValuePriceByIdProductOptionValue($idProductOptionValue)
     {

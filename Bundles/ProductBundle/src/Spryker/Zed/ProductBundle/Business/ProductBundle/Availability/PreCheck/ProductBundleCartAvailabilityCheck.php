@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -151,7 +152,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability|null
      */
     protected function findAvailabilityEntityBySku($sku, StoreTransfer $storeTransfer)
     {

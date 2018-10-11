@@ -20,6 +20,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 class ProductReviewMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $productData
@@ -42,8 +44,8 @@ class ProductReviewMapExpanderPlugin extends AbstractPlugin implements ProductPa
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, 'rating', $rating)
             ->addSearchResultData($pageMapTransfer, 'review_count', $productData['review_count'])
-            ->addIntegerFacet($pageMapTransfer, 'rating', $rating * 100)
-            ->addIntegerSort($pageMapTransfer, 'rating', $rating * 100);
+            ->addIntegerFacet($pageMapTransfer, 'rating', (int)($rating * 100))
+            ->addIntegerSort($pageMapTransfer, 'rating', (int)($rating * 100));
 
         return $pageMapTransfer;
     }

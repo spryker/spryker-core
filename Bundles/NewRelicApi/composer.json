@@ -1,5 +1,6 @@
 {
   "name": "spryker/new-relic-api",
+  "type": "library",
   "description": "NewRelicApi module",
   "license": "proprietary",
   "require": {
@@ -24,5 +25,6 @@
   },
   "config": {
     "sort-packages": true
-  }
+  },
+  "abandoned": true
 }

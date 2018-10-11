@@ -1,9 +1,11 @@
 {
   "name": "spryker/checkout",
+  "type": "library",
   "description": "Checkout module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/checkout-extension": "^1.0.0",
     "spryker/error-handler": "^2.1.0",
     "spryker/kernel": "^3.0.0",
     "spryker/oms": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",

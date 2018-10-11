@@ -14,21 +14,21 @@ use Spryker\Shared\Kernel\Store;
  */
 class EnvironmentDataCollector extends AbstractDataCollector
 {
-    const TYPE = 'environment';
+    public const TYPE = 'environment';
 
-    const FIELD_APP = 'app';
+    public const FIELD_APP = 'app';
 
-    const FIELD_APP_ENV = 'app_env';
+    public const FIELD_APP_ENV = 'app_env';
 
-    const FIELD_DATE_TIME = 'date_time';
+    public const FIELD_DATE_TIME = 'date_time';
 
-    const FIELD_APP_STORE = 'app_store';
+    public const FIELD_APP_STORE = 'app_store';
 
-    const FIELD_APP_LANGUAGE = 'app_language';
+    public const FIELD_APP_LANGUAGE = 'app_language';
 
-    const FIELD_APP_LOCALE = 'app_locale';
+    public const FIELD_APP_LOCALE = 'app_locale';
 
-    const FIELD_APP_CURRENCY = 'app_currency';
+    public const FIELD_APP_CURRENCY = 'app_currency';
 
     /**
      * @return array

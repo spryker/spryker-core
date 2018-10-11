@@ -15,7 +15,7 @@ interface ProductRelationEvents
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_RELATION_PUBLISH = 'ProductRelation.product_abstract_relation.publish';
+    public const PRODUCT_ABSTRACT_RELATION_PUBLISH = 'ProductRelation.product_abstract_relation.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface ProductRelationEvents
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_RELATION_UNPUBLISH = 'ProductRelation.product_abstract_relation.unpublish';
+    public const PRODUCT_ABSTRACT_RELATION_UNPUBLISH = 'ProductRelation.product_abstract_relation.unpublish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface ProductRelationEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_relation_product_abstract.create';
+    public const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_relation_product_abstract.create';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface ProductRelationEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE = 'Entity.spy_product_relation_product_abstract.update';
+    public const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE = 'Entity.spy_product_relation_product_abstract.update';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface ProductRelationEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE = 'Entity.spy_product_relation_product_abstract.delete';
+    public const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE = 'Entity.spy_product_relation_product_abstract.delete';
 
     /**
      * Specification
@@ -55,7 +55,7 @@ interface ProductRelationEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_RELATION_CREATE = 'Entity.spy_product_relation.create';
+    public const ENTITY_SPY_PRODUCT_RELATION_CREATE = 'Entity.spy_product_relation.create';
 
     /**
      * Specification
@@ -63,7 +63,7 @@ interface ProductRelationEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_RELATION_UPDATE = 'Entity.spy_product_relation.update';
+    public const ENTITY_SPY_PRODUCT_RELATION_UPDATE = 'Entity.spy_product_relation.update';
 
     /**
      * Specification
@@ -71,5 +71,5 @@ interface ProductRelationEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_RELATION_DELETE = 'Entity.spy_product_relation.delete';
+    public const ENTITY_SPY_PRODUCT_RELATION_DELETE = 'Entity.spy_product_relation.delete';
 }

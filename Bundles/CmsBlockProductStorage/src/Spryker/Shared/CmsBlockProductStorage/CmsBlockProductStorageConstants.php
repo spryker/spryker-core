@@ -18,7 +18,7 @@ class CmsBlockProductStorageConstants
      *
      * @api
      */
-    const CMS_BLOCK_PRODUCT_SYNC_STORAGE_QUEUE = 'sync.storage.cms';
+    public const CMS_BLOCK_PRODUCT_SYNC_STORAGE_QUEUE = 'sync.storage.cms';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ class CmsBlockProductStorageConstants
      *
      * @api
      */
-    const CMS_BLOCK_PRODUCT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.cms.error';
+    public const CMS_BLOCK_PRODUCT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.cms.error';
 
     /**
      * Specification:
@@ -34,5 +34,5 @@ class CmsBlockProductStorageConstants
      *
      * @api
      */
-    const CMS_BLOCK_PRODUCT_RESOURCE_NAME = 'cms_block_product';
+    public const CMS_BLOCK_PRODUCT_RESOURCE_NAME = 'cms_block_product';
 }
