@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Cart\Plugin;
+namespace Spryker\Glue\CartsRestApi\Plugin;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 
 /**
- * @method \Spryker\Client\Cart\CartClientInterface getClient()
+ * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
 class CartQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
 {
@@ -31,7 +31,7 @@ class CartQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCol
     {
         return (new QuoteCollectionTransfer())
             ->addQuote(
-                $this->getClient()->getQuote()
+                $this->getFactory()->getCartClient()->getQuote()
             );
     }
 }

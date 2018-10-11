@@ -45,4 +45,9 @@ interface CartsRestApiToCartClientInterface
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote();
 }
