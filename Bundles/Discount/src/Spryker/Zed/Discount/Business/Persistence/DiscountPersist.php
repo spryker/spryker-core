@@ -411,11 +411,13 @@ class DiscountPersist implements DiscountPersistInterface
      */
     protected function deleteDiscountMoneyValues(SpyDiscount $discountEntity): void
     {
-        if (!$discountEntity->getDiscountAmounts()) {
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountAmount[]|null $discountAmountEntities */
+        $discountAmountEntities = $discountEntity->getDiscountAmounts();
+        if (!$discountAmountEntities) {
             return;
         }
 
-        foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
+        foreach ($discountAmountEntities as $discountAmountEntity) {
             $discountAmountEntity->delete();
         }
     }
