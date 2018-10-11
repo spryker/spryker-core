@@ -50,29 +50,15 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
                 ->filterByFkProductAbstract($idProductAbstract)
                 ->filterByIsActive(true)
             ->innerJoinWithSpyProductAbstract()
+            ->useSpyProductAbstractQuery()
+                ->leftJoinWithSpyProductPackagingLeadProduct()
+            ->endUse()
             ->innerJoinWithSpyProductPackagingUnit()
             ->useSpyProductPackagingUnitQuery()
                 ->leftJoinWithSpyProductPackagingUnitAmount()
                 ->innerJoinWithProductPackagingUnitType()
             ->endUse()
             ->orderByCreatedAt();
-
-        return $this->buildQueryFromCriteria($query)->find();
-    }
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
-     */
-    public function getProductPackagingLeadProductEntitiesByProductAbstractIds(array $productAbstractIds): array
-    {
-        $query = $this->getFactory()
-            ->createSpyProductPackagingLeadProductQuery()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->useSpyProductQuery()
-                ->filterByIsActive(true)
-            ->endUse();
 
         return $this->buildQueryFromCriteria($query)->find();
     }
