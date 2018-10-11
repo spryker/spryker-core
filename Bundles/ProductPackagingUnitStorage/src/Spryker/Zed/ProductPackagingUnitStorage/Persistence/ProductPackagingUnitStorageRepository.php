@@ -68,7 +68,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     public function getProductPackagingLeadProductEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
         $query = $this->getFactory()
-            ->getSpyProductPackagingLeadProductQuery()
+            ->createSpyProductPackagingLeadProductQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->useSpyProductQuery()
                 ->filterByIsActive(true)

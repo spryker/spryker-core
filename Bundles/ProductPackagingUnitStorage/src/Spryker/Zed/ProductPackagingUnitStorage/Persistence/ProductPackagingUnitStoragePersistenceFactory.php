@@ -27,18 +27,18 @@ class ProductPackagingUnitStoragePersistenceFactory extends AbstractPersistenceF
     }
 
     /**
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery
+     */
+    public function createSpyProductPackagingLeadProductQuery(): SpyProductPackagingLeadProductQuery
+    {
+        return SpyProductPackagingLeadProductQuery::create();
+    }
+
+    /**
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function getSpyProductQuery(): SpyProductQuery
     {
         return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::PROPEL_QUERY_PRODUCT);
-    }
-
-    /**
-     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery
-     */
-    public function getSpyProductPackagingLeadProductQuery(): SpyProductPackagingLeadProductQuery
-    {
-        return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::PROPEL_QUERY_PRODUCT_PACKAGING_LEAD_PRODUCT);
     }
 }
