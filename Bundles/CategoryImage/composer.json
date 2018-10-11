@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "spryker/category": "*",
+    "spryker/category-extension": "*",
     "spryker/kernel": "*",
     "spryker/locale": "*",
     "spryker/propel-orm": "*"
