@@ -81,13 +81,9 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
             if ($phpToken[0] !== T_DOC_COMMENT) {
                 continue;
             }
-            $parsedParameters = $this->getParametersFromDocComment($phpToken[1]);
-            if ($parsedParameters) {
-                foreach ($parsedParameters as $parsedParameter) {
-                    foreach ($parsedParameter as $method => $values) {
-                        $result[$method] = $values;
-                    }
-                }
+            $annotationsParsed = $this->getParametersFromDocComment($phpToken[1]);
+            if ($annotationsParsed) {
+                $result = $this->getDataFromAnnotationsParsed($annotationsParsed, $result);
             }
         }
 
@@ -132,5 +128,22 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
         }
 
         return $annotations;
+    }
+
+    /**
+     * @param array $annotationsParsed
+     * @param array $result
+     *
+     * @return array
+     */
+    protected function getDataFromAnnotationsParsed(array $annotationsParsed, array $result): array
+    {
+        foreach ($annotationsParsed as $annotationParsed) {
+            foreach ($annotationParsed as $method => $values) {
+                $result[$method] = $values;
+            }
+        }
+
+        return $result;
     }
 }
