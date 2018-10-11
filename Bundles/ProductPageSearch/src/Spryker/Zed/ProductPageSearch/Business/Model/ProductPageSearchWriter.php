@@ -70,9 +70,9 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
         } catch (PropelException $exception) {
             ErrorLogger::getInstance()->log($exception);
             $productPageSearchEntity = SpyProductAbstractPageSearchQuery::create()
-                ->filterByFkProductAbstract()
-                ->filterByLocale($productPageSearchTransfer->getStore())
-                ->filterByStore($productPageSearchTransfer->getLocale())
+                ->filterByFkProductAbstract($productPageSearchTransfer->getIdProductAbstract())
+                ->filterByLocale($productPageSearchTransfer->getLocale())
+                ->filterByStore($productPageSearchTransfer->getStore())
                 ->findOne();
             if ($productPageSearchEntity === null) {
                 throw $exception;
