@@ -52,6 +52,7 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     public function findSchemas(StoreTransfer $storeTransfer): RestRequestValidatorToFinderAdapterInterface
     {
         $this->finder
+            ->reset()
             ->in($this->getPaths($storeTransfer))
             ->name($this->config->getValidationSchemaFileNamePattern());
 

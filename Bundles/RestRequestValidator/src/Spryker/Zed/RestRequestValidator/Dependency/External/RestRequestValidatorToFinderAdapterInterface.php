@@ -25,4 +25,9 @@ interface RestRequestValidatorToFinderAdapterInterface extends IteratorAggregate
      * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
     public function name(string $pattern): self;
+
+    /**
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
+     */
+    public function reset(): self;
 }

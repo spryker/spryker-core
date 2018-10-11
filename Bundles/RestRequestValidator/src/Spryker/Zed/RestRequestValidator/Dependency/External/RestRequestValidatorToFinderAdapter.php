@@ -18,7 +18,7 @@ class RestRequestValidatorToFinderAdapter implements RestRequestValidatorToFinde
 
     public function __construct()
     {
-        $this->finder = new Finder();
+        $this->finder = Finder::create();
     }
 
     /**
@@ -59,5 +59,15 @@ class RestRequestValidatorToFinderAdapter implements RestRequestValidatorToFinde
     public function count(): int
     {
         return $this->finder->count();
+    }
+
+    /**
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
+     */
+    public function reset(): RestRequestValidatorToFinderAdapterInterface
+    {
+        $this->finder = Finder::create();
+
+        return $this;
     }
 }
