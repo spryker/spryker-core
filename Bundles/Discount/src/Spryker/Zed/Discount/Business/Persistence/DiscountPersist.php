@@ -198,7 +198,7 @@ class DiscountPersist implements DiscountPersistInterface
             );
         }
 
-         return $this->persistVoucherCodes($discountVoucherTransfer, $discountEntity);
+        return $this->persistVoucherCodes($discountVoucherTransfer, $discountEntity);
     }
 
     /**
@@ -388,6 +388,8 @@ class DiscountPersist implements DiscountPersistInterface
     {
         $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
         if ($discountCalculatorTransfer->getCalculatorPlugin() !== DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED) {
+            $this->deleteDiscountMoneyValues($discountEntity);
+
             return;
         }
 
@@ -399,6 +401,22 @@ class DiscountPersist implements DiscountPersistInterface
             $discountAmountEntity->fromArray($moneyValueTransfer->modifiedToArray());
             $discountAmountEntity->setFkDiscount($discountEntity->getIdDiscount());
             $discountAmountEntity->save();
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return void
+     */
+    protected function deleteDiscountMoneyValues(SpyDiscount $discountEntity): void
+    {
+        if (!$discountEntity->getDiscountAmounts()) {
+            return;
+        }
+
+        foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
+            $discountAmountEntity->delete();
         }
     }
 
