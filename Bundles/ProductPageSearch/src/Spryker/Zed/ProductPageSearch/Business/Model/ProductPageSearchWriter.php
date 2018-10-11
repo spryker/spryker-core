@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Business\Model;
 
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
+use Generated\Shared\Transfer\SpyProductAbstractPageSearchEntityTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
@@ -60,6 +61,7 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
     protected function saveEntity(SpyProductAbstractPageSearch $productPageSearchEntity, ProductPageSearchTransfer $productPageSearchTransfer, array $data)
     {
         try {
+            $productPageSearchEntity = new SpyProductAbstractPageSearch();
             $productPageSearchEntity->setFkProductAbstract($productPageSearchTransfer->getIdProductAbstract());
             $this->applyChangesToEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
             $productPageSearchEntity->save();
