@@ -140,6 +140,10 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
                         ->filterByFkProductAbstract()
                         ->filterByPriceKey($priceKey)
                         ->findOne();
+
+                    if ($priceProductMerchantRelationshipStorageEntity === null) {
+                        throw $exception;
+                    }
                     $this->applyChangesToEntity($priceProductMerchantRelationshipStorageEntity, $priceKey, $idCompanyBusinessUnit, $prices);
                     $priceProductMerchantRelationshipStorageEntity->save();
                 }

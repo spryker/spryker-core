@@ -71,6 +71,9 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
                 ->filterByLocale($productPageSearchTransfer->getStore())
                 ->filterByStore($productPageSearchTransfer->getLocale())
                 ->findOne();
+            if ($productPageSearchEntity === null) {
+                throw $exception;
+            }
             $this->applyChangesToEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
             $productPageSearchEntity->save();
         }
