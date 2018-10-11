@@ -184,7 +184,7 @@ class ResponsePagination implements ResponsePaginationInterface
         if (strlen($queryString)) {
             $queryString .= '&';
         }
-        $domain = sprintf(static::DOMAIN_LINK_TEMPLATE . '', $this->domainName, $restRequest->getResource()->getType(), $queryString);
+        $domain = sprintf(static::DOMAIN_LINK_TEMPLATE, $this->domainName, $restRequest->getResource()->getType(), $queryString);
 
         return $domain;
     }
