@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Zed\ShoppingListDataImport\Business\Model;
+namespace Spryker\Zed\ShoppingListDataImport\Business\Model\DataSet;
 
 interface ShoppingListPermissionDataSetInterface
 {

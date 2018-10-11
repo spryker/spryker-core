@@ -19,6 +19,8 @@ use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
 class ShoppingListDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -30,6 +32,8 @@ class ShoppingListDataImportPlugin extends AbstractPlugin implements DataImportP
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getImportType(): string

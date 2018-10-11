@@ -13,15 +13,14 @@ use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUserQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroupQuery;
-use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ShoppingListDataImport\Business\Model\DataSet\ShoppingListPermissionDataSetInterface;
 
-class ShoppingListPermissionWriterStep implements DataImportStepInterface
+class ShoppingListPermissionWriterStep extends AbstractShoppingListDataImportStep implements DataImportStepInterface
 {
     /**
      * @see \Spryker\Shared\ShoppingList\ShoppingListConfig::PERMISSION_GROUP_READ_ONLY;
@@ -31,11 +30,6 @@ class ShoppingListPermissionWriterStep implements DataImportStepInterface
         'READ_ONLY',
         'FULL_ACCESS',
     ];
-
-    /**
-     * @var int[]
-     */
-    protected $idShoppingListCache = [];
 
     /**
      * @var int[]
@@ -85,35 +79,6 @@ class ShoppingListPermissionWriterStep implements DataImportStepInterface
         $shoppingListCompanyUserEntity
             ->setFkShoppingListPermissionGroup($idShoppingListPermissionGroup)
             ->save();
-    }
-
-    /**
-     * @param string $shoppingListKey
-     *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
-     * @return int
-     */
-    protected function getIdShoppingListByKey(string $shoppingListKey): int
-    {
-        if (isset($this->idShoppingListCache[$shoppingListKey])) {
-            return $this->idShoppingListCache[$shoppingListKey];
-        }
-
-        $idShoppingList = SpyShoppingListQuery::create()
-            ->filterByKey($shoppingListKey)
-            ->select(SpyShoppingListTableMap::COL_ID_SHOPPING_LIST)
-            ->findOne();
-
-        if (!$idShoppingList) {
-            throw new EntityNotFoundException(
-                sprintf('Shopping List with key "%s" was not found during data import.', $shoppingListKey)
-            );
-        }
-
-        $this->idShoppingListCache[$shoppingListKey] = $idShoppingList;
-
-        return $idShoppingList;
     }
 
     /**

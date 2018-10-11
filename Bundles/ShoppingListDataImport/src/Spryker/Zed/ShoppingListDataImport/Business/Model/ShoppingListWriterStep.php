@@ -10,8 +10,9 @@ namespace Spryker\Zed\ShoppingListDataImport\Business\Model;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ShoppingListDataImport\Business\Model\DataSet\ShoppingListDataSetInterface;
 
-class ShoppingListWriterStep implements DataImportStepInterface
+class ShoppingListWriterStep extends AbstractShoppingListDataImportStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
