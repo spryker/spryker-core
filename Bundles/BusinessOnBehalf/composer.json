@@ -1,10 +1,11 @@
 {
   "name": "spryker/business-on-behalf",
+  "type": "library",
   "description": "BusinessOnBehalf module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company-user": "^1.2.0",
+    "spryker/company-user": "^1.2.0 || ^2.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/zed-request": "^3.0.0"
   },

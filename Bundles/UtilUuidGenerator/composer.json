@@ -1,5 +1,6 @@
 {
   "name": "spryker/util-uuid-generator",
+  "type": "library",
   "description": "UtilUuidGenerator module",
   "license": "proprietary",
   "require": {

@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormView;
  */
 abstract class AbstractDiscountExtensionSubFormType extends AbstractType
 {
-    const TEMPLATE_PATH = 'template_path';
+    public const TEMPLATE_PATH = 'template_path';
 
     /**
      * Return path to template you want to use for custom discount form type, this template will receive

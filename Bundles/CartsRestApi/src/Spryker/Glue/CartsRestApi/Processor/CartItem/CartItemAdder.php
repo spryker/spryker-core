@@ -1,13 +1,12 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -15,6 +14,7 @@ use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterfac
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -48,24 +48,32 @@ class CartItemAdder implements CartItemAdderInterface
     protected $cartReader;
 
     /**
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface
+     */
+    protected $cartItemsResourceMapper;
+
+    /**
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface $cartClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface $quoteClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
      */
     public function __construct(
         CartsRestApiToCartClientInterface $cartClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CartsRestApiToZedRequestClientInterface $zedRequestClient,
         CartsRestApiToQuoteClientInterface $quoteClient,
-        CartReaderInterface $cartReader
+        CartReaderInterface $cartReader,
+        CartItemsResourceMapperInterface $cartItemsResourceMapper
     ) {
         $this->cartClient = $cartClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->zedRequestClient = $zedRequestClient;
         $this->quoteClient = $quoteClient;
         $this->cartReader = $cartReader;
+        $this->cartItemsResourceMapper = $cartItemsResourceMapper;
     }
 
     /**
@@ -80,7 +88,7 @@ class CartItemAdder implements CartItemAdderInterface
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $idQuote = $this->getCartIdentifier($restRequest);
+        $idQuote = $this->findCartIdentifier($restRequest);
         if ($idQuote === null) {
             return $this->createQuoteIdMissingError();
         }
@@ -91,7 +99,7 @@ class CartItemAdder implements CartItemAdderInterface
 
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         $quoteTransfer = $this->cartClient->addItem(
-            $this->prepareItemTransfer($restCartItemsAttributesTransfer)
+            $this->cartItemsResourceMapper->mapItemAttributesToItemTransfer($restCartItemsAttributesTransfer)
         );
 
         $errors = $this->zedRequestClient->getLastResponseErrorMessages();
@@ -100,20 +108,6 @@ class CartItemAdder implements CartItemAdderInterface
         }
 
         return $this->cartReader->readByIdentifier($quoteTransfer->getUuid(), $restRequest);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function prepareItemTransfer(RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer): ItemTransfer
-    {
-        $itemTransfer = (new ItemTransfer())->fromArray(
-            $restCartItemsAttributesRequestTransfer->toArray(),
-            true
-        );
-        return $itemTransfer;
     }
 
     /**
@@ -141,7 +135,7 @@ class CartItemAdder implements CartItemAdderInterface
      *
      * @return string|null
      */
-    protected function getCartIdentifier(RestRequestInterface $restRequest): ?string
+    protected function findCartIdentifier(RestRequestInterface $restRequest): ?string
     {
         $cartsResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS);
         if ($cartsResource !== null) {

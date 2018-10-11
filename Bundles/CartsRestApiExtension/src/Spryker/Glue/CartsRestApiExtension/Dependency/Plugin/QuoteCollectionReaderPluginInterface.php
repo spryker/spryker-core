@@ -9,7 +9,7 @@ interface QuoteCollectionReaderPluginInterface
 {
     /**
      * Specification:
-     * - This plugin interface is used for extend cart reader in cart module.
+     * - This plugin method is used for extending cart reader in cart module.
      * - Method provides quote collection.
      *
      * @api

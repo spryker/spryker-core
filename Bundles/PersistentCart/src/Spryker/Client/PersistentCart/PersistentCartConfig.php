@@ -12,7 +12,7 @@ use Spryker\Shared\PersistentCart\PersistentCartConstants;
 
 class PersistentCartConfig extends AbstractBundleConfig
 {
-    protected const DEFAULT_PERSISTENT_CART_ANONYMOUS_PREFIX = 'anonymous';
+    protected const DEFAULT_PERSISTENT_CART_ANONYMOUS_PREFIX = 'anonymous:';
 
     /**
      * Specification:

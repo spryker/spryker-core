@@ -14,17 +14,17 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class GroupUsersTable extends AbstractTable
 {
-    const REMOVE = 'remove';
+    public const REMOVE = 'remove';
 
-    const PARAMETER_ID_USER = 'id-user';
-    const PARAMETER_ID_GROUP = 'id-group';
+    public const PARAMETER_ID_USER = 'id-user';
+    public const PARAMETER_ID_GROUP = 'id-group';
 
-    const COL_ID_ACL_GROUP = 'id_acl_group';
-    const COL_ID_USER = 'id_user';
-    const COL_EMAIL = 'email';
-    const COL_FIRST_NAME = 'first_name';
-    const COL_LAST_NAME = 'last_name';
-    const ACTIONS = 'Actions';
+    public const COL_ID_ACL_GROUP = 'id_acl_group';
+    public const COL_ID_USER = 'id_user';
+    public const COL_EMAIL = 'email';
+    public const COL_FIRST_NAME = 'first_name';
+    public const COL_LAST_NAME = 'last_name';
+    public const ACTIONS = 'Actions';
 
     /**
      * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface

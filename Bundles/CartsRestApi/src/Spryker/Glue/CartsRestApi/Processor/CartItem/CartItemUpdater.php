@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -81,7 +81,7 @@ class CartItemUpdater implements CartItemUpdaterInterface, GuestCartItemUpdaterI
         $sku = '';
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $idQuote = $this->getCartIdentifier($restRequest);
+        $idQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
         if ($this->isRequestValid($idQuote, $itemIdentifier)) {
             return $this->createMissingRequiredParameterError();
@@ -136,7 +136,7 @@ class CartItemUpdater implements CartItemUpdaterInterface, GuestCartItemUpdaterI
      *
      * @return string|null
      */
-    protected function getCartIdentifier(RestRequestInterface $restRequest): ?string
+    protected function findCartIdentifier(RestRequestInterface $restRequest): ?string
     {
         $cartsResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS);
         if ($cartsResource !== null) {

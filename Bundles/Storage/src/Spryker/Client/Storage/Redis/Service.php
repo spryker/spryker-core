@@ -12,7 +12,7 @@ use Predis\ClientInterface;
 
 class Service implements ServiceInterface
 {
-    const KV_PREFIX = 'kv:';
+    public const KV_PREFIX = 'kv:';
 
     /**
      * @var \Predis\ClientInterface
@@ -389,9 +389,7 @@ class Service implements ServiceInterface
     public function deleteAll()
     {
         $keys = $this->getAllKeys();
-        $deleteCount = count($keys);
-        $this->deleteMulti($keys);
 
-        return $deleteCount;
+        return $this->client->del($keys);
     }
 }

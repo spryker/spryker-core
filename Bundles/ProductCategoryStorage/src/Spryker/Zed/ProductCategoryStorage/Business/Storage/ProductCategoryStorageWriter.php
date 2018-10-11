@@ -19,10 +19,10 @@ use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryCo
 
 class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterface
 {
-    const ID_CATEGORY_NODE = 'id_category_node';
-    const FK_CATEGORY = 'fk_category';
-    const NAME = 'name';
-    const URL = 'url';
+    public const ID_CATEGORY_NODE = 'id_category_node';
+    public const FK_CATEGORY = 'fk_category';
+    public const NAME = 'name';
+    public const URL = 'url';
 
     /**
      * @var \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface

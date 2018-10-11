@@ -21,7 +21,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implements ProductSetPageSearchQueryContainerInterface
 {
-    const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
+    public const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
 
     /**
      * @api

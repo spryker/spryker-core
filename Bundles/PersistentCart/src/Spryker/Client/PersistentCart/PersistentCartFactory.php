@@ -151,7 +151,7 @@ class PersistentCartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PersistentCart\GuestCartCustomerReferenceGenerator\GuestCartCustomerReferenceGeneratorInterface
      */
-    public function createGuestCartPreparer(): GuestCartCustomerReferenceGeneratorInterface
+    public function createGuestCartCustomerReferenceGenerator(): GuestCartCustomerReferenceGeneratorInterface
     {
         return new GuestCartCustomerReferenceGenerator($this->getConfig()->getPersistentCartAnonymousPrefix());
     }

@@ -21,14 +21,14 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class GroupController extends AbstractController
 {
-    const USER_LIST_URL = '/acl/users';
-    const PARAMETER_ID_GROUP = 'id-group';
-    const PARAMETER_ID_USER = 'id-user';
+    public const USER_LIST_URL = '/acl/users';
+    public const PARAMETER_ID_GROUP = 'id-group';
+    public const PARAMETER_ID_USER = 'id-user';
 
-    const MESSAGE_GROUP_CREATE_SUCCESS = 'Group was created successfully.';
-    const MESSAGE_GROUP_UPDATE_SUCCESS = 'Group was updated successfully.';
-    const MESSAGE_USER_IN_GROUP_DELETE_SUCCESS = 'The User was removed from the group.';
-    const MESSAGE_USER_IN_GROUP_DELETE_ERROR = 'User and group are not found.';
+    public const MESSAGE_GROUP_CREATE_SUCCESS = 'Group was created successfully.';
+    public const MESSAGE_GROUP_UPDATE_SUCCESS = 'Group was updated successfully.';
+    public const MESSAGE_USER_IN_GROUP_DELETE_SUCCESS = 'The User was removed from the group.';
+    public const MESSAGE_USER_IN_GROUP_DELETE_ERROR = 'User and group are not found.';
 
     /**
      * @return array

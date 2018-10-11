@@ -1,5 +1,6 @@
 {
   "name": "spryker/barcode-extension",
+  "type": "library",
   "description": "BarcodeExtension module",
   "license": "proprietary",
   "require": {

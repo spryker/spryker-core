@@ -17,11 +17,11 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CmsPageMetaAttributesFormType extends AbstractType
 {
-    const FIELD_META_TITLE = 'metaTitle';
-    const FIELD_META_KEYWORDS = 'metaKeywords';
-    const FIELD_META_DESCRIPTION = 'metaDescription';
-    const FIELD_LOCALE_NAME = 'localeName';
-    const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'idCmsPageLocalizedAttributes';
+    public const FIELD_META_TITLE = 'metaTitle';
+    public const FIELD_META_KEYWORDS = 'metaKeywords';
+    public const FIELD_META_DESCRIPTION = 'metaDescription';
+    public const FIELD_LOCALE_NAME = 'localeName';
+    public const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'idCmsPageLocalizedAttributes';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

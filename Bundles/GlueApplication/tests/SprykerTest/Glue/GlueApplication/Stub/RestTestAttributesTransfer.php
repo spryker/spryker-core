@@ -10,9 +10,9 @@ use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
 class RestTestAttributesTransfer extends AbstractTransfer
 {
-    const ATTRIBUTE1 = 'attribute1';
+    public const ATTRIBUTE1 = 'attribute1';
 
-    const ATTRIBUTE2 = 'attribute2';
+    public const ATTRIBUTE2 = 'attribute2';
 
     /**
      * @var string

@@ -113,7 +113,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
             $request
         );
 
-        if (!\in_array($requestedMethod, $availableMethods, false)) {
+        if (!in_array($requestedMethod, $availableMethods, false)) {
             return (new RestErrorMessageTransfer())
                 ->setDetail('Not allowed.')
                 ->setStatus(Response::HTTP_FORBIDDEN);
@@ -139,7 +139,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
         $allowedHeaders = $this->config->getCorsAllowedHeaders();
 
         foreach ($requestedHeaders as $requestedHeader) {
-            if (\in_array($requestedHeader, $allowedHeaders, false)) {
+            if (in_array($requestedHeader, $allowedHeaders, false)) {
                 continue;
             }
 

@@ -22,10 +22,10 @@ use Zend\Filter\Word\SeparatorToCamelCase;
 
 class ComposerDependencyParser implements ComposerDependencyParserInterface
 {
-    const TYPE_INCLUDE = 'include';
-    const TYPE_EXCLUDE = 'exclude';
-    const TYPE_INCLUDE_DEV = 'include-dev';
-    const TYPE_EXCLUDE_DEV = 'exclude-dev';
+    public const TYPE_INCLUDE = 'include';
+    public const TYPE_EXCLUDE = 'exclude';
+    public const TYPE_INCLUDE_DEV = 'include-dev';
+    public const TYPE_EXCLUDE_DEV = 'exclude-dev';
 
     /**
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $dependencyCollectionTransfer
