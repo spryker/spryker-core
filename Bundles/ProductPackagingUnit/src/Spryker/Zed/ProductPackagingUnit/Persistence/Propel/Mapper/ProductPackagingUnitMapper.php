@@ -77,7 +77,6 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
     ): ProductPackagingLeadProductTransfer {
         $productConcreteTransfer = (new ProductConcreteTransfer())
             ->fromArray($productPackagingLeadProductEntity->getSpyProduct()->toArray(), true);
-        $productConcreteTransfer->setIdProductConcrete($productPackagingLeadProductEntity->getFkProduct());
         $productPackagingLeadProductTransfer->setProduct($productConcreteTransfer);
         $productPackagingLeadProductTransfer->setIdProductAbstract($productPackagingLeadProductEntity->getFkProductAbstract());
 
