@@ -62,7 +62,7 @@ class DiscountPersistTest extends Unit
         $discountEntityMock = $this->createDiscountEntityMock();
         $voucherPoolEntityMock = $this->createVoucherPoolEntity();
 
-        $discountEntityMock->expects($this->exactly(2))
+        $discountEntityMock->expects($this->exactly(1))
             ->method('getVoucherPool')
             ->willReturn($voucherPoolEntityMock);
 
@@ -111,7 +111,7 @@ class DiscountPersistTest extends Unit
         $discountEntityMock = $this->createDiscountEntityMock();
         $voucherPoolEntityMock = $this->createVoucherPoolEntity();
 
-        $discountEntityMock->expects($this->exactly(2))
+        $discountEntityMock->expects($this->exactly(1))
             ->method('getVoucherPool')
             ->willReturn($voucherPoolEntityMock);
 

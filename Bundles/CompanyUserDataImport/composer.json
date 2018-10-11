@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-user-data-import",
+  "type": "library",
   "description": "CompanyUserDataImport module",
   "license": "MIT",
   "require": {

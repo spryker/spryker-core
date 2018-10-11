@@ -1,5 +1,6 @@
 {
   "name": "spryker/util-measurement-unit-conversion",
+  "type": "library",
   "description": "UtilMeasurementUnitConversion module",
   "license": "proprietary",
   "require": {
