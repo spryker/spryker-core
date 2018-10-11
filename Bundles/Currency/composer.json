@@ -1,5 +1,6 @@
 {
   "name": "spryker/currency",
+  "type": "library",
   "description": "Currency module",
   "license": "proprietary",
   "require": {

@@ -1,0 +1,11 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-sales-order-threshold-gui-main.js"></script>
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-sales-order-threshold-gui-main.css">
+{% endblock %}

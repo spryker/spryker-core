@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\Permission\Business\PermissionFinder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
+use Spryker\Client\Permission\PermissionClientInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\InfrastructuralPermissionPluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
+use Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface;
 
 class PermissionFinder implements PermissionFinderInterface
 {
@@ -20,11 +24,28 @@ class PermissionFinder implements PermissionFinderInterface
     protected $permissionPlugins = [];
 
     /**
-     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[] $permissionPlugins
+     * @var \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface
      */
-    public function __construct(array $permissionPlugins)
-    {
+    protected $permissionRepository;
+
+    /**
+     * @var \Spryker\Client\Permission\PermissionClientInterface
+     */
+    protected $permissionClient;
+
+    /**
+     * @param array $permissionPlugins
+     * @param \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface $permissionRepository
+     * @param \Spryker\Client\Permission\PermissionClientInterface $permissionClient
+     */
+    public function __construct(
+        array $permissionPlugins,
+        PermissionRepositoryInterface $permissionRepository,
+        PermissionClientInterface $permissionClient
+    ) {
         $this->permissionPlugins = $this->indexPermissions($permissionPlugins);
+        $this->permissionRepository = $permissionRepository;
+        $this->permissionClient = $permissionClient;
     }
 
     /**
@@ -56,10 +77,97 @@ class PermissionFinder implements PermissionFinderInterface
                 $permissionTransfer->setConfigurationSignature($permissionPlugin->getConfigurationSignature());
             }
 
+            $permissionTransfer->setIsInfrastructural(
+                $permissionPlugin instanceof InfrastructuralPermissionPluginInterface
+            );
+
             $permissionCollectionTransfer->addPermission($permissionTransfer);
         }
 
         return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
+    {
+        $registeredPermissions = $this->getIndexedMergedRegisteredNonInfrastructuralPermissions();
+        $permissionTransfers = $this->indexPermissionTransfers(
+            $this->permissionRepository->findAll()->getPermissions()->getArrayCopy()
+        );
+
+        $registeredPermissionTransfers = new ArrayObject();
+        foreach ($registeredPermissions as $permissionTransfer) {
+            $registeredPermissionTransfers->append($permissionTransfers[$permissionTransfer->getKey()]);
+        }
+
+        return (new PermissionCollectionTransfer())
+            ->setPermissions($registeredPermissionTransfers);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionTransfer[] Keys are permission keys
+     */
+    protected function getIndexedMergedRegisteredNonInfrastructuralPermissions()
+    {
+        $zedRegisteredPermissions = $this->getZedRegisteredPermissions();
+        $zedRegisteredNonInfrastructuralPermissions = $this->filterNonInfrastructuralPermissions($zedRegisteredPermissions);
+        $zedIndexedRegisteredNonInfrastructuralPermissions = $this->indexPermissionTransfers($zedRegisteredNonInfrastructuralPermissions);
+
+        $clientRegisteredPermissions = $this->getClientRegisteredPermissions();
+        $clientRegisteredNonInfrastructuralPermissions = $this->filterNonInfrastructuralPermissions($clientRegisteredPermissions);
+        $clientIndexedRegisteredNonInfrastructuralPermissions = $this->indexPermissionTransfers($clientRegisteredNonInfrastructuralPermissions);
+
+        return $zedIndexedRegisteredNonInfrastructuralPermissions + $clientIndexedRegisteredNonInfrastructuralPermissions;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PermissionTransfer[] $permissions
+     *
+     * @return \Generated\Shared\Transfer\PermissionTransfer[]
+     */
+    protected function filterNonInfrastructuralPermissions(array $permissions)
+    {
+        return array_filter($permissions, function (PermissionTransfer $permission) {
+            return !$permission->getIsInfrastructural();
+        });
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionTransfer[]
+     */
+    protected function getZedRegisteredPermissions()
+    {
+        return $this->getRegisteredPermissions()
+            ->getPermissions()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionTransfer[]
+     */
+    protected function getClientRegisteredPermissions()
+    {
+        return $this->permissionClient->getRegisteredPermissions()
+            ->getPermissions()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PermissionTransfer[] $permissions
+     *
+     * @return \Generated\Shared\Transfer\PermissionTransfer[] Keys are permission keys
+     */
+    protected function indexPermissionTransfers(
+        array $permissions
+    ): array {
+        $indexedPermissions = [];
+        foreach ($permissions as $permission) {
+            $indexedPermissions[$permission->getKey()] = $permission;
+        }
+
+        return $indexedPermissions;
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\SprykGui;
 
 use Codeception\Actor;
+use Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface;
 
 /**
  * Inherited Methods
@@ -23,11 +24,18 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
- * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
  */
 class SprykGuiBusinessTester extends Actor
 {
     use _generated\SprykGuiBusinessTesterActions;
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     */
+    public function getSprykGuiFacade(): SprykGuiFacadeInterface
+    {
+        return $this->getFacade();
+    }
 
     /**
      * @param array $sprykView

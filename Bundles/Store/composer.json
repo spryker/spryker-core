@@ -1,5 +1,6 @@
 {
   "name": "spryker/store",
+  "type": "library",
   "description": "Store module",
   "license": "proprietary",
   "require": {

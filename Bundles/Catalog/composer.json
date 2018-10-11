@@ -1,5 +1,6 @@
 {
   "name": "spryker/catalog",
+  "type": "library",
   "description": "Catalog module",
   "license": "proprietary",
   "require": {

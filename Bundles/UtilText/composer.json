@@ -1,5 +1,6 @@
 {
   "name": "spryker/util-text",
+  "type": "library",
   "description": "UtilText module",
   "license": "proprietary",
   "require": {

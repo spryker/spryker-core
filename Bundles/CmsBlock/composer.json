@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block",
+  "type": "library",
   "description": "CmsBlock module",
   "license": "proprietary",
   "require": {
