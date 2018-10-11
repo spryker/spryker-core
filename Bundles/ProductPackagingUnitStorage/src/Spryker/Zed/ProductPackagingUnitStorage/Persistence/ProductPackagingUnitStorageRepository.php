@@ -65,7 +65,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
-    public function getProductPackagingLeadProductsByProductAbstractIds(array $productAbstractIds): array
+    public function getProductPackagingLeadProductEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
         $query = $this->getFactory()
             ->getSpyProductPackagingLeadProductQuery()

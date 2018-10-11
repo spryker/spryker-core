@@ -28,7 +28,7 @@ interface ProductPackagingUnitStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
-    public function getProductPackagingLeadProductsByProductAbstractIds(array $productAbstractIds): array;
+    public function getProductPackagingLeadProductEntitiesByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]

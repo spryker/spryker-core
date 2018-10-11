@@ -59,7 +59,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     public function getProductAbstractPackagingStorageTransfer(array $productAbstractIds): array
     {
         $productAbstractPackagingStoreTransfers = [];
-        $productPackagingLeadProductEntityTransfers = $this->getProductPackagingLeadProductsByProductAbstractIds($productAbstractIds);
+        $productPackagingLeadProductEntityTransfers = $this->getProductPackagingLeadProductEntitiesByProductAbstractIds($productAbstractIds);
 
         foreach ($productPackagingLeadProductEntityTransfers as $productPackagingLeadProductEntityTransfer) {
             $idProductAbstract = $productPackagingLeadProductEntityTransfer->getFkProductAbstract();
@@ -72,7 +72,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
             $packageProductConcreteEntityTransfers = $this->getPackageProductsByAbstractId($idProductAbstract);
 
             if (!empty($packageProductConcreteEntityTransfers)) {
-                $productAbstractPackagingStoreTransfers[] = $this->hydrateProductAbstractPackagingStoreTransfer(
+                $productAbstractPackagingStoreTransfers[] = $this->hydrateProductAbstractPackagingStorageTransfer(
                     $idProductAbstract,
                     $idLeadProductConcrete,
                     $packageProductConcreteEntityTransfers
@@ -110,10 +110,10 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
-    protected function getProductPackagingLeadProductsByProductAbstractIds(array $productAbstractIds): array
+    protected function getProductPackagingLeadProductEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
         return $this->productPackagingUnitStorageRepository
-            ->getProductPackagingLeadProductsByProductAbstractIds($productAbstractIds);
+            ->getProductPackagingLeadProductEntitiesByProductAbstractIds($productAbstractIds);
     }
 
     /**
@@ -123,7 +123,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
      *
      * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer
      */
-    protected function hydrateProductAbstractPackagingStoreTransfer(
+    protected function hydrateProductAbstractPackagingStorageTransfer(
         int $idProductAbstract,
         int $idLeadProductConcrete,
         array $packageProductConcreteEntityTransfers
