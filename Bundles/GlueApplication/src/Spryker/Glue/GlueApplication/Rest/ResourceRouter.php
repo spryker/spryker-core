@@ -78,11 +78,7 @@ class ResourceRouter implements ResourceRouterInterface
             $httpRequest
         );
 
-        if (!$route) {
-            return $this->createResourceNotFoundRoute();
-        }
-
-        if (!$this->isParentValid($route, $resources)) {
+        if (!$this->isValidRoute($route, $resources, $httpRequest)) {
             return $this->createResourceNotFoundRoute();
         }
 
@@ -220,6 +216,34 @@ class ResourceRouter implements ResourceRouterInterface
      */
     protected function isParentValid(array $route, array $resources): bool
     {
-        return !isset($route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE]) || $this->isValidPath($resources, $route);
+        if (isset($route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE])) {
+            if ($route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE] !== $resources[0][RequestConstantsInterface::ATTRIBUTE_TYPE]) {
+                return false;
+            }
+
+            return $this->isValidPath($resources, $route);
+        }
+
+        return $route[RequestConstantsInterface::ATTRIBUTE_TYPE] === $resources[0][RequestConstantsInterface::ATTRIBUTE_TYPE];
+    }
+
+    /**
+     * @param array|null $route
+     * @param array $resources
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
+     *
+     * @return bool
+     */
+    protected function isValidRoute(?array $route, array $resources, Request $httpRequest): bool
+    {
+        if (!$route || !$this->isParentValid($route, $resources)) {
+            return false;
+        }
+
+        if ($httpRequest->getMethod() === Request::METHOD_POST && isset($this->getMainResource($resources)['id'])) {
+            return false;
+        }
+
+        return true;
     }
 }

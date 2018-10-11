@@ -1,0 +1,31 @@
+{
+  "name": "spryker/customer-access-gui",
+  "type": "library",
+  "description": "CustomerAccessGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/customer-access": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

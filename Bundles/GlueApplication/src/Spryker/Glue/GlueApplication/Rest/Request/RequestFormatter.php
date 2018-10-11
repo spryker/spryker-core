@@ -1,19 +1,16 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\GlueApplication\Rest\Request;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
-use Spryker\Glue\GlueApplication\Rest\Serialize\DecoderMatcherInterface;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class RequestFormatter implements RequestFormatterInterface
@@ -24,14 +21,9 @@ class RequestFormatter implements RequestFormatterInterface
     protected $requestMetaDataExtractor;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Serialize\DecoderMatcherInterface
+     * @var \Spryker\Glue\GlueApplication\Rest\Request\RequestResourceExtractorInterface
      */
-    protected $decoderMatcher;
-
-    /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
+    protected $requestResourceExtractor;
 
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface[]
@@ -40,20 +32,17 @@ class RequestFormatter implements RequestFormatterInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractorInterface $requestMetaDataExtractor
-     * @param \Spryker\Glue\GlueApplication\Rest\Serialize\DecoderMatcherInterface $decoderMatcher
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestResourceExtractorInterface $requestResourceExtractor
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface[] $requestFormatterPlugins
      */
     public function __construct(
         RequestMetaDataExtractorInterface $requestMetaDataExtractor,
-        DecoderMatcherInterface $decoderMatcher,
-        RestResourceBuilderInterface $restResourceBuilder,
+        RequestResourceExtractorInterface $requestResourceExtractor,
         array $requestFormatterPlugins = []
     ) {
         $this->requestMetaDataExtractor = $requestMetaDataExtractor;
-        $this->decoderMatcher = $decoderMatcher;
-        $this->restResourceBuilder = $restResourceBuilder;
         $this->requestFormatterPlugins = $requestFormatterPlugins;
+        $this->requestResourceExtractor = $requestResourceExtractor;
     }
 
     /**
@@ -64,15 +53,7 @@ class RequestFormatter implements RequestFormatterInterface
     public function formatRequest(HttpRequest $request): RestRequestInterface
     {
         $metadata = $this->requestMetaDataExtractor->extract($request);
-
-        $resource = $this->processPostData($request, $metadata);
-
-        if (!$resource) {
-            $resource = $this->restResourceBuilder->createRestResource(
-                $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE, 'errors'),
-                $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID)
-            );
-        }
+        $resource = $this->requestResourceExtractor->extract($request, $metadata);
 
         $requestBuilder = $this->createRequestResourceBuilder($resource);
 
@@ -125,106 +106,15 @@ class RequestFormatter implements RequestFormatterInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
-     */
-    public function processPostData(
-        HttpRequest $httpRequest,
-        MetadataInterface $metadata
-    ): ?RestResourceInterface {
-
-        $requestData = $this->readRequestData($httpRequest, $metadata);
-        if (!$requestData) {
-            return null;
-        }
-
-        $data = $requestData[RestResourceInterface::RESOURCE_DATA];
-
-        return $this->restResourceBuilder->createRestResource(
-            $data[RestResourceInterface::RESOURCE_TYPE],
-            $httpRequest->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID),
-            $this->mapEntityTransfer($httpRequest, $data)
-        );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
-     *
-     * @return array|null
-     */
-    protected function readRequestData(HttpRequest $httpRequest, MetadataInterface $metadata): ?array
-    {
-        $rawPostData = (string)$httpRequest->getContent();
-
-        if (!$rawPostData) {
-            return null;
-        }
-
-        $decoder = $this->decoderMatcher->match($metadata);
-        if (!$decoder) {
-            return null;
-        }
-
-        $requestData = $decoder->decode($rawPostData);
-        if (!isset($requestData[RestResourceInterface::RESOURCE_DATA])) {
-            return null;
-        }
-
-        return $requestData;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
-     * @param array $data
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
-     */
-    protected function mapEntityTransfer(HttpRequest $httpRequest, array $data): ?AbstractTransfer
-    {
-        $className = $httpRequest->attributes->get(RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN);
-
-        if (!$className) {
-            return null;
-        }
-
-        $restResourceAttributesTransfer = new $className();
-        if ($restResourceAttributesTransfer instanceof AbstractTransfer) {
-            $restResourceAttributesTransfer->fromArray($data[RestResourceInterface::RESOURCE_ATTRIBUTES], true);
-        }
-
-        return $restResourceAttributesTransfer;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface $requestBuilder
      *
      * @return void
      */
     protected function setParentResources(HttpRequest $httpRequest, RequestBuilderInterface $requestBuilder): void
     {
-        $allResources = (array)$httpRequest->attributes->get(RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES);
-        if (count($allResources) === 1) {
-            return;
-        }
-
-        foreach ($allResources as $resource) {
-            if (!$resource[RequestConstantsInterface::ATTRIBUTE_ID]) {
-                continue;
-            }
-
-            if ($requestBuilder->getResource()->getId() === $resource[RequestConstantsInterface::ATTRIBUTE_TYPE]) {
-                continue;
-            }
-
-            $linkedResource = $this->restResourceBuilder->createRestResource(
-                $resource[RequestConstantsInterface::ATTRIBUTE_TYPE],
-                $resource[RequestConstantsInterface::ATTRIBUTE_ID]
-            );
-
-            $requestBuilder->addParentResource($linkedResource);
+        $parentResources = $this->requestResourceExtractor->extractParentResources($requestBuilder->getResource()->getType(), $httpRequest);
+        foreach ($parentResources as $parentResource) {
+            $requestBuilder->addParentResource($parentResource);
         }
     }
 
@@ -294,7 +184,7 @@ class RequestFormatter implements RequestFormatterInterface
     ): void {
 
         if (!isset($queryParameters[RequestConstantsInterface::QUERY_FIELDS]) ||
-            !\is_array($queryParameters[RequestConstantsInterface::QUERY_FIELDS])) {
+            !is_array($queryParameters[RequestConstantsInterface::QUERY_FIELDS])) {
             return;
         }
 
@@ -329,7 +219,7 @@ class RequestFormatter implements RequestFormatterInterface
      */
     protected function setFilterFields(RequestBuilderInterface $requestBuilder, array $queryParameters): void
     {
-        if (!isset($queryParameters[RequestConstantsInterface::QUERY_FILTER]) || !\is_array($queryParameters[RequestConstantsInterface::QUERY_FILTER])) {
+        if (!isset($queryParameters[RequestConstantsInterface::QUERY_FILTER]) || !is_array($queryParameters[RequestConstantsInterface::QUERY_FILTER])) {
             return;
         }
 
