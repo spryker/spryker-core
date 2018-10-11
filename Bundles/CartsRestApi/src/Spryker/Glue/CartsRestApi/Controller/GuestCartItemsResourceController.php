@@ -31,6 +31,19 @@ class GuestCartItemsResourceController extends AbstractController
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $request
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function patchAction(RestRequestInterface $request, RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): RestResponseInterface
+    {
+        return $this->getFactory()
+            ->createGuestCartItemUpdater()
+            ->updateItemQuantity($request, $restCartItemsAttributesTransfer);
+    }
+    
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
