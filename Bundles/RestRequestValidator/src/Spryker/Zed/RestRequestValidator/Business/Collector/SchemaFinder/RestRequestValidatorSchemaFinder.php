@@ -45,15 +45,15 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string[] $paths
      *
      * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
-    public function findSchemas(StoreTransfer $storeTransfer): RestRequestValidatorToFinderAdapterInterface
+    public function findSchemas(array $paths): RestRequestValidatorToFinderAdapterInterface
     {
         $this->finder
             ->reset()
-            ->in($this->getPaths($storeTransfer))
+            ->in($paths)
             ->name($this->config->getValidationSchemaFileNamePattern());
 
         return $this->finder;
@@ -69,7 +69,8 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
         $paths = [];
         foreach ($this->config->getValidationSchemaPathPattern() as $pathPattern) {
             $pathPattern = $this->preparePathPattern($storeTransfer, $pathPattern);
-            $paths = array_merge($paths, glob($pathPattern));
+            $currentLevelPaths = $this->excludeStoreModules($pathPattern, glob($pathPattern));
+            $paths = array_merge($paths, $currentLevelPaths);
         }
 
         return $paths;
@@ -85,9 +86,6 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     {
         if ($this->isStoreLevelPath($pathPattern)) {
             $pathPattern = $this->replaceStoreCodeInPath($pathPattern, $storeTransfer);
-        }
-        if ($this->isProjectLevelPath($pathPattern)) {
-            $pathPattern = $this->excludeStoreCodeFromPath($pathPattern);
         }
 
         return $pathPattern;
@@ -109,7 +107,7 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
      *
      * @return string
      */
-    protected function excludeStoreCodeFromPath(string $pathPattern): string
+    protected function addStoreCodesToPath(string $pathPattern): string
     {
         $excludedStoreCodes = [];
         foreach ($this->storeFacade->getAllStores() as $store) {
@@ -137,5 +135,25 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     protected function isProjectLevelPath(string $pathPattern): bool
     {
         return $pathPattern === $this->config->getProjectPathPattern();
+    }
+
+    /**
+     * @param string $pathPattern
+     * @param string[] $currentLevelPaths
+     *
+     * @return string[]
+     */
+    protected function excludeStoreModules(string $pathPattern, array $currentLevelPaths): array
+    {
+        if ($this->isProjectLevelPath($pathPattern)) {
+            $currentLevelPaths = array_filter($currentLevelPaths, function ($pathItem) {
+                return !preg_match(
+                    $this->addStoreCodesToPath($this->config->getStoreModulesPattern()),
+                    $pathItem
+                );
+            });
+        }
+
+        return $currentLevelPaths;
     }
 }

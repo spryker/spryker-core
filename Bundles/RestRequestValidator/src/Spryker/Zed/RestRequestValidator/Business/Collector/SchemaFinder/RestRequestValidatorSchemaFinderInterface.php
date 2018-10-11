@@ -13,11 +13,11 @@ use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToF
 interface RestRequestValidatorSchemaFinderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string[] $paths
      *
      * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
-    public function findSchemas(StoreTransfer $storeTransfer): RestRequestValidatorToFinderAdapterInterface;
+    public function findSchemas(array $paths): RestRequestValidatorToFinderAdapterInterface;
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer

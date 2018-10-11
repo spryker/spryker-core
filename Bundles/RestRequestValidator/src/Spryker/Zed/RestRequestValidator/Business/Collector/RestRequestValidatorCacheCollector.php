@@ -53,11 +53,12 @@ class RestRequestValidatorCacheCollector implements RestRequestValidatorCacheCol
     {
         $resultingConfig = [];
 
-        if (!$this->restRequestValidatorSchemaFinder->getPaths($storeTransfer)) {
+        $paths = $this->restRequestValidatorSchemaFinder->getPaths($storeTransfer);
+        if (!$paths) {
             return $resultingConfig;
         }
 
-        foreach ($this->restRequestValidatorSchemaFinder->findSchemas($storeTransfer) as $moduleValidationSchema) {
+        foreach ($this->restRequestValidatorSchemaFinder->findSchemas($paths) as $moduleValidationSchema) {
             $parsedConfiguration = $this->yaml->parseFile($moduleValidationSchema->getPathname());
             foreach ($parsedConfiguration as $resourceName => $resourceValidatorConfiguration) {
                 $resultingConfig[$resourceName][] = $resourceValidatorConfiguration;

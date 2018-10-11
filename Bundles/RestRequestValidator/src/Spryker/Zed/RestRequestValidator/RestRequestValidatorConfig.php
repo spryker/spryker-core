@@ -14,7 +14,8 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
 {
     protected const VALIDATION_FILENAME_PATTERN = '*.validation.yaml';
     protected const PATH_PATTERN_PROJECT_STORE_VALIDATION = '/*/Glue/*%s/Validation';
-    protected const PATH_PATTERN_PROJECT_VALIDATION = '/*/Glue/*!(%s)/Validation';
+    protected const PATH_PATTERN_PROJECT_VALIDATION = '/*/Glue/*/Validation';
+    protected const PATH_PATTERN_STORE_MODULES = '/(%s)\/Validation/';
     protected const PATH_PATTERN_CORE_VALIDATION = '/*/*/*/*/Glue/*/Validation';
 
     /**
@@ -67,5 +68,13 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     public function getCacheFilePathPattern(): string
     {
         return APPLICATION_SOURCE_DIR . RestRequestValidatorConfigShared::VALIDATION_CACHE_FILENAME_PATTERN;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStoreModulesPattern(): string
+    {
+        return RestRequestValidatorConfig::PATH_PATTERN_STORE_MODULES;
     }
 }
