@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesReclamationGui\Communication\Plugin\ManualOrderEntryG
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface;
+use Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\ManualOrderEntryFormPluginInterface;
 use Spryker\Zed\SalesReclamationGui\Communication\Form\ReclamationType;
 use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig;
 use Symfony\Component\Form\FormInterface;
