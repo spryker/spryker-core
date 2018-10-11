@@ -14,5 +14,4 @@ use Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\ManualOrderEntryF
  */
 interface ManualOrderEntryFormPluginInterface extends ExtensionManualOrderEntryFormPluginInterface
 {
-
 }

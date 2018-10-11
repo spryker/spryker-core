@@ -16,8 +16,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/manual-order-entry-gui":"^0.5.0"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/manual-order-entry-gui": "If you want to use 'Create connected order' button"

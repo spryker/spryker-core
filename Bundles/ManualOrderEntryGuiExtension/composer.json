@@ -8,10 +8,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/symfony": "^3.1.0"
   },
   "suggest": {
-    "spryker/kernel": "^3.18.0"
+    "spryker/kernel": "^3.18.0",
+    "spryker/symfony": "^3.1.0"
   },
   "autoload": {
     "psr-4": {

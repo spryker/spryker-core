@@ -14,11 +14,15 @@ use Symfony\Component\HttpFoundation\Request;
 interface ManualOrderEntryFormPluginInterface
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string;
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -27,6 +31,8 @@ interface ManualOrderEntryFormPluginInterface
     public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface;
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,6 +42,8 @@ interface ManualOrderEntryFormPluginInterface
     public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer;
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -43,6 +51,8 @@ interface ManualOrderEntryFormPluginInterface
     public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool;
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
