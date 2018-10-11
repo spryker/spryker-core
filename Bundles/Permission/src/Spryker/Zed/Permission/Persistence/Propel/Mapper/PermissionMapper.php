@@ -43,7 +43,7 @@ class PermissionMapper
         PermissionTransfer $permissionTransfer
     ) {
         $permissionTransfer->fromArray($permissionEntity->toArray(), true);
-        $permissionTransfer->setConfigurationSignature(\json_decode($permissionEntity->getConfigurationSignature(), true));
+        $permissionTransfer->setConfigurationSignature(json_decode($permissionEntity->getConfigurationSignature(), true));
 
         return $permissionTransfer;
     }
@@ -57,7 +57,7 @@ class PermissionMapper
     public function mapPermissionTransferToEntity(PermissionTransfer $permissionTransfer, SpyPermission $permissionEntity)
     {
         $permissionEntity->setKey($permissionTransfer->getKey());
-        $permissionEntity->setConfigurationSignature(\json_encode($permissionTransfer->getConfigurationSignature()));
+        $permissionEntity->setConfigurationSignature(json_encode($permissionTransfer->getConfigurationSignature()));
 
         return $permissionEntity;
     }
