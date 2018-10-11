@@ -17,7 +17,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company-user-gui": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/company-user-gui": "If you want to use CompanyUserGui plugins."
   },
   "autoload": {
     "psr-4": {
