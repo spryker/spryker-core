@@ -39,7 +39,7 @@ class MerchantFormDataProvider
 
         $merchantTransfer->setIdMerchant($idMerchant);
 
-        return $this->merchantFacade->getMerchantById($merchantTransfer);
+        return $this->merchantFacade->findMerchantById($merchantTransfer);
     }
 
     /**
