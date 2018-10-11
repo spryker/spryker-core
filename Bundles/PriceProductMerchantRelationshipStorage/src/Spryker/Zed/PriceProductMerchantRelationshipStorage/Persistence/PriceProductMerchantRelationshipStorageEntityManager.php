@@ -128,21 +128,26 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
                 }
 
                 $priceKey = $this->buildPriceKey($storageTransfers[0]);
+                $priceProductMerchantRelationshipStorageEntity = $this->getPriceProductMerchantRelationshipStorageEntity(
+                    $existingPriceProductMerchantRelationshipStorageEntityMap,
+                    $priceKey,
+                    $priceProductStorageEntityClass
+                );
 
                 try {
-                    $priceProductMerchantRelationshipStorageEntity = $this->getPriceProductMerchantRelationshipStorageEntity(
-                        $existingPriceProductMerchantRelationshipStorageEntityMap,
-                        $priceKey,
-                        $priceProductStorageEntityClass
-                    );
                     $this->applyChangesToEntity($priceProductMerchantRelationshipStorageEntity, $priceKey, $idCompanyBusinessUnit, $prices, $idProduct);
                     $priceProductMerchantRelationshipStorageEntity->save();
                 } catch (PropelException $exception) {
                     ErrorLogger::getInstance()->log($exception);
-                    $priceProductMerchantRelationshipStorageEntity = SpyPriceProductAbstractMerchantRelationshipStorageQuery::create()
-                        ->filterByFkProductAbstract()
-                        ->filterByPriceKey($priceKey)
-                        ->findOne();
+                    if ($priceProductMerchantRelationshipStorageEntity instanceof SpyPriceProductAbstractMerchantRelationshipStorage) {
+                        $priceProductMerchantRelationshipStorageEntity = SpyPriceProductAbstractMerchantRelationshipStorageQuery::create()
+                            ->filterByPriceKey($priceKey)
+                            ->findOne();
+                    } elseif ($priceProductMerchantRelationshipStorageEntity instanceof SpyPriceProductConcreteMerchantRelationshipStorage) {
+                        $priceProductMerchantRelationshipStorageEntity = SpyPriceProductConcreteMerchantRelationshipStorageQuery::create()
+                            ->filterByPriceKey($priceKey)
+                            ->findOne();
+                    }
 
                     if ($priceProductMerchantRelationshipStorageEntity === null) {
                         throw $exception;
@@ -163,7 +168,7 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
      *
      * @return void
      */
-    protected function applyChangesToEntity(SpyPriceProductAbstractMerchantRelationshipStorage $priceProductMerchantRelationshipStorageEntity, $priceKey, $idCompanyBusinessUnit, array $prices, $idProduct): void
+    protected function applyChangesToEntity($priceProductMerchantRelationshipStorageEntity, $priceKey, $idCompanyBusinessUnit, array $prices, $idProduct): void
     {
         $data = [
             'prices' => $prices,
