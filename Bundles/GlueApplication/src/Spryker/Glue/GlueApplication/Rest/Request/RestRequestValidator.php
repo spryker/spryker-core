@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RestRequestValidator implements RestRequestValidatorInterface
 {
-    protected const POST_DATA_MISSING = 'Post data missing.';
+    protected const EXCEPTION_MESSAGE_POST_DATA_IS_INVALID = 'Post data is invalid.';
 
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
@@ -66,7 +66,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
         $restResource = $restRequest->getResource();
         if (!$restResource->getAttributes()) {
             $restErrorMessageTransfer = new RestErrorMessageTransfer();
-            $restErrorMessageTransfer->setDetail(static::POST_DATA_MISSING);
+            $restErrorMessageTransfer->setDetail(static::EXCEPTION_MESSAGE_POST_DATA_IS_INVALID);
 
             return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
         }
