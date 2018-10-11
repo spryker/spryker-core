@@ -27,7 +27,9 @@ class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements Resour
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addPost(CartsRestApiConfig::ACTION_GUEST_CART_ITEMS_POST, false);
+        $resourceRouteCollection
+            ->addPost(CartsRestApiConfig::ACTION_GUEST_CART_ITEMS_POST, false)
+            ->addDelete(CartsRestApiConfig::ACTION_GUEST_CART_ITEMS_DELETE, false);
 
         return $resourceRouteCollection;
     }

@@ -20,7 +20,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const CONTROLLER_CART_ITEMS = 'cart-items-resource';
     public const CONTROLLER_GUEST_CARTS = 'guest-carts-resource';
     public const CONTROLLER_GUEST_CART_ITEMS = 'guest-cart-items-resource';
-    public const ACTION_GUEST_CART_ITEMS_POST = 'post';
 
     public const ACTION_CARTS_GET = 'get';
     public const ACTION_CARTS_POST = 'post';
@@ -31,6 +30,9 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const ACTION_CART_ITEMS_DELETE = 'delete';
 
     public const ACTION_GUEST_CARTS_GET = 'get';
+
+    public const ACTION_GUEST_CART_ITEMS_POST = 'post';
+    public const ACTION_GUEST_CART_ITEMS_DELETE = 'delete';
 
     public const RESPONSE_CODE_QUOTE_NOT_FOUND = '101';
     public const RESPONSE_CODE_ITEM_VALIDATION = '102';
