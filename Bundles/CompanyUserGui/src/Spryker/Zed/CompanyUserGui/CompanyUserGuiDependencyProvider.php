@@ -35,6 +35,7 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addCompanyFacade($container);
         $container = $this->addCustomerFacade($container);

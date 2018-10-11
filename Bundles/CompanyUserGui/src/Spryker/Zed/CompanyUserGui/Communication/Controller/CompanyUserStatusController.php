@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CompanyUserGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyUserGui\Communication\Table\CompanyUserTableConstants;
+use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,11 +31,11 @@ class CompanyUserStatusController extends AbstractController
      */
     public function enableCompanyUserAction(Request $request): RedirectResponse
     {
-        $idCompanyUser = $request->query->get(CompanyUserTableConstants::PARAM_ID_COMPANY_USER);
+        $idCompanyUser = $request->query->get(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
         if (!$idCompanyUser) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_ENABLE);
 
-            return $this->redirectResponse(CompanyUserTableConstants::URL_REDIRECT_COMPANY_USER_PAGE);
+            return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
         }
 
         $companyUserTransfer = (new CompanyUserTransfer())
@@ -48,12 +48,12 @@ class CompanyUserStatusController extends AbstractController
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_ENABLE);
 
-            return $this->redirectResponse(CompanyUserTableConstants::URL_REDIRECT_COMPANY_USER_PAGE);
+            return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
         }
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_ENABLE);
 
-        return $this->redirectResponse(CompanyUserTableConstants::URL_REDIRECT_COMPANY_USER_PAGE);
+        return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
     }
 
     /**
@@ -63,11 +63,11 @@ class CompanyUserStatusController extends AbstractController
      */
     public function disableCompanyUserAction(Request $request): RedirectResponse
     {
-        $idCompanyUser = $request->query->get(CompanyUserTableConstants::PARAM_ID_COMPANY_USER);
+        $idCompanyUser = $request->query->get(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
         if (!$idCompanyUser) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DISABLE);
 
-            return $this->redirectResponse(CompanyUserTableConstants::URL_REDIRECT_COMPANY_USER_PAGE);
+            return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
         }
 
         $companyUserTransfer = (new CompanyUserTransfer())
@@ -80,11 +80,11 @@ class CompanyUserStatusController extends AbstractController
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DISABLE);
 
-            return $this->redirectResponse(CompanyUserTableConstants::URL_REDIRECT_COMPANY_USER_PAGE);
+            return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
         }
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_DISABLE);
 
-        return $this->redirectResponse(CompanyUserTableConstants::URL_REDIRECT_COMPANY_USER_PAGE);
+        return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
     }
 }

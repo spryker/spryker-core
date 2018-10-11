@@ -17,7 +17,7 @@ use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFaca
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToGlossaryFacadeInterface;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToPermissionFacadeInterface;
 
-class CompanyRoleCreateDataProvider implements CompanyRoleCreateDataProviderInterface
+class CompanyRoleCreateDataProvider
 {
     protected const GLOSSARY_KEY_PREFIX_PERMISSION_NAME = 'permission.name.';
 

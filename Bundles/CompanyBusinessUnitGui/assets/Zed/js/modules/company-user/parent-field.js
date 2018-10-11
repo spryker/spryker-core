@@ -32,7 +32,7 @@ function CompanyFieldHandler() {
     const $parentField = $(parentFieldPath);
 
     function addListenerOnCompany() {
-        if (apllyeble()) {
+        if (isApplicable()) {
             setParentNames();
             $companyField.change(setParentNames);
         }
@@ -41,7 +41,7 @@ function CompanyFieldHandler() {
     /**
      * @returns {bool}
      */
-    function apllyeble() {
+    function isApplicable() {
         return $parentField.length && $companyField.length;
     }
 

@@ -17,7 +17,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
     public const OPTION_VALUES_BUSINESS_UNITS_CHOICES = 'company_business_unit_choices';
     public const OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES = 'company_business_unit_attributes';
 
-    protected const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
+    public const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
 
     protected const TEMPLATE_PATH = '@CompanyBusinessUnitGui/CompanyUser/company_business_unit.twig';
 

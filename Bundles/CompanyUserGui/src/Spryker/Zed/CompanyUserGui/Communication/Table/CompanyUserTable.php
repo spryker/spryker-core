@@ -13,12 +13,12 @@ use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
+use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CompanyUserTable extends AbstractTable
 {
-    protected const COL_ID_COMPANY_USER = 'id_company_user';
     protected const COL_COMPANY_NAME = 'company_name';
     protected const COL_COMPANY_USER_NAME = 'company_user_name';
     protected const COL_IS_ACTIVE = 'is_active';
@@ -54,7 +54,7 @@ class CompanyUserTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            static::COL_ID_COMPANY_USER => 'User ID',
+            CompanyUserGuiConfig::COL_ID_COMPANY_USER => 'User ID',
             static::COL_COMPANY_NAME => 'Company Name',
             static::COL_COMPANY_USER_NAME => 'User Name',
         ]);
@@ -67,7 +67,7 @@ class CompanyUserTable extends AbstractTable
         ]);
 
         $config->setSortable([
-            static::COL_ID_COMPANY_USER,
+            CompanyUserGuiConfig::COL_ID_COMPANY_USER,
             static::COL_COMPANY_NAME,
             static::COL_COMPANY_USER_NAME,
         ]);
@@ -154,7 +154,7 @@ class CompanyUserTable extends AbstractTable
     protected function mapCompanyUserDataItemToCompanyUserTableDataRow(array $companyUserDataItem): array
     {
         return [
-            static::COL_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            CompanyUserGuiConfig::COL_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             static::COL_COMPANY_USER_NAME => $companyUserDataItem[static::COL_COMPANY_USER_NAME],
             static::COL_COMPANY_NAME => $companyUserDataItem[static::COL_COMPANY_NAME],
             static::COL_IS_ACTIVE => $this->generateCompanyUserStatusLabel($companyUserDataItem),
@@ -163,6 +163,9 @@ class CompanyUserTable extends AbstractTable
     }
 
     /**
+     * @module Customer
+     * @module Company
+     *
      * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $companyUserQuery
      *
      * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
@@ -216,8 +219,8 @@ class CompanyUserTable extends AbstractTable
     protected function generateCompanyUserEditButton(array $companyUserDataItem): string
     {
         return $this->generateEditButton(
-            Url::generate(CompanyUserTableConstants::URL_EDIT_COMPANY_USER, [
-                CompanyUserTableConstants::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            Url::generate(CompanyUserGuiConfig::URL_EDIT_COMPANY_USER, [
+                CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
             'Edit'
         );
@@ -232,16 +235,16 @@ class CompanyUserTable extends AbstractTable
     {
         if ($companyUserDataItem[SpyCompanyUserTableMap::COL_IS_ACTIVE]) {
             return $this->generateRemoveButton(
-                Url::generate(CompanyUserTableConstants::URL_DISABLE_COMPANY_USER, [
-                    CompanyUserTableConstants::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+                Url::generate(CompanyUserGuiConfig::URL_DISABLE_COMPANY_USER, [
+                    CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
                 ]),
                 'Disable'
             );
         }
 
         return $this->generateViewButton(
-            Url::generate(CompanyUserTableConstants::URL_ENABLE_COMPANY_USER, [
-                CompanyUserTableConstants::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            Url::generate(CompanyUserGuiConfig::URL_ENABLE_COMPANY_USER, [
+                CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
             'Enable'
         );
@@ -255,8 +258,8 @@ class CompanyUserTable extends AbstractTable
     protected function generateCompanyUserDeleteButton(array $companyUserDataItem): string
     {
         return $this->generateRemoveButton(
-            Url::generate(CompanyUserTableConstants::URL_CONFIRM_DELETE_COMPANY_USER, [
-                CompanyUserTableConstants::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            Url::generate(CompanyUserGuiConfig::URL_CONFIRM_DELETE_COMPANY_USER, [
+                CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
             'Delete'
         );

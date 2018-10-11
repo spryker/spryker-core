@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Customer\Communication\Table;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
@@ -223,8 +222,8 @@ class CustomerTable extends AbstractTable
      */
     protected function expandLinks(array $buttons, SpyCustomer $customer): array
     {
-        $customerTransfer = $this->mapSpyCustomerToCustomerTransfer($customer);
-        $expandedButtons = $this->customerTableExpanderPluginExecutor->executeActionExpanderPlugins($customerTransfer);
+        $expandedButtons = $this->customerTableExpanderPluginExecutor
+            ->executeActionExpanderPlugins($customer->getIdCustomer());
 
         foreach ($expandedButtons as $button) {
             $buttons[] = $this->generateButton(
@@ -236,16 +235,5 @@ class CustomerTable extends AbstractTable
         }
 
         return $buttons;
-    }
-
-    /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function mapSpyCustomerToCustomerTransfer(SpyCustomer $customer): CustomerTransfer
-    {
-        return (new CustomerTransfer())
-            ->fromArray($customer->toArray(), true);
     }
 }

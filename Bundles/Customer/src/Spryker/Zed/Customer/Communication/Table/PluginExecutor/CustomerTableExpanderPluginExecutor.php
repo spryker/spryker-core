@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Customer\Communication\Table\PluginExecutor;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 /**
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
@@ -28,16 +26,16 @@ class CustomerTableExpanderPluginExecutor implements CustomerTableExpanderPlugin
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function executeActionExpanderPlugins(CustomerTransfer $customerTransfer): array
+    public function executeActionExpanderPlugins(int $idCustomer): array
     {
         $buttons = [];
 
         foreach ($this->customerTableActionExpanderPlugins as $customerTableActionExpanderPlugin) {
-            $buttons = $customerTableActionExpanderPlugin->execute($customerTransfer, $buttons);
+            $buttons = $customerTableActionExpanderPlugin->execute($idCustomer, $buttons);
         }
 
         return $buttons;

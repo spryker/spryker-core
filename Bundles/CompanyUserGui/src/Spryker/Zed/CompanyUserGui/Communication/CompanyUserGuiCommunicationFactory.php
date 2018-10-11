@@ -24,6 +24,9 @@ use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeI
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig getConfig()
+ */
 class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**

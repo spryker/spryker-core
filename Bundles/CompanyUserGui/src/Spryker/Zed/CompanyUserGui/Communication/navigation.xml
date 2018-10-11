@@ -67,8 +67,8 @@
                         <label>Attach customer to company</label>
                         <title>Attach customer to company</title>
                         <bundle>company-user-gui</bundle>
-                        <controller>attach-customer-company</controller>
-                        <action>index</action>
+                        <controller>create-company-user</controller>
+                        <action>attach-customer</action>
                         <visible>0</visible>
                     </customer-company-attach>
                 </pages>

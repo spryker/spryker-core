@@ -35,16 +35,16 @@ class CompanyUserCustomerForm extends AbstractType
     public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
     public const OPTION_GENDER_CHOICES = 'gender_choices';
 
-    protected const FIELD_EMAIL = 'email';
-    protected const FIELD_SALUTATION = 'salutation';
-    protected const FIELD_FIRST_NAME = 'first_name';
-    protected const FIELD_LAST_NAME = 'last_name';
-    protected const FIELD_GENDER = 'gender';
-    protected const FIELD_SEND_PASSWORD_TOKEN = 'send_password_token';
-    protected const FIELD_ID_CUSTOMER = 'id_customer';
-    protected const FIELD_COMPANY = 'company';
-    protected const FIELD_PHONE = 'phone';
-    protected const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+    public const FIELD_EMAIL = 'email';
+    public const FIELD_SALUTATION = 'salutation';
+    public const FIELD_FIRST_NAME = 'first_name';
+    public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_GENDER = 'gender';
+    public const FIELD_SEND_PASSWORD_TOKEN = 'send_password_token';
+    public const FIELD_ID_CUSTOMER = 'id_customer';
+    public const FIELD_COMPANY = 'company';
+    public const FIELD_PHONE = 'phone';
+    public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
 
     /**
      * @return string

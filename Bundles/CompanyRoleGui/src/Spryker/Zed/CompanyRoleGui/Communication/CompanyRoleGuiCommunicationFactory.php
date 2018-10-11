@@ -13,7 +13,6 @@ use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleCreateForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProvider;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProviderInterface;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyUserRoleFormDataProvider;
 use Spryker\Zed\CompanyRoleGui\Communication\Table\CompanyRoleTable;
 use Spryker\Zed\CompanyRoleGui\CompanyRoleGuiDependencyProvider;
@@ -25,6 +24,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
+/**
+ * @method \Spryker\Zed\CompanyRoleGui\CompanyRoleGuiConfig getConfig()
+ */
 class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -100,9 +102,9 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProviderInterface
+     * @return \Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProvider
      */
-    public function createCompanyRoleCreateFormDataProvider(): CompanyRoleCreateDataProviderInterface
+    public function createCompanyRoleCreateFormDataProvider(): CompanyRoleCreateDataProvider
     {
         return new CompanyRoleCreateDataProvider(
             $this->getCompanyFacade(),

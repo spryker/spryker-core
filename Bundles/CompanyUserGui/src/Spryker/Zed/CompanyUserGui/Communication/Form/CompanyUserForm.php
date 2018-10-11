@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Form;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -23,7 +24,6 @@ class CompanyUserForm extends AbstractType
 {
     public const OPTION_COMPANY_CHOICES = 'company_choices';
 
-    public const FIELD_ID_COMPANY_USER = 'id_company_user';
     public const FIELD_FK_COMPANY = 'fk_company';
 
     /**
@@ -93,7 +93,7 @@ class CompanyUserForm extends AbstractType
      */
     protected function addIdCompanyUserField(FormBuilderInterface $builder): self
     {
-        $builder->add(static::FIELD_ID_COMPANY_USER, HiddenType::class);
+        $builder->add(CompanyUserGuiConfig::COL_ID_COMPANY_USER, HiddenType::class);
 
         return $this;
     }

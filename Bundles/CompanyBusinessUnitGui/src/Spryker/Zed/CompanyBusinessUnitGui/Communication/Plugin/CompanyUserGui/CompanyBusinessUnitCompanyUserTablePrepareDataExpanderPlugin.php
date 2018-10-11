@@ -5,9 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin\CompanyUser;
+namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin\CompanyUserGui;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -16,7 +17,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugin implements CompanyUserTablePrepareDataExpanderPluginInterface
 {
-    protected const COL_ID_COMPANY_USER = 'id_company_user';
+    /**
+     * @see \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig
+     */
+    protected const COL_ID_COMPANY_USER = CompanyUserGuiConfig::COL_ID_COMPANY_USER;
 
     /**
      * {@inheritdoc}

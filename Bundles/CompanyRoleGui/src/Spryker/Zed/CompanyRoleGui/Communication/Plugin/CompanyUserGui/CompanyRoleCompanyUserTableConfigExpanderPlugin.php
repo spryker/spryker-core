@@ -5,8 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin\CompanyUser;
+namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin\CompanyUserGui;
 
+use Spryker\Zed\CompanyRoleGui\CompanyRoleGuiConfig;
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableConfigExpanderPluginInterface;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -16,8 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin implements CompanyUserTableConfigExpanderPluginInterface
 {
-    public const COL_COMPANY_ROLE_NAMES = 'company_role_names';
-
     protected const TITLE_COMPANY_ROLE_NAMES = 'Roles';
 
     /**
@@ -33,11 +32,11 @@ class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin imp
     public function expandConfig(TableConfiguration $config): TableConfiguration
     {
         $configHeader = $config->getHeader() + [
-            static::COL_COMPANY_ROLE_NAMES => static::TITLE_COMPANY_ROLE_NAMES,
+            CompanyRoleGuiConfig::COL_COMPANY_ROLE_NAMES => static::TITLE_COMPANY_ROLE_NAMES,
         ];
         $config->setHeader($configHeader);
 
-        $config->addRawColumn(static::COL_COMPANY_ROLE_NAMES);
+        $config->addRawColumn(CompanyRoleGuiConfig::COL_COMPANY_ROLE_NAMES);
 
         return $config;
     }

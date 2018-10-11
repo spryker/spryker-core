@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Plugin\Customer;
 use Generated\Shared\Transfer\ButtonTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -18,10 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyUserCustomerTableActionExpanderPlugin extends AbstractPlugin implements CustomerTableActionExpanderPluginInterface
 {
-    protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_URL = 'company-user-gui/attach-customer-company';
+    protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_URL = 'company-user-gui/create-company-user/attach-customer';
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE = 'Attach to company';
-
-    protected const PARAM_ID_CUSTOMER = 'id-customer';
 
     /**
      * {@inheritdoc}
@@ -29,16 +28,16 @@ class CompanyUserCustomerTableActionExpanderPlugin extends AbstractPlugin implem
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttons
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function execute(CustomerTransfer $customerTransfer, array $buttons): array
+    public function execute(int $idCustomer, array $buttons): array
     {
         $countActiveCompanyUsersByIdCustomer = $this->getFactory()
             ->getCompanyUserFacade()
-            ->countActiveCompanyUsersByIdCustomer($customerTransfer);
+            ->countActiveCompanyUsersByIdCustomer((new CustomerTransfer())->setIdCustomer($idCustomer));
 
         if ($countActiveCompanyUsersByIdCustomer !== 0) {
             return $buttons;
@@ -52,7 +51,7 @@ class CompanyUserCustomerTableActionExpanderPlugin extends AbstractPlugin implem
         $url = Url::generate(
             static::BUTTON_ATTACH_CUSTOMER_TO_COMPANY_URL,
             [
-                static::PARAM_ID_CUSTOMER => $customerTransfer->getIdCustomer(),
+                CompanyUserGuiConfig::PARAM_ID_CUSTOMER => $idCustomer,
             ]
         );
 

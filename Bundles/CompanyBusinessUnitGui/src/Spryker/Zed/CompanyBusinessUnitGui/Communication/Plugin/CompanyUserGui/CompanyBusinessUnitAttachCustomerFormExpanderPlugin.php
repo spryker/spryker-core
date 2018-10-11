@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin\CompanyUser;
+namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin\CompanyUserGui;
 
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserAttachCustomerFormExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;

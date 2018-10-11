@@ -5,11 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUserGui\Communication\Table;
+namespace Spryker\Zed\CompanyUserGui;
 
-interface CompanyUserTableConstants
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+
+class CompanyUserGuiConfig extends AbstractBundleConfig
 {
+    public const COL_ID_COMPANY_USER = 'id_company_user';
+
     public const PARAM_ID_COMPANY_USER = 'id-company-user';
+    public const PARAM_ID_CUSTOMER = 'id-customer';
+    public const PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
      * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\EditCompanyUserController::indexAction()

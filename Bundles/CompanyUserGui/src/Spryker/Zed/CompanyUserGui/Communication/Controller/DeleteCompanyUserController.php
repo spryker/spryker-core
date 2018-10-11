@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CompanyUserGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyUserGui\Communication\Table\CompanyUserTableConstants;
+use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +28,7 @@ class DeleteCompanyUserController extends AbstractController
      */
     public function confirmDeleteAction(Request $request): array
     {
-        $idCompanyUser = $request->query->getInt(CompanyUserTableConstants::PARAM_ID_COMPANY_USER);
+        $idCompanyUser = $request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
 
         $companyUserTransfer = $this->getFactory()
             ->getCompanyUserFacade()
@@ -51,11 +51,11 @@ class DeleteCompanyUserController extends AbstractController
      */
     public function deleteAction(Request $request): RedirectResponse
     {
-        $idCompanyUser = $request->query->getInt(CompanyUserTableConstants::PARAM_ID_COMPANY_USER);
+        $idCompanyUser = $request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
         if (!$idCompanyUser) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DELETE);
 
-            return $this->redirectResponse(CompanyUserTableConstants::URL_REDIRECT_COMPANY_USER_PAGE);
+            return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
         }
 
         $companyUserTransfer = (new CompanyUserTransfer())
@@ -68,11 +68,11 @@ class DeleteCompanyUserController extends AbstractController
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DELETE);
 
-            return $this->redirectResponse(CompanyUserTableConstants::URL_REDIRECT_COMPANY_USER_PAGE);
+            return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
         }
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_DELETE);
 
-        return $this->redirectResponse(CompanyUserTableConstants::URL_REDIRECT_COMPANY_USER_PAGE);
+        return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
     }
 }

@@ -16,9 +16,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CompanyRoleTable extends AbstractTable
 {
-    protected const COL_ID_COMPANY_ROLE = SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE;
-    protected const COL_NAME_COMPANY_ROLE = SpyCompanyRoleTableMap::COL_NAME;
-    protected const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
     protected const COL_ACTIONS = 'Actions';
 
     protected const HEADER_ID_COMPANY_ROLE = 'Role ID';
@@ -55,24 +52,24 @@ class CompanyRoleTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            static::COL_ID_COMPANY_ROLE => static::HEADER_ID_COMPANY_ROLE,
-            static::COL_COMPANY_NAME => static::HEADER_NAME_COMPANY,
-            static::COL_NAME_COMPANY_ROLE => static::HEADER_NAME_COMPANY_ROLE,
+            SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE => static::HEADER_ID_COMPANY_ROLE,
+            SpyCompanyTableMap::COL_NAME => static::HEADER_NAME_COMPANY,
+            SpyCompanyRoleTableMap::COL_NAME => static::HEADER_NAME_COMPANY_ROLE,
             static::COL_ACTIONS => static::HEADER_ACTIONS,
         ]);
 
         $config->addRawColumn(static::COL_ACTIONS);
 
         $config->setSortable([
-            static::COL_ID_COMPANY_ROLE,
-            static::COL_NAME_COMPANY_ROLE,
-            static::COL_COMPANY_NAME,
+            SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE,
+            SpyCompanyRoleTableMap::COL_NAME,
+            SpyCompanyTableMap::COL_NAME,
         ]);
 
         $config->setSearchable([
-            static::COL_ID_COMPANY_ROLE,
-            static::COL_NAME_COMPANY_ROLE,
-            static::COL_COMPANY_NAME,
+            SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE,
+            SpyCompanyRoleTableMap::COL_NAME,
+            SpyCompanyTableMap::COL_NAME,
         ]);
 
         return $config;
@@ -90,9 +87,9 @@ class CompanyRoleTable extends AbstractTable
 
         foreach ($queryResults as $companyRole) {
             $results[] = [
-                static::COL_ID_COMPANY_ROLE => $companyRole[static::COL_ID_COMPANY_ROLE],
-                static::COL_COMPANY_NAME => $companyRole[static::COL_COMPANY_NAME],
-                static::COL_NAME_COMPANY_ROLE => $companyRole[static::COL_NAME_COMPANY_ROLE],
+                SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE => $companyRole[SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE],
+                SpyCompanyTableMap::COL_NAME => $companyRole[SpyCompanyTableMap::COL_NAME],
+                SpyCompanyRoleTableMap::COL_NAME => $companyRole[SpyCompanyRoleTableMap::COL_NAME],
                 static::COL_ACTIONS => implode(' ', $this->createTableActions($companyRole)),
             ];
         }
@@ -110,12 +107,12 @@ class CompanyRoleTable extends AbstractTable
         $buttons = [];
 
         $buttons[] = $this->generateEditButton(
-            Url::generate(self::UPDATE_ROLE_URL, [self::PARAM_ID_COMPANY_ROLE => $companyRole[static::COL_ID_COMPANY_ROLE]]),
+            Url::generate(self::UPDATE_ROLE_URL, [self::PARAM_ID_COMPANY_ROLE => $companyRole[SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE]]),
             static::BUTTON_TITLE_EDIT
         );
 
         $buttons[] = $this->generateRemoveButton(
-            Url::generate(self::DELETE_ROLE_URL, [self::PARAM_ID_COMPANY_ROLE => $companyRole[static::COL_ID_COMPANY_ROLE]]),
+            Url::generate(self::DELETE_ROLE_URL, [self::PARAM_ID_COMPANY_ROLE => $companyRole[SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE]]),
             static::BUTTON_TITLE_DELETE
         );
 
@@ -123,6 +120,8 @@ class CompanyRoleTable extends AbstractTable
     }
 
     /**
+     * @module Company
+     *
      * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery
      */
     protected function prepareQuery(): SpyCompanyRoleQuery
@@ -131,9 +130,9 @@ class CompanyRoleTable extends AbstractTable
         $query = $this->companyRoleQuery
             ->leftJoinWithCompany()
             ->select([
-                static::COL_ID_COMPANY_ROLE,
-                static::COL_COMPANY_NAME,
-                static::COL_NAME_COMPANY_ROLE,
+                SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE,
+                SpyCompanyTableMap::COL_NAME,
+                SpyCompanyRoleTableMap::COL_NAME,
             ]);
 
         return $query;

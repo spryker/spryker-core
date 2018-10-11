@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserGui\Communication\Controller;
 
+use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,14 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditCompanyUserController extends AbstractController
 {
-    protected const PARAM_ID_COMPANY_USER = 'id-company-user';
-    protected const PARAM_REDIRECT_URL = 'redirect-url';
-    /**
-     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\ListCompanyUserController::indexAction()
-     */
-    protected const URL_USER_LIST = '/company-user-gui/list-company-user';
-
-    protected const MESSAGE_SUCCESS_COMPANY_USER_UPDATE = 'Company User "%s" has been updated.';
+    protected const MESSAGE_SUCCESS_COMPANY_USER_UPDATE = 'Company User has been updated.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,7 +26,7 @@ class EditCompanyUserController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCompanyUser = $this->castId($request->query->get(static::PARAM_ID_COMPANY_USER));
+        $idCompanyUser = $this->castId($request->query->get(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER));
 
         $dataProvider = $this->getFactory()->createCompanyUserFormDataProvider();
         $companyUserForm = $this->getFactory()
@@ -45,7 +39,7 @@ class EditCompanyUserController extends AbstractController
         if ($companyUserForm->isSubmitted() && $companyUserForm->isValid()) {
             return $this->updateCompanyUser(
                 $companyUserForm,
-                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_USER_LIST)
+                $request->query->get(CompanyUserGuiConfig::PARAM_REDIRECT_URL, CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE)
             );
         }
 
@@ -84,10 +78,7 @@ class EditCompanyUserController extends AbstractController
             $this->addSuccessMessage($message->getText());
         }
 
-        $this->addSuccessMessage(sprintf(
-            static::MESSAGE_SUCCESS_COMPANY_USER_UPDATE,
-            $companyUserTransfer->getCustomer()->getFirstName() . ' ' . $companyUserTransfer->getCustomer()->getLastName()
-        ));
+        $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_UPDATE);
 
         return $this->redirectResponse($redirectUrl);
     }
