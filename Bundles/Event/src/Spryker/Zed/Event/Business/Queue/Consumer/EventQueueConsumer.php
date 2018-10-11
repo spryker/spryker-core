@@ -139,7 +139,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                 );
                 $this->logConsumerAction($errorMessage, $throwable);
                 if (!$this->eventConfig->isLoggerActivated()) {
-                    $errorMessage = $throwable->getMessage();
+                    $errorMessage = '';
                 }
                 $this->handleFailedMessages($eventItem, $errorMessage);
             }
