@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductPageSearch\Business\Model;
 
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
-use Generated\Shared\Transfer\SpyProductAbstractPageSearchEntityTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
-use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorageQuery;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage;
@@ -156,7 +155,8 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
      *
      * @return void
      */
-    protected function applyChangesToEntity(SpyPriceProductAbstractMerchantRelationshipStorage $priceProductMerchantRelationshipStorageEntity, string $priceKey, int $idCompanyBusinessUnit, array $prices): void {
+    protected function applyChangesToEntity(SpyPriceProductAbstractMerchantRelationshipStorage $priceProductMerchantRelationshipStorageEntity, string $priceKey, int $idCompanyBusinessUnit, array $prices): void
+    {
         $data = [
             'prices' => $prices,
         ];
