@@ -58,12 +58,30 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
      */
     protected function saveEntity(SpyProductAbstractPageSearch $productPageSearchEntity, ProductPageSearchTransfer $productPageSearchTransfer, array $data)
     {
-        $productPageSearchEntity->setFkProductAbstract($productPageSearchTransfer->getIdProductAbstract());
+        try {
+            $productPageSearchEntity->setFkProductAbstract($productPageSearchTransfer->getIdProductAbstract());
+            $this->applyChangesToEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
+            $productPageSearchEntity->save();
+        } catch (\Exception $e) {
+            $productPageSearchEntity = SpyProductAbstractPageSearchQuery::create()->findOneByFkProductAbstract($productPageSearchEntity->getFkProductAbstract());
+            $this->applyChangesToEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
+            $productPageSearchEntity->save();
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productPageSearchEntity
+     * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
+     * @param array $data
+     *
+     * @return void
+     */
+    protected function applyChangesToEntity(SpyProductAbstractPageSearch $productPageSearchEntity, ProductPageSearchTransfer $productPageSearchTransfer, array $data): void
+    {
         $productPageSearchEntity->setStructuredData($this->utilEncoding->encodeJson($productPageSearchTransfer->toArray()));
         $productPageSearchEntity->setData($data);
         $productPageSearchEntity->setStore($productPageSearchTransfer->getStore());
         $productPageSearchEntity->setLocale($productPageSearchTransfer->getLocale());
         $productPageSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
-        $productPageSearchEntity->save();
     }
 }
