@@ -8,11 +8,13 @@
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
+use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorageQuery;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorageQuery;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
+use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntityManager implements PriceProductMerchantRelationshipStorageEntityManagerInterface
@@ -125,27 +127,47 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
 
                 $priceKey = $this->buildPriceKey($storageTransfers[0]);
 
-                $priceProductMerchantRelationshipStorageEntity = $this->getPriceProductMerchantRelationshipStorageEntity(
-                    $existingPriceProductMerchantRelationshipStorageEntityMap,
-                    $priceKey,
-                    $priceProductStorageEntityClass
-                );
-
-                $data = [
-                    'prices' => $prices,
-                ];
-
-                $priceProductMerchantRelationshipStorageEntity
-                    ->setPriceKey($priceKey)
-                    ->setFkCompanyBusinessUnit($idCompanyBusinessUnit)
-                    ->setData($data)
-                    ->setIsSendingToQueue(true);
-
-                $this->setProductForeignKey($priceProductMerchantRelationshipStorageEntity, $idProduct);
-
-                $priceProductMerchantRelationshipStorageEntity->save();
+                try {
+                    $priceProductMerchantRelationshipStorageEntity = $this->getPriceProductMerchantRelationshipStorageEntity(
+                        $existingPriceProductMerchantRelationshipStorageEntityMap,
+                        $priceKey,
+                        $priceProductStorageEntityClass
+                    );
+                    $this->applyChangesToEntity($priceProductMerchantRelationshipStorageEntity, $priceKey, $idCompanyBusinessUnit, $prices);
+                    $priceProductMerchantRelationshipStorageEntity->save();
+                } catch (PropelException $exception) {
+                    ErrorLogger::getInstance()->log($exception);
+                    $priceProductMerchantRelationshipStorageEntity = SpyPriceProductAbstractMerchantRelationshipStorageQuery::create()
+                        ->filterByFkProductAbstract()
+                        ->filterByPriceKey($priceKey)
+                        ->findOne();
+                    $this->applyChangesToEntity($priceProductMerchantRelationshipStorageEntity, $priceKey, $idCompanyBusinessUnit, $prices);
+                    $priceProductMerchantRelationshipStorageEntity->save();
+                }
             }
         }
+    }
+
+    /**
+     * @param Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage $priceProductMerchantRelationshipStorageEntity
+     * @param string $priceKey
+     * @param int $idCompanyBusinessUnit
+     * @param array $prices
+     *
+     * @return void
+     */
+    protected function applyChangesToEntity(SpyPriceProductAbstractMerchantRelationshipStorage $priceProductMerchantRelationshipStorageEntity, string $priceKey, int $idCompanyBusinessUnit, array $prices): void {
+        $data = [
+            'prices' => $prices,
+        ];
+
+        $priceProductMerchantRelationshipStorageEntity
+            ->setPriceKey($priceKey)
+            ->setFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->setData($data)
+            ->setIsSendingToQueue(true);
+
+        $this->setProductForeignKey($priceProductMerchantRelationshipStorageEntity, $idProduct);
     }
 
     /**
