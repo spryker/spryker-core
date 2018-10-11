@@ -56,6 +56,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         };
 
         $app['profiler.mount_prefix'] = '/_profiler';
+
         $app['dispatcher'] = $app->share($app->extend('dispatcher', function ($dispatcher, $app) {
             return new TraceableEventDispatcher($dispatcher, $app['stopwatch'], $app['logger']);
         }));
@@ -72,7 +73,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
                 ['memory',    '@WebProfiler/Collector/memory.html.twig'],
                 ['form',      '@WebProfiler/Collector/form.html.twig'],
             ];
-            if (class_exists('Symfony\Bridge\Twig\Extension\ProfilerExtension')) {
+            if (class_exists(ProfilerExtension::class)) {
                 $templates[] = ['twig', '@WebProfiler/Collector/twig.html.twig'];
             }
 
@@ -108,7 +109,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
             ];
         });
 
-        if (isset($app['form.resolved_type_factory']) && class_exists('\Symfony\Component\Form\Extension\DataCollector\FormDataCollector')) {
+        if (isset($app['form.resolved_type_factory']) && class_exists(FormDataCollector::class)) {
             $app['data_collectors.form.extractor'] = $app->share(function () {
                 return new FormDataExtractor();
             });
@@ -132,7 +133,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
             }));
         }
 
-        if (class_exists('Symfony\Bridge\Twig\Extension\ProfilerExtension')) {
+        if (class_exists(ProfilerExtension::class)) {
             $app['data_collectors'] = $app->share($app->extend('data_collectors', function ($collectors, $app) {
                 $collectors['twig'] = $app->share(function ($app) {
                     return new TwigDataCollector($app['twig.profiler.profile']);
@@ -200,11 +201,11 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         $app['twig'] = $app->share($app->extend('twig', function ($twig, $app) {
             $twig->addExtension(new CodeExtension($app['code.file_link_format'], '', $app['charset']));
 
-            if (class_exists('\Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension')) {
+            if (class_exists(WebProfilerExtension::class)) {
                 $twig->addExtension(new WebProfilerExtension());
             }
 
-            if (class_exists('Symfony\Bridge\Twig\Extension\ProfilerExtension')) {
+            if (class_exists(ProfilerExtension::class)) {
                 $twig->addExtension(new ProfilerExtension($app['twig.profiler.profile'], $app['stopwatch']));
             }
 
@@ -218,7 +219,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         }));
 
         $app['profiler.templates_path'] = function () {
-            $reflectionClass = new ReflectionClass('Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener');
+            $reflectionClass = new ReflectionClass(WebDebugToolbarListener::class);
 
             return dirname(dirname((string)$reflectionClass->getFileName())) . '/Resources/views';
         };
