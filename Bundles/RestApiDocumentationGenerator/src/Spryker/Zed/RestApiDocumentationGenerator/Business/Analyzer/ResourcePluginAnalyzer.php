@@ -86,9 +86,11 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
                     $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins())
                 );
 
-                $this->processGetResourcePath($plugin, $resourcePath, $annotationParameters->getGetResource());
                 $this->processGetResourceByIdPath($plugin, $resourcePath, $annotationParameters->getGetResourceById());
                 $this->processGetResourceCollectionPath($plugin, $resourcePath, $annotationParameters->getGetCollection());
+                if ($annotationParameters->getGetResourceById() === null && $annotationParameters->getGetCollection() === null) {
+                    $this->processGetResourcePath($plugin, $resourcePath, $annotationParameters->getGetResource());
+                }
                 $this->processPostResourcePath($plugin, $resourcePath, $annotationParameters->getPost());
                 $this->processPatchResourcePath($plugin, $resourcePath, $annotationParameters->getPatch());
                 $this->processDeleteResourcePath($plugin, $resourcePath, $annotationParameters->getDelete());
