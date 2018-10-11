@@ -42,4 +42,16 @@ class GuestCartItemsResourceController extends AbstractController
             ->createGuestCartItemUpdater()
             ->updateItemQuantity($request, $restCartItemsAttributesTransfer);
     }
+    
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return $this->getFactory()
+            ->createGuestCartItemDeleter()
+            ->deleteItem($restRequest);
+    }
 }

@@ -28,6 +28,8 @@ use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdater;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemAdder;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemAdderInterface;
+use Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemDeleter;
+use Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemUpdater;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapper;
@@ -128,6 +130,19 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getCartClient(),
             $this->getResourceBuilder(),
             $this->getZedRequestClient(),
+            $this->getQuoteClient(),
+            $this->createCartReader()
+        );
+    }
+     
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemDeleterInterface
+     */
+    public function createGuestCartItemDeleter(): GuestCartItemDeleterInterface
+    {
+        return new GuestCartItemDeleter(
+            $this->getCartClient(),
+            $this->getResourceBuilder(),
             $this->getQuoteClient(),
             $this->createCartReader()
         );
