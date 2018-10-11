@@ -44,6 +44,8 @@ class ProductAttributeBusinessTester extends Actor
     public const SUPER_ATTRIBUTE_KEY = 'super_attribute';
     public const SUPER_ATTRIBUTE_VALUE = 'very super attribute';
     public const FOO_ATTRIBUTE_KEY = 'foo';
+    public const ANOTHER_SUPER_ATTRIBUTE_KEY = 'another_super_attribute';
+    public const ANOTHER_SUPER_ATTRIBUTE_VALUE = 'another super attribute value';
 
     public const DATA_PRODUCT_ATTRIBUTES_VALUES = [
         'foo' => 'Foo Value',
