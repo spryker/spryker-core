@@ -72,7 +72,8 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCustomersResourceMapper(),
             $this->createRestApiError(),
-            $this->createRestApiValidator()
+            $this->createRestApiValidator(),
+            $this->getCustomerRegisterPostSavePlugins()
         );
     }
 
@@ -150,5 +151,13 @@ class CustomersRestApiFactory extends AbstractFactory
     public function createRestApiError(): RestApiErrorInterface
     {
         return new RestApiError();
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[]
+     */
+    public function getCustomerRegisterPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PLUGINS_CUSTOMER_POST_REGISTER);
     }
 }

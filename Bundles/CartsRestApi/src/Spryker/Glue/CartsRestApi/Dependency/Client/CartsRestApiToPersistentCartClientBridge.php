@@ -9,6 +9,7 @@ namespace Spryker\Glue\CartsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 
 class CartsRestApiToPersistentCartClientBridge implements CartsRestApiToPersistentCartClientInterface
 {
@@ -53,5 +54,15 @@ class CartsRestApiToPersistentCartClientBridge implements CartsRestApiToPersiste
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->persistentCartClient->createQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
     }
 }
