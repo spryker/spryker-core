@@ -17,12 +17,12 @@ use Spryker\Zed\Kernel\Container;
 
 class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
-    const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
-    const FACADE_CATEGORY = 'FACADE_CATEGORY';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const STORE = 'store';
+    public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const STORE = 'store';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

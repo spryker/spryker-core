@@ -5,6 +5,7 @@ parameters:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
     - '#Method .+Criteria::addJoinObject\(\) invoked with 2 parameters, 1 required.#'
     - '#Call to an undefined method .+SpyCompanyRoleQuery|.+SpyPermissionQuery::groupByIdQuote\(\).#'
+    - '#Casting to int something that.+s already int#'
 
 services:
     -

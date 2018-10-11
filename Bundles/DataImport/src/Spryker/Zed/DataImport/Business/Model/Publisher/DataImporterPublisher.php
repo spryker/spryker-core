@@ -8,14 +8,15 @@
 namespace Spryker\Zed\DataImport\Business\Model\Publisher;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 
 class DataImporterPublisher implements DataImporterPublisherInterface
 {
+    public const CHUNK_SIZE = 20000;
+
     /**
-     * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
+     * @var \Spryker\Zed\Event\Business\EventFacadeInterface
      */
-    protected $eventFacade;
+    protected static $eventFacade;
 
     /**
      * @var array
@@ -23,39 +24,71 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     protected static $importedEntityEvents = [];
 
     /**
-     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface $eventFacade
+     * @var array
      */
-    public function __construct(DataImportToEventFacadeInterface $eventFacade)
+    protected static $triggeredEventIds = [];
+
+    /**
+     * @param string $eventName
+     * @param int $entityId
+     *
+     * @return void
+     */
+    public static function addEvent($eventName, $entityId): void
     {
-        $this->eventFacade = $eventFacade;
+        if (isset(static::$triggeredEventIds[$eventName][$entityId])) {
+            return;
+        }
+
+        static::$importedEntityEvents[$eventName][$entityId] = true;
+
+        if (count(static::$importedEntityEvents, COUNT_RECURSIVE) >= static::CHUNK_SIZE) {
+            static::triggerEvents();
+        }
     }
 
     /**
+     * @deprecated use addEvent() instead.
+     *
      * @param array $events
      *
      * @return void
      */
     public static function addImportedEntityEvents(array $events): void
     {
-        $mergedArray = array_merge_recursive(static::$importedEntityEvents, $events);
-
-        static::$importedEntityEvents = static::getUniqueArray($mergedArray);
+        static::$importedEntityEvents = array_merge_recursive(static::$importedEntityEvents, $events);
     }
 
     /**
+     * @param int $flushChunkSize
+     *
      * @return void
      */
-    public function triggerEvents(): void
+    public static function triggerEvents($flushChunkSize = self::FLUSH_CHUNK_SIZE): void
     {
-        foreach (static::$importedEntityEvents as $event => $ids) {
-            $uniqueIds = array_unique($ids, SORT_REGULAR);
-            foreach ($uniqueIds as $id) {
-                $this->eventFacade->trigger($event, (new EventEntityTransfer())->setId($id));
+        $uniqueEvents = static::$importedEntityEvents;
+        foreach ($uniqueEvents as $eventName => $ids) {
+            $events = [];
+            foreach ($ids as $key => $value) {
+                $events[] = (new EventEntityTransfer())->setId($key);
+                static::$triggeredEventIds[$eventName][$key] = true;
             }
+
+            static::loadEventFacade();
+            static::$eventFacade->triggerBulk($eventName, $events);
+        }
+
+        static::$importedEntityEvents = [];
+
+        if (count(static::$triggeredEventIds, COUNT_RECURSIVE) > $flushChunkSize) {
+            static::$triggeredEventIds = [];
         }
     }
 
     /**
+     * @deprecated $ids will be unique by calling DataImporterPublisher::addEvent(),
+     * No necessary to call this method anymore
+     *
      * @param array $mergedArray
      *
      * @return array
@@ -68,5 +101,18 @@ class DataImporterPublisher implements DataImporterPublisherInterface
         }
 
         return $uniqueArray;
+    }
+
+    /**
+     * Added here for keeping the BC, needs to inject this from outside
+     *
+     * @return void
+     */
+    protected static function loadEventFacade()
+    {
+        if (!static::$eventFacade) {
+            $locatorClassName = '\Spryker\Zed\Kernel\Locator';
+            static::$eventFacade = $locatorClassName::getInstance()->event()->facade();
+        }
     }
 }

@@ -10,16 +10,20 @@ namespace Spryker\Zed\Event\Business\Queue\Consumer;
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
+use Spryker\Shared\Event\EventConfig as SharedEventConfig;
+use Spryker\Zed\Event\Business\Exception\MessageTypeNotFoundException;
 use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
+use Spryker\Zed\Event\EventConfig;
 use Throwable;
 
 class EventQueueConsumer implements EventQueueConsumerInterface
 {
-    const EVENT_TRANSFERS = 'eventTransfers';
-    const EVENT_MESSAGES = 'eventMessages';
+    public const EVENT_TRANSFERS = 'eventTransfers';
+    public const EVENT_MESSAGES = 'eventMessages';
+    public const RETRY_KEY = 'retry';
     /**
      * @var \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
@@ -31,16 +35,24 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Zed\Event\EventConfig
+     */
+    protected $eventConfig;
+
+    /**
      * @param \Spryker\Zed\Event\Business\Logger\EventLoggerInterface $eventLogger
      * @param \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Zed\Event\EventConfig $eventConfig
      */
     public function __construct(
         EventLoggerInterface $eventLogger,
-        EventToUtilEncodingInterface $utilEncodingService
+        EventToUtilEncodingInterface $utilEncodingService,
+        EventConfig $eventConfig
     ) {
 
         $this->eventLogger = $eventLogger;
         $this->utilEncodingService = $utilEncodingService;
+        $this->eventConfig = $eventConfig;
     }
 
     /**
@@ -62,13 +74,13 @@ class EventQueueConsumer implements EventQueueConsumerInterface
             }
 
             try {
-                $eventTransfer = $this->mapEventTransfer($eventQueueSentMessageBodyTransfer);
-                $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][static::EVENT_TRANSFERS][] = $eventTransfer;
+                $transfer = $this->mapEventTransfer($eventQueueSentMessageBodyTransfer);
+                $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][static::EVENT_TRANSFERS][] = $transfer;
                 $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][static::EVENT_MESSAGES][] = $queueMessageTransfer;
 
                 $listener = $this->createEventListener($eventQueueSentMessageBodyTransfer->getListenerClassName());
                 if ($listener instanceof EventHandlerInterface) {
-                    $listener->handle($eventTransfer, $eventQueueSentMessageBodyTransfer->getEventName());
+                    $listener->handle($transfer, $eventQueueSentMessageBodyTransfer->getEventName());
                 }
 
                 $this->logConsumerAction(
@@ -89,6 +101,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                     $exception->getTraceAsString()
                 );
                 $this->logConsumerAction($errorMessage, $exception);
+                $this->retryMessage($queueMessageTransfer, $errorMessage);
                 $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
             }
         }
@@ -125,11 +138,62 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                     $throwable->getTraceAsString()
                 );
                 $this->logConsumerAction($errorMessage, $throwable);
-                foreach ($eventItem[static::EVENT_MESSAGES] as $queueMessageTransfer) {
-                    $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
+                if (!$this->eventConfig->isLoggerActivated()) {
+                    $errorMessage = $throwable->getMessage();
                 }
+                $this->handleFailedMessages($eventItem, $errorMessage);
             }
         }
+    }
+
+    /**
+     * @param array $eventItem
+     * @param string $errorMessage
+     *
+     * @return void
+     */
+    protected function handleFailedMessages(array $eventItem, string $errorMessage): void
+    {
+        foreach ($eventItem[static::EVENT_MESSAGES] as $queueMessageTransfer) {
+            $this->retryMessage($queueMessageTransfer, $errorMessage);
+            $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
+     * @param string $retryMessage
+     *
+     * @return void
+     */
+    protected function retryMessage(QueueReceiveMessageTransfer $queueMessageTransfer, string $retryMessage): void
+    {
+        if ($queueMessageTransfer->getRoutingKey()) {
+            return;
+        }
+
+        $queueMessageBody = $this->utilEncodingService->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
+        $queueMessageBody = $this->updateMessageRetryKey($queueMessageBody);
+
+        if ($queueMessageBody[static::RETRY_KEY] < $this->eventConfig->getMaxRetryAmount()) {
+            $queueMessageBody[static::RETRY_KEY]++;
+            $queueMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));
+            $this->markMessageAsRetry($queueMessageTransfer, $retryMessage);
+        }
+    }
+
+    /**
+     * @param array $messageBody
+     *
+     * @return array
+     */
+    protected function updateMessageRetryKey(array $messageBody): array
+    {
+        if (!isset($messageBody[static::RETRY_KEY])) {
+            $messageBody[static::RETRY_KEY] = 0;
+        }
+
+        return $messageBody;
     }
 
     /**
@@ -232,22 +296,48 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function markMessageAsFailed(QueueReceiveMessageTransfer $queueMessageTransfer, $errorMessage = '')
     {
-        $this->setMessageError($queueMessageTransfer, $errorMessage);
+        if ($queueMessageTransfer->getRoutingKey()) {
+            return;
+        }
+
+        $this->setMessage($queueMessageTransfer, 'errorMessage', $errorMessage);
         $queueMessageTransfer->setAcknowledge(false);
         $queueMessageTransfer->setReject(true);
         $queueMessageTransfer->setHasError(true);
+        $queueMessageTransfer->setRoutingKey(SharedEventConfig::EVENT_ROUTING_KEY_ERROR);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
-     * @param string $errorMessage
+     * @param string $retryMessage
      *
      * @return void
      */
-    protected function setMessageError(QueueReceiveMessageTransfer $queueMessageTransfer, $errorMessage = '')
+    protected function markMessageAsRetry(QueueReceiveMessageTransfer $queueMessageTransfer, $retryMessage = '')
     {
+        $message = sprintf('Retry on: %s', $retryMessage);
+        $this->setMessage($queueMessageTransfer, 'retryMessage', $message);
+        $queueMessageTransfer->setAcknowledge(true);
+        $queueMessageTransfer->setRoutingKey(SharedEventConfig::EVENT_ROUTING_KEY_RETRY);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
+     * @param string $messageType
+     * @param string $message
+     *
+     * @throws \Spryker\Zed\Event\Business\Exception\MessageTypeNotFoundException
+     *
+     * @return void
+     */
+    protected function setMessage(QueueReceiveMessageTransfer $queueMessageTransfer, string $messageType, string $message = '')
+    {
+        if (!$messageType) {
+            throw new MessageTypeNotFoundException('message type is not defined');
+        }
+
         $queueMessageBody = $this->utilEncodingService->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
-        $queueMessageBody['errorMessage'] = $errorMessage;
+        $queueMessageBody[$messageType] = $message;
         $queueMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));
     }
 

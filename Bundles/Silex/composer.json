@@ -1,5 +1,6 @@
 {
   "name": "spryker/silex",
+  "type": "library",
   "description": "Silex module",
   "license": "proprietary",
   "require": {

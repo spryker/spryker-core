@@ -1,12 +1,13 @@
 {
   "name": "spryker/price-cart-connector",
+  "type": "library",
   "description": "PriceCartConnector module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
     "spryker/price": "^5.0.0",
-    "spryker/price-product": "^1.0.0 || ^2.0.0"
+    "spryker/price-product": "^1.3.0 || ^2.3.0"
   },
   "require-dev": {
     "spryker/calculation": "*",

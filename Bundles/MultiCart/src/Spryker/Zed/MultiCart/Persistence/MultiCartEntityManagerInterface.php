@@ -15,4 +15,11 @@ interface MultiCartEntityManagerInterface
      * @return void
      */
     public function resetQuoteDefaultFlagByCustomer(string $customerReference): void;
+
+    /**
+     * @param int $idQuote
+     *
+     * @return void
+     */
+    public function setDefaultQuote(int $idQuote): void;
 }

@@ -50,7 +50,7 @@ use Spryker\Zed\Messenger\Business\MessengerFacade;
  */
 class CalculatorTest extends Unit
 {
-    const ITEM_GROSS_PRICE_500 = 500;
+    public const ITEM_GROSS_PRICE_500 = 500;
 
     /**
      * @return void
@@ -252,7 +252,9 @@ class CalculatorTest extends Unit
      */
     protected function createCollectorPlugins()
     {
-         $collectorProviderPlugins[] = new ItemBySkuCollectorPlugin();
+        $collectorProviderPlugins = [];
+
+        $collectorProviderPlugins[] = new ItemBySkuCollectorPlugin();
 
         return $collectorProviderPlugins;
     }
@@ -315,11 +317,14 @@ class CalculatorTest extends Unit
      */
     protected function createCalculatorPlugins($calculatorPluginMock = null)
     {
+        $calculatorPlugins = [];
+
         if ($calculatorPluginMock) {
-            return [
-                'test' => $calculatorPluginMock,
-            ];
+            $calculatorPlugins['test'] = $calculatorPluginMock;
+
+            return $calculatorPlugins;
         }
+
         $calculatorPlugins[DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE] = $this->createPercentageCalculator();
 
         return $calculatorPlugins;

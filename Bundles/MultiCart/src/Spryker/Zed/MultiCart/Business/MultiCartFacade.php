@@ -39,6 +39,22 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
      *
      * @api
      *
+     * @param string $customerReference
+     *
+     * @return void
+     */
+    public function initDefaultCustomerQuote(string $customerReference): void
+    {
+        $this->getFactory()
+            ->createQuoteWriter()
+            ->initDefaultCustomerQuote($customerReference);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

@@ -18,7 +18,7 @@ class NavigationStorageConstants
      *
      * @api
      */
-    const NAVIGATION_SYNC_STORAGE_QUEUE = 'sync.storage.category';
+    public const NAVIGATION_SYNC_STORAGE_QUEUE = 'sync.storage.category';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ class NavigationStorageConstants
      *
      * @api
      */
-    const NAVIGATION_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.category.error';
+    public const NAVIGATION_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.category.error';
 
     /**
      * Specification:
@@ -34,5 +34,5 @@ class NavigationStorageConstants
      *
      * @api
      */
-    const RESOURCE_NAME = 'navigation';
+    public const RESOURCE_NAME = 'navigation';
 }

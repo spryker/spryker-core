@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Merchant;
 
 use Codeception\Actor;
+use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 
 /**
  * Inherited Methods
@@ -31,4 +32,20 @@ class MerchantBusinessTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return void
+     */
+    public function truncateMerchantRelations(): void
+    {
+        $this->truncateTableRelations($this->getMerchantQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     */
+    protected function getMerchantQuery(): SpyMerchantQuery
+    {
+        return SpyMerchantQuery::create();
+    }
 }

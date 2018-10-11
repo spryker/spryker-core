@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Container;
 
 class SalesSplitDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SALES_QUERY_CONTAINER = 'SALES_QUERY_CONTAINER';
+    public const SALES_QUERY_CONTAINER = 'SALES_QUERY_CONTAINER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

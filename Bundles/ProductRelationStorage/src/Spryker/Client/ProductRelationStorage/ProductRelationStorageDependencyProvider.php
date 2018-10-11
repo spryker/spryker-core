@@ -15,10 +15,10 @@ use Spryker\Client\ProductRelationStorage\Dependency\Service\ProductRelationStor
 
 class ProductRelationStorageDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
-    const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
-    const PLUGIN_RELATED_PRODUCT_EXPANDERS = 'PLUGIN_RELATED_PRODUCT_EXPANDERS';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const PLUGIN_RELATED_PRODUCT_EXPANDERS = 'PLUGIN_RELATED_PRODUCT_EXPANDERS';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
