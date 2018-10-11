@@ -13,7 +13,7 @@ interface TwigTranslatorExtensionPluginInterface
 {
     /**
      * Specification:
-     *  - Add translation extension to twig
+     * - Add translation extension to twig.
      *
      * @api
      *
@@ -21,5 +21,5 @@ interface TwigTranslatorExtensionPluginInterface
      *
      * @return \Twig_Environment
      */
-    public function addExtension(Twig_Environment $twig): Twig_Environment;
+    public function addTranslatorExtension(Twig_Environment $twig): Twig_Environment;
 }

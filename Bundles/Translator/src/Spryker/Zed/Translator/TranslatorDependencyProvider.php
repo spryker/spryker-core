@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Translator;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
@@ -18,6 +19,7 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
     public const APPLICATION = 'APPLICATION';
     public const SYMFONY_FILE_SYSTEM = 'SYMFONY_FILE_SYSTEM';
     public const SYMFONY_FINDER = 'SYMFONY_FINDER';
+    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,6 +31,7 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addApplication($container);
         $container = $this->addFileSystem($container);
         $container = $this->addFinder($container);
+        $container = $this->addStore($container);
 
         return $container;
     }
@@ -56,6 +59,20 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStore(Container $container): Container
+    {
+        $container[static::STORE] = function () {
+            return Store::getInstance();
         };
 
         return $container;

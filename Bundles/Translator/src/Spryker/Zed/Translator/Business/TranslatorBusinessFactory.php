@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Translator\Business;
 
 use Spryker\Shared\Kernel\Communication\Application;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Translator\Business\Cache\CacheClearer;
 use Spryker\Zed\Translator\Business\Cache\CacheClearerInterface;
@@ -96,5 +97,13 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     protected function getFinder(): Finder
     {
         return $this->getProvidedDependency(TranslatorDependencyProvider::SYMFONY_FINDER);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore(): Store
+    {
+        return $this->getProvidedDependency(TranslatorDependencyProvider::STORE);
     }
 }

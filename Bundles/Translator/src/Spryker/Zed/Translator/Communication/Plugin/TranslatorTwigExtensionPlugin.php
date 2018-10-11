@@ -27,7 +27,7 @@ class TranslatorTwigExtensionPlugin extends AbstractPlugin implements TwigTransl
      *
      * @return \Twig_Environment
      */
-    public function addExtension(Twig_Environment $twig): Twig_Environment
+    public function addTranslatorExtension(Twig_Environment $twig): Twig_Environment
     {
         $twig->addExtension(new TranslationExtension($this->getFactory()->createTranslator()));
 

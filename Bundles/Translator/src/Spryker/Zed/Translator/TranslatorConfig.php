@@ -13,9 +13,9 @@ class TranslatorConfig extends AbstractBundleConfig
 {
     protected const DELIMITER = ',';
     protected const FALLBACK_LOCALES = [
-        'de_DE' => ['en_EN'],
+        'de_DE' => ['en_US'],
     ];
-    protected const DEFAULT_FALLBACK_LOCALES = ['en_EN'];
+    protected const DEFAULT_FALLBACK_LOCALES = ['en_US'];
 
     /**
      * @return array
@@ -32,6 +32,7 @@ class TranslatorConfig extends AbstractBundleConfig
     {
         return [
             APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/*/Zed/*/Translation/',
+            APPLICATION_VENDOR_DIR . '/spryker/*/src/*/Zed/*/Translation/',
         ];
     }
 

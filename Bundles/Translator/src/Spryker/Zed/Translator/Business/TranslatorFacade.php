@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Translator\Business;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -24,8 +23,10 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
      */
     public function generateTranslationCache(): void
     {
-        $translator = $this->getFactory()->createTranslator();
-        $locales = Store::getInstance()->getLocales();
+        $factory = $this->getFactory();
+
+        $translator = $factory->createTranslator();
+        $locales = $factory->getStore()->getLocales();
 
         $translator->generateCache($locales);
     }
