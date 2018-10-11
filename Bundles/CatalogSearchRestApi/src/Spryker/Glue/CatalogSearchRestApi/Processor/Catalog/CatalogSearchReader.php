@@ -195,6 +195,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
             $params[static::PARAMETER_NAME_ITEMS_PER_PAGE] = $restRequest->getPage()->getLimit();
             $params[static::PARAMETER_NAME_PAGE] = ($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1;
         }
+
         return $params;
     }
 

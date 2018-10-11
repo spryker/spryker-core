@@ -129,6 +129,7 @@ class ResponseBuilder implements ResponseBuilderInterface
                 $restRequest
             );
         }
+
         return $data;
     }
 
@@ -180,6 +181,7 @@ class ResponseBuilder implements ResponseBuilderInterface
 
             $formattedLinks[$key] = $this->domainName . '/' . $link;
         }
+
         return $formattedLinks;
     }
 
@@ -204,10 +206,12 @@ class ResponseBuilder implements ResponseBuilderInterface
             if (strlen($queryString)) {
                 $linkParts[] = '?' . $queryString;
             }
+
             return $this->formatLinks([
                 RestResourceInterface::RESOURCE_LINKS_SELF => implode('/', $linkParts),
             ]);
         }
+
         return [];
     }
 }

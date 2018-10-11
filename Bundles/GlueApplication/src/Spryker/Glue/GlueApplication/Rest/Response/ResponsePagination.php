@@ -14,6 +14,8 @@ class ResponsePagination implements ResponsePaginationInterface
 {
     protected const KEY_PAGE = 'page';
 
+    protected const DOMAIN_LINK_TEMPLATE = '%s/%s?%spage[offset]=';
+
     /**
      * @var string
      */
@@ -27,6 +29,7 @@ class ResponsePagination implements ResponsePaginationInterface
     /**
      * @param string $domainName
      */
+
     public function __construct(string $domainName)
     {
         $this->domainName = $domainName;
@@ -182,7 +185,7 @@ class ResponsePagination implements ResponsePaginationInterface
         if (strlen($queryString)) {
             $queryString .= '&';
         }
-        $domain = sprintf($this->domainName . '/%s?%spage[offset]=', $restRequest->getResource()->getType(), $queryString);
+        $domain = sprintf( static::DOMAIN_LINK_TEMPLATE . '', $this->domainName, $restRequest->getResource()->getType(), $queryString);
 
         return $domain;
     }
