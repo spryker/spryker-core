@@ -103,11 +103,11 @@ class PathMethodSpecificationComponent implements SpecificationComponentInterfac
     }
 
     /**
-     * @param string|array $summary
+     * @param string $summary
      *
      * @return void
      */
-    public function setSummary($summary): void
+    public function setSummary(string $summary): void
     {
         $this->summary = $summary;
     }
