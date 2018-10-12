@@ -7,6 +7,7 @@
         <property name="createdAt" type="string"/>
         <property name="totals" type="RestOrderTotalsAttributes"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="RestOrderDetailsAttributes">
