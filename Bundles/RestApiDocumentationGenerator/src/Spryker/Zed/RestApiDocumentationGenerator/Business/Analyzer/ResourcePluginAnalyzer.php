@@ -135,11 +135,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
      */
     protected function processGetResourceByIdPath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
     {
-        if (!$this->resourceRouteCollection->has(Request::METHOD_GET)) {
-            return;
-        }
-
-        if (!$annotationTransfer) {
+        if (!$annotationTransfer || !$this->resourceRouteCollection->has(Request::METHOD_GET)) {
             return;
         }
 
@@ -161,10 +157,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
      */
     protected function processGetResourceCollectionPath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
     {
-        if (!$this->resourceRouteCollection->has(Request::METHOD_GET)) {
-            return;
-        }
-        if (!$annotationTransfer) {
+        if (!$annotationTransfer || !$this->resourceRouteCollection->has(Request::METHOD_GET)) {
             return;
         }
 
