@@ -125,6 +125,10 @@ class Finder implements FinderInterface
             ->querySalesOrderById($idOrder)
             ->findOne();
 
+        if ($order === null) {
+            return false;
+        }
+
         $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
 
         return (count($flaggedOrderItems) > 0);
