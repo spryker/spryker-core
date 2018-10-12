@@ -82,6 +82,8 @@ class PriceVolumeCollectionDataProvider
         $data[PriceVolumeCollectionFormType::FIELD_ID_CURRENCY] = $priceProductTransfer->getMoneyValue()->getFkCurrency();
         $data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_ABSTRACT] = $priceProductTransfer->getIdProductAbstract();
         $data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_CONCRETE] = $priceProductTransfer->getIdProduct();
+        $data[PriceVolumeCollectionFormType::FIELD_NET_PRICE] = $priceProductTransfer->getMoneyValue()->getNetAmount();
+        $data[PriceVolumeCollectionFormType::FIELD_GROSS_PRICE] = $priceProductTransfer->getMoneyValue()->getGrossAmount();
         $data[PriceVolumeCollectionFormType::FIELD_VOLUMES] = $this->getVolumes($priceProductTransfer);
 
         return $data;
