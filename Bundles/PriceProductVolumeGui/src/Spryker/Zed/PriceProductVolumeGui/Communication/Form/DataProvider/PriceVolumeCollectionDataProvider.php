@@ -178,7 +178,12 @@ class PriceVolumeCollectionDataProvider
      */
     protected function generateEmptyPriceProductVolumeItemTransfers(int $quantity): array
     {
-        return array_fill(0, $quantity, new PriceProductVolumeItemTransfer());
+        $priceProductVolumeItemTransfers = [];
+        for ($iterator = 1; $iterator <= $quantity; $iterator++) {
+            $priceProductVolumeItemTransfers[] = new PriceProductVolumeItemTransfer();
+        }
+
+        return $priceProductVolumeItemTransfers;
     }
 
     /**
