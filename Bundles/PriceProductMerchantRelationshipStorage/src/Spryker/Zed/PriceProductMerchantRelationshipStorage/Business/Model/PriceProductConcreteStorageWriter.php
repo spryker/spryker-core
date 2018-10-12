@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepository;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface;
@@ -59,7 +60,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
 
         // re-publish remaining for BU prices
         $concreteProducts = $this->priceProductMerchantRelationshipStorageRepository
-            ->findPriceProductStoresByCompanyBusinessUnitConcreteProducts(array_keys($businessUnitProducts));
+            ->getProductConcretePriceDataByCompanyBusinessUnitIds(array_keys($businessUnitProducts));
 
         $this->write($concreteProducts);
     }
@@ -78,7 +79,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
 
         // re-publish remaining prices
         $concreteProducts = $this->priceProductMerchantRelationshipStorageRepository
-            ->findPriceProductStoresByCompanyBusinessUnitConcreteProducts($businessUnitIds);
+            ->getProductConcretePriceDataByCompanyBusinessUnitIds($businessUnitIds);
 
         $this->write($concreteProducts);
     }
@@ -97,28 +98,52 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param array $concreteProducts
+     * @param array $productConcretes
      *
      * @return void
      */
-    protected function write(array $concreteProducts): void
+    protected function write(array $productConcretes): void
     {
-        $groupedPrices = $this->priceGrouper->getGroupedPrices(
-            $concreteProducts,
-            PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_CONCRETE_ID_PRODUCT,
-            PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_CONCRETE_SKU
-        );
+        $productsGroupedByIdCompanyBusinessUnit = $this->groupProductsByIdCompanyBusinessUnit($productConcretes);
 
-        if (count($groupedPrices) === 0) {
-            return;
+        foreach ($productsGroupedByIdCompanyBusinessUnit as $idCompanyBusinessUnit => $concreteProducts) {
+            $groupedPrices = $this->priceGrouper->getGroupedPrices(
+                $concreteProducts,
+                PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_CONCRETE_ID_PRODUCT,
+                PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_CONCRETE_SKU
+            );
+
+            if (count($groupedPrices) === 0) {
+                continue;
+            }
+
+            $productConcreteIds = array_column(
+                $concreteProducts,
+                PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_CONCRETE_ID_PRODUCT
+            );
+            $priceProductMerchantRelationshipStorageEntityMap = $this->priceProductMerchantRelationshipStorageRepository
+                ->findExistingPriceProductConcreteMerchantRelationshipStorageEntities($idCompanyBusinessUnit, $productConcreteIds);
+
+            $this->priceProductMerchantRelationshipStorageEntityManager->writePriceProductConcrete(
+                $groupedPrices,
+                $priceProductMerchantRelationshipStorageEntityMap
+            );
+        }
+    }
+
+    /**
+     * @param array $products
+     *
+     * @return array
+     */
+    protected function groupProductsByIdCompanyBusinessUnit(array $products): array
+    {
+        $productsGroupedByIdCompanyBusinessUnit = [];
+        foreach ($products as $product) {
+            $idCompanyBusinessUnit = $product[MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT];
+            $productsGroupedByIdCompanyBusinessUnit[$idCompanyBusinessUnit][] = $product;
         }
 
-        $priceProductMerchantRelationshipStorageEntityMap = $this->priceProductMerchantRelationshipStorageRepository
-            ->findExistingPriceProductConcreteMerchantRelationshipStorageEntities($concreteProducts);
-
-        $this->priceProductMerchantRelationshipStorageEntityManager->writePriceProductConcrete(
-            $groupedPrices,
-            $priceProductMerchantRelationshipStorageEntityMap
-        );
+        return $productsGroupedByIdCompanyBusinessUnit;
     }
 }
