@@ -49,16 +49,19 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
 
     /**
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
-     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer|null $responseSchemaDataTransfer
      *
      * @return void
      */
     public function addGetPath(
         RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer,
-        RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer,
-        RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
+        RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer,
+        ?RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer
     ): void {
+        if ($responseSchemaDataTransfer === null) {
+            $responseSchemaDataTransfer = new RestApiDocumentationPathSchemaDataTransfer();
+        }
         $responseSchemaDataTransfer->setCode((string)Response::HTTP_OK);
         $responseSchemaDataTransfer->setDescription(static::DESCRIPTION_SUCCESSFUL_RESPONSE);
 
@@ -75,17 +78,20 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
     /**
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $requestSchemaDataTransfer
-     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer|null $responseSchemaDataTransfer
      *
      * @return void
      */
     public function addPostPath(
         RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer,
         RestApiDocumentationPathSchemaDataTransfer $requestSchemaDataTransfer,
-        RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer,
-        RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
+        RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer,
+        ?RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer
     ): void {
+        if ($responseSchemaDataTransfer === null) {
+            $responseSchemaDataTransfer = new RestApiDocumentationPathSchemaDataTransfer();
+        }
         $responseSchemaDataTransfer->setCode((string)Response::HTTP_CREATED);
         $responseSchemaDataTransfer->setDescription(static::DESCRIPTION_SUCCESSFUL_RESPONSE);
 
@@ -105,17 +111,20 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
     /**
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $requestSchemaDataTransfer
-     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer|null $responseSchemaDataTransfer
      *
      * @return void
      */
     public function addPatchPath(
         RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer,
         RestApiDocumentationPathSchemaDataTransfer $requestSchemaDataTransfer,
-        RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer,
-        RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
+        RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer,
+        ?RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer
     ): void {
+        if ($responseSchemaDataTransfer === null) {
+            $responseSchemaDataTransfer = new RestApiDocumentationPathSchemaDataTransfer();
+        }
         $responseSchemaDataTransfer->setCode((string)Response::HTTP_ACCEPTED);
         $responseSchemaDataTransfer->setDescription(static::DESCRIPTION_SUCCESSFUL_RESPONSE);
 

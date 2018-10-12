@@ -50,10 +50,10 @@
     </transfer>
 
     <transfer name="RestApiDocumentationAnnotation">
-        <property name="getResource" type="bool" />
-        <property name="getCollection" type="bool" />
         <property name="summary" type="string" />
         <property name="headers" singular="header" type="string[]" />
+        <property name="responseClass" type="string" />
+        <property name="isEmptyResponse" type="bool" />
         <property name="responses" singular="response" type="array" />
     </transfer>
 

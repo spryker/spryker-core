@@ -97,7 +97,7 @@ class PluginHandler implements PluginHandlerInterface
             $annotationTransfer
         );
 
-        $this->addGetResource($plugin, $pathDataTransfer);
+        $this->addGetResource($plugin, $pathDataTransfer, $annotationTransfer);
     }
 
     /**
@@ -120,7 +120,7 @@ class PluginHandler implements PluginHandlerInterface
             $annotationTransfer
         );
 
-        $this->addGetResourceById($plugin, $pathDataTransfer, $idResource);
+        $this->addGetResourceById($plugin, $pathDataTransfer, $idResource, $annotationTransfer);
     }
 
     /**
@@ -143,7 +143,7 @@ class PluginHandler implements PluginHandlerInterface
             $annotationTransfer
         );
 
-        $this->addGetCollectionPath($plugin, $pathDataTransfer);
+        $this->addGetCollectionPath($plugin, $pathDataTransfer, $annotationTransfer);
     }
 
     /**
@@ -157,7 +157,7 @@ class PluginHandler implements PluginHandlerInterface
     public function addPostResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
     {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
+        $responseSchema = $this->getResponseResourceSchema($plugin, $annotationTransfer);
         $requestSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addRequestSchemaForPlugin($plugin));
 
         $pathDataTransfer = $this->createPathDataTransfer(
@@ -172,7 +172,7 @@ class PluginHandler implements PluginHandlerInterface
             $pathDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_POST_RESOURCE, $plugin->getResourceType()));
         }
 
-        $this->pathGenerator->addPostPath($pathDataTransfer, $requestSchema, $responseSchema, $errorSchema);
+        $this->pathGenerator->addPostPath($pathDataTransfer, $requestSchema, $errorSchema, $responseSchema);
     }
 
     /**
@@ -186,7 +186,7 @@ class PluginHandler implements PluginHandlerInterface
     public function addPatchResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
     {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
+        $responseSchema = $this->getResponseResourceSchema($plugin, $annotationTransfer);
         $requestSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addRequestSchemaForPlugin($plugin));
 
         $pathDataTransfer = $this->createPathDataTransfer(
@@ -201,7 +201,7 @@ class PluginHandler implements PluginHandlerInterface
             $pathDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_PATCH_RESOURCE, $plugin->getResourceType()));
         }
 
-        $this->pathGenerator->addPatchPath($pathDataTransfer, $requestSchema, $responseSchema, $errorSchema);
+        $this->pathGenerator->addPatchPath($pathDataTransfer, $requestSchema, $errorSchema, $responseSchema);
     }
 
     /**
@@ -234,57 +234,60 @@ class PluginHandler implements PluginHandlerInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
-    protected function addGetCollectionPath(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer): void
+    protected function addGetCollectionPath(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
     {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin));
+        $responseSchema = $this->getResponseCollectionSchema($plugin, $annotationTransfer);
 
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_COLLECTION, $pathMethodDataTransfer->getResource()));
         }
 
-        $this->pathGenerator->addGetPath($pathMethodDataTransfer, $responseSchema, $errorSchema);
+        $this->pathGenerator->addGetPath($pathMethodDataTransfer, $errorSchema, $responseSchema);
     }
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
-    protected function addGetResource(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer): void
+    protected function addGetResource(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
     {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
+        $responseSchema = $this->getResponseResourceSchema($plugin, $annotationTransfer);
 
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource()));
         }
 
-        $this->pathGenerator->addGetPath($pathMethodDataTransfer, $responseSchema, $errorSchema);
+        $this->pathGenerator->addGetPath($pathMethodDataTransfer, $errorSchema, $responseSchema);
     }
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
      * @param string $idResource
+     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
-    protected function addGetResourceById(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer, string $idResource): void
+    protected function addGetResourceById(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer, string $idResource, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
     {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
+        $responseSchema = $this->getResponseResourceSchema($plugin, $annotationTransfer);
 
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource()));
         }
         $pathMethodDataTransfer->setPath($pathMethodDataTransfer->getPath() . '/' . $idResource);
 
-        $this->pathGenerator->addGetPath($pathMethodDataTransfer, $responseSchema, $errorSchema);
+        $this->pathGenerator->addGetPath($pathMethodDataTransfer, $errorSchema, $responseSchema);
     }
 
     /**
@@ -338,6 +341,48 @@ class PluginHandler implements PluginHandlerInterface
     protected function getDefaultMethodSummary(string $pattern, string $resourceType): string
     {
         return sprintf($pattern, str_replace('-', ' ', $resourceType));
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer|null
+     */
+    protected function getResponseResourceSchema(ResourceRoutePluginInterface $plugin, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): ?RestApiDocumentationPathSchemaDataTransfer
+    {
+        if ($annotationTransfer === null) {
+            return $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
+        }
+
+        if ($annotationTransfer->getIsEmptyResponse()) {
+            return null;
+        }
+
+        return $this->createPathSchemaDataTransfer(
+            $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin, $annotationTransfer->getResponseClass())
+        );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer|null
+     */
+    protected function getResponseCollectionSchema(ResourceRoutePluginInterface $plugin, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): ?RestApiDocumentationPathSchemaDataTransfer
+    {
+        if ($annotationTransfer === null) {
+            return $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin));
+        }
+
+        if ($annotationTransfer->getIsEmptyResponse()) {
+            return null;
+        }
+
+        return $this->createPathSchemaDataTransfer(
+            $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin, $annotationTransfer->getResponseClass())
+        );
     }
 
     /**

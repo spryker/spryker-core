@@ -136,14 +136,18 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string|null $transferClassName
      *
      * @throws \Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\InvalidTransferClassException
      *
      * @return string
      */
-    public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin): string
+    public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
     {
-        $transferClassName = $plugin->getResourceAttributesClassName();
+        if ($transferClassName === null) {
+            $transferClassName = $plugin->getResourceAttributesClassName();
+        }
+
         if (!$this->resourceTransferAnalyzer->isTransferValid($transferClassName)) {
             throw new InvalidTransferClassException(sprintf(static::MESSAGE_INVALID_TRANSFER_CLASS, get_class($plugin)));
         }
@@ -164,14 +168,18 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string|null $transferClassName
      *
      * @throws \Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\InvalidTransferClassException
      *
      * @return string
      */
-    public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin): string
+    public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
     {
-        $transferClassName = $plugin->getResourceAttributesClassName();
+        if ($transferClassName === null) {
+            $transferClassName = $plugin->getResourceAttributesClassName();
+        }
+
         if (!$this->resourceTransferAnalyzer->isTransferValid($transferClassName)) {
             throw new InvalidTransferClassException(sprintf(static::MESSAGE_INVALID_TRANSFER_CLASS, get_class($plugin)));
         }
