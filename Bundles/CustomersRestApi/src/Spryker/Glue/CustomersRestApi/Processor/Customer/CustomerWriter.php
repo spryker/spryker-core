@@ -160,9 +160,7 @@ class CustomerWriter implements CustomerWriterInterface
         RestRequestInterface $restRequest,
         RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
     ): RestResponseInterface {
-        $restResponse = $this->restResourceBuilder
-            ->createRestResponse()
-            ->setStatus(Response::HTTP_NO_CONTENT);
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $customerResponseTransfer = $this->customerReader->findCustomer($restRequest);
 
@@ -191,7 +189,7 @@ class CustomerWriter implements CustomerWriterInterface
             return $this->restApiError->addPasswordChangeError($restResponse, $error->getMessage());
         }
 
-        return $restResponse;
+        return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
     }
 
     /**

@@ -53,14 +53,12 @@ class CustomerForgottenPasswordProcessor implements CustomerForgottenPasswordPro
      */
     public function sendPasswordRestoreMail(RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer): RestResponseInterface
     {
-        $response = $this->restResourceBuilder
-            ->createRestResponse()
-            ->setStatus(Response::HTTP_NO_CONTENT);
-
         $customerTransfer = $this->customerForgottenPasswordResourceMapper
             ->mapCustomerForgottenPasswordAttributesToCustomerTransfer($restCustomerForgottenPasswordAttributesTransfer);
         $this->customerClient->sendPasswordRestoreMail($customerTransfer);
 
-        return $response;
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->setStatus(Response::HTTP_NO_CONTENT);
     }
 }
