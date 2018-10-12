@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceProductVolumeItemTransfer;
+use Spryker\Zed\PriceProductVolumeGui\Communication\Exception\PriceProductNotFoundException;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\PriceVolumeCollectionFormType;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeInterface;
@@ -21,6 +22,8 @@ use Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig;
 class PriceVolumeCollectionDataProvider
 {
     public const OPTION_CURRENCY_CODE = 'currency_code';
+    protected const MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Abstract Id "%d".';
+    protected const MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Concrete Id "%d".';
 
     /**
      * @var \Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeInterface
@@ -108,6 +111,8 @@ class PriceVolumeCollectionDataProvider
      * @param string $storeName
      * @param string $currencyCode
      *
+     * @throws \Spryker\Zed\PriceProductVolumeGui\Communication\Exception\PriceProductNotFoundException
+     *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function getPriceProductTransfer(int $idProductAbstract, ?int $idProductConcrete, string $storeName, string $currencyCode): PriceProductTransfer
@@ -134,15 +139,33 @@ class PriceVolumeCollectionDataProvider
         if (!$priceProductTransfers) {
             $priceProductTransfers = $this->priceProductFacade
                 ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
-        }
 
-        foreach ($priceProductTransfers as $priceProductTransfer) { //todo: check `findProductAbstractPricesWithoutPriceExtraction` filtering by PriceType.
-            if ($priceProductTransfer->getPriceTypeName() == $this->config->getPriceTypeDefaultName()) {
-                return $priceProductTransfer;
+            if (empty($priceProductTransfers)) {
+                throw new PriceProductNotFoundException(
+                    sprintf(static::MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR, $idProductAbstract)
+                );
             }
         }
 
-        // todo: throw exception
+        if (empty($priceProductTransfers)) {
+            throw new PriceProductNotFoundException(
+                sprintf(static::MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR, $idProductConcrete)
+            );
+        }
+
+        return reset($priceProductTransfers);
+    }
+
+    /**
+     * @param string $currencyCode
+     *
+     * @return array
+     */
+    public function getOptions(string $currencyCode): array
+    {
+        return [
+            static::OPTION_CURRENCY_CODE => $currencyCode,
+        ];
     }
 
     /**
@@ -167,17 +190,5 @@ class PriceVolumeCollectionDataProvider
         $currencyTransfer = $this->currencyFacade->fromIsoCode($currencyCode);
 
         return $currencyTransfer->getIdCurrency();
-    }
-
-    /**
-     * @param string $currencyCode
-     *
-     * @return array
-     */
-    public function getOptions(string $currencyCode): array
-    {
-        return [
-            static::OPTION_CURRENCY_CODE => $currencyCode,
-        ];
     }
 }
