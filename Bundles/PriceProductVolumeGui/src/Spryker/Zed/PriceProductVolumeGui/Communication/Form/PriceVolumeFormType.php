@@ -8,9 +8,11 @@
 namespace Spryker\Zed\PriceProductVolumeGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
@@ -35,8 +37,8 @@ class PriceVolumeFormType extends AbstractType
     {
         $this
             ->addQuantityField($builder)
-            ->addGrossPriceField($builder)
-            ->addNetPriceField($builder);
+            ->addGrossPriceField($builder, $options)
+            ->addNetPriceField($builder, $options);
     }
 
     /**
@@ -60,14 +62,15 @@ class PriceVolumeFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addNetPriceField(FormBuilderInterface $builder)
+    protected function addNetPriceField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_NET_PRICE, MoneyType::class, [
             'label' => 'Net Price',
-            'currency' => 'EUR', //todo: set up according to param
+            'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
             'required' => false,
             'constraints' => [
                 new GreaterThanOrEqual(0),
@@ -79,14 +82,15 @@ class PriceVolumeFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addGrossPriceField(FormBuilderInterface $builder)
+    protected function addGrossPriceField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_GROSS_PRICE, MoneyType::class, [
             'label' => 'Gross Price',
-            'currency' => 'EUR', //todo: set up according to param
+            'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
             'required' => false,
             'constraints' => [
                 new GreaterThanOrEqual(0),
@@ -94,5 +98,15 @@ class PriceVolumeFormType extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE);
     }
 }

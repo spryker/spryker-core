@@ -20,7 +20,7 @@ use Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig;
 
 class PriceVolumeCollectionDataProvider
 {
-    public const PRICE_TYPE_DEFAULT = 'DEFAULT';
+    public const OPTION_CURRENCY_CODE = 'currency_code';
 
     /**
      * @var \Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeInterface
@@ -77,6 +77,8 @@ class PriceVolumeCollectionDataProvider
     {
         $data[PriceVolumeCollectionFormType::FIELD_ID_STORE] = $priceProductTransfer->getMoneyValue()->getFkStore();
         $data[PriceVolumeCollectionFormType::FIELD_ID_CURRENCY] = $priceProductTransfer->getMoneyValue()->getFkCurrency();
+        $data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_ABSTRACT] = $priceProductTransfer->getIdProductAbstract();
+        $data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_CONCRETE] = $priceProductTransfer->getIdProduct();
 
         $volumes = [];
 
@@ -168,10 +170,14 @@ class PriceVolumeCollectionDataProvider
     }
 
     /**
+     * @param string $currencyCode
+     *
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions(string $currencyCode): array
     {
-        return [];
+        return [
+            static::OPTION_CURRENCY_CODE => $currencyCode,
+        ];
     }
 }

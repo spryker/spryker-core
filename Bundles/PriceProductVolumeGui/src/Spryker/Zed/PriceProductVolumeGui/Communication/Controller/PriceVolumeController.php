@@ -39,7 +39,7 @@ class PriceVolumeController extends AbstractController
         $priceVolumeCollectionFormType = $this->getFactory()
             ->getPriceVolumeCollectionFormType(
                 $dataProvider->getData($priceProductTransfer),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
             )->handleRequest($request);
 
         if ($priceVolumeCollectionFormType->isSubmitted() && $priceVolumeCollectionFormType->isValid()) {
@@ -69,7 +69,7 @@ class PriceVolumeController extends AbstractController
         $priceVolumeCollectionFormType = $this->getFactory()
             ->getPriceVolumeCollectionFormType(
                 $dataProvider->getData($priceProductTransfer),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
             )->handleRequest($request);
 
         if ($priceVolumeCollectionFormType->isSubmitted() && $priceVolumeCollectionFormType->isValid()) {
@@ -81,7 +81,7 @@ class PriceVolumeController extends AbstractController
             $priceVolumeCollectionFormType = $this->getFactory()
                 ->getPriceVolumeCollectionFormType(
                     $dataProvider->getData($priceProductTransfer),
-                    $dataProvider->getOptions()
+                    $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
                 );
             $this->addSuccessMessage(static::MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS);
         }
