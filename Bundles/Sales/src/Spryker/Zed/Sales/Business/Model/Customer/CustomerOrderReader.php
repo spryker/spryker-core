@@ -76,7 +76,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     {
         $orders = new ArrayObject();
         foreach ($orderCollection as $salesOrderEntity) {
-            if ($salesOrderEntity->countItems() === 0) {
+            if (count($salesOrderEntity->getItems()) == 0) {
                 continue;
             }
 
