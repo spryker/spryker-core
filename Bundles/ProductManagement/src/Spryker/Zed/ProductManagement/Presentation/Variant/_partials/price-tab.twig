@@ -1,9 +1,13 @@
 <div class="well">
     {% filter trans|raw %}
-        <h3>Price & Tax</h3>
-        <p>Enter price and tax set.</p>
+        <h3>Price</h3>
+        <p>Enter price.</p>
     {% endfilter %}
 </div>
+
+{% if form.price_source is defined %}
+    {{ form_row(form.price_source, { 'id': 'price-source-checkbox' }) }}
+{% endif %}
 
 {{ include('@ProductManagement/_partials/product_price_collection.twig', {moneyValueFormViewCollection: form.prices}) }}
 
