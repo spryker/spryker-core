@@ -22,7 +22,7 @@ class PathMethodSpecificationComponent implements SpecificationComponentInterfac
     protected $method;
 
     /**
-     * @var string|array
+     * @var string
      */
     protected $summary;
 
