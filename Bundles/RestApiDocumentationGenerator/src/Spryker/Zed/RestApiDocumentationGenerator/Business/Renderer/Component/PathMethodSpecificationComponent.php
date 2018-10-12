@@ -22,7 +22,7 @@ class PathMethodSpecificationComponent implements SpecificationComponentInterfac
     protected $method;
 
     /**
-     * @var string
+     * @var string|array
      */
     protected $summary;
 
@@ -103,11 +103,11 @@ class PathMethodSpecificationComponent implements SpecificationComponentInterfac
     }
 
     /**
-     * @param string $summary
+     * @param string|array $summary
      *
      * @return void
      */
-    public function setSummary(string $summary): void
+    public function setSummary($summary): void
     {
         $this->summary = $summary;
     }
