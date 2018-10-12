@@ -47,6 +47,7 @@ class ProductStorageFactory extends AbstractFactory
         return new ProductConcreteStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
+            $this->getLocaleClient(),
             $this->getProductConcreteRestrictionPlugins()
         );
     }

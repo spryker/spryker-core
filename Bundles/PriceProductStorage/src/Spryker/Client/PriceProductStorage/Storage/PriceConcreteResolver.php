@@ -68,7 +68,7 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function getResolvedCurrentProductPriceTransfer(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
+    public function resolveCurrentProductPriceTransfer(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
     {
         $itemTransfer->requireId();
         $itemTransfer->requireIdProductAbstract();
