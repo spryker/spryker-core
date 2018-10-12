@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\PriceProductStorage;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+
 interface PriceProductStorageClientInterface
 {
     /**
@@ -47,4 +50,18 @@ interface PriceProductStorageClientInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getResolvedPriceProductConcreteTransfers(int $idProductConcrete, int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     * - Retrieves the provided item specific price.
+     * - Uses product concrete prices when available.
+     * - Uses product abstract prices as fall back.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function getResolvedCurrentProductPriceTransfer(ItemTransfer $itemTransfer): CurrentProductPriceTransfer;
 }

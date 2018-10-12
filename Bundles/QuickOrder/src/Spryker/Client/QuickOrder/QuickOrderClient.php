@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\QuickOrder;
 
-use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -31,21 +29,5 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
         return $this->getFactory()
             ->createProductConcreteExpander()
             ->expand($productConcreteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-     */
-    public function getCurrentProductPrice(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
-    {
-        return $this->getFactory()
-            ->createProductPriceReader()
-            ->getCurrentProductPrice($itemTransfer);
     }
 }

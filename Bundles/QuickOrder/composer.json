@@ -4,8 +4,6 @@
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
-    "spryker/price-product": "^2.0.0",
-    "spryker/price-product-storage": "^2.0.0",
     "spryker/quick-order-extension": "^1.0.0"
   },
   "require-dev": {

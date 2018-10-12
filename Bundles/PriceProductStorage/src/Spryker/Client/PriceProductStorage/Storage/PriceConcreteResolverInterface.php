@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\PriceProductStorage\Storage;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+
 interface PriceConcreteResolverInterface
 {
     /**
@@ -16,4 +19,11 @@ interface PriceConcreteResolverInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function resolvePriceProductConcrete(int $idProductConcrete, int $idProductAbstract): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function getResolvedCurrentProductPriceTransfer(ItemTransfer $itemTransfer): CurrentProductPriceTransfer;
 }

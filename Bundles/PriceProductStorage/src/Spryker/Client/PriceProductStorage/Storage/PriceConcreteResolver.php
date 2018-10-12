@@ -7,6 +7,11 @@
 
 namespace Spryker\Client\PriceProductStorage\Storage;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface;
+
 class PriceConcreteResolver implements PriceConcreteResolverInterface
 {
     /**
@@ -20,13 +25,23 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
     protected $priceConcreteStorageReader;
 
     /**
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
+     */
+    protected $priceProductClient;
+
+    /**
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface $priceAbstractStorageReader
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface $priceConcreteStorageReader
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface $priceProductClient
      */
-    public function __construct(PriceAbstractStorageReaderInterface $priceAbstractStorageReader, PriceConcreteStorageReaderInterface $priceConcreteStorageReader)
-    {
+    public function __construct(
+        PriceAbstractStorageReaderInterface $priceAbstractStorageReader,
+        PriceConcreteStorageReaderInterface $priceConcreteStorageReader,
+        PriceProductStorageToPriceProductInterface $priceProductClient
+    ) {
         $this->priceAbstractStorageReader = $priceAbstractStorageReader;
         $this->priceConcreteStorageReader = $priceConcreteStorageReader;
+        $this->priceProductClient = $priceProductClient;
     }
 
     /**
@@ -46,5 +61,28 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
         }
 
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function getResolvedCurrentProductPriceTransfer(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
+    {
+        $itemTransfer->requireId();
+        $itemTransfer->requireIdProductAbstract();
+        $itemTransfer->requireQuantity();
+
+        $priceProductTransfers = $this->resolvePriceProductConcrete(
+            $itemTransfer->getId(),
+            $itemTransfer->getIdProductAbstract()
+        );
+
+        return $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
+            $priceProductTransfers,
+            (new PriceProductFilterTransfer())
+                ->setQuantity($itemTransfer->getQuantity())
+        );
     }
 }

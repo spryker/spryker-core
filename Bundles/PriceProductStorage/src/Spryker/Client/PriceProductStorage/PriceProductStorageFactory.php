@@ -66,7 +66,8 @@ class PriceProductStorageFactory extends AbstractFactory
     {
         return new PriceConcreteResolver(
             $this->createPriceAbstractStorageReader(),
-            $this->createPriceConcreteStorageReader()
+            $this->createPriceConcreteStorageReader(),
+            $this->getPriceProductClient()
         );
     }
 
