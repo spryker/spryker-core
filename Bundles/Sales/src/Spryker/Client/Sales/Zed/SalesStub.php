@@ -55,11 +55,14 @@ class SalesStub implements SalesStubInterface
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getPaginatedCustomerOrdersOverview(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        return $this->zedStub->call('/sales/gateway/get-paginated-customer-orders-overview', $orderListTransfer);
+        /** @var \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer */
+        $orderListTransfer = $this->zedStub->call('/sales/gateway/get-paginated-customer-orders-overview', $orderListTransfer);
+
+        return $orderListTransfer;
     }
 
     /**
