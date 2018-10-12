@@ -78,6 +78,6 @@ class PriceProductStorageClient extends AbstractClient implements PriceProductSt
     {
         return $this->getFactory()
             ->createPriceConcreteResolver()
-            ->getResolvedCurrentProductPriceTransfer($itemTransfer);
+            ->resolveCurrentProductPriceTransfer($itemTransfer);
     }
 }
