@@ -152,6 +152,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
             )
             ->filterByNetPrice($moneyValueTransfer->getNetAmount())
             ->filterByGrossPrice($moneyValueTransfer->getGrossAmount())
+            ->filterByPriceDataChecksum($moneyValueTransfer->getPriceDataChecksum())
             ->findOneOrCreate();
     }
 }
