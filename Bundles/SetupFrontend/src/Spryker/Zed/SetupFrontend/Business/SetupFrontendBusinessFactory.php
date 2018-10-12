@@ -94,7 +94,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new DependencyInstaller(
             $this->createZedInstallerPathFinder(),
-            $this->getConfig()->getYvesInstallCommand()
+            $this->getConfig()->getZedInstallCommand()
         );
     }
 

@@ -15,7 +15,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getProjectFrontendDependencyDirectories()
+    public function getProjectFrontendDependencyDirectories(): array
     {
         return [
             APPLICATION_ROOT_DIR . '/node_modules',
@@ -25,7 +25,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getProjectInstallCommand()
+    public function getProjectInstallCommand(): string
     {
         return 'npm i --prefer-offline';
     }
@@ -33,7 +33,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getYvesAssetsDirectories()
+    public function getYvesAssetsDirectories(): array
     {
         return [
             APPLICATION_ROOT_DIR . '/public/Yves/assets',
@@ -43,7 +43,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getYvesInstallerDirectoryPattern()
+    public function getYvesInstallerDirectoryPattern(): array
     {
         return [
             $this->get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Yves',
@@ -53,7 +53,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getYvesInstallCommand()
+    public function getYvesInstallCommand(): string
     {
         return 'npm i --prefer-offline';
     }
@@ -61,7 +61,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getYvesBuildCommand()
+    public function getYvesBuildCommand(): string
     {
         return 'npm run yves';
     }
@@ -69,7 +69,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getZedAssetsDirectories()
+    public function getZedAssetsDirectories(): array
     {
         return [
             APPLICATION_ROOT_DIR . '/public/Zed/assets',
@@ -79,7 +79,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getZedInstallerDirectoryPattern()
+    public function getZedInstallerDirectoryPattern(): array
     {
         return [
             $this->get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Zed',
@@ -89,7 +89,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getZedInstallCommand()
+    public function getZedInstallCommand(): string
     {
         return 'npm i --prefer-offline';
     }
@@ -97,7 +97,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getZedBuildCommand()
+    public function getZedBuildCommand(): string
     {
         return 'npm run zed';
     }

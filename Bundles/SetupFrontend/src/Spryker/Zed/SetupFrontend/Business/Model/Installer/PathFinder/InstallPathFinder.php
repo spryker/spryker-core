@@ -19,7 +19,7 @@ class InstallPathFinder implements PathFinderInterface
     /**
      * @param array $pathPattern
      */
-    public function __construct($pathPattern)
+    public function __construct(array $pathPattern)
     {
         $this->pathPattern = $pathPattern;
     }
