@@ -122,6 +122,8 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     /**
      * {@inheritdoc}
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      *
      * @param int $idProductAbstract
