@@ -25,6 +25,8 @@ class ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge implements P
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null

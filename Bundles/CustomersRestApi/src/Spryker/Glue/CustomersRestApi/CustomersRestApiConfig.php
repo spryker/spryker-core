@@ -57,4 +57,6 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_NOT_VALID_GENDER = '414';
     public const RESPONSE_DETAILS_NOT_VALID_GENDER = 'Gender is not valid.';
+
+    public const FORMAT_SELF_LINK_ADDRESS_RESOURCE = '%s/%s/%s/%s';
 }
