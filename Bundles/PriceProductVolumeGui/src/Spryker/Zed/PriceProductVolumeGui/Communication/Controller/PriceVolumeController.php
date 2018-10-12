@@ -54,7 +54,8 @@ class PriceVolumeController extends AbstractController
 
         return $this->viewResponse([
             'form' => $priceVolumeCollectionFormType->createView(),
-            'money_value' => $priceProductTransfer->getMoneyValue(),
+            'price_product' => $priceProductTransfer,
+            'store_name' => $request->get(static::REQUEST_PARAM_STORE_NAME),
         ]);
     }
 
@@ -89,7 +90,8 @@ class PriceVolumeController extends AbstractController
 
         return $this->viewResponse([
             'form' => $priceVolumeCollectionFormType->createView(),
-            'money_value' => $priceProductTransfer->getMoneyValue(),
+            'price_product' => $priceProductTransfer,
+            'store_name' => $request->get(static::REQUEST_PARAM_STORE_NAME),
         ]);
     }
 

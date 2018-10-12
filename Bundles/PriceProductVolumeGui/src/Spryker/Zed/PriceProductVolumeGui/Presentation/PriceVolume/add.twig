@@ -11,6 +11,16 @@
 
     {{ form_start(form) }}
 
+    <div>
+        Price Type: {{ price_product.priceType.name }}
+    </div>
+    <div>
+        Currency: {{ price_product.moneyValue.currency.name }}
+    </div>
+    <div>
+        Store: {{ store_name }}
+    </div>
+
     <table class="table table--expand">
         <thead>
         <tr class="active">
@@ -31,17 +41,18 @@
             </td>
             <td>
                 <div class="input-group">
-                    <span class="input-group-addon">{{ money_value.currency.symbol }}</span>
-                    <input type="text" class="form-control" value="{{ money_value.netAmount | money(false) }}" disabled>
+                    <span class="input-group-addon">{{ price_product.moneyValue.currency.symbol }}</span>
+                    <input type="text" class="form-control" value="{{ price_product.moneyValue.netAmount | money(false) }}" disabled>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <span class="input-group-addon">{{ money_value.currency.symbol }}</span>
-                    <input type="text" class="form-control" value="{{ money_value.grossAmount | money(false) }}" disabled>
+                    <span class="input-group-addon">{{ price_product.moneyValue.currency.symbol }}</span>
+                    <input type="text" class="form-control" value="{{ price_product.moneyValue.grossAmount | money(false) }}" disabled>
                 </div>
             </td>
         </tr>
+
         {% for volume in form.volumes %}
             <tr>
                 <td>
