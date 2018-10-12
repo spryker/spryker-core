@@ -53,6 +53,16 @@ class SalesStub implements SalesStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function getPaginatedCustomerOrdersOverview(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        return $this->zedStub->call('/sales/gateway/get-paginated-customer-orders-overview', $orderListTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -61,6 +71,19 @@ class SalesStub implements SalesStubInterface
     {
         /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
         $orderTransfer = $this->zedStub->call('/sales/gateway/get-order-details', $orderTransfer);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        $orderTransfer = $this->zedStub->call('/sales/gateway/get-customer-order-by-order-reference', $orderTransfer);
 
         return $orderTransfer;
     }

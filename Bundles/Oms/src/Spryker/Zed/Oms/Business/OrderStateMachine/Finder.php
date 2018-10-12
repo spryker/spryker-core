@@ -142,25 +142,9 @@ class Finder implements FinderInterface
             ->querySalesOrderById($idOrder)
             ->findOne();
 
-        $orderItems = $this->queryContainer
-            ->querySalesOrderItemsByIdOrder($idOrder)
-            ->find();
-
         $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
 
-        if (!$flaggedOrderItems) {
-            return false;
-        }
-
-        foreach ($orderItems as $orderItem) {
-            foreach ($flaggedOrderItems as $flaggedOrderItem) {
-                if ($flaggedOrderItem->getPrimaryKey() !== $orderItem->getPrimaryKey()) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+        return $flaggedOrderItems && (count($flaggedOrderItems) === count($order->getItems()));
     }
 
     /**

@@ -94,7 +94,6 @@ class AttributeReader implements AttributeReaderInterface
         $offset = null,
         $limit = 10
     ) {
-
         $query = $this->productAttributeQueryContainer->queryProductManagementAttributeValueWithTranslation(
             $idProductManagementAttribute,
             $idLocale,

@@ -210,8 +210,8 @@ class Condition implements ConditionInterface
     ) {
 
         $stateMachineItemStateIds = $this->stateMachinePersistence->getStateMachineItemIdsByStatesProcessAndStateMachineName(
-            $stateMachineName,
             $process->getName(),
+            $stateMachineName,
             array_keys($states)
         );
 

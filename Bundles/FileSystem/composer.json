@@ -1,5 +1,6 @@
 {
   "name": "spryker/file-system",
+  "type": "library",
   "description": "FileSystem module",
   "license": "proprietary",
   "require": {

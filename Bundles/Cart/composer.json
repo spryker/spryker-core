@@ -1,5 +1,6 @@
 {
   "name": "spryker/cart",
+  "type": "library",
   "description": "Cart module",
   "license": "proprietary",
   "require": {

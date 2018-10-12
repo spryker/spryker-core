@@ -1,5 +1,6 @@
 {
   "name": "spryker/availability-storage",
+  "type": "library",
   "description": "AvailabilityStorage module",
   "license": "proprietary",
   "require": {

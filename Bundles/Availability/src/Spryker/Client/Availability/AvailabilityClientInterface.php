@@ -42,7 +42,7 @@ interface AvailabilityClientInterface
 
     /**
      * Specification:
-     *  - Reads product concrete availability as it's persisted in zed database
+     *  - Reads product concrete availability as it's persisted in Zed database
      *
      * @api
      *

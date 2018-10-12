@@ -34,18 +34,26 @@ class CartHandler implements CartHandlerInterface
     protected $messengerClient;
 
     /**
+     * @var \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
+     */
+    protected $shoppingListItemToItemMapperPlugins;
+
+    /**
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface $cartClient
      * @param \Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface $shoppingListStub
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface $messengerClient
+     * @param \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[] $shoppingListItemToItemMapperPlugins
      */
     public function __construct(
         ShoppingListToCartClientInterface $cartClient,
         ShoppingListStubInterface $shoppingListStub,
-        ShoppingListToMessengerClientInterface $messengerClient
+        ShoppingListToMessengerClientInterface $messengerClient,
+        array $shoppingListItemToItemMapperPlugins
     ) {
         $this->cartClient = $cartClient;
         $this->shoppingListStub = $shoppingListStub;
         $this->messengerClient = $messengerClient;
+        $this->shoppingListItemToItemMapperPlugins = $shoppingListItemToItemMapperPlugins;
     }
 
     /**
@@ -61,7 +69,7 @@ class CartHandler implements CartHandlerInterface
         foreach ($shoppingListAddToCartRequestCollectionTransfer->getRequests() as $shoppingListAddToCartRequestTransfer) {
             $this->assertRequestTransfer($shoppingListAddToCartRequestTransfer);
             $cartChangeTransfer->addItem(
-                $this->createItemTransfer($shoppingListAddToCartRequestTransfer->getSku(), $shoppingListAddToCartRequestTransfer->getQuantity())
+                $this->createItemTransfer($shoppingListAddToCartRequestTransfer)
             );
         }
 
@@ -109,19 +117,25 @@ class CartHandler implements CartHandlerInterface
     {
         $shoppingListAddToCartRequestTransfer->requireSku();
         $shoppingListAddToCartRequestTransfer->requireQuantity();
+        $shoppingListAddToCartRequestTransfer->requireShoppingListItem();
     }
 
     /**
-     * @param string $sku
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\ShoppingListAddToCartRequestTransfer $shoppingListAddToCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createItemTransfer(string $sku, int $quantity): ItemTransfer
+    protected function createItemTransfer(ShoppingListAddToCartRequestTransfer $shoppingListAddToCartRequestTransfer): ItemTransfer
     {
-        return (new ItemTransfer())
-            ->setSku($sku)
-            ->setQuantity($quantity);
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($shoppingListAddToCartRequestTransfer->getSku())
+            ->setQuantity($shoppingListAddToCartRequestTransfer->getQuantity());
+
+        foreach ($this->shoppingListItemToItemMapperPlugins as $shoppingListItemToItemMapperPlugin) {
+            $itemTransfer = $shoppingListItemToItemMapperPlugin->map($shoppingListAddToCartRequestTransfer->getShoppingListItem(), $itemTransfer);
+        }
+
+        return $itemTransfer;
     }
 
     /**
