@@ -965,7 +965,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array
     {
-        return $this->getFactory()
+        return $this
             ->getRepository()
             ->getProductConcreteTransfersByProductIds($productIds);
     }

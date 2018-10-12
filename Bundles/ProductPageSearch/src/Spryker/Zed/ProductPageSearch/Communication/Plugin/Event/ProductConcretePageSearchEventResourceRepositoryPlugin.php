@@ -44,8 +44,9 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
     public function getData(array $productIds = []): array
     {
         if (empty($productIds)) {
-            // TODO: create follow up
-            return [];
+            // TODO: create follow up and fix this
+            $productIds = [];
+            // return [];
         }
 
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[] $productConcreteTransfers */

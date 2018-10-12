@@ -227,7 +227,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array
     {
-        $productConcreteEntities = $this->getFactory()
+        $query = $this->getFactory()
             ->createProductQuery()
             ->joinWithSpyProductAbstract()
             ->joinWithSpyProductLocalizedAttributes()
@@ -239,9 +239,15 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
                 ->useSpyProductAbstractStoreQuery()
                     ->joinWithSpyStore()
                 ->endUse()
-            ->endUse()
-            ->filterByIdProduct_In($productIds)
-            ->find();
+            ->endUse();
+
+        // TODO: fix this
+        if (!empty($productIds)) {
+            $query
+                ->filterByIdProduct_In($productIds);
+        }
+
+        $productConcreteEntities = $query->find();
 
         return $this->getProductConcreteTransfersMappedFromProductConcreteEntities($productConcreteEntities);
     }
