@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
 use Generated\Shared\Transfer\RestCustomerForgottenPasswordAttributesTransfer;
-use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerForgottenPasswordResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -54,16 +53,14 @@ class CustomerForgottenPasswordProcessor implements CustomerForgottenPasswordPro
      */
     public function sendPasswordRestoreMail(RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
+        $response = $this->restResourceBuilder
+            ->createRestResponse()
+            ->setStatus(Response::HTTP_NO_CONTENT);
 
         $customerTransfer = $this->customerForgottenPasswordResourceMapper
             ->mapCustomerForgottenPasswordAttributesToCustomerTransfer($restCustomerForgottenPasswordAttributesTransfer);
         $this->customerClient->sendPasswordRestoreMail($customerTransfer);
 
-        $restResource = $this->restResourceBuilder->createRestResource(CustomersRestApiConfig::RESOURCE_FORGOTTEN_PASSWORD);
-
-        return $response
-            ->addResource($restResource)
-            ->setStatus(Response::HTTP_NO_CONTENT);
+        return $response;
     }
 }

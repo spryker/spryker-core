@@ -55,7 +55,9 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
      */
     public function restorePassword(RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
+        $response = $this->restResourceBuilder
+            ->createRestResponse()
+            ->setStatus(Response::HTTP_NO_CONTENT);
 
         $customerTransfer = $this->customerRestorePasswordResourceMapper
             ->mapCustomerRestorePasswordAttributesToCustomerTransfer($restCustomerRestorePasswordAttributesTransfer);
@@ -65,11 +67,7 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
             return $response->addError($this->createErrorRestorePasswordKeyIsNotValid());
         }
 
-        $restResource = $this->restResourceBuilder->createRestResource(CustomersRestApiConfig::RESOURCE_CUSTOMER_RESTORE_PASSWORD);
-
-        return $response
-            ->addResource($restResource)
-            ->setStatus(Response::HTTP_NO_CONTENT);
+        return $response;
     }
 
     /**

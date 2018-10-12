@@ -10,7 +10,6 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Customer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
-use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
@@ -161,7 +160,9 @@ class CustomerWriter implements CustomerWriterInterface
         RestRequestInterface $restRequest,
         RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
     ): RestResponseInterface {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->restResourceBuilder
+            ->createRestResponse()
+            ->setStatus(Response::HTTP_NO_CONTENT);
 
         $customerResponseTransfer = $this->customerReader->findCustomer($restRequest);
 
@@ -190,13 +191,7 @@ class CustomerWriter implements CustomerWriterInterface
             return $this->restApiError->addPasswordChangeError($restResponse, $error->getMessage());
         }
 
-        $restResource = $this->restResourceBuilder->createRestResource(
-            CustomersRestApiConfig::RESOURCE_CUSTOMER_PASSWORD
-        );
-
-        return $restResponse
-            ->addResource($restResource)
-            ->setStatus(Response::HTTP_NO_CONTENT);
+        return $restResponse;
     }
 
     /**
