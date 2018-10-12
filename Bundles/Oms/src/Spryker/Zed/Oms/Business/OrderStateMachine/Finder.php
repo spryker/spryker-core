@@ -125,10 +125,6 @@ class Finder implements FinderInterface
             ->querySalesOrderById($idOrder)
             ->findOne();
 
-        if ($order === null) {
-            return false;
-        }
-
         $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
 
         return (count($flaggedOrderItems) > 0);
@@ -146,13 +142,25 @@ class Finder implements FinderInterface
             ->querySalesOrderById($idOrder)
             ->findOne();
 
-        if ($order === null) {
-            return false;
-        }
+        $orderItems = $this->queryContainer
+            ->querySalesOrderItemsByIdOrder($idOrder)
+            ->find();
 
         $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
 
-        return $flaggedOrderItems && (count($flaggedOrderItems) === count($order->getItems()));
+        if (!$flaggedOrderItems) {
+            return false;
+        }
+
+        foreach ($orderItems as $orderItem) {
+            foreach ($flaggedOrderItems as $flaggedOrderItem) {
+                if ($flaggedOrderItem->getPrimaryKey() !== $orderItem->getPrimaryKey()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**

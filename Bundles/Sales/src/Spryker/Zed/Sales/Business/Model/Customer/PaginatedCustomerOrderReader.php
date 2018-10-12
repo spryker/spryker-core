@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Business\Model\Customer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 
-class PaginatedCustomerOrderReader extends CustomerOrderReader
+class PaginatedCustomerOrderReader extends CustomerOrderReader implements CustomerOrderReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
