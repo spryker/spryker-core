@@ -135,7 +135,7 @@ class PluginHandler implements PluginHandlerInterface
         );
 
         if (!$pathDataTransfer->getSummary()) {
-            $pathDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_POST_RESOURCE, $plugin->getResourceType()));
+            $pathDataTransfer->setSummary([$this->getDefaultMethodSummary(static::PATTERN_SUMMARY_POST_RESOURCE, $plugin->getResourceType())]);
         }
 
         $this->pathGenerator->addPostPath($pathDataTransfer, $requestSchema, $responseSchema, $errorSchema);
@@ -164,7 +164,7 @@ class PluginHandler implements PluginHandlerInterface
         );
 
         if (!$pathDataTransfer->getSummary()) {
-            $pathDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_PATCH_RESOURCE, $plugin->getResourceType()));
+            $pathDataTransfer->setSummary([$this->getDefaultMethodSummary(static::PATTERN_SUMMARY_PATCH_RESOURCE, $plugin->getResourceType())]);
         }
 
         $this->pathGenerator->addPatchPath($pathDataTransfer, $requestSchema, $responseSchema, $errorSchema);
@@ -191,7 +191,7 @@ class PluginHandler implements PluginHandlerInterface
         );
 
         if (!$pathDataTransfer->getSummary()) {
-            $pathDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_DELETE_RESOURCE, $plugin->getResourceType()));
+            $pathDataTransfer->setSummary([$this->getDefaultMethodSummary(static::PATTERN_SUMMARY_DELETE_RESOURCE, $plugin->getResourceType())]);
         }
 
         $this->pathGenerator->addDeletePath($pathDataTransfer, $errorSchema);
@@ -209,7 +209,7 @@ class PluginHandler implements PluginHandlerInterface
         $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin));
 
         if (!$pathMethodDataTransfer->getSummary()) {
-            $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_COLLECTION, $pathMethodDataTransfer->getResource()));
+            $pathMethodDataTransfer->setSummary([$this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_COLLECTION, $pathMethodDataTransfer->getResource())]);
         }
 
         $this->pathGenerator->addGetPath($pathMethodDataTransfer, $responseSchema, $errorSchema);
@@ -227,7 +227,7 @@ class PluginHandler implements PluginHandlerInterface
         $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
 
         if (!$pathMethodDataTransfer->getSummary()) {
-            $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource()));
+            $pathMethodDataTransfer->setSummary([$this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource())]);
         }
 
         $this->pathGenerator->addGetPath($pathMethodDataTransfer, $responseSchema, $errorSchema);
@@ -246,7 +246,7 @@ class PluginHandler implements PluginHandlerInterface
         $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin));
 
         if (!$pathMethodDataTransfer->getSummary()) {
-            $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource()));
+            $pathMethodDataTransfer->setSummary([$this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource())]);
         }
         $pathMethodDataTransfer->setPath($pathMethodDataTransfer->getPath() . '/' . $idResource);
 
