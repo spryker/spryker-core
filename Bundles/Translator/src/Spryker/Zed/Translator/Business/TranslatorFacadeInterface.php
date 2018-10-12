@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\Translator\Business;
 
+use Twig_Environment;
+
 interface TranslatorFacadeInterface
 {
     /**
      * Specification:
-     *  - Generates translation cache for Zed for all store's locales.
+     * - Generates translation cache for Zed for all store's locales.
      *
      * @api
      *
@@ -21,11 +23,23 @@ interface TranslatorFacadeInterface
 
     /**
      * Specification:
-     *  - Clears Zed's translation cache.
+     * - Clears Zed's translation cache.
      *
      * @api
      *
      * @return void
      */
     public function clearTranslationCache(): void;
+
+    /**
+     * Specification:
+     * - Add Translator as Twig Translation extension
+     *
+     * @api
+     *
+     * @param \Twig_Environment $twig
+     *
+     * @return void
+     */
+    public function registerTwigTranslator(Twig_Environment $twig): void;
 }

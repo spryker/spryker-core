@@ -9,7 +9,6 @@ namespace Spryker\Zed\Translator\Communication\Plugin;
 
 use Spryker\Zed\ApplicationExtension\Dependency\Plugin\TwigTranslatorExtensionPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Twig_Environment;
 
 /**
@@ -25,12 +24,10 @@ class TranslatorTwigExtensionPlugin extends AbstractPlugin implements TwigTransl
      *
      * @param \Twig_Environment $twig
      *
-     * @return \Twig_Environment
+     * @return void
      */
-    public function addTranslatorExtension(Twig_Environment $twig): Twig_Environment
+    public function addTranslatorExtension(Twig_Environment $twig): void
     {
-        $twig->addExtension(new TranslationExtension($this->getFactory()->createTranslator()));
-
-        return $twig;
+        $this->getFacade()->registerTwigTranslator($twig);
     }
 }

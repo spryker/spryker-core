@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Translator\Business\Translator;
 
 use Spryker\Zed\Translator\Business\Finder\TranslationFinderInterface;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Component\Translation\Translator as SymfonyTranslator;
+use Twig_Environment;
 
 class Translator extends SymfonyTranslator implements TranslatorInterface
 {
@@ -69,5 +71,15 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
         foreach ($locales as $locale) {
             $this->loadCatalogue($locale);
         }
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     *
+     * @return void
+     */
+    public function addAsTwigExtension(Twig_Environment $twig): void
+    {
+        $twig->addExtension(new TranslationExtension($this));
     }
 }

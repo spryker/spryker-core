@@ -9,6 +9,7 @@ namespace Spryker\Zed\Translator\Business\Translator;
 
 use Spryker\Zed\Translator\Business\Finder\TranslationFinderInterface;
 use Symfony\Component\Translation\TranslatorInterface as SymfonyTranslatorInterface;
+use Twig_Environment;
 
 interface TranslatorInterface extends SymfonyTranslatorInterface
 {
@@ -25,4 +26,11 @@ interface TranslatorInterface extends SymfonyTranslatorInterface
      * @return void
      */
     public function generateCache(array $locales): void;
+
+    /**
+     * @param \Twig_Environment $twig
+     *
+     * @return void
+     */
+    public function addAsTwigExtension(Twig_Environment $twig): void;
 }

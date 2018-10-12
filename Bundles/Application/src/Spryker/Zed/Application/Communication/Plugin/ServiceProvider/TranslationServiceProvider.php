@@ -34,7 +34,7 @@ class TranslationServiceProvider extends AbstractPlugin implements ServiceProvid
                 $translationPlugins = $this->getFactory()->getTwigTranslatorExtensionPlugins();
 
                 foreach ($translationPlugins as $translationPlugin) {
-                    $twig = $translationPlugin->addTranslatorExtension($twig);
+                    $translationPlugin->addTranslatorExtension($twig);
                 }
 
                 return $twig;

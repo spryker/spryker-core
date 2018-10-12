@@ -19,7 +19,7 @@ interface TwigTranslatorExtensionPluginInterface
      *
      * @param \Twig_Environment $twig
      *
-     * @return \Twig_Environment
+     * @return void
      */
-    public function addTranslatorExtension(Twig_Environment $twig): Twig_Environment;
+    public function addTranslatorExtension(Twig_Environment $twig): void;
 }

@@ -6,14 +6,14 @@
   "require": {
     "spryker/application-extension": "^1.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/twig": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*",
-    "spryker/twig": "*"
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
@@ -36,7 +36,6 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/installer": "ADD SUGGEST DESCRIPTION",
-    "spryker/twig": "ADD SUGGEST DESCRIPTION"
+    "spryker/installer": "ADD SUGGEST DESCRIPTION"
   }
 }
