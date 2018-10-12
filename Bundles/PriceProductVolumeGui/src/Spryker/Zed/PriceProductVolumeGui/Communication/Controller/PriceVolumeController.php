@@ -54,6 +54,7 @@ class PriceVolumeController extends AbstractController
 
         return $this->viewResponse([
             'form' => $priceVolumeCollectionFormType->createView(),
+            'money_value' => $priceProductTransfer->getMoneyValue(),
         ]);
     }
 
@@ -88,6 +89,7 @@ class PriceVolumeController extends AbstractController
 
         return $this->viewResponse([
             'form' => $priceVolumeCollectionFormType->createView(),
+            'money_value' => $priceProductTransfer->getMoneyValue(),
         ]);
     }
 

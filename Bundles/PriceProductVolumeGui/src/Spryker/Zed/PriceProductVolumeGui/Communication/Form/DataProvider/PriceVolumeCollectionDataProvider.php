@@ -22,6 +22,7 @@ use Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig;
 class PriceVolumeCollectionDataProvider
 {
     public const OPTION_CURRENCY_CODE = 'currency_code';
+    protected const EMPTY_ROWS_QUANTITY = 3;
     protected const MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Abstract Id "%d".';
     protected const MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Concrete Id "%d".';
 
@@ -82,25 +83,7 @@ class PriceVolumeCollectionDataProvider
         $data[PriceVolumeCollectionFormType::FIELD_ID_CURRENCY] = $priceProductTransfer->getMoneyValue()->getFkCurrency();
         $data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_ABSTRACT] = $priceProductTransfer->getIdProductAbstract();
         $data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_CONCRETE] = $priceProductTransfer->getIdProduct();
-
-        $volumes = [];
-
-        $preSavedVolumes = $this->utilEncodingService->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData());
-
-        if ($preSavedVolumes && $preSavedVolumes->volume_prices) {
-            foreach ($preSavedVolumes->volume_prices as $preSavedVolume) {
-                $volumes[] = (new PriceProductVolumeItemTransfer())
-                    ->fromArray(get_object_vars($preSavedVolume), true);
-            }
-        }
-
-        $volumes = array_merge($volumes, [
-            new PriceProductVolumeItemTransfer(),
-            new PriceProductVolumeItemTransfer(),
-            new PriceProductVolumeItemTransfer(),
-        ]);
-
-        $data[PriceVolumeCollectionFormType::FIELD_VOLUMES] = $volumes;
+        $data[PriceVolumeCollectionFormType::FIELD_VOLUMES] = $this->getVolumes($priceProductTransfer);
 
         return $data;
     }
@@ -190,5 +173,35 @@ class PriceVolumeCollectionDataProvider
         $currencyTransfer = $this->currencyFacade->fromIsoCode($currencyCode);
 
         return $currencyTransfer->getIdCurrency();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
+     */
+    protected function getVolumes(PriceProductTransfer $priceProductTransfer): array
+    {
+        $volumes = [];
+        $preSavedVolumes = $this->utilEncodingService->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData());
+        if ($preSavedVolumes && $preSavedVolumes->volume_prices) {
+            foreach ($preSavedVolumes->volume_prices as $preSavedVolume) {
+                $volumes[] = (new PriceProductVolumeItemTransfer())
+                    ->fromArray(get_object_vars($preSavedVolume), true);
+            }
+        }
+        $volumes = array_merge($volumes, $this->generateEmptyPriceProductVolumeItemTransfers(static::EMPTY_ROWS_QUANTITY));
+
+        return $volumes;
+    }
+
+    /**
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
+     */
+    protected function generateEmptyPriceProductVolumeItemTransfers(int $quantity): array
+    {
+        return array_fill(0, $quantity, new PriceProductVolumeItemTransfer());
     }
 }

@@ -20,6 +20,28 @@
         </tr>
         </thead>
         <tbody>
+        {{ form_widget(form.idStore) }}
+        {{ form_widget(form.idCurrency) }}
+        {{ form_widget(form.idProductAbstract) }}
+        {{ form_widget(form.idProductConcrete) }}
+
+        <tr>
+            <td>
+                <input type="text" class="form-control" value="1" disabled>
+            </td>
+            <td>
+                <div class="input-group">
+                    <span class="input-group-addon">{{ money_value.currency.symbol }}</span>
+                    <input type="text" class="form-control" value="{{ money_value.netAmount | money(false) }}" disabled>
+                </div>
+            </td>
+            <td>
+                <div class="input-group">
+                    <span class="input-group-addon">{{ money_value.currency.symbol }}</span>
+                    <input type="text" class="form-control" value="{{ money_value.grossAmount | money(false) }}" disabled>
+                </div>
+            </td>
+        </tr>
         {% for volume in form.volumes %}
             <tr>
                 <td>
