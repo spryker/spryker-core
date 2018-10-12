@@ -57,24 +57,44 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
      */
     public function mapArrayToPriceProductTransfer(array $data, PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        $priceProductVolumeItemTransfers = $data[PriceVolumeCollectionFormType::FIELD_VOLUMES];
-        $idCurrency = $data[PriceVolumeCollectionFormType::FIELD_ID_CURRENCY];
-        $idStore = $data[PriceVolumeCollectionFormType::FIELD_ID_STORE];
+        $priceData = $this->getPriceData($data);
 
-        $priceProductVolumeItemArray = [];
-        foreach ($priceProductVolumeItemTransfers as $priceProductVolumeItemTransfer) {
-            $priceProductVolumeItemArray[] = array_filter($priceProductVolumeItemTransfer->toArray());
-        }
-        $priceProductVolumeItemArray = array_filter($priceProductVolumeItemArray);
-        $priceData[$this->config->getVolumePriceTypeName()] = $priceProductVolumeItemArray;
-
-        $priceDataJson = $this->utilEncodingService->encodeJson($priceData);
-
-        $priceProductTransfer->getMoneyValue()->setPriceData($priceDataJson)
-            ->setFkStore($idStore)
-            ->setFkCurrency($idCurrency)
+        $priceProductTransfer->getMoneyValue()
+            ->setPriceData($this->utilEncodingService->encodeJson($priceData))
+            ->setFkStore($data[PriceVolumeCollectionFormType::FIELD_ID_STORE])
+            ->setFkCurrency($data[PriceVolumeCollectionFormType::FIELD_ID_CURRENCY])
             ->setPriceDataChecksum($this->priceProductFacade->generatePriceDataChecksum($priceData));
 
         return $priceProductTransfer;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
+     */
+    protected function getPriceProductVolumeItemTransfers(array $data): array
+    {
+        $rawPriceProductVolumeItemTransfers = $data[PriceVolumeCollectionFormType::FIELD_VOLUMES];
+
+        $priceProductVolumeItemTransfers = [];
+        foreach ($rawPriceProductVolumeItemTransfers as $priceProductVolumeItemTransfer) {
+            $priceProductVolumeItemTransfers[] = array_filter($priceProductVolumeItemTransfer->toArray());
+        }
+        $priceProductVolumeItemTransfers = array_filter($priceProductVolumeItemTransfers);
+
+        return $priceProductVolumeItemTransfers;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function getPriceData(array $data): array
+    {
+        $priceData[$this->config->getVolumePriceTypeName()] = $this->getPriceProductVolumeItemTransfers($data);
+
+        return $priceData;
     }
 }
