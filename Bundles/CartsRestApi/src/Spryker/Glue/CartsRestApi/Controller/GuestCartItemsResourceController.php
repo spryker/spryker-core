@@ -42,7 +42,7 @@ class GuestCartItemsResourceController extends AbstractController
             ->createGuestCartItemUpdater()
             ->updateItemQuantity($request, $restCartItemsAttributesTransfer);
     }
-    
+
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *

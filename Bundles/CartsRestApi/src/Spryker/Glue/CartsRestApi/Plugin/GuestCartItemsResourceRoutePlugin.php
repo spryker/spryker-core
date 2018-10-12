@@ -29,7 +29,7 @@ class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements Resour
     {
         $resourceRouteCollection
             ->addPost(CartsRestApiConfig::ACTION_GUEST_CART_ITEMS_POST, false)
-            ->addPatch(CartsRestApiConfig::ACTION_GUEST_CART_ITEMS_PATCH, false);
+            ->addPatch(CartsRestApiConfig::ACTION_GUEST_CART_ITEMS_PATCH, false)
             ->addDelete(CartsRestApiConfig::ACTION_GUEST_CART_ITEMS_DELETE, false);
 
         return $resourceRouteCollection;

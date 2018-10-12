@@ -134,7 +134,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->createCartReader()
         );
     }
-     
+
     /**
      * @return \Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemDeleterInterface
      */

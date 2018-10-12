@@ -9,8 +9,8 @@ namespace Spryker\Glue\CartsRestApi\Plugin;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
+use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
