@@ -12,16 +12,12 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductLabelStorageClientInterface;
-use Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductLabelsRestApi\Processor\Mapper\ProductLabelMapperInterface;
 use Spryker\Glue\ProductLabelsRestApi\ProductLabelsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductLabelReader implements ProductLabelReaderInterface
 {
-    protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
-    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-
     /**
      * @var \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductLabelStorageClientInterface
      */
@@ -38,26 +34,18 @@ class ProductLabelReader implements ProductLabelReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductStorageClientInterface
-     */
-    protected $productStorageClient;
-
-    /**
      * @param \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductLabelStorageClientInterface $productLabelStorageClient
      * @param \Spryker\Glue\ProductLabelsRestApi\Processor\Mapper\ProductLabelMapperInterface $productLabelMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductStorageClientInterface $productStorageClient
      */
     public function __construct(
         ProductLabelsRestApiToProductLabelStorageClientInterface $productLabelStorageClient,
         ProductLabelMapperInterface $productLabelMapper,
-        RestResourceBuilderInterface $restResourceBuilder,
-        ProductLabelsRestApiToProductStorageClientInterface $productStorageClient
+        RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->productLabelStorageClient = $productLabelStorageClient;
         $this->productLabelMapper = $productLabelMapper;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->productStorageClient = $productStorageClient;
     }
 
     /**
@@ -74,7 +62,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         }
 
         $labelTransfer = $this->productLabelStorageClient->findLabelByKey(
-            urldecode($restRequest->getResource()->getId()),
+            $restRequest->getResource()->getId(),
             $restRequest->getMetadata()->getLocale()
         );
 
@@ -88,46 +76,11 @@ class ProductLabelReader implements ProductLabelReaderInterface
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,
-            $labelTransfer->getKey(),
+            $restRequest->getResource()->getId(),
             $restProductLabelAttributesTransfer
         );
 
         return $restResponse->addResource($restResource);
-    }
-
-    /**
-     * @param string $sku
-     * @param string $locale
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
-     */
-    public function findByAbstractSku(string $sku, string $locale): array
-    {
-        $abstractProductData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
-            static::PRODUCT_ABSTRACT_MAPPING_TYPE,
-            $sku,
-            $locale
-        );
-
-        $productLabels = $this->productLabelStorageClient->findLabelsByIdProductAbstract(
-            $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT],
-            $locale
-        );
-        $productLabelResources = [];
-
-        foreach ($productLabels as $productLabel) {
-            $restProductLabelAttributesTransfer = $this
-                ->productLabelMapper
-                ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer($productLabel);
-
-            $productLabelResources[] = $this->restResourceBuilder->createRestResource(
-                ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,
-                $productLabel->getKey(),
-                $restProductLabelAttributesTransfer
-            );
-        }
-
-        return $productLabelResources;
     }
 
     /**

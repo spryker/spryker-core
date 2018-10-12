@@ -9,12 +9,4 @@ namespace Spryker\Glue\ProductLabelsRestApi\Dependency\Client;
 
 interface ProductLabelsRestApiToProductStorageClientInterface
 {
-    /**
-     * @param string $mappingType
-     * @param string $identifier
-     * @param string $localeName
-     *
-     * @return array|null
-     */
-    public function findProductAbstractStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
 }

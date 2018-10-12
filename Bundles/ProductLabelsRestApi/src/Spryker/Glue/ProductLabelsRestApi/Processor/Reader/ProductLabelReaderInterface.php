@@ -18,12 +18,4 @@ interface ProductLabelReaderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function findByKey(RestRequestInterface $restRequest): RestResponseInterface;
-
-    /**
-     * @param string $sku
-     * @param string $locale
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
-     */
-    public function findByAbstractSku(string $sku, string $locale): array;
 }

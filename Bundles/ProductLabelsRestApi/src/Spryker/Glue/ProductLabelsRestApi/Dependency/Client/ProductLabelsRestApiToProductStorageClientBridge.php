@@ -21,16 +21,4 @@ class ProductLabelsRestApiToProductStorageClientBridge implements ProductLabelsR
     {
         $this->productStorageClient = $productStorageClient;
     }
-
-    /**
-     * @param string $mappingType
-     * @param string $identifier
-     * @param string $localeName
-     *
-     * @return array|null
-     */
-    public function findProductAbstractStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array
-    {
-        return $this->productStorageClient->findProductAbstractStorageDataByMapping($mappingType, $identifier, $localeName);
-    }
 }

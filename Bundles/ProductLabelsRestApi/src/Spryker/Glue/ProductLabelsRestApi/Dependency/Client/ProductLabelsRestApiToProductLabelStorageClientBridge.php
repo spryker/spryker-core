@@ -34,15 +34,4 @@ class ProductLabelsRestApiToProductLabelStorageClientBridge implements ProductLa
     {
         return $this->productLabelStorageClient->findLabelByKey($labelKey, $localeName);
     }
-
-    /**
-     * @param int $idProductAbstract
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
-     */
-    public function findLabelsByIdProductAbstract(int $idProductAbstract, string $localeName): array
-    {
-        return $this->productLabelStorageClient->findLabelsByIdProductAbstract($idProductAbstract, $localeName);
-    }
 }
