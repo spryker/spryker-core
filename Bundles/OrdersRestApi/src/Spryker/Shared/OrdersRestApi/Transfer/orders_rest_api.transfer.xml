@@ -102,8 +102,6 @@
         <property name="description" type="string"/>
         <property name="comment" type="string"/>
         <property name="email" type="string"/>
-        <property name="isBilling" type="bool"/>
-        <property name="isShipping" type="bool"/>
     </transfer>
 
     <transfer name="RestOrderPayment">
