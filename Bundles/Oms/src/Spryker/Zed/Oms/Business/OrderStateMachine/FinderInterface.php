@@ -33,7 +33,7 @@ interface FinderInterface
      *
      * @return bool
      */
-    public function isOrderFlaggedAll($idOrder, $flag): bool;
+    public function isOrderFlaggedAll($idOrder, $flag);
 
     /**
      * @param string $sku
