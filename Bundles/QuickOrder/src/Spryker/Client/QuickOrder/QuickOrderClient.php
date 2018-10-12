@@ -48,20 +48,4 @@ class QuickOrderClient extends AbstractClient implements QuickOrderClientInterfa
             ->createProductPriceReader()
             ->getCurrentProductPrice($itemTransfer);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
-     */
-    public function findProductConcretesByQuickOrderItemTransfers(array $quickOrderItemTransfers): array
-    {
-        return $this->getFactory()
-            ->createProductConcreteReader()
-            ->findProductConcretesByQuickOrderItemTransfers($quickOrderItemTransfers);
-    }
 }

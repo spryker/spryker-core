@@ -91,6 +91,22 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     */
+    public function getProductConcreteStorageTransfers(array $productIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->getProductConcreteStorageTransfersForCurrentLocale($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param array $data
      * @param string $localeName
      * @param array $selectedAttributes

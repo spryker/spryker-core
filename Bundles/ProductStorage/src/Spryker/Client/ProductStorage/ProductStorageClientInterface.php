@@ -80,6 +80,17 @@ interface ProductStorageClientInterface
     public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     */
+    public function getProductConcreteStorageTransfers(array $productIds): array;
+
+    /**
      * Specification:
      * - Retrieves a current Store specific ProductConcrete resource from Storage using specified mapping.
      *

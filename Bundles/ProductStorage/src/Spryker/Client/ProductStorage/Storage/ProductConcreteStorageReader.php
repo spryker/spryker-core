@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\ProductStorage\Storage;
 
+use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
@@ -25,6 +27,11 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected $storageClient;
 
     /**
+     * @var \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface
+     */
+    protected $localeClient;
+
+    /**
      * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[]
      */
     protected $productConcreteRestrictionPlugins;
@@ -32,15 +39,18 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[] $productConcreteRestrictionPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
+        ProductStorageToLocaleInterface $localeClient,
         array $productConcreteRestrictionPlugins = []
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->localeClient = $localeClient;
         $this->productConcreteRestrictionPlugins = $productConcreteRestrictionPlugins;
     }
 
@@ -72,6 +82,48 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         $key = $this->getStorageKey($idProductConcrete, $localeName);
 
         return $this->storageClient->get($key);
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     */
+    public function getProductConcreteStorageTransfersForCurrentLocale(array $productIds): array
+    {
+        return $this->getProductConcreteStorageTransfers($productIds, $this->localeClient->getCurrentLocale());
+    }
+
+    /**
+     * @param int[] $productIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     */
+    protected function getProductConcreteStorageTransfers(array $productIds, string $localeName): array
+    {
+        $productConcreteStorageTransfers = [];
+        foreach ($productIds as $productId) {
+            $productConcreteStorageData = $this->findProductConcreteStorageData($productId, $localeName);
+            if ($productConcreteStorageData === null) {
+                continue;
+            }
+
+            $productConcreteStorageTransfers[] = $this->mapProductConcreteStorageDataToTransfer($productConcreteStorageData);
+        }
+
+        return $productConcreteStorageTransfers;
+    }
+
+    /**
+     * @param array $productConcreteStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer
+     */
+    protected function mapProductConcreteStorageDataToTransfer(array $productConcreteStorageData): ProductConcreteStorageTransfer
+    {
+        return (new ProductConcreteStorageTransfer())
+            ->fromArray($productConcreteStorageData, true);
     }
 
     /**
