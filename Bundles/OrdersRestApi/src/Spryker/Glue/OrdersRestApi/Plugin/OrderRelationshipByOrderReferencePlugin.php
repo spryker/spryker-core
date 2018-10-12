@@ -44,6 +44,6 @@ class OrderRelationshipByOrderReferencePlugin extends AbstractPlugin implements 
      */
     public function getRelationshipResourceType(): string
     {
-        return 'order';
+        return 'checkout';
     }
 }

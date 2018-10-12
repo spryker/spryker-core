@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 class CheckoutDataMapper implements CheckoutDataMapperInterface
 {
@@ -82,18 +83,23 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             )
         );
         foreach ($restCheckoutRequestAttributesTransfer->getQuote()->getPayments() as $restPaymentTransfer) {
-            $quoteTransfer->addPayment(
-                (new PaymentTransfer())->fromArray(
-                    $restPaymentTransfer->toArray(),
+            $paymentTransfer = (new PaymentTransfer())
+                ->fromArray(
+                    $restPaymentTransfer->getPaymentMethodInformation(),
                     true
                 )
-            );
+                ->fromArray($restPaymentTransfer->toArray(), true);
+
+            $paymentTransfer->setAmount($quoteTransfer->getTotals()->getPriceToPay());
+
+            $quoteTransfer->addPayment($paymentTransfer);
+            $quoteTransfer->setPayment($paymentTransfer);
         }
-//        $quoteTransfer->setShipment(
-//            (new ShipmentTransfer())->fromArray(
-//                $restCheckoutRequestAttributesTransfer->getQuote()->getShipment()->toArray()
-//            )
-//        );
+        $quoteTransfer->setShipment(
+            (new ShipmentTransfer())->fromArray(
+                $restCheckoutRequestAttributesTransfer->getQuote()->getShipment()->toArray()
+            )
+        );
         $quoteTransfer->setVoucherCode($restCheckoutRequestAttributesTransfer->getQuote()->getVoucherCode());
 
         return $quoteTransfer;

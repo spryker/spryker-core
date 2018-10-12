@@ -15,8 +15,6 @@
 
     <transfer name="Address">
         <property name="idCustomerAddress" type="int" />
-        <property name="customerId" type="string" />
-        <property name="fkCustomer" type="int" />
         <property name="email" type="string" />
         <property name="salutation" type="string" />
         <property name="firstName" type="string" />
@@ -64,6 +62,7 @@
     </transfer>
 
     <transfer name="RestQuoteRequest">
+        <property name="quoteIdentifier" type="string"/>
         <property name="billingAddress" type="RestAddress"/>
         <property name="shippingAddress" type="RestAddress"/>
         <property name="payments" type="RestPayment[]" singular="payment"/>
@@ -72,6 +71,8 @@
     </transfer>
 
     <transfer name="RestAddress">
+        <property name="idCustomerAddress" type="int" />
+        <property name="email" type="string" />
         <property name="salutation" type="string" />
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
@@ -84,17 +85,18 @@
         <property name="iso2Code" type="string" />
         <property name="company" type="string" />
         <property name="phone" type="string" />
-        <property name="isDefaultShipping" type="bool" />
-        <property name="isDefaultBilling" type="bool" />
     </transfer>
 
     <transfer name="RestPayment">
+        <property name="paymentMethodInformation" type="array"/>
         <property name="paymentMethod" type="string"/>
-        <property name="amount" type="int"/>
+        <property name="paymentProvider" type="string"/>
+        <property name="paymentSelection" type="string"/>
     </transfer>
 
     <transfer name="RestShipment">
-        <property name="idShipmentMethod" type="int"/>
+        <property name="shipmentSelection" type="int"/>
+        <property name="method" type="ShipmentMethod"/>
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">

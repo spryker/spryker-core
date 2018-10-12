@@ -5,13 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CheckoutRestApi\Processor\Checkout;
+namespace Spryker\Glue\CheckoutRestApi\Controller;
 
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\Kernel\Controller\AbstractController;
 
-interface CheckoutWriterInterface
+/**
+ * @method \Spryker\Glue\CheckoutRestApi\CheckoutRestApiFactory getFactory()
+ */
+class CheckoutResourceController extends AbstractController
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -19,5 +23,12 @@ interface CheckoutWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function placeOrder(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface;
+    public function postAction(
+        RestRequestInterface $restRequest,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestResponseInterface {
+        return $this->getFactory()
+            ->createCheckoutWriter()
+            ->placeOrder($restRequest, $restCheckoutRequestAttributesTransfer);
+    }
 }

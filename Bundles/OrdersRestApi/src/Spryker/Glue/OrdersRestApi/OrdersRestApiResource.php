@@ -8,11 +8,12 @@
 namespace Spryker\Glue\OrdersRestApi;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Glue\Kernel\AbstractRestResource;
 
 /**
  * @method \Spryker\Glue\OrdersRestApi\OrdersRestApiFactory getFactory()
  */
-class OrdersRestApiResource implements OrdersRestApiResourceInterface
+class OrdersRestApiResource extends AbstractRestResource implements OrdersRestApiResourceInterface
 {
     /**
      * {@inheritdoc}
