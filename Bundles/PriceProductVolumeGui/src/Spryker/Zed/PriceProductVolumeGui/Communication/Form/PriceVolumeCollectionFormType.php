@@ -13,8 +13,12 @@ use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolum
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\PriceProductVolumeGui\Business\PriceProductVolumeGuiFacadeInterface getFacade()
@@ -27,6 +31,7 @@ class PriceVolumeCollectionFormType extends AbstractType
     public const FIELD_ID_CURRENCY = 'idCurrency';
     public const FIELD_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
     public const FIELD_ID_PRODUCT_CONCRETE = 'idProductConcrete';
+    protected const VALIDATION_VOLUMES_GROUP = 'volumes_group';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -57,6 +62,7 @@ class PriceVolumeCollectionFormType extends AbstractType
             'entry_options' => [
                 'label' => false,
                 'data_class' => PriceProductVolumeItemTransfer::class,
+                'constraints' => $this->getVolumesConstants(),
                 PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
             ],
         ]);
@@ -132,5 +138,36 @@ class PriceVolumeCollectionFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE);
+
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+                return [Constraint::DEFAULT_GROUP, static::VALIDATION_VOLUMES_GROUP];
+            },
+        ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getVolumesConstants()
+    {
+        $volumesConstants[] = new Callback([
+            'callback' => function (PriceProductVolumeItemTransfer $priceProductVolumeItemTransfer, ExecutionContextInterface $context) {
+                if (empty(array_filter($priceProductVolumeItemTransfer->toArray()))) {
+                    return;
+                }
+
+                if (!$priceProductVolumeItemTransfer->getQuantity()) {
+                    $context->addViolation('Quantity Should not be empty.');
+                }
+
+                if (!$priceProductVolumeItemTransfer->getNetPrice() && !$priceProductVolumeItemTransfer->getGrossPrice()) {
+                    $context->addViolation(sprintf('Set up net or gross price for "quantity": %d.', $priceProductVolumeItemTransfer->getQuantity()));
+                }
+            },
+            'groups' => [static::VALIDATION_VOLUMES_GROUP],
+        ]);
+
+        return $volumesConstants;
     }
 }

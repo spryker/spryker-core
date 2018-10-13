@@ -23,9 +23,11 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class PriceVolumeFormType extends AbstractType
 {
+    public const FIELD_QUANTITY = 'quantity';
     protected const FIELD_NET_PRICE = 'net_price';
     protected const FIELD_GROSS_PRICE = 'gross_price';
-    public const FIELD_QUANTITY = 'quantity';
+    protected const MINIMUM_QUANTITY = 2;
+    protected const MESSAGE_QUANTITY_ERROR = 'The quantity you have entered is invalid.';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -53,7 +55,8 @@ class PriceVolumeFormType extends AbstractType
             'required' => false,
             'constraints' => [
                 new Required(),
-                new Regex(['pattern' => '/[\d]+/']),
+                new GreaterThanOrEqual(['value' => static::MINIMUM_QUANTITY, 'message' => static::MESSAGE_QUANTITY_ERROR]),
+                new Regex(['pattern' => '/[\d]+/', 'message' => static::MESSAGE_QUANTITY_ERROR]),
             ],
         ]);
 

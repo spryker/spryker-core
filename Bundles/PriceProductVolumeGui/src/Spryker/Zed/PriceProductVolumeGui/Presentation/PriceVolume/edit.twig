@@ -53,6 +53,8 @@
             </td>
         </tr>
 
+        {{ form_errors(form) }}
+
         {% for volume in form.volumes %}
             <tr>
                 <td>
@@ -72,7 +74,7 @@
         </tbody>
     </table>
 
-    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>
+    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save and add more rows' | trans }}"/>
 
     {{ form_end(form) }}
 
