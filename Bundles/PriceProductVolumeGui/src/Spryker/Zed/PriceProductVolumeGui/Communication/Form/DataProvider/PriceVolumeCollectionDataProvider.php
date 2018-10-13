@@ -73,15 +73,17 @@ class PriceVolumeCollectionDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param int $idProductAbstract
+     * @param int|null $idProductConcrete
      *
      * @return array
      */
-    public function getData(PriceProductTransfer $priceProductTransfer): array
+    public function getData(PriceProductTransfer $priceProductTransfer, int $idProductAbstract, ?int $idProductConcrete): array
     {
         $data[PriceVolumeCollectionFormType::FIELD_ID_STORE] = $priceProductTransfer->getMoneyValue()->getFkStore();
         $data[PriceVolumeCollectionFormType::FIELD_ID_CURRENCY] = $priceProductTransfer->getMoneyValue()->getFkCurrency();
-        $data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_ABSTRACT] = $priceProductTransfer->getIdProductAbstract();
-        $data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_CONCRETE] = $priceProductTransfer->getIdProduct();
+        $data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_ABSTRACT] = $idProductAbstract;
+        $data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_CONCRETE] = $idProductConcrete;
         $data[PriceVolumeCollectionFormType::FIELD_VOLUMES] = $this->getVolumes($priceProductTransfer);
 
         return $data;

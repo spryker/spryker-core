@@ -23,8 +23,11 @@ class PriceVolumeController extends AbstractController
     protected const REQUEST_PARAM_ID_PRODUCT_CONCRETE = 'id-product-concrete';
     protected const REQUEST_PARAM_STORE_NAME = 'store-name';
     protected const REQUEST_PARAM_CURRENCY_CODE = 'currency-code';
+    protected const REQUEST_PARAM_SAVE_AND_EXIT = 'save_and_exit';
 
     protected const PRICE_PRODUCT_VOLUME_EDIT_URL = '/price-product-volume-gui/price-volume/edit';
+    protected const PRODUCT_CONCRETE_EDIT_URL = '/product-management/edit/variant';
+    protected const PRODUCT_ABSTRACT_EDIT_URL = '/product-management/edit';
     protected const MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS = 'Volume prices successfully saved.';
 
     /**
@@ -38,7 +41,7 @@ class PriceVolumeController extends AbstractController
         $priceProductTransfer = $this->getPriceProductTransfer($request, $dataProvider);
         $priceVolumeCollectionFormType = $this->getFactory()
             ->getPriceVolumeCollectionFormType(
-                $dataProvider->getData($priceProductTransfer),
+                $dataProvider->getData($priceProductTransfer, $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT), $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)),
                 $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
             )->handleRequest($request);
 
@@ -48,6 +51,10 @@ class PriceVolumeController extends AbstractController
                 $priceProductTransfer
             );
             $this->addSuccessMessage(static::MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS);
+
+            if ($request->request->has(static::REQUEST_PARAM_SAVE_AND_EXIT)) {
+                return $this->redirectResponse($this->getExitUrl($request, $priceVolumeCollectionFormType->getData()));
+            }
 
             return $this->redirectResponse($this->getEditUrl($request));
         }
@@ -70,7 +77,7 @@ class PriceVolumeController extends AbstractController
         $priceProductTransfer = $this->getPriceProductTransfer($request, $dataProvider);
         $priceVolumeCollectionFormType = $this->getFactory()
             ->getPriceVolumeCollectionFormType(
-                $dataProvider->getData($priceProductTransfer),
+                $dataProvider->getData($priceProductTransfer, $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT), $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)),
                 $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
             )->handleRequest($request);
 
@@ -82,10 +89,14 @@ class PriceVolumeController extends AbstractController
 
             $priceVolumeCollectionFormType = $this->getFactory()
                 ->getPriceVolumeCollectionFormType(
-                    $dataProvider->getData($priceProductTransfer),
+                    $dataProvider->getData($priceProductTransfer, $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT), $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)),
                     $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
                 );
             $this->addSuccessMessage(static::MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS);
+
+            if ($request->request->has(static::REQUEST_PARAM_SAVE_AND_EXIT)) {
+                return $this->redirectResponse($this->getExitUrl($request));
+            }
         }
 
         return $this->viewResponse([
@@ -150,6 +161,61 @@ class PriceVolumeController extends AbstractController
                 static::REQUEST_PARAM_ID_PRODUCT_CONCRETE => $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE),
                 static::REQUEST_PARAM_STORE_NAME => $request->get(static::REQUEST_PARAM_STORE_NAME),
                 static::REQUEST_PARAM_CURRENCY_CODE => $request->get(static::REQUEST_PARAM_CURRENCY_CODE),
+            ]
+        )->build();
+
+        return $redirectUrl;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    protected function getExitUrl(Request $request, $data): string
+    {
+        if (isset($data['idProductConcrete'])) {
+            return $this->getConcreteProductExitUrl($request);
+        }
+
+        return $this->getAbstractProductExitUrl($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    protected function getConcreteProductExitUrl(Request $request): string
+    {
+        $redirectUrl = Url::generate(
+            static::PRODUCT_CONCRETE_EDIT_URL,
+            [
+                'id-product' => $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE),
+                'id-product-abstract' => $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
+            ],
+            [
+                'fragment' => 'tab-content-price',
+            ]
+        )->build();
+
+        return $redirectUrl;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    protected function getAbstractProductExitUrl(Request $request): string
+    {
+        $redirectUrl = Url::generate(
+            static::PRODUCT_ABSTRACT_EDIT_URL,
+            [
+                'id-product-abstract' => $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
+            ],
+            [
+                'fragment' => 'tab-content-price_and_tax',
             ]
         )->build();
 
