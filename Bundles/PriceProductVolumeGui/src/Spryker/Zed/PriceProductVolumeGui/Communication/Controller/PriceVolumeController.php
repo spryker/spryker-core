@@ -21,6 +21,7 @@ class PriceVolumeController extends AbstractController
 {
     protected const REQUEST_PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     protected const REQUEST_PARAM_ID_PRODUCT_CONCRETE = 'id-product-concrete';
+    protected const REQUEST_PARAM_ID_PRODUCT = 'id-product';
     protected const REQUEST_PARAM_STORE_NAME = 'store-name';
     protected const REQUEST_PARAM_CURRENCY_CODE = 'currency-code';
     protected const REQUEST_PARAM_SAVE_AND_EXIT = 'save_and_exit';
@@ -28,6 +29,7 @@ class PriceVolumeController extends AbstractController
     protected const PRICE_PRODUCT_VOLUME_EDIT_URL = '/price-product-volume-gui/price-volume/edit';
     protected const PRODUCT_CONCRETE_EDIT_URL = '/product-management/edit/variant';
     protected const PRODUCT_ABSTRACT_EDIT_URL = '/product-management/edit';
+
     protected const MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS = 'Volume prices successfully saved.';
 
     /**
@@ -53,7 +55,7 @@ class PriceVolumeController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS);
 
             if ($request->request->has(static::REQUEST_PARAM_SAVE_AND_EXIT)) {
-                return $this->redirectResponse($this->getExitUrl($request, $priceVolumeCollectionFormType->getData()));
+                return $this->redirectResponse($this->getExitUrl($request));
             }
 
             return $this->redirectResponse($this->getEditUrl($request));
@@ -136,7 +138,6 @@ class PriceVolumeController extends AbstractController
      */
     protected function getPriceProductTransfer(Request $request, PriceVolumeCollectionDataProvider $dataProvider): PriceProductTransfer
     {
-        $dataProvider = $this->getFactory()->createPriceVolumeCollectionDataProvider();
         $priceProductTransfer = $dataProvider->getPriceProductTransfer(
             $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
             $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE),
@@ -154,17 +155,14 @@ class PriceVolumeController extends AbstractController
      */
     protected function getEditUrl(Request $request): string
     {
-        $redirectUrl = Url::generate(
-            static::PRICE_PRODUCT_VOLUME_EDIT_URL,
-            [
-                static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT => $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
-                static::REQUEST_PARAM_ID_PRODUCT_CONCRETE => $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE),
-                static::REQUEST_PARAM_STORE_NAME => $request->get(static::REQUEST_PARAM_STORE_NAME),
-                static::REQUEST_PARAM_CURRENCY_CODE => $request->get(static::REQUEST_PARAM_CURRENCY_CODE),
-            ]
-        )->build();
+        $query = [
+            static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT => $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
+            static::REQUEST_PARAM_ID_PRODUCT_CONCRETE => $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE),
+            static::REQUEST_PARAM_STORE_NAME => $request->get(static::REQUEST_PARAM_STORE_NAME),
+            static::REQUEST_PARAM_CURRENCY_CODE => $request->get(static::REQUEST_PARAM_CURRENCY_CODE),
+        ];
 
-        return $redirectUrl;
+        return $this->generateUrl(static::PRICE_PRODUCT_VOLUME_EDIT_URL, $query);
     }
 
     /**
@@ -172,9 +170,9 @@ class PriceVolumeController extends AbstractController
      *
      * @return string
      */
-    protected function getExitUrl(Request $request, $data): string
+    protected function getExitUrl(Request $request): string
     {
-        if (isset($data['idProductConcrete'])) {
+        if ($request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)) {
             return $this->getConcreteProductExitUrl($request);
         }
 
@@ -188,18 +186,12 @@ class PriceVolumeController extends AbstractController
      */
     protected function getConcreteProductExitUrl(Request $request): string
     {
-        $redirectUrl = Url::generate(
-            static::PRODUCT_CONCRETE_EDIT_URL,
-            [
-                'id-product' => $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE),
-                'id-product-abstract' => $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
-            ],
-            [
-                'fragment' => 'tab-content-price',
-            ]
-        )->build();
+        $query = [
+            static::REQUEST_PARAM_ID_PRODUCT => $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE),
+            static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT => $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
+        ];
 
-        return $redirectUrl;
+        return $this->generateUrl(static::PRODUCT_CONCRETE_EDIT_URL, $query, $this->getUrlOptions('price'));
     }
 
     /**
@@ -209,16 +201,34 @@ class PriceVolumeController extends AbstractController
      */
     protected function getAbstractProductExitUrl(Request $request): string
     {
-        $redirectUrl = Url::generate(
-            static::PRODUCT_ABSTRACT_EDIT_URL,
-            [
-                'id-product-abstract' => $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
-            ],
-            [
-                'fragment' => 'tab-content-price_and_tax',
-            ]
-        )->build();
+        $query = [
+            static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT => $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
+        ];
 
-        return $redirectUrl;
+        return $this->generateUrl(static::PRODUCT_ABSTRACT_EDIT_URL, $query, $this->getUrlOptions('price_and_tax'));
+    }
+
+    /**
+     * @param string $url
+     * @param array $query
+     * @param array $options
+     *
+     * @return string
+     */
+    protected function generateUrl(string $url, array $query = [], array $options = []): string
+    {
+        return Url::generate($url, $query, $options)->build();
+    }
+
+    /**
+     * @param string $fragment
+     *
+     * @return array
+     */
+    protected function getUrlOptions(string $fragment): array
+    {
+        return [
+            'fragment' => sprintf('tab-content-%s', $fragment),
+        ];
     }
 }

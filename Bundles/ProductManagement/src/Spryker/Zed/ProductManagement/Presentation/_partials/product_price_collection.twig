@@ -2,6 +2,7 @@
 {% set numberOfGrossPriceTypes = moneyValueFormViewCollection.vars.priceTypes.GROSS_MODE|length %}
 {% set numberOfNetPriceTypes = moneyValueFormViewCollection.vars.priceTypes.NET_MODE|length %}
 {% set currencies = moneyValueFormViewCollection.vars.currencies %}
+{% set volumePrices = moneyValueFormViewCollection.vars.volumePrices ?? [] %}
 
 {% set priceModeGross = 'GROSS_MODE' %}
 {% set priceModeNet = 'NET_MODE' %}
@@ -47,16 +48,16 @@
 
                 <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold">
                     {{ currencies[currencyIsoCode].symbol }}
-
-                    {{ viewActionButton(
-                        url('/price-product-volume-gui/price-volume/add', {
-                            'id-product-abstract': idProductAbstract,
-                            'id-product-concrete': idProduct,
-                            'store-name': storeName,
-                            'currency-code': currencyIsoCode,
-
-                        }),
-                    'Price Product Volume Add' | trans) }}
+                    {% if volumePrices[storeName][currencyIsoCode] is defined %}
+                        {{ viewActionButton(
+                            url(volumePrices[storeName][currencyIsoCode]['url'], {
+                                'id-product-abstract': idProductAbstract,
+                                'id-product-concrete': idProduct,
+                                'store-name': storeName,
+                                'currency-code': currencyIsoCode,
+                            }),
+                        volumePrices[storeName][currencyIsoCode]['title'] | trans) }}
+                    {% endif %}
                 </td>
 
                {% for priceMode, priceTypes in priceModes %}

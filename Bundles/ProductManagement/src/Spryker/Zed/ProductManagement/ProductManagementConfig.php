@@ -14,6 +14,7 @@ class ProductManagementConfig extends AbstractBundleConfig
 {
     public const PRODUCT_TYPE_BUNDLE = 'bundle';
     public const PRODUCT_TYPE_REGULAR = 'regular';
+    protected const HAS_VOLUME_PRICE_SUPPORT = true;
 
     /**
      * Used for validity datetimes transformation and displaying in messages.
@@ -44,5 +45,13 @@ class ProductManagementConfig extends AbstractBundleConfig
     public function getValidityTimeFormat()
     {
         return static::VALIDITY_DATE_TIME_FORMAT;
+    }
+
+    /**
+     * @return string
+     */
+    public function hasVolumePriceSupport()
+    {
+        return static::HAS_VOLUME_PRICE_SUPPORT;
     }
 }
