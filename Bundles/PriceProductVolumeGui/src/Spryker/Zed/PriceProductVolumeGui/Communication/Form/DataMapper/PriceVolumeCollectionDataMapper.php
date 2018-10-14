@@ -71,6 +71,18 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
     /**
      * @param array $data
      *
+     * @return array
+     */
+    protected function getPriceData(array $data): array
+    {
+        $priceData[$this->config->getVolumePriceTypeName()] = $this->getPriceProductVolumeItemTransfers($data);
+
+        return $priceData;
+    }
+
+    /**
+     * @param array $data
+     *
      * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
      */
     protected function getPriceProductVolumeItemTransfers(array $data): array
@@ -84,17 +96,5 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
         $priceProductVolumeItemTransfers = array_filter($priceProductVolumeItemTransfers);
 
         return $priceProductVolumeItemTransfers;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function getPriceData(array $data): array
-    {
-        $priceData[$this->config->getVolumePriceTypeName()] = $this->getPriceProductVolumeItemTransfers($data);
-
-        return $priceData;
     }
 }

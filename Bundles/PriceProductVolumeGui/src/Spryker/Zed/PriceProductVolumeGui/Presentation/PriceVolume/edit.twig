@@ -43,16 +43,10 @@
                 <input type="text" class="form-control" value="1" disabled>
             </td>
             <td>
-                <div class="input-group">
-                    <span class="input-group-addon">{{ price_product.moneyValue.currency.symbol }}</span>
-                    <input type="text" class="form-control" value="{{ price_product.moneyValue.netAmount | money(false) }}" disabled>
-                </div>
+                {{ form_widget(form.net_price) }}
             </td>
             <td>
-                <div class="input-group">
-                    <span class="input-group-addon">{{ price_product.moneyValue.currency.symbol }}</span>
-                    <input type="text" class="form-control" value="{{ price_product.moneyValue.grossAmount | money(false) }}" disabled>
-                </div>
+                {{ form_widget(form.gross_price) }}
             </td>
         </tr>
 

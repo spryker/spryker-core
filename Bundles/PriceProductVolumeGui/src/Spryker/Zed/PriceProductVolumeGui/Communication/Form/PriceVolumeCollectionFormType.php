@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,6 +33,8 @@ class PriceVolumeCollectionFormType extends AbstractType
     public const FIELD_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
     public const FIELD_ID_PRODUCT_CONCRETE = 'idProductConcrete';
     protected const VALIDATION_VOLUMES_GROUP = 'volumes_group';
+    public const FIELD_NET_PRICE = 'net_price';
+    public const FIELD_GROSS_PRICE = 'gross_price';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -46,7 +49,9 @@ class PriceVolumeCollectionFormType extends AbstractType
             ->addIdStoreField($builder)
             ->addIdCurrencyField($builder)
             ->addIdProductAbstractField($builder)
-            ->addIdProductConcreteField($builder);
+            ->addIdProductConcreteField($builder)
+            ->addNetPriceField($builder, $options)
+            ->addGrossPriceField($builder, $options);
     }
 
     /**
@@ -126,6 +131,42 @@ class PriceVolumeCollectionFormType extends AbstractType
     protected function addIdProductConcreteField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addNetPriceField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_NET_PRICE, MoneyType::class, [
+            'label' => 'Net Price',
+            'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
+            'required' => false,
+            'attr' => ['disabled' => 'disabled'],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addGrossPriceField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_GROSS_PRICE, MoneyType::class, [
+            'label' => 'Gross Price',
+            'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
+            'required' => false,
+            'attr' => ['disabled' => 'disabled'],
+        ]);
 
         return $this;
     }
