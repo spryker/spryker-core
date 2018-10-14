@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/price-product-volume-gui.svg)](https://travis-ci.org/spryker/price-product-volume-gui)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/price-product-volume-gui/badge.svg)](https://coveralls.io/github/spryker/price-product-volume-gui)
 
-PriceProductVolumeGui contains the Zed UI implementation to add/remove volume prices for abstract and concrete products.
+PriceProductVolumeGui contains the Zed UI implementation to manage volume prices for abstract and concrete products.
 
 ## Installation
 
