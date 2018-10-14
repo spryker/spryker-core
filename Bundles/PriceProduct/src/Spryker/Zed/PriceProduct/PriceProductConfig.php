@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class PriceProductConfig extends AbstractBundleConfig
 {
+    protected const PRICE_DIMENSION_DEFAULT_NAME = 'Default';
+
     /**
      * @return string
      */
@@ -36,5 +38,13 @@ class PriceProductConfig extends AbstractBundleConfig
     public function getPriceModeIdentifierForBothType()
     {
         return $this->getSharedConfig()->getPriceModeIdentifierForBothType();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceDimensionDefaultName(): string
+    {
+        return static::PRICE_DIMENSION_DEFAULT_NAME;
     }
 }

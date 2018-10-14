@@ -144,9 +144,9 @@ class PriceVolumeCollectionFormType extends AbstractType
     protected function addNetPriceField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_NET_PRICE, MoneyType::class, [
-            'label' => 'Net Price',
-            'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
+            'label' => false,
             'required' => false,
+            'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
             'attr' => ['disabled' => 'disabled'],
         ]);
 
@@ -162,9 +162,9 @@ class PriceVolumeCollectionFormType extends AbstractType
     protected function addGrossPriceField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_GROSS_PRICE, MoneyType::class, [
-            'label' => 'Gross Price',
-            'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
+            'label' => false,
             'required' => false,
+            'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
             'attr' => ['disabled' => 'disabled'],
         ]);
 

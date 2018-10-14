@@ -155,7 +155,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductExpander(): PriceProductExpanderInterface
     {
         return new PriceProductExpander(
-            $this->getPriceProductDimensionExpanderStrategyPlugins()
+            $this->getPriceProductDimensionExpanderStrategyPlugins(),
+            $this->getConfig()
         );
     }
 
