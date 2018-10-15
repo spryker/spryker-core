@@ -17,7 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditCompanyUserController extends AbstractController
 {
+    protected const PARAM_REDIRECT_URL = 'redirect-url';
+
     protected const MESSAGE_SUCCESS_COMPANY_USER_UPDATE = 'Company User has been updated.';
+
+    /**
+     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\ListCompanyUserController::indexAction()
+     */
+    protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -39,7 +46,7 @@ class EditCompanyUserController extends AbstractController
         if ($companyUserForm->isSubmitted() && $companyUserForm->isValid()) {
             return $this->updateCompanyUser(
                 $companyUserForm,
-                $request->query->get(CompanyUserGuiConfig::PARAM_REDIRECT_URL, CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE)
+                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_COMPANY_USER_PAGE)
             );
         }
 

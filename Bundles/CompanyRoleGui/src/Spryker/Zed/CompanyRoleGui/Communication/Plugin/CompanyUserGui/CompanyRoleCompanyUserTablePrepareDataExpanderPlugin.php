@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin\CompanyUserGui;
 
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Spryker\Zed\CompanyRoleGui\CompanyRoleGuiConfig;
-use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -18,11 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyRoleCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugin implements CompanyUserTablePrepareDataExpanderPluginInterface
 {
-    /**
-     * @see \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig
-     */
-    protected const COL_ID_COMPANY_USER = CompanyUserGuiConfig::COL_ID_COMPANY_USER;
-
     /**
      * {@inheritdoc}
      * - Expands table data rows of company user table with company role names.
@@ -35,7 +29,7 @@ class CompanyRoleCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugi
      */
     public function expandDataItem(array $companyUserDataItem): array
     {
-        $idCompanyUser = $companyUserDataItem[static::COL_ID_COMPANY_USER];
+        $idCompanyUser = $companyUserDataItem[CompanyRoleGuiConfig::COL_ID_COMPANY_USER];
 
         $companyRoles = $this->getFactory()->getCompanyRoleFacade()->getCompanyRoleCollection(
             (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser)

@@ -17,8 +17,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateCompanyUserController extends AbstractController
 {
+    protected const PARAM_REDIRECT_URL = 'redirect-url';
+
     protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Company user has been created.';
     protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Company user has not been created.';
+
+    /**
+     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\ListCompanyUserController::indexAction()
+     */
+    protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -38,13 +45,13 @@ class CreateCompanyUserController extends AbstractController
         if ($companyUserForm->isSubmitted() && $companyUserForm->isValid()) {
             return $this->createCompanyUser(
                 $companyUserForm,
-                $request->query->get(CompanyUserGuiConfig::PARAM_REDIRECT_URL, CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE)
+                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_COMPANY_USER_PAGE)
             );
         }
 
         return $this->viewResponse([
             'form' => $companyUserForm->createView(),
-            'backButton' => CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE,
+            'backButton' => static::URL_REDIRECT_COMPANY_USER_PAGE,
         ]);
     }
 
@@ -76,7 +83,7 @@ class CreateCompanyUserController extends AbstractController
             } else {
                 $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
 
-                return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
+                return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
             }
         }
 

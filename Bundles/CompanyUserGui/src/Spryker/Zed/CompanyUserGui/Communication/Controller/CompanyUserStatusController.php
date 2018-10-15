@@ -18,9 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CompanyUserStatusController extends AbstractController
 {
+    /**
+     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\ListCompanyUserController::indexAction()
+     */
+    protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
+
     protected const MESSAGE_SUCCESS_COMPANY_USER_ENABLE = 'Company user successfully enabled';
     protected const MESSAGE_ERROR_COMPANY_USER_ENABLE = 'Company user cannot be enabled';
-
     protected const MESSAGE_SUCCESS_COMPANY_USER_DISABLE = 'Company user successfully disabled';
     protected const MESSAGE_ERROR_COMPANY_USER_DISABLE = 'Company user cannot be disabled';
 
@@ -35,7 +39,7 @@ class CompanyUserStatusController extends AbstractController
         if (!$idCompanyUser) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_ENABLE);
 
-            return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
         }
 
         $companyUserTransfer = (new CompanyUserTransfer())
@@ -48,12 +52,12 @@ class CompanyUserStatusController extends AbstractController
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_ENABLE);
 
-            return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
         }
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_ENABLE);
 
-        return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
+        return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
     }
 
     /**
@@ -67,7 +71,7 @@ class CompanyUserStatusController extends AbstractController
         if (!$idCompanyUser) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DISABLE);
 
-            return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
         }
 
         $companyUserTransfer = (new CompanyUserTransfer())
@@ -80,11 +84,11 @@ class CompanyUserStatusController extends AbstractController
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DISABLE);
 
-            return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
         }
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_DISABLE);
 
-        return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
+        return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
     }
 }

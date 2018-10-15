@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin\CompanyUserGui;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
-use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
+use Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConfig;
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -17,11 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugin implements CompanyUserTablePrepareDataExpanderPluginInterface
 {
-    /**
-     * @see \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig
-     */
-    protected const COL_ID_COMPANY_USER = CompanyUserGuiConfig::COL_ID_COMPANY_USER;
-
     /**
      * {@inheritdoc}
      * - Extends table data rows of company user table with company business unit names.
@@ -34,7 +29,7 @@ class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends Abstr
      */
     public function expandDataItem(array $companyUserDataItem): array
     {
-        $idCompanyUser = $companyUserDataItem[static::COL_ID_COMPANY_USER];
+        $idCompanyUser = $companyUserDataItem[CompanyBusinessUnitGuiConfig::COL_ID_COMPANY_USER];
 
         $companyBusinessUnits = $this->getFactory()
             ->getCompanyBusinessUnitFacade()
