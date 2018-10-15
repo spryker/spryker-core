@@ -27,7 +27,7 @@ class Discount implements DiscountInterface
 {
     use LoggerTrait;
 
-    const MESSAGE_DISCOUNT_NOT_APPLICABLE = 'discount.voucher_code.not_applicable';
+    protected const MESSAGE_VOUCHER_APPLY_FAILED = 'cart.voucher.apply.failed';
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -113,7 +113,7 @@ class Discount implements DiscountInterface
 
         $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
         $this->addNonApplicableDiscountsToQuote($quoteTransfer, $nonApplicableDiscounts);
-        $this->addMessagesForNonApplicableVoucherDiscounts($nonApplicableDiscounts);
+        $this->addMessagesForNonApplicableDiscounts($nonApplicableDiscounts);
 
         return $quoteTransfer;
     }
@@ -339,7 +339,7 @@ class Discount implements DiscountInterface
      *
      * @return void
      */
-    protected function addMessagesForNonApplicableVoucherDiscounts(array $discountTransfers): void
+    protected function addMessagesForNonApplicableDiscounts(array $discountTransfers): void
     {
         foreach ($discountTransfers as $discountTransfer) {
             if (!$discountTransfer->getVoucherCode()) {
@@ -347,7 +347,7 @@ class Discount implements DiscountInterface
             }
 
             $this->messengerFacade->addErrorMessage(
-                $this->createMessageTransfer(static::MESSAGE_DISCOUNT_NOT_APPLICABLE)
+                $this->createMessageTransfer(static::MESSAGE_VOUCHER_APPLY_FAILED)
             );
         }
     }
