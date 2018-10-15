@@ -79,16 +79,32 @@ class ProductAbstractProductListSynchronizationDataPlugin extends AbstractPlugin
      */
     public function getData(array $ids = [])
     {
-        $synchronizationDataTransfers = [];
-        $spyProductAbstractProductListStorageEntities = $this->getRepository()->findProductAbstractProductListStorageEntities($ids);
+        $spyProductAbstractProductListStorageEntities = $this->findSpyProductAbstractProductListStorageEntities($ids);
 
+        $synchronizationDataTransfers = [];
         foreach ($spyProductAbstractProductListStorageEntities as $spyProductAbstractProductListStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData(json_encode($spyProductAbstractProductListStorageEntity->getData()));
+            /** @var string $data */
+            $data = $spyProductAbstractProductListStorageEntity->getData();
+            $synchronizationDataTransfer->setData($data);
             $synchronizationDataTransfer->setKey($spyProductAbstractProductListStorageEntity->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
         return $synchronizationDataTransfers;
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     */
+    protected function findSpyProductAbstractProductListStorageEntities(array $ids = []): array
+    {
+        if (empty($ids)) {
+            return $this->getRepository()->findAllProductAbstractProductListStorageEntities();
+        }
+
+        return $this->getRepository()->findProductAbstractProductListStorageEntities($ids);
     }
 }

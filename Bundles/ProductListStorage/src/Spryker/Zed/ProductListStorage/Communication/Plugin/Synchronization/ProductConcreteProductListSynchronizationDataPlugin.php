@@ -79,16 +79,32 @@ class ProductConcreteProductListSynchronizationDataPlugin extends AbstractPlugin
      */
     public function getData(array $ids = [])
     {
-        $synchronizationDataTransfers = [];
-        $spyProductAbstractProductListStorageEntities = $this->getRepository()->findProductConcreteProductListStorageEntities($ids);
+        $spyProductConcreteProductListStorageEntities = $this->findSpyProductConcreteProductListStorageEntities($ids);
 
-        foreach ($spyProductAbstractProductListStorageEntities as $spyProductAbstractProductListStorageEntity) {
+        $synchronizationDataTransfers = [];
+        foreach ($spyProductConcreteProductListStorageEntities as $spyProductConcreteProductListStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData(json_encode($spyProductAbstractProductListStorageEntity->getData()));
-            $synchronizationDataTransfer->setKey($spyProductAbstractProductListStorageEntity->getKey());
+            /** @var string $data */
+            $data = $spyProductConcreteProductListStorageEntity->getData();
+            $synchronizationDataTransfer->setData($data);
+            $synchronizationDataTransfer->setKey($spyProductConcreteProductListStorageEntity->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
         return $synchronizationDataTransfers;
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
+     */
+    protected function findSpyProductConcreteProductListStorageEntities(array $ids = []): array
+    {
+        if (empty($ids)) {
+            return $this->getRepository()->findAllProductConcreteProductListStorageEntities();
+        }
+
+        return $this->getRepository()->findProductConcreteProductListStorageEntities($ids);
     }
 }
