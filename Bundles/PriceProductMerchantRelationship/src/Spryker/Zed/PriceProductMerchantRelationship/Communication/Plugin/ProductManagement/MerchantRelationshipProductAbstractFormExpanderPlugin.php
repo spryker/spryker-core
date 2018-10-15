@@ -19,11 +19,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 class MerchantRelationshipProductAbstractFormExpanderPlugin extends AbstractPlugin implements ProductAbstractFormExpanderPluginInterface
 {
     /**
-     * @see \Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd
-     */
-    protected const FORM_PRICE_DIMENSION = 'price_dimension';
-
-    /**
      * {@inheritdoc}
      *
      * @api
@@ -38,7 +33,7 @@ class MerchantRelationshipProductAbstractFormExpanderPlugin extends AbstractPlug
             ->createMerchantPriceDimensionFormDataProvider()
             ->getOptions();
 
-        $builder->get(static::FORM_PRICE_DIMENSION)->add(
+        $builder->get(PriceProductMerchantRelationshipConfig::FORM_PRICE_DIMENSION)->add(
             PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP,
             MerchantPriceDimensionForm::class,
             $options

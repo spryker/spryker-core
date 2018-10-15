@@ -5,6 +5,7 @@
 
     <transfer name="ProductAbstract">
         <property name="storeRelation" type="StoreRelation"/>
+        <property name="priceProductDimension" type="PriceProductDimension"/>
     </transfer>
 
     <transfer name="StoreRelation">
