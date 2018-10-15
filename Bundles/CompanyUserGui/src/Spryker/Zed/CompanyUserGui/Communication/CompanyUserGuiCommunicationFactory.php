@@ -14,6 +14,8 @@ use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CustomerCompanyAttachForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider\CompanyUserFormDataProvider;
 use Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider\CustomerCompanyAttachFormDataProvider;
+use Spryker\Zed\CompanyUserGui\Communication\Helper\CompanyUserGuiHelper;
+use Spryker\Zed\CompanyUserGui\Communication\Helper\CompanyUserGuiHelperInterface;
 use Spryker\Zed\CompanyUserGui\Communication\Table\CompanyUserTable;
 use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutor;
 use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
@@ -60,6 +62,14 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCompanyUserFacade(),
             $this->getCompanyFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGui\Communication\Helper\CompanyUserGuiHelperInterface
+     */
+    public function createCompanyUserGuiHelper(): CompanyUserGuiHelperInterface
+    {
+        return new CompanyUserGuiHelper();
     }
 
     /**

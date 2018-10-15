@@ -31,17 +31,15 @@ class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends Abstr
     {
         $idCompanyUser = $companyUserDataItem[CompanyBusinessUnitGuiConfig::COL_ID_COMPANY_USER];
 
-        $companyBusinessUnits = $this->getFactory()
+        $companyBusinessUnitCollection = $this->getFactory()
             ->getCompanyBusinessUnitFacade()
             ->getCompanyBusinessUnitCollection(
                 (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser)
-            )
-            ->getCompanyBusinessUnits();
+            );
 
-        $companyBusinessUnitName = null;
-        if ($companyBusinessUnits->count() > 0) {
-            $companyBusinessUnitName = $companyBusinessUnits->offsetGet(0)->getName();
-        }
+        $companyBusinessUnitName = $this->getFactory()
+            ->createCompanyBusinessUnitGuiHelper()
+            ->getCompanyBusinessUnitName($companyBusinessUnitCollection);
 
         return array_merge(
             $companyUserDataItem,

@@ -31,17 +31,15 @@ class CompanyRoleCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugi
     {
         $idCompanyUser = $companyUserDataItem[CompanyRoleGuiConfig::COL_ID_COMPANY_USER];
 
-        $companyRoles = $this->getFactory()->getCompanyRoleFacade()->getCompanyRoleCollection(
-            (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser)
-        )
-        ->getRoles();
+        $companyRoleCollection = $this->getFactory()
+            ->getCompanyRoleFacade()
+            ->getCompanyRoleCollection(
+                (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser)
+            );
 
-        $companyUserRoleNames = '';
-        if ($companyRoles->count() > 0) {
-            foreach ($companyRoles as $companyRole) {
-                $companyUserRoleNames .= '<p>' . $companyRole->getName() . '</p>';
-            }
-        }
+        $companyUserRoleNames = $this->getFactory()
+            ->createCompanyRoleGuiHelper()
+            ->getCompanyRoleNames($companyRoleCollection);
 
         return array_merge(
             $companyUserDataItem,

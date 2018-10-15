@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserGui\Communication\Plugin\Customer;
 
-use Generated\Shared\Transfer\ButtonTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -19,9 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyUserCustomerTableActionExpanderPlugin extends AbstractPlugin implements CustomerTableActionExpanderPluginInterface
 {
-    protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_URL = 'company-user-gui/create-company-user/attach-customer';
-    protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE = 'Attach to company';
-
     /**
      * {@inheritdoc}
      * - Adds "Attach to company" button in actions for customer table
@@ -43,23 +37,8 @@ class CompanyUserCustomerTableActionExpanderPlugin extends AbstractPlugin implem
             return $buttons;
         }
 
-        $defaultOptions = [
-            'class' => 'btn-create',
-            'icon' => 'fa-plus',
-        ];
-
-        $url = Url::generate(
-            static::BUTTON_ATTACH_CUSTOMER_TO_COMPANY_URL,
-            [
-                CompanyUserGuiConfig::PARAM_ID_CUSTOMER => $idCustomer,
-            ]
-        );
-
-        $buttons[] = (new ButtonTransfer())
-            ->setUrl($url)
-            ->setTitle(static::BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE)
-            ->setDefaultOptions($defaultOptions);
-
-        return $buttons;
+        return $this->getFactory()
+            ->createCompanyUserGuiHelper()
+            ->addAttachCustomerButton($idCustomer, $buttons);
     }
 }
