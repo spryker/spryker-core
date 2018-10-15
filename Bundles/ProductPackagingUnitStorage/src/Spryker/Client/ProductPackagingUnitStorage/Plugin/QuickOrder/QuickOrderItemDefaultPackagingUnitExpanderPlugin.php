@@ -18,6 +18,13 @@ use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemExpanderP
 class QuickOrderItemDefaultPackagingUnitExpanderPlugin extends AbstractPlugin implements QuickOrderItemExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Expands ItemTransfer with packaging unit data if available.
+     * - Uses the default amount and default measurement unit settings.
+     * - Returns ItemTransfer unchanged if no packaging unit data is available.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer

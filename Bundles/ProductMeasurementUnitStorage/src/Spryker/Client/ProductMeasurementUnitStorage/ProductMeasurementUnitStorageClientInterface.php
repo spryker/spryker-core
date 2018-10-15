@@ -79,7 +79,7 @@ interface ProductMeasurementUnitStorageClientInterface
     /**
      * Specification:
      * - Expands ProductConcreteTransfer with base measurement unit data using given product ID.
-     * - Does nothing when product ID is not provided.
+     * - Returns the unchanged provided ProductConcreteTransfer when no base measurement unit is defined for the product.
      *
      * @api
      *

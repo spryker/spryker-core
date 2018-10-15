@@ -42,7 +42,7 @@ interface ProductPackagingUnitStorageClientInterface
      * Specification:
      * - Expands ItemTransfer with packaging unit data if available.
      * - Uses the default amount and default measurement unit settings.
-     * - Leaves ItemTransfer unchanged if no packaging unit data is available.
+     * - Returns ItemTransfer unchanged if no packaging unit data is available.
      *
      * @api
      *

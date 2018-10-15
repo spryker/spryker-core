@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductMeasurementUnitStorage\Plugin;
+namespace Spryker\Client\ProductMeasurementUnitStorage\Plugin\QuickOrder;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
