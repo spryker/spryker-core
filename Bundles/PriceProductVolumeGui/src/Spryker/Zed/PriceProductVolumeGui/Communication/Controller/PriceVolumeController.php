@@ -45,7 +45,7 @@ class PriceVolumeController extends AbstractController
         $priceVolumeCollectionFormType = $this->getPriceVolumeCollectionFormType($request, $dataProvider, $priceProductTransfer);
 
         if ($priceVolumeCollectionFormType->isSubmitted() && $priceVolumeCollectionFormType->isValid()) {
-            $this->executeAction($priceVolumeCollectionFormType->getData(), $priceProductTransfer);
+            $this->executeAction($priceVolumeCollectionFormType, $priceProductTransfer);
 
             if ($request->request->has(static::REQUEST_PARAM_SAVE_AND_EXIT)) {
                 return $this->redirectResponse($this->getExitUrl($request));
@@ -73,13 +73,8 @@ class PriceVolumeController extends AbstractController
         $priceVolumeCollectionFormType = $this->getPriceVolumeCollectionFormType($request, $dataProvider, $priceProductTransfer);
 
         if ($priceVolumeCollectionFormType->isSubmitted() && $priceVolumeCollectionFormType->isValid()) {
-            $priceProductTransfer = $this->executeAction($priceVolumeCollectionFormType->getData(), $priceProductTransfer);
-
-            $priceVolumeCollectionFormType = $this->getFactory()
-                ->getPriceVolumeCollectionFormType(
-                    $dataProvider->getData($priceProductTransfer, $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT), $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)),
-                    $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
-                );
+            $priceProductTransfer = $this->executeAction($priceVolumeCollectionFormType, $priceProductTransfer);
+            $priceVolumeCollectionFormType = $this->getPriceVolumeCollectionFormType($request, $dataProvider, $priceProductTransfer);
 
             if ($request->request->has(static::REQUEST_PARAM_SAVE_AND_EXIT)) {
                 return $this->redirectResponse($this->getExitUrl($request));
