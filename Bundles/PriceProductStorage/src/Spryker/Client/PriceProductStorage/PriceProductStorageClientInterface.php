@@ -8,7 +8,7 @@
 namespace Spryker\Client\PriceProductStorage;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 interface PriceProductStorageClientInterface
 {
@@ -59,9 +59,9 @@ interface PriceProductStorageClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function getResolvedCurrentProductPriceTransfer(ItemTransfer $itemTransfer): CurrentProductPriceTransfer;
+    public function getResolvedCurrentProductPriceTransfer(PriceProductFilterTransfer $priceProductFilterTransfer): CurrentProductPriceTransfer;
 }

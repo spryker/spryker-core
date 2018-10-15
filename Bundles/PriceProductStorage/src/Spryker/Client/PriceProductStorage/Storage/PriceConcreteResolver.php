@@ -8,7 +8,6 @@
 namespace Spryker\Client\PriceProductStorage\Storage;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface;
 
@@ -64,29 +63,29 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function resolveCurrentProductPriceTransfer(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
+    public function resolveCurrentProductPriceTransfer(PriceProductFilterTransfer $priceProductFilterTransfer): CurrentProductPriceTransfer
     {
-        $itemTransfer->requireId();
-        $itemTransfer->requireIdProductAbstract();
-        $itemTransfer->requireQuantity();
+        $priceProductFilterTransfer->requireIdProduct();
+        $priceProductFilterTransfer->requireIdProductAbstract();
+        $priceProductFilterTransfer->requireQuantity();
 
         $priceProductTransfers = $this->resolvePriceProductConcrete(
-            $itemTransfer->getId(),
-            $itemTransfer->getIdProductAbstract()
+            $priceProductFilterTransfer->getIdProduct(),
+            $priceProductFilterTransfer->getIdProductAbstract()
         );
 
         $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
             $priceProductTransfers,
             (new PriceProductFilterTransfer())
-                ->setQuantity($itemTransfer->getQuantity())
+                ->setQuantity($priceProductFilterTransfer->getQuantity())
         );
 
         if ($currentProductPriceTransfer->getQuantity() === null) {
-            $currentProductPriceTransfer->setQuantity($itemTransfer->getQuantity());
+            $currentProductPriceTransfer->setQuantity($priceProductFilterTransfer->getQuantity());
         }
 
         return $currentProductPriceTransfer;
