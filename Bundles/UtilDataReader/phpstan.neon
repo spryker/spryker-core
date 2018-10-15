@@ -1,7 +1,4 @@
 parameters:
-    ignoreErrors:
-        - '#Parameter \#1 \$.+ of method .+CriteriaBuilderInterface::.+\(\) expects int, null given#'
-
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
 services:

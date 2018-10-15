@@ -693,7 +693,7 @@ interface ProductFacadeInterface
      * - Returns an associative array of attribute key - attribute value pairs of the persisted concrete product.
      * - The result is a combination of the concrete product's attributes and its abstract product's attributes.
      * - Includes localized abstract product and concrete products attribute keys when $localeTransfer is provided.
-
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -826,4 +826,17 @@ interface ProductFacadeInterface
      * @return array
      */
     public function getProductConcreteSkusByConcreteIds(array $productIds): array;
+
+    /**
+     * Specification:
+     * - Returns the generated SKU for new concrete product that build from the given attributes or incremented value within the abstract product.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string
+     */
+    public function generateProductConcreteSku(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer): string;
 }
