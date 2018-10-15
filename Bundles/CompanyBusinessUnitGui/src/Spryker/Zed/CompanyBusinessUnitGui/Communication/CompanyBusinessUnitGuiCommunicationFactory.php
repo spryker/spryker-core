@@ -21,6 +21,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
+/**
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConfig getConfig()
+ */
 class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
