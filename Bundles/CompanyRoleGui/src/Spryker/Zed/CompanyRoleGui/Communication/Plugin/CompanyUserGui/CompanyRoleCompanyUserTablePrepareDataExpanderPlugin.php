@@ -39,7 +39,7 @@ class CompanyRoleCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugi
 
         $companyUserRoleNames = $this->getFactory()
             ->createCompanyRoleGuiFormatter()
-            ->getCompanyRoleNames($companyRoleCollection);
+            ->formatCompanyRoleNames($companyRoleCollection);
 
         return array_merge(
             $companyUserDataItem,

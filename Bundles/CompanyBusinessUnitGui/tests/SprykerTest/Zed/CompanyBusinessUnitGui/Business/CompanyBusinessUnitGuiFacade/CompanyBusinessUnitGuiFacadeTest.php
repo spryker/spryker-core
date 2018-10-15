@@ -50,7 +50,7 @@ class CompanyBusinessUnitGuiFacadeTest extends Unit
             ->getFacade()
             ->findCompanyBusinessUnitName($companyUserTransfer->getIdCompanyUser());
 
-//        // Assert
+        // Assert
         $this->assertEquals($businessUnitTransfer->getName(), $companyBusinessUnitName);
     }
 }

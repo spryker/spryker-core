@@ -16,5 +16,5 @@ interface CompanyRoleGuiFormatterInterface
      *
      * @return string
      */
-    public function getCompanyRoleNames(CompanyRoleCollectionTransfer $companyRoleCollectionTransfer): string;
+    public function formatCompanyRoleNames(CompanyRoleCollectionTransfer $companyRoleCollectionTransfer): string;
 }
