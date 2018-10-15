@@ -171,12 +171,10 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             $prices[$priceProductOnePriceTypeTransfer->getPriceTypeName()] = $this->getPriceValueByPriceMode($priceProductOnePriceTypeTransfer->getMoneyValue(), $priceMode);
         }
 
-        $currencyTransfer = $this->currencyClient->getCurrent();
-
         return $currentProductPriceTransfer
             ->setPrice($price)
             ->setPrices($prices)
-            ->setCurrency($currencyTransfer)
+            ->setCurrency($priceProductFilter->getCurrency())
             ->setQuantity($priceProductFilter->getQuantity())
             ->setPriceMode($priceMode)
             ->setSumPrice($price * $priceProductFilter->getQuantity());
@@ -190,7 +188,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected function buildPriceProductFilterWithCurrentValues(
         ?PriceProductFilterTransfer $priceProductFilterTransfer = null
     ): PriceProductFilterTransfer {
-        $currencyIsoCode = $this->currencyClient->getCurrent()->getCode();
+        $currencyTransfer = $this->currencyClient->getCurrent();
         $priceMode = $this->priceClient->getCurrentPriceMode();
         $priceTypeName = $this->priceProductConfig->getPriceTypeDefaultName();
         $quote = $this->quoteClient->getQuote();
@@ -206,7 +204,8 @@ class ProductPriceResolver implements ProductPriceResolverInterface
 
         $builtPriceProductFilterTransfer
             ->setPriceMode($priceMode)
-            ->setCurrencyIsoCode($currencyIsoCode)
+            ->setCurrency($currencyTransfer)
+            ->setCurrencyIsoCode($currencyTransfer->getCode())
             ->setPriceTypeName($priceTypeName)
             ->setQuote($quote);
 
