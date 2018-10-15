@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductManagement\Communication\Transfer;
 use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -27,8 +29,10 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
@@ -67,12 +71,18 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     protected $productFormTransferMapperExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface
+     */
+    protected $productConcreteSuperAttributeFilterHelperInterface;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface $utilTextService
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface[] $productFormTransferMapperExpanderPlugins
+     * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelperInterface
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -80,7 +90,8 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         ProductManagementToLocaleInterface $localeFacade,
         ProductManagementToUtilTextInterface $utilTextService,
         LocaleProvider $localeProvider,
-        array $productFormTransferMapperExpanderPlugins
+        array $productFormTransferMapperExpanderPlugins,
+        ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelperInterface
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
@@ -88,6 +99,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $this->utilTextService = $utilTextService;
         $this->localeProvider = $localeProvider;
         $this->productFormTransferMapperExpanderPlugins = $productFormTransferMapperExpanderPlugins;
+        $this->productConcreteSuperAttributeFilterHelperInterface = $productConcreteSuperAttributeFilterHelperInterface;
     }
 
     /**
@@ -146,23 +158,27 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param int $idProduct
+     * @param int|null $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function buildProductConcreteTransfer(
         ProductAbstractTransfer $productAbstractTransfer,
         FormInterface $form,
-        $idProduct
+        $idProduct = null
     ) {
         $sku = $form->get(ProductConcreteFormEdit::FIELD_SKU)->getData();
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setIdProductConcrete($idProduct)
-            ->setAttributes($this->getConcreteAttributes($idProduct))
+            ->setAttributes($this->getConcreteAttributes($form->getData(), $idProduct))
             ->setSku($sku)
             ->setAbstractSku($productAbstractTransfer->getSku())
             ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
+
+        if ($idProduct === null) {
+            $productConcreteTransfer->setIsActive(false);
+        }
 
         $productConcreteTransfer = $this->assignProductToBeBundled($form, $productConcreteTransfer);
         $productConcreteTransfer = $this->assignProductsToBeRemovedFromBundle($form, $productConcreteTransfer);
@@ -187,6 +203,10 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
         $productConcreteTransfer->setValidFrom($formData[ProductConcreteFormEdit::FIELD_VALID_FROM]);
         $productConcreteTransfer->setValidTo($formData[ProductConcreteFormEdit::FIELD_VALID_TO]);
+
+        if (!empty($formData[ProductConcreteFormAdd::FIELD_PRICE_SOURCE])) {
+            $this->setAbstractProductPricesToConcreteProduct($productConcreteTransfer, $productAbstractTransfer);
+        }
 
         foreach ($this->productFormTransferMapperExpanderPlugins as $plugin) {
             $productConcreteTransfer = $plugin->map($productConcreteTransfer, $formData);
@@ -458,12 +478,23 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param int $idProduct
+     * @param array $formData
+     * @param int|null $idProduct
      *
      * @return array
      */
-    protected function getConcreteAttributes($idProduct)
+    protected function getConcreteAttributes(array $formData, ?int $idProduct): array
     {
+        if ($idProduct === null &&
+            isset($formData[ProductConcreteFormAdd::CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES][ProductConcreteFormAdd::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES])
+        ) {
+            return $this
+                ->productConcreteSuperAttributeFilterHelperInterface
+                ->getTransformedSubmittedSuperAttributes(
+                    $formData[ProductConcreteFormAdd::CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES][ProductConcreteFormAdd::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES]
+                );
+        }
+
         $attributes = [];
 
         $entity = $this->productQueryContainer
@@ -545,5 +576,64 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             ->setBundlesToRemove($form->getData()[ProductConcreteFormEdit::BUNDLED_PRODUCTS_TO_BE_REMOVED]);
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function setAbstractProductPricesToConcreteProduct(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): void {
+        $abstractProductPriceProductTransfers = $productAbstractTransfer->getPrices();
+        $concreteProductPriceProductTransfers = new ArrayObject();
+
+        foreach ($abstractProductPriceProductTransfers as $abstractProductPriceProductTransfer) {
+            $concreteProductPriceProductTransfer = $this->createPriceProductTransfer(
+                $productConcreteTransfer,
+                $abstractProductPriceProductTransfer
+            );
+
+            $concreteProductPriceProductTransfers->append($concreteProductPriceProductTransfer);
+        }
+
+        $productConcreteTransfer->setPrices($concreteProductPriceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $abstractProductPriceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
+     */
+    protected function createPriceDimensionTransfer(
+        PriceProductTransfer $abstractProductPriceProductTransfer
+    ): PriceProductDimensionTransfer {
+        return (new PriceProductDimensionTransfer())
+            ->setType($abstractProductPriceProductTransfer->getPriceDimension()->getType());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $abstractProductPriceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function createPriceProductTransfer(
+        ProductConcreteTransfer $productConcreteTransfer,
+        PriceProductTransfer $abstractProductPriceProductTransfer
+    ): PriceProductTransfer {
+        return (new PriceProductTransfer())
+            ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
+            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            ->setSkuProductAbstract($productConcreteTransfer->getAbstractSku())
+            ->setSkuProduct($productConcreteTransfer->getSku())
+            ->setPriceTypeName($abstractProductPriceProductTransfer->getPriceTypeName())
+            ->setFkPriceType($abstractProductPriceProductTransfer->getFkPriceType())
+            ->setPriceType($abstractProductPriceProductTransfer->getPriceType())
+            ->setPriceDimension($this->createPriceDimensionTransfer($abstractProductPriceProductTransfer))
+            ->setMoneyValue($abstractProductPriceProductTransfer->getMoneyValue());
     }
 }
