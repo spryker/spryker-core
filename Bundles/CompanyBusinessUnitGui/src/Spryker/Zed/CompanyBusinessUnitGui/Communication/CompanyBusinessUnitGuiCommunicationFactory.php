@@ -13,8 +13,6 @@ use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitFor
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyUserBusinessUnitFormDataProvider;
-use Spryker\Zed\CompanyBusinessUnitGui\Communication\Formatter\CompanyBusinessUnitGuiFormatter;
-use Spryker\Zed\CompanyBusinessUnitGui\Communication\Formatter\CompanyBusinessUnitGuiFormatterInterface;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Table\CompanyBusinessUnitTable;
 use Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiDependencyProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
@@ -77,14 +75,6 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     public function createCompanyUserBusinessUnitForm(): FormTypeInterface
     {
         return new CompanyUserBusinessUnitForm();
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Formatter\CompanyBusinessUnitGuiFormatterInterface
-     */
-    public function createCompanyBusinessUnitGuiFormatter(): CompanyBusinessUnitGuiFormatterInterface
-    {
-        return new CompanyBusinessUnitGuiFormatter();
     }
 
     /**

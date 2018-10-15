@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin\CompanyUserGui;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConfig;
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\Business\CompanyBusinessUnitGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
  */
 class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugin implements CompanyUserTablePrepareDataExpanderPluginInterface
@@ -29,17 +29,8 @@ class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends Abstr
      */
     public function expandDataItem(array $companyUserDataItem): array
     {
-        $idCompanyUser = $companyUserDataItem[CompanyBusinessUnitGuiConfig::COL_ID_COMPANY_USER];
-
-        $companyBusinessUnitCollection = $this->getFactory()
-            ->getCompanyBusinessUnitFacade()
-            ->getCompanyBusinessUnitCollection(
-                (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser)
-            );
-
-        $companyBusinessUnitName = $this->getFactory()
-            ->createCompanyBusinessUnitGuiFormatter()
-            ->getCompanyBusinessUnitName($companyBusinessUnitCollection);
+        $companyBusinessUnitName = $this->getFacade()
+            ->findCompanyBusinessUnitName($companyUserDataItem[CompanyBusinessUnitGuiConfig::COL_ID_COMPANY_USER]);
 
         return array_merge(
             $companyUserDataItem,
