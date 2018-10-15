@@ -96,14 +96,15 @@ class PriceVolumeCollectionDataProvider
      * @param int|null $idProductConcrete
      * @param string $storeName
      * @param string $currencyCode
+     * @param array $priceDimension
      *
      * @throws \Spryker\Zed\PriceProductVolumeGui\Communication\Exception\PriceProductNotFoundException
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function getPriceProductTransfer(int $idProductAbstract, ?int $idProductConcrete, string $storeName, string $currencyCode): PriceProductTransfer
+    public function getPriceProductTransfer(int $idProductAbstract, ?int $idProductConcrete, string $storeName, string $currencyCode, array $priceDimension): PriceProductTransfer
     {
-        $priceProductCriteriaTransfer = $this->createPriceProductCriteriaTransfer($storeName, $currencyCode);
+        $priceProductCriteriaTransfer = $this->createPriceProductCriteriaTransfer($storeName, $currencyCode, $priceDimension);
         $priceProductTransfers = [];
 
         if ($idProductConcrete) {
@@ -193,16 +194,16 @@ class PriceVolumeCollectionDataProvider
     /**
      * @param string $storeName
      * @param string $currencyCode
+     * @param array $priceDimension
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    protected function createPriceProductCriteriaTransfer(string $storeName, string $currencyCode): PriceProductCriteriaTransfer
+    protected function createPriceProductCriteriaTransfer(string $storeName, string $currencyCode, array $priceDimension): PriceProductCriteriaTransfer
     {
         $idCurrency = $this->findIdCurrency($currencyCode);
         $idStore = $this->findIdStore($storeName);
 
-        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType($this->config->getPriceDimensionDefaultName());
+        $priceProductDimensionTransfer = $this->createPriceProductDimensionTransfer($priceDimension);
 
         $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
         $priceProductCriteriaTransfer
@@ -212,6 +213,23 @@ class PriceVolumeCollectionDataProvider
             ->setPriceDimension($priceProductDimensionTransfer);
 
         return $priceProductCriteriaTransfer;
+    }
+
+    /**
+     * @param array $priceDimension
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
+     */
+    protected function createPriceProductDimensionTransfer(array $priceDimension): PriceProductDimensionTransfer
+    {
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->fromArray($priceDimension);
+
+        if (!$priceProductDimensionTransfer->getType()) {
+            $priceProductDimensionTransfer->setType($this->config->getPriceDimensionDefaultName());
+
+            return $priceProductDimensionTransfer;
+        }
     }
 
     /**
