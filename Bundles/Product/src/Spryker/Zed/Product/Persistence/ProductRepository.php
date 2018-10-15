@@ -221,6 +221,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @module Locale
+     * @module Store
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
