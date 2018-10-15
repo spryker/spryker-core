@@ -115,9 +115,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         array $priceProductTransfers,
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): CurrentProductPriceTransfer {
-        $currentProductPriceTransfer = (new CurrentProductPriceTransfer())
-            ->setQuantity($priceProductFilterTransfer->getQuantity());
-
+        $currentProductPriceTransfer = new CurrentProductPriceTransfer();
         if (!$priceProductTransfers) {
             return $currentProductPriceTransfer;
         }

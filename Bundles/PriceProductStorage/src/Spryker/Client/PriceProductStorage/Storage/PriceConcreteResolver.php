@@ -79,10 +79,16 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
             $itemTransfer->getIdProductAbstract()
         );
 
-        return $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
+        $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
             $priceProductTransfers,
             (new PriceProductFilterTransfer())
                 ->setQuantity($itemTransfer->getQuantity())
         );
+
+        if ($currentProductPriceTransfer->getQuantity() === null) {
+            $currentProductPriceTransfer->setQuantity($itemTransfer->getQuantity());
+        }
+
+        return $currentProductPriceTransfer;
     }
 }
