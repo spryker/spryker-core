@@ -291,7 +291,6 @@ class ProductFormAdd extends AbstractType
                         'callback' => function ($sku, ExecutionContextInterface $context) {
                             $form = $context->getRoot();
                             $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-                            $sku = $this->getFactory()->getUtilTextService()->generateSlug($sku);
 
                             $skuCount = $this->getFactory()->getProductQueryContainer()
                                 ->queryProduct()
