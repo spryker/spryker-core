@@ -22,9 +22,6 @@ class CreateCompanyUserController extends AbstractController
     protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Company user has been created.';
     protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Company user has not been created.';
 
-    /**
-     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\ListCompanyUserController::indexAction()
-     */
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
     /**

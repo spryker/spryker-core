@@ -18,9 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CompanyUserStatusController extends AbstractController
 {
-    /**
-     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\ListCompanyUserController::indexAction()
-     */
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
     protected const MESSAGE_SUCCESS_COMPANY_USER_ENABLE = 'Company user successfully enabled';

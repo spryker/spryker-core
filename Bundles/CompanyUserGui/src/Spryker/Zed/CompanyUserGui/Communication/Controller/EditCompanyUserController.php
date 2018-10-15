@@ -21,9 +21,6 @@ class EditCompanyUserController extends AbstractController
 
     protected const MESSAGE_SUCCESS_COMPANY_USER_UPDATE = 'Company User has been updated.';
 
-    /**
-     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\ListCompanyUserController::indexAction()
-     */
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
     /**
