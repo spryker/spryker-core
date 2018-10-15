@@ -37,8 +37,8 @@ $(document).ready(function () {
         let url = window.location.search;
 
         $("select[id*='" + priceDimension + "'] option:selected").each(function () {
-            url = removeParam(url, priceDimension + "[type]");
-            url = removeParam(url, priceDimension + "[idMerchantRelationship]");
+            url = removeParam(priceDimension + "[type]", url);
+            url = removeParam(priceDimension + "[idMerchantRelationship]", url);
         });
 
         window.location.search = url;
@@ -64,22 +64,22 @@ function setParam(uri, key, val) {
         .replace(/^([^?&]+)&/, "$1?");
 }
 
-function removeParam(url, sParam)
-{
-    let sPageURL = decodeURIComponent(url.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
+function removeParam(param, sourceURL) {
+    let rtn = sourceURL.split("?")[0],
+        param,
+        params_arr = [],
+        queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
 
-    let url = url.split('?')[0]+'?';
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] !== sParam) {
-            url = url + sParameterName[0] + '=' + sParameterName[1] + '&'
+    if (queryString !== "") {
+        params_arr = queryString.split("&");
+        for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+            param = params_arr[i].split("=")[0];
+            if (param === key) {
+                params_arr.splice(i, 1);
+            }
         }
+        rtn = rtn + "?" + params_arr.join("&");
     }
-
-    return url.substring(0,url.length-1);
+    return rtn;
 }
 
