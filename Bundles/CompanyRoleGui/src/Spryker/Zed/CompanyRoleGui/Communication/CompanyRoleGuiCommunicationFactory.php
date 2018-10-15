@@ -14,8 +14,8 @@ use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProvider;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyUserRoleFormDataProvider;
-use Spryker\Zed\CompanyRoleGui\Communication\Helper\CompanyRoleGuiHelper;
-use Spryker\Zed\CompanyRoleGui\Communication\Helper\CompanyRoleGuiHelperInterface;
+use Spryker\Zed\CompanyRoleGui\Communication\Formatter\CompanyRoleGuiFormatter;
+use Spryker\Zed\CompanyRoleGui\Communication\Formatter\CompanyRoleGuiFormatterInterface;
 use Spryker\Zed\CompanyRoleGui\Communication\Table\CompanyRoleTable;
 use Spryker\Zed\CompanyRoleGui\CompanyRoleGuiDependencyProvider;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyFacadeInterface;
@@ -66,11 +66,11 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyRoleGui\Communication\Helper\CompanyRoleGuiHelperInterface
+     * @return \Spryker\Zed\CompanyRoleGui\Communication\Formatter\CompanyRoleGuiFormatterInterface
      */
-    public function createCompanyRoleGuiHelper(): CompanyRoleGuiHelperInterface
+    public function createCompanyRoleGuiFormatter(): CompanyRoleGuiFormatterInterface
     {
-        return new CompanyRoleGuiHelper();
+        return new CompanyRoleGuiFormatter();
     }
 
     /**

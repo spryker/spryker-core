@@ -13,8 +13,8 @@ use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitFor
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyUserBusinessUnitFormDataProvider;
-use Spryker\Zed\CompanyBusinessUnitGui\Communication\Helper\CompanyBusinessUnitGuiHelper;
-use Spryker\Zed\CompanyBusinessUnitGui\Communication\Helper\CompanyBusinessUnitGuiHelperInterface;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Formatter\CompanyBusinessUnitGuiFormatter;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Formatter\CompanyBusinessUnitGuiFormatterInterface;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Table\CompanyBusinessUnitTable;
 use Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiDependencyProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
@@ -80,11 +80,11 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Helper\CompanyBusinessUnitGuiHelperInterface
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Formatter\CompanyBusinessUnitGuiFormatterInterface
      */
-    public function createCompanyBusinessUnitGuiHelper(): CompanyBusinessUnitGuiHelperInterface
+    public function createCompanyBusinessUnitGuiFormatter(): CompanyBusinessUnitGuiFormatterInterface
     {
-        return new CompanyBusinessUnitGuiHelper();
+        return new CompanyBusinessUnitGuiFormatter();
     }
 
     /**

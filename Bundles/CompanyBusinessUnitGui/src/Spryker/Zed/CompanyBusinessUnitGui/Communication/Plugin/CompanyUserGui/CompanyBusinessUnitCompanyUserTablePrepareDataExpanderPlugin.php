@@ -38,7 +38,7 @@ class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends Abstr
             );
 
         $companyBusinessUnitName = $this->getFactory()
-            ->createCompanyBusinessUnitGuiHelper()
+            ->createCompanyBusinessUnitGuiFormatter()
             ->getCompanyBusinessUnitName($companyBusinessUnitCollection);
 
         return array_merge(

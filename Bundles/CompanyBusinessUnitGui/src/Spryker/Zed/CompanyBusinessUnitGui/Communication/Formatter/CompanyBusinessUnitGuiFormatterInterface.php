@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Helper;
+namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Formatter;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 
-interface CompanyBusinessUnitGuiHelperInterface
+interface CompanyBusinessUnitGuiFormatterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollection

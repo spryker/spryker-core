@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUserGui\Communication\Helper;
+namespace Spryker\Zed\CompanyUserGui\Communication\ButtonCreator;
 
 use Generated\Shared\Transfer\ButtonTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 
-class CompanyUserGuiHelper implements CompanyUserGuiHelperInterface
+class CompanyUserGuiButtonCreator implements CompanyUserGuiButtonCreatorInterface
 {
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_URL = 'company-user-gui/create-company-user/attach-customer';
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE = 'Attach to company';

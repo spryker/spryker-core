@@ -38,7 +38,7 @@ class CompanyUserCustomerTableActionExpanderPlugin extends AbstractPlugin implem
         }
 
         return $this->getFactory()
-            ->createCompanyUserGuiHelper()
+            ->createCompanyUserGuiButtonCreator()
             ->addAttachCustomerButton($idCustomer, $buttons);
     }
 }

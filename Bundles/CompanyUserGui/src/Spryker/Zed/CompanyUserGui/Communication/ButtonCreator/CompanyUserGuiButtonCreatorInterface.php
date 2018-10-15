@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUserGui\Communication\Helper;
+namespace Spryker\Zed\CompanyUserGui\Communication\ButtonCreator;
 
-interface CompanyUserGuiHelperInterface
+interface CompanyUserGuiButtonCreatorInterface
 {
     /**
      * @param int $idCustomer

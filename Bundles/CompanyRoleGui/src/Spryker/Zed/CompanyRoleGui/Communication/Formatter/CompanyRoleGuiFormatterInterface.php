@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyRoleGui\Communication\Helper;
+namespace Spryker\Zed\CompanyRoleGui\Communication\Formatter;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 
-interface CompanyRoleGuiHelperInterface
+interface CompanyRoleGuiFormatterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
