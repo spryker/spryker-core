@@ -217,9 +217,9 @@ class PriceVolumeCollectionDataProvider
     /**
      * @param string $storeName
      *
-     * @return int|null
+     * @return int
      */
-    protected function findIdStore(string $storeName): ?int
+    protected function findIdStore(string $storeName): int
     {
         $storeTransfer = $this->storeFacade->getStoreByName($storeName);
 
@@ -229,9 +229,9 @@ class PriceVolumeCollectionDataProvider
     /**
      * @param string $currencyCode
      *
-     * @return int|null
+     * @return int
      */
-    protected function findIdCurrency(string $currencyCode): ?int
+    protected function findIdCurrency(string $currencyCode): int
     {
         $currencyTransfer = $this->currencyFacade->fromIsoCode($currencyCode);
 
