@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -41,18 +42,10 @@ class PriceVolumeController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createPriceVolumeCollectionDataProvider();
         $priceProductTransfer = $this->getPriceProductTransfer($request, $dataProvider);
-        $priceVolumeCollectionFormType = $this->getFactory()
-            ->getPriceVolumeCollectionFormType(
-                $dataProvider->getData($priceProductTransfer, $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT), $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)),
-                $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
-            )->handleRequest($request);
+        $priceVolumeCollectionFormType = $this->getPriceVolumeCollectionFormType($request, $dataProvider, $priceProductTransfer);
 
         if ($priceVolumeCollectionFormType->isSubmitted() && $priceVolumeCollectionFormType->isValid()) {
-            $this->savePriceProduct(
-                $priceVolumeCollectionFormType->getData(),
-                $priceProductTransfer
-            );
-            $this->addSuccessMessage(static::MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS);
+            $this->executeAction($priceVolumeCollectionFormType->getData(), $priceProductTransfer);
 
             if ($request->request->has(static::REQUEST_PARAM_SAVE_AND_EXIT)) {
                 return $this->redirectResponse($this->getExitUrl($request));
@@ -77,24 +70,16 @@ class PriceVolumeController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createPriceVolumeCollectionDataProvider();
         $priceProductTransfer = $this->getPriceProductTransfer($request, $dataProvider);
-        $priceVolumeCollectionFormType = $this->getFactory()
-            ->getPriceVolumeCollectionFormType(
-                $dataProvider->getData($priceProductTransfer, $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT), $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)),
-                $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
-            )->handleRequest($request);
+        $priceVolumeCollectionFormType = $this->getPriceVolumeCollectionFormType($request, $dataProvider, $priceProductTransfer);
 
         if ($priceVolumeCollectionFormType->isSubmitted() && $priceVolumeCollectionFormType->isValid()) {
-            $priceProductTransfer = $this->savePriceProduct(
-                $priceVolumeCollectionFormType->getData(),
-                $priceProductTransfer
-            );
+            $priceProductTransfer = $this->executeAction($priceVolumeCollectionFormType->getData(), $priceProductTransfer);
 
             $priceVolumeCollectionFormType = $this->getFactory()
                 ->getPriceVolumeCollectionFormType(
                     $dataProvider->getData($priceProductTransfer, $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT), $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)),
                     $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
                 );
-            $this->addSuccessMessage(static::MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS);
 
             if ($request->request->has(static::REQUEST_PARAM_SAVE_AND_EXIT)) {
                 return $this->redirectResponse($this->getExitUrl($request));
@@ -106,6 +91,42 @@ class PriceVolumeController extends AbstractController
             'price_product' => $priceProductTransfer,
             'store_name' => $request->get(static::REQUEST_PARAM_STORE_NAME),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $priceVolumeCollectionFormType
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function executeAction(FormInterface $priceVolumeCollectionFormType, PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        $priceProductTransfer = $this->savePriceProduct(
+            $priceVolumeCollectionFormType->getData(),
+            $priceProductTransfer
+        );
+
+        $this->addSuccessMessage(static::MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS);
+
+        return $priceProductTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider $dataProvider
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getPriceVolumeCollectionFormType(Request $request, PriceVolumeCollectionDataProvider $dataProvider, PriceProductTransfer $priceProductTransfer): FormInterface
+    {
+        $priceVolumeCollectionFormType = $this->getFactory()
+            ->getPriceVolumeCollectionFormType(
+                $dataProvider->getData($priceProductTransfer, $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT), $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)),
+                $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
+            )->handleRequest($request);
+
+        return $priceVolumeCollectionFormType;
     }
 
     /**

@@ -40,6 +40,11 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     protected $priceProductStorePreDeletePlugins;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface
+     */
+    protected $priceProductDefaultWriter;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
