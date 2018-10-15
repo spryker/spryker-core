@@ -6,10 +6,4 @@
     <transfer name="ProductConcrete">
     </transfer>
 
-    <transfer name="Item">
-        <property name="id" type="int" />
-        <property name="idProductAbstract" type="int" />
-        <property name="quantity" type="int" />
-    </transfer>
-
 </transfers>

@@ -92,6 +92,10 @@ interface ShoppingListFacadeInterface
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 
     /**
+     * Specification:
+     * - Adds items to the shopping list in persistence.
+     * - Adds success and failed messages through messenger facade.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
