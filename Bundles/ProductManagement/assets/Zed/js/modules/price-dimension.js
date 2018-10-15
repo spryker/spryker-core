@@ -34,7 +34,14 @@ $(document).ready(function () {
     });
 
     $('#showDefaultPrices').click(function () {
-        console.log(2);
+        let url = window.location.search;
+
+        $("select[id*='" + priceDimension + "'] option:selected").each(function () {
+            url = removeParam(url, priceDimension + "[type]");
+            url = removeParam(url, priceDimension + "[idMerchantRelationship]");
+        });
+
+        window.location.search = url;
     });
 });
 
@@ -56,3 +63,23 @@ function setParam(uri, key, val) {
         .replace(new RegExp("([?&]" + key + "(?=[=&#]|$)[^#&]*|(?=#|$))"), "&" + key + "=" + encodeURIComponent(val))
         .replace(/^([^?&]+)&/, "$1?");
 }
+
+function removeParam(url, sParam)
+{
+    let sPageURL = decodeURIComponent(url.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    let url = url.split('?')[0]+'?';
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] !== sParam) {
+            url = url + sParameterName[0] + '=' + sParameterName[1] + '&'
+        }
+    }
+
+    return url.substring(0,url.length-1);
+}
+
