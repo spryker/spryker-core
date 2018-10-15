@@ -34,7 +34,7 @@ class AuthTest extends Unit
     /**
      * @const string
      */
-    const USERNAME = 'test@test.com';
+    public const USERNAME = 'test@test.com';
 
     /**
      * @return void

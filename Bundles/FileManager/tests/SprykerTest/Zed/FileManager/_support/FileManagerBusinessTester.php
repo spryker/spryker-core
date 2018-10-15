@@ -106,7 +106,12 @@ class FileManagerBusinessTester extends Actor
      */
     public function getDocumentFullFileName($fileName)
     {
-        return Configuration::dataDir() . static::ROOT_DIRECTORY . static::PATH_DOCUMENT . $fileName;
+        $rootDirectory = Configuration::dataDir() . static::ROOT_DIRECTORY . static::PATH_DOCUMENT;
+        if (!is_dir($rootDirectory)) {
+            mkdir($rootDirectory, 0777, true);
+        }
+
+        return $rootDirectory . $fileName;
     }
 
     /**

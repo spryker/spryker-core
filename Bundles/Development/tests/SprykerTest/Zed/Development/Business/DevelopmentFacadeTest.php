@@ -103,6 +103,14 @@ class DevelopmentFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetModuleOverviewReturnsCollection(): void
+    {
+        $this->assertInternalType('array', $this->getFacade()->getModuleOverview());
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\DevelopmentFacadeInterface
      */
     protected function getFacade(): DevelopmentFacadeInterface

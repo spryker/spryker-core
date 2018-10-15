@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ConvertConfigConsole extends Console
 {
-    const COMMAND_NAME = 'propel:config:convert';
+    public const COMMAND_NAME = 'propel:config:convert';
 
     /**
      * @return void

@@ -21,9 +21,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class TranslationTable extends AbstractTable
 {
-    const ACTIONS = 'Actions';
-    const URL_GLOSSARY_EDIT = '/glossary/edit';
-    const GENERATED_KEY_MASK = 'generated.%';
+    public const ACTIONS = 'Actions';
+    public const URL_GLOSSARY_EDIT = '/glossary/edit';
+    public const GENERATED_KEY_MASK = 'generated.%';
 
     /**
      * @var \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery

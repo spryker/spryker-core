@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-customer-permission",
+  "type": "library",
   "description": "ProductCustomerPermission module",
   "license": "proprietary",
   "require": {

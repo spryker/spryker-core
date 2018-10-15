@@ -1,5 +1,6 @@
 {
   "name": "spryker/dataset",
+  "type": "library",
   "description": "Dataset module",
   "license": "proprietary",
   "require": {

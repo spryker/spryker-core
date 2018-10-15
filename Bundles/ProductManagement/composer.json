@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-management",
+  "type": "library",
   "description": "ProductManagement module",
   "license": "proprietary",
   "require": {
@@ -14,8 +15,8 @@
     "spryker/money": "^2.4.0",
     "spryker/price": "^5.0.0",
     "spryker/price-product": "^2.0.0",
-    "spryker/product": "^6.0.0",
-    "spryker/product-attribute": "^1.0.0",
+    "spryker/product": "^6.7.0",
+    "spryker/product-attribute": "^1.1.0",
     "spryker/product-bundle": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/product-group": "^1.0.0",
     "spryker/product-image": "^3.0.0",

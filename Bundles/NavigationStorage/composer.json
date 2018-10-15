@@ -1,5 +1,6 @@
 {
   "name": "spryker/navigation-storage",
+  "type": "library",
   "description": "NavigationStorage module",
   "license": "proprietary",
   "require": {

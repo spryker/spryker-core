@@ -17,11 +17,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchCopyIndexConsole extends Console
 {
-    const COMMAND_NAME = 'search:index:copy';
-    const DESCRIPTION = 'This command will copy one index to another.';
+    public const COMMAND_NAME = 'search:index:copy';
+    public const DESCRIPTION = 'This command will copy one index to another.';
 
-    const ARGUMENT_SOURCE = 'source';
-    const ARGUMENT_TARGET = 'target';
+    public const ARGUMENT_SOURCE = 'source';
+    public const ARGUMENT_TARGET = 'target';
 
     /**
      * @return void
