@@ -14,6 +14,11 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInte
 class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorInterface
 {
     /**
+     * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface
+     */
+    protected $messengerFacade;
+
+    /**
      * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface[]
      */
     protected $beforeDeletePlugins;
@@ -27,11 +32,6 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
      * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
      */
     protected $addItemPreCheckPlugins;
-
-    /**
-     * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface
-     */
-    protected $messengerFacade;
 
     /**
      * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
@@ -52,10 +52,10 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
         array $addItemPreCheckPlugins,
         array $itemExpanderPlugins
     ) {
+        $this->messengerFacade = $messengerFacade;
         $this->beforeDeletePlugins = $beforeDeletePlugins;
         $this->postSavePlugins = $postSavePlugins;
         $this->addItemPreCheckPlugins = $addItemPreCheckPlugins;
-        $this->messengerFacade = $messengerFacade;
         $this->itemExpanderPlugins = $itemExpanderPlugins;
     }
 
