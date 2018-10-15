@@ -11,6 +11,8 @@ use Everon\Component\Collection\Collection;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -162,6 +164,11 @@ class AbstractProductFormDataProvider
 
         $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
 
+//        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+//            ->setPriceDimension((new PriceProductDimensionTransfer())->setType('')->setIdMerchantRelationship(18));
+//
+//        $this->priceProductFacade->
+
         $localizedAttributeOptions = [];
         foreach ($localeCollection as $localeTransfer) {
             $localizedAttributeOptions[$localeTransfer->getLocaleName()] = $this->convertAbstractLocalizedAttributesToFormOptions($productAbstractTransfer, $localeTransfer);
@@ -191,6 +198,7 @@ class AbstractProductFormDataProvider
             ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT => null,
             ProductFormAdd::FIELD_SKU => null,
             ProductFormAdd::FORM_ATTRIBUTE_SUPER => $this->getAttributeVariantDefaultFields(),
+            ProductFormAdd::FORM_PRICE_DIMENSION => null,
         ];
 
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());

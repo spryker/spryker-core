@@ -1,0 +1,14 @@
+{% if priceDimensionForm.children | length %}
+
+    {% for subForm in priceDimensionForm.children %}
+        {{ form_row(subForm) }}
+    {% endfor %}
+
+    <div class="tabs-navigation pull-right m-b">
+        <input type="button" class="btn btn-primary" value="Show specific prices" id="showSpecificPrices"/>
+        <input type="button" class="btn btn-default" value="Show default prices (Clear selection)" id="showDefaultPrices"/>
+    </div>
+
+{% endif %}
+
+<script src="/assets/js/spryker-zed-productmanagement-price-dimension.js"></script>

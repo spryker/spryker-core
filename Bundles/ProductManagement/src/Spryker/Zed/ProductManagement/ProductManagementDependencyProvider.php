@@ -68,6 +68,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS = 'PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS';
     public const PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS = 'PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS';
     public const PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER';
+    public const PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -233,6 +234,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductConcreteFormEditDataProviderExpanderPlugins($container);
         $container = $this->addProductFormTransferMapperExpanderPlugins($container);
         $container = $this->addProductConcreteFormEditTabsExpanderPlugins($container);
+        $container = $this->addProductAbstractFormExpanderPlugins($container);
 
         return $container;
     }
@@ -362,6 +364,28 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
         };
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER] = function (Container $container) {
+            return $this->getProductAbstractFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
+     */
+    protected function getProductAbstractFormExpanderPlugins(): array
+    {
+        return [];
     }
 
     /**
