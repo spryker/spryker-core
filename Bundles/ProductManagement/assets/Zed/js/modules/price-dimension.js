@@ -64,7 +64,7 @@ function setParam(uri, key, val) {
         .replace(/^([^?&]+)&/, "$1?");
 }
 
-function removeParam(param, sourceURL) {
+function removeParam(key, sourceURL) {
     let rtn = sourceURL.split("?")[0],
         param,
         params_arr = [],
@@ -72,7 +72,7 @@ function removeParam(param, sourceURL) {
 
     if (queryString !== "") {
         params_arr = queryString.split("&");
-        for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+        for (let i = params_arr.length - 1; i >= 0; i -= 1) {
             param = params_arr[i].split("=")[0];
             if (param === key) {
                 params_arr.splice(i, 1);
