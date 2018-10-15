@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShoppingList\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
@@ -115,15 +114,15 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    public function addItems(ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer): ShoppingListResponseTransfer
+    public function addItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         return $this->getFactory()
             ->createShoppingListItemOperation()
-            ->addItems($shoppingListAddItemsRequestTransfer);
+            ->addItems($shoppingListTransfer);
     }
 
     /**

@@ -8,7 +8,6 @@
 namespace Spryker\Client\ShoppingList\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
@@ -105,14 +104,14 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    public function addItems(ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer): ShoppingListResponseTransfer
+    public function addItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
-        $shoppingListResponseTransfer = $this->zedRequestClient->call('/shopping-list/gateway/add-items', $shoppingListAddItemsRequestTransfer);
+        $shoppingListResponseTransfer = $this->zedRequestClient->call('/shopping-list/gateway/add-items', $shoppingListTransfer);
 
         return $shoppingListResponseTransfer;
     }

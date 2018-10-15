@@ -12,7 +12,6 @@ use Generated\Shared\DataBuilder\ShoppingListBuilder;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
@@ -642,15 +641,16 @@ class ShoppingListFacadeTest extends Unit
         // Arrange
         $customerTransfer = (clone $this->ownerCompanyUserTransfer->getCustomer())
             ->setCompanyUserTransfer($this->ownerCompanyUserTransfer);
-        $shoppingLisAddItemRequestTransfer = (new ShoppingListAddItemsRequestTransfer())
-            ->setCustomer($customerTransfer);
-        $shoppingLisAddItemRequestTransfer->addItem(
+        $shoppingLisTransfer = (new ShoppingListTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+        $shoppingLisTransfer->addItem(
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->product->getSku(),
             ])
         );
-        $shoppingLisAddItemRequestTransfer->addItem(
+        $shoppingLisTransfer->addItem(
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->productTwo->getSku(),
@@ -658,7 +658,7 @@ class ShoppingListFacadeTest extends Unit
         );
 
         // Act
-        $shoppingListResponseTransfer = $this->tester->getFacade()->addItems($shoppingLisAddItemRequestTransfer);
+        $shoppingListResponseTransfer = $this->tester->getFacade()->addItems($shoppingLisTransfer);
         $shoppingListCollectionTransfer = (new ShoppingListCollectionTransfer())
             ->addShoppingList($shoppingListResponseTransfer->getShoppingList());
         $shoppingListItemCollectionTransfer = $this->tester->getFacade()->getShoppingListItemCollection($shoppingListCollectionTransfer);
@@ -676,15 +676,16 @@ class ShoppingListFacadeTest extends Unit
         // Arrange
         $customerTransfer = (clone $this->ownerCompanyUserTransfer->getCustomer())
             ->setCompanyUserTransfer($this->ownerCompanyUserTransfer);
-        $shoppingLisAddItemRequestTransfer = (new ShoppingListAddItemsRequestTransfer())
-            ->setCustomer($customerTransfer);
-        $shoppingLisAddItemRequestTransfer->addItem(
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+        $shoppingListTransfer->addItem(
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->product->getSku(),
             ])
         );
-        $shoppingLisAddItemRequestTransfer->addItem(
+        $shoppingListTransfer->addItem(
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => uniqid('', true),
@@ -692,7 +693,7 @@ class ShoppingListFacadeTest extends Unit
         );
 
         // Act
-        $shoppingListResponseTransfer = $this->tester->getFacade()->addItems($shoppingLisAddItemRequestTransfer);
+        $shoppingListResponseTransfer = $this->tester->getFacade()->addItems($shoppingListTransfer);
         $shoppingListCollectionTransfer = (new ShoppingListCollectionTransfer())
             ->addShoppingList($shoppingListResponseTransfer->getShoppingList());
         $shoppingListItemCollectionTransfer = $this->tester->getFacade()->getShoppingListItemCollection($shoppingListCollectionTransfer);
@@ -711,16 +712,16 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $customerTransfer = (clone $this->otherCompanyUserTransfer->getCustomer())
             ->setCompanyUserTransfer($this->otherCompanyUserTransfer);
-        $shoppingLisAddItemRequestTransfer = (new ShoppingListAddItemsRequestTransfer())
-            ->setCustomer($customerTransfer)
-            ->setShoppingListId($shoppingListTransfer->getIdShoppingList());
-        $shoppingLisAddItemRequestTransfer->addItem(
+        $shoppingLisTransfer = (new ShoppingListTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+        $shoppingLisTransfer->addItem(
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->product->getSku(),
             ])
         );
-        $shoppingLisAddItemRequestTransfer->addItem(
+        $shoppingLisTransfer->addItem(
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => uniqid('', true),
@@ -728,7 +729,7 @@ class ShoppingListFacadeTest extends Unit
         );
 
         // Act
-        $shoppingListResponseTransfer = $this->tester->getFacade()->addItems($shoppingLisAddItemRequestTransfer);
+        $shoppingListResponseTransfer = $this->tester->getFacade()->addItems($shoppingLisTransfer);
         $shoppingListCollectionTransfer = (new ShoppingListCollectionTransfer())
             ->addShoppingList($shoppingListTransfer);
         $shoppingListItemCollectionTransfer = $this->tester->getFacade()->getShoppingListItemCollection($shoppingListCollectionTransfer);

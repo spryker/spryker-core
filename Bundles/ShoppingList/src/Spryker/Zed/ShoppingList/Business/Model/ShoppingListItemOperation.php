@@ -8,10 +8,8 @@
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
@@ -121,72 +119,91 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    public function addItems(ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer): ShoppingListResponseTransfer
+    public function addItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $customerTransfer = $shoppingListAddItemsRequestTransfer
-            ->requireCustomer()
-            ->getCustomer();
-        $customerTransfer->requireCompanyUserTransfer()
+        $shoppingListTransfer
+            ->requireIdShoppingList()
+            ->requireIdCompanyUser()
             ->requireCustomerReference();
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListAddItemsRequestTransfer) {
-            return $this->executeAddItemsTransaction($shoppingListAddItemsRequestTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListTransfer) {
+            return $this->executeAddItemsTransaction($shoppingListTransfer);
         });
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    protected function executeAddItemsTransaction(ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer): ShoppingListResponseTransfer
+    protected function executeAddItemsTransaction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $customerTransfer = $shoppingListAddItemsRequestTransfer->getCustomer();
-        $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setIdShoppingList($shoppingListAddItemsRequestTransfer->getShoppingListId())
-            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
-            ->setCustomerReference($customerTransfer->getCustomerReference());
         $shoppingListTransfer = $this->resolveShoppingList($shoppingListTransfer);
-        if (!$this->checkWritePermission($shoppingListTransfer)) {
+        $shoppingListTransfer = $this->sanitizeItems($shoppingListTransfer);
+
+        if (!$this->isApplicableForAddItems($shoppingListTransfer)) {
             return (new ShoppingListResponseTransfer())
                 ->setIsSuccess(false);
         }
 
-        return $this->createItems($shoppingListTransfer, $shoppingListAddItemsRequestTransfer);
+        $this->createItems($shoppingListTransfer);
+        $response = (new ShoppingListResponseTransfer())
+            ->setIsSuccess(true)
+            ->setShoppingList($shoppingListTransfer);
+
+        return $response;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     * @return bool
      */
-    protected function createItems(ShoppingListTransfer $shoppingListTransfer, ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer): ShoppingListResponseTransfer
+    protected function isApplicableForAddItems(ShoppingListTransfer $shoppingListTransfer): bool
     {
-        $shoppingListResponseTransfer = (new ShoppingListResponseTransfer())
-            ->setShoppingList($shoppingListTransfer)
-            ->setIsSuccess(true);
-        foreach ($shoppingListAddItemsRequestTransfer->getItems() as $shoppingListItemTransfer) {
+        if (!$this->checkWritePermission($shoppingListTransfer)) {
+            return false;
+        }
+
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
             if (!$this->assertItem($shoppingListItemTransfer)) {
-                $shoppingListResponseTransfer->setIsSuccess(false);
-                continue;
+                return false;
             }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function sanitizeItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    {
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
             $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
+        }
+
+        return $shoppingListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function createItems(ShoppingListTransfer $shoppingListTransfer): void
+    {
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
             $shoppingListItemTransfer = $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
-            if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
-                $shoppingListResponseTransfer->setIsSuccess(false);
-                $this->addItemAddFailedMessage($shoppingListItemTransfer->getSku());
-                continue;
-            }
 
             $this->addItemAddSuccessMessage($shoppingListItemTransfer->getSku());
         }
-
-        return $shoppingListResponseTransfer;
     }
 
     /**
