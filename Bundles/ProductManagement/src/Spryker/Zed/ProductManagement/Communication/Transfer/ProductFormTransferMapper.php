@@ -34,7 +34,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
-use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -61,11 +60,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface
-     */
-    protected $utilTextService;
-
-    /**
      * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface[]
      */
     protected $productFormTransferMapperExpanderPlugins;
@@ -79,7 +73,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface $utilTextService
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface[] $productFormTransferMapperExpanderPlugins
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelperInterface
@@ -88,7 +81,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         ProductQueryContainerInterface $productQueryContainer,
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToLocaleInterface $localeFacade,
-        ProductManagementToUtilTextInterface $utilTextService,
         LocaleProvider $localeProvider,
         array $productFormTransferMapperExpanderPlugins,
         ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelperInterface
@@ -96,7 +88,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $this->productQueryContainer = $productQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->localeFacade = $localeFacade;
-        $this->utilTextService = $utilTextService;
         $this->localeProvider = $localeProvider;
         $this->productFormTransferMapperExpanderPlugins = $productFormTransferMapperExpanderPlugins;
         $this->productConcreteSuperAttributeFilterHelperInterface = $productConcreteSuperAttributeFilterHelperInterface;
