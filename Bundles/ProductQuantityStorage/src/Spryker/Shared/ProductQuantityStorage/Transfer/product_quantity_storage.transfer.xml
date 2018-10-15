@@ -20,8 +20,8 @@
         <property name="quantityInterval" type="int" />
     </transfer>
 
-    <transfer name="Item">
-        <property name="id" type="int" />
+    <transfer name="ProductView">
+        <property name="idProductConcrete" type="int" />
         <property name="quantity" type="int" />
     </transfer>
 
