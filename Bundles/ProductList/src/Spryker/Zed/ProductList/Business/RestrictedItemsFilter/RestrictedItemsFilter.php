@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ProductList\Business\RestrictedItemsFilter;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface;
 use Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeInterface;
-use Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface;
 
 class RestrictedItemsFilter implements RestrictedItemsFilterInterface
 {
@@ -29,23 +29,15 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
     protected $productListRestrictionValidator;
 
     /**
-     * @var \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface
-     */
-    protected $productFacade;
-
-    /**
      * @param \Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface $productListRestrictionValidator
-     * @param \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface $productFacade
      */
     public function __construct(
         ProductListToMessengerFacadeInterface $messengerFacade,
-        ProductListRestrictionValidatorInterface $productListRestrictionValidator,
-        ProductListToProductFacadeInterface $productFacade
+        ProductListRestrictionValidatorInterface $productListRestrictionValidator
     ) {
         $this->messengerFacade = $messengerFacade;
         $this->productListRestrictionValidator = $productListRestrictionValidator;
-        $this->productFacade = $productFacade;
     }
 
     /**
@@ -61,7 +53,7 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
             if ($customerProductListCollectionTransfer) {
                 $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?: [];
                 $customerBlacklistIds = $customerProductListCollectionTransfer->getBlacklistIds() ?: [];
-                $this->removeRestrictedItemsFromQuote($quoteTransfer, $customerBlacklistIds, $customerWhitelistIds);
+                $this->removeRestrictedItemsFromQuote($quoteTransfer, $customerWhitelistIds, $customerBlacklistIds);
             }
         }
 
@@ -70,29 +62,33 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int[] $customerBlacklistIds
      * @param int[] $customerWhitelistIds
+     * @param int[] $customerBlacklistIds
      *
      * @return void
      */
     protected function removeRestrictedItemsFromQuote(
         QuoteTransfer $quoteTransfer,
-        array $customerBlacklistIds,
-        array $customerWhitelistIds
+        array $customerWhitelistIds,
+        array $customerBlacklistIds
     ): void {
         if (!$customerBlacklistIds && !$customerWhitelistIds) {
             return;
         }
 
+        $quoteSkus = array_map(function (ItemTransfer $itemTransfer) {
+            return $itemTransfer->getSku();
+        }, $quoteTransfer->getItems()->getArrayCopy());
+
+        $restrictedProductConcreteSkus = $this->productListRestrictionValidator->filterRestrictedProductConcreteSkus($quoteSkus, $customerWhitelistIds, $customerBlacklistIds);
+
+        if (!$restrictedProductConcreteSkus) {
+            return;
+        }
+
         $allowedItems = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $idProductConcrete = $itemTransfer->getId();
-
-            if (!$idProductConcrete) {
-                $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($itemTransfer->getSku());
-            }
-
-            if ($this->isProductConcreteRestricted($idProductConcrete, $customerBlacklistIds, $customerWhitelistIds)) {
+            if (in_array($itemTransfer->getSku(), $restrictedProductConcreteSkus)) {
                 $this->addFilterMessage($itemTransfer->getSku());
                 continue;
             }
@@ -101,22 +97,6 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
         }
 
         $quoteTransfer->getItems()->exchangeArray($allowedItems);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     * @param array $customerBlacklistIds
-     * @param array $customerWhitelistIds
-     *
-     * @return bool
-     */
-    protected function isProductConcreteRestricted(
-        int $idProductConcrete,
-        array $customerBlacklistIds,
-        array $customerWhitelistIds
-    ): bool {
-        return $this->productListRestrictionValidator
-            ->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds);
     }
 
     /**

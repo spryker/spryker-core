@@ -75,20 +75,20 @@ interface ProductListRepositoryInterface
     public function getConcreteProductWhitelistIds(int $idProductConcrete): array;
 
     /**
-     * @param int $idProductConcrete
+     * @param string[] $productConcreteSkus
      * @param int[] $blackListIds
      *
-     * @return bool
+     * @return string[]
      */
-    public function isConcreteProductBlacklisted(int $idProductConcrete, array $blackListIds): bool;
+    public function getConcreteProductSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array;
 
     /**
-     * @param int $idProductConcrete
+     * @param string[] $productConcreteSkus
      * @param int[] $whiteListIds
      *
-     * @return bool
+     * @return string[]
      */
-    public function isConcreteProductWhitelisted(int $idProductConcrete, array $whiteListIds): bool;
+    public function getConcreteProductSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array;
 
     /**
      * @param int[] $productListIds

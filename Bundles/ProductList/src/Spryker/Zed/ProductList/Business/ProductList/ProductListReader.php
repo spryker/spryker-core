@@ -97,25 +97,25 @@ class ProductListReader implements ProductListReaderInterface
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param string[] $productConcreteSkus
      * @param int[] $blackListIds
      *
-     * @return bool
+     * @return string[]
      */
-    public function isConcreteProductBlacklisted(int $idProductConcrete, array $blackListIds): bool
+    public function getConcreteProductSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array
     {
-        return $this->productListRepository->isConcreteProductBlacklisted($idProductConcrete, $blackListIds);
+        return $this->productListRepository->getConcreteProductSkusInBlacklists($productConcreteSkus, $blackListIds);
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param string[] $productConcreteSkus
      * @param int[] $whiteListIds
      *
-     * @return bool
+     * @return string[]
      */
-    public function isConcreteProductWhitelisted(int $idProductConcrete, array $whiteListIds): bool
+    public function getConcreteProductSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array
     {
-        return $this->productListRepository->isConcreteProductWhitelisted($idProductConcrete, $whiteListIds);
+        return $this->productListRepository->getConcreteProductSkusInWhitelists($productConcreteSkus, $whiteListIds);
     }
 
     /**

@@ -108,7 +108,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      */
     public function getConcreteProductBlacklistIds(int $idProductConcrete): array
     {
-        return $this->getConcreteProductWhiteOrBlacklistIds(
+        return $this->getConcreteProductListIdsForType(
             $idProductConcrete,
             SpyProductListTableMap::COL_TYPE_BLACKLIST
         );
@@ -121,37 +121,37 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      */
     public function getConcreteProductWhitelistIds(int $idProductConcrete): array
     {
-        return $this->getConcreteProductWhiteOrBlacklistIds(
+        return $this->getConcreteProductListIdsForType(
             $idProductConcrete,
             SpyProductListTableMap::COL_TYPE_WHITELIST
         );
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param string[] $productConcreteSkus
      * @param int[] $blackListIds
      *
-     * @return bool
+     * @return string[]
      */
-    public function isConcreteProductBlacklisted(int $idProductConcrete, array $blackListIds): bool
+    public function getConcreteProductSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array
     {
-        return $this->isConcreteProductWhiteOrBlacklisted(
-            $idProductConcrete,
+        return $this->getConcreteProductSkusInList(
+            $productConcreteSkus,
             SpyProductListTableMap::COL_TYPE_BLACKLIST,
             $blackListIds
         );
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param string[] $productConcreteSkus
      * @param int[] $whiteListIds
      *
-     * @return bool
+     * @return string[]
      */
-    public function isConcreteProductWhitelisted(int $idProductConcrete, array $whiteListIds): bool
+    public function getConcreteProductSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array
     {
-        return $this->isConcreteProductWhiteOrBlacklisted(
-            $idProductConcrete,
+        return $this->getConcreteProductSkusInList(
+            $productConcreteSkus,
             SpyProductListTableMap::COL_TYPE_WHITELIST,
             $whiteListIds
         );
@@ -163,7 +163,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      *
      * @return int[]
      */
-    protected function getConcreteProductWhiteOrBlacklistIds(int $idProductConcrete, string $listType): array
+    protected function getConcreteProductListIdsForType(int $idProductConcrete, string $listType): array
     {
         /** @var \Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery $productListProductConcreteQuery */
         $productListProductConcreteQuery = $this->getFactory()
@@ -181,22 +181,26 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param string[] $productConcreteSkus
      * @param string $listType
      * @param array $listIds
      *
-     * @return bool
+     * @return string[]
      */
-    protected function isConcreteProductWhiteOrBlacklisted(int $idProductConcrete, string $listType, array $listIds): bool
+    protected function getConcreteProductSkusInList(array $productConcreteSkus, string $listType, array $listIds): array
     {
         return $this->getFactory()
             ->createProductListProductConcreteQuery()
-            ->filterByFkProduct($idProductConcrete)
             ->filterByFkProductList_In($listIds)
+            ->useSpyProductQuery()
+                ->filterBySku_In($productConcreteSkus)
+            ->endUse()
             ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
                 ->filterByType($listType)
             ->endUse()
-            ->exists();
+            ->select(SpyProductTableMap::COL_SKU)
+            ->find()
+            ->toArray();
     }
 
     /**
