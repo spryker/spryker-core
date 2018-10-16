@@ -75,7 +75,11 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
      */
     protected function getPriceData(array $data): array
     {
-        $priceData[$this->config->getVolumePriceTypeName()] = $this->getPriceProductVolumeItemTransfers($data);
+        $priceData = [];
+
+        if ($this->getPriceProductVolumeItemTransfers($data)) {
+            $priceData[$this->config->getVolumePriceTypeName()] = $this->getPriceProductVolumeItemTransfers($data);
+        }
 
         return $priceData;
     }
