@@ -8,6 +8,8 @@
 namespace Spryker\Zed\UserLocale\Business\Installer;
 
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Shared\Acl\AclConstants;
+use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToAclBridgeInterface;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleBridgeInterface;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserBridgeInterface;
 
@@ -30,13 +32,23 @@ class Installer implements InstallerInterface
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToAclBridgeInterface
+     */
+    protected $aclFacade;
+
+    /**
      * @param \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserBridgeInterface $userFacade
      * @param \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleBridgeInterface $localeFacade
+     * @param \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToAclBridgeInterface $aclFacade
      */
-    public function __construct(UserLocaleToUserBridgeInterface $userFacade, UserLocaleToLocaleBridgeInterface $localeFacade)
-    {
+    public function __construct(
+        UserLocaleToUserBridgeInterface $userFacade,
+        UserLocaleToLocaleBridgeInterface $localeFacade,
+        UserLocaleToAclBridgeInterface $aclFacade
+    ) {
         $this->userFacade = $userFacade;
         $this->localeFacade = $localeFacade;
+        $this->aclFacade = $aclFacade;
     }
 
     /**
@@ -44,13 +56,14 @@ class Installer implements InstallerInterface
      */
     public function install(): void
     {
-        $this->createUser();
+        $userTransfer = $this->createUser();
+        $this->addUserToRootGroup($userTransfer);
     }
 
     /**
-     * @return void
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function createUser(): void
+    protected function createUser(): UserTransfer
     {
         $userTransfer = new UserTransfer();
         $userTransfer->setFirstName(static::USER_FIRST_NAME);
@@ -59,7 +72,19 @@ class Installer implements InstallerInterface
         $userTransfer->setFkLocale($this->getLocaleId());
         $userTransfer->setUsername(static::USER_USERNAME);
 
-        $this->userFacade->createUser($userTransfer);
+        return $this->userFacade->createUser($userTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return void
+     */
+    protected function addUserToRootGroup(UserTransfer $userTransfer): void
+    {
+        $rootGroup = $this->aclFacade->getGroupByName(AclConstants::ROOT_GROUP);
+
+        $this->aclFacade->addUserToGroup($userTransfer->getIdUser(), $rootGroup->getIdAclGroup());
     }
 
     /**

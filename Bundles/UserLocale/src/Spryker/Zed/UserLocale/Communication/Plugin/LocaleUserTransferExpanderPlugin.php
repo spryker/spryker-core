@@ -19,7 +19,7 @@ class LocaleUserTransferExpanderPlugin extends AbstractPlugin implements UserTra
 {
     /**
      * {@inheritdoc}
-     * - Expands UserTransfer with locale code
+     * - Expands UserTransfer with locale code.
      *
      * @api
      *
@@ -30,7 +30,7 @@ class LocaleUserTransferExpanderPlugin extends AbstractPlugin implements UserTra
     public function expandTransfer(UserTransfer $userTransfer): UserTransfer
     {
         $userFkLocale = $userTransfer->getFkLocale();
-        if ($userFkLocale === null) {
+        if ($userFkLocale === null || $userTransfer->getLocaleCode() !== null) {
             return $userTransfer;
         }
 

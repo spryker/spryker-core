@@ -11,7 +11,7 @@ interface UserLocaleFacadeInterface
 {
     /**
      * Specification:
-     * - Executes required actions on install
+     * - Executes required actions on install.
      *
      * @api
      *

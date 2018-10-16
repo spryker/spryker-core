@@ -4,6 +4,7 @@
   "description": "UserLocale module",
   "license": "proprietary",
   "require": {
+    "spryker/acl": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/user": "^3.0.0",

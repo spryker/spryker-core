@@ -34,13 +34,17 @@ class UserLocaleServiceProvider extends AbstractPlugin implements ServiceProvide
      */
     public function boot(Application $app)
     {
-        $app['locale'] = $this->getConfig()->getDefaultLocale();
-        if ($this->getFactory()->getUserFacade()->hasCurrentUser()) {
-            $currentUser = $this->getFactory()->getUserFacade()->getCurrentUser();
-            $localeCode = $currentUser->getLocaleCode();
-            if ($localeCode) {
-                $app['locale'] = $localeCode;
-            }
+        $app['locale'] = $this->getCurrentUserLocaleCode() ?: $this->getConfig()->getDefaultLocale();
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getCurrentUserLocaleCode(): ?string
+    {
+        if (!$this->getFactory()->getUserFacade()->hasCurrentUser()) {
+            return null;
         }
+        return $this->getFactory()->getUserFacade()->getCurrentUser()->getLocaleCode();
     }
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\UserLocale\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\UserLocale\Business\Installer\Installer;
 use Spryker\Zed\UserLocale\Business\Installer\InstallerInterface;
+use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToAclBridgeInterface;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleBridgeInterface;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserBridgeInterface;
 use Spryker\Zed\UserLocale\UserLocaleDependencyProvider;
@@ -32,7 +33,7 @@ class UserLocaleBusinessFactory extends AbstractBusinessFactory
      */
     public function createInstaller(): InstallerInterface
     {
-        return new Installer($this->getUserFacade(), $this->getLocaleFacade());
+        return new Installer($this->getUserFacade(), $this->getLocaleFacade(), $this->getAclFacade());
     }
 
     /**
@@ -41,5 +42,13 @@ class UserLocaleBusinessFactory extends AbstractBusinessFactory
     public function getUserFacade(): UserLocaleToUserBridgeInterface
     {
         return $this->getProvidedDependency(UserLocaleDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToAclBridgeInterface
+     */
+    public function getAclFacade(): UserLocaleToAclBridgeInterface
+    {
+        return $this->getProvidedDependency(UserLocaleDependencyProvider::FACADE_ACL);
     }
 }

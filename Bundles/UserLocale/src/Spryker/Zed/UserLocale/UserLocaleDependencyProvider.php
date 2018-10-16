@@ -9,6 +9,7 @@ namespace Spryker\Zed\UserLocale;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToAclBridge;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleBridge;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserBridge;
 
@@ -16,6 +17,7 @@ class UserLocaleDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_USER = 'FACADE_USER';
+    public const FACADE_ACL = 'FACADE_ACL';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -42,6 +44,7 @@ class UserLocaleDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addUserFacade($container);
+        $container = $this->addAclFacade($container);
 
         return $container;
     }
@@ -69,6 +72,20 @@ class UserLocaleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_USER] = function (Container $container) {
             return new UserLocaleToUserBridge($container->getLocator()->user()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAclFacade(Container $container): Container
+    {
+        $container[static::FACADE_ACL] = function (Container $container) {
+            return new UserLocaleToAclBridge($container->getLocator()->acl()->facade());
         };
 
         return $container;
