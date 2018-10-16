@@ -9,15 +9,11 @@ namespace Spryker\Zed\Quote\Business\Model;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface;
 use Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface;
 
 class QuoteReader implements QuoteReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface
-     */
-    protected $quoteEntityManager;
-
     /**
      * @var \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface
      */
@@ -30,10 +26,12 @@ class QuoteReader implements QuoteReaderInterface
 
     /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
+     * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
      */
-    public function __construct(QuoteRepositoryInterface $quoteRepository)
+    public function __construct(QuoteRepositoryInterface $quoteRepository, QuoteToStoreFacadeInterface $storeFacade)
     {
         $this->quoteRepository = $quoteRepository;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -46,8 +44,11 @@ class QuoteReader implements QuoteReaderInterface
         $customerTransfer->requireCustomerReference();
         $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteResponseTransfer->setIsSuccessful(false);
-        $quoteTransfer = $this->quoteRepository
-            ->findQuoteByCustomer($customerTransfer->getCustomerReference());
+        $quoteTransfer = $this->quoteRepository->findQuoteByCustomerAndStore(
+            $customerTransfer->getCustomerReference(),
+            $this->storeFacade->getCurrentStore()->getIdStore()
+        );
+
         if (!$quoteTransfer) {
             $quoteResponseTransfer->setIsSuccessful(false);
             return $quoteResponseTransfer;
