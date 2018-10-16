@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupBusinessFactory getFactory()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupRepositoryInterface getRepository()
  */
 class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeInterface
 {
@@ -124,9 +125,7 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
      */
     public function getCustomerGroupCollectionByIdCustomer(int $idCustomer): CustomerGroupCollectionTransfer
     {
-        return $this->getFactory()
-            ->getRepository()
-            ->getCustomerGroupCollectionByIdCustomer($idCustomer);
+        return $this->getRepository()->getCustomerGroupCollectionByIdCustomer($idCustomer);
     }
 
     /**
