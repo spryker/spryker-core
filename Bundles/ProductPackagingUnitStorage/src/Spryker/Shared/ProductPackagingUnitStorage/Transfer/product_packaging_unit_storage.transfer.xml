@@ -30,4 +30,8 @@
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int" />
+    </transfer>
+
 </transfers>
