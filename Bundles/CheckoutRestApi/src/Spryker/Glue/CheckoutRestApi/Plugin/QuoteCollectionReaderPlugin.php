@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CheckoutRestApi\Plugin;
+namespace Spryker\Glue\CheckoutRestApi\Plugin;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
@@ -15,7 +15,7 @@ use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReade
 /**
  * @method \Spryker\Client\CheckoutRestApi\CheckoutRestApiFactory getFactory()
  */
-class CartQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
+class QuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
 {
     /**
      * {@inheritdoc}

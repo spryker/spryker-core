@@ -101,6 +101,9 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             $restCheckoutResponseAttributesTransfer
         );
 
-        return $this->restResourceBuilder->createRestResponse()->addResource($checkoutDataResource);
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResponse->addResource($checkoutDataResource);
+
+        return $restResponse;
     }
 }
