@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder;
 
-use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface;
-use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
 
 class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFinderInterface
@@ -25,23 +24,23 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     protected $config;
 
     /**
-     * @var \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface
+     * @var \Spryker\Shared\Kernel\Store
      */
-    protected $storeFacade;
+    protected $store;
 
     /**
      * @param \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface $finder
-     * @param \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig $config
+     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         RestRequestValidatorToFinderAdapterInterface $finder,
-        RestRequestValidatorToStoreFacadeInterface $storeFacade,
-        RestRequestValidatorConfig $config
+        RestRequestValidatorConfig $config,
+        Store $store
     ) {
         $this->finder = $finder;
-        $this->storeFacade = $storeFacade;
         $this->config = $config;
+        $this->store = $store;
     }
 
     /**
@@ -60,15 +59,15 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $storeName
      *
      * @return string[]
      */
-    public function getPaths(StoreTransfer $storeTransfer): array
+    public function getPaths(string $storeName): array
     {
         $paths = [];
         foreach ($this->config->getValidationSchemaPathPattern() as $pathPattern) {
-            $pathPattern = $this->preparePathPattern($storeTransfer, $pathPattern);
+            $pathPattern = $this->preparePathPattern($storeName, $pathPattern);
             $currentLevelPaths = $this->excludeStoreModules($pathPattern, glob($pathPattern));
             $paths = array_merge($paths, $currentLevelPaths);
         }
@@ -77,15 +76,15 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $storeName
      * @param string $pathPattern
      *
      * @return string
      */
-    protected function preparePathPattern(StoreTransfer $storeTransfer, string $pathPattern): string
+    protected function preparePathPattern(string $storeName, string $pathPattern): string
     {
         if ($this->isStoreLevelPath($pathPattern)) {
-            $pathPattern = $this->replaceStoreCodeInPath($pathPattern, $storeTransfer);
+            $pathPattern = $this->replaceStoreCodeInPath($pathPattern, $storeName);
         }
 
         return $pathPattern;
@@ -93,13 +92,13 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
 
     /**
      * @param string $pathPattern
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $storeName
      *
      * @return string
      */
-    protected function replaceStoreCodeInPath(string $pathPattern, StoreTransfer $storeTransfer): string
+    protected function replaceStoreCodeInPath(string $pathPattern, string $storeName): string
     {
-        return sprintf($pathPattern, $storeTransfer->getName());
+        return sprintf($pathPattern, $storeName);
     }
 
     /**
@@ -110,8 +109,8 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     protected function addStoreCodesToPath(string $pathPattern): string
     {
         $excludedStoreCodes = [];
-        foreach ($this->storeFacade->getAllStores() as $store) {
-            $excludedStoreCodes[] = $store->getName();
+        foreach ($this->store->getAllowedStores() as $storeName) {
+            $excludedStoreCodes[] = $storeName;
         }
 
         return sprintf($pathPattern, implode('|', $excludedStoreCodes));

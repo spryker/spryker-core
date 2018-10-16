@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Collector;
 
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
@@ -45,15 +44,15 @@ class RestRequestValidatorCacheCollector implements RestRequestValidatorCacheCol
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $storeName
      *
      * @return array
      */
-    public function collect(StoreTransfer $storeTransfer): array
+    public function collect(string $storeName): array
     {
         $resultingConfig = [];
 
-        $paths = $this->restRequestValidatorSchemaFinder->getPaths($storeTransfer);
+        $paths = $this->restRequestValidatorSchemaFinder->getPaths($storeName);
         if (!$paths) {
             return $resultingConfig;
         }

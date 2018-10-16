@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Collector;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface RestRequestValidatorCacheCollectorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $storeName
      *
      * @return array
      */
-    public function collect(StoreTransfer $storeTransfer): array;
+    public function collect(string $storeName): array;
 }

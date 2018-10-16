@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Saver;
 
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
@@ -46,40 +45,40 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
 
     /**
      * @param array $validatorConfig
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $storeName
      *
      * @return void
      */
-    public function save(array $validatorConfig, StoreTransfer $storeTransfer): void
+    public function save(array $validatorConfig, string $storeName): void
     {
-        $outdatedConfigFiles = $this->getOutdatedConfig($storeTransfer);
+        $outdatedConfigFiles = $this->getOutdatedConfig($storeName);
         if (!empty($outdatedConfigFiles)) {
             $this->filesystem->remove($outdatedConfigFiles);
         }
 
         $this->filesystem->dumpFile(
-            $this->getStoreCacheFilePath($storeTransfer),
+            $this->getStoreCacheFilePath($storeName),
             $this->yaml->dump($validatorConfig)
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $storeName
      *
      * @return string
      */
-    protected function getStoreCacheFilePath(StoreTransfer $storeTransfer): string
+    protected function getStoreCacheFilePath(string $storeName): string
     {
-        return sprintf($this->config->getCacheFilePathPattern(), $storeTransfer->getName());
+        return sprintf($this->config->getCacheFilePathPattern(), $storeName);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $storeName
      *
      * @return array
      */
-    protected function getOutdatedConfig(StoreTransfer $storeTransfer): array
+    protected function getOutdatedConfig(string $storeName): array
     {
-        return glob(sprintf($this->config->getCacheFilePathPattern(), $storeTransfer->getName()));
+        return glob(sprintf($this->config->getCacheFilePathPattern(), $storeName));
     }
 }

@@ -7,15 +7,13 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Saver;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface RestRequestValidatorCacheSaverInterface
 {
     /**
      * @param array $validatorConfig
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $storeName
      *
      * @return void
      */
-    public function save(array $validatorConfig, StoreTransfer $storeTransfer): void;
+    public function save(array $validatorConfig, string $storeName): void;
 }

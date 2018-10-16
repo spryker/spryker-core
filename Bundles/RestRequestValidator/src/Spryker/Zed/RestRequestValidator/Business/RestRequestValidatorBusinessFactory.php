@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCacheBuilder;
 use Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCacheBuilderInterface;
@@ -21,7 +22,6 @@ use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSav
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
-use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorDependencyProvider;
 
 /**
@@ -38,7 +38,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
             $this->createRestRequestValidatorCacheCollector(),
             $this->createRestRequestValidatorSchemaMerger(),
             $this->createRestRequestValidatorCacheSaver(),
-            $this->getStoreFacade()
+            $this->getStore()
         );
     }
 
@@ -81,8 +81,8 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     {
         return new RestRequestValidatorSchemaFinder(
             $this->getFinderAdapter(),
-            $this->getStoreFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getStore()
         );
     }
 
@@ -111,10 +111,10 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface
+     * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStoreFacade(): RestRequestValidatorToStoreFacadeInterface
+    public function getStore(): Store
     {
-        return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::FACADE_STORE);
+        return Store::getInstance();
     }
 }
