@@ -73,11 +73,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
         $this->addPriceProductEvents($eventCollection);
         $this->addProductImageEvents($eventCollection);
         $this->addProductCategoryEvents($eventCollection);
-
-        $eventCollection
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_SEARCH_CREATE, new ProductSearchListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_SEARCH_UPDATE, new ProductSearchListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_SEARCH_DELETE, new ProductSearchListener());
+        $this->addProductSearchEvents($eventCollection);
 
         return $eventCollection;
     }
@@ -571,5 +567,18 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
     protected function addProductPageProductAbstractStoreDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE, new ProductPageProductAbstractStoreSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductSearchEvents(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_SEARCH_CREATE, new ProductSearchListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_SEARCH_UPDATE, new ProductSearchListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_SEARCH_DELETE, new ProductSearchListener());
     }
 }
