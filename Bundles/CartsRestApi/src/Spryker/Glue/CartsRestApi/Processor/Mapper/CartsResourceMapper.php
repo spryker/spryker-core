@@ -66,6 +66,22 @@ class CartsResourceMapper implements CartsResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCartsAttributesTransfer
+     */
+    public function mapQuoteTransferToRestCartsAttributesTransfer(QuoteTransfer $quoteTransfer): RestCartsAttributesTransfer
+    {
+        $restCartsAttributesTransfer = new RestCartsAttributesTransfer();
+
+        $this->setBaseCartData($quoteTransfer, $restCartsAttributesTransfer);
+        $this->setTotals($quoteTransfer, $restCartsAttributesTransfer);
+        $this->setDiscounts($quoteTransfer, $restCartsAttributesTransfer);
+
+        return $restCartsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartResource
      *
      * @return void
