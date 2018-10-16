@@ -85,6 +85,8 @@ class DictionaryFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated use createKeyStrategy() instead.
+     *
      * @return \Spryker\Client\ProductLabelStorage\Storage\Dictionary\KeyStrategyInterface
      */
     protected function createKeyByNameStrategy()
