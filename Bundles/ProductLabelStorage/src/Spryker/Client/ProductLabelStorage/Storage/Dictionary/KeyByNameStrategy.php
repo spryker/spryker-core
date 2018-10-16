@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductLabelStorage\Storage\Dictionary;
 use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 
 /**
- * @deprecated use KeyStrategy instead.
+ * @deprecated use \Spryker\Client\ProductLabelStorage\Storage\Dictionary\KeyStrategy instead.
  */
 class KeyByNameStrategy implements KeyStrategyInterface
 {
