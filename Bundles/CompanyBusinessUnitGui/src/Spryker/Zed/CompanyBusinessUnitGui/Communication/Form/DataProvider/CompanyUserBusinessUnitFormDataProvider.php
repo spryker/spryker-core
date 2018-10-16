@@ -73,6 +73,6 @@ class CompanyUserBusinessUnitFormDataProvider
      */
     protected function generateCompanyBusinessUnitName(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): string
     {
-        return sprintf('%s - %s', $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(), $companyBusinessUnitTransfer->getName());
+        return sprintf('%s (id: %s)', $companyBusinessUnitTransfer->getName(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
     }
 }

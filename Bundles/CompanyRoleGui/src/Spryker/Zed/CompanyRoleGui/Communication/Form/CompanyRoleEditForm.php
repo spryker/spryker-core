@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication\Form;
 
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CompanyRoleEditForm extends CompanyRoleCreateForm
@@ -20,7 +20,13 @@ class CompanyRoleEditForm extends CompanyRoleCreateForm
      */
     protected function addFkCompanyField(FormBuilderInterface $builder, array $options): CompanyRoleCreateForm
     {
-        $builder->add(static::FIELD_FK_COMPANY, HiddenType::class);
+        $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
+            'choices' => $options[static::OPTION_COMPANY_CHOICES],
+            'expanded' => false,
+            'placeholder' => 'Select company',
+            'label' => 'Company',
+            'disabled' => 'disabled',
+        ]);
 
         return $this;
     }

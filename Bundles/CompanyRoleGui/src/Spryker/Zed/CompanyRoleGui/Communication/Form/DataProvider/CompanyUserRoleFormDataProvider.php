@@ -96,6 +96,6 @@ class CompanyUserRoleFormDataProvider
      */
     protected function generateCompanyRoleName(CompanyRoleTransfer $companyRoleTransfer): string
     {
-        return sprintf('%s - %s', $companyRoleTransfer->getIdCompanyRole(), $companyRoleTransfer->getName());
+        return sprintf('%s (id: %s)', $companyRoleTransfer->getName(), $companyRoleTransfer->getIdCompanyRole());
     }
 }
