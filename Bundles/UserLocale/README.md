@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/user-locale.svg)](https://travis-ci.org/spryker/user-locale)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/user-locale/badge.svg)](https://coveralls.io/github/spryker/user-locale)
 
-{{ADD DESCRIPTION HERE}}
+UserLocale module allows to assign locale to Zed user
 
 ## Installation
 

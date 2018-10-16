@@ -4,10 +4,10 @@
   "description": "UserLocale module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "*",
-    "spryker/locale": "*",
-    "spryker/user": "*",
-    "spryker/user-extension": "*"
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/user": "^3.0.0",
+    "spryker/user-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
