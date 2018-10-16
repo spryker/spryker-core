@@ -56,7 +56,7 @@ class DictionaryFactory extends AbstractFactory
         return new LabelDictionary(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->createKeyByNameStrategy()
+            $this->createKeyStrategy()
         );
     }
 
@@ -90,6 +90,14 @@ class DictionaryFactory extends AbstractFactory
     protected function createKeyByNameStrategy()
     {
         return new KeyByNameStrategy();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductLabelStorage\Storage\Dictionary\KeyStrategyInterface
+     */
+    protected function createKeyStrategy(): KeyStrategyInterface
+    {
+        return new KeyStrategy();
     }
 
     /**
