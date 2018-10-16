@@ -25,6 +25,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
@@ -92,6 +93,11 @@ class AbstractProductFormDataProvider
     protected $productImageFacade;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface
+     */
+    protected $priceProductFacade;
+
+    /**
      * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]|\Everon\Component\Collection\CollectionInterface
      */
     protected $attributeTransferCollection;
@@ -118,6 +124,7 @@ class AbstractProductFormDataProvider
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface $productImageFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
      * @param array $attributeCollection
@@ -132,6 +139,7 @@ class AbstractProductFormDataProvider
         StockQueryContainerInterface $stockQueryContainer,
         ProductManagementToProductInterface $productFacade,
         ProductManagementToProductImageInterface $productImageFacade,
+        ProductManagementToPriceProductInterface $priceProductFacade,
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
         array $attributeCollection,
@@ -144,6 +152,7 @@ class AbstractProductFormDataProvider
         $this->productQueryContainer = $productQueryContainer;
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productImageFacade = $productImageFacade;
+        $this->priceProductFacade = $priceProductFacade;
         $this->localeProvider = $localeProvider;
         $this->productFacade = $productFacade;
         $this->currentLocale = $currentLocale;
@@ -163,12 +172,6 @@ class AbstractProductFormDataProvider
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
         $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
-
-//        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-//            ->setPriceDimension((new PriceProductDimensionTransfer())->setType('')->setIdMerchantRelationship(18));
-//
-//        $this->priceProductFacade->
-
         $localizedAttributeOptions = [];
         foreach ($localeCollection as $localeTransfer) {
             $localizedAttributeOptions[$localeTransfer->getLocaleName()] = $this->convertAbstractLocalizedAttributesToFormOptions($productAbstractTransfer, $localeTransfer);
@@ -190,15 +193,17 @@ class AbstractProductFormDataProvider
     }
 
     /**
+     * @param array|null $priceDimension
+     *
      * @return array
      */
-    protected function getDefaultFormFields()
+    protected function getDefaultFormFields(?array $priceDimension = null)
     {
         $data = [
             ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT => null,
             ProductFormAdd::FIELD_SKU => null,
             ProductFormAdd::FORM_ATTRIBUTE_SUPER => $this->getAttributeVariantDefaultFields(),
-            ProductFormAdd::FORM_PRICE_DIMENSION => null,
+            ProductFormAdd::FORM_PRICE_DIMENSION => $priceDimension,
         ];
 
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());

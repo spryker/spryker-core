@@ -24,6 +24,7 @@ class AddController extends AbstractController
 {
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     protected const PARAM_ID_PRODUCT = 'id-product';
+    protected const PARAM_PRICE_DIMENSION = 'price-dimension';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -39,7 +40,7 @@ class AddController extends AbstractController
         $form = $this
             ->getFactory()
             ->createProductFormAdd(
-                $dataProvider->getData(),
+                $dataProvider->getData($request->query->get(static::PARAM_PRICE_DIMENSION)),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);

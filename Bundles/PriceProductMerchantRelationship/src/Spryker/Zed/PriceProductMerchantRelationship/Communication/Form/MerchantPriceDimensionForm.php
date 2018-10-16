@@ -17,7 +17,7 @@ class MerchantPriceDimensionForm extends AbstractType
 {
     public const OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES = 'merchant_relationship_choices';
 
-    public const ATTR_TYPE = 'type';
+    protected const TEMPLATE_PATH = '@PriceProductMerchantRelationship/ProductManagement/price_dimension.twig';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -59,10 +59,19 @@ class MerchantPriceDimensionForm extends AbstractType
             'choices_as_values' => true,
             'label' => false,
             'attr' => [
-                static::ATTR_TYPE => PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP,
+                'template_path' => $this->getTemplatePath(),
+                'data-type' => PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP,
             ]
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTemplatePath(): string
+    {
+        return static::TEMPLATE_PATH;
     }
 }

@@ -22,6 +22,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
@@ -48,6 +49,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface $productImageFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
      * @param array $attributeCollection
@@ -64,6 +66,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         StockQueryContainerInterface $stockQueryContainer,
         ProductManagementToProductInterface $productFacade,
         ProductManagementToProductImageInterface $productImageFacade,
+        ProductManagementToPriceProductInterface $priceProductFacade,
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
         array $attributeCollection,
@@ -80,6 +83,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $stockQueryContainer,
             $productFacade,
             $productImageFacade,
+            $priceProductFacade,
             $localeProvider,
             $currentLocale,
             $attributeCollection,
@@ -109,11 +113,13 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     }
 
     /**
+     * @param array|null $priceDimension
+     *
      * @return array
      */
-    protected function getDefaultFormFields()
+    protected function getDefaultFormFields(?array $priceDimension = null)
     {
-        $formData = parent::getDefaultFormFields();
+        $formData = parent::getDefaultFormFields($priceDimension);
 
         unset($formData[ProductFormAdd::FORM_PRICE_AND_TAX]);
 

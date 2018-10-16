@@ -1,14 +1,18 @@
-{% if priceDimensionForm.children | length %}
 
-    {% for subForm in priceDimensionForm.children %}
-        {{ form_row(subForm) }}
+{% for subForm in priceDimensionForm.children %}
+
+    {% for child in subForm %}
+        <div class="form-group">
+            {% if "hidden" not in child.vars.block_prefixes %}
+                {{ form_label(child) }}
+                {{ form_errors(child) }}
+            {% endif %}
+            {% if child.vars.attr.template_path is defined %}
+                {% include child.vars.attr.template_path with {'form': child} %}
+            {% else %}
+                {{ form_widget(child) }}
+            {% endif %}
+        </div>
     {% endfor %}
 
-    <div class="tabs-navigation pull-right m-b">
-        <input type="button" class="btn btn-primary" value="Show specific prices" id="showSpecificPrices"/>
-        <input type="button" class="btn btn-default" value="Show default prices (Clear selection)" id="showDefaultPrices"/>
-    </div>
-
-{% endif %}
-
-<script src="/assets/js/spryker-zed-productmanagement-price-dimension.js"></script>
+{% endfor %}

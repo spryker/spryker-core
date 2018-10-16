@@ -18,12 +18,13 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 {
     /**
      * @param int $idProductAbstract
+     * @param array|null $priceDimension
      *
      * @return array
      */
-    public function getData($idProductAbstract)
+    public function getData($idProductAbstract, ?array $priceDimension = null)
     {
-        $formData = $this->getDefaultFormFields();
+        $formData = $this->getDefaultFormFields($priceDimension);
         $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
 
         if ($productAbstractTransfer) {
