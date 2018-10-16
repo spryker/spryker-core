@@ -33,18 +33,17 @@
 
     <table class="table table--expand">
         <thead>
-        <tr class="active">
-            <th>{{ 'Quantity' | trans }}</th>
-            <th>{{ 'Gross price' | trans }}</th>
-            <th>{{ 'Net price' | trans }}</th>
-        </tr>
+            <tr class="active">
+                <th>{{ 'Quantity' | trans }}</th>
+                <th>{{ 'Gross price' | trans }}</th>
+                <th>{{ 'Net price' | trans }}</th>
+            </tr>
         </thead>
         <tbody>
         {{ form_widget(form.idStore) }}
         {{ form_widget(form.idCurrency) }}
         {{ form_widget(form.idProductAbstract) }}
         {{ form_widget(form.idProductConcrete) }}
-
         <tr>
             <td>
                 <input type="text" class="form-control" value="1" disabled>
