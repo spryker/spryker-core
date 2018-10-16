@@ -94,7 +94,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
     ): RestResponseInterface {
         $quoteResponseTransfers = $this->cartReader->getCustomerQuotes();
         $quotes = $quoteResponseTransfers->getQuotes();
-        $quoteTransfer = $quotes[0] ?? $this->guestCartCreator->create($restRequest);
+        $quoteTransfer = $quotes[0] ?? $this->guestCartCreator->createQuoteTransfer($restRequest);
         $this->quoteClient->setQuote($quoteTransfer);
         $quoteTransfer = $this->cartClient->addItem(
             $this->cartItemsResourceMapper->mapItemAttributesToItemTransfer($restCartItemsAttributesTransfer)
