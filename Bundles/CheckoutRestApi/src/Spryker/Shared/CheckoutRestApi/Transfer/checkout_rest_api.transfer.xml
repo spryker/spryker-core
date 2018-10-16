@@ -94,7 +94,8 @@
     </transfer>
 
     <transfer name="RestShipment">
-        <property name="idShipmentMethod" type="int"/>
+        <property name="shipmentSelection" type="int"/>
+        <property name="method" type="ShipmentMethod"/>
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">

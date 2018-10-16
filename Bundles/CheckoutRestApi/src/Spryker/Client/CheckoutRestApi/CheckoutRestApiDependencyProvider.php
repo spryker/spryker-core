@@ -14,7 +14,7 @@ use Spryker\Client\Kernel\Container;
 
 class CheckoutRestApiDependencyProvider extends AbstractDependencyProvider
 {
-    public const CLIENT_ZED_REQUEST = 'ZED_REQUEST_CLIENT';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const CLIENT_QUOTE = 'QUOTE_CLIENT';
 
     /**
