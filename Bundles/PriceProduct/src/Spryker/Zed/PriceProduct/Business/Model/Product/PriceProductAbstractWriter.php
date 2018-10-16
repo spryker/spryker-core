@@ -139,6 +139,7 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
 
         $this->persistProductAbstractPriceEntity($priceProductTransfer, $idProductAbstract);
         $priceProductTransfer->setIdProductAbstract($idProductAbstract);
+        $priceProductTransfer = $this->priceProductStoreWriter->persistPriceProductStore($priceProductTransfer);
         $priceProductTransfer = $this->executePriceDimensionAbstractSaverPlugins($priceProductTransfer);
 
         return $priceProductTransfer;
@@ -216,7 +217,6 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
     protected function persistPriceProductIfDimensionTypeDefault(
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
-        $priceProductTransfer = $this->priceProductStoreWriter->persistPriceProductStore($priceProductTransfer);
         $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
         $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
             $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
