@@ -232,6 +232,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     {
         $query = $this->getFactory()
             ->createProductQuery()
+            ->filterByIdProduct_In($productIds)
             ->joinWithSpyProductAbstract()
             ->joinWithSpyProductLocalizedAttributes()
             ->useSpyProductLocalizedAttributesQuery()
@@ -243,12 +244,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
                     ->joinWithSpyStore()
                 ->endUse()
             ->endUse();
-
-        // TODO: fix this
-        if (!empty($productIds)) {
-            $query
-                ->filterByIdProduct_In($productIds);
-        }
 
         $productConcreteEntities = $query->find();
 

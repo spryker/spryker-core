@@ -25,11 +25,13 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @param int[] $productIds
+     *
+     * @return array
      */
-    public function findAllProductConcretePageSearchTransfers(): array
+    public function getProductConcretePageSearchTransfersByProductIds(array $productIds): array
     {
-        return $this->repository->findProductConcretePageSearchTransfers();
+        return $this->repository->getProductConcretePageSearchTransfers($productIds);
     }
 
     /**
@@ -37,19 +39,9 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
      *
      * @return array
      */
-    public function findProductConcretePageSearchTransfersByProductConcreteIds(array $productConcreteIds): array
+    public function getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale(array $productConcreteIds): array
     {
-        return $this->repository->findProductConcretePageSearchTransfers($productConcreteIds);
-    }
-
-    /**
-     * @param int[] $productConcreteIds
-     *
-     * @return array
-     */
-    public function findProductConcretePageSearchTransfersByProductConcreteIdsGrouppedByStoreAndLocale(array $productConcreteIds): array
-    {
-        $productConcreteSearchPageTransfers = $this->repository->findProductConcretePageSearchTransfers($productConcreteIds);
+        $productConcreteSearchPageTransfers = $this->repository->getProductConcretePageSearchTransfers($productConcreteIds);
 
         return $this->getTransfersGrouppedByStoreAndLocale($productConcreteSearchPageTransfers);
     }
@@ -65,10 +57,10 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
 
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
             $idProduct = $productConcretePageSearchTransfer->getFkProduct();
-            $store = $productConcretePageSearchTransfer->getStore();
-            $locale = $productConcretePageSearchTransfer->getLocale();
+            $storeName = $productConcretePageSearchTransfer->getStore();
+            $localeName = $productConcretePageSearchTransfer->getLocale();
 
-            $grouppedProductConcretePageSearchTransfers[$idProduct][$store][$locale] = $productConcretePageSearchTransfer;
+            $grouppedProductConcretePageSearchTransfers[$idProduct][$storeName][$localeName] = $productConcretePageSearchTransfer;
         }
 
         return $grouppedProductConcretePageSearchTransfers;

@@ -100,28 +100,14 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findProductConcretePageSearchTransfersByProductConcreteIds(array $productConcreteIds = []): array
+    public function getProductConcretePageSearchTransfersByProductIds(array $productIds): array
     {
         return $this->getFactory()
             ->createProductConcretePageSearchReader()
-            ->findProductConcretePageSearchTransfersByProductConcreteIds($productConcreteIds);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
-     */
-    public function findAllProductConcretePageSearchTransfers(): array
-    {
-        return $this->getFactory()
-            ->createProductConcretePageSearchReader()
-            ->findAllProductConcretePageSearchTransfers();
+            ->getProductConcretePageSearchTransfersByProductIds($productIds);
     }
 }

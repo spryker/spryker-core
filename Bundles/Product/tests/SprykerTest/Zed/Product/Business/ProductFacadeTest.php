@@ -40,14 +40,11 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConcreteTransfersByProductIds()
+    public function testGetProductConcreteTransfersByProductIdsRetrievesAllSpecifiedProductconcreteAsTransferWithId()
     {
-        // TODO: enhance tests
-
         $productConcreteIds = $this->tester->getProductConcreteIds();
 
         $this->assertTrue(count($productConcreteIds) > 0);
-
         $productConcreteTransfers = $this->tester->getProductFacade()->getProductConcreteTransfersByProductIds($productConcreteIds);
         $this->assertSame(count($productConcreteIds), count($productConcreteTransfers));
 

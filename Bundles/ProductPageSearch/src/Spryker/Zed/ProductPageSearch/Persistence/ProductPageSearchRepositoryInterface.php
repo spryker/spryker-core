@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductPageSearch\Persistence;
 interface ProductPageSearchRepositoryInterface
 {
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findProductConcretePageSearchTransfers(array $productConcreteIds = []): array;
+    public function getProductConcretePageSearchTransfers(array $productIds): array;
 }

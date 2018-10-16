@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -44,9 +45,7 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
     public function getData(array $productIds = []): array
     {
         if (empty($productIds)) {
-            // TODO: create follow up and fix this
-            $productIds = [];
-            // return [];
+            $productIds = $this->getAllProductIds();
         }
 
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[] $productConcreteTransfers */
@@ -77,5 +76,16 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
     public function getIdColumnName(): ?string
     {
         return SpyProductTableMap::COL_ID_PRODUCT;
+    }
+
+    /**
+     * @return int[]
+     */
+    protected function getAllProductIds()
+    {
+        return SpyProductQuery::create()
+            ->select([SpyProductTableMap::COL_ID_PRODUCT])
+            ->find()
+            ->toArray();
     }
 }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
@@ -55,8 +57,9 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
     public function getData(array $productConcreteIds = []): array
     {
         $synchronizationDataTransfers = [];
-        $productConcretePageSearchTransfers = $this->findProductConcretePageSearchTransfers($productConcreteIds);
+        $productConcretePageSearchTransfers = $this->getProductConcretePageSearchTransfers($productConcreteIds);
 
+        /** @var \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer */
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
             $synchronizationDataTransfer->setData($productConcretePageSearchTransfer->getData());
@@ -104,16 +107,27 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    protected function findProductConcretePageSearchTransfers(array $productConcreteIds): array
+    protected function getProductConcretePageSearchTransfers(array $productIds): array
     {
-        if (empty($productConcreteIds)) {
-            return $this->getFacade()->findAllProductConcretePageSearchTransfers();
+        if (empty($productIds)) {
+            $productIds = $this->getAllProductIds();
         }
 
-        return $this->getFacade()->findProductConcretePageSearchTransfersByProductConcreteIds($productConcreteIds);
+        return $this->getFacade()->getProductConcretePageSearchTransfersByProductIds($productIds);
+    }
+
+    /**
+     * @return int[]
+     */
+    protected function getAllProductIds()
+    {
+        return SpyProductQuery::create()
+            ->select([SpyProductTableMap::COL_ID_PRODUCT])
+            ->find()
+            ->toArray();
     }
 }
