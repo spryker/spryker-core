@@ -18,6 +18,8 @@ class CompanyUserRoleFormDataProvider
     protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
     protected const OPTION_IS_DEFAULT = 'data-is_default';
 
+    protected const FORMAT_NAME = '%s (id: %s)';
+
     /**
      * @var \Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface
      */
@@ -96,6 +98,6 @@ class CompanyUserRoleFormDataProvider
      */
     protected function generateCompanyRoleName(CompanyRoleTransfer $companyRoleTransfer): string
     {
-        return sprintf('%s (id: %s)', $companyRoleTransfer->getName(), $companyRoleTransfer->getIdCompanyRole());
+        return sprintf(static::FORMAT_NAME, $companyRoleTransfer->getName(), $companyRoleTransfer->getIdCompanyRole());
     }
 }
