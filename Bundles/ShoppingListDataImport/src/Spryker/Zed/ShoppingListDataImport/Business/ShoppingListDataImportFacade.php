@@ -27,7 +27,9 @@ class ShoppingListDataImportFacade extends AbstractFacade implements ShoppingLis
      */
     public function importShoppingLists(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->getShoppingListDataImporter()->import();
+        return $this->getFactory()
+            ->getShoppingListDataImporter()
+            ->import($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -41,7 +43,9 @@ class ShoppingListDataImportFacade extends AbstractFacade implements ShoppingLis
      */
     public function importShoppingListItems(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->getShoppingListItemDataImporter()->import();
+        return $this->getFactory()
+            ->getShoppingListItemDataImporter()
+            ->import($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -53,8 +57,26 @@ class ShoppingListDataImportFacade extends AbstractFacade implements ShoppingLis
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importShoppingListPermissions(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    public function importShoppingListCompanyUser(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->getShoppingListPermissionDataImporter()->import();
+        return $this->getFactory()
+            ->getShoppingListCompanyUserDataImporter()
+            ->import($dataImporterConfigurationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importShoppingListCompanyBusinessUnit(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer
+    {
+        return $this->getFactory()
+            ->getShoppingListCompanyBusinessUnitDataImporter()
+            ->import($dataImporterConfigurationTransfer);
     }
 }

@@ -38,7 +38,7 @@ interface ShoppingListDataImportFacadeInterface
 
     /**
      * Specification:
-     * - Imports Shopping Lists permissions data.
+     * - Imports Shopping Lists company user sharing data.
      *
      * @api
      *
@@ -46,5 +46,17 @@ interface ShoppingListDataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importShoppingListPermissions(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+    public function importShoppingListCompanyUser(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+
+    /**
+     * Specification:
+     * - Imports Shopping Lists company business unit sharing data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importShoppingListCompanyBusinessUnit(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer;
 }

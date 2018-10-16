@@ -16,7 +16,7 @@ use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
 /**
  * @method \Spryker\Zed\ShoppingListDataImport\Business\ShoppingListDataImportFacadeInterface getFacade()
  */
-class ShoppingListPermissionDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
+class ShoppingListCompanyUserDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
      * @api
@@ -28,7 +28,7 @@ class ShoppingListPermissionDataImportPlugin extends AbstractPlugin implements D
     public function import(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFacade()->importShoppingListPermissions($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importShoppingListCompanyUser($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -38,6 +38,6 @@ class ShoppingListPermissionDataImportPlugin extends AbstractPlugin implements D
      */
     public function getImportType(): string
     {
-        return ShoppingListDataImportConfig::IMPORT_TYPE_SHOPPING_LIST_PERMISSION;
+        return ShoppingListDataImportConfig::IMPORT_TYPE_SHOPPING_LIST_COMPANY_USER;
     }
 }

@@ -14,7 +14,8 @@ class ShoppingListDataImportConfig extends DataImportConfig
 {
     public const IMPORT_TYPE_SHOPPING_LIST = 'shopping-list';
     public const IMPORT_TYPE_SHOPPING_LIST_ITEM = 'shopping-list-item';
-    public const IMPORT_TYPE_SHOPPING_LIST_PERMISSION = 'shopping-list-permission';
+    public const IMPORT_TYPE_SHOPPING_LIST_COMPANY_USER = 'shopping-list-company-user';
+    public const IMPORT_TYPE_SHOPPING_LIST_COMPANY_BUSINESS_UNIT = 'shopping-list-company-business-unit';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
@@ -45,13 +46,26 @@ class ShoppingListDataImportConfig extends DataImportConfig
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
-    public function getShoppingListPermissionDataImporterConfiguration(): DataImporterConfigurationTransfer
+    public function getShoppingListCompanyUserDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
         return $this->buildImporterConfiguration(
-            $moduleDataImportDirectory . 'shopping_list_permission.csv',
-            static::IMPORT_TYPE_SHOPPING_LIST
+            $moduleDataImportDirectory . 'shopping_list_company_user.csv',
+            static::IMPORT_TYPE_SHOPPING_LIST_COMPANY_USER
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    public function getShoppingListCompanyBusinessUnitDataImporterConfiguration(): DataImporterConfigurationTransfer
+    {
+        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+
+        return $this->buildImporterConfiguration(
+            $moduleDataImportDirectory . 'shopping_list_company_business_unit.csv',
+            static::IMPORT_TYPE_SHOPPING_LIST_COMPANY_BUSINESS_UNIT
         );
     }
 
