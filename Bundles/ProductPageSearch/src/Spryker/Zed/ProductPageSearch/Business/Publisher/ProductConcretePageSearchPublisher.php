@@ -7,22 +7,25 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business\Publisher;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductPageSearch\Business\Exception\ProductConcretePageSearchNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface;
 use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
-use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapper;
-use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface;
 
 class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPublisherInterface
 {
     use TransactionTrait;
+
+    protected const IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH = 'id_product_concrete_page_search';
 
     /**
      * @var \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface
@@ -40,14 +43,14 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface
-     */
-    protected $productPageSearchMapper;
-
-    /**
      * @var \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface
      */
     protected $utilEncoding;
+
+    /**
+     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface
+     */
+    protected $searchFacade;
 
     /**
      * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface[]
@@ -58,23 +61,23 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      * @param \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface $productConcretePageSearchReader
      * @param \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface $productConcretePageSearchWriter
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface $productFacade
-     * @param \Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface $productPageSearchMapper
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface $searchFacade
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface[] $pageDataExpanderPlugins
      */
     public function __construct(
         ProductConcretePageSearchReaderInterface $productConcretePageSearchReader,
         ProductConcretePageSearchWriterInterface $productConcretePageSearchWriter,
         ProductPageSearchToProductInterface $productFacade,
-        ProductPageSearchMapperInterface $productPageSearchMapper,
         ProductPageSearchToUtilEncodingInterface $utilEncoding,
+        ProductPageSearchToSearchInterface $searchFacade,
         array $pageDataExpanderPlugins
     ) {
         $this->productConcretePageSearchReader = $productConcretePageSearchReader;
         $this->productConcretePageSearchWriter = $productConcretePageSearchWriter;
         $this->productFacade = $productFacade;
-        $this->productPageSearchMapper = $productPageSearchMapper;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
+        $this->searchFacade = $searchFacade;
         $this->utilEncoding = $utilEncoding;
     }
 
@@ -204,7 +207,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         ProductConcretePageSearchTransfer $productConcretePageSearchTransfer,
         LocalizedAttributesTransfer $localizedAttributesTransfer
     ): ProductConcretePageSearchTransfer {
-        $productConcretePageSearchTransfer = $this->productPageSearchMapper->mapProductConcreteTransferToProductConcretePageSearchTransfer(
+        $productConcretePageSearchTransfer = $this->mapProductConcreteTransferToProductConcretePageSearchTransfer(
             $productConcreteTransfer,
             $productConcretePageSearchTransfer,
             $storeTransfer,
@@ -214,7 +217,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         $productConcretePageSearchTransfer = $this->expandProductConcretePageSearchTransferWithPlugins($productConcreteTransfer, $productConcretePageSearchTransfer);
 
         $productConcretePageSearchTransfer->setData(
-            $this->productPageSearchMapper->mapToSearchData($productConcretePageSearchTransfer)
+            $this->mapTransferToProductConcretePageSearchDocument($productConcretePageSearchTransfer)
         );
 
         $productConcretePageSearchTransfer->setStructuredData(
@@ -222,6 +225,53 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         );
 
         return $productConcretePageSearchTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
+     */
+    protected function mapProductConcreteTransferToProductConcretePageSearchTransfer(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer,
+        StoreTransfer $storeTransfer,
+        LocalizedAttributesTransfer $localizedAttributesTransfer
+    ): ProductConcretePageSearchTransfer {
+        $productConcretePageSearchTransfer->fromArray(
+            $productConcreteTransfer->toArray(),
+            true
+        );
+
+        $productConcretePageSearchTransfer->setFkProduct($productConcreteTransfer->getIdProductConcrete())
+            ->setFkProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            ->setType(ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME)
+            ->setStore($storeTransfer->getName())
+            ->setLocale($localizedAttributesTransfer->getLocale()->getLocaleName())
+            ->setName($localizedAttributesTransfer->getName());
+
+        return $productConcretePageSearchTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     *
+     * @return array
+     */
+    protected function mapTransferToProductConcretePageSearchDocument(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): array
+    {
+        $productConcretePageSearchData = $productConcretePageSearchTransfer->toArray(true, true);
+        $localeTransfer = (new LocaleTransfer())
+            ->setLocaleName($productConcretePageSearchTransfer->getLocale());
+
+        return $this->searchFacade->transformPageMapToDocumentByMapperName(
+            $productConcretePageSearchData,
+            $localeTransfer,
+            ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME
+        );
     }
 
     /**
@@ -261,7 +311,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     protected function getStructuredDataFromProductConcretePageSearchTransfer(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): string
     {
         $data = $productConcretePageSearchTransfer->toArray();
-        unset($data[ProductPageSearchMapper::IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH]);
+        unset($data[static::IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH]);
 
         return $this->utilEncoding->encodeJson($data);
     }

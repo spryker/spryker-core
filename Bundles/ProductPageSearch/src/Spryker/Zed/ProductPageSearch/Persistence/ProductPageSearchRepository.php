@@ -22,13 +22,13 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      */
     public function getProductConcretePageSearchTransfers(array $productIds): array
     {
-        $productConcretePageSearchTransfers = [];
-        $mapper = $this->getFactory()->createProductPageSearchMapper();
         $productConcretePageSearchEntities = $this->getFactory()
             ->createProductConcretePageSearchQuery()
             ->filterByFkProduct_In($productIds)
             ->find();
 
+        $mapper = $this->getFactory()->createProductPageSearchMapper();
+        $productConcretePageSearchTransfers = [];
         foreach ($productConcretePageSearchEntities as $productConcretePageSearchEntity) {
             $productConcretePageSearchTransfers[] = $mapper->mapProductConcretePageSearchEntityToTransfer(
                 $productConcretePageSearchEntity,
