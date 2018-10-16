@@ -10,10 +10,12 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
+    "spryker/symfony": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/silex": "If you want to use ServiceProvider plugins."
+    "spryker/silex": "If you want to use ServiceProvider plugins.",
+    "spryker/symfony": "If you want to use the WebProfilerServiceProvider plugin."
   },
   "autoload": {
     "psr-4": {
