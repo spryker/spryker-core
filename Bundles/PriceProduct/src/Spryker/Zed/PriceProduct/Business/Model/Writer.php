@@ -13,7 +13,6 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Spryker\Zed\PriceProduct\Business\Exception\MissingPriceException;
 use Spryker\Zed\PriceProduct\Business\Exception\ProductPriceChangeException;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
-use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterface;
@@ -57,10 +56,10 @@ class Writer implements WriterInterface
      */
     protected $priceProductStoreWriter;
 
-    /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface
-     */
-    protected $priceProductDefaultWriter;
+//    /**
+//     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface
+//     */
+//    protected $priceProductDefaultWriter;
 
     /**
      * @var array|\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
@@ -79,7 +78,7 @@ class Writer implements WriterInterface
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceTypeReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface $priceProductStoreWriter
-     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface $priceProductDefaultWriter
+// * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface $priceProductDefaultWriter
      * @param array $priceDimensionAbstractSaverPlugins
      * @param array $priceDimensionConcreteSaverPlugins
      */
@@ -90,7 +89,7 @@ class Writer implements WriterInterface
         PriceProductToProductFacadeInterface $productFacade,
         PriceProductTypeReaderInterface $priceTypeReader,
         PriceProductStoreWriterInterface $priceProductStoreWriter,
-        PriceProductDefaultWriterInterface $priceProductDefaultWriter,
+        //        PriceProductDefaultWriterInterface $priceProductDefaultWriter,
         array $priceDimensionAbstractSaverPlugins,
         array $priceDimensionConcreteSaverPlugins
     ) {
@@ -100,7 +99,7 @@ class Writer implements WriterInterface
         $this->productFacade = $productFacade;
         $this->priceTypeReader = $priceTypeReader;
         $this->priceProductStoreWriter = $priceProductStoreWriter;
-        $this->priceProductDefaultWriter = $priceProductDefaultWriter;
+//        $this->priceProductDefaultWriter = $priceProductDefaultWriter;
         $this->priceDimensionAbstractSaverPlugins = $priceDimensionAbstractSaverPlugins;
         $this->priceDimensionConcreteSaverPlugins = $priceDimensionConcreteSaverPlugins;
     }
@@ -128,12 +127,6 @@ class Writer implements WriterInterface
         $priceProductTransfer = $this->savePriceProductEntity($priceProductTransfer, new SpyPriceProduct());
         if ($priceProductTransfer->getIdProduct()) {
             $this->insertTouchRecord(static::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
-        }
-
-        if ($priceProductTransfer->getIdProduct()) {
-            $priceProductTransfer = $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionConcreteSaverPlugins);
-        } elseif ($priceProductTransfer->getIdProductAbstract()) {
-            $priceProductTransfer = $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionAbstractSaverPlugins);
         }
 
         $priceProductTransfer->setIdPriceProduct($priceProductTransfer->getIdPriceProduct());
@@ -165,12 +158,6 @@ class Writer implements WriterInterface
 
         if ($priceProductTransfer->getIdProduct()) {
             $this->insertTouchRecord(self::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
-        }
-
-        if ($priceProductTransfer->getIdProduct()) {
-            $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionConcreteSaverPlugins);
-        } elseif ($priceProductTransfer->getIdProductAbstract()) {
-            $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionAbstractSaverPlugins);
         }
     }
 
@@ -373,63 +360,63 @@ class Writer implements WriterInterface
             ->setPriceType($priceTypeEntity->getName());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $priceDimensionSaverPlugins
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function executePriceDimensionSaverPlugins(
-        PriceProductTransfer $priceProductTransfer,
-        array $priceDimensionSaverPlugins
-    ): PriceProductTransfer {
+//    /**
+//     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+//     * @param array $priceDimensionSaverPlugins
+//     *
+//     * @return \Generated\Shared\Transfer\PriceProductTransfer
+//     */
+//    protected function executePriceDimensionSaverPlugins(
+//        PriceProductTransfer $priceProductTransfer,
+//        array $priceDimensionSaverPlugins
+//    ): PriceProductTransfer {
+//
+//        $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
+//
+//        if ($priceDimensionType === $this->priceConfig->getPriceDimensionDefault()) {
+//            return $this->persistPriceProductIfDimensionTypeDefault($priceProductTransfer);
+//        }
+//
+//        return $this->savePrice($priceProductTransfer, $priceDimensionSaverPlugins, $priceDimensionType);
+//    }
 
-        $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
+//    /**
+//     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+//     * @param array $priceDimensionSaverPlugins
+//     * @param string $priceDimensionType
+//     *
+//     * @return \Generated\Shared\Transfer\PriceProductTransfer
+//     */
+//    protected function savePrice(
+//        PriceProductTransfer $priceProductTransfer,
+//        array $priceDimensionSaverPlugins,
+//        string $priceDimensionType
+//    ): PriceProductTransfer {
+//
+//        foreach ($priceDimensionSaverPlugins as $priceDimensionSaverPlugin) {
+//            if ($priceDimensionSaverPlugin->getDimensionName() !== $priceDimensionType) {
+//                continue;
+//            }
+//
+//            return $priceDimensionSaverPlugin->savePrice($priceProductTransfer);
+//        }
+//
+//        return $priceProductTransfer;
+//    }
 
-        if ($priceDimensionType === $this->priceConfig->getPriceDimensionDefault()) {
-            return $this->persistPriceProductIfDimensionTypeDefault($priceProductTransfer);
-        }
-
-        return $this->savePrice($priceProductTransfer, $priceDimensionSaverPlugins, $priceDimensionType);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $priceDimensionSaverPlugins
-     * @param string $priceDimensionType
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function savePrice(
-        PriceProductTransfer $priceProductTransfer,
-        array $priceDimensionSaverPlugins,
-        string $priceDimensionType
-    ): PriceProductTransfer {
-
-        foreach ($priceDimensionSaverPlugins as $priceDimensionSaverPlugin) {
-            if ($priceDimensionSaverPlugin->getDimensionName() !== $priceDimensionType) {
-                continue;
-            }
-
-            return $priceDimensionSaverPlugin->savePrice($priceProductTransfer);
-        }
-
-        return $priceProductTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function persistPriceProductIfDimensionTypeDefault(PriceProductTransfer $priceProductTransfer
-    ): PriceProductTransfer
-    {
-        $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
-        $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
-            $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
-        );
-
-        return $priceProductTransfer;
-    }
+//    /**
+//     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+//     *
+//     * @return \Generated\Shared\Transfer\PriceProductTransfer
+//     */
+//    protected function persistPriceProductIfDimensionTypeDefault(PriceProductTransfer $priceProductTransfer
+//    ): PriceProductTransfer
+//    {
+//        $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
+//        $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
+//            $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
+//        );
+//
+//        return $priceProductTransfer;
+//    }
 }
