@@ -41,6 +41,8 @@ use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader\PriceProductReaderPluginExecutor;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter\PriceProductStoreWriterPluginExecutor;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter\PriceProductStoreWriterPluginExecutorInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Reader;
 use Spryker\Zed\PriceProduct\Business\Model\ReaderInterface;
@@ -291,11 +293,21 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getEntityManager(),
             $this->getRepository(),
+            $this->createPriceProductStoreWriterPluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter\PriceProductStoreWriterPluginExecutorInterface
+     */
+    public function createPriceProductStoreWriterPluginExecutor(): PriceProductStoreWriterPluginExecutorInterface
+    {
+        return new PriceProductStoreWriterPluginExecutor(
             $this->getPriceProductStorePreDeletePlugins(),
-            $this->getConfig(),
-            $this->createPriceProductDefaultWriter(),
             $this->getPriceDimensionAbstractSaverPlugins(),
-            $this->getPriceDimensionConcreteSaverPlugins()
+            $this->getPriceDimensionConcreteSaverPlugins(),
+            $this->getConfig(),
+            $this->createPriceProductDefaultWriter()
         );
     }
 
