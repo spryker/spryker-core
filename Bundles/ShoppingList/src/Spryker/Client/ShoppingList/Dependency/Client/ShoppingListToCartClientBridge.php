@@ -8,6 +8,7 @@
 namespace Spryker\Client\ShoppingList\Dependency\Client;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class ShoppingListToCartClientBridge implements ShoppingListToCartClientInterface
@@ -41,5 +42,17 @@ class ShoppingListToCartClientBridge implements ShoppingListToCartClientInterfac
     public function getQuote(): QuoteTransfer
     {
         return $this->cartClient->getQuote();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
+    {
+        return $this->cartClient->findQuoteItem($quoteTransfer, $sku, $groupKey);
     }
 }
