@@ -16,11 +16,11 @@ use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilEncodi
 
 class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'FACADE_LOCALE';
-    const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

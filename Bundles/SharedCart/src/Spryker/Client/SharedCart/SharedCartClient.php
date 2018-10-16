@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
+use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -35,6 +36,8 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Please use SharedCartClientInterface::updateQuotePermissions() instead
      *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
@@ -73,5 +76,72 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
         return $this->getFactory()
             ->createPermissionResolver()
             ->getQuoteAccessLevel($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuotePermissions(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartSharer()
+            ->updateQuotePermissions($shareCartRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    public function getShareDetailsByIdQuoteAction(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createZedSharedCartStub()
+            ->getShareDetailsByIdQuoteAction($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteDeletable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createCartDeleteChecker()
+            ->isQuoteDeletable($quoteTransfer);
+    }
+
+    /**
+     * Specification:
+     *  - Sends Zed Request to get share detail collection by quote id.
+     *  - Filters quote share detail from share details by company user id.
+     *  - Sends Zed request to update quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function dismissSharedCart(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartSharer()
+            ->dismissSharedCart($shareCartRequestTransfer);
     }
 }

@@ -11,5 +11,5 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Base;
 
 class Confirm extends Base
 {
-    const OPERATION = Constants::REQUEST_MODEL_PAYMENT_CONFIRM;
+    public const OPERATION = Constants::REQUEST_MODEL_PAYMENT_CONFIRM;
 }

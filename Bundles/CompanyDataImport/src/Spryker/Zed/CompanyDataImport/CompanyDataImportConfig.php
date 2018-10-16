@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class CompanyDataImportConfig extends DataImportConfig
 {
-    const IMPORT_TYPE_COMPANY = 'company';
+    public const IMPORT_TYPE_COMPANY = 'company';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer

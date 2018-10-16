@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProduct\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\PriceProductFilterBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
@@ -22,14 +23,16 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
+use Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
+use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManager;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
-use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceQueryCriteriaPlugin;
 use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProduct
@@ -40,8 +43,8 @@ use Spryker\Zed\Store\Business\StoreFacade;
  */
 class PriceProductFacadeTest extends Unit
 {
-    const EUR_ISO_CODE = 'EUR';
-    const USD_ISO_CODE = 'USD';
+    public const EUR_ISO_CODE = 'EUR';
+    public const USD_ISO_CODE = 'USD';
     /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
@@ -56,7 +59,6 @@ class PriceProductFacadeTest extends Unit
 
         $priceDimensionQueryCriteriaPlugins = [
             new DefaultPriceQueryCriteriaPlugin(),
-            new MerchantRelationshipPriceQueryCriteriaPlugin(),
         ];
 
         $this->tester->setDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA, $priceDimensionQueryCriteriaPlugins);
@@ -99,18 +101,17 @@ class PriceProductFacadeTest extends Unit
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
-        $priceProductTransfer1 = $this->createProductWithAmount(50, 40);
-        $priceProductTransfer2 = $this->createProductWithAmount(
+        $priceProductTransfer = $this->createProductWithAmount(
             100,
             90,
-            $priceProductTransfer1->getSkuProductAbstract(),
-            $priceProductTransfer1->getSkuProduct(),
+            '',
+            '',
             self::USD_ISO_CODE
         );
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setCurrencyIsoCode(self::USD_ISO_CODE)
-            ->setSku($priceProductTransfer2->getSkuProduct());
+            ->setSku($priceProductTransfer->getSkuProduct());
 
         $price = $priceProductFacade->findPriceFor($priceProductFilterTransfer);
 
@@ -502,6 +503,17 @@ class PriceProductFacadeTest extends Unit
     public function testDeleteOrphanPriceProductStoreEntitiesNotFails()
     {
         $priceProductFacade = $this->getPriceProductFacade();
+        $priceProductBusinessFactory = (new PriceProductBusinessFactory());
+
+        /** @var \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManager $priceProductEntityManagerMock */
+        $priceProductEntityManagerMock = $this->getMockBuilder(PriceProductEntityManager::class)
+            ->setMethods([
+                'deletePriceProductStore',
+            ])
+            ->getMock();
+
+        $priceProductBusinessFactory->setEntityManager($priceProductEntityManagerMock);
+        $priceProductFacade->setFactory($priceProductBusinessFactory);
 
         $priceProductFacade->deleteOrphanPriceProductStoreEntities();
     }
@@ -514,6 +526,52 @@ class PriceProductFacadeTest extends Unit
         $priceProductFacade = $this->getPriceProductFacade();
 
         $priceProductFacade->install();
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(): void
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceTypeTransfer = new PriceTypeTransfer();
+        $priceTypeTransfer->setName($priceProductFacade->getDefaultPriceTypeName());
+
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $prices = new ArrayObject();
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, self::USD_ISO_CODE);
+
+        $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            ->setSku($productConcreteTransfer->getAbstractSku())
+            ->setPrices($prices);
+
+        $productAbstractTransfer = $priceProductFacade->persistProductAbstractPriceCollection($productAbstractTransfer);
+
+        $foundPrices = $priceProductFacade->findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn([$productAbstractTransfer->getIdProductAbstract()]);
+
+        $this->assertEquals(
+            count($foundPrices),
+            count($prices)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildCriteriaFromFilter(): void
+    {
+        $priceProductFilterTransfer = (new PriceProductFilterBuilder([
+            'quantity' => rand(1, 100),
+        ]))->build();
+
+        $priceProductCriteriaTransfer = $this->getPriceProductFacade()
+            ->buildCriteriaFromFilter($priceProductFilterTransfer);
+
+        $this->assertEquals($priceProductFilterTransfer->getQuantity(), $priceProductCriteriaTransfer->getQuantity());
     }
 
     /**
@@ -554,8 +612,8 @@ class PriceProductFacadeTest extends Unit
     ) {
 
         $priceProductTransfer = (new PriceProductTransfer())
-             ->setSkuProductAbstract($skuAbstract)
-             ->setSkuProduct($skuConcrete);
+            ->setSkuProductAbstract($skuAbstract)
+            ->setSkuProduct($skuConcrete);
 
         $config = $this->createSharedPriceProductConfig();
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
@@ -583,7 +641,7 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
     protected function getPriceProductFacade()
     {

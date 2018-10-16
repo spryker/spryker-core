@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MaintenanceController extends AbstractController
 {
-    const REFERENCE_KEY = 'reference_key';
-    const MESSAGE_REMOVED_ENTRIES = 'Removed "%s" entries from storage.';
-    const URL_STORAGE_MAINTENANCE = '/storage/maintenance';
+    public const REFERENCE_KEY = 'reference_key';
+    public const MESSAGE_REMOVED_ENTRIES = 'Removed "%s" entries from storage.';
+    public const URL_STORAGE_MAINTENANCE = '/storage/maintenance';
 
     /**
      * @return array

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -14,10 +15,10 @@ use Spryker\Zed\ProductLabelDiscountConnector\Dependency\QueryContainer\ProductL
 
 class ProductLabelDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
-    const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+    public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+    public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
 
-    const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
+    public const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

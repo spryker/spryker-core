@@ -63,7 +63,7 @@ class ModuleBuilder
     {
         $namespace = static::NAMESPACE_SPRYKER;
         if (strpos($module, '.') !== false) {
-            list ($namespace, $module) = explode('.', $module, 2);
+            [$namespace, $module] = explode('.', $module, 2);
         }
 
         if ($module !== 'all') {

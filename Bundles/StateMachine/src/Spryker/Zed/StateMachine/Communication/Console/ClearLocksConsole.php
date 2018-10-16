@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -15,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ClearLocksConsole extends Console
 {
-    const COMMAND_NAME = 'state-machine:clear-locks';
-    const COMMAND_DESCRIPTION = 'Clear expired locks from lock table';
+    public const COMMAND_NAME = 'state-machine:clear-locks';
+    public const COMMAND_DESCRIPTION = 'Clear expired locks from lock table';
 
     /**
      * @return void

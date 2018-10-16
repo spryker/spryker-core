@@ -17,12 +17,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchCloseIndexConsole extends Console
 {
-    const COMMAND_NAME = 'search:index:close';
-    const DESCRIPTION = 'This command will close an index.';
+    public const COMMAND_NAME = 'search:index:close';
+    public const DESCRIPTION = 'This command will close an index.';
 
-    const OPTION_ALL = 'all';
-    const OPTION_ALL_SHORT = 'a';
-    const OPTION_ALL_DESCRIPTION = 'If set to this command will work on all indices (_all) instead of the environment specific one.';
+    public const OPTION_ALL = 'all';
+    public const OPTION_ALL_SHORT = 'a';
+    public const OPTION_ALL_DESCRIPTION = 'If set to this command will work on all indices (_all) instead of the environment specific one.';
 
     /**
      * @return void

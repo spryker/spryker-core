@@ -127,7 +127,9 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
             'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, StorageConfig::DEFAULT_REDIS_DATABASE),
         ];
 
-        if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {
+        if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD) &&
+            Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD) !== false
+        ) {
             $config['password'] = Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD);
         }
 

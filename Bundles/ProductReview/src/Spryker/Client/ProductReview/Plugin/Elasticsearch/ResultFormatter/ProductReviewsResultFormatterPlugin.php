@@ -14,11 +14,9 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
 
 class ProductReviewsResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-    const NAME = 'productReviews';
+    public const NAME = 'productReviews';
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getName()
@@ -27,8 +25,6 @@ class ProductReviewsResultFormatterPlugin extends AbstractElasticsearchResultFor
     }
 
     /**
-     * @api
-     *
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *

@@ -22,14 +22,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class VariantController extends AbstractController
 {
-    const PARAM_SKU = 'sku';
-    const PARAM_ATTRIBUTE_COLLECTION = 'attribute_collection';
-    const PARAM_ATTRIBUTE_GROUP = 'attribute_group';
-    const PARAM_ATTRIBUTE_VALUES = 'attribute_values';
-    const PARAM_LOCALIZED_ATTRIBUTE_VALUES = 'localized_attribute_values';
-    const PARAM_ID_PRODUCT_CONCRETE = 'id-product';
-    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    const PARAM_ACTIVATE = 'activate';
+    public const PARAM_SKU = 'sku';
+    public const PARAM_ATTRIBUTE_COLLECTION = 'attribute_collection';
+    public const PARAM_ATTRIBUTE_GROUP = 'attribute_group';
+    public const PARAM_ATTRIBUTE_VALUES = 'attribute_values';
+    public const PARAM_LOCALIZED_ATTRIBUTE_VALUES = 'localized_attribute_values';
+    public const PARAM_ID_PRODUCT_CONCRETE = 'id-product';
+    public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const PARAM_ACTIVATE = 'activate';
 
     /**
      * Request data:

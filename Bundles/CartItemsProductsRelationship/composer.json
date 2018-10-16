@@ -1,5 +1,6 @@
 {
   "name": "spryker/cart-items-products-relationship",
+  "type": "library",
   "description": "CartItemsProductsRelationship module",
   "license": "proprietary",
   "require": {
@@ -7,7 +8,7 @@
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.22.0",
-    "spryker/products-rest-api": "^1.1.0"
+    "spryker/products-rest-api": "^1.1.0 || ^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

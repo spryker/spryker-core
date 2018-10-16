@@ -21,7 +21,7 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
  */
 class CategoryNodeDataPageMapBuilder extends AbstractPlugin implements NamedPageMapInterface
 {
-    const TYPE_CATEGORY = 'category';
+    public const TYPE_CATEGORY = 'category';
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder

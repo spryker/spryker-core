@@ -35,6 +35,11 @@
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
 
+    <transfer name="ShareDetailCollection">
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+    </transfer>
+
+
     <transfer name="Quote">
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
     </transfer>
@@ -46,7 +51,8 @@
     <transfer name="ShareCartRequest">
         <property name="idQuote" type="int"/>
         <property name="idCompanyUser" type="int"/>
-        <property name="idQuotePermissionGroup" type="int"/>
+        <property name="idQuotePermissionGroup" type="int" deprecated="Use shareDetails param instead"/>
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
     </transfer>
 
 </transfers>

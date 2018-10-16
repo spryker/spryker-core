@@ -1,5 +1,6 @@
 {
   "name": "spryker/application",
+  "type": "library",
   "description": "Application module",
   "license": "proprietary",
   "require": {
