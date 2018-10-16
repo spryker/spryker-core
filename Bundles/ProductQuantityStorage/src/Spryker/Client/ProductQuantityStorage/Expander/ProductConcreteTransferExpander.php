@@ -34,12 +34,9 @@ class ProductConcreteTransferExpander implements ProductConcreteTransferExpander
      */
     public function expandWithProductQuantity(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        $idProduct = $productConcreteTransfer->getIdProductConcrete();
-        if (empty($idProduct)) {
-            return $productConcreteTransfer;
-        }
+        $productConcreteTransfer->requireIdProductConcrete();
 
-        $productQuantityStorageTransfer = $this->productQuantityStorageReader->findProductQuantityStorage($idProduct);
+        $productQuantityStorageTransfer = $this->productQuantityStorageReader->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
         if ($productQuantityStorageTransfer === null) {
             return $productConcreteTransfer;
         }
