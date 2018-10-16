@@ -16,6 +16,8 @@ class CompanyUserBusinessUnitFormDataProvider
 {
     protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
 
+    protected const FORMAT_NAME = '%s (id: %s)';
+
     /**
      * @var \Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface
      */
@@ -73,6 +75,6 @@ class CompanyUserBusinessUnitFormDataProvider
      */
     protected function generateCompanyBusinessUnitName(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): string
     {
-        return sprintf('%s - %s', $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(), $companyBusinessUnitTransfer->getName());
+        return sprintf(static::FORMAT_NAME, $companyBusinessUnitTransfer->getName(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
     }
 }
