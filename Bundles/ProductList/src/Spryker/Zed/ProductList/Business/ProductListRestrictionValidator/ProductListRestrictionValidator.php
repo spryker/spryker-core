@@ -105,17 +105,17 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
             return [];
         }
 
+        $productConcreteSkusInWhitelist = $productConcreteSkus;
         $productConcreteSkusInBlacklist = [];
-        $productConcreteSkusInWhitelist = [];
-
-        if ($customerBlacklistIds) {
-            $productConcreteSkusInBlacklist = $this->productListReader
-                ->getConcreteProductSkusInBlacklists($productConcreteSkus, $customerBlacklistIds);
-        }
 
         if ($customerWhitelistIds) {
             $productConcreteSkusInWhitelist = $this->productListReader
                 ->getConcreteProductSkusInWhitelists($productConcreteSkus, $customerWhitelistIds);
+        }
+
+        if ($customerBlacklistIds) {
+            $productConcreteSkusInBlacklist = $this->productListReader
+                ->getConcreteProductSkusInBlacklists($productConcreteSkus, $customerBlacklistIds);
         }
 
         if (!$productConcreteSkusInWhitelist && !$productConcreteSkusInBlacklist) {
@@ -123,7 +123,7 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         }
 
         return array_unique(array_merge(
-            array_intersect($productConcreteSkus, $productConcreteSkusInBlacklist),
+            $productConcreteSkusInBlacklist,
             array_diff($productConcreteSkus, $productConcreteSkusInWhitelist)
         ));
     }
