@@ -4,9 +4,15 @@
   "description": "UserLocale module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "*",
+    "spryker/locale": "*",
+    "spryker/user": "*",
+    "spryker/user-extension": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/installer": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -28,5 +34,9 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/installer": "ADD SUGGEST DESCRIPTION",
+    "spryker/silex": "ADD SUGGEST DESCRIPTION"
   }
 }

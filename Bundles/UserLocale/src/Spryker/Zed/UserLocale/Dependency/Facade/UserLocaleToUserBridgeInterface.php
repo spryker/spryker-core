@@ -5,21 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\UserExtension\Dependency\Plugin;
+namespace Spryker\Zed\UserLocale\Dependency\Facade;
 
 use Generated\Shared\Transfer\UserTransfer;
 
-interface UserPreSavePluginInterface
+interface UserLocaleToUserBridgeInterface
 {
     /**
-     * Specification
-     * - Prepares UserTransfer before saving it.
-     *
-     * @api
-     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getCurrentUser(): UserTransfer;
+
+    /**
+     * @return bool
+     */
+    public function hasCurrentUser(): bool;
+
+    /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function preSave(UserTransfer $userTransfer): UserTransfer;
+    public function createUser(UserTransfer $userTransfer): UserTransfer;
 }

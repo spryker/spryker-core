@@ -8,6 +8,10 @@
 
     <table name="spy_user" idMethod="native" phpName="SpyUser">
         <column name="fk_locale" type="INTEGER"/>
+
+        <foreign-key name="spy_user-fk_locale" foreignTable="spy_locale" phpName="SpyLocale" refPhpName="Locale">
+            <reference local="fk_locale" foreign="id_locale"/>
+        </foreign-key>
     </table>
 
 </database>

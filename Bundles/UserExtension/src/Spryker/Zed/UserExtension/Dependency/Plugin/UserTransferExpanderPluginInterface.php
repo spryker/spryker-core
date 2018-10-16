@@ -9,11 +9,11 @@ namespace Spryker\Zed\UserExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\UserTransfer;
 
-interface UserPreSavePluginInterface
+interface UserTransferExpanderPluginInterface
 {
     /**
-     * Specification
-     * - Prepares UserTransfer before saving it.
+     * Specification:
+     * - Expands user transfer with required data.
      *
      * @api
      *
@@ -21,5 +21,5 @@ interface UserPreSavePluginInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function preSave(UserTransfer $userTransfer): UserTransfer;
+    public function expandTransfer(UserTransfer $userTransfer): UserTransfer;
 }
