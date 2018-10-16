@@ -62,12 +62,20 @@
     </transfer>
 
     <transfer name="RestQuoteRequest">
+        <property name="customer" type="RestCustomer"/>
         <property name="quoteIdentifier" type="string"/>
         <property name="billingAddress" type="RestAddress"/>
         <property name="shippingAddress" type="RestAddress"/>
         <property name="payments" type="RestPayment[]" singular="payment"/>
         <property name="shipment" type="RestShipment"/>
         <property name="voucherCode" type="string"/>
+    </transfer>
+
+    <transfer name="RestCustomer">
+        <property name="email" type="string" />
+        <property name="salutation" type="string" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
     </transfer>
 
     <transfer name="RestAddress">

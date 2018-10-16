@@ -12,6 +12,8 @@ use Spryker\Glue\OrdersRestApi\OrdersRestApiResourceInterface;
 
 class OrderByOrderReferenceResourceRelationshipExpander implements OrderByOrderReferenceResourceRelationshipExpanderInterface
 {
+    protected const ORDER_REFERENCE = 'orderReference';
+
     /**
      * @var \Spryker\Glue\OrdersRestApi\OrdersRestApiResourceInterface
      */
@@ -40,7 +42,10 @@ class OrderByOrderReferenceResourceRelationshipExpander implements OrderByOrderR
         }
 
         foreach ($resources as $resource) {
-            $orderReference = $resource->getId();
+            if (!$resource->getAttributes()->offsetExists(static::ORDER_REFERENCE)) {
+                return;
+            }
+            $orderReference = $resource->getAttributes()->offsetGet(static::ORDER_REFERENCE);
             $orderResource = $this->orderResource->findOrderByOrderReference($orderReference, $customerReference);
             if ($orderResource !== null) {
                 $resource->addRelationship($orderResource);
