@@ -32,4 +32,3 @@ suites:
                 - \SprykerTest\Shared\ShoppingList\Helper\ShoppingListHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\Stock\Helper\StockDataHelper
-F
