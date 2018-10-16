@@ -13,8 +13,12 @@ use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
+use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderOverviewInterface;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
+use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderOverview;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderReader;
+use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydrator;
+use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
@@ -59,6 +63,26 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->createOrderHydrator(),
             $this->getOmsFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderOverviewInterface
+     */
+    public function createPaginatedCustomerOrderOverview(): CustomerOrderOverviewInterface
+    {
+        return new PaginatedCustomerOrderOverview(
+            $this->getQueryContainer(),
+            $this->createCustomerOrderOverviewHydrator(),
+            $this->getOmsFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface
+     */
+    public function createCustomerOrderOverviewHydrator(): CustomerOrderOverviewHydratorInterface
+    {
+        return new CustomerOrderOverviewHydrator();
     }
 
     /**

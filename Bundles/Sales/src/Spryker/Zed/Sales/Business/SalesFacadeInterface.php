@@ -149,6 +149,21 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
+     *  - Returns a list of of orders for the given customer id and (optional) filters, without order items information.
+     *  - Aggregates order totals calls -> SalesAggregator
+     *  - Paginates order list for limited result
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getPaginatedCustomerOrdersOverview(OrderListTransfer $orderListTransfer, $idCustomer): OrderListTransfer;
+
+    /**
+     * Specification:
      *  - Returns the order for the given customer id and sales order id.
      *  - Aggregates order totals calls -> SalesAggregator
      *
