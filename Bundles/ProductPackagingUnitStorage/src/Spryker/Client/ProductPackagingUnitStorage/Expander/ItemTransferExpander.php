@@ -68,9 +68,6 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
             return $itemTransfer;
         }
 
-        // TODO Check if these are not required (also remove them from transfer definition)
-        // $itemTransfer->setAmountLeadProduct();
-        // $itemTransfer->setProductPackagingUnit();
         $itemTransfer->setQuantitySalesUnit($quantityProductMeasurementSalesUnitTransfer);
         $itemTransfer->setAmountSalesUnit($amountProductMeasurementSalesUnitTransfer);
         $itemTransfer->setAmount(
