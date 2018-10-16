@@ -43,7 +43,7 @@ interface ProductLabelStorageClientInterface
      *
      * @api
      *
-     * @deprecated Use findLabelByKey($labelKey, $localeName): ?ProductLabelDictionaryItemTransfer.
+     * @deprecated use findLabelByKey() instead.
      *
      * @param string $labelName
      * @param string $localeName
@@ -54,7 +54,7 @@ interface ProductLabelStorageClientInterface
 
     /**
      * Specification:
-     * - Retrieves ProductLabelDictionaryItemTransfer by label key
+     * - Retrieves ProductLabelDictionaryItemTransfer by label key.
      *
      * @api
      *

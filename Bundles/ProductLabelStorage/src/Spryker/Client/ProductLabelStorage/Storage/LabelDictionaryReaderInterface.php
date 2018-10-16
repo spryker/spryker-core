@@ -36,7 +36,7 @@ interface LabelDictionaryReaderInterface
     public function findLabelByLocalizedName($labelName, $localeName);
 
     /**
-     * @deprecated Use findLabelByKey($labelKey, $localeName): ?ProductLabelDictionaryItemTransfer.
+     * @deprecated use findLabelByKey() instead.
      *
      * @param int $labelName
      * @param string $localeName

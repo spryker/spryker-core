@@ -22,7 +22,7 @@ class ProductLabelsRestApiDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
         $container = $this->addProductStorageClientDependency($container);

@@ -49,6 +49,18 @@ class DictionaryFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductLabelStorage\Storage\Dictionary\LabelDictionaryInterface
+     */
+    public function createDictionaryByKey()
+    {
+        return new LabelDictionary(
+            $this->getStorageClient(),
+            $this->getSynchronizationService(),
+            $this->createKeyByNameStrategy()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface
      */
     protected function getStorageClient()

@@ -88,7 +88,7 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     public function findLabelByKey(string $labelKey, string $localeName): ?ProductLabelDictionaryItemTransfer
     {
         return $this->dictionaryFactory
-            ->createDictionaryByName()
+            ->createDictionaryByKey()
             ->findLabel($labelKey, $localeName);
     }
 
