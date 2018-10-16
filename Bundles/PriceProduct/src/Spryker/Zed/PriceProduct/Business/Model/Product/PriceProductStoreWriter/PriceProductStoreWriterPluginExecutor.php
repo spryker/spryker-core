@@ -29,14 +29,14 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
     protected $priceDimensionConcreteSaverPlugins;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface
-     */
-    protected $priceProductDefaultWriter;
-
-    /**
      * @var \Spryker\Zed\PriceProduct\PriceProductConfig
      */
     protected $priceConfig;
+
+    /**
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface
+     */
+    protected $priceProductDefaultWriter;
 
     /**
      * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface[] $priceProductStorePreDeletePlugins

@@ -91,9 +91,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getProductFacade(),
             $this->createPriceTypeReader(),
-            $this->createPriceProductStoreWriter(),
-            $this->getPriceDimensionAbstractSaverPlugins(),
-            $this->getPriceDimensionConcreteSaverPlugins()
+            $this->createPriceProductStoreWriter()
         );
     }
 
@@ -108,9 +106,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getProductFacade(),
             $this->createPriceTypeReader(),
-            $this->createPriceProductStoreWriter(),
-            $this->getPriceDimensionAbstractSaverPlugins(),
-            $this->getPriceDimensionConcreteSaverPlugins()
+            $this->createPriceProductStoreWriter()
         );
     }
 
