@@ -192,8 +192,10 @@ class PriceVolumeCollectionFormType extends AbstractType
      */
     protected function getVolumesConstants()
     {
+        $savedPriceProductVolumeItemTransfers = [];
+
         $volumesConstants[] = new Callback([
-            'callback' => function (PriceProductVolumeItemTransfer $priceProductVolumeItemTransfer, ExecutionContextInterface $context) {
+            'callback' => function (PriceProductVolumeItemTransfer $priceProductVolumeItemTransfer, ExecutionContextInterface $context) use (&$savedPriceProductVolumeItemTransfers) {
                 if (empty(array_filter($priceProductVolumeItemTransfer->toArray()))) {
                     return;
                 }
@@ -205,6 +207,14 @@ class PriceVolumeCollectionFormType extends AbstractType
                 if (!$priceProductVolumeItemTransfer->getNetPrice() && !$priceProductVolumeItemTransfer->getGrossPrice()) {
                     $context->addViolation(sprintf('Set up net or gross price for "quantity": %d.', $priceProductVolumeItemTransfer->getQuantity()));
                 }
+
+                foreach ($savedPriceProductVolumeItemTransfers as $savedPriceProductVolumeItemTransfer) {
+                    if ($priceProductVolumeItemTransfer->getQuantity() == $savedPriceProductVolumeItemTransfer->getQuantity()) {
+                        $context->addViolation(sprintf('Quantity "%d" is duplicate.', $priceProductVolumeItemTransfer->getQuantity()));
+                    }
+                }
+
+                $savedPriceProductVolumeItemTransfers[] = $priceProductVolumeItemTransfer;
             },
             'groups' => [static::VALIDATION_VOLUMES_GROUP],
         ]);

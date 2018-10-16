@@ -175,8 +175,9 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $utilEncodingService = $this->getFactory()->getUtilEncoding();
         $priceData = $utilEncodingService->decodeJson($moneyValueTransfer->getPriceData());
         $priceProductTransfer = $this->extractPriceProductTransfer($productMoneyTypeFormView);
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
-        if (!$priceProductTransfer->getIdPriceProduct()) {
+        if (!$priceProductTransfer->getIdPriceProduct() || !$moneyValueTransfer->getGrossAmount() || !$moneyValueTransfer->getNetAmount()) {
             return $volumePrices;
         }
 
