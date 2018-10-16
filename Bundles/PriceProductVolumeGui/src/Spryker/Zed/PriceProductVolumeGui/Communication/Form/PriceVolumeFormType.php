@@ -71,14 +71,7 @@ class PriceVolumeFormType extends AbstractType
      */
     protected function addNetPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_NET_PRICE, MoneyType::class, [
-            'label' => 'Net Price',
-            'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
-            'required' => false,
-            'constraints' => [
-                new GreaterThanOrEqual(0),
-            ],
-        ]);
+        $this->addPriceField($builder, $options, static::FIELD_NET_PRICE, 'Net Price');
 
         return $this;
     }
@@ -91,8 +84,23 @@ class PriceVolumeFormType extends AbstractType
      */
     protected function addGrossPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_GROSS_PRICE, MoneyType::class, [
-            'label' => 'Gross Price',
+        $this->addPriceField($builder, $options, static::FIELD_GROSS_PRICE, 'Gross Price');
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     * @param string $name
+     * @param string $label
+     *
+     * @return $this
+     */
+    protected function addPriceField(FormBuilderInterface $builder, array $options, string $name, string $label)
+    {
+        $builder->add($name, MoneyType::class, [
+            'label' => $label,
             'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
             'required' => false,
             'constraints' => [
