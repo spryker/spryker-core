@@ -68,7 +68,10 @@
     </transfer>
 
     <transfer name="PageMap">
-        <property name="suggestionSku" type="string"/>
+        <property name="type" type="string" />
+        <property name="store" type="string" />
+        <property name="locale" type="string" />
+        <property name="isActive" type="bool" />
     </transfer>
 
 </transfers>

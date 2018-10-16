@@ -60,7 +60,7 @@ class ProductPageSearchToProductBridge implements ProductPageSearchToProductInte
      *
      * @return int[]
      */
-    public function findProductConcreteIdsByIdProductAbstract(int $idProductAbstract)
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
     {
         return $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
     }

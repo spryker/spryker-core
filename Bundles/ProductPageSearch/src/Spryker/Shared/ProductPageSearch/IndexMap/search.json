@@ -2,10 +2,6 @@
   "mappings": {
     "page": {
       "properties": {
-        "suggestion-sku": {
-          "type": "text",
-          "include_in_all": false
-        }
       }
     }
   }

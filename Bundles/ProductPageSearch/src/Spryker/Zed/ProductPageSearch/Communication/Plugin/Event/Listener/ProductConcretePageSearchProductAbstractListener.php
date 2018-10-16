@@ -29,14 +29,14 @@ class ProductConcretePageSearchProductAbstractListener extends AbstractProductCo
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        $productConcreteIds = $this->getProductConcreteIds($productAbstractIds);
+        $productIds = $this->getProductIds($productAbstractIds);
 
         if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE) {
-            $this->unpublish($productConcreteIds);
+            $this->unpublish($productIds);
         }
 
         if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE) {
-            $this->publish($productConcreteIds);
+            $this->publish($productIds);
         }
     }
 
@@ -45,19 +45,18 @@ class ProductConcretePageSearchProductAbstractListener extends AbstractProductCo
      *
      * @return int[]
      */
-    protected function getProductConcreteIds(array $productAbstractIds): array
+    protected function getProductIds(array $productAbstractIds): array
     {
-        $productConcreteIds = [];
-
+        $productIds = [];
         foreach ($productAbstractIds as $idProductAbstract) {
-            $productConcreteIds = array_merge(
-                $productConcreteIds,
+            $productIds = array_merge(
+                $productIds,
                 $this->getFactory()
                     ->getProductFacade()
-                    ->findProductConcreteIdsByIdProductAbstract($idProductAbstract)
+                    ->findProductConcreteIdsByAbstractProductId($idProductAbstract)
             );
         }
 
-        return $productConcreteIds;
+        return $productIds;
     }
 }

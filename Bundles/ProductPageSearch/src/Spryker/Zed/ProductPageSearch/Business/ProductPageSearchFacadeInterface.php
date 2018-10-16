@@ -60,11 +60,11 @@ interface ProductPageSearchFacadeInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return void
      */
-    public function publishConcreteProducts(array $productConcreteIds): void;
+    public function publishProductConcretes(array $productIds): void;
 
     /**
      * Specification:
@@ -72,11 +72,11 @@ interface ProductPageSearchFacadeInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return void
      */
-    public function unpublishConcreteProducts(array $productConcreteIds): void;
+    public function unpublishProductConcretes(array $productIds): void;
 
     /**
      * Specification

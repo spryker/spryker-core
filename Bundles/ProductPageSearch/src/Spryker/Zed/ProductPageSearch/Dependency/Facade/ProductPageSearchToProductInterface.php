@@ -38,7 +38,7 @@ interface ProductPageSearchToProductInterface
      *
      * @return int[]
      */
-    public function findProductConcreteIdsByIdProductAbstract(int $idProductAbstract);
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
 
     /**
      * @param int[] $productIds

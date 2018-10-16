@@ -19,22 +19,22 @@ abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin 
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return void
      */
-    protected function publish(array $productConcreteIds): void
+    protected function publish(array $productIds): void
     {
-        $this->getFacade()->publishConcreteProducts($productConcreteIds);
+        $this->getFacade()->publishProductConcretes($productIds);
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return void
      */
-    protected function unpublish(array $productConcreteIds): void
+    protected function unpublish(array $productIds): void
     {
-        $this->getFacade()->unpublishConcreteProducts($productConcreteIds);
+        $this->getFacade()->unpublishProductConcretes($productIds);
     }
 }

@@ -7,8 +7,6 @@
 
 namespace Spryker\Shared\ProductPageSearch;
 
-use Spryker\Shared\Search\SearchConstants;
-
 /**
  * Declares global environment configuration keys. Do not use it for other class constants.
  */
@@ -47,7 +45,7 @@ class ProductPageSearchConstants
     public const PRODUCT_CONCRETE_RESOURCE_NAME = 'product_concrete';
 
     /**
-     * @uses SearchConstants
+     * @uses SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
      */
-    public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE;
+    public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 }
