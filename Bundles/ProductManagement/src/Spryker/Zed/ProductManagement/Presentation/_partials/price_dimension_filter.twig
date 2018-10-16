@@ -1,6 +1,5 @@
 
 {% for subForm in priceDimensionForm.children %}
-
     {% for child in subForm %}
         <div class="form-group">
             {% if "hidden" not in child.vars.block_prefixes %}
@@ -14,5 +13,4 @@
             {% endif %}
         </div>
     {% endfor %}
-
 {% endfor %}
