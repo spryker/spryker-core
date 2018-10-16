@@ -13,6 +13,7 @@ namespace Spryker\Shared\ProductManagement;
 interface ProductManagementConstants
 {
     public const PRODUCT_MANAGEMENT_DEFAULT_LOCALE = 'default';
+    public const HAS_VOLUME_PRICE_SUPPORT = 'PRODUCT_MANAGEMENT:HAS_VOLUME_PRICE_SUPPORT';
 
     /**
      * Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)

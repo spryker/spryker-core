@@ -14,7 +14,6 @@ class ProductManagementConfig extends AbstractBundleConfig
 {
     public const PRODUCT_TYPE_BUNDLE = 'bundle';
     public const PRODUCT_TYPE_REGULAR = 'regular';
-    protected const HAS_VOLUME_PRICE_SUPPORT = true;
 
     /**
      * Used for validity datetimes transformation and displaying in messages.
@@ -48,10 +47,10 @@ class ProductManagementConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function hasVolumePriceSupport()
+    public function hasVolumePriceSupport(): bool
     {
-        return static::HAS_VOLUME_PRICE_SUPPORT;
+        return $this->get(ProductManagementConstants::HAS_VOLUME_PRICE_SUPPORT);
     }
 }
