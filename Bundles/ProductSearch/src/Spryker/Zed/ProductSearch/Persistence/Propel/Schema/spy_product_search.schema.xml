@@ -20,10 +20,6 @@
         </index>
 
         <id-method-parameter value="spy_product_search_pk_seq"/>
-
-        <behavior name="event">
-            <parameter name="spy_product_search_all" column="*"/>
-        </behavior>
     </table>
 
     <table name="spy_product_search_attribute_map">
