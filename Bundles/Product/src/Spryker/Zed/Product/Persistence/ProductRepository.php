@@ -230,6 +230,10 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array
     {
+        if (empty($productIds)) {
+            return [];
+        }
+
         $query = $this->getFactory()
             ->createProductQuery()
             ->filterByIdProduct_In($productIds)

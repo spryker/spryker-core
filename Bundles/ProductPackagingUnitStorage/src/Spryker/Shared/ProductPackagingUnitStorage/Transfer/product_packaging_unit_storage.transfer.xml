@@ -26,10 +26,8 @@
         <property name="productConcrete" type="ProductConcrete"/>
         <property name="quantity" type="int"/>
         <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
-        <property name="productPackagingUnit" type="ProductPackagingUnit"/>
         <property name="amount" type="int"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
-        <property name="amountLeadProduct" type="ProductPackagingLeadProduct"/>
     </transfer>
 
 </transfers>

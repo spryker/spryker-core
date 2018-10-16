@@ -60,6 +60,8 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
      */
     public function expandProductConcreteTransferWithBaseMeasurementUnit(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
+        $productConcreteTransfer->requireIdProductConcrete();
+
         $productMeasurementUnitTransfer = $this->findProductMeasurementBaseUnitByIdProduct($productConcreteTransfer->getIdProductConcrete());
 
         if ($productMeasurementUnitTransfer === null) {

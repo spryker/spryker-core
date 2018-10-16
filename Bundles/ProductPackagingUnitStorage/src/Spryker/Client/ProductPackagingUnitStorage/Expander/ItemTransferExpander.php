@@ -45,9 +45,7 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
      */
     public function expandWithDefaultPackagingUnit(ItemTransfer $itemTransfer): ItemTransfer
     {
-        if (!$this->isApplicable($itemTransfer)) {
-            return $itemTransfer;
-        }
+        $this->assertItemTransfer($itemTransfer);
 
         $productAbstractPackagingStorageTransfer = $this->productPackagingUnitStorageReader->findProductAbstractPackagingById((int)$itemTransfer->getIdProductAbstract());
         if ($productAbstractPackagingStorageTransfer === null) {
@@ -80,20 +78,18 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return bool
+     * @return void
      */
-    protected function isApplicable(ItemTransfer $itemTransfer): bool
+    protected function assertItemTransfer(ItemTransfer $itemTransfer): void
     {
-        if (empty($itemTransfer->getIdProductAbstract())) {
-            return false;
-        }
+        $itemTransfer
+            ->requireIdProductAbstract()
+            ->requireProductConcrete();
 
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = $itemTransfer->getProductConcrete();
-        if (empty($productConcreteTransfer) || empty($productConcreteTransfer->getIdProductConcrete())) {
-            return false;
-        }
-
-        return true;
+        $productConcreteTransfer
+            ->requireIdProductConcrete();
     }
 
     /**

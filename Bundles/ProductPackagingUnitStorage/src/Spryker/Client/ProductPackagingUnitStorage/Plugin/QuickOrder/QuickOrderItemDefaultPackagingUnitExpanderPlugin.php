@@ -19,7 +19,7 @@ class QuickOrderItemDefaultPackagingUnitExpanderPlugin extends AbstractPlugin im
 {
     /**
      * {@inheritdoc}
-     * - Expands ItemTransfer with packaging unit data if available.
+     * - Expands ItemTransfer with packaging unit data if available using product abstract ID and product concrete ID.
      * - Uses the default amount and default measurement unit settings.
      * - Returns ItemTransfer unchanged if no packaging unit data is available.
      *
