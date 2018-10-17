@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CleanUpDependenciesConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:project:cleanup-dependencies';
-    const DESCRIPTION = 'This command will remove all frontend dependencies.';
+    public const COMMAND_NAME = 'frontend:project:cleanup-dependencies';
+    public const DESCRIPTION = 'This command will remove all frontend dependencies.';
 
     /**
      * @return void

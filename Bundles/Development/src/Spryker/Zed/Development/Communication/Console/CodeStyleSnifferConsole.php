@@ -19,13 +19,13 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
  */
 class CodeStyleSnifferConsole extends Console
 {
-    const COMMAND_NAME = 'code:sniff:style';
-    const OPTION_MODULE = 'module';
-    const OPTION_SNIFFS = 'sniffs';
-    const OPTION_DRY_RUN = 'dry-run';
-    const OPTION_FIX = 'fix';
-    const OPTION_EXPLAIN = 'explain';
-    const ARGUMENT_SUB_PATH = 'path';
+    public const COMMAND_NAME = 'code:sniff:style';
+    public const OPTION_MODULE = 'module';
+    public const OPTION_SNIFFS = 'sniffs';
+    public const OPTION_DRY_RUN = 'dry-run';
+    public const OPTION_FIX = 'fix';
+    public const OPTION_EXPLAIN = 'explain';
+    public const ARGUMENT_SUB_PATH = 'path';
 
     /**
      * @return void

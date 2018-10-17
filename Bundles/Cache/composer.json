@@ -1,5 +1,6 @@
 {
   "name": "spryker/cache",
+  "type": "library",
   "description": "Cache module",
   "license": "proprietary",
   "require": {

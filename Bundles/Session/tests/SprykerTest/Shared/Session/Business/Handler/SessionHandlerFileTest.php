@@ -25,14 +25,14 @@ use Symfony\Component\Finder\Finder;
  */
 class SessionHandlerFileTest extends Unit
 {
-    const LIFETIME = 20;
+    public const LIFETIME = 20;
 
-    const SESSION_NAME = 'sessionName';
+    public const SESSION_NAME = 'sessionName';
 
-    const SESSION_ID = 'sessionId';
-    const SESSION_ID_2 = 'anotherSessionId';
+    public const SESSION_ID = 'sessionId';
+    public const SESSION_ID_2 = 'anotherSessionId';
 
-    const SESSION_DATA = 'sessionData';
+    public const SESSION_DATA = 'sessionData';
 
     /**
      * @return void

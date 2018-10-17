@@ -43,8 +43,8 @@ interface PermissionFacadeInterface
 
     /**
      * Specification:
-     * - Finds permission plugin stack registered in the permission client dependency provider
-     * - Adds permission plugin stack registered in the permission zed dependency provider
+     * - Finds permission plugin stack registered in the permission Client dependency provider
+     * - Adds permission plugin stack registered in the permission Zed dependency provider
      * - Adds new permission keys to permission table in a DB
      *
      * @api
@@ -64,4 +64,14 @@ interface PermissionFacadeInterface
      * @return \Generated\Shared\Transfer\PermissionTransfer|null
      */
     public function findPermissionByKey(string $key): ?PermissionTransfer;
+
+    /**
+     * Specification:
+     * - Finds permissions registered either in Zed or Client dependency provider and removes non-infrastructural ones.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
 }

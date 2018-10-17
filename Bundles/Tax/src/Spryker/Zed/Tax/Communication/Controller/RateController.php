@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RateController extends AbstractController
 {
-    const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
+    public const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -118,18 +118,19 @@ class RateController extends AbstractController
     }
 
     /**
+     * @deprecated Use DeleteRateController::indexAction() instead.
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
-        $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
-
-        $this->getFacade()->deleteTaxRate($idTaxRate);
-        $this->addSuccessMessage(sprintf('Tax rate %d was deleted successfully.', $idTaxRate));
-
-        return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
+        $idTaxSet = $this->castId($request->query->get(static::PARAM_URL_ID_TAX_RATE));
+        $url = Url::generate('/tax/delete-rate', [
+            static::PARAM_URL_ID_TAX_RATE => $idTaxSet,
+        ])->build();
+        return $this->redirectResponse($url, 301);
     }
 
     /**

@@ -22,16 +22,16 @@ use Twig_Loader_Filesystem;
 
 abstract class AbstractTable
 {
-    const TABLE_CLASS = 'gui-table-data';
-    const TABLE_CLASS_NO_SEARCH_SUFFIX = '-no-search';
+    public const TABLE_CLASS = 'gui-table-data';
+    public const TABLE_CLASS_NO_SEARCH_SUFFIX = '-no-search';
 
-    const BUTTON_CLASS = 'class';
-    const BUTTON_HREF = 'href';
-    const BUTTON_DEFAULT_CLASS = 'btn-default';
-    const BUTTON_ICON = 'icon';
-    const PARAMETER_VALUE = 'value';
-    const SORT_BY_COLUMN = 'column';
-    const SORT_BY_DIRECTION = 'dir';
+    public const BUTTON_CLASS = 'class';
+    public const BUTTON_HREF = 'href';
+    public const BUTTON_DEFAULT_CLASS = 'btn-default';
+    public const BUTTON_ICON = 'icon';
+    public const PARAMETER_VALUE = 'value';
+    public const SORT_BY_COLUMN = 'column';
+    public const SORT_BY_DIRECTION = 'dir';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -238,7 +238,7 @@ abstract class AbstractTable
     {
         $callback = function (&$value, $key) use ($safeColumns) {
             if (!in_array($key, $safeColumns)) {
-                $value = \twig_escape_filter(new Twig_Environment(new Twig_Loader_Filesystem()), $value);
+                $value = twig_escape_filter(new Twig_Environment(new Twig_Loader_Filesystem()), $value);
             }
 
             return $value;

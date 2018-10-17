@@ -12,7 +12,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class EndsWith extends AbstractOperator
 {
-    const TYPE = 'ends_with';
+    public const TYPE = 'ends_with';
 
     /**
      * @return string

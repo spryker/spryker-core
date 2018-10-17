@@ -14,14 +14,14 @@ use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class BasketMapper extends BaseMapper
 {
-    const DEFAULT_DISCOUNT_NODE_VALUE = 'Discount';
-    const DEFAULT_DISCOUNT_TAX_RATE = 0;
-    const DEFAULT_DISCOUNT_UNIT_PRICE = 0;
+    public const DEFAULT_DISCOUNT_NODE_VALUE = 'Discount';
+    public const DEFAULT_DISCOUNT_TAX_RATE = 0;
+    public const DEFAULT_DISCOUNT_UNIT_PRICE = 0;
 
-    const DEFAULT_SHIPPING_NODE_VALUE = 'Shipping costs';
-    const DEFAULT_SHIPPING_TAX_RATE = 0;
+    public const DEFAULT_SHIPPING_NODE_VALUE = 'Shipping costs';
+    public const DEFAULT_SHIPPING_TAX_RATE = 0;
 
-    const BASKET_DISCOUNT_COEFFICIENT = -1;
+    public const BASKET_DISCOUNT_COEFFICIENT = -1;
 
     /**
      * @var \Generated\Shared\Transfer\RatepayPaymentRequestTransfer

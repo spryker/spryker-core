@@ -9,12 +9,12 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 class DefinitionNormalizer implements DefinitionNormalizerInterface
 {
-    const KEY_BUNDLE = 'bundle';
-    const KEY_CONTAINING_BUNDLE = 'containing bundle';
-    const KEY_NAME = 'name';
-    const KEY_PROPERTY = 'property';
-    const KEY_BUNDLES = 'bundles';
-    const KEY_DEPRECATED = 'deprecated';
+    public const KEY_BUNDLE = 'bundle';
+    public const KEY_CONTAINING_BUNDLE = 'containing bundle';
+    public const KEY_NAME = 'name';
+    public const KEY_PROPERTY = 'property';
+    public const KEY_BUNDLES = 'bundles';
+    public const KEY_DEPRECATED = 'deprecated';
 
     /**
      * @param array $transferDefinitions

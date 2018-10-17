@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-gui",
+  "type": "library",
   "description": "CompanyGui module",
   "license": "proprietary",
   "require": {

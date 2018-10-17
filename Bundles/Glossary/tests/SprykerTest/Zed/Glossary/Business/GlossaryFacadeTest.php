@@ -25,7 +25,7 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
  */
 class GlossaryFacadeTest extends Unit
 {
-    const GLOSSARY_KEY = 'glossary_key';
+    public const GLOSSARY_KEY = 'glossary_key';
 
     /**
      * @var array

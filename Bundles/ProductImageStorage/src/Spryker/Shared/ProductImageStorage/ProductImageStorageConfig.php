@@ -18,7 +18,7 @@ class ProductImageStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_IMAGE_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_ABSTRACT_IMAGE_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ class ProductImageStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_IMAGE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+    public const PRODUCT_ABSTRACT_IMAGE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
     /**
      * Specification:
@@ -34,7 +34,7 @@ class ProductImageStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_IMAGE_RESOURCE_NAME = 'product_abstract_image';
+    public const PRODUCT_ABSTRACT_IMAGE_RESOURCE_NAME = 'product_abstract_image';
 
     /**
      * Specification:
@@ -42,7 +42,7 @@ class ProductImageStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_CONCRETE_IMAGE_RESOURCE_NAME = 'product_concrete_image';
+    public const PRODUCT_CONCRETE_IMAGE_RESOURCE_NAME = 'product_concrete_image';
 
     /**
      * Specification:
@@ -50,5 +50,5 @@ class ProductImageStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const DEFAULT_IMAGE_SET_NAME = ProductImageConfig::DEFAULT_IMAGE_SET_NAME;
+    public const DEFAULT_IMAGE_SET_NAME = ProductImageConfig::DEFAULT_IMAGE_SET_NAME;
 }

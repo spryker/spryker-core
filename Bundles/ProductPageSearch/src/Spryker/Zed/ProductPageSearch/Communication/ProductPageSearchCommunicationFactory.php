@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductPageSearch\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceFacadeInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToPriceProductServiceInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
 /**
@@ -102,5 +104,21 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     public function getCatalogPriceProductConnectorClient()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToPriceProductServiceInterface
+     */
+    public function getPriceProductService(): ProductPageSearchToPriceProductServiceInterface
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::SERVICE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceFacadeInterface
+     */
+    public function getPriceFacade(): ProductPageSearchToPriceFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_PRICE);
     }
 }

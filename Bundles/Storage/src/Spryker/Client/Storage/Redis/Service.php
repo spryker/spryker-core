@@ -12,7 +12,7 @@ use Predis\ClientInterface;
 
 class Service implements ServiceInterface
 {
-    const KV_PREFIX = 'kv:';
+    public const KV_PREFIX = 'kv:';
 
     /**
      * @var \Predis\ClientInterface
@@ -370,8 +370,17 @@ class Service implements ServiceInterface
      */
     public function deleteMulti(array $keys)
     {
-        $this->client->del($keys);
-        $this->addMultiDeleteAccessStats($keys);
+        if (count($keys) === 0) {
+            return;
+        }
+
+        $transformedKeys = [];
+        foreach ($keys as $key) {
+            $transformedKeys[] = $this->getKeyName($key);
+        }
+
+        $this->client->del($transformedKeys);
+        $this->addMultiDeleteAccessStats($transformedKeys);
     }
 
     /**
@@ -380,9 +389,7 @@ class Service implements ServiceInterface
     public function deleteAll()
     {
         $keys = $this->getAllKeys();
-        $deleteCount = count($keys);
-        $this->deleteMulti($keys);
 
-        return $deleteCount;
+        return $this->client->del($keys);
     }
 }

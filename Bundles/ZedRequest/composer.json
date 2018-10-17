@@ -1,5 +1,6 @@
 {
   "name": "spryker/zed-request",
+  "type": "library",
   "description": "ZedRequest module",
   "license": "proprietary",
   "require": {

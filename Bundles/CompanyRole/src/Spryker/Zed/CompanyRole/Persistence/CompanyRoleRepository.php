@@ -124,7 +124,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      */
     protected function jsonDecode($value)
     {
-        $decodedValue = \json_decode($value, true);
+        $decodedValue = json_decode($value, true);
 
         if (json_last_error() === \JSON_ERROR_NONE) {
             return $decodedValue;
@@ -314,6 +314,8 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     }
 
     /**
+     * @deprecated Use CompanyRoleRepository::findDefaultCompanyRoleByIdCompany() instead.
+     *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
     public function getDefaultCompanyRole(): CompanyRoleTransfer
@@ -325,6 +327,26 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         $spyCompanyRole = $this->buildQueryFromCriteria($query)->findOne();
 
         return $this->prepareCompanyRoleTransfer($spyCompanyRole);
+    }
+
+    /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findDefaultCompanyRoleByIdCompany(int $idCompany): ?CompanyRoleTransfer
+    {
+        $companyRoleEntity = $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->filterByFkCompany($idCompany)
+            ->filterByIsDefault(true)
+            ->findOne();
+
+        if (!$companyRoleEntity) {
+            return null;
+        }
+
+        return $this->prepareCompanyRoleTransfer($companyRoleEntity);
     }
 
     /**
