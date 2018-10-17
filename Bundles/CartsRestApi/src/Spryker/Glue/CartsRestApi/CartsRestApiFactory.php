@@ -18,6 +18,8 @@ use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleter;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReader;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Cart\GuestCartValidator;
+use Spryker\Glue\CartsRestApi\Processor\Cart\GuestCartValidatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdder;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdderInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleter;
@@ -44,6 +46,9 @@ use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPl
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class CartsRestApiFactory extends AbstractFactory
 {
     /**
@@ -192,6 +197,14 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->createGuestCartReader()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\Cart\GuestCartValidatorInterface
+     */
+    public function createGuestCartValidator(): GuestCartValidatorInterface
+    {
+        return new GuestCartValidator();
     }
 
     /**

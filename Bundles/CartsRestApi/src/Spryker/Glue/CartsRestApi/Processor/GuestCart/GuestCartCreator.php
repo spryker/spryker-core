@@ -66,9 +66,8 @@ class GuestCartCreator implements GuestCartCreatorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function create(
-        RestRequestInterface $restRequest
-    ): RestResponseInterface {
+    public function create(RestRequestInterface $restRequest): RestResponseInterface
+    {
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $quoteTransfer = $this->createQuoteTransfer($restRequest);
         $quoteResponseTransfer = $this->persistentCartClient->createQuote($quoteTransfer);
@@ -90,9 +89,8 @@ class GuestCartCreator implements GuestCartCreatorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer(
-        RestRequestInterface $restRequest
-    ): QuoteTransfer {
+    public function createQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer
+    {
         $currencyTransfer = $this->getCurrencyTransfer();
         $customerTransfer = $this->getCustomerTransfer($restRequest);
         $storeTransfer = $this->getStoreTransfer();

@@ -29,9 +29,13 @@ class CartQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCol
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        return (new QuoteCollectionTransfer())
-            ->addQuote(
-                $this->getFactory()->getCartClient()->getQuote()
-            );
+        $quoteCollectionTransfer = new QuoteCollectionTransfer();
+
+        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
+        if ($quoteTransfer->getIdQuote() === null) {
+            return $quoteCollectionTransfer;
+        }
+
+        return $quoteCollectionTransfer->addQuote($quoteTransfer);
     }
 }
