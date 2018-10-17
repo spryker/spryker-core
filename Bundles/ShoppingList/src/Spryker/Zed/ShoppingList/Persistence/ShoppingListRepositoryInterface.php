@@ -145,6 +145,13 @@ interface ShoppingListRepositoryInterface
     public function findCompanyBusinessUnitSharedShoppingLists(int $idCompanyBusinessUnit): ShoppingListCollectionTransfer;
 
     /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return bool
+     */
+    public function isCompanyBusinessUnitSharedWithShoppingLists(int $idCompanyBusinessUnit): bool;
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
