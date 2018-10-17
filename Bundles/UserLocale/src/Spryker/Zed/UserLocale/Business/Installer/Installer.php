@@ -16,12 +16,6 @@ use Spryker\Zed\UserLocale\UserLocaleConfig;
 
 class Installer implements InstallerInterface
 {
-    protected const USER_FIRST_NAME = 'Admin';
-    protected const USER_LAST_NAME = 'German';
-    protected const USER_PASSWORD = 'Change123';
-    protected const USER_USERNAME = 'admin_de@spryker.com';
-    protected const LOCALE_CODE = 'de_DE';
-
     /**
      * @var \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserBridgeInterface
      */
