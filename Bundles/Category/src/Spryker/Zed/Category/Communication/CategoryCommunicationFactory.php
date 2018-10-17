@@ -12,10 +12,12 @@ use Spryker\Zed\Category\Communication\Form\CategoryType;
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryCreateDataProvider;
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryDeleteDataProvider;
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryEditDataProvider;
+use Spryker\Zed\Category\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\Category\Communication\Form\DeleteType;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToCategoryImageInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -115,6 +117,22 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
             $this->getFacade(),
             $this->getLocaleFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Communication\Form\DataProvider\LocaleProvider
+     */
+    public function createLocaleProvider(): LocaleProvider
+    {
+        return new LocaleProvider($this->getLocaleFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToCategoryImageInterface
+     */
+    public function getCategoryImageFacade(): CategoryToCategoryImageInterface
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_CATEGORY_IMAGE);
     }
 
     /**

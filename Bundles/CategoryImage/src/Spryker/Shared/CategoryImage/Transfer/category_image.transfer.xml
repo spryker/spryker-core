@@ -20,6 +20,9 @@
 
     <transfer name="Category">
         <property name="imageSets" type="CategoryImageSet[]" singular="imageSet" />
+        <property name="imageSetsDefault" type="CategoryImageSet[]" singular="imageSetDefault" />
+        <property name="imageSetsDeDe" type="CategoryImageSet[]" singular="imageSetDeDe" />
+        <property name="imageSetsEnUs" type="CategoryImageSet[]" singular="imageSet" />
     </transfer>
 
 </transfers>

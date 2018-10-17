@@ -4,6 +4,11 @@
     {% set widget_title = 'Edit category' | trans %}
 {% endif %}
 
+{% form_theme categoryForm with [
+    '@Category/_partials/category-image-set-theme.twig',
+    '@Category/_partials/category-image-collection-theme.twig',
+]%}
+
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
@@ -19,6 +24,9 @@
 
             {{ form_start(categoryForm) }}
                 {% do categoryForm.localized_attributes.setRendered %}
+            {% do categoryForm.imageSets_default.setRendered %}
+            {% do categoryForm.imageSets_en_US.setRendered %}
+            {% do categoryForm.imageSets_de_DE.setRendered %}
                 {{ form_widget(categoryForm) }}
                 <hr />
                 <p><strong>{{ 'Translations' | trans }}</strong></p>
@@ -36,6 +44,34 @@
                         {% endblock %}
                     {% endembed %}
                 {% endfor %}
+
+            <div class="well">
+                {% filter trans|raw %}
+                    <h3>Category Image(s)</h3>
+                    <p>Multiple images can be grouped to an image set. An image set has a name for identification and may contain a small and a large version of each image.</p>
+                    <p><i>Note: Image sets can be used for different purposes.</i></p>
+                {% endfilter %}
+            </div>
+
+            {% set formKey = 'imageSets_default' %}
+
+                    {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': true, 'localeName': 'default'} %}
+                        {% block content %}
+                            {% include '@Category/_partials/image-set-form.twig' %}
+                        {% endblock %}
+                    {% endembed %}
+
+            {% for localeTransfer in localeCollection %}
+                {% set formKey = 'imageSets_' ~ localeTransfer.localeName %}
+
+                {% if categoryForm[formKey] is defined %}
+                    {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': true, 'localeName': localeTransfer.localeName} %}
+                        {% block content %}
+                            {% include '@Category/_partials/image-set-form.twig' %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endif %}
+            {% endfor %}
 
                 <hr />
                 <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>

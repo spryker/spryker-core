@@ -72,7 +72,7 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function expandProductAbstractWithImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer
+    public function expandCategoryWithImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         $imageSetCollection = $this->findCategoryImagesSetCollectionByCategoryId(
             $categoryTransfer->requireIdCategory()->getIdCategory()

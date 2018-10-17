@@ -1,0 +1,15 @@
+<div class="image-set-container" data-image-collection-prototype="{{ form_widget(categoryForm[formKey].vars.prototype.children.category_images.vars.prototype) | e }}"
+     data-image-set-prototype="{{ form_widget(categoryForm[formKey].vars.prototype) | e }}"
+>
+    {% for categoryImageSet in categoryForm[formKey] %}
+        {% if not categoryImageSet.vars.value.idCategoryImageSet and categoryImageSet.parent.parent.vars.valid %}
+            {% do categoryImageSet.setRendered %}
+        {% endif %}
+
+        {{ form_widget(categoryImageSet) }}
+    {% endfor %}
+
+    <a href="#" class="btn btn-outline btn-primary add-another-image-set m-t-md">
+        <i class="fa fa-files-o"></i> {{ 'Add image set' | trans }}
+    </a>
+</div>

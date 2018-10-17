@@ -26,7 +26,7 @@ class CategoryImageRepository extends AbstractRepository implements CategoryImag
         return $this->getFactory()
             ->createCategoryImageSetQuery()
             ->filterByFkCategory($categoryId)
-            ->filterByIdCategoryImageSet($excludeIdCategoryImageSets)
+            ->filterByIdCategoryImageSet($excludeIdCategoryImageSets, Criteria::NOT_IN)
             ->find();
     }
 

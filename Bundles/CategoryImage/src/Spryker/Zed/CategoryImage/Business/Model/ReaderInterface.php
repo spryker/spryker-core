@@ -31,5 +31,5 @@ interface ReaderInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function expandProductAbstractWithImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function expandCategoryWithImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer;
 }

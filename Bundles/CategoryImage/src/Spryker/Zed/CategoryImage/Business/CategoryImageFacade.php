@@ -121,7 +121,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
     {
         return $this->getFactory()
             ->createCategoryImageReader()
-            ->expandProductAbstractWithImageSets($categoryTransfer);
+            ->expandCategoryWithImageSets($categoryTransfer);
     }
 
     /**

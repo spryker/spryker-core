@@ -29,6 +29,7 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $this->getFacade()->syncCategoryTemplate();
+        $localeProvider = $this->getFactory()->createLocaleProvider();
 
         $form = $this->getFactory()->createCategoryEditForm();
         $form->handleRequest($request);
@@ -51,6 +52,7 @@ class EditController extends AbstractController
             'categoryForm' => $form->createView(),
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
             'idCategory' => $this->castId($request->query->get(CategoryConstants::PARAM_ID_CATEGORY)),
+            'localeCollection' => $localeProvider->getLocaleCollection(),
         ]);
     }
 

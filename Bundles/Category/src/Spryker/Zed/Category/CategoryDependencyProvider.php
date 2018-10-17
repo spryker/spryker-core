@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category;
 
+use Spryker\Zed\Category\Dependency\Facade\CategoryToCategoryImageBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchBridge;
@@ -23,6 +24,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_LOCALE = 'locale facade';
     public const FACADE_URL = 'url facade';
     public const FACADE_EVENT = 'facade event';
+    public const FACADE_CATEGORY_IMAGE = 'FACADE_CATEGORY_IMAGE';
 
     public const PLUGIN_GRAPH = 'graph plugin';
     public const PLUGIN_STACK_RELATION_DELETE = 'delete relation plugin stack';
@@ -91,6 +93,23 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addRelationReadPluginStack($container);
         $container = $this->addCategoryFormPlugins($container);
+        $container = $this->addCategoryImageFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryImageFacade(Container $container): Container
+    {
+        $container[static::FACADE_CATEGORY_IMAGE] = function (Container $container) {
+            return new CategoryToCategoryImageBridge(
+                $container->getLocator()->categoryImage()->facade()
+            );
+        };
 
         return $container;
     }

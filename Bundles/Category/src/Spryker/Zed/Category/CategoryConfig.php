@@ -27,6 +27,8 @@ class CategoryConfig extends AbstractBundleConfig
      */
     public const RESOURCE_TYPE_NAVIGATION = SharedCategoryConfig::RESOURCE_TYPE_NAVIGATION;
 
+    public const BASE_URL_YVES = 'PRODUCT_MANAGEMENT:BASE_URL_YVES';
+
     /**
      * @return array
      */
@@ -35,5 +37,13 @@ class CategoryConfig extends AbstractBundleConfig
         return [
             static::CATEGORY_TEMPLATE_DEFAULT => '',
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageUrlPrefix()
+    {
+        return $this->get(static::BASE_URL_YVES);
     }
 }
