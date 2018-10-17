@@ -6,27 +6,63 @@
     <transfer name="RestCustomersAttributes">
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
-        <property name="email" type="string"/>
-        <property name="company" type="string" />
         <property name="gender" type="string" />
         <property name="dateOfBirth" type="string" />
         <property name="salutation" type="string" />
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
-        <property name="registered" type="string" />
-        <property name="password" type="string"/>
-        <property name="passwordConfirmation" type="string"/>
+        <property name="email" type="string"/>
+        <property name="password" type="string" />
+        <property name="confirmPassword" type="string" />
         <property name="acceptedTerms" type="bool"/>
     </transfer>
 
     <transfer name="RestCustomersResponseAttributes">
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
-        <property name="email" type="string"/>
-        <property name="company" type="string" />
         <property name="gender" type="string" />
         <property name="dateOfBirth" type="string" />
         <property name="salutation" type="string" />
+        <property name="createdAt" type="string" />
+        <property name="updatedAt" type="string" />
     </transfer>
+
+    <transfer name="RestCustomersRegisterAttributes">
+        <property name="salutation" type="string" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="email" type="string"/>
+        <property name="password" type="string" />
+        <property name="confirmPassword" type="string" />
+        <property name="acceptedTerms" type="bool"/>
+    </transfer>
+
+    <transfer name="RestAddressAttributes">
+        <property name="salutation" type="string" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="address1" type="string" />
+        <property name="address2" type="string" />
+        <property name="address3" type="string" />
+        <property name="zipCode" type="string" />
+        <property name="city" type="string" />
+        <property name="country" type="string" />
+        <property name="iso2Code" type="string" />
+        <property name="company" type="string" />
+        <property name="phone" type="string" />
+        <property name="isDefaultShipping" type="bool" />
+        <property name="isDefaultBilling" type="bool" />
+    </transfer>
+
+    <transfer name="RestCustomerPasswordAttributes">
+        <property name="password" type="string" />
+        <property name="newPassword" type="string" />
+        <property name="confirmPassword" type="string" />
+    </transfer>
+
+    <transfer name="Address">
+        <property name="uuid" type="string" />
+    </transfer>
+
 
 </transfers>

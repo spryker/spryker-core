@@ -34,7 +34,7 @@ interface EventConstants
      *
      * @api
      */
-    const MAX_RETRY_ON_FAIL = 'MAX_RETRY_ON_FAIL';
+    public const MAX_RETRY_ON_FAIL = 'MAX_RETRY_ON_FAIL';
 
     /**
      * Specification:
@@ -58,7 +58,7 @@ interface EventConstants
      *
      * @api
      */
-    const EVENT_QUEUE_RETRY = 'event.retry';
+    public const EVENT_QUEUE_RETRY = 'event.retry';
 
     /**
      * Specification:
