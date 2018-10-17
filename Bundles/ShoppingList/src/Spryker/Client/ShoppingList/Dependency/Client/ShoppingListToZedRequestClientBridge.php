@@ -63,8 +63,8 @@ class ShoppingListToZedRequestClientBridge implements ShoppingListToZedRequestCl
     /**
      * @return void
      */
-    public function addAllResponseMessagesToMessenger()
+    public function addResponseMessagesToMessenger()
     {
-        $this->zedRequestClient->addAllResponseMessagesToMessenger();
+        $this->zedRequestClient->addResponseMessagesToMessenger();
     }
 }

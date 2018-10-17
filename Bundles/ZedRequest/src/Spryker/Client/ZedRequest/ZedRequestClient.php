@@ -150,11 +150,11 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      *
      * @return void
      */
-    public function addAllResponseMessagesToMessenger(): void
+    public function addResponseMessagesToMessenger(): void
     {
         $this->getFactory()
             ->createMessenger()
-            ->addAllResponseMessagesToMessenger();
+            ->addResponseMessagesToMessenger();
     }
 
     /**

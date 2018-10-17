@@ -77,7 +77,7 @@ class QuoteDeleter implements QuoteDeleterInterface
         if ($quoteResponseTransfer->getIsSuccessful() && $this->quoteClient->getQuote()->getIdQuote() === $quoteTransfer->getIdQuote()) {
             $this->quoteClient->setQuote(new QuoteTransfer());
         }
-        $this->zedRequestClient->addAllResponseMessagesToMessenger();
+        $this->zedRequestClient->addResponseMessagesToMessenger();
 
         return $quoteResponseTransfer;
     }

@@ -67,7 +67,7 @@ class QuoteCreator implements QuoteCreatorInterface
         }
         $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
 
-        $this->zedRequestClient->addAllResponseMessagesToMessenger();
+        $this->zedRequestClient->addResponseMessagesToMessenger();
 
         return $quoteResponseTransfer;
     }

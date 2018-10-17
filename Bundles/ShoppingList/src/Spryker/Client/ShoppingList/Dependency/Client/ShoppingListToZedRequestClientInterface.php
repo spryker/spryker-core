@@ -40,5 +40,5 @@ interface ShoppingListToZedRequestClientInterface
     /**
      * @return void
      */
-    public function addAllResponseMessagesToMessenger();
+    public function addResponseMessagesToMessenger();
 }

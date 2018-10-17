@@ -64,7 +64,7 @@ interface ZedRequestClientInterface
      *  - Writes error message to flash bag.
      *  - Writes success message to flash bag.
      *  - Writes informational message to flash bag.
-     * This behavior is different from addAllResponseMessagesToMessenger and inspects only the last Zed request.
+     * This behavior is different from addResponseMessagesToMessenger and inspects only the last Zed request.
      *
      * @api
      *

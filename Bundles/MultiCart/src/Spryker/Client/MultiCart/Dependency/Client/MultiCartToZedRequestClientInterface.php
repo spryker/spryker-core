@@ -28,5 +28,5 @@ interface MultiCartToZedRequestClientInterface
     /**
      * @return void
      */
-    public function addAllResponseMessagesToMessenger(): void;
+    public function addResponseMessagesToMessenger(): void;
 }

@@ -307,7 +307,7 @@ class CartClientTest extends Unit
             'changeItemQuantity',
             'validateQuote',
             'addFlashMessagesFromLastZedRequest',
-            'addAllResponseMessagesToMessenger',
+            'addResponseMessagesToMessenger',
         ])->getMock();
     }
 }

@@ -47,5 +47,5 @@ interface MessengerInterface
     /**
      * @return void
      */
-    public function addAllResponseMessagesToMessenger(): void;
+    public function addResponseMessagesToMessenger(): void;
 }
