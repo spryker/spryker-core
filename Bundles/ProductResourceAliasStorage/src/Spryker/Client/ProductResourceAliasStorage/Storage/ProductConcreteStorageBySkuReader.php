@@ -68,6 +68,7 @@ class ProductConcreteStorageBySkuReader implements ProductConcreteStorageReaderI
             return null;
         }
 
-        return $this->storageClient->get($mappingResource['key']);
+        // TODO: retrieve the whole data
+        return $mappingResource;
     }
 }
