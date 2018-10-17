@@ -38,7 +38,7 @@ class GuestCartValidator implements GuestCartValidatorInterface
             return (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)
                 ->setCode(CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
-                ->setDetail(CartsRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED);
+                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_UNAUTHORIZED);
         }
 
         return null;
