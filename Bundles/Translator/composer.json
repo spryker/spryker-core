@@ -36,6 +36,6 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/installer": "ADD SUGGEST DESCRIPTION"
+    "spryker/installer": "If you want to use Installer plugins. Minimum required version: 4.0.1"
   }
 }

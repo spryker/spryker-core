@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\Translator;
 
+use Spryker\Shared\Translator\TranslatorConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TranslatorConfig extends AbstractBundleConfig
 {
     protected const DELIMITER = ',';
-    protected const FALLBACK_LOCALES = [
-        'de_DE' => ['en_US'],
-    ];
     protected const DEFAULT_FALLBACK_LOCALES = ['en_US'];
 
     /**
@@ -53,7 +51,9 @@ class TranslatorConfig extends AbstractBundleConfig
      */
     public function getFallbackLocales(string $localeCode): array
     {
-        return static::FALLBACK_LOCALES[$localeCode] ?? $this->getDefaultFallbackLocales();
+        $fallbackLocales = $this->get(TranslatorConstants::FALLBACK_LOCALES, []);
+
+        return $fallbackLocales[$localeCode] ?? $this->getDefaultFallbackLocales();
     }
 
     /**

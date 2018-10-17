@@ -34,7 +34,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
     public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
-    public const PLUGINS_TWIG_TRANSLATION = 'PLUGINS_TWIG_TRANSLATION';
+    public const PLUGINS_TWIG_ENVIRONMENT_EXTENSION = 'PLUGINS_TWIG_ENVIRONMENT_EXTENSION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -185,7 +185,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTwigTranslatorExtensionPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_TWIG_TRANSLATION] = function () {
+        $container[static::PLUGINS_TWIG_ENVIRONMENT_EXTENSION] = function () {
             return $this->getTwigTranslatorExtensionPlugins();
         };
 

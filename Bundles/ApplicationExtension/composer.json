@@ -29,6 +29,6 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/twig": "ADD SUGGEST DESCRIPTION"
+    "spryker/twig": "If you want to use TwigTranslatorExtensionPlugin. Minimum required version: 3.3.2"
   }
 }

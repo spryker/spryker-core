@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/application-extension.svg)](https://travis-ci.org/spryker/application-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/application-extension/badge.svg)](https://coveralls.io/github/spryker/application-extension)
 
-Extension of Application module
+ApplicationExtension module provides interfaces for extending Application module with plugins.
 
 ## Installation
 

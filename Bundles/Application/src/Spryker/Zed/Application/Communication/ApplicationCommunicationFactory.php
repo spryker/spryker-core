@@ -34,6 +34,6 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getTwigTranslatorExtensionPlugins(): array
     {
-        return $this->getProvidedDependency(ApplicationDependencyProvider::PLUGINS_TWIG_TRANSLATION);
+        return $this->getProvidedDependency(ApplicationDependencyProvider::PLUGINS_TWIG_ENVIRONMENT_EXTENSION);
     }
 }
