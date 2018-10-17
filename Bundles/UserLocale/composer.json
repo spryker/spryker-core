@@ -37,7 +37,7 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/installer": "ADD SUGGEST DESCRIPTION",
-    "spryker/silex": "ADD SUGGEST DESCRIPTION"
+    "spryker/installer": "If you want to use Installer plugin, minimum required version: 4.0.1",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies, minimum required version: 2.0.1"
   }
 }

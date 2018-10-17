@@ -33,7 +33,12 @@ class UserLocaleBusinessFactory extends AbstractBusinessFactory
      */
     public function createInstaller(): InstallerInterface
     {
-        return new Installer($this->getUserFacade(), $this->getLocaleFacade(), $this->getAclFacade());
+        return new Installer(
+            $this->getUserFacade(),
+            $this->getLocaleFacade(),
+            $this->getAclFacade(),
+            $this->getConfig()
+        );
     }
 
     /**

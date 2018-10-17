@@ -27,7 +27,7 @@ class UserLocaleTransferExpanderPlugin extends AbstractPlugin implements UserTra
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function expandTransfer(UserTransfer $userTransfer): UserTransfer
+    public function expandUserTransfer(UserTransfer $userTransfer): UserTransfer
     {
         $userFkLocale = $userTransfer->getFkLocale();
         if ($userFkLocale === null || $userTransfer->getLocaleCode() !== null) {

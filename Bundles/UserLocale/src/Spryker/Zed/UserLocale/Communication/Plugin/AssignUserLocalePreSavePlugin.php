@@ -19,6 +19,8 @@ use Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface;
 class AssignUserLocalePreSavePlugin extends AbstractPlugin implements UserPreSavePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
