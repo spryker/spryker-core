@@ -44,7 +44,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addVolumesField($builder, $options)
@@ -62,7 +62,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addVolumesField(FormBuilderInterface $builder, array $options)
+    protected function addVolumesField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_VOLUMES, CollectionType::class, [
             'entry_type' => PriceVolumeFormType::class,
@@ -83,7 +83,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addIdStoreField(FormBuilderInterface $builder)
+    protected function addIdStoreField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_ID_STORE, HiddenType::class, [
             'constraints' => [
@@ -99,7 +99,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCurrencyField(FormBuilderInterface $builder)
+    protected function addIdCurrencyField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_ID_CURRENCY, HiddenType::class, [
             'constraints' => [
@@ -115,7 +115,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addIdProductAbstractField(FormBuilderInterface $builder)
+    protected function addIdProductAbstractField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_ID_PRODUCT_ABSTRACT, HiddenType::class, [
             'constraints' => [
@@ -131,7 +131,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addIdProductConcreteField(FormBuilderInterface $builder)
+    protected function addIdProductConcreteField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class);
 
@@ -144,7 +144,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addNetPriceField(FormBuilderInterface $builder, array $options)
+    protected function addNetPriceField(FormBuilderInterface $builder, array $options): self
     {
         $this->addPriceField($builder, $options, static::FIELD_NET_PRICE);
 
@@ -157,7 +157,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addGrossPriceField(FormBuilderInterface $builder, array $options)
+    protected function addGrossPriceField(FormBuilderInterface $builder, array $options): self
     {
         $this->addPriceField($builder, $options, static::FIELD_GROSS_PRICE);
 
@@ -171,7 +171,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addPriceField(FormBuilderInterface $builder, array $options, string $name)
+    protected function addPriceField(FormBuilderInterface $builder, array $options, string $name): self
     {
         $currencyTransfer = $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_TRANSFER];
         $builder->add($name, MoneyType::class, [
@@ -206,7 +206,7 @@ class PriceVolumeCollectionFormType extends AbstractType
     /**
      * @return array
      */
-    protected function getVolumesConstants()
+    protected function getVolumesConstants(): array
     {
         $savedPriceProductVolumeItemTransfers = [];
 
