@@ -43,6 +43,9 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_FAILED_DELETING_QUOTE_ITEM = '106';
     public const RESPONSE_CODE_FAILED_CREATING_QUOTE = '107';
     public const RESPONSE_CODE_MISSING_REQUIRED_PARAMETER = '108';
+    /**
+     * @uses \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED
+     */
     public const RESPONSE_CODE_CUSTOMER_UNAUTHORIZED = '411';
 
     public const EXCEPTION_MESSAGE_QUOTE_ID_MISSING = 'Quote identifier is required.';
@@ -53,6 +56,9 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_FAILED_DELETING_QUOTE_ITEM = 'Quote item could not be deleted.';
     public const EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER = 'Quote id or item id is not specified.';
     public const EXCEPTION_MESSAGE_QUOTE_NOT_FOUND = 'Cart with id \'%s\' not found.';
+    /**
+     * @uses \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED
+     */
     public const EXCEPTION_MESSAGE_CUSTOMER_UNAUTHORIZED = 'Unauthorized request.';
 
     public const DEFAULT_PRICE_MODE = 'GROSS_MODE';
