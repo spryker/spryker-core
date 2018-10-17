@@ -148,7 +148,7 @@ class ProductConcreteFormAddDataProvider
 
     /**
      * @param array|null $priceDimension
-     * 
+     *
      * @return array
      */
     public function getData(?array $priceDimension = null)

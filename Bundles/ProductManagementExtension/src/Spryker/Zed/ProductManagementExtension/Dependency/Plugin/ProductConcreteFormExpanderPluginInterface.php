@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductManagementExtension\Dependency\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface ProductAbstractFormExpanderPluginInterface
+interface ProductConcreteFormExpanderPluginInterface
 {
     /**
      * Specification:

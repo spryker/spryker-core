@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
+use ArrayObject;
 use Everon\Component\Collection\Collection;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -14,6 +15,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
@@ -774,5 +776,61 @@ class AbstractProductFormDataProvider
         }
 
         return $url;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $formData
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function getProductAbstractPricesByPriceDimension(ProductAbstractTransfer $productAbstractTransfer, array $formData): ArrayObject
+    {
+        if (!$formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
+            return $productAbstractTransfer->getPrices();
+        }
+
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
+
+        $priceProducts = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
+            $productAbstractTransfer->getIdProductAbstract(),
+            (new PriceProductCriteriaTransfer())->setPriceDimension($priceProductDimensionTransfer)
+        );
+
+        return new ArrayObject($priceProducts);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $formData
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function getProductConcretePricesByPriceDimension(
+        ProductConcreteTransfer $productTransfer,
+        ProductAbstractTransfer $productAbstractTransfer,
+        array $formData
+    ): ArrayObject {
+
+        if (!$formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
+            return $productTransfer->getPrices();
+        }
+
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
+
+        if (!$priceProductDimensionTransfer->getType()) {
+            return $productTransfer->getPrices();
+        }
+
+        $priceProducts = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
+            $productTransfer->getIdProductConcrete(),
+            $productAbstractTransfer->getIdProductAbstract(),
+            (new PriceProductCriteriaTransfer())->setPriceDimension($priceProductDimensionTransfer)
+        );
+
+        return new ArrayObject($priceProducts);
     }
 }

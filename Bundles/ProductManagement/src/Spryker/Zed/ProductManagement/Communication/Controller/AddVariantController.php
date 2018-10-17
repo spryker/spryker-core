@@ -19,6 +19,7 @@ class AddVariantController extends AbstractController
 {
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     protected const PARAM_ID_PRODUCT = 'id-product';
+    protected const PARAM_PRICE_DIMENSION = 'price-dimension';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -47,7 +48,7 @@ class AddVariantController extends AbstractController
         $form = $this
             ->getFactory()
             ->getProductVariantFormAdd(
-                $dataProvider->getData(),
+                $dataProvider->getData($request->query->get(static::PARAM_PRICE_DIMENSION)),
                 $dataProvider->getOptions($idProductAbstract, ProductManagementConfig::PRODUCT_TYPE_REGULAR)
             )
             ->handleRequest($request);

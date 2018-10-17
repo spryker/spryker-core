@@ -26,6 +26,7 @@ class PriceProductMerchantRelationshipCommunicationFactory extends AbstractCommu
     {
         return new MerchantPriceDimensionForm();
     }
+
     /**
      * @return \Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\DataProvider\MerchantPriceDimensionFormDataProvider
      */

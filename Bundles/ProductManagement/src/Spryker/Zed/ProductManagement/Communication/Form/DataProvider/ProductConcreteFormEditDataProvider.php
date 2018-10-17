@@ -155,12 +155,13 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     /**
      * @param int $idProductAbstract
      * @param int $idProduct
+     * @param array|null $priceDimension
      *
      * @return array
      */
-    public function getData($idProductAbstract, $idProduct)
+    public function getData($idProductAbstract, $idProduct, ?array $priceDimension = null)
     {
-        $formData = $this->getDefaultFormFields();
+        $formData = $this->getDefaultFormFields($priceDimension);
         $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
         $productTransfer = $this->productFacade->findProductConcreteById($idProduct);
 
@@ -227,7 +228,11 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      */
     protected function appendVariantPriceAndStock(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
     {
-        $formData[ProductFormAdd::FIELD_PRICES] = $productTransfer->getPrices();
+        $formData[ProductFormAdd::FIELD_PRICES] = $this->getProductConcretePricesByPriceDimension(
+            $productTransfer,
+            $productAbstractTransfer,
+            $formData
+        );
         $stockType = $this->stockQueryContainer->queryAllStockTypes()->find()->getData();
         $this->productStockHelper->addMissingStockTypes($productTransfer, $stockType);
 

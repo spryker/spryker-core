@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -41,7 +42,7 @@ class MerchantPriceDimensionForm extends AbstractType
 
         $resolver->setRequired(static::OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES);
         $resolver->setDefaults([
-            'label' => 'Merchant Price Dimension',
+            'label' => false,
         ]);
     }
 
@@ -57,11 +58,11 @@ class MerchantPriceDimensionForm extends AbstractType
             'choices' => $options[static::OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES],
             'placeholder' => 'Choose merchant relation',
             'choices_as_values' => true,
-            'label' => false,
+            'label' => 'Merchant Price Dimension',
             'attr' => [
                 'template_path' => $this->getTemplatePath(),
                 'data-type' => PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP,
-            ]
+            ],
         ]);
 
         return $this;

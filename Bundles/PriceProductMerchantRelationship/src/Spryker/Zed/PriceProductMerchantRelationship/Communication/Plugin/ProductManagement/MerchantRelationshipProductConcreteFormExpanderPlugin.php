@@ -10,14 +10,14 @@ namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\Prod
 use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\MerchantPriceDimensionForm;
-use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface;
+use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Communication\PriceProductMerchantRelationshipCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Business\PriceProductMerchantRelationshipFacadeInterface getFacade()
  */
-class MerchantRelationshipProductAbstractFormExpanderPlugin extends AbstractPlugin implements ProductAbstractFormExpanderPluginInterface
+class MerchantRelationshipProductConcreteFormExpanderPlugin extends AbstractPlugin implements ProductConcreteFormExpanderPluginInterface
 {
     /**
      * {@inheritdoc}

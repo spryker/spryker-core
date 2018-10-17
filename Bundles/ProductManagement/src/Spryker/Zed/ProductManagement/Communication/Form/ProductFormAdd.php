@@ -169,7 +169,7 @@ class ProductFormAdd extends AbstractType
             ->addSeoLocalizedForms($builder)
             ->addImageLocalizedForms($builder)
             ->addStoreRelationForm($builder)
-            ->executeProductAbstractFormExpanderPlugins($builder);
+            ->executeProductAbstractFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -721,13 +721,14 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function executeProductAbstractFormExpanderPlugins(FormBuilderInterface $builder): self
+    protected function executeProductAbstractFormExpanderPlugins(FormBuilderInterface $builder, array $options): self
     {
         foreach ($this->getFactory()->getProductAbstractFormExpanderPlugins() as $abstractFormExpanderPlugin) {
-            $builder = $abstractFormExpanderPlugin->expand($builder);
+            $builder = $abstractFormExpanderPlugin->expand($builder, $options);
         }
 
         return $this;

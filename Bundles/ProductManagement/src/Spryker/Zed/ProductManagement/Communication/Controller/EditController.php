@@ -148,7 +148,7 @@ class EditController extends AddController
         $form = $this
             ->getFactory()
             ->createProductVariantFormEdit(
-                $dataProvider->getData($idProductAbstract, $idProduct),
+                $dataProvider->getData($idProductAbstract, $idProduct, $request->query->get(static::PARAM_PRICE_DIMENSION)),
                 $dataProvider->getOptions($idProductAbstract, $type)
             )
             ->handleRequest($request);

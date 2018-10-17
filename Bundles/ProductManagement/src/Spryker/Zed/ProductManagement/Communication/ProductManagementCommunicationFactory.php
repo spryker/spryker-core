@@ -605,6 +605,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface[]
+     */
+    public function getProductConcreteFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface
      */
     public function createProductConcreteSuperAttributeFilterHelper(): ProductConcreteSuperAttributeFilterHelperInterface
