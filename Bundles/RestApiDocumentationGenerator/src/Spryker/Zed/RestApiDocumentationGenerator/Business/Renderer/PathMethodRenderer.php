@@ -51,11 +51,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
         $methodComponent->setMethod($pathMethodDataTransfer->getMethod());
 
         $summary = $pathMethodDataTransfer->getSummary();
-        $formattedSummary = $summary;
-
-        if (is_array($summary)) {
-            $formattedSummary = implode(PHP_EOL, $summary);
-        }
+        $formattedSummary = implode(PHP_EOL, $summary);
 
         $methodComponent->setSummary($formattedSummary);
         $methodComponent->addTag($pathMethodDataTransfer->getResource());
