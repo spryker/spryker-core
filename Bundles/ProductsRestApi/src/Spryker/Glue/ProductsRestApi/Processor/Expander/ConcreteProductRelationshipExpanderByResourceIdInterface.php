@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
+namespace Spryker\Glue\ProductsRestApi\Processor\Expander;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface GuestCartItemDeleterInterface
+interface ConcreteProductRelationshipExpanderByResourceIdInterface
 {
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return void
      */
-    public function deleteItem(RestRequestInterface $restRequest): RestResponseInterface;
+    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): void;
 }

@@ -5,24 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Controller;
+namespace Spryker\Glue\CartsRestApi\Processor\GuestCartItem;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\Kernel\Controller\AbstractController;
 
-/**
- * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
- */
-class GuestCartsResourceController extends AbstractController
+interface GuestCartItemDeleterInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
-    {
-        return $this->getFactory()->createGuestCartReader()->readCurrentCustomerCarts($restRequest);
-    }
+    public function deleteItem(RestRequestInterface $restRequest): RestResponseInterface;
 }

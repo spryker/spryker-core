@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
+namespace Spryker\Glue\CartsRestApi\Processor\GuestCartItem;
 
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
+use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdater;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class GuestCartItemDeleter extends CartItemDeleter implements GuestCartItemDeleterInterface
+class GuestCartItemUpdater extends CartItemUpdater implements GuestCartItemUpdaterInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

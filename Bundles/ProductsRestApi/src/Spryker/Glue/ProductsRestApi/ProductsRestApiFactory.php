@@ -13,6 +13,8 @@ use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsRead
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReaderInterface;
 use Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReader;
 use Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface;
+use Spryker\Glue\ProductsRestApi\Processor\Expander\ConcreteProductRelationshipExpanderByResourceId;
+use Spryker\Glue\ProductsRestApi\Processor\Expander\ConcreteProductRelationshipExpanderByResourceIdInterface;
 use Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapper;
 use Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapperInterface;
 use Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapper;
@@ -63,6 +65,14 @@ class ProductsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createConcreteProductsResourceMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsRestApi\Processor\Expander\ConcreteProductRelationshipExpanderByResourceIdInterface
+     */
+    public function createConcreteProductRelationshipExpanderByResourceId(): ConcreteProductRelationshipExpanderByResourceIdInterface
+    {
+        return new ConcreteProductRelationshipExpanderByResourceId($this->createConcreteProductsReader());
     }
 
     /**
