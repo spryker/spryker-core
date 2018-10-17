@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Price;
 
 use Countable;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractCollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -346,7 +347,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
-    protected function extractMoneyValueTransfer(FormView $moneyValueFormView)
+    protected function extractMoneyValueTransfer(FormView $moneyValueFormView): MoneyValueTransfer
     {
         return $moneyValueFormView->vars['value'];
     }
@@ -356,7 +357,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function extractPriceProductTransfer(FormView $productMoneyTypeFormView)
+    protected function extractPriceProductTransfer(FormView $productMoneyTypeFormView): PriceProductTransfer
     {
         return $productMoneyTypeFormView->vars['value'];
     }
