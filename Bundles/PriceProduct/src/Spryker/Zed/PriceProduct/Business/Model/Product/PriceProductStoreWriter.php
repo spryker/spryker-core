@@ -88,7 +88,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
         $moneyValueTransfer->setIdEntity($priceProduceStoreEntity->getIdPriceProductStore());
 
-        $this->priceProductStoreWriterPluginExecutor->runPriceDimensionSaverPlugins($priceProductTransfer);
+        $priceProductTransfer = $this->priceProductStoreWriterPluginExecutor->runPriceDimensionSaverPlugins($priceProductTransfer);
 
         return $priceProductTransfer;
     }

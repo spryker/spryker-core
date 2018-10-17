@@ -14,9 +14,9 @@ interface PriceProductStoreWriterPluginExecutorInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function runPriceDimensionSaverPlugins(PriceProductTransfer $priceProductTransfer): void;
+    public function runPriceDimensionSaverPlugins(PriceProductTransfer $priceProductTransfer): PriceProductTransfer;
 
     /**
      * @param int $idPriceProductStore

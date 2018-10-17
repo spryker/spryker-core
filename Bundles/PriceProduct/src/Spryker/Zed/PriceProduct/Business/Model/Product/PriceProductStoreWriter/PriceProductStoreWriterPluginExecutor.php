@@ -62,15 +62,17 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function runPriceDimensionSaverPlugins(PriceProductTransfer $priceProductTransfer): void
+    public function runPriceDimensionSaverPlugins(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         if ($priceProductTransfer->getIdProduct()) {
-            $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionConcreteSaverPlugins);
+            $priceProductTransfer = $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionConcreteSaverPlugins);
         } elseif ($priceProductTransfer->getIdProductAbstract()) {
-            $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionAbstractSaverPlugins);
+            $priceProductTransfer = $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionAbstractSaverPlugins);
         }
+
+        return $priceProductTransfer;
     }
 
     /**
