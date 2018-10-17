@@ -12,10 +12,7 @@ use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector as SymfonyRe
 class RequestDataCollector extends SymfonyRequestDataCollector
 {
     /**
-     * Gets the previous request attributes.
-     *
-     * @return array|bool A legacy array of data from the previous redirection response
-     *                    or false otherwise
+     * @return array|bool
      */
     public function getRedirect()
     {
