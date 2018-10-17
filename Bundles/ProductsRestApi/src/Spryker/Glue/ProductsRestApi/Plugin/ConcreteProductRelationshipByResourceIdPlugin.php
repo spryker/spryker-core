@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartItemsProductsRelationship\Plugin;
+namespace Spryker\Glue\ProductsRestApi\Plugin;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
 /**
- * @method \Spryker\Glue\CartItemsProductsRelationship\CartItemsProductsRelationshipFactory getFactory()
+ * @method \Spryker\Glue\ProductsRestApi\ProductsRestApiFactory getFactory()
  */
-class GuestCartItemsProductsRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ConcreteProductRelationshipByResourceIdPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
-    protected const RESOURCE_TYPE = 'products';
-
     /**
      * {@inheritdoc}
-     *  - Adds concrete-products resource relationship to guest-cart-items resource
+     *
+     * - Identifier of passed resources should contain customer reference.
      *
      * @api
      *
@@ -31,7 +31,9 @@ class GuestCartItemsProductsRelationshipPlugin extends AbstractPlugin implements
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $this->getFactory()->createCartsProductsResourceExpander()->addResourceRelationships($resources, $restRequest);
+        $this->getFactory()
+            ->createConcreteProductRelationshipExpanderByResourceId()
+            ->addResourceRelationshipsByResourceId($resources, $restRequest);
     }
 
     /**
@@ -43,6 +45,6 @@ class GuestCartItemsProductsRelationshipPlugin extends AbstractPlugin implements
      */
     public function getRelationshipResourceType(): string
     {
-        return static::RESOURCE_TYPE;
+        return ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS;
     }
 }

@@ -18,24 +18,28 @@ use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleter;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReader;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
-use Spryker\Glue\CartsRestApi\Processor\Cart\GuestCartCreator;
-use Spryker\Glue\CartsRestApi\Processor\Cart\GuestCartCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdder;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemAdderInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleter;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdater;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdaterInterface;
-use Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemAdder;
-use Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemAdderInterface;
-use Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemDeleter;
-use Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemDeleterInterface;
-use Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemUpdater;
-use Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemUpdaterInterface;
+use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreator;
+use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreatorInterface;
+use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReader;
+use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemAdder;
+use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemAdderInterface;
+use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemDeleter;
+use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemDeleterInterface;
+use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemUpdater;
+use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilder;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Shared\Kernel\Store;
@@ -122,7 +126,49 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemUpdaterInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface
+     */
+    public function createGuestCartReader(): GuestCartReaderInterface
+    {
+        return new GuestCartReader(
+            $this->getResourceBuilder(),
+            $this->createCartsResourceMapper(),
+            $this->getQuoteCollectionReaderPlugin(),
+            $this->getCustomerClient(),
+            $this->createGuestCartRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreatorInterface
+     */
+    public function createGuestCartCreator(): GuestCartCreatorInterface
+    {
+        return new GuestCartCreator(
+            $this->getResourceBuilder(),
+            $this->createCartsResourceMapper(),
+            $this->getPersistentCartClient(),
+            $this->getStorage()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemAdderInterface
+     */
+    public function createGuestCartItemAdder(): GuestCartItemAdderInterface
+    {
+        return new GuestCartItemAdder(
+            $this->getCartClient(),
+            $this->getQuoteClient(),
+            $this->createGuestCartReader(),
+            $this->createGuestCartCreator(),
+            $this->createCartItemsResourceMapper(),
+            $this->createGuestCartRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemUpdaterInterface
      */
     public function createGuestCartItemUpdater(): GuestCartItemUpdaterInterface
     {
@@ -131,12 +177,12 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getZedRequestClient(),
             $this->getQuoteClient(),
-            $this->createCartReader()
+            $this->createGuestCartReader()
         );
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemDeleterInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemDeleterInterface
      */
     public function createGuestCartItemDeleter(): GuestCartItemDeleterInterface
     {
@@ -144,7 +190,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getCartClient(),
             $this->getResourceBuilder(),
             $this->getQuoteClient(),
-            $this->createCartReader()
+            $this->createGuestCartReader()
         );
     }
 
@@ -213,31 +259,14 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\CartItem\GuestCartItemAdderInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface
      */
-    public function createGuestCartItemAdder(): GuestCartItemAdderInterface
+    public function createGuestCartRestResponseBuilder(): GuestCartRestResponseBuilderInterface
     {
-        return new GuestCartItemAdder(
-            $this->getCartClient(),
+        return new GuestCartRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->getQuoteClient(),
-            $this->createCartReader(),
-            $this->createGuestCartCreator(),
             $this->createCartsResourceMapper(),
             $this->createCartItemsResourceMapper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Cart\GuestCartCreatorInterface
-     */
-    public function createGuestCartCreator(): GuestCartCreatorInterface
-    {
-        return new GuestCartCreator(
-            $this->getResourceBuilder(),
-            $this->createCartsResourceMapper(),
-            $this->getPersistentCartClient(),
-            $this->getStorage()
         );
     }
 
