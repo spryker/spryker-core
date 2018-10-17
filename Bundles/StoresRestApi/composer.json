@@ -1,5 +1,6 @@
 {
   "name": "spryker/stores-rest-api",
+  "type": "library",
   "description": "StoresRestApi module",
   "license": "proprietary",
   "require": {

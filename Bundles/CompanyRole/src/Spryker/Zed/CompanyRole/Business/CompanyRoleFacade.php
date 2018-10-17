@@ -229,10 +229,27 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      *
      * @api
      *
+     * @deprecated Use CompanyRoleFacade::findDefaultCompanyRoleByIdCompany() instead.
+     *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
     public function getDefaultCompanyRole(): CompanyRoleTransfer
     {
         return $this->getRepository()->getDefaultCompanyRole();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findDefaultCompanyRoleByIdCompany(int $idCompany): ?CompanyRoleTransfer
+    {
+        return $this->getRepository()
+            ->findDefaultCompanyRoleByIdCompany($idCompany);
     }
 }

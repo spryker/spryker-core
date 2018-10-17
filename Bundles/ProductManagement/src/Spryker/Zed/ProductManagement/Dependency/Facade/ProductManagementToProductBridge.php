@@ -211,4 +211,25 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     {
         $this->productFacade->touchProductConcrete($idProductConcrete);
     }
+
+    /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    public function findProductConcreteIdBySku($sku)
+    {
+        return $this->productFacade->findProductConcreteIdBySku($sku);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string
+     */
+    public function generateProductConcreteSku(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->productFacade->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
+    }
 }

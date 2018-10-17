@@ -327,4 +327,20 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
             ->createAttributeReader()
             ->getProductAttributeCollection();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createSuperAttributeReader()
+            ->getUniqueSuperAttributesFromConcreteProducts($productConcreteTransfers);
+    }
 }
