@@ -118,7 +118,7 @@ class RateController extends AbstractController
     }
 
     /**
-     * @deprecated
+     * @deprecated Use DeleteRateController::indexAction() instead.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
