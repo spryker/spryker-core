@@ -49,9 +49,11 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product abstract blacklists by product abstract id.
+     *  - Retrieves product blacklist ids by product abstract id.
      *
      * @api
+     *
+     * @deprecated for better method naming, use getProductBlacklistIdsByIdProductAbstract() instead.
      *
      * @param int $idProductAbstract
      *
@@ -61,7 +63,7 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product abstract whitelists by product abstract id.
+     *  - Retrieves product blacklist ids by product abstract id.
      *
      * @api
      *
@@ -69,7 +71,33 @@ interface ProductListFacadeInterface
      *
      * @return int[]
      */
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product whitelist ids by product abstract id.
+     *
+     * @api
+     *
+     * @deprecated for better method naming, use getProductWhitelistIdsByIdProductAbstract() instead.
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
     public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product whitelist ids by product abstract id.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * Specification:
@@ -85,9 +113,11 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product concrete whitelists by product abstract id.
+     *  - Retrieves product blacklist ids by product concrete id.
      *
      * @api
+     *
+     * @deprecated Misleading method name, use getProductBlacklistIdsByIdProductConcrete() instead.
      *
      * @param int $idProductConcrete
      *
@@ -97,7 +127,7 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product concrete whitelists by product abstract id.
+     *  - Retrieves product blacklist ids by product concrete id.
      *
      * @api
      *
@@ -105,7 +135,33 @@ interface ProductListFacadeInterface
      *
      * @return int[]
      */
+    public function getProductBlacklistIdsByIdProductConcrete(int $idProductConcrete): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product whitelist ids by product concrete id.
+     *
+     * @api
+     *
+     * @deprecated Misleading method name, use getProductWhitelistIdsByIdProductConcrete() instead.
+     *
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
     public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product whitelist ids by product concrete id.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
 
     /**
      * Specification:

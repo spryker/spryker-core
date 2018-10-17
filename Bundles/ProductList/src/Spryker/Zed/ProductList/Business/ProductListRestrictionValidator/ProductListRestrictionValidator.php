@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface;
-use Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface;
 
 class ProductListRestrictionValidator implements ProductListRestrictionValidatorInterface
 {
@@ -20,24 +19,16 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
     protected const MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED = 'product-cart.info.restricted-product.removed';
 
     /**
-     * @var \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface
-     */
-    protected $productFacade;
-
-    /**
      * @var \Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface
      */
     protected $productListReader;
 
     /**
-     * @param \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface $productListReader
      */
     public function __construct(
-        ProductListToProductFacadeInterface $productFacade,
         ProductListReaderInterface $productListReader
     ) {
-        $this->productFacade = $productFacade;
         $this->productListReader = $productListReader;
     }
 
@@ -48,120 +39,105 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
      */
     public function validateItemAddition(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
+        $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
         $customerTransfer = $cartChangeTransfer->getQuote()->getCustomer();
         if (!$customerTransfer) {
-            return $responseTransfer;
+            return $cartPreCheckResponseTransfer;
         }
 
         $customerProductListCollectionTransfer = $customerTransfer->getCustomerProductListCollection();
         if (!$customerProductListCollectionTransfer) {
-            return $responseTransfer;
+            return $cartPreCheckResponseTransfer;
         }
 
-        $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?: [];
         $customerBlacklistIds = $customerProductListCollectionTransfer->getBlacklistIds() ?: [];
+        $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?: [];
+        $cartChangeSkus = array_map(function (ItemTransfer $itemTransfer) {
+            return $itemTransfer->getSku();
+        }, $cartChangeTransfer->getItems()->getArrayCopy());
 
-        foreach ($cartChangeTransfer->getItems() as $item) {
+        $restrictedProductConcreteSkus = $this->filterRestrictedProductConcreteSkus($cartChangeSkus, $customerBlacklistIds, $customerWhitelistIds);
+
+        if (empty($restrictedProductConcreteSkus)) {
+            return $cartPreCheckResponseTransfer;
+        }
+
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $this->validateItem(
-                $item,
-                $responseTransfer,
-                $customerWhitelistIds,
-                $customerBlacklistIds
+                $itemTransfer,
+                $cartPreCheckResponseTransfer,
+                $restrictedProductConcreteSkus
             );
         }
 
-        return $responseTransfer;
+        return $cartPreCheckResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
-     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
-     * @param int[] $customerWhitelistIds
-     * @param int[] $customerBlacklistIds
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
+     * @param string[] $restrictedProductConcreteSkus
      *
      * @return void
      */
     protected function validateItem(
-        ItemTransfer $item,
-        CartPreCheckResponseTransfer $responseTransfer,
-        array $customerWhitelistIds,
-        array $customerBlacklistIds
+        ItemTransfer $itemTransfer,
+        CartPreCheckResponseTransfer $cartPreCheckResponseTransfer,
+        array $restrictedProductConcreteSkus
     ): void {
-        $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($item->getSku());
-        if ($this->isProductAbstractRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds)) {
-            $this->addViolation($item->getSku(), $responseTransfer);
-            return;
-        }
+        if (in_array($itemTransfer->getSku(), $restrictedProductConcreteSkus)) {
+            $this->addViolation($itemTransfer->getSku(), $cartPreCheckResponseTransfer);
 
-        $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($item->getSku());
-        if ($this->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds)) {
-            $this->addViolation($item->getSku(), $responseTransfer);
             return;
         }
     }
 
     /**
-     * @param int $idProductAbstract
-     * @param int[] $customerWhitelistIds
+     * @param string[] $productConcreteSkus
      * @param int[] $customerBlacklistIds
+     * @param int[] $customerWhitelistIds
      *
-     * @return bool
+     * @return string[]
      */
-    public function isProductAbstractRestricted(
-        int $idProductAbstract,
-        array $customerWhitelistIds,
-        array $customerBlacklistIds
-    ): bool {
-        if (!$customerBlacklistIds && !$customerWhitelistIds) {
-            return false;
-        }
-
-        $productAbstractBlacklistIds = $this->productListReader
-            ->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
-        $isProductInBlacklist = !empty(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
-
-        $productAbstractWhitelistIds = $this->productListReader
-            ->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
-        $isProductInWhitelist = !empty(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
-
-        return $isProductInBlacklist || !(empty($productAbstractWhitelistIds) || $isProductInWhitelist);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     * @param array $customerWhitelistIds
-     * @param array $customerBlacklistIds
-     *
-     * @return bool
-     */
-    public function isProductConcreteRestricted(int $idProductConcrete, array $customerWhitelistIds, array $customerBlacklistIds): bool
+    public function filterRestrictedProductConcreteSkus(array $productConcreteSkus, array $customerBlacklistIds, array $customerWhitelistIds): array
     {
-        if (!$customerBlacklistIds && !$customerWhitelistIds) {
-            return false;
+        if (empty($productConcreteSkus)) {
+            return [];
         }
 
-        $productAbstractBlacklistIds = $this->productListReader
-            ->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete);
-        $isProductInBlacklist = !empty(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
+        $productConcreteSkusInWhitelist = $productConcreteSkus;
+        $productConcreteSkusInBlacklist = [];
 
-        $productAbstractWhitelistIds = $this->productListReader
-            ->getProductAbstractWhitelistIdsByIdProductConcrete($idProductConcrete);
-        $isProductInWhitelist = !empty(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
+        if (!empty($customerWhitelistIds)) {
+            $productConcreteSkusInWhitelist = $this->productListReader
+                ->getConcreteProductSkusInWhitelists($productConcreteSkus, $customerWhitelistIds);
+        }
 
-        return $isProductInBlacklist || !(empty($productAbstractWhitelistIds) || $isProductInWhitelist);
+        if (!empty($customerBlacklistIds)) {
+            $productConcreteSkusInBlacklist = $this->productListReader
+                ->getConcreteProductSkusInBlacklists($productConcreteSkus, $customerBlacklistIds);
+        }
+
+        if (empty($productConcreteSkusInWhitelist) && empty($productConcreteSkusInBlacklist)) {
+            return [];
+        }
+
+        return array_unique(array_merge(
+            $productConcreteSkusInBlacklist,
+            array_diff($productConcreteSkus, $productConcreteSkusInWhitelist)
+        ));
     }
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
      *
      * @return void
      */
-    protected function addViolation(string $sku, CartPreCheckResponseTransfer $responseTransfer): void
+    protected function addViolation(string $sku, CartPreCheckResponseTransfer $cartPreCheckResponseTransfer): void
     {
-        $responseTransfer->setIsSuccess(false);
-        $responseTransfer->addMessage(
+        $cartPreCheckResponseTransfer->setIsSuccess(false);
+        $cartPreCheckResponseTransfer->addMessage(
             (new MessageTransfer())
                 ->setValue(static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED)
                 ->setParameters(['%sku%' => $sku])

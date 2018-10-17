@@ -51,9 +51,9 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
     {
-        return $this->productListRepository->getAbstractProductBlacklistIds($idProductAbstract);
+        return $this->productListRepository->getProductBlacklistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -61,7 +61,7 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
+    public function getProductWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
         return $this->productListRepository->getAbstractProductWhitelistIds($idProductAbstract);
     }
@@ -81,7 +81,7 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array
+    public function getProductBlacklistIdsByIdProductConcrete(int $idProductConcrete): array
     {
         return $this->productListRepository->getConcreteProductBlacklistIds($idProductConcrete);
     }
@@ -91,9 +91,31 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array
+    public function getProductWhitelistIdsByIdProductConcrete(int $idProductConcrete): array
     {
         return $this->productListRepository->getConcreteProductWhitelistIds($idProductConcrete);
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     * @param int[] $blackListIds
+     *
+     * @return string[]
+     */
+    public function getConcreteProductSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array
+    {
+        return $this->productListRepository->getConcreteProductSkusInBlacklists($productConcreteSkus, $blackListIds);
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     * @param int[] $whiteListIds
+     *
+     * @return string[]
+     */
+    public function getConcreteProductSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array
+    {
+        return $this->productListRepository->getConcreteProductSkusInWhitelists($productConcreteSkus, $whiteListIds);
     }
 
     /**

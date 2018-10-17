@@ -30,7 +30,6 @@ use Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductList
 use Spryker\Zed\ProductList\Business\RestrictedItemsFilter\RestrictedItemsFilter;
 use Spryker\Zed\ProductList\Business\RestrictedItemsFilter\RestrictedItemsFilterInterface;
 use Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeInterface;
-use Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface;
 use Spryker\Zed\ProductList\Dependency\Service\ProductListToUtilTextServiceInterface;
 use Spryker\Zed\ProductList\ProductListDependencyProvider;
 
@@ -48,8 +47,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     {
         return new RestrictedItemsFilter(
             $this->getMessengerFacade(),
-            $this->createProductListRestrictionValidator(),
-            $this->getProductFacade()
+            $this->createProductListRestrictionValidator()
         );
     }
 
@@ -59,7 +57,6 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     public function createProductListRestrictionValidator(): ProductListRestrictionValidatorInterface
     {
         return new ProductListRestrictionValidator(
-            $this->getProductFacade(),
             $this->createProductListReader()
         );
     }
@@ -170,14 +167,6 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getUtilTextService()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface
-     */
-    public function getProductFacade(): ProductListToProductFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductListDependencyProvider::FACADE_PRODUCT);
     }
 
     /**

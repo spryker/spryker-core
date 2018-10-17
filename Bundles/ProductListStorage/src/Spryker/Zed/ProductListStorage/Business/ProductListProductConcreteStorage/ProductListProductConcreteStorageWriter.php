@@ -121,8 +121,8 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
         $idProductAbstract = reset($productAbstractIds);
 
         $blacklistIds = array_merge(
-            $this->productListFacade->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete),
-            $this->productListFacade->getProductAbstractBlacklistIdsIdProductAbstract($idProductAbstract)
+            $this->productListFacade->getProductBlacklistIdsByIdProductConcrete($idProductConcrete),
+            $this->productListFacade->getProductBlacklistIdsIdProductAbstract($idProductAbstract)
         );
 
         return array_unique($blacklistIds);
@@ -139,7 +139,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
         $idProductAbstract = reset($productAbstractIds);
 
         $whitelistIds = array_merge(
-            $this->productListFacade->getProductAbstractWhitelistIdsByIdProductConcrete($idProductConcrete),
+            $this->productListFacade->getProductWhitelistIdsByIdProductConcrete($idProductConcrete),
             $this->productListFacade->getCategoryWhitelistIdsByIdProductAbstract($idProductAbstract)
         );
 

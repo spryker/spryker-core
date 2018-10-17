@@ -27,9 +27,9 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsIdProductAbstract(int $idProductAbstract): array
+    public function getProductBlacklistIdsIdProductAbstract(int $idProductAbstract): array
     {
-        return $this->productListFacade->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
+        return $this->productListFacade->getProductBlacklistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -37,9 +37,9 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
+    public function getProductWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
-        return $this->productListFacade->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
+        return $this->productListFacade->getProductWhitelistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -57,9 +57,9 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array
+    public function getProductBlacklistIdsByIdProductConcrete(int $idProductConcrete): array
     {
-        return $this->productListFacade->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete);
+        return $this->productListFacade->getProductBlacklistIdsByIdProductConcrete($idProductConcrete);
     }
 
     /**
@@ -67,9 +67,9 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array
+    public function getProductWhitelistIdsByIdProductConcrete(int $idProductConcrete): array
     {
-        return $this->productListFacade->getProductAbstractWhitelistIdsByIdProductConcrete($idProductConcrete);
+        return $this->productListFacade->getProductWhitelistIdsByIdProductConcrete($idProductConcrete);
     }
 
     /**
