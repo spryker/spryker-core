@@ -13,6 +13,8 @@ use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductM
 
 class MerchantPriceDimensionFormDataProvider
 {
+    protected const FORMAT_NAME = '%s - %s';
+
     /**
      * @var \Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface
      */
@@ -63,7 +65,7 @@ class MerchantPriceDimensionFormDataProvider
     protected function generateMerchantRelationshipName(MerchantRelationshipTransfer $merchantRelationshipTransfer): string
     {
         return sprintf(
-            '%s - %s',
+            static::FORMAT_NAME,
             $merchantRelationshipTransfer->getIdMerchantRelationship(),
             $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()
         );
