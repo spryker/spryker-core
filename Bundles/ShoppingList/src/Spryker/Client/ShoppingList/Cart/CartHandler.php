@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface;
@@ -39,21 +40,29 @@ class CartHandler implements CartHandlerInterface
     protected $shoppingListItemToItemMapperPlugins;
 
     /**
+     * @var \Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapperPluginInterface[]
+     */
+    protected $quoteItemToItemMapperPlugins;
+
+    /**
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface $cartClient
      * @param \Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface $shoppingListStub
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface $messengerClient
      * @param \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[] $shoppingListItemToItemMapperPlugins
+     * @param \Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapperPluginInterface[] $quoteItemToItemMapperPlugins
      */
     public function __construct(
         ShoppingListToCartClientInterface $cartClient,
         ShoppingListStubInterface $shoppingListStub,
         ShoppingListToMessengerClientInterface $messengerClient,
-        array $shoppingListItemToItemMapperPlugins
+        array $shoppingListItemToItemMapperPlugins,
+        array $quoteItemToItemMapperPlugins
     ) {
         $this->cartClient = $cartClient;
         $this->shoppingListStub = $shoppingListStub;
         $this->messengerClient = $messengerClient;
         $this->shoppingListItemToItemMapperPlugins = $shoppingListItemToItemMapperPlugins;
+        $this->quoteItemToItemMapperPlugins = $quoteItemToItemMapperPlugins;
     }
 
     /**
@@ -130,12 +139,56 @@ class CartHandler implements CartHandlerInterface
         $itemTransfer = (new ItemTransfer())
             ->setSku($shoppingListAddToCartRequestTransfer->getSku())
             ->setQuantity($shoppingListAddToCartRequestTransfer->getQuantity());
+        $itemTransfer = $this->mapShoppingListItemToItem($shoppingListAddToCartRequestTransfer->getShoppingListItem(), $itemTransfer);
+        $itemTransfer = $this->mapQuoteItemToItem($this->findItemInQuote($itemTransfer), $itemTransfer);
 
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function mapShoppingListItemToItem(ShoppingListItemTransfer $shoppingListItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
+    {
         foreach ($this->shoppingListItemToItemMapperPlugins as $shoppingListItemToItemMapperPlugin) {
-            $itemTransfer = $shoppingListItemToItemMapperPlugin->map($shoppingListAddToCartRequestTransfer->getShoppingListItem(), $itemTransfer);
+            $itemTransfer = $shoppingListItemToItemMapperPlugin->map($shoppingListItemTransfer, $itemTransfer);
         }
 
         return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer|null $quoteItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function mapQuoteItemToItem(?ItemTransfer $quoteItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
+    {
+        if (!$quoteItemTransfer) {
+            return $itemTransfer;
+        }
+
+        foreach ($this->quoteItemToItemMapperPlugins as $quoteItemToItemMapperPlugin) {
+            $itemTransfer = $quoteItemToItemMapperPlugin->map($quoteItemTransfer, $itemTransfer);
+        }
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    protected function findItemInQuote(ItemTransfer $itemTransfer): ?ItemTransfer
+    {
+        $quoteTransfer = $this->cartClient->getQuote();
+
+        return $this->cartClient->findQuoteItem($quoteTransfer, $itemTransfer->getSku());
     }
 
     /**

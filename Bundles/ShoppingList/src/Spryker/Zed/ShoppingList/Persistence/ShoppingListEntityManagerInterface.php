@@ -108,6 +108,13 @@ interface ShoppingListEntityManagerInterface
     public function deleteShoppingListCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): void;
 
     /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function deleteShoppingListCompanyBusinessUnitsByCompanyBusinessUnitId(int $idCompanyBusinessUnit): void;
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
      *
      * @return void
