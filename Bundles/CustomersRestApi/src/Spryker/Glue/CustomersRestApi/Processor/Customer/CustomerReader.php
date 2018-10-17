@@ -74,12 +74,12 @@ class CustomerReader implements CustomerReaderInterface
     public function getCustomerByCustomerReference(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
+        $customerResource = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)
+            ?? $restRequest->getResource();
 
-        if (!$restRequest->getResource()->getId()) {
-            return $this->restApiError->addCustomerReferenceMissingError($restResponse);
-        }
-
-        $customerResponseTransfer = $this->findCustomer($restRequest);
+        $customerResponseTransfer = $customerResource->getId()
+            ? $this->findCustomer($restRequest)
+            : $this->findCurrentCustomer($restRequest);
 
         $restResponse = $this->restApiValidator->validateCustomerResponseTransfer(
             $customerResponseTransfer,
@@ -112,6 +112,21 @@ class CustomerReader implements CustomerReaderInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function findCustomer(RestRequestInterface $restRequest): CustomerResponseTransfer
+    {
+        $customerReference = !empty($restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS))
+            ? $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId()
+            : $restRequest->getResource()->getId();
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference ?? '');
+
+        return $this->customerClient->findCustomerByReference($customerTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function findCurrentCustomer(RestRequestInterface $restRequest): CustomerResponseTransfer
     {
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
 
