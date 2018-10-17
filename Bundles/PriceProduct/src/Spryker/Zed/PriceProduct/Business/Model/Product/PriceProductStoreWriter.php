@@ -15,6 +15,7 @@ use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter\Pric
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
+use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 {
@@ -41,21 +42,37 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     protected $priceProductStoreWriterPluginExecutor;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\PriceProductConfig
+     */
+    protected $priceProductConfig;
+
+    /**
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface
+     */
+    protected $priceProductDefaultWriter;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter\PriceProductStoreWriterPluginExecutorInterface $priceProductStoreWriterPluginExecutor
+     * @param \Spryker\Zed\PriceProduct\PriceProductConfig $priceProductConfig
+     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface $priceProductDefaultWriter
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
         PriceProductEntityManagerInterface $priceProductEntityManager,
         PriceProductRepositoryInterface $priceProductRepository,
-        PriceProductStoreWriterPluginExecutorInterface $priceProductStoreWriterPluginExecutor
+        PriceProductStoreWriterPluginExecutorInterface $priceProductStoreWriterPluginExecutor,
+        PriceProductConfig $priceProductConfig,
+        PriceProductDefaultWriterInterface $priceProductDefaultWriter
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductEntityManager = $priceProductEntityManager;
         $this->priceProductRepository = $priceProductRepository;
         $this->priceProductStoreWriterPluginExecutor = $priceProductStoreWriterPluginExecutor;
+        $this->priceProductConfig = $priceProductConfig;
+        $this->priceProductDefaultWriter = $priceProductDefaultWriter;
     }
 
     /**
@@ -88,7 +105,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
         $moneyValueTransfer->setIdEntity($priceProduceStoreEntity->getIdPriceProductStore());
 
-        $priceProductTransfer = $this->priceProductStoreWriterPluginExecutor->runPriceDimensionSaverPlugins($priceProductTransfer);
+        $priceProductTransfer = $this->persistPriceProductDimension($priceProductTransfer);
 
         return $priceProductTransfer;
     }
@@ -107,6 +124,42 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
             $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function persistPriceProductDimension(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        if ($priceProductTransfer->getPriceDimension()->getType() === $this->priceProductConfig->getPriceDimensionDefault()) {
+            return $this->persistPriceProductDefaultDimensionType($priceProductTransfer);
+        }
+
+        if ($priceProductTransfer->getIdProduct()) {
+            return $this->priceProductStoreWriterPluginExecutor->executePriceDimensionConcreteSaverPlugins($priceProductTransfer);
+        }
+
+        if ($priceProductTransfer->getIdProductAbstract()) {
+            return $this->priceProductStoreWriterPluginExecutor->executePriceDimensionAbstractSaverPlugins($priceProductTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function persistPriceProductDefaultDimensionType(
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductTransfer {
+        $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
+        $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
+            $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
+        );
+
+        return $priceProductTransfer;
     }
 
     /**

@@ -76,9 +76,10 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
     protected function getPriceData(array $data): array
     {
         $priceData = [];
+        $priceProductVolumeItemArray = $this->getPriceProductVolumeItemArray($data);
 
-        if ($this->getPriceProductVolumeItemTransfers($data)) {
-            $priceData[$this->config->getVolumePriceTypeName()] = $this->getPriceProductVolumeItemTransfers($data);
+        if ($priceProductVolumeItemArray) {
+            $priceData[$this->config->getVolumePriceTypeName()] = $priceProductVolumeItemArray;
         }
 
         return $priceData;
@@ -87,20 +88,24 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]|null
      */
-    protected function getPriceProductVolumeItemTransfers(array $data): array
+    protected function getPriceProductVolumeItemArray(array $data): ?array
     {
-        $rawPriceProductVolumeItemTransfers = $data[PriceVolumeCollectionFormType::FIELD_VOLUMES];
-        $nonFilteredPriceProductVolumeItemTransfers = [];
-
-        $priceProductVolumeItemTransfers = [];
-        foreach ($rawPriceProductVolumeItemTransfers as $priceProductVolumeItemTransfer) {
-            $priceProductVolumeItemTransfers[] = array_filter($priceProductVolumeItemTransfer->toArray());
-            $nonFilteredPriceProductVolumeItemTransfers[] = $priceProductVolumeItemTransfer->toArray();
+        if (!isset($data[PriceVolumeCollectionFormType::FIELD_VOLUMES])) {
+            return null;
         }
-        $priceProductVolumeItemTransfers = array_filter($priceProductVolumeItemTransfers);
 
-        return array_intersect_key($nonFilteredPriceProductVolumeItemTransfers, $priceProductVolumeItemTransfers);
+        $rawPriceProductVolumeItemTransfers = $data[PriceVolumeCollectionFormType::FIELD_VOLUMES];
+        $priceProductVolumeItemArray = [];
+        $nonFilteredPriceProductVolumeItemArray = [];
+
+        foreach ($rawPriceProductVolumeItemTransfers as $priceProductVolumeItemTransfer) {
+            $priceProductVolumeItemArray[] = array_filter($priceProductVolumeItemTransfer->toArray());
+            $nonFilteredPriceProductVolumeItemArray[] = $priceProductVolumeItemTransfer->toArray();
+        }
+        $priceProductVolumeItemArray = array_filter($priceProductVolumeItemArray);
+
+        return array_intersect_key($nonFilteredPriceProductVolumeItemArray, $priceProductVolumeItemArray);
     }
 }

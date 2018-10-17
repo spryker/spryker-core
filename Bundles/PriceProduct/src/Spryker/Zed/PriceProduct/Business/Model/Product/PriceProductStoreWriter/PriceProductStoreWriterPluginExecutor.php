@@ -8,8 +8,6 @@
 namespace Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface;
-use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPluginExecutorInterface
 {
@@ -19,44 +17,28 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
     protected $priceProductStorePreDeletePlugins;
 
     /**
-     * @var array|\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
      */
     protected $priceDimensionAbstractSaverPlugins;
 
     /**
-     * @var array|\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
+     * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
      */
     protected $priceDimensionConcreteSaverPlugins;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\PriceProductConfig
-     */
-    protected $priceConfig;
-
-    /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface
-     */
-    protected $priceProductDefaultWriter;
-
-    /**
      * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface[] $priceProductStorePreDeletePlugins
-     * @param array $priceDimensionAbstractSaverPlugins
-     * @param array $priceDimensionConcreteSaverPlugins
-     * @param \Spryker\Zed\PriceProduct\PriceProductConfig $priceConfig
-     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface $priceProductDefaultWriter
+     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[] $priceDimensionAbstractSaverPlugins
+     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[] $priceDimensionConcreteSaverPlugins
      */
     public function __construct(
         array $priceProductStorePreDeletePlugins,
         array $priceDimensionAbstractSaverPlugins,
-        array $priceDimensionConcreteSaverPlugins,
-        PriceProductConfig $priceConfig,
-        PriceProductDefaultWriterInterface $priceProductDefaultWriter
+        array $priceDimensionConcreteSaverPlugins
     ) {
         $this->priceProductStorePreDeletePlugins = $priceProductStorePreDeletePlugins;
         $this->priceDimensionAbstractSaverPlugins = $priceDimensionAbstractSaverPlugins;
         $this->priceDimensionConcreteSaverPlugins = $priceDimensionConcreteSaverPlugins;
-        $this->priceConfig = $priceConfig;
-        $this->priceProductDefaultWriter = $priceProductDefaultWriter;
     }
 
     /**
@@ -64,15 +46,19 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function runPriceDimensionSaverPlugins(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    public function executePriceDimensionAbstractSaverPlugins(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        if ($priceProductTransfer->getIdProduct()) {
-            $priceProductTransfer = $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionConcreteSaverPlugins);
-        } elseif ($priceProductTransfer->getIdProductAbstract()) {
-            $priceProductTransfer = $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionAbstractSaverPlugins);
-        }
+        return $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionAbstractSaverPlugins);
+    }
 
-        return $priceProductTransfer;
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function executePriceDimensionConcreteSaverPlugins(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        return $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionConcreteSaverPlugins);
     }
 
     /**
@@ -89,7 +75,7 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $priceDimensionSaverPlugins
+     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]|\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[] $priceDimensionSaverPlugins
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
@@ -97,44 +83,7 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
         PriceProductTransfer $priceProductTransfer,
         array $priceDimensionSaverPlugins
     ): PriceProductTransfer {
-
         $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
-
-        if ($priceDimensionType === $this->priceConfig->getPriceDimensionDefault()) {
-            return $this->persistPriceProductIfDimensionTypeDefault($priceProductTransfer);
-        }
-
-        return $this->savePrice($priceProductTransfer, $priceDimensionSaverPlugins, $priceDimensionType);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function persistPriceProductIfDimensionTypeDefault(PriceProductTransfer $priceProductTransfer
-    ): PriceProductTransfer
-    {
-        $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
-        $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
-            $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
-        );
-
-        return $priceProductTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $priceDimensionSaverPlugins
-     * @param string $priceDimensionType
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function savePrice(
-        PriceProductTransfer $priceProductTransfer,
-        array $priceDimensionSaverPlugins,
-        string $priceDimensionType
-    ): PriceProductTransfer {
 
         foreach ($priceDimensionSaverPlugins as $priceDimensionSaverPlugin) {
             if ($priceDimensionSaverPlugin->getDimensionName() !== $priceDimensionType) {

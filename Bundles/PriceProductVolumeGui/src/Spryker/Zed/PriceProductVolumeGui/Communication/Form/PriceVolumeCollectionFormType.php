@@ -178,7 +178,7 @@ class PriceVolumeCollectionFormType extends AbstractType
             'label' => false,
             'required' => false,
             'divisor' => $this->getDivisor($currencyTransfer),
-            'scale' => $this->getFractionDigits($currencyTransfer),
+            'scale' => $this->getFractionDigits($currencyTransfer, $options),
             'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
             'attr' => ['readonly' => 'readonly'],
         ]);
@@ -195,6 +195,7 @@ class PriceVolumeCollectionFormType extends AbstractType
     {
         $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE);
         $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_TRANSFER);
+        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_DEFAULT_SCALE);
 
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -257,10 +258,11 @@ class PriceVolumeCollectionFormType extends AbstractType
 
     /**
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param array $options
      *
      * @return int
      */
-    protected function getFractionDigits(CurrencyTransfer $currencyTransfer): int
+    protected function getFractionDigits(CurrencyTransfer $currencyTransfer, array $options): int
     {
         $fractionDigits = $currencyTransfer->getFractionDigits();
 
@@ -268,6 +270,6 @@ class PriceVolumeCollectionFormType extends AbstractType
             return $fractionDigits;
         }
 
-        return static::DEFAULT_SCALE;
+        return $options[PriceVolumeCollectionDataProvider::OPTION_DEFAULT_SCALE];
     }
 }

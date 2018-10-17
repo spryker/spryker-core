@@ -289,7 +289,9 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createPriceProductStoreWriterPluginExecutor()
+            $this->createPriceProductStoreWriterPluginExecutor(),
+            $this->getConfig(),
+            $this->createPriceProductDefaultWriter()
         );
     }
 
@@ -301,9 +303,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
         return new PriceProductStoreWriterPluginExecutor(
             $this->getPriceProductStorePreDeletePlugins(),
             $this->getPriceDimensionAbstractSaverPlugins(),
-            $this->getPriceDimensionConcreteSaverPlugins(),
-            $this->getConfig(),
-            $this->createPriceProductDefaultWriter()
+            $this->getPriceDimensionConcreteSaverPlugins()
         );
     }
 

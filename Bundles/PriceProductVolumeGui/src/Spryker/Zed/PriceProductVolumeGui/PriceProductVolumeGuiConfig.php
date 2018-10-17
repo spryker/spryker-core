@@ -27,6 +27,7 @@ class PriceProductVolumeGuiConfig extends AbstractBundleConfig
     protected const VOLUME_PRICE_TYPE = 'volume_prices';
 
     protected const EMPTY_ROWS_QUANTITY = 3;
+    protected const DEFAULT_SCALE = 2;
 
     /**
      * @return string
@@ -58,5 +59,13 @@ class PriceProductVolumeGuiConfig extends AbstractBundleConfig
     public function getEmptyRowsQuantity(): int
     {
         return static::EMPTY_ROWS_QUANTITY;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefaultScale(): int
+    {
+        return static::DEFAULT_SCALE;
     }
 }

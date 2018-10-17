@@ -24,6 +24,8 @@ class PriceVolumeCollectionDataProvider
 {
     public const OPTION_CURRENCY_CODE = 'currency_code';
     public const OPTION_CURRENCY_TRANSFER = 'currency_transfer';
+    public const OPTION_DEFAULT_SCALE = 'default_scale';
+
     protected const MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Abstract Id "%d".';
     protected const MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Concrete Id "%d".';
 
@@ -143,7 +145,8 @@ class PriceVolumeCollectionDataProvider
     {
         return [
             static::OPTION_CURRENCY_CODE => $currencyCode,
-            static::OPTION_CURRENCY_TRANSFER => $this->findCurrencyTransfer($currencyCode),
+            static::OPTION_CURRENCY_TRANSFER => $this->getCurrencyByCode($currencyCode),
+            static::OPTION_DEFAULT_SCALE => $this->config->getDefaultScale(),
         ];
     }
 
@@ -167,18 +170,18 @@ class PriceVolumeCollectionDataProvider
      */
     protected function getPreSavedVolumes(PriceProductTransfer $priceProductTransfer): array
     {
-        $volumes = [];
+        $priceProductVolumeItemTransfers = [];
         $preSavedVolumes = $this->utilEncodingService->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData());
         if (!$preSavedVolumes || !$preSavedVolumes->volume_prices) {
-            return $volumes;
+            return $priceProductVolumeItemTransfers;
         }
 
         foreach ($preSavedVolumes->volume_prices as $preSavedVolume) {
-            $volumes[] = (new PriceProductVolumeItemTransfer())
+            $priceProductVolumeItemTransfers[] = (new PriceProductVolumeItemTransfer())
                 ->fromArray(get_object_vars($preSavedVolume), true);
         }
 
-        return $volumes;
+        return $priceProductVolumeItemTransfers;
     }
 
     /**
@@ -205,8 +208,8 @@ class PriceVolumeCollectionDataProvider
      */
     protected function createPriceProductCriteriaTransfer(string $storeName, string $currencyCode, array $priceDimension): PriceProductCriteriaTransfer
     {
-        $idCurrency = $this->findIdCurrency($currencyCode);
-        $idStore = $this->findIdStore($storeName);
+        $idCurrency = $this->getIdCurrencyByCode($currencyCode);
+        $idStore = $this->getIdStoreByName($storeName);
 
         $priceProductDimensionTransfer = $this->createPriceProductDimensionTransfer($priceDimension);
 
@@ -242,7 +245,7 @@ class PriceVolumeCollectionDataProvider
      *
      * @return int
      */
-    protected function findIdStore(string $storeName): int
+    protected function getIdStoreByName(string $storeName): int
     {
         $storeTransfer = $this->storeFacade->getStoreByName($storeName);
 
@@ -254,9 +257,9 @@ class PriceVolumeCollectionDataProvider
      *
      * @return int
      */
-    protected function findIdCurrency(string $currencyCode): int
+    protected function getIdCurrencyByCode(string $currencyCode): int
     {
-        $currencyTransfer = $this->findCurrencyTransfer($currencyCode);
+        $currencyTransfer = $this->getCurrencyByCode($currencyCode);
 
         return $currencyTransfer->getIdCurrency();
     }
@@ -266,7 +269,7 @@ class PriceVolumeCollectionDataProvider
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    protected function findCurrencyTransfer(string $currencyCode): CurrencyTransfer
+    protected function getCurrencyByCode(string $currencyCode): CurrencyTransfer
     {
         return $this->currencyFacade->fromIsoCode($currencyCode);
     }

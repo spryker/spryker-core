@@ -33,6 +33,8 @@ class PriceVolumeController extends AbstractController
     protected const PRODUCT_ABSTRACT_EDIT_URL = '/product-management/edit';
 
     protected const MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS = 'Volume prices successfully saved.';
+    protected const PARAM_URL_FRAGMENT = 'fragment';
+    protected const PARAM_URL_FRAGMENT_DEFAULT_VALUE = 'tab-content-%s';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -246,7 +248,7 @@ class PriceVolumeController extends AbstractController
     protected function getUrlOptions(string $fragment): array
     {
         return [
-            'fragment' => sprintf('tab-content-%s', $fragment),
+            self::PARAM_URL_FRAGMENT => sprintf(static::PARAM_URL_FRAGMENT_DEFAULT_VALUE, $fragment),
         ];
     }
 }

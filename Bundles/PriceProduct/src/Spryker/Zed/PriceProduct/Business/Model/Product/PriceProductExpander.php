@@ -22,18 +22,18 @@ class PriceProductExpander implements PriceProductExpanderInterface
     /**
      * @var \Spryker\Zed\PriceProduct\PriceProductConfig
      */
-    protected $config;
+    protected $priceProductConfig;
 
     /**
      * @param \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface[] $priceProductDimensionExpanderStrategyPlugins
-     * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
+     * @param \Spryker\Zed\PriceProduct\PriceProductConfig $priceProductConfig
      */
     public function __construct(
         array $priceProductDimensionExpanderStrategyPlugins,
-        PriceProductConfig $config
+        PriceProductConfig $priceProductConfig
     ) {
         $this->priceProductDimensionExpanderStrategyPlugins = $priceProductDimensionExpanderStrategyPlugins;
-        $this->config = $config;
+        $this->priceProductConfig = $priceProductConfig;
     }
 
     /**
@@ -80,7 +80,7 @@ class PriceProductExpander implements PriceProductExpanderInterface
 
         if ($priceProductDimensionTransfer->getIdPriceProductDefault() !== null) {
             $priceProductDimensionTransfer->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
-            $priceProductDimensionTransfer->setName($this->config->getPriceDimensionDefaultName());
+            $priceProductDimensionTransfer->setName($this->priceProductConfig->getPriceDimensionDefaultName());
         }
 
         return $priceProductDimensionTransfer;
