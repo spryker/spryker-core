@@ -38,4 +38,9 @@ interface QuoteProcessorInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         RestRequestInterface $restRequest
     ): QuoteTransfer;
+
+    /**
+     * @return void
+     */
+    public function clearQuote(): void;
 }

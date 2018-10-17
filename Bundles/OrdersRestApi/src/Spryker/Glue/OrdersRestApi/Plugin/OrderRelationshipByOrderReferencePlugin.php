@@ -16,6 +16,8 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  */
 class OrderRelationshipByOrderReferencePlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
+    protected const CHECKOUT_RESOURCE = 'checkout';
+
     /**
      * {@inheritdoc}
      * - Adds relationship to the order by order reference.
@@ -44,6 +46,6 @@ class OrderRelationshipByOrderReferencePlugin extends AbstractPlugin implements 
      */
     public function getRelationshipResourceType(): string
     {
-        return 'checkout';
+        return static::CHECKOUT_RESOURCE;
     }
 }

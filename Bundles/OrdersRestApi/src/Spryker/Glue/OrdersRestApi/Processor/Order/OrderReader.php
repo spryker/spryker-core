@@ -80,7 +80,7 @@ class OrderReader implements OrderReaderInterface
             ->setCustomerReference($customerReference);
         $orderTransfer = $this->salesClient->getCustomerOrderByOrderReference($orderTransfer);
 
-        if (!$orderTransfer->getItems()->count()) {
+        if ($orderTransfer->getItems()->count() === 0) {
             return null;
         }
 

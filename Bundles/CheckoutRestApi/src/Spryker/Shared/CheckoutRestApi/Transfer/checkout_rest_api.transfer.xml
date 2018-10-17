@@ -66,7 +66,7 @@
         <property name="quoteIdentifier" type="string"/>
         <property name="billingAddress" type="RestAddress"/>
         <property name="shippingAddress" type="RestAddress"/>
-        <property name="payments" type="RestPayment[]" singular="payment"/>
+        <property name="payments" type="Payment[]" singular="payment"/>
         <property name="shipment" type="RestShipment"/>
         <property name="voucherCode" type="string"/>
     </transfer>
@@ -93,13 +93,6 @@
         <property name="iso2Code" type="string" />
         <property name="company" type="string" />
         <property name="phone" type="string" />
-    </transfer>
-
-    <transfer name="RestPayment">
-        <property name="paymentMethodInformation" type="array"/>
-        <property name="paymentMethod" type="string"/>
-        <property name="paymentProvider" type="string"/>
-        <property name="paymentSelection" type="string"/>
     </transfer>
 
     <transfer name="RestShipment">

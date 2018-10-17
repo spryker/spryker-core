@@ -10,6 +10,8 @@ namespace Spryker\Glue\CheckoutRestApi;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCheckoutClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCustomerClientInterface;
+use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
+use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessor;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessorInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapper;
@@ -68,7 +70,9 @@ class CheckoutRestApiFactory extends AbstractFactory
         return new CheckoutProcessor(
             $this->getResourceBuilder(),
             $this->createQuoteProcessor(),
-            $this->getCheckoutClient()
+            $this->getCheckoutClient(),
+            $this->getZedRequestClient(),
+            $this->getGlossaryStorageClient()
         );
     }
 
@@ -102,5 +106,21 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function getCustomerClient(): CheckoutRestApiToCustomerClientInterface
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): CheckoutRestApiToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): CheckoutRestApiToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

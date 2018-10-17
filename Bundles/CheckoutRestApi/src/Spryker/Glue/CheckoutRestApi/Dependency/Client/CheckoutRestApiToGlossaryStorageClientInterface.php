@@ -7,15 +7,14 @@
 
 namespace Spryker\Glue\CheckoutRestApi\Dependency\Client;
 
-interface CheckoutRestApiToCartClientInterface
+interface CheckoutRestApiToGlossaryStorageClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @param string $id
+     * @param string $localeName
+     * @param array $parameters
+     *
+     * @return string
      */
-    public function validateQuote();
-
-    /**
-     * @return mixed
-     */
-    public function clearQuote();
+    public function translate($id, $localeName, array $parameters = []);
 }
