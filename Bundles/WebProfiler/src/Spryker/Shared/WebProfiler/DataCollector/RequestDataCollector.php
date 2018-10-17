@@ -16,7 +16,7 @@ class RequestDataCollector extends SymfonyRequestDataCollector
      */
     public function getRedirect()
     {
-        return isset($this->data['redirect']) ? $this->data['redirect'] : false;
+        return $this->data['redirect'] ?? false;
     }
 
     /**
@@ -24,6 +24,6 @@ class RequestDataCollector extends SymfonyRequestDataCollector
      */
     public function getMethod(): string
     {
-        return (isset($this->data['method'])) ? $this->data['method'] : 'undefined';
+        return $this->data['method'] ?? 'undefined';
     }
 }
