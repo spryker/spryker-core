@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductVolumeGui\Communication\Form;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\PriceProductVolumeItemTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider;
@@ -32,9 +33,10 @@ class PriceVolumeCollectionFormType extends AbstractType
     public const FIELD_ID_CURRENCY = 'idCurrency';
     public const FIELD_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
     public const FIELD_ID_PRODUCT_CONCRETE = 'idProductConcrete';
-    protected const VALIDATION_VOLUMES_GROUP = 'volumes_group';
     public const FIELD_NET_PRICE = 'net_price';
     public const FIELD_GROSS_PRICE = 'gross_price';
+    protected const VALIDATION_VOLUMES_GROUP = 'volumes_group';
+    protected const DEFAULT_SCALE = 2;
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -64,6 +66,7 @@ class PriceVolumeCollectionFormType extends AbstractType
     {
         $builder->add(static::FIELD_VOLUMES, CollectionType::class, [
             'entry_type' => PriceVolumeFormType::class,
+            'allow_extra_fields' => true,
             'entry_options' => [
                 'label' => false,
                 'data_class' => PriceProductVolumeItemTransfer::class,
@@ -143,12 +146,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      */
     protected function addNetPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_NET_PRICE, MoneyType::class, [
-            'label' => false,
-            'required' => false,
-            'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
-            'attr' => ['disabled' => 'disabled'],
-        ]);
+        $this->addPriceField($builder, $options, static::FIELD_NET_PRICE);
 
         return $this;
     }
@@ -161,11 +159,28 @@ class PriceVolumeCollectionFormType extends AbstractType
      */
     protected function addGrossPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_GROSS_PRICE, MoneyType::class, [
+        $this->addPriceField($builder, $options, static::FIELD_GROSS_PRICE);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     * @param string $name
+     *
+     * @return $this
+     */
+    protected function addPriceField(FormBuilderInterface $builder, array $options, string $name)
+    {
+        $currencyTransfer = $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_TRANSFER];
+        $builder->add($name, MoneyType::class, [
             'label' => false,
             'required' => false,
+            'divisor' => $this->getDivisor($currencyTransfer),
+            'scale' => $this->getFractionDigits($currencyTransfer),
             'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
-            'attr' => ['disabled' => 'disabled'],
+            'attr' => ['readonly' => 'readonly'],
         ]);
 
         return $this;
@@ -179,6 +194,7 @@ class PriceVolumeCollectionFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE);
+        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_TRANSFER);
 
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -220,5 +236,38 @@ class PriceVolumeCollectionFormType extends AbstractType
         ]);
 
         return $volumesConstants;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return int
+     */
+    protected function getDivisor(CurrencyTransfer $currencyTransfer): int
+    {
+        $fractionDigits = $currencyTransfer->getFractionDigits();
+
+        $divisor = 1;
+        if ($fractionDigits) {
+            $divisor = pow(10, $fractionDigits);
+        }
+
+        return $divisor;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return int
+     */
+    protected function getFractionDigits(CurrencyTransfer $currencyTransfer): int
+    {
+        $fractionDigits = $currencyTransfer->getFractionDigits();
+
+        if ($fractionDigits !== null) {
+            return $fractionDigits;
+        }
+
+        return static::DEFAULT_SCALE;
     }
 }

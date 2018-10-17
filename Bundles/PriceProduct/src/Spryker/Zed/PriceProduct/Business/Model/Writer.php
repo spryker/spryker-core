@@ -57,24 +57,12 @@ class Writer implements WriterInterface
     protected $priceProductStoreWriter;
 
     /**
-     * @var array|\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
-     */
-    protected $priceDimensionAbstractSaverPlugins;
-
-    /**
-     * @var array|\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
-     */
-    protected $priceDimensionConcreteSaverPlugins;
-
-    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $priceConfig
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceTypeReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface $priceProductStoreWriter
-     * @param array $priceDimensionAbstractSaverPlugins
-     * @param array $priceDimensionConcreteSaverPlugins
      */
     public function __construct(
         PriceProductQueryContainerInterface $queryContainer,
@@ -82,9 +70,7 @@ class Writer implements WriterInterface
         PriceProductConfig $priceConfig,
         PriceProductToProductFacadeInterface $productFacade,
         PriceProductTypeReaderInterface $priceTypeReader,
-        PriceProductStoreWriterInterface $priceProductStoreWriter,
-        array $priceDimensionAbstractSaverPlugins,
-        array $priceDimensionConcreteSaverPlugins
+        PriceProductStoreWriterInterface $priceProductStoreWriter
     ) {
         $this->queryContainer = $queryContainer;
         $this->touchFacade = $touchFacade;
@@ -92,8 +78,6 @@ class Writer implements WriterInterface
         $this->productFacade = $productFacade;
         $this->priceTypeReader = $priceTypeReader;
         $this->priceProductStoreWriter = $priceProductStoreWriter;
-        $this->priceDimensionAbstractSaverPlugins = $priceDimensionAbstractSaverPlugins;
-        $this->priceDimensionConcreteSaverPlugins = $priceDimensionConcreteSaverPlugins;
     }
 
     /**

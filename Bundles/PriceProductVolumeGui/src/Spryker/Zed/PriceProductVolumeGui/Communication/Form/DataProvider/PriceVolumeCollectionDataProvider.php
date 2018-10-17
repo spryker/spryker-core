@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -22,6 +23,7 @@ use Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig;
 class PriceVolumeCollectionDataProvider
 {
     public const OPTION_CURRENCY_CODE = 'currency_code';
+    public const OPTION_CURRENCY_TRANSFER = 'currency_transfer';
     protected const MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Abstract Id "%d".';
     protected const MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Concrete Id "%d".';
 
@@ -141,6 +143,7 @@ class PriceVolumeCollectionDataProvider
     {
         return [
             static::OPTION_CURRENCY_CODE => $currencyCode,
+            static::OPTION_CURRENCY_TRANSFER => $this->findCurrencyTransfer($currencyCode),
         ];
     }
 
@@ -251,8 +254,18 @@ class PriceVolumeCollectionDataProvider
      */
     protected function findIdCurrency(string $currencyCode): int
     {
-        $currencyTransfer = $this->currencyFacade->fromIsoCode($currencyCode);
+        $currencyTransfer = $this->findCurrencyTransfer($currencyCode);
 
         return $currencyTransfer->getIdCurrency();
+    }
+
+    /**
+     * @param string $currencyCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function findCurrencyTransfer(string $currencyCode): CurrencyTransfer
+    {
+        return $this->currencyFacade->fromIsoCode($currencyCode);
     }
 }
