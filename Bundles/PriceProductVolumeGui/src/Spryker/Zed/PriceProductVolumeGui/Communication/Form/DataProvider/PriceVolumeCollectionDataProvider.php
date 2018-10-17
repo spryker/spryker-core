@@ -232,9 +232,9 @@ class PriceVolumeCollectionDataProvider
 
         if (!$priceProductDimensionTransfer->getType()) {
             $priceProductDimensionTransfer->setType($this->config->getPriceDimensionDefaultName());
-
-            return $priceProductDimensionTransfer;
         }
+
+        return $priceProductDimensionTransfer;
     }
 
     /**
