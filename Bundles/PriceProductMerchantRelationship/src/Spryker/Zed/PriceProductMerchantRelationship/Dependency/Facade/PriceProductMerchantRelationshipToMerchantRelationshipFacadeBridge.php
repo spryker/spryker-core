@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+
 class PriceProductMerchantRelationshipToMerchantRelationshipFacadeBridge implements PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface
 {
     /**
@@ -28,5 +30,15 @@ class PriceProductMerchantRelationshipToMerchantRelationshipFacadeBridge impleme
     public function getMerchantRelationshipCollection(): array
     {
         return $this->merchantRelationshipFacade->getMerchantRelationshipCollection();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    public function getMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    {
+        return $this->merchantRelationshipFacade->getMerchantRelationshipById($merchantRelationshipTransfer);
     }
 }
