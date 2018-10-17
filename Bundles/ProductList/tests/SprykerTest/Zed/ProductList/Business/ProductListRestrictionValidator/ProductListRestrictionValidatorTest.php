@@ -50,8 +50,9 @@ class ProductListRestrictionValidatorTest extends Unit
      */
     public function testFilterRestrictedProductConcreteSkusWithSkuInBlacklist(): void
     {
+        // Assign
+        $customerBlacklistIds = [1];
         $customerWhitelistIds = [];
-        $customerBlacklistIds = [2];
 
         $this->productListReaderMock
             ->method('getConcreteProductSkusInBlacklists')
@@ -60,9 +61,11 @@ class ProductListRestrictionValidatorTest extends Unit
         $cartSkus = ['x', 'y'];
         $expectedSku = ['x'];
 
+        // Act
         $filteredSkus = $this->createProductListRestrictionValidator()
-            ->filterRestrictedProductConcreteSkus($cartSkus, $customerWhitelistIds, $customerBlacklistIds);
+            ->filterRestrictedProductConcreteSkus($cartSkus, $customerBlacklistIds, $customerWhitelistIds);
 
+        // Assert
         $this->assertSame($filteredSkus, $expectedSku);
     }
 
@@ -71,8 +74,9 @@ class ProductListRestrictionValidatorTest extends Unit
      */
     public function testFilterRestrictedProductConcreteSkusWithSkuInWhitelist(): void
     {
-        $customerWhitelistIds = [1];
+        // Assign
         $customerBlacklistIds = [];
+        $customerWhitelistIds = [2];
 
         $this->productListReaderMock
             ->method('getConcreteProductSkusInWhitelists')
@@ -81,9 +85,11 @@ class ProductListRestrictionValidatorTest extends Unit
         $cartSkus = ['x', 'y'];
         $expectedSku = ['x'];
 
+        // Act
         $filteredSkus = $this->createProductListRestrictionValidator()
-            ->filterRestrictedProductConcreteSkus($cartSkus, $customerWhitelistIds, $customerBlacklistIds);
+            ->filterRestrictedProductConcreteSkus($cartSkus, $customerBlacklistIds, $customerWhitelistIds);
 
+        // Assert
         $this->assertSame($filteredSkus, $expectedSku);
     }
 
@@ -92,8 +98,9 @@ class ProductListRestrictionValidatorTest extends Unit
      */
     public function testFilterRestrictedProductConcreteSkusWithSkuInBlacklistAndWhitelist(): void
     {
-        $customerWhitelistIds = [1];
-        $customerBlacklistIds = [2];
+        // Assign
+        $customerBlacklistIds = [1];
+        $customerWhitelistIds = [2];
 
         $this->productListReaderMock
             ->method('getConcreteProductSkusInWhitelists')
@@ -106,9 +113,11 @@ class ProductListRestrictionValidatorTest extends Unit
         $cartSkus = ['x', 'y', 'z'];
         $expectedSku = ['x', 'z'];
 
+        // Act
         $filteredSkus = $this->createProductListRestrictionValidator()
-            ->filterRestrictedProductConcreteSkus($cartSkus, $customerWhitelistIds, $customerBlacklistIds);
+            ->filterRestrictedProductConcreteSkus($cartSkus, $customerBlacklistIds, $customerWhitelistIds);
 
+        // Assert
         $this->assertSame(array_values($filteredSkus), $expectedSku);
     }
 
@@ -117,8 +126,9 @@ class ProductListRestrictionValidatorTest extends Unit
      */
     public function testFilterRestrictedProductConcreteSkusWithSkuInBlacklistWhileDuplicatedInWhitelistShouldAlsoBeBlacklisted(): void
     {
-        $customerWhitelistIds = [1];
-        $customerBlacklistIds = [2];
+        // Assign
+        $customerBlacklistIds = [1];
+        $customerWhitelistIds = [2];
 
         $this->productListReaderMock
             ->method('getConcreteProductSkusInWhitelists')
@@ -131,9 +141,11 @@ class ProductListRestrictionValidatorTest extends Unit
         $cartSkus = ['x', 'y', 'z'];
         $expectedSku = ['x', 'y', 'z'];
 
+        // Act
         $filteredSkus = $this->createProductListRestrictionValidator()
-            ->filterRestrictedProductConcreteSkus($cartSkus, $customerWhitelistIds, $customerBlacklistIds);
+            ->filterRestrictedProductConcreteSkus($cartSkus, $customerBlacklistIds, $customerWhitelistIds);
 
+        // Assert
         $this->assertSame(array_values($filteredSkus), $expectedSku);
     }
 

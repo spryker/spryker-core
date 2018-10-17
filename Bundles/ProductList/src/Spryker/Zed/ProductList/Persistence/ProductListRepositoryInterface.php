@@ -44,7 +44,7 @@ interface ProductListRepositoryInterface
      *
      * @return int[]
      */
-    public function getAbstractProductBlacklistIds(int $idProductAbstract): array;
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract

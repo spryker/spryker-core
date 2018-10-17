@@ -21,10 +21,10 @@ interface ProductListRestrictionValidatorInterface
 
     /**
      * @param string[] $productConcreteSkus
-     * @param int[] $customerWhitelistIds
      * @param int[] $customerBlacklistIds
+     * @param int[] $customerWhitelistIds
      *
      * @return string[]
      */
-    public function filterRestrictedProductConcreteSkus(array $productConcreteSkus, array $customerWhitelistIds, array $customerBlacklistIds): array;
+    public function filterRestrictedProductConcreteSkus(array $productConcreteSkus, array $customerBlacklistIds, array $customerWhitelistIds): array;
 }

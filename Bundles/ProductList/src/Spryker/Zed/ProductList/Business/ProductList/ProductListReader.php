@@ -53,7 +53,7 @@ class ProductListReader implements ProductListReaderInterface
      */
     public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
     {
-        return $this->productListRepository->getAbstractProductBlacklistIds($idProductAbstract);
+        return $this->productListRepository->getProductBlacklistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**

@@ -50,15 +50,15 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
             return $cartPreCheckResponseTransfer;
         }
 
-        $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?: [];
         $customerBlacklistIds = $customerProductListCollectionTransfer->getBlacklistIds() ?: [];
+        $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?: [];
         $cartChangeSkus = array_map(function (ItemTransfer $itemTransfer) {
             return $itemTransfer->getSku();
         }, $cartChangeTransfer->getItems()->getArrayCopy());
 
-        $restrictedProductConcreteSkus = $this->filterRestrictedProductConcreteSkus($cartChangeSkus, $customerWhitelistIds, $customerBlacklistIds);
+        $restrictedProductConcreteSkus = $this->filterRestrictedProductConcreteSkus($cartChangeSkus, $customerBlacklistIds, $customerWhitelistIds);
 
-        if (!$restrictedProductConcreteSkus) {
+        if (empty($restrictedProductConcreteSkus)) {
             return $cartPreCheckResponseTransfer;
         }
 
@@ -94,31 +94,31 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
 
     /**
      * @param string[] $productConcreteSkus
-     * @param int[] $customerWhitelistIds
      * @param int[] $customerBlacklistIds
+     * @param int[] $customerWhitelistIds
      *
      * @return string[]
      */
-    public function filterRestrictedProductConcreteSkus(array $productConcreteSkus, array $customerWhitelistIds, array $customerBlacklistIds): array
+    public function filterRestrictedProductConcreteSkus(array $productConcreteSkus, array $customerBlacklistIds, array $customerWhitelistIds): array
     {
-        if (!$productConcreteSkus) {
+        if (empty($productConcreteSkus)) {
             return [];
         }
 
         $productConcreteSkusInWhitelist = $productConcreteSkus;
         $productConcreteSkusInBlacklist = [];
 
-        if ($customerWhitelistIds) {
+        if (!empty($customerWhitelistIds)) {
             $productConcreteSkusInWhitelist = $this->productListReader
                 ->getConcreteProductSkusInWhitelists($productConcreteSkus, $customerWhitelistIds);
         }
 
-        if ($customerBlacklistIds) {
+        if (!empty($customerBlacklistIds)) {
             $productConcreteSkusInBlacklist = $this->productListReader
                 ->getConcreteProductSkusInBlacklists($productConcreteSkus, $customerBlacklistIds);
         }
 
-        if (!$productConcreteSkusInWhitelist && !$productConcreteSkusInBlacklist) {
+        if (empty($productConcreteSkusInWhitelist) && empty($productConcreteSkusInBlacklist)) {
             return [];
         }
 
