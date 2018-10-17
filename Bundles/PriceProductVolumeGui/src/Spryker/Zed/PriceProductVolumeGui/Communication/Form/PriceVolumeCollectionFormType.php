@@ -225,7 +225,7 @@ class PriceVolumeCollectionFormType extends AbstractType
                 }
 
                 foreach ($savedPriceProductVolumeItemTransfers as $savedPriceProductVolumeItemTransfer) {
-                    if ($priceProductVolumeItemTransfer->getQuantity() == $savedPriceProductVolumeItemTransfer->getQuantity()) {
+                    if ($priceProductVolumeItemTransfer->getQuantity() === $savedPriceProductVolumeItemTransfer->getQuantity()) {
                         $context->addViolation(sprintf('Quantity "%d" is duplicate.', $priceProductVolumeItemTransfer->getQuantity()));
                     }
                 }
