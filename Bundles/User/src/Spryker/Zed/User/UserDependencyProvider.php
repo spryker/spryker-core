@@ -175,7 +175,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     protected function addPreSavePlugins(Container $container): Container
     {
         $container[static::PLUGINS_PRE_SAVE] = function (): array {
-            return $this->getPreSavePlugins();
+            return $this->getUserPreSavePlugins();
         };
 
         return $container;
@@ -184,7 +184,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface[]
      */
-    protected function getPreSavePlugins(): array
+    protected function getUserPreSavePlugins(): array
     {
         return [];
     }

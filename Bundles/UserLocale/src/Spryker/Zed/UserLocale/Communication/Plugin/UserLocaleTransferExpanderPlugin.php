@@ -15,7 +15,7 @@ use Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterf
  * @method \Spryker\Zed\UserLocale\Communication\UserLocaleCommunicationFactory getFactory()
  * @method \Spryker\Zed\UserLocale\Business\UserLocaleFacade getFacade()()
  */
-class LocaleUserTransferExpanderPlugin extends AbstractPlugin implements UserTransferExpanderPluginInterface
+class UserLocaleTransferExpanderPlugin extends AbstractPlugin implements UserTransferExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
