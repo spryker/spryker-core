@@ -41,7 +41,7 @@ class MerchantPriceDimensionForm extends AbstractType
 
         $resolver->setRequired(static::OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES);
         $resolver->setDefaults([
-            'label' => false,
+            'label' => 'Merchant Price Dimension',
         ]);
     }
 
