@@ -104,7 +104,7 @@ class SetController extends AbstractController
     }
 
     /**
-     * @deprecated
+     * @deprecated Use DeleteSetController::indexAction() instead.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
