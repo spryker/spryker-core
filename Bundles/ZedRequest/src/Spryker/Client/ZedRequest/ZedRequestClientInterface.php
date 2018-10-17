@@ -60,7 +60,7 @@ interface ZedRequestClientInterface
 
     /**
      * Specification:
-     *  - Get messages from zed request and put them to session in next order:
+     *  - Get messages from Zed request and put them to session in next order:
      *  - Writes error message to flash bag.
      *  - Writes success message to flash bag.
      *  - Writes informational message to flash bag.

@@ -9,13 +9,14 @@ namespace Spryker\Client\ShoppingList\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
@@ -228,17 +229,17 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
-    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
     {
-        /** @var \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer */
-        $shoppingListPermissionGroupTransfer = $this->zedRequestClient->call(
-            '/shopping-list/gateway/get-shopping-list-permission-group',
-            new ShoppingListPermissionGroupTransfer()
+        /** @var \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer */
+        $shoppingListPermissionGroupCollectionTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/get-shopping-list-permission-group-collection',
+            new ShoppingListPermissionGroupCollectionTransfer()
         );
 
-        return $shoppingListPermissionGroupTransfer;
+        return $shoppingListPermissionGroupCollectionTransfer;
     }
 
     /**
@@ -274,6 +275,22 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListResponseTransfer */
+        $shoppingListResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/update-shopping-list-shared-entities',
+            $shoppingListTransfer
+        );
+
+        return $shoppingListResponseTransfer;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages(): array
@@ -287,5 +304,21 @@ class ShoppingListStub implements ShoppingListStubInterface
     public function getResponsesErrorMessages(): array
     {
         return $this->zedRequestClient->getResponsesErrorMessages();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListShareResponseTransfer */
+        $shoppingListShareResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/dismiss-shopping-list-sharing',
+            $shoppingListDismissRequest
+        );
+
+        return $shoppingListShareResponseTransfer;
     }
 }
