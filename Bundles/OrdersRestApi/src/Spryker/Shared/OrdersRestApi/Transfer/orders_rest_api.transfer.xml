@@ -103,6 +103,7 @@
         <property name="description" type="string"/>
         <property name="comment" type="string"/>
         <property name="email" type="string"/>
+        <property name="country" type="string"/>
     </transfer>
 
     <transfer name="RestOrderPayment">
