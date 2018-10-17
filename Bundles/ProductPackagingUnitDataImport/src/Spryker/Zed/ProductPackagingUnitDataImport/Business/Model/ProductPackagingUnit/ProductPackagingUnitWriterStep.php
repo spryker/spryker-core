@@ -28,7 +28,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     protected const PRODUCT_ABSTRACT_ID = 'PRODUCT_ABSTRACT_ID';
 
     /**
-     * @see \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES
+     * @uses\Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES
      */
     protected const DEFAULT_AMOUNT_DEFAULT_VALUE = 1;
 
@@ -78,7 +78,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
 
         $productPackagingUnitEntity->save();
 
-        if ($this->checkIfAmountEntityShouldBeCreated($dataSet)) {
+        if ($this->hasAmount($dataSet)) {
             $this->persistAmount($dataSet, $productPackagingUnitEntity);
         }
 
@@ -188,17 +188,18 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      *
      * @return bool
      */
-    protected function checkIfAmountEntityShouldBeCreated(DataSetInterface $dataSet): bool
+    protected function hasAmount(DataSetInterface $dataSet): bool
     {
         if ($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT]) {
             return false;
         }
 
-        if (!$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE] &&
-            (
-                $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] === 0 ||
-                $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] === static::DEFAULT_AMOUNT_DEFAULT_VALUE
-            )
+        if ($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE]) {
+            return true;
+        }
+
+        if (empty($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT]) ||
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] === static::DEFAULT_AMOUNT_DEFAULT_VALUE
         ) {
             return false;
         }
