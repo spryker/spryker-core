@@ -11,9 +11,18 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 interface DiscountConfiguratorHydrateInterface
 {
     /**
+     * @deprecated Use `findByIdDiscount()` instead.
+     *
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     */
+    public function getByIdDiscount($idDiscount);
+
+    /**
      * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
      */
-    public function getByIdDiscount($idDiscount): ?DiscountConfiguratorTransfer;
+    public function findByIdDiscount(int $idDiscount): ?DiscountConfiguratorTransfer;
 }

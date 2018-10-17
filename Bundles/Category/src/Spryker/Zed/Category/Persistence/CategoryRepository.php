@@ -123,16 +123,16 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function findCategoryById(int $idCategory): ?CategoryTransfer
     {
-        $categoryEntityTransfer = $this->getFactory()
+        $spyCategoryEntity = $this->getFactory()
             ->createCategoryQuery()
             ->findOneByIdCategory($idCategory);
 
-        if ($categoryEntityTransfer === null) {
-            return $categoryEntityTransfer;
+        if ($spyCategoryEntity === null) {
+            return $spyCategoryEntity;
         }
 
         return $this->getFactory()->createCategoryMapper()->mapCategory(
-            $categoryEntityTransfer,
+            $spyCategoryEntity,
             new CategoryTransfer()
         );
     }

@@ -443,11 +443,13 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
+     * @deprecated use `findHydratedDiscountConfiguratorByIdDiscount()` instead.
+     *
      * @param int $idDiscount
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
-    public function getHydratedDiscountConfiguratorByIdDiscount($idDiscount): ?DiscountConfiguratorTransfer
+    public function getHydratedDiscountConfiguratorByIdDiscount($idDiscount)
     {
         return $this->getFactory()
             ->createDiscountConfiguratorHydrate()
@@ -676,5 +678,21 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function checkDiscountChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void
     {
         $this->getFactory()->createQuoteChangeObserver()->checkDiscountChanges($resultQuoteTransfer, $sourceQuoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
+     */
+    public function findHydratedDiscountConfiguratorByIdDiscount(int $idDiscount): ?DiscountConfiguratorTransfer
+    {
+        return $this->getFactory()
+            ->createDiscountConfiguratorHydrate()
+            ->findByIdDiscount($idDiscount);
     }
 }

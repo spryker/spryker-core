@@ -72,7 +72,7 @@ class IndexController extends AbstractController
         $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
 
         $discountConfiguratorTransfer = $this->getFacade()
-            ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+            ->findHydratedDiscountConfiguratorByIdDiscount($idDiscount);
 
         if ($discountConfiguratorTransfer === null) {
             $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
@@ -143,7 +143,7 @@ class IndexController extends AbstractController
         $idDiscount = $this->castId($request->query->get(static::URL_PARAM_ID_DISCOUNT));
 
         $discountConfiguratorTransfer = $this->getFacade()
-            ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+            ->findHydratedDiscountConfiguratorByIdDiscount($idDiscount);
 
         if ($discountConfiguratorTransfer === null) {
             $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));

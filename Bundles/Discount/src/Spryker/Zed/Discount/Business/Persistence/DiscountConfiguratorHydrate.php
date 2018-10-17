@@ -57,20 +57,19 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     }
 
     /**
+     * @deprecated Use `findByIdDiscount()` instead.
+     *
      * @param int $idDiscount
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
-    public function getByIdDiscount($idDiscount): ?DiscountConfiguratorTransfer
+    public function getByIdDiscount($idDiscount)
     {
         $discountEntity = $this->discountQueryContainer
             ->queryDiscountWithStoresByFkDiscount($idDiscount)
             ->find()
             ->getFirst();
 
-        if ($discountEntity === null) {
-            return $discountEntity;
-        }
         $discountConfigurator = $this->createDiscountConfiguratorTransfer();
 
         $discountGeneralTransfer = $this->hydrateGeneralDiscount($discountEntity);
@@ -179,5 +178,53 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         }
 
         return $discountConfiguratorTransfer;
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
+     */
+    public function findByIdDiscount(int $idDiscount): ?DiscountConfiguratorTransfer
+    {
+        $discountEntity = $this->discountQueryContainer
+            ->queryDiscountWithStoresByFkDiscount($idDiscount)
+            ->find()
+            ->getFirst();
+
+        if ($discountEntity === null) {
+            return $discountEntity;
+        }
+
+        return $this->hydrateDiscountConfigurator($discountEntity);
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     */
+    protected function hydrateDiscountConfigurator(SpyDiscount $discountEntity): DiscountConfiguratorTransfer
+    {
+        $discountConfigurator = $this->createDiscountConfiguratorTransfer();
+
+        $discountGeneralTransfer = $this->hydrateGeneralDiscount($discountEntity);
+        $discountCalculatorTransfer = $this->hydrateDiscountCalculator($discountEntity);
+        $discountConditionTransfer = $this->hydrateDiscountCondition($discountEntity);
+
+        $discountConfigurator
+            ->setDiscountGeneral($discountGeneralTransfer)
+            ->setDiscountCalculator($discountCalculatorTransfer)
+            ->setDiscountCondition($discountConditionTransfer);
+
+        $this->hydrateDiscountVoucher(
+            $discountEntity->getIdDiscount(),
+            $discountEntity,
+            $discountConfigurator
+        );
+
+        $discountConfigurator = $this->executeDiscountConfigurationExpanderPlugins($discountConfigurator);
+
+        return $discountConfigurator;
     }
 }
