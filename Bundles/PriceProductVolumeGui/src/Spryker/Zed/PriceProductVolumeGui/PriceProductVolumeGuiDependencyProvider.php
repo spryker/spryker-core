@@ -27,7 +27,7 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addCurrencyFacade($container);
         $container = $this->addPriceProductFacade($container);
@@ -43,7 +43,7 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCurrencyFacade(Container $container)
+    protected function addCurrencyFacade(Container $container): Container
     {
         $container[static::FACADE_CURRENCY] = function (Container $container) {
             return new PriceProductVolumeGuiToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
@@ -57,7 +57,7 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPriceProductFacade(Container $container)
+    protected function addPriceProductFacade(Container $container): Container
     {
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
             return new PriceProductVolumeGuiToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());
@@ -71,7 +71,7 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreFacade(Container $container)
+    protected function addStoreFacade(Container $container): Container
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new PriceProductVolumeGuiToStoreFacadeBridge($container->getLocator()->store()->facade());
@@ -85,7 +85,7 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilEncodingService(Container $container)
+    protected function addUtilEncodingService(Container $container): Container
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new PriceProductVolumeGuiToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
