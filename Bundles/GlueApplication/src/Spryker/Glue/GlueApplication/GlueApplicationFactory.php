@@ -28,6 +28,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatter;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractor;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractorInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\RequestResourceExtractor;
+use Spryker\Glue\GlueApplication\Rest\Request\RequestResourceExtractorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRelationshipLoader;
@@ -91,8 +93,7 @@ class GlueApplicationFactory extends AbstractFactory
     {
         return new RequestFormatter(
             $this->createRestRequestMetaDataExtractor(),
-            $this->createRestDecoderMatcher(),
-            $this->getResourceBuilder(),
+            $this->createRestRequestResourceExtractor(),
             $this->getFormatRequestPlugins()
         );
     }
@@ -312,6 +313,17 @@ class GlueApplicationFactory extends AbstractFactory
     public function createRestResponseRelationship(): ResponseRelationshipInterface
     {
         return new ResponseRelationship($this->createRestResourceRelationshipLoader());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestResourceExtractorInterface
+     */
+    public function createRestRequestResourceExtractor(): RequestResourceExtractorInterface
+    {
+        return new RequestResourceExtractor(
+            $this->createRestResourceBuilder(),
+            $this->createRestDecoderMatcher()
+        );
     }
 
     /**
