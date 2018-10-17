@@ -283,6 +283,18 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
+     * @return void
+     */
+    public function addFlashMessagesFromLastZedRequest()
+    {
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
      * @param string|null $groupKey
