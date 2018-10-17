@@ -29,22 +29,16 @@ interface OfferToZedRequestClientInterface
     public function call($url, TransferInterface $object, $requestOptions = null);
 
     /**
-     * @deprecated will be removed, not used in module.
-     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseInfoMessages();
 
     /**
-     * @deprecated will be removed, not used in module.
-     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages();
 
     /**
-     * @deprecated will be removed, not used in module.
-     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseSuccessMessages();

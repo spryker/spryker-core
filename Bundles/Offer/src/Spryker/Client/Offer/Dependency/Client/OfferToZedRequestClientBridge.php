@@ -43,8 +43,6 @@ class OfferToZedRequestClientBridge implements OfferToZedRequestClientInterface
     /**
      * {@inheritdoc}
      *
-     * @deprecated will be removed, not used in module.
-     *
      * @api
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
@@ -57,8 +55,6 @@ class OfferToZedRequestClientBridge implements OfferToZedRequestClientInterface
     /**
      * {@inheritdoc}
      *
-     * @deprecated will be removed, not used in module.
-     *
      * @api
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
@@ -70,8 +66,6 @@ class OfferToZedRequestClientBridge implements OfferToZedRequestClientInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @deprecated will be removed, not used in module.
      *
      * @api
      *
