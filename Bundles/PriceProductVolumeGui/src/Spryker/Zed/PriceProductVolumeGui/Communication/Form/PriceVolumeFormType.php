@@ -35,7 +35,7 @@ class PriceVolumeFormType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addQuantityField($builder)
@@ -48,7 +48,7 @@ class PriceVolumeFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder)
+    protected function addQuantityField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
@@ -69,7 +69,7 @@ class PriceVolumeFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addNetPriceField(FormBuilderInterface $builder, array $options)
+    protected function addNetPriceField(FormBuilderInterface $builder, array $options): self
     {
         $this->addPriceField($builder, $options, static::FIELD_NET_PRICE, 'Net Price');
 
@@ -82,7 +82,7 @@ class PriceVolumeFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addGrossPriceField(FormBuilderInterface $builder, array $options)
+    protected function addGrossPriceField(FormBuilderInterface $builder, array $options): self
     {
         $this->addPriceField($builder, $options, static::FIELD_GROSS_PRICE, 'Gross Price');
 
@@ -97,7 +97,7 @@ class PriceVolumeFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addPriceField(FormBuilderInterface $builder, array $options, string $name, string $label)
+    protected function addPriceField(FormBuilderInterface $builder, array $options, string $name, string $label): self
     {
         $builder->add($name, MoneyType::class, [
             'label' => $label,

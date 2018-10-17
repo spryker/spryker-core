@@ -169,11 +169,13 @@ class PriceVolumeCollectionDataProvider
     {
         $volumes = [];
         $preSavedVolumes = $this->utilEncodingService->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData());
-        if ($preSavedVolumes && $preSavedVolumes->volume_prices) {
-            foreach ($preSavedVolumes->volume_prices as $preSavedVolume) {
-                $volumes[] = (new PriceProductVolumeItemTransfer())
-                    ->fromArray(get_object_vars($preSavedVolume), true);
-            }
+        if (!$preSavedVolumes || !$preSavedVolumes->volume_prices) {
+            return $volumes;
+        }
+
+        foreach ($preSavedVolumes->volume_prices as $preSavedVolume) {
+            $volumes[] = (new PriceProductVolumeItemTransfer())
+                ->fromArray(get_object_vars($preSavedVolume), true);
         }
 
         return $volumes;
