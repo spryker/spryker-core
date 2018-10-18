@@ -26,4 +26,12 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
     {
         return null;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getProductAbstractPackagingUnitSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }
