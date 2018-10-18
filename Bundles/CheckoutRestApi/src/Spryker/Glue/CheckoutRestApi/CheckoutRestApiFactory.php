@@ -25,6 +25,7 @@ use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
  * @method \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface getClient()
+ * @method \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig getConfig()
  */
 class CheckoutRestApiFactory extends AbstractFactory
 {
@@ -46,7 +47,7 @@ class CheckoutRestApiFactory extends AbstractFactory
      */
     public function createCheckoutDataMapper(): CheckoutDataMapperInterface
     {
-        return new CheckoutDataMapper();
+        return new CheckoutDataMapper($this->getConfig());
     }
 
     /**

@@ -108,7 +108,7 @@
 
     <transfer name="RestPaymentMethodAttributes">
         <property name="methodName" type="string"/>
-        <property name="requiredResponseData" type="bool"/>
+        <property name="requiredResponseData" type="array"/>
     </transfer>
 
     <transfer name="RestShipmentMethodAttributes">

@@ -16,9 +16,23 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 
 class CheckoutDataMapper implements CheckoutDataMapperInterface
 {
+    /**
+     * @var \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig $config
+     */
+    public function __construct(CheckoutRestApiConfig $config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
@@ -65,7 +79,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
                 (new RestPaymentMethodAttributesTransfer())->fromArray(
                     $paymentMethodTransfer->toArray(),
                     true
-                )
+                )->setRequiredResponseData($this->config->getRequiredPaymentDataForMethod($paymentMethodTransfer->getMethodName()))
             );
         }
     }
@@ -138,7 +152,9 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     protected function mapPaymentsToQuoteTransfer(QuoteTransfer $quoteTransfer, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): void
     {
         foreach ($restCheckoutRequestAttributesTransfer->getQuote()->getPayments() as $paymentTransfer) {
-            $paymentTransfer->setAmount($quoteTransfer->getTotals()->getPriceToPay());
+            if ($quoteTransfer->getTotals() !== null && $quoteTransfer->getTotals()->getPriceToPay() !== null) {
+                $paymentTransfer->setAmount($quoteTransfer->getTotals()->getPriceToPay());
+            }
             $quoteTransfer->addPayment($paymentTransfer);
             $quoteTransfer->setPayment($paymentTransfer);
         }

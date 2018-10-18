@@ -27,4 +27,38 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_DATA_INVALID = 'Quote data is invalid.';
     public const EXCEPTION_MESSAGE_ORDER_NOT_PLACED = 'Order could not be placed.';
     public const EXCEPTION_MESSAGE_QUOTE_NOT_FOUND = 'Quote could not be found.';
+
+    protected const PAYMENT_REQUIRED_DATA_COMMON = [
+        'paymentMethod' => '',
+        'paymentProvider' => '',
+        'paymentSelection' => '',
+    ];
+
+    protected const PAYMENT_REQUIRED_DATA = [
+        'dummyPaymentInvoice' => [
+            'dateOfBirth' => '',
+        ],
+        'dummyPaymentCreditCard' => [
+            'cardType' => '',
+            'cardNumber' => '',
+            'nameOnCard' => '',
+            'cardExpiresMonth' => '',
+            'cardExpiresYear' => '',
+            'cardSecurityCode' => '',
+        ],
+    ];
+
+    /**
+     * @param string $methodName
+     *
+     * @return array
+     */
+    public function getRequiredPaymentDataForMethod(string $methodName): array
+    {
+        if (!isset(static::PAYMENT_REQUIRED_DATA[$methodName])) {
+            return static::PAYMENT_REQUIRED_DATA_COMMON;
+        }
+
+        return static::PAYMENT_REQUIRED_DATA_COMMON + [$methodName => static::PAYMENT_REQUIRED_DATA[$methodName]];
+    }
 }
