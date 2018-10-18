@@ -90,13 +90,16 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryAllCategoryNodes()
     {
-        return $this->getFactory()->createCategoryNodeQuery();
+        return $this->getFactory()->createCategoryNodeQuery()
+            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
     }
 
     /**
@@ -1126,5 +1129,25 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     {
         return $this->queryCategoryTemplate()
             ->filterByName($nameCategoryTemplate);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idNode
+     * @param string $nodeName
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryFirstLevelChildrenByName(int $idNode, string $nodeName)
+    {
+        return $this->getFactory()->createCategoryNodeQuery()
+            ->filterByFkParentCategoryNode($idNode)
+            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC)
+            ->useCategoryQuery()
+                ->useAttributeQuery()
+                    ->filterByName($nodeName)
+                ->endUse()
+            ->endUse();
     }
 }

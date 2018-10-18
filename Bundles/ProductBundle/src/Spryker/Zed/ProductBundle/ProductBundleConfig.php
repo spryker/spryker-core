@@ -11,4 +11,29 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductBundleConfig extends AbstractBundleConfig
 {
+    /**
+     * @see \Spryker\Zed\Availability\AvailabilityConfig::ERROR_TYPE_AVAILABILITY
+     */
+    protected const ERROR_TYPE_AVAILABILITY = 'Availability';
+
+    /**
+     * @see \Spryker\Zed\Availability\AvailabilityConfig::PARAMETER_PRODUCT_SKU_AVAILABILITY
+     */
+    protected const PARAMETER_PRODUCT_SKU_AVAILABILITY = '%sku%';
+
+    /**
+     * @return string
+     */
+    public function getAvailabilityErrorType(): string
+    {
+        return static::ERROR_TYPE_AVAILABILITY;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvailabilityProductSkuParameter(): string
+    {
+        return static::PARAMETER_PRODUCT_SKU_AVAILABILITY;
+    }
 }

@@ -18,6 +18,8 @@ use Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface;
 class DetachNavigationUrlAfterUrlDeletePlugin extends AbstractPlugin implements UrlDeletePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void

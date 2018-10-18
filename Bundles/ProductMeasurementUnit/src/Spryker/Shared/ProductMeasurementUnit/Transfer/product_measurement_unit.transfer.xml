@@ -24,6 +24,7 @@
         <property name="precision" type="int" />
         <property name="isDisplayed" type="bool" />
         <property name="isDefault" type="bool" />
+        <property name="fkProduct" type="int" />
         <property name="fkProductMeasurementUnit" type="int" />
         <property name="fkProductMeasurementBaseUnit" type="int" />
         <property name="productMeasurementBaseUnit" type="ProductMeasurementBaseUnit" />

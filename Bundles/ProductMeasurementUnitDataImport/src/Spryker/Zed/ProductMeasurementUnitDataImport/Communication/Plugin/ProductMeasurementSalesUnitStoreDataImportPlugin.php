@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin;
@@ -19,6 +19,8 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImpor
 class ProductMeasurementSalesUnitStoreDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -29,6 +31,8 @@ class ProductMeasurementSalesUnitStoreDataImportPlugin extends AbstractPlugin im
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getImportType(): string

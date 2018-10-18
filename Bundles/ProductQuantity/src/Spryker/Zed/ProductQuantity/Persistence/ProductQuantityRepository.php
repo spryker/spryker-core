@@ -73,4 +73,24 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
 
         return $productQuantityTransfers;
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findProductQuantityTransfers(): array
+    {
+        $query = $this->getFactory()
+            ->createProductQuantityQuery();
+
+        $productQuantityEntityTransfers = $this->buildQueryFromCriteria($query)->find();
+
+        $productQuantityTransfers = [];
+        foreach ($productQuantityEntityTransfers as $productQuantityEntityTransfer) {
+            $productQuantityTransfers[] = $this->getFactory()
+                ->createProductQuantityMapper()
+                ->mapProductQuantityTransfer($productQuantityEntityTransfer, new ProductQuantityTransfer());
+        }
+
+        return $productQuantityTransfers;
+    }
 }

@@ -15,14 +15,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductLabelSearchQueryContainer extends AbstractQueryContainer implements ProductLabelSearchQueryContainerInterface
 {
-    const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+    public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
     /**
      * @api
      *
      * @param array $productLabelIds
      *
-     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryProductLabelByProductLabelIds(array $productLabelIds)
     {

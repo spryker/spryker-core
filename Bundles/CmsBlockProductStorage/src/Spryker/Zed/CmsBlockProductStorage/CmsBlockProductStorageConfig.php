@@ -14,8 +14,16 @@ class CmsBlockProductStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCmsBlockProductSynchronizationPoolName(): ?string
+    {
+        return null;
     }
 }

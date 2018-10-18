@@ -300,8 +300,7 @@ class TemplateManager implements TemplateManagerInterface
     {
         $isTemplateCreated = false;
         $this->finder->in($folder)
-            ->name('*.twig')
-            ->depth('0');
+            ->name('*.twig');
 
         foreach ($this->finder->files() as $file) {
             $fullFileName = $file->getRelativePathname();

@@ -23,7 +23,7 @@ use Spryker\Shared\Quote\QuoteConfig;
 
 /**
  * @method \Spryker\Client\PersistentCart\PersistentCartFactory getFactory()
- * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()()
+ * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()
  */
 class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface
 {

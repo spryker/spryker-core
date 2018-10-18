@@ -23,7 +23,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const BUNDLE = 'Propel';
+    public const BUNDLE = 'Propel';
 
     /**
      * @param \Silex\Application $app
@@ -60,10 +60,11 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
     }
 
     /**
-     * @return \Propel\Runtime\ServiceContainer\ServiceContainerInterface|\Propel\Runtime\ServiceContainer\StandardServiceContainer
+     * @return \Propel\Runtime\ServiceContainer\StandardServiceContainer
      */
     protected function getServiceContainer()
     {
+        /** @var \Propel\Runtime\ServiceContainer\StandardServiceContainer $serviceContainer */
         $serviceContainer = Propel::getServiceContainer();
 
         return $serviceContainer;

@@ -17,9 +17,11 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class CustomerRestoredPasswordConfirmationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    const MAIL_TYPE = 'customer restored password confirmation';
+    public const MAIL_TYPE = 'customer restored password confirmation';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -28,6 +30,8 @@ class CustomerRestoredPasswordConfirmationMailTypePlugin extends AbstractPlugin 
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
      * @return void
@@ -49,7 +53,7 @@ class CustomerRestoredPasswordConfirmationMailTypePlugin extends AbstractPlugin 
      */
     protected function setSubject(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSubject('mail.customer.reset_password_confirmation.subject');
+        $mailBuilder->setSubject('mail.customer.restore_password_confirmation.subject');
 
         return $this;
     }

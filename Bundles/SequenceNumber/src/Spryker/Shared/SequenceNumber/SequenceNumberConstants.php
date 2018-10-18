@@ -7,9 +7,12 @@
 
 namespace Spryker\Shared\SequenceNumber;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface SequenceNumberConstants
 {
-    const ENVIRONMENT_PREFIX = 'environmentPrefix';
+    public const ENVIRONMENT_PREFIX = 'environmentPrefix';
 
     /**
      * Specification:
@@ -22,5 +25,5 @@ interface SequenceNumberConstants
      *  'SEQUENCE2' => 200,
      * ]
      */
-    const LIMIT_LIST = 'SEQUENCE_NUMBER:LIMIT_LIST';
+    public const LIMIT_LIST = 'SEQUENCE_NUMBER:LIMIT_LIST';
 }

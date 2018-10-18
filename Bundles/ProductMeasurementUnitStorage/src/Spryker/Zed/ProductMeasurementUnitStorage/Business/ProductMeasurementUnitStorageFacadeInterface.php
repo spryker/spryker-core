@@ -32,4 +32,36 @@ interface ProductMeasurementUnitStorageFacadeInterface
      * @return void
      */
     public function publishProductConcreteMeasurementUnit(array $productIds): void;
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findAllProductMeasurementUnitTransfers(): array;
+
+    /**
+     * @api
+     *
+     * @param int[] $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function getSalesUnits(): array;
+
+    /**
+     * @api
+     *
+     * @param int[] $salesUnitIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function getSalesUnitsByIds(array $salesUnitIds): array;
 }

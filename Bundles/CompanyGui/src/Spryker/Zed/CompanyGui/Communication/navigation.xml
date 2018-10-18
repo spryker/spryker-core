@@ -11,6 +11,24 @@
                 <bundle>company-gui</bundle>
                 <controller>list-company</controller>
                 <action>index</action>
+                <pages>
+                    <add-company>
+                        <label>Create Company</label>
+                        <title>Create Company</title>
+                        <bundle>company-gui</bundle>
+                        <controller>add-company</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </add-company>
+                    <edit-company>
+                        <label>Edit Company</label>
+                        <title>Edit Company</title>
+                        <bundle>company-gui</bundle>
+                        <controller>edit-company</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </edit-company>
+                </pages>
             </page>
         </pages>
     </company-gui>

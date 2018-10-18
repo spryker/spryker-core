@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageMapExpander;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
@@ -21,6 +22,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 class PricePageMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $productData
@@ -51,8 +54,11 @@ class PricePageMapExpanderPlugin extends AbstractPlugin implements ProductPageMa
     protected function setPricesByType(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $productData)
     {
         foreach ($productData['prices'] as $currencyIsoCode => $pricesByPriceMode) {
-            foreach ($pricesByPriceMode as $priceMode => $pricesByType) {
-                foreach ($pricesByType as $priceType => $price) {
+            foreach (ProductPageSearchConfig::PRICE_MODES as $priceMode) {
+                if (!isset($pricesByPriceMode[$priceMode])) {
+                    continue;
+                }
+                foreach ($pricesByPriceMode[$priceMode] as $priceType => $price) {
                     $facetName = $this->getFactory()->getCatalogPriceProductConnectorClient()->buildPricedIdentifierFor($priceType, $currencyIsoCode, $priceMode);
                     $pageMapBuilder->addIntegerFacet($pageMapTransfer, $facetName, $price);
                     $pageMapBuilder->addIntegerSort($pageMapTransfer, $facetName, $price);

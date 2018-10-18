@@ -59,7 +59,7 @@ class GiftCardReplacer implements GiftCardReplacerInterface
     }
 
     /**
-     * @param \ArrayObject|\Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard[] $giftCardPayments
+     * @param \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard[] $giftCardPayments
      *
      * @return void
      */

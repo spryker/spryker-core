@@ -198,6 +198,8 @@ class Customer implements CustomerInterface
         $customerTransfer->setIdCustomer($customerEntity->getPrimaryKey());
         $customerTransfer->setCustomerReference($customerEntity->getCustomerReference());
         $customerTransfer->setRegistrationKey($customerEntity->getRegistrationKey());
+        $customerTransfer->setCreatedAt($customerEntity->getCreatedAt()->format("Y-m-d H:i:s.u"));
+        $customerTransfer->setUpdatedAt($customerEntity->getUpdatedAt()->format("Y-m-d H:i:s.u"));
 
         $customerResponseTransfer
             ->setIsSuccess(true)
@@ -325,6 +327,8 @@ class Customer implements CustomerInterface
      */
     protected function sendPasswordRestoreConfirmation(CustomerTransfer $customerTransfer)
     {
+        $customerTransfer = $this->get($customerTransfer);
+
         $mailTransfer = new MailTransfer();
         $mailTransfer->setType(CustomerRestoredPasswordConfirmationMailTypePlugin::MAIL_TYPE);
         $mailTransfer->setCustomer($customerTransfer);

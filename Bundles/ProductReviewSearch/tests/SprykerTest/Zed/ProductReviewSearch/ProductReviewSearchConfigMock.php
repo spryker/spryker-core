@@ -14,7 +14,7 @@ class ProductReviewSearchConfigMock extends ProductReviewSearchConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return false;
     }

@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\CompanyUnitAddressDataImport;
@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class CompanyUnitAddressDataImportConfig extends DataImportConfig
 {
-    const IMPORT_TYPE_COMPANY_UNIT_ADDRESS = 'company-unit-address';
+    public const IMPORT_TYPE_COMPANY_UNIT_ADDRESS = 'company-unit-address';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer

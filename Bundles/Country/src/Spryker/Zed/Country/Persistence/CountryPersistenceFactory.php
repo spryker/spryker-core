@@ -9,6 +9,8 @@ namespace Spryker\Zed\Country\Persistence;
 
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Country\Persistence\SpyRegionQuery;
+use Spryker\Zed\Country\Persistence\Propel\Mapper\CountryMapper;
+use Spryker\Zed\Country\Persistence\Propel\Mapper\CountryMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -31,5 +33,13 @@ class CountryPersistenceFactory extends AbstractPersistenceFactory
     public function createRegionQuery()
     {
         return SpyRegionQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Country\Persistence\Propel\Mapper\CountryMapperInterface
+     */
+    public function createCountryMapper(): CountryMapperInterface
+    {
+        return new CountryMapper();
     }
 }

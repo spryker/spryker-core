@@ -27,13 +27,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductLabelFormType extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_EXCLUSIVE_FLAG = 'isExclusive';
-    const FIELD_STATUS_FLAG = 'isActive';
-    const FIELD_VALID_FROM_DATE = 'validFrom';
-    const FIELD_VALID_TO_DATE = 'validTo';
-    const FIELD_FRONT_END_REFERENCE = 'frontEndReference';
-    const FIELD_LOCALIZED_ATTRIBUTES = 'localizedAttributes';
+    public const FIELD_NAME = 'name';
+    public const FIELD_EXCLUSIVE_FLAG = 'isExclusive';
+    public const FIELD_STATUS_FLAG = 'isActive';
+    public const FIELD_VALID_FROM_DATE = 'validFrom';
+    public const FIELD_VALID_TO_DATE = 'validTo';
+    public const FIELD_FRONT_END_REFERENCE = 'frontEndReference';
+    public const FIELD_LOCALIZED_ATTRIBUTES = 'localizedAttributes';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

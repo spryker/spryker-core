@@ -11,9 +11,12 @@ use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Manager\NodeUrlManager;
 use Spryker\Zed\Category\Business\Model\Category;
 use Spryker\Zed\Category\Business\Model\Category\Category as CategoryEntityModel;
+use Spryker\Zed\Category\Business\Model\Category\CategoryHydrator;
+use Spryker\Zed\Category\Business\Model\Category\CategoryHydratorInterface;
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttribute;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParents;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
+use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeChecker;
 use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateReader;
 use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSync;
 use Spryker\Zed\Category\Business\Model\CategoryToucher;
@@ -30,6 +33,7 @@ use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
  */
@@ -128,7 +132,11 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCategoryCategory()
     {
-        return new CategoryEntityModel($this->getQueryContainer());
+        return new CategoryEntityModel(
+            $this->getQueryContainer(),
+            $this->getRepository(),
+            $this->createCategoryHydrator()
+        );
     }
 
     /**
@@ -336,5 +344,24 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new CategoryTemplateReader(
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeCheckerInterface
+     */
+    public function createCategoryNodeChecker()
+    {
+        return new CategoryNodeChecker(
+            $this->getQueryContainer(),
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\Category\CategoryHydratorInterface
+     */
+    public function createCategoryHydrator(): CategoryHydratorInterface
+    {
+        return new CategoryHydrator($this->getRepository());
     }
 }

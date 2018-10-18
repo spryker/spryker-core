@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Oms;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface OmsConstants
 {
     /**
@@ -15,7 +18,7 @@ interface OmsConstants
      *
      * @api
      */
-    const PROCESS_LOCATION = 'PROCESS_LOCATION';
+    public const PROCESS_LOCATION = 'PROCESS_LOCATION';
 
     /**
      * Specification:
@@ -23,5 +26,5 @@ interface OmsConstants
      *
      * @api
      */
-    const ACTIVE_PROCESSES = 'ACTIVE_PROCESSES';
+    public const ACTIVE_PROCESSES = 'ACTIVE_PROCESSES';
 }

@@ -11,5 +11,5 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class UrlConfig extends AbstractBundleConfig
 {
-    const RESOURCE_TYPE_URL = 'url';
+    public const RESOURCE_TYPE_URL = 'url';
 }

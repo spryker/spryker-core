@@ -44,6 +44,20 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findProductQuantityTransfers(): array
+    {
+        $productQuantityTransfers = $this->productQuantityRepository->findProductQuantityTransfers();
+
+        foreach ($productQuantityTransfers as $productQuantityTransfer) {
+            $this->filterProductQuantityTransfer($productQuantityTransfer);
+        }
+
+        return $productQuantityTransfers;
+    }
+
+    /**
      * @param string[] $productSkus
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]

@@ -13,9 +13,9 @@ interface ProductMeasurementUnitToEventFacadeInterface
 {
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $eventTransfer): void;
+    public function trigger($eventName, TransferInterface $transfer): void;
 }

@@ -27,8 +27,6 @@ class QuoteMapper implements QuoteMapperInterface
     protected $quoteConfig;
 
     /**
-     * QuoteMapper constructor.
-     *
      * @param \Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceInterface $encodingService
      * @param \Spryker\Zed\Quote\QuoteConfig $quoteConfig
      */

@@ -20,9 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RepeaterHelper extends Module
 {
-    const BUNDLE = 'module';
-    const CONTROLLER = 'controller';
-    const ACTION = 'action';
+    public const BUNDLE = 'module';
+    public const CONTROLLER = 'controller';
+    public const ACTION = 'action';
 
     /**
      * @param \Codeception\TestInterface $test
@@ -125,11 +125,14 @@ class RepeaterHelper extends Module
     }
 
     /**
-     * @return object|\Spryker\Shared\ZedRequest\Client\AbstractRequest
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractRequest
      */
     public function getTransferRequest()
     {
-        return Stub::make(AbstractRequest::class);
+        /** @var \Spryker\Shared\ZedRequest\Client\AbstractRequest $request */
+        $request = Stub::make(AbstractRequest::class);
+
+        return $request;
     }
 
     /**

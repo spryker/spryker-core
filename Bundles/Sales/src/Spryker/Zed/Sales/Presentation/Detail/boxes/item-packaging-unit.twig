@@ -1,0 +1,10 @@
+{% if orderItem.amountSalesUnit is defined and orderItem.amountSalesUnit %}
+    x {{ (orderItem.amount / orderItem.quantity) }}
+    {{ orderItem.amountSalesUnit.productMeasurementBaseUnit.productMeasurementUnit.name | trans }}
+    ( =
+        {{ (orderItem.amount / orderItem.quantity) / orderItem.amountSalesUnit.conversion }}
+        {{ orderItem.amountSalesUnit.productMeasurementUnit.name | trans }}
+    )
+    = {{ orderItem.amount }}
+    {{ orderItem.amountSalesUnit.productMeasurementBaseUnit.productMeasurementUnit.name | trans }}
+{% endif %}

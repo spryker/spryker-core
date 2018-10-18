@@ -36,6 +36,11 @@ interface ProductPageSearchToCategoryQueryContainerInterface
     public function queryAllCategoryAttributes();
 
     /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoryNodes();
+
+    /**
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery

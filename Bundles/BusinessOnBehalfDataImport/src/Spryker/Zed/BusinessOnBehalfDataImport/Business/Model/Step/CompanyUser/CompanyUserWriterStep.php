@@ -2,8 +2,9 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
+
 namespace Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser;
 
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
@@ -27,6 +28,10 @@ class CompanyUserWriterStep implements DataImportStepInterface
             ->filterByFkCompanyBusinessUnit($dataSet[BusinessOnBehalfCompanyUserDataSetInterface::COLUMN_ID_BUSINESS_UNIT])
             ->filterByFkCustomer($dataSet[BusinessOnBehalfCompanyUserDataSetInterface::COLUMN_ID_CUSTOMER])
             ->findOneOrCreate();
+
+        if (isset($dataSet[BusinessOnBehalfCompanyUserDataSetInterface::COLUMN_DEFAULT])) {
+            $companyUserEntity->setIsDefault($dataSet[BusinessOnBehalfCompanyUserDataSetInterface::COLUMN_DEFAULT]);
+        }
 
         $companyUserEntity->save();
     }

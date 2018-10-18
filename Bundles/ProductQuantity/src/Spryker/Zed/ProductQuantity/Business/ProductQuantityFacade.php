@@ -63,4 +63,18 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
             ->createProductQuantityReader()
             ->findProductQuantityTransfersByProductIds($productIds);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findProductQuantityTransfers(): array
+    {
+        return $this->getFactory()
+            ->createProductQuantityReader()
+            ->findProductQuantityTransfers();
+    }
 }

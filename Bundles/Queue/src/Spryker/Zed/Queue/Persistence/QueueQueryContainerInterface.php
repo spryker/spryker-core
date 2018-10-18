@@ -17,7 +17,7 @@ interface QueueQueryContainerInterface extends QueryContainerInterface
      * @param string $serverId
      * @param string $queueName
      *
-     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
+     * @return \Orm\Zed\Queue\Persistence\SpyQueueProcessQuery
      */
     public function queryProcessesByServerIdAndQueueName($serverId, $queueName);
 
@@ -26,7 +26,7 @@ interface QueueQueryContainerInterface extends QueryContainerInterface
      *
      * @param string $serverId
      *
-     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
+     * @return \Orm\Zed\Queue\Persistence\SpyQueueProcessQuery
      */
     public function queryProcessesByServerId($serverId);
 
@@ -35,14 +35,14 @@ interface QueueQueryContainerInterface extends QueryContainerInterface
      *
      * @param array $processIds
      *
-     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
+     * @return \Orm\Zed\Queue\Persistence\SpyQueueProcessQuery
      */
     public function queryProcessesByProcessIds(array $processIds);
 
     /**
      * @api
      *
-     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
+     * @return \Orm\Zed\Queue\Persistence\SpyQueueProcessQuery
      */
     public function queryProcesses();
 }

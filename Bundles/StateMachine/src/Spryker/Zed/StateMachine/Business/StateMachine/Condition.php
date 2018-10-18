@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -162,7 +163,7 @@ class Condition implements ConditionInterface
      * @param string $stateMachineName
      * @param string $processName
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $itemsWithOnEnterEvent
+     * @return array $itemsWithOnEnterEvent
      */
     public function getOnEnterEventsForStatesWithoutTransition($stateMachineName, $processName)
     {
@@ -209,8 +210,8 @@ class Condition implements ConditionInterface
     ) {
 
         $stateMachineItemStateIds = $this->stateMachinePersistence->getStateMachineItemIdsByStatesProcessAndStateMachineName(
-            $stateMachineName,
             $process->getName(),
+            $stateMachineName,
             array_keys($states)
         );
 
@@ -329,7 +330,7 @@ class Condition implements ConditionInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return string[]
      */
     protected function createStateMap(array $stateMachineItems)
     {

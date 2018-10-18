@@ -12,7 +12,7 @@ use Twig_Loader_Filesystem;
 
 class ClassGenerator implements GeneratorInterface
 {
-    const TWIG_TEMPLATES_LOCATION = '/Templates/';
+    public const TWIG_TEMPLATES_LOCATION = '/Templates/';
 
     /**
      * @var string

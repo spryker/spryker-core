@@ -12,6 +12,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Component\Translation\Translator;
+use Twig_Environment;
 
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
@@ -27,7 +28,7 @@ class TranslationServiceProvider extends AbstractPlugin implements ServiceProvid
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
+            $app->extend('twig', function (Twig_Environment $twig) use ($app) {
                 $twig->addExtension(new TranslationExtension(new Translator($app['locale'])));
 
                 return $twig;

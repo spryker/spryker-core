@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\CompanyDataImport;
@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class CompanyDataImportConfig extends DataImportConfig
 {
-    const IMPORT_TYPE_COMPANY = 'company';
+    public const IMPORT_TYPE_COMPANY = 'company';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer

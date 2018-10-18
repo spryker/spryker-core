@@ -7,10 +7,13 @@
 
 namespace Spryker\Shared\Price;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface PriceConstants
 {
     /**
      * @deprecated use \Spryker\Shared\PriceProduct\PriceProductConfig instead
      */
-    const DEFAULT_PRICE_TYPE = 'DEFAULT_PRICE_TYPE';
+    public const DEFAULT_PRICE_TYPE = 'DEFAULT_PRICE_TYPE';
 }

@@ -53,7 +53,7 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string
+     * @return int|null
      */
     public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -124,7 +124,8 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     {
         $flysystemTransferCollection = $this->getService()->listContents(
             $fileSystemListTransfer->getFileSystemName(),
-            $fileSystemListTransfer->getPath()
+            $fileSystemListTransfer->getPath(),
+            $fileSystemListTransfer->getRecursive()
         );
 
         $collection = [];

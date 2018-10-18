@@ -2,12 +2,13 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\CompanyBusinessUnitDataImport;
 
 use Codeception\Actor;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 
 /**
  * Inherited Methods
@@ -31,4 +32,20 @@ class CompanyBusinessUnitDataImportCommunicationTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return void
+     */
+    public function truncateCompanyBusinessUnitRelations(): void
+    {
+        $this->truncateTableRelations($this->getCompanyBusinessUnitQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
+     */
+    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
+    {
+        return SpyCompanyBusinessUnitQuery::create();
+    }
 }

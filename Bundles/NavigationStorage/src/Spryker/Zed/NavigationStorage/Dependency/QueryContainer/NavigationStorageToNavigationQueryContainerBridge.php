@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\NavigationStorage\Dependency\QueryContainer;
 
+use Orm\Zed\Navigation\Persistence\SpyNavigationQuery;
+
 class NavigationStorageToNavigationQueryContainerBridge implements NavigationStorageToNavigationQueryContainerInterface
 {
     /**
@@ -28,5 +30,13 @@ class NavigationStorageToNavigationQueryContainerBridge implements NavigationSto
     public function queryNavigationNode()
     {
         return $this->navigationQueryContainer->queryNavigationNode();
+    }
+
+    /**
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
+     */
+    public function queryNavigation(): SpyNavigationQuery
+    {
+        return $this->navigationQueryContainer->queryNavigation();
     }
 }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\CmsBlockStorage;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 class CmsBlockStorageConstants
 {
     /**
@@ -15,7 +18,7 @@ class CmsBlockStorageConstants
      *
      * @api
      */
-    const CMS_BLOCK_SYNC_STORAGE_QUEUE = 'sync.storage.cms';
+    public const CMS_BLOCK_SYNC_STORAGE_QUEUE = 'sync.storage.cms';
 
     /**
      * Specification:
@@ -23,7 +26,7 @@ class CmsBlockStorageConstants
      *
      * @api
      */
-    const CMS_BLOCK_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.cms.error';
+    public const CMS_BLOCK_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.cms.error';
 
     /**
      * Specification:
@@ -31,5 +34,5 @@ class CmsBlockStorageConstants
      *
      * @api
      */
-    const CMS_BLOCK_RESOURCE_NAME = 'cms_block';
+    public const CMS_BLOCK_RESOURCE_NAME = 'cms_block';
 }

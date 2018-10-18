@@ -7,7 +7,9 @@
 
 namespace SprykerTest\Zed\Calculation\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -153,24 +155,28 @@ class CalculationFacadeTest extends Unit
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitAmount(20);
+        $calculatedDiscountTransfer->setSumAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitAmount(20);
+        $calculatedDiscountTransfer->setSumAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitAmount(20);
+        $calculatedDiscountTransfer->setSumAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitAmount(20);
+        $calculatedDiscountTransfer->setSumAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
@@ -183,6 +189,7 @@ class CalculationFacadeTest extends Unit
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitAmount(20);
+        $calculatedDiscountTransfer->setSumAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
@@ -501,13 +508,13 @@ class CalculationFacadeTest extends Unit
         $quoteTransfer = new QuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setUnitPriceToPayAggregation(10);
+        $itemTransfer->setSumPriceToPayAggregation(10);
         $itemTransfer->setCanceledAmount(5);
 
         $quoteTransfer->addItem($itemTransfer);
 
         $expenseTransfer = new ExpenseTransfer();
-        $expenseTransfer->setUnitPriceToPayAggregation(10);
+        $expenseTransfer->setSumPriceToPayAggregation(10);
         $expenseTransfer->setCanceledAmount(2);
         $quoteTransfer->addExpense($expenseTransfer);
 
@@ -604,5 +611,25 @@ class CalculationFacadeTest extends Unit
         $calculationFacade->setFactory($calculationBusinessFactory);
 
         return $calculationFacade;
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCanceledAmountResetsCancelledAmount()
+    {
+        // Assign
+        $calculationFacade = new CalculationFacade();
+        $items = (new ItemTransfer())->setCanceledAmount(100);
+        $calculableObjectTransfer = new CalculableObjectTransfer();
+        $calculableObjectTransfer->setItems(new ArrayObject([$items]));
+        $expectedCancelledAmount = 0;
+
+        // Act
+        $calculationFacade->removeCanceledAmount($calculableObjectTransfer);
+        $actualCancelledAmount = $calculableObjectTransfer->getItems()[0]->getCanceledAmount();
+
+        // Assert
+        $this->assertSame($expectedCancelledAmount, $actualCancelledAmount);
     }
 }

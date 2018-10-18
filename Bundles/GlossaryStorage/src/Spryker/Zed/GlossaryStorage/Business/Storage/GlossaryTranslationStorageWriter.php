@@ -50,7 +50,41 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
         $spyGlossaryTranslationEntities = $this->findGlossaryTranslationEntities($glossaryKeyIds);
         $spyGlossaryStorageEntities = $this->findGlossaryStorageEntitiesByGlossaryKeyIds($glossaryKeyIds);
 
+        [$glossaryStorageInactiveEntities, $spyGlossaryTranslationEntities] = $this
+            ->filterInactiveAndEmptyLocalizedStorageEntities(
+                $spyGlossaryTranslationEntities,
+                $spyGlossaryStorageEntities
+            );
+
+        foreach ($glossaryStorageInactiveEntities as $glossaryStorageInactiveEntity) {
+            $glossaryStorageInactiveEntity->delete();
+        }
+
         $this->storeData($spyGlossaryTranslationEntities, $spyGlossaryStorageEntities);
+    }
+
+    /**
+     * @param array $glossaryTranslations
+     * @param array $spyGlossaryTranslationStorageEntities
+     *
+     * @return array
+     */
+    protected function filterInactiveAndEmptyLocalizedStorageEntities(array $glossaryTranslations, array $spyGlossaryTranslationStorageEntities): array
+    {
+        $spyGlossaryStorageEntities = [];
+        foreach ($glossaryTranslations as $id => $glossaryTranslation) {
+            $idGlossaryKey = $glossaryTranslation['fk_glossary_key'];
+            $localeName = $glossaryTranslation['Locale']['locale_name'];
+
+            if ((!$glossaryTranslation['is_active'] || !$glossaryTranslation['value']) &&
+                isset($spyGlossaryTranslationStorageEntities[$idGlossaryKey][$localeName])
+            ) {
+                $spyGlossaryStorageEntities[] = $spyGlossaryTranslationStorageEntities[$idGlossaryKey][$localeName];
+                unset($glossaryTranslations[$id]);
+            }
+        }
+
+        return [$spyGlossaryStorageEntities, $glossaryTranslations];
     }
 
     /**

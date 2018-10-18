@@ -59,7 +59,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      * @param int $idProductAbstract
      * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
     public function getProductOptions($idProductAbstract, $locale)
     {
@@ -76,7 +76,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
     public function getProductOptionsForCurrentStore($idProductAbstract)
     {

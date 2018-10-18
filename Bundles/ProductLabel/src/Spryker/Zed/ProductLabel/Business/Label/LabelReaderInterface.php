@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductLabel\Business\Label;
 
+use Generated\Shared\Transfer\ProductLabelTransfer;
+
 interface LabelReaderInterface
 {
     /**
@@ -15,6 +17,13 @@ interface LabelReaderInterface
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
     public function findByIdProductLabel($idProductLabel);
+
+    /**
+     * @param string $labelName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
+     */
+    public function findProductLabelByName($labelName): ?ProductLabelTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]

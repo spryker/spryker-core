@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Wishlist\Business\Model;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
@@ -23,7 +24,7 @@ class Writer implements WriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
-    const DEFAULT_NAME = 'default';
+    public const DEFAULT_NAME = 'default';
 
     /**
      * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
@@ -41,18 +42,26 @@ class Writer implements WriterInterface
     protected $productFacade;
 
     /**
+     * @var \Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
+     */
+    protected $addItemPreCheckPlugins;
+
+    /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Business\Model\ReaderInterface $reader
      * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface|null $productFacade
+     * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[] $addItemPreCheckPlugins
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
         ReaderInterface $reader,
-        ?WishlistToProductInterface $productFacade = null
+        ?WishlistToProductInterface $productFacade = null,
+        array $addItemPreCheckPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->reader = $reader;
         $this->productFacade = $productFacade;
+        $this->addItemPreCheckPlugins = $addItemPreCheckPlugins;
     }
 
     /**
@@ -80,7 +89,7 @@ class Writer implements WriterInterface
         $wishlistEntity->fromArray($wishlistTransfer->toArray());
         $wishlistEntity->save();
 
-        $wishlistTransfer->setIdWishlist($wishlistEntity->getIdWishlist());
+        $wishlistTransfer->fromArray($wishlistEntity->toArray(), true);
 
         return $wishlistTransfer;
     }
@@ -264,7 +273,15 @@ class Writer implements WriterInterface
     {
         $this->assertWishlistItemUpdateRequest($wishlistItemTransfer);
 
-        if ($this->productFacade && !$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku())) {
+        $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($wishlistItemTransfer->getSku());
+
+        if ($this->productFacade
+            && (!$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku())
+                || !$this->productFacade->isProductConcreteActive($productConcreteTransfer))) {
+            return $wishlistItemTransfer;
+        }
+
+        if (!$this->preAddItemCheck($wishlistItemTransfer)) {
             return $wishlistItemTransfer;
         }
 
@@ -469,5 +486,22 @@ class Writer implements WriterInterface
             ->filterByIdWishlist($wishlistTransfer->getIdWishlist(), Criteria::NOT_EQUAL);
 
         return $query->count() === 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return bool
+     */
+    protected function preAddItemCheck(WishlistItemTransfer $wishlistItemTransfer): bool
+    {
+        foreach ($this->addItemPreCheckPlugins as $preAddItemCheckPlugin) {
+            $shoppingListPreAddItemCheckResponseTransfer = $preAddItemCheckPlugin->check($wishlistItemTransfer);
+            if (!$shoppingListPreAddItemCheckResponseTransfer->getIsSuccess()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

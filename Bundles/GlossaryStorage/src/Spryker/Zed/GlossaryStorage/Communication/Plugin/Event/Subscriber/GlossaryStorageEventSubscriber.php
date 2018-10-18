@@ -108,6 +108,5 @@ class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     protected function addGlossaryTranslationUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE, new GlossaryTranslationStorageListener());
-        ;
     }
 }

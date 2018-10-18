@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\FlysystemAws3v3FileSystem;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface FlysystemAws3v3FileSystemConstants
 {
 }

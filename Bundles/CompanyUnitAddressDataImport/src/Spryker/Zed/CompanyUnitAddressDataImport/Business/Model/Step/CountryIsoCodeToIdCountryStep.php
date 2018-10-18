@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Step;
@@ -42,7 +42,7 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getIso2Code(DataSetInterface $dataSet)
     {
@@ -56,7 +56,7 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getIso3Code(DataSetInterface $dataSet)
     {

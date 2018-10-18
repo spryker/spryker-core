@@ -14,7 +14,7 @@ class GlossaryStorageConfigMock extends GlossaryStorageConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return false;
     }

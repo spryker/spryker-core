@@ -61,7 +61,7 @@ class CmsRedirectHelper extends Module
      */
     private function cleanupUrlRedirect($idUrl)
     {
-        $this->debug(sprintf('Deleting Url redirect: %d', $idUrl));
+        $this->debug(sprintf('Deleting URL redirect: %d', $idUrl));
 
         $this->getUrlQuery()
             ->queryUrlRedirectByIdUrl($idUrl)

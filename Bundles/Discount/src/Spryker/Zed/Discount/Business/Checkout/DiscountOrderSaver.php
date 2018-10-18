@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -128,7 +129,9 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
         SpySalesDiscount $salesDiscountEntity,
         CalculatedDiscountTransfer $calculatedDiscountTransfer
     ) {
-        $salesDiscountEntity->setAmount($calculatedDiscountTransfer->getUnitAmount());
+        $calculatedDiscountTransfer->requireSumAmount();
+
+        $salesDiscountEntity->setAmount($calculatedDiscountTransfer->getSumAmount());
         $this->persistSalesDiscount($salesDiscountEntity);
 
         if ($this->haveVoucherCode($calculatedDiscountTransfer)) {
@@ -205,7 +208,7 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
     /**
      * @param string $code
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher|null
      */
     protected function getDiscountVoucherEntityByCode($code)
     {
