@@ -25,6 +25,13 @@ interface GuestCartRestResponseBuilderInterface
     public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface;
 
     /**
+     * @param string $idQuote
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createGuestCartNotFoundErrorRestResponse(string $idQuote): RestResponseInterface;
+
+    /**
      * @param \Generated\Shared\Transfer\MessageTransfer[] $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

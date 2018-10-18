@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCartItem;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
+use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
@@ -92,9 +94,31 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
-        $quoteResponseTransfers = $this->cartReader->getCustomerQuotes();
-        $quotes = $quoteResponseTransfers->getQuotes();
-        $quoteTransfer = $quotes[0] ?? $this->guestCartCreator->createQuoteTransfer($restRequest);
+        $parentResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_GUEST_CARTS);
+        if (!$parentResource) {
+            $quoteResponseTransfers = $this->cartReader->getCustomerQuotes();
+            $quotes = $quoteResponseTransfers->getQuotes();
+            $quoteTransfer = $quotes[0] ?? $this->guestCartCreator->createQuoteTransfer($restRequest);
+
+            return $this->addItemToQuote($quoteTransfer, $restCartItemsAttributesTransfer);
+        }
+
+        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($parentResource->getId(), $restRequest);
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->guestCartRestResponseBuilder->createGuestCartNotFoundErrorRestResponse($parentResource->getId());
+        }
+
+        return $this->addItemToQuote($quoteResponseTransfer->getQuoteTransfer(), $restCartItemsAttributesTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addItemToQuote(QuoteTransfer $quoteTransfer, RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): RestResponseInterface
+    {
         $this->quoteClient->setQuote($quoteTransfer);
         $quoteTransfer = $this->cartClient->addItem(
             $this->cartItemsResourceMapper->mapItemAttributesToItemTransfer($restCartItemsAttributesTransfer)
