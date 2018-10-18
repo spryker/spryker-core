@@ -17,9 +17,8 @@ class TestResourceController
      *              "Accept-Language"
      *          ],
      *          "responses": {
-     *              "400": "Bad Response",
-     *              "404": "Item not found",
-     *              "500": "Server Error"
+     *              "400": "Bad Request",
+     *              "404": "Item not found"
      *          }
      *     }
      * })
@@ -35,8 +34,7 @@ class TestResourceController
      *     "post": {
      *          "responseClass": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {
-     *              "400": "Bad Response",
-     *              "404": "Item not found",
+     *              "400": "Bad Request",
      *              "500": "Server Error"
      *          }
      *     }
