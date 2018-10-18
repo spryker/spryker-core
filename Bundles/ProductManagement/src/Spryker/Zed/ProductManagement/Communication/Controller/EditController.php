@@ -22,6 +22,7 @@ class EditController extends AddController
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     public const PARAM_ID_PRODUCT = 'id-product';
     public const PARAM_PRODUCT_TYPE = 'type';
+    public const PARAM_PRICE_DIMENSION = 'price-dimension';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -106,6 +107,7 @@ class EditController extends AddController
             'variantTable' => $variantTable->render(),
             'idProduct' => null,
             'idProductAbstract' => $idProductAbstract,
+            'priceDimension' => $request->get(self::PARAM_PRICE_DIMENSION),
             'productFormEditTabs' => $this->getFactory()->createProductFormEditTabs()->createView(),
         ]);
     }
@@ -202,6 +204,7 @@ class EditController extends AddController
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
             'idProduct' => $idProduct,
             'idProductAbstract' => $idProductAbstract,
+            'priceDimension' => $request->get(self::PARAM_PRICE_DIMENSION),
             'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs()->createView(),
             'bundledProductTable' => $bundledProductTable->render(),
             'type' => $type,

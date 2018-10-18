@@ -25,7 +25,7 @@ class PriceVolumeController extends AbstractController
     protected const REQUEST_PARAM_ID_PRODUCT = 'id-product';
     protected const REQUEST_PARAM_STORE_NAME = 'store-name';
     protected const REQUEST_PARAM_CURRENCY_CODE = 'currency-code';
-    protected const REQUEST_PARAM_PRICE_DIMENSION = 'price_dimension';
+    protected const REQUEST_PARAM_PRICE_DIMENSION = 'price-dimension';
     protected const REQUEST_PARAM_SAVE_AND_EXIT = 'save_and_exit';
 
     protected const PRICE_PRODUCT_VOLUME_EDIT_URL = '/price-product-volume-gui/price-volume/edit';
