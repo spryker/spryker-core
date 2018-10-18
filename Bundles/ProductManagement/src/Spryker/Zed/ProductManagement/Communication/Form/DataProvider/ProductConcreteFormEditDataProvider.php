@@ -158,6 +158,8 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
         $productTransfer = $this->productFacade->findProductConcreteById($idProduct);
 
+        $formData[ProductConcreteFormEdit::FIELD_ID_PRODUCT_CONCRETE] = $productTransfer->getIdProductConcrete();
+
         if ($productAbstractTransfer) {
             $formData = $this->appendVariantGeneralAndSeoData($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendVariantPriceAndStock($productAbstractTransfer, $productTransfer, $formData);
@@ -230,6 +232,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         }
 
         foreach ($stockCollection as $stockTransfer) {
+            $stock = [];
             $stock[StockForm::FIELD_HIDDEN_FK_STOCK] = $stockTransfer->getFkStock();
             $stock[StockForm::FIELD_HIDDEN_STOCK_PRODUCT_ID] = $stockTransfer->getIdStockProduct();
             $stock[StockForm::FIELD_IS_NEVER_OUT_OF_STOCK] = (bool)$stockTransfer->getIsNeverOutOfStock();
@@ -256,6 +259,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
         $bundledProducts = $productTransfer->getProductBundle()->getBundledProducts();
         foreach ($bundledProducts as $productForBundleTransfer) {
+            $bundledProduct = [];
             $bundledProduct[BundledProductForm::FIELD_QUANTITY] = $productForBundleTransfer->getQuantity();
             $bundledProduct[BundledProductForm::FIELD_ID_PRODUCT_CONCRETE] = $productForBundleTransfer->getIdProductConcrete();
             $bundledProduct[BundledProductForm::FIELD_SKU] = $productForBundleTransfer->getSku();
