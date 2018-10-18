@@ -108,7 +108,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
                 continue;
             }
 
-            if (array_key_exists(ProductConfig::VARIANT_LEAF_NODE_ID, $filteredAttributeVariant)) {
+            if ($filteredAttributeVariantKey === ProductConfig::VARIANT_LEAF_NODE_ID) {
                 continue;
             }
 
