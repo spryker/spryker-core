@@ -41,12 +41,15 @@ class Installer implements InstallerInterface
      */
     public function install(): void
     {
-        foreach ($this->oauthCustomerConnectorConfig->getCustomerScopes() as $scope) {
-            $oauthScopeTransfer = new OauthScopeTransfer();
-            $oauthScopeTransfer->setIdentifier($scope);
+        $customerScopes = $this->oauthCustomerConnectorConfig->getCustomerScopes();
+        $oauthScopesTransfers = $this->findScopesByIdentifiers($customerScopes);
 
-            if (!$this->isExistOauthScope($oauthScopeTransfer)) {
-                $this->oauthFacade->saveScope($oauthScopeTransfer);
+        foreach ($customerScopes as $customerScope) {
+            if (!$this->isExistOauthScope($customerScope, $oauthScopesTransfers)) {
+                $oauthScopeTransfer = new OauthScopeTransfer();
+                $oauthScopeTransfer->setIdentifier($customerScope);
+
+                $oauthScopesTransfers[$customerScope] = $this->oauthFacade->saveScope($oauthScopeTransfer);
             }
         }
 
@@ -67,13 +70,36 @@ class Installer implements InstallerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OauthScopeTransfer $oauthScopeTransfer
+     * @param string[] $customerScopes
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
+     */
+    protected function findScopesByIdentifiers(array $customerScopes): array
+    {
+        $oauthScopesTransfersWithIdentifierKeys = [];
+        $oauthScopesTransfers = $this->oauthFacade->findScopesByIdentifiers($customerScopes);
+
+        foreach ($oauthScopesTransfers as $oauthScopeTransfer) {
+            $oauthScopesIdentifier = $oauthScopeTransfer->getIdentifier();
+            $oauthScopesTransfersWithIdentifierKeys[$oauthScopesIdentifier] = $oauthScopeTransfer;
+        }
+
+        return $oauthScopesTransfersWithIdentifierKeys;
+    }
+
+    /**
+     * @param string $oauthScopeIdentifier
+     * @param \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
      *
      * @return bool
      */
-    protected function isExistOauthScope(OauthScopeTransfer $oauthScopeTransfer): bool
+    protected function isExistOauthScope(string $oauthScopeIdentifier, array $oauthScopeTransfers): bool
     {
-        return $this->oauthFacade->findScopeByIdentifier($oauthScopeTransfer) !== null;
+        if (isset($oauthScopeTransfers[$oauthScopeIdentifier])) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

@@ -64,21 +64,74 @@ class ProductPackagingUnitTypeInstaller implements ProductPackagingUnitTypeInsta
     {
         $productInfrastructuralPackagingUnitTypes = $this->config->getInfrastructuralPackagingUnitTypes();
 
+        $productPackagingUnitTypeTransfers = $this->findProductPackagingUnitTypeByNames(
+            $productInfrastructuralPackagingUnitTypes
+        );
+
         foreach ($productInfrastructuralPackagingUnitTypes as $productInfrastructuralPackagingUnitTypeTransfer) {
-            if (!$this->isExistProductPackagingUnitType($productInfrastructuralPackagingUnitTypeTransfer)) {
-                $this->entityManager->saveProductPackagingUnitType($productInfrastructuralPackagingUnitTypeTransfer);
+            $isExistProductPackagingUnitType = $this->isExistProductPackagingUnitType(
+                $productInfrastructuralPackagingUnitTypeTransfer,
+                $productPackagingUnitTypeTransfers
+            );
+
+            if (!$isExistProductPackagingUnitType) {
+                $productPackagingUnitTypeName = $productInfrastructuralPackagingUnitTypeTransfer->getName();
+                $productPackagingUnitTypeTransfers[$productPackagingUnitTypeName] = $this->entityManager
+                    ->saveProductPackagingUnitType($productInfrastructuralPackagingUnitTypeTransfer);
             }
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer[] $productPackagingUnitTypeTransfers
      *
      * @return bool
      */
     protected function isExistProductPackagingUnitType(
-        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer,
+        array $productPackagingUnitTypeTransfers
     ): bool {
-        return $this->reader->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer) !== null;
+        return isset($productPackagingUnitTypeTransfers[$productPackagingUnitTypeTransfer->getName()]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer[] $productPackagingUnitTypeTransfers
+     *
+     * @return string[]
+     */
+    protected function getProductPackagingUnitTypeNames(array $productPackagingUnitTypeTransfers): array
+    {
+        $productPackagingUnitTypeNames = [];
+
+        foreach ($productPackagingUnitTypeTransfers as $productPackagingUnitTypeTransfer) {
+            $productPackagingUnitTypeNames[] = $productPackagingUnitTypeTransfer->getName();
+        }
+
+        return $productPackagingUnitTypeNames;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer[] $productInfrastructuralPackagingUnitTypes
+     *
+     * @return array
+     */
+    protected function findProductPackagingUnitTypeByNames(array $productInfrastructuralPackagingUnitTypes): array
+    {
+        $productInfrastructuralPackagingUnitTypeNames = $this->getProductPackagingUnitTypeNames(
+            $productInfrastructuralPackagingUnitTypes
+        );
+
+        $productPackagingUnitTypeTransfersWithNameKeys = [];
+
+        $productPackagingUnitTypeTransfers = $this->reader
+            ->findProductPackagingUnitTypeByNames($productInfrastructuralPackagingUnitTypeNames);
+
+        foreach ($productPackagingUnitTypeTransfers as $productPackagingUnitTypeTransfer) {
+            $productPackagingUnitTypeName = $productPackagingUnitTypeTransfer->getName();
+            $productPackagingUnitTypeTransfersWithNameKeys[$productPackagingUnitTypeName] = $productPackagingUnitTypeTransfer;
+        }
+
+        return $productPackagingUnitTypeTransfersWithNameKeys;
     }
 }

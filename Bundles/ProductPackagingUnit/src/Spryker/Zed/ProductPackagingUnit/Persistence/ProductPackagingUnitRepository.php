@@ -314,4 +314,34 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->innerJoinWithProductPackagingUnitType()
             ->leftJoinWithSpyProductPackagingUnitAmount();
     }
+
+    /**
+     * @param string[] $productPackagingUnitTypeNames
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer[]
+     */
+    public function findProductPackagingUnitTypeByNames(array $productPackagingUnitTypeNames): array
+    {
+        $spyProductPackagingUnitTypeEntities = $this->getFactory()
+            ->createProductPackagingUnitTypeQuery()
+            ->filterByName_In($productPackagingUnitTypeNames)
+            ->find();
+
+        $productPackagingUnitTypeTransfers = [];
+
+        if ($spyProductPackagingUnitTypeEntities->count() === 0) {
+            return $productPackagingUnitTypeTransfers;
+        }
+
+        foreach ($spyProductPackagingUnitTypeEntities as $spyProductPackagingUnitTypeEntity) {
+            $productPackagingUnitTypeTransfers[] = $this->getFactory()
+                ->createProductPackagingUnitMapper()
+                ->mapProductPackagingUnitTypeTransfer(
+                    $spyProductPackagingUnitTypeEntity,
+                    new ProductPackagingUnitTypeTransfer()
+                );
+        }
+
+        return $productPackagingUnitTypeTransfers;
+    }
 }

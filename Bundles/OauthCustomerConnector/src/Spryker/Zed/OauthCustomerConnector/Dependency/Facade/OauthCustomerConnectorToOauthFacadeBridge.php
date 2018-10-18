@@ -64,4 +64,14 @@ class OauthCustomerConnectorToOauthFacadeBridge implements OauthCustomerConnecto
     {
         return $this->oauthFacade->findClientByIdentifier($oauthClientTransfer);
     }
+
+    /**
+     * @param string[] $customerScopes
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     */
+    public function findScopesByIdentifiers(array $customerScopes): array
+    {
+        return $this->oauthFacade->findScopesByIdentifiers($customerScopes);
+    }
 }

@@ -48,4 +48,11 @@ interface ProductPackagingUnitTypeReaderInterface
      * @return array
      */
     public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\string[] $productInfrastructuralPackagingUnitTypeNames
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer[] $productInfrastructuralPackagingUnitTypes
+     */
+    public function findProductPackagingUnitTypeByNames(array $productInfrastructuralPackagingUnitTypeNames): array;
 }

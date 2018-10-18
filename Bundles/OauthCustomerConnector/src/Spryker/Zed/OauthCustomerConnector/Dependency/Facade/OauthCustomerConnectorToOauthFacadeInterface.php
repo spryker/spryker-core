@@ -39,4 +39,11 @@ interface OauthCustomerConnectorToOauthFacadeInterface
      * @return \Generated\Shared\Transfer\OauthClientTransfer|null
      */
     public function findClientByIdentifier(OauthClientTransfer $oauthClientTransfer): ?OauthClientTransfer;
+
+    /**
+     * @param string[] $customerScopes
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     */
+    public function findScopesByIdentifiers(array $customerScopes): array;
 }

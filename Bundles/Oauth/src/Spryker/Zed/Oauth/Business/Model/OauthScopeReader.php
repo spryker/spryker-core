@@ -44,4 +44,14 @@ class OauthScopeReader implements OauthScopeReaderInterface
 
         return $oauthScopeTransfer->fromArray($entityTransfer->toArray(), true);
     }
+
+    /**
+     * @param string[] $customerScopes
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     */
+    public function findScopesByIdentifiers(array $customerScopes): array
+    {
+        return $this->repository->findScopesByIdentifiers($customerScopes);
+    }
 }

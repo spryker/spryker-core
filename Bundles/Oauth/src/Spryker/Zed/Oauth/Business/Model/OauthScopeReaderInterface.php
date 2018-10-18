@@ -17,4 +17,11 @@ interface OauthScopeReaderInterface
      * @return \Generated\Shared\Transfer\OauthScopeTransfer|null
      */
     public function findScopeByIdentifier(OauthScopeTransfer $oauthScopeTransfer): ?OauthScopeTransfer;
+
+    /**
+     * @param string[] $customerScopes
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     */
+    public function findScopesByIdentifiers(array $customerScopes): array;
 }
