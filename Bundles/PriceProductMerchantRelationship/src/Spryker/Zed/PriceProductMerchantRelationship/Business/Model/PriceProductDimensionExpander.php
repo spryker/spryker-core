@@ -14,8 +14,6 @@ use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductM
 
 class PriceProductDimensionExpander implements PriceProductDimensionExpanderInterface
 {
-    protected const FORMAT_NAME = '%s - %s';
-
     /**
      * @var \Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface
      */
@@ -43,22 +41,8 @@ class PriceProductDimensionExpander implements PriceProductDimensionExpanderInte
         $merchantRelationshipTransfer = $this->merchantRelationshipFacade->getMerchantRelationshipById($merchantRelationshipTransfer);
 
         $priceProductDimensionTransfer->setType(PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP);
-        $priceProductDimensionTransfer->setName($this->generateMerchantRelationshipName($merchantRelationshipTransfer));
+        $priceProductDimensionTransfer->setName($merchantRelationshipTransfer->getName());
 
         return $priceProductDimensionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
-     *
-     * @return string
-     */
-    protected function generateMerchantRelationshipName(MerchantRelationshipTransfer $merchantRelationshipTransfer): string
-    {
-        return sprintf(
-            static::FORMAT_NAME,
-            $merchantRelationshipTransfer->getIdMerchantRelationship(),
-            $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()
-        );
     }
 }

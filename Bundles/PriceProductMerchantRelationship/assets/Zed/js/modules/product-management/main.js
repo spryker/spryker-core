@@ -24,7 +24,7 @@ $(document).ready(function () {
     let selectedValue = parseInt(getUrlParam(priceDimensionParam + "[idMerchantRelationship]", 0));
 
     if (selectedValue) {
-        $(selectIdPath + " option[value='" + selectedValue + "']").first().attr('selected', 'selected');
+        $(selectIdPath + " option[value='" + selectedValue + "']").attr('selected', 'selected');
     }
 
     $(selectIdPath).change(function() {
@@ -34,81 +34,81 @@ $(document).ready(function () {
             addNewParamsToUrl();
         }
     });
-});
 
-function addNewParamsToUrl() {
+    function addNewParamsToUrl() {
 
-    let url = window.location.search;
+        let url = window.location.search;
 
-    $(selectIdPath + " option:selected").each(function () {
+        $(selectIdPath + " option:selected").each(function () {
+            url = removeParam(priceDimensionParam + "[type]", url);
+            url = updateUrl(url, priceDimensionParam + "[type]", $(this).closest('select').attr('data-type'));
+
+            url = removeParam(priceDimensionParam + "[idMerchantRelationship]", url);
+            url = updateUrl(url, priceDimensionParam + "[idMerchantRelationship]", $(this).val());
+        });
+
+        window.location.search = url;
+    }
+
+    function removeParamsFromUrl() {
+        let url = window.location.search;
+
         url = removeParam(priceDimensionParam + "[type]", url);
-        url = updateUrl(url, priceDimensionParam + "[type]", $(this).closest('select').attr('data-type'));
-
         url = removeParam(priceDimensionParam + "[idMerchantRelationship]", url);
-        url = updateUrl(url, priceDimensionParam + "[idMerchantRelationship]", $(this).val());
-    });
 
-    window.location.search = url;
-}
-
-function removeParamsFromUrl() {
-    let url = window.location.search;
-
-    url = removeParam(priceDimensionParam + "[type]", url);
-    url = removeParam(priceDimensionParam + "[idMerchantRelationship]", url);
-
-    window.location.search = url;
-}
-
-function updateUrl(url, paramName, paramValue) {
-
-    if (url.includes(paramName)) {
-        return setParam(url, paramName, paramValue);
+        window.location.search = url;
     }
 
-    return url + '&' + paramName + '=' + paramValue;
-}
+    function updateUrl(url, paramName, paramValue) {
 
-function setParam(uri, key, val) {
-    return uri
-        .replace(new RegExp("([?&]" + key + "(?=[=&#]|$)[^#&]*|(?=#|$))"), "&" + key + "=" + encodeURIComponent(val))
-        .replace(/^([^?&]+)&/, "$1?");
-}
-
-function removeParam(key, sourceURL) {
-    let rtn = sourceURL.split("?")[0],
-        param,
-        params_arr = [],
-        queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
-
-    if (queryString !== "") {
-        params_arr = queryString.split("&");
-        for (let i = params_arr.length - 1; i >= 0; i -= 1) {
-            param = params_arr[i].split("=")[0];
-            if (param === key) {
-                params_arr.splice(i, 1);
-            }
+        if (url.includes(paramName)) {
+            return setParam(url, paramName, paramValue);
         }
-        rtn = rtn + "?" + params_arr.join("&");
-    }
-    return rtn;
-}
 
-function getUrlParam(parameter, defaultvalue) {
-    let urlparameter = defaultvalue;
-
-    if (window.location.href.indexOf(parameter) > -1) {
-        urlparameter = getUrlVars()[parameter];
+        return url + '&' + paramName + '=' + paramValue;
     }
 
-    return urlparameter;
-}
+    function setParam(uri, key, val) {
+        return uri
+            .replace(new RegExp("([?&]" + key + "(?=[=&#]|$)[^#&]*|(?=#|$))"), "&" + key + "=" + encodeURIComponent(val))
+            .replace(/^([^?&]+)&/, "$1?");
+    }
 
-function getUrlVars() {
-    let vars = {};
-    let parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-        vars[key] = value;
-    });
+    function removeParam(key, sourceURL) {
+        let rtn = sourceURL.split("?")[0],
+            param,
+            params_arr = [],
+            queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
 
-    return vars;
-}
+        if (queryString !== "") {
+            params_arr = queryString.split("&");
+            for (let i = params_arr.length - 1; i >= 0; i -= 1) {
+                param = params_arr[i].split("=")[0];
+                if (param === key) {
+                    params_arr.splice(i, 1);
+                }
+            }
+            rtn = rtn + "?" + params_arr.join("&");
+        }
+        return rtn;
+    }
+
+    function getUrlParam(parameter, defaultvalue) {
+        let urlparameter = defaultvalue;
+
+        if (window.location.href.indexOf(parameter) > -1) {
+            urlparameter = getUrlVars()[parameter];
+        }
+
+        return urlparameter;
+    }
+
+    function getUrlVars() {
+        let vars = {};
+        let parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+            vars[key] = value;
+        });
+
+        return vars;
+    }
+});

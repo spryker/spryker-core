@@ -18,6 +18,9 @@ class MerchantPriceDimensionForm extends AbstractType
 {
     public const OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES = 'merchant_relationship_choices';
 
+    public const FIELD_PLACEHOLDER_MERCHANT_RELATIONSHIP = 'Choose merchant relation';
+    public const FIELD_LABEL_MERCHANT_RELATIONSHIP = 'Merchant Price Dimension';
+
     protected const TEMPLATE_PATH = '@PriceProductMerchantRelationship/ProductManagement/price_dimension.twig';
 
     /**
@@ -56,9 +59,9 @@ class MerchantPriceDimensionForm extends AbstractType
     {
         $builder->add(PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP, ChoiceType::class, [
             'choices' => $options[static::OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES],
-            'placeholder' => 'Choose merchant relation',
+            'placeholder' => static::FIELD_PLACEHOLDER_MERCHANT_RELATIONSHIP,
             'choices_as_values' => true,
-            'label' => 'Merchant Price Dimension',
+            'label' => static::FIELD_LABEL_MERCHANT_RELATIONSHIP,
             'attr' => [
                 'template_path' => $this->getTemplatePath(),
                 'data-type' => PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP,

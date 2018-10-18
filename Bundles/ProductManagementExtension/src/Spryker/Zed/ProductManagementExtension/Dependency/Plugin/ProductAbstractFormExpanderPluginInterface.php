@@ -13,7 +13,7 @@ interface ProductAbstractFormExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands ProductFormAdd with new form.
+     * - Expands ProductFormAdd, ProductFormEdit for abstract products with new form fields or sub-forms.
      *
      * @api
      *

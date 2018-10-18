@@ -63,8 +63,9 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addImageLocalizedForms($builder)
             ->addAssignBundledProductForm($builder, $options)
             ->addBundledProductsToBeRemoved($builder)
-            ->addFormBuildPlugins($builder, $options)
-            ->executeProductConcreteFormExpanderPlugins($builder, $options);
+            ->addFormBuildPlugins($builder, $options);
+
+        $this->executeProductConcreteFormExpanderPlugins($builder, $options);
     }
 
     /**

@@ -132,7 +132,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $productAbstractTransfer->setImageSets(new ArrayObject($imageSetCollection));
         $productAbstractTransfer->setStoreRelation($formData[ProductFormAdd::FORM_STORE_RELATION]);
 
-        $priceProducts = $this->formatNewPricesUsingPriceDimension($formData);
+        $priceProducts = $this->updatePricesDimension($formData);
         $productAbstractTransfer->setPrices($priceProducts);
 
         return $productAbstractTransfer;
@@ -195,7 +195,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         }
 
         $formData = $form->getData();
-        $priceProducts = $this->formatNewPricesUsingPriceDimension($formData);
+        $priceProducts = $this->updatePricesDimension($formData);
         $productConcreteTransfer->setPrices($priceProducts);
 
         $stockCollection = $this->buildProductStockCollectionTransfer($form);
@@ -223,7 +223,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function formatNewPricesUsingPriceDimension(array $formData): ArrayObject
+    protected function updatePricesDimension(array $formData): ArrayObject
     {
         $priceProducts = $formData[ProductFormAdd::FIELD_PRICES];
 
@@ -243,12 +243,13 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             $priceDimension = $priceProductTransfer->getPriceDimension();
 
             if (!$priceDimension) {
-                $priceDimension = $priceProductDimensionTransfer;
-            } else {
-                $priceDimension->fromArray($priceProductDimensionTransfer->modifiedToArray());
+                $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
+                continue;
             }
 
-            $priceProductTransfer->setPriceDimension($priceDimension);
+            $priceProductTransfer->setPriceDimension(
+                $priceDimension->fromArray($priceProductDimensionTransfer->modifiedToArray())
+            );
         }
 
         return $priceProducts;

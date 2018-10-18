@@ -13,7 +13,7 @@ interface ProductConcreteFormExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands ProductFormAdd with new form.
+     * - Expands ProductFormAdd, ProductFormEdit for concrete products with new form fields or sub-forms.
      *
      * @api
      *

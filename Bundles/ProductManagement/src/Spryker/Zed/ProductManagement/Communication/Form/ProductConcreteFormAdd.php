@@ -57,8 +57,9 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
             ->addAssignBundledProductForm($builder, $options)
             ->addBundledProductsToBeRemoved($builder)
             ->addProductConcreteSuperAttributeForm($builder, $options)
-            ->addPriceSourceCheckbox($builder)
-            ->executeProductConcreteFormExpanderPlugins($builder, $options);
+            ->addPriceSourceCheckbox($builder);
+
+        $this->executeProductConcreteFormExpanderPlugins($builder, $options);
     }
 
     /**

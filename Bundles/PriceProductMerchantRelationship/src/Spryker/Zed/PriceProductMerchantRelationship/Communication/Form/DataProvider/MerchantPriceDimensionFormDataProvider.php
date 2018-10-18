@@ -7,14 +7,11 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\MerchantPriceDimensionForm;
 use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface;
 
 class MerchantPriceDimensionFormDataProvider
 {
-    protected const FORMAT_NAME = '%s - %s';
-
     /**
      * @var \Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface
      */
@@ -49,25 +46,9 @@ class MerchantPriceDimensionFormDataProvider
         $merchantRelationships = $this->merchantRelationshipFacade->getMerchantRelationshipCollection();
 
         foreach ($merchantRelationships as $merchantRelationshipTransfer) {
-            $merchantRelationshipKey = $this->generateMerchantRelationshipName($merchantRelationshipTransfer);
-
-            $choices[$merchantRelationshipTransfer->getMerchant()->getName()][$merchantRelationshipKey] = $merchantRelationshipTransfer->getIdMerchantRelationship();
+            $choices[$merchantRelationshipTransfer->getMerchant()->getName()][$merchantRelationshipTransfer->getName()] = $merchantRelationshipTransfer->getIdMerchantRelationship();
         }
 
         return $choices;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
-     *
-     * @return string
-     */
-    protected function generateMerchantRelationshipName(MerchantRelationshipTransfer $merchantRelationshipTransfer): string
-    {
-        return sprintf(
-            static::FORMAT_NAME,
-            $merchantRelationshipTransfer->getIdMerchantRelationship(),
-            $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()
-        );
     }
 }

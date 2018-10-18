@@ -21,6 +21,7 @@ class MerchantRelationshipProductConcreteFormExpanderPlugin extends AbstractPlug
 {
     /**
      * {@inheritdoc}
+     *  - Adds sub-form with merchant relationship dimension dropdown.
      *
      * @api
      *

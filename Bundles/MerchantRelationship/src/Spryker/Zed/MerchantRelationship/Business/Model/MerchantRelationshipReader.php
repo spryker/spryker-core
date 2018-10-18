@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException;
+use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpanderInterface;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface;
 
 class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
@@ -19,11 +20,20 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     protected $repository;
 
     /**
-     * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface $repository
+     * @var \Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpanderInterface
      */
-    public function __construct(MerchantRelationshipRepositoryInterface $repository)
-    {
+    protected $merchantRelationshipExpander;
+
+    /**
+     * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface $repository
+     * @param \Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpanderInterface $merchantRelationshipExpander
+     */
+    public function __construct(
+        MerchantRelationshipRepositoryInterface $repository,
+        MerchantRelationshipExpanderInterface $merchantRelationshipExpander
+    ) {
         $this->repository = $repository;
+        $this->merchantRelationshipExpander = $merchantRelationshipExpander;
     }
 
     /**
@@ -40,9 +50,13 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
         $merchantRelationshipTransfer = $this->repository->getMerchantRelationshipById(
             $merchantRelationshipTransfer->getIdMerchantRelationship()
         );
+
         if (!$merchantRelationshipTransfer) {
             throw new MerchantRelationshipNotFoundException();
         }
+
+        $merchantRelationshipTransfer = $this->merchantRelationshipExpander
+            ->expandMerchantRelationshipTransferByName($merchantRelationshipTransfer);
 
         return $merchantRelationshipTransfer;
     }
@@ -75,5 +89,19 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     public function getIdAssignedBusinessUnitsByMerchantRelationshipId(int $idMerchantRelationship): array
     {
         return $this->repository->getIdAssignedBusinessUnitsByMerchantRelationshipId($idMerchantRelationship);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function getMerchantRelationshipCollection(): array
+    {
+        $merchantRelationships = $this->repository->getMerchantRelationshipCollection();
+
+        foreach ($merchantRelationships as $merchantRelationshipTransfer) {
+             $this->merchantRelationshipExpander->expandMerchantRelationshipTransferByName($merchantRelationshipTransfer);
+        }
+
+        return $merchantRelationships;
     }
 }
