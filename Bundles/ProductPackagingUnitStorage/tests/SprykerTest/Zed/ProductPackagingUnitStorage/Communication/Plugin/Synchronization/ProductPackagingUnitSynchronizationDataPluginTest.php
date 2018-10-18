@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageBusinessFactory;
 use Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacade;
-use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductPackagingUnitSynchronizationDataPlugin;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductAbstractPackgingSynchronizationDataPlugin;
 use SprykerTest\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfigMock;
 
 /**
@@ -131,10 +131,10 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductPackagingUnitSynchronizationDataPlugin
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductAbstractPackgingSynchronizationDataPlugin
      */
-    protected function getProductPackagingUnitSynchronizationDataPlugin(): ProductPackagingUnitSynchronizationDataPlugin
+    protected function getProductPackagingUnitSynchronizationDataPlugin(): ProductAbstractPackgingSynchronizationDataPlugin
     {
-        return new ProductPackagingUnitSynchronizationDataPlugin();
+        return new ProductAbstractPackgingSynchronizationDataPlugin();
     }
 }

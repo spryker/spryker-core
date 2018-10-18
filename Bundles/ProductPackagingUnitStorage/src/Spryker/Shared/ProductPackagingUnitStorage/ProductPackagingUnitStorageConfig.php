@@ -33,5 +33,15 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
+    public const PRODUCT_ABSTRACT_PACKAGING_RESOURCE_NAME = 'product_abstract_packaging';
+
+    /**
+     * Specification:
+     * - Resource name, this will use for key generating
+     *
+     * @deprecated Use Spryker\Shared\ProductPackagingUnitStorage\PRODUCT_ABSTRACT_PACKAGING_RESOURCE_NAME::PRODUCT_ABSTRACT_PACKAGING_RESOURCE_NAME
+     *
+     * @api
+     */
     public const PRODUCT_PACKAGING_UNIT_RESOURCE_NAME = 'product_abstract_packaging';
 }
