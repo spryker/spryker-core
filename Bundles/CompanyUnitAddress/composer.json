@@ -17,11 +17,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/customer": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/customer": "If you want to use CompanyBusinessUnitAddressesCustomerTransferExpanderPlugin: ^7.5.0"
   },
   "autoload": {
     "psr-4": {
