@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductListStorage\Business\ProductListProductAbstractStorage;
 
 use Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer;
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface;
 use Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface;
@@ -28,6 +29,11 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      * @var bool
      */
     protected $isSendingToQueue;
+
+    /**
+     * @var array
+     */
+    protected $productListsCache = [];
 
     /**
      * @param \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface $productListFacade
@@ -51,6 +57,8 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     public function publish(array $productAbstractIds): void
     {
+        $this->productListsCache = $this->productListFacade->getProductAbstractListsIdsByIdProductAbstractIn($productAbstractIds);
+
         $productAbstractProductListStorageEntities = $this->findProductAbstractProductListStorageEntities($productAbstractIds);
         $indexedProductAbstractProductListStorageEntities = $this->indexProductAbstractProductListStorageEntities($productAbstractProductListStorageEntities);
         foreach ($productAbstractIds as $idProductAbstract) {
@@ -108,7 +116,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     protected function findProductAbstractBlacklistIds(int $idProductAbstract): array
     {
-        return $this->productListFacade->getProductAbstractBlacklistIdsIdProductAbstract($idProductAbstract);
+        return $this->productListsCache[$idProductAbstract][SpyProductListTableMap::COL_TYPE_BLACKLIST] ?? [];
     }
 
     /**
@@ -118,7 +126,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     protected function findProductAbstractWhitelistIds(int $idProductAbstract): array
     {
-        return $this->productListFacade->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
+        return $this->productListsCache[$idProductAbstract][SpyProductListTableMap::COL_TYPE_WHITELIST] ?? [];
     }
 
     /**

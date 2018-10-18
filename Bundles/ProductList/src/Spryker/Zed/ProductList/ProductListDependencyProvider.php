@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductList;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -17,6 +18,7 @@ use Spryker\Zed\ProductList\Dependency\Service\ProductListToUtilTextServiceBridg
 class ProductListDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_PRODUCT_CATEGORY_QUERY = 'PROPEL_PRODUCT_CATEGORY_QUERY';
+    public const PROPEL_PRODUCT_QUERY = 'PROPEL_PRODUCT_QUERY';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
@@ -31,6 +33,7 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addProductCategoryPropelQuery($container);
+        $container = $this->addProductPropelQuery($container);
 
         return $container;
     }
@@ -59,6 +62,20 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PROPEL_PRODUCT_CATEGORY_QUERY] = function (Container $container) {
             return SpyProductCategoryQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_PRODUCT_QUERY] = function () {
+            return SpyProductQuery::create();
         };
 
         return $container;

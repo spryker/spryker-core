@@ -75,6 +75,41 @@ interface ProductListRepositoryInterface
     public function getConcreteProductWhitelistIds(int $idProductConcrete): array;
 
     /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function findProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return array
+     */
+    public function getProductListIdsByProductConcreteIdsIn(array $productConcreteIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getCategoryProductList(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductListsByIdProductAbstractIn(array $productAbstractIds): array;
+
+    /**
      * @param int[] $productListIds
      *
      * @return int[]

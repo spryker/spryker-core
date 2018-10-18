@@ -10,8 +10,11 @@ namespace Spryker\Zed\ProductList\Business\ProductList;
 use Generated\Shared\Transfer\ProductListCategoryRelationTransfer;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\ProductList\Business\ProductListCategoryRelation\ProductListCategoryRelationReaderInterface;
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationReaderInterface;
+use Spryker\Zed\ProductList\Persistence\ProductListRepository;
 use Spryker\Zed\ProductList\Persistence\ProductListRepositoryInterface;
 
 class ProductListReader implements ProductListReaderInterface
@@ -54,6 +57,181 @@ class ProductListReader implements ProductListReaderInterface
     public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
     {
         return $this->productListRepository->getAbstractProductBlacklistIds($idProductAbstract);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return array
+     */
+    public function getProductListsIdsByIdProductIn(array $productConcreteIds): array
+    {
+        $concreteToAbstractMap = $this->productListRepository
+            ->findProductAbstractIdsByProductConcreteIds($productConcreteIds);
+
+        $productConcreteLists = $this->mapProductListIdsByIdProductConcreteAndType(
+            $this->productListRepository->getProductListIdsByProductConcreteIdsIn($productConcreteIds)
+        );
+
+        $productAbstractLists = $this->getProductAbstractListsIdsByIdProductAbstractIn(
+            array_values($concreteToAbstractMap)
+        );
+
+        return $this->mergeConcreteAndAbstractLists($productConcreteLists, $productAbstractLists, $concreteToAbstractMap);
+    }
+
+    /**
+     * @param array $productConcreteLists
+     * @param array $productAbstractLists
+     * @param array $concreteToAbstractMap
+     *
+     * @return array
+     */
+    protected function mergeConcreteAndAbstractLists(array $productConcreteLists, array $productAbstractLists, array $concreteToAbstractMap): array
+    {
+        $mergedLists = [];
+        foreach ($productConcreteLists as $idProductConcrete => $productConcreteList) {
+            $idProductAbstract = $concreteToAbstractMap[$idProductConcrete];
+
+            $mergedLists[$idProductConcrete] = array_merge(
+                $productConcreteList,
+                $productAbstractLists[$idProductAbstract] ?? []
+            );
+        }
+
+        return $mergedLists;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductAbstractListsIdsByIdProductAbstractIn(array $productAbstractIds): array
+    {
+        $productListIds = $this->filterProductListIds(
+            $this->getProductListsByIdProductAbstractIn($productAbstractIds),
+            $this->getProductConcreteCountByProductAbstractIds($productAbstractIds)
+        );
+
+        $categoryProductList = $this->getCategoryProductList($productAbstractIds);
+
+        $totalProductList = array_merge($productListIds, $categoryProductList);
+
+        return $this->mapProductListIdsByIdProductAbstractAndType($totalProductList);
+    }
+
+    /**
+     * @param array $productAbstractListsIds
+     *
+     * @return array
+     */
+    protected function mapProductListIdsByIdProductAbstractAndType(array $productAbstractListsIds): array
+    {
+        $typeValueSet = SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE);
+        $mappedProductListIds = [];
+        foreach ($productAbstractListsIds as $productList) {
+            $idProductAbstract = $productList[ProductListRepository::COL_ID_PRODUCT_ABSTRACT];
+            $type = $typeValueSet[$productList[ProductListRepository::COL_TYPE]];
+            $idProductList = $productList[ProductListRepository::COL_ID_PRODUCT_LIST];
+
+            $mappedProductListIds[$idProductAbstract][$type][] = $idProductList;
+        }
+
+        return $mappedProductListIds;
+    }
+
+    /**
+     * @param array $productAbstractListsIds
+     *
+     * @return array
+     */
+    protected function mapProductListIdsByIdProductConcreteAndType(array $productAbstractListsIds): array
+    {
+        $typeValueSet = SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE);
+        $mappedProductListIds = [];
+        foreach ($productAbstractListsIds as $productList) {
+            $idProduct = $productList[SpyProductListProductConcreteTableMap::COL_FK_PRODUCT];
+            $type = $typeValueSet[$productList[ProductListRepository::COL_TYPE]];
+            $idProductList = $productList[ProductListRepository::COL_ID_PRODUCT_LIST];
+
+            $mappedProductListIds[$idProduct][$type][] = $idProductList;
+        }
+
+        return $mappedProductListIds;
+    }
+
+    /**
+     * @param array $productListIds
+     * @param array $productConcreteCountByProductAbstractIds
+     *
+     * @return array
+     */
+    protected function filterProductListIds(array $productListIds, $productConcreteCountByProductAbstractIds): array
+    {
+        return array_filter($productListIds, function (array $item) use ($productConcreteCountByProductAbstractIds) {
+            if ($item[ProductListRepository::COL_TYPE] === $this->getWhitelistEnumValue()) {
+                return true;
+            }
+
+            $idProductAbstract = $item[ProductListRepository::COL_ID_PRODUCT_ABSTRACT];
+
+            return $this->isAllConcreteProductsInList(
+                $item,
+                $productConcreteCountByProductAbstractIds[$idProductAbstract][ProductListRepository::COL_CONCRETE_PRODUCT_COUNT]
+            );
+        });
+    }
+
+    /**
+     * @return int
+     */
+    protected function getWhitelistEnumValue(): int
+    {
+        return array_flip(
+            SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE)
+        )[SpyProductListTableMap::COL_TYPE_WHITELIST];
+    }
+
+    /**
+     * @param array $item
+     * @param int $totalProductConcreteCount
+     *
+     * @return bool
+     */
+    protected function isAllConcreteProductsInList(array $item, int $totalProductConcreteCount): bool
+    {
+        return $item[ProductListRepository::COL_CONCRETE_PRODUCT_COUNT] === $totalProductConcreteCount;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    protected function getCategoryProductList(array $productAbstractIds): array
+    {
+        return $this->productListRepository->getCategoryProductList($productAbstractIds);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    protected function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->productListRepository->getProductConcreteCountByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    protected function getProductListsByIdProductAbstractIn(array $productAbstractIds): array
+    {
+        return $this->productListRepository->getProductListsByIdProductAbstractIn($productAbstractIds);
     }
 
     /**

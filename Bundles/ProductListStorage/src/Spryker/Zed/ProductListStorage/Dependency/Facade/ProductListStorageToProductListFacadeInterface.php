@@ -50,4 +50,18 @@ interface ProductListStorageToProductListFacadeInterface
      * @return int[]
      */
     public function getProductAbstractIdsByProductListIds(array $productListIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductAbstractListsIdsByIdProductAbstractIn(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return array
+     */
+    public function getProductListsIdsByIdProductIn(array $productConcreteIds): array;
 }

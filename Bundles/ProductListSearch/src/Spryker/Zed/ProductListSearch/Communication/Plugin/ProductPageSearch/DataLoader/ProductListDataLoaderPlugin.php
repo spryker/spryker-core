@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductListSearch\Communication\Plugin\ProductPageSearch\D
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepository;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
 /**
@@ -28,108 +27,18 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
     {
-        $productList = $this->filterProductListIds(
-            $this->getProductList($loadTransfer->getProductAbstractIds()),
-            $this->getProductConcreteCountByProductAbstractIds($loadTransfer->getProductAbstractIds())
-        );
-
-        $categoryProductList = $this->getCategoryProductList($loadTransfer->getProductAbstractIds());
-
-        $totalProductList = array_merge($productList, $categoryProductList);
+        $productList = $this->getFactory()
+            ->getProductListFacade()
+            ->getProductAbstractListsIdsByIdProductAbstractIn($loadTransfer->getProductAbstractIds());
 
         $updatedPayloadTransfers = $this->updatePayloadTransfers(
             $loadTransfer->getPayloadTransfers(),
-            $this->mapProductListIds($totalProductList)
+            $productList
         );
 
         $loadTransfer->setPayloadTransfers($updatedPayloadTransfers);
 
         return $loadTransfer;
-    }
-
-    /**
-     * @param array $totalProductListIds
-     *
-     * @return array
-     */
-    protected function mapProductListIds(array $totalProductListIds): array
-    {
-        $mappedProductListIds = [];
-        foreach ($totalProductListIds as $productList) {
-            $idProductAbstract = $productList[ProductListSearchRepository::COL_ID_PRODUCT_ABSTRACT];
-            $type = $productList[ProductListSearchRepository::COL_TYPE];
-            $idProductList = $productList[ProductListSearchRepository::COL_ID_PRODUCT_LIST];
-
-            $mappedProductListIds[$idProductAbstract][$type][] = $idProductList;
-        }
-
-        return $mappedProductListIds;
-    }
-
-    /**
-     * @param array $productListIds
-     * @param array $productConcreteCountByProductAbstractIds
-     *
-     * @return array
-     */
-    protected function filterProductListIds(array $productListIds, $productConcreteCountByProductAbstractIds): array
-    {
-        return array_filter($productListIds, function (array $item) use ($productConcreteCountByProductAbstractIds) {
-            if ($item[ProductListSearchRepository::COL_TYPE] !== $this->getRepository()->getValueForBlacklistType()) {
-                return true;
-            }
-
-            $idProductAbstract = $item[ProductListSearchRepository::COL_ID_PRODUCT_ABSTRACT];
-
-            return $this->isAllConcreteProductsInList(
-                $item,
-                $productConcreteCountByProductAbstractIds[$idProductAbstract][ProductListSearchRepository::COL_CONCRETE_PRODUCT_COUNT]
-            );
-        });
-    }
-
-    /**
-     * @param array $item
-     * @param int $totalProductConcreteCount
-     *
-     * @return bool
-     */
-    protected function isAllConcreteProductsInList(array $item, int $totalProductConcreteCount): bool
-    {
-        return $item[ProductListSearchRepository::COL_CONCRETE_PRODUCT_COUNT] === $totalProductConcreteCount;
-    }
-
-    /**
-     * @param array $productAbstractIds
-     *
-     * @return array
-     */
-    protected function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array
-    {
-        return $this->getRepository()
-            ->getProductConcreteCountByProductAbstractIds($productAbstractIds);
-    }
-
-    /**
-     * @param array $productAbstractIds
-     *
-     * @return array
-     */
-    protected function getProductList(array $productAbstractIds): array
-    {
-        return $this->getRepository()
-            ->getProductList($productAbstractIds);
-    }
-
-    /**
-     * @param array $productAbstractIds
-     *
-     * @return array
-     */
-    protected function getCategoryProductList(array $productAbstractIds): array
-    {
-        return $this->getRepository()
-            ->getCategoryProductList($productAbstractIds);
     }
 
     /**

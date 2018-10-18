@@ -45,7 +45,6 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
     public function createProductListProductConcreteStorageWriter(): ProductListProductConcreteStorageWriterInterface
     {
         return new ProductListProductConcreteStorageWriter(
-            $this->createProductAbstractReader(),
             $this->getProductListFacade(),
             $this->getRepository(),
             $this->getConfig()->isSendingToQueue()

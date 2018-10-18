@@ -81,4 +81,24 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
     {
         return $this->productListFacade->getProductAbstractIdsByProductListIds($productListIds);
     }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductAbstractListsIdsByIdProductAbstractIn(array $productAbstractIds): array
+    {
+        return $this->productListFacade->getProductAbstractListsIdsByIdProductAbstractIn($productAbstractIds);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return array
+     */
+    public function getProductListsIdsByIdProductIn(array $productConcreteIds): array
+    {
+        return $this->productListFacade->getProductListsIdsByIdProductIn($productConcreteIds);
+    }
 }

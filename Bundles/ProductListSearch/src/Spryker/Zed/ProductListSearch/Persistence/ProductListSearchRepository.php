@@ -95,6 +95,8 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\ProductList\Persistence\ProductListRepository::getProductConcreteCountByProductAbstractIds instead.
+     *
      * @param int[] $productAbstractIds
      *
      * @return array
@@ -117,6 +119,8 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\ProductList\Persistence\ProductListRepository::getCategoryProductList instead.
+     *
      * @param int[] $productAbstractIds
      *
      * @return array
@@ -149,6 +153,8 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\ProductList\Persistence\ProductListRepository::getProductListsByIdProductAbstractIn instead.
+     *
      * @param int[] $productAbstractIds
      *
      * @return array

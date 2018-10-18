@@ -23,6 +23,11 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductListRepository extends AbstractRepository implements ProductListRepositoryInterface
 {
+    public const COL_CONCRETE_PRODUCT_COUNT = 'concrete_product_count';
+    public const COL_ID_PRODUCT_ABSTRACT = 'col_id_product_abstract';
+    public const COL_TYPE = 'col_type';
+    public const COL_ID_PRODUCT_LIST = 'col_id_product_list';
+
     /**
      * @param int $idProductList
      *
@@ -125,6 +130,49 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             $idProductConcrete,
             SpyProductListTableMap::COL_TYPE_WHITELIST
         );
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function findProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
+    {
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
+        $productQuery = $this->getFactory()
+            ->getProductQuery()
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_ID_PRODUCT]);
+
+        return $productQuery
+            ->filterByIdProduct_In($productConcreteIds)
+            ->find()
+            ->toKeyValue(SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return array
+     */
+    public function getProductListIdsByProductConcreteIdsIn(array $productConcreteIds): array
+    {
+        /** @var \Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery $productListProductConcreteQuery */
+        $productListProductConcreteQuery = $this->getFactory()
+            ->createProductListProductConcreteQuery()
+            ->select([
+                SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
+                SpyProductListProductConcreteTableMap::COL_FK_PRODUCT,
+            ])
+            ->withColumn(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST, static::COL_ID_PRODUCT_LIST)
+            ->withColumn(SpyProductListTableMap::COL_TYPE, static::COL_TYPE);
+
+        return $productListProductConcreteQuery
+            ->filterByFkProduct_In($productConcreteIds)
+            ->innerJoinSpyProductList()
+            ->groupByFkProductList()
+            ->find()
+            ->toArray();
     }
 
     /**
@@ -305,6 +353,90 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
                 $this->getProductAbstractIdsRelatedToCategories($productListIds)
             )
         );
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->getProductQuery()
+            ->addAsColumn(static::COL_CONCRETE_PRODUCT_COUNT, sprintf('COUNT(%s)', SpyProductTableMap::COL_ID_PRODUCT))
+            ->addAsColumn(static::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->select([
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+            ])
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->groupBy([
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+            ])
+            ->find()
+            ->toArray(static::COL_ID_PRODUCT_ABSTRACT);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getCategoryProductList(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createProductListCategoryQuery()
+            ->select([
+                SpyProductListCategoryTableMap::COL_FK_PRODUCT_LIST,
+            ])
+            ->withColumn(SpyProductListTableMap::COL_TYPE, static::COL_TYPE)
+            ->withColumn(SpyProductListCategoryTableMap::COL_FK_PRODUCT_LIST, static::COL_ID_PRODUCT_LIST)
+            ->withColumn(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
+            ->innerJoinWithSpyCategory()
+            ->useSpyCategoryQuery()
+                ->innerJoinWithSpyProductCategory()
+                ->useSpyProductCategoryQuery()
+                    ->filterByFkProductAbstract_In($productAbstractIds)
+                ->endUse()
+            ->endUse()
+            ->innerJoinWithSpyProductList()
+            ->groupBy([
+                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductListCategoryTableMap::COL_FK_PRODUCT_LIST,
+                SpyProductListTableMap::COL_TYPE,
+            ])
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductListsByIdProductAbstractIn(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createProductListProductConcreteQuery()
+            ->addAsColumn(static::COL_CONCRETE_PRODUCT_COUNT, sprintf('COUNT(%s)', SpyProductListProductConcreteTableMap::COL_FK_PRODUCT))
+            ->addAsColumn(static::COL_ID_PRODUCT_LIST, SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
+            ->addAsColumn(static::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->addAsColumn(static::COL_TYPE, SpyProductListTableMap::COL_TYPE)
+            ->select([
+                SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
+            ])
+            ->innerJoinWithSpyProduct()
+            ->useSpyProductQuery()
+                ->filterByFkProductAbstract_In($productAbstractIds)
+            ->endUse()
+            ->innerJoinWithSpyProductList()
+            ->groupBy([
+                SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductListTableMap::COL_TYPE,
+            ])
+            ->find()
+            ->toArray();
     }
 
     /**

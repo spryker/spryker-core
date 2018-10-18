@@ -61,6 +61,30 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
+     *  - TODO.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductAbstractListsIdsByIdProductAbstractIn(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     *  - TODO.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return array
+     */
+    public function getProductListsIdsByIdProductIn(array $productConcreteIds): array;
+
+    /**
+     * Specification:
      *  - Retrieves product abstract whitelists by product abstract id.
      *
      * @api

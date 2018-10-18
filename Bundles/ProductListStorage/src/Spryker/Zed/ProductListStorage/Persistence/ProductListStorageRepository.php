@@ -29,12 +29,12 @@ class ProductListStorageRepository extends AbstractRepository implements Product
         /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
         $productQuery = $this->getFactory()
             ->getProductPropelQuery()
-            ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_ID_PRODUCT]);
 
         return $productQuery
             ->filterByIdProduct_In($productConcreteIds)
             ->find()
-            ->toArray();
+            ->toKeyValue(SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
     }
 
     /**

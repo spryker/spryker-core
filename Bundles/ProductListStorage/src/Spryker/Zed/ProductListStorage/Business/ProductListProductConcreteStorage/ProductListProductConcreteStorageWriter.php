@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductListStorage\Business\ProductListProductConcreteStorage;
 
 use Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer;
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage;
-use Spryker\Zed\ProductListStorage\Business\ProductAbstract\ProductAbstractReaderInterface;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface;
 use Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface;
 
@@ -26,30 +26,27 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
     protected $productListStorageRepository;
 
     /**
-     * @var \Spryker\Zed\ProductListStorage\Business\ProductAbstract\ProductAbstractReaderInterface
-     */
-    protected $productAbstractReader;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue;
 
     /**
-     * @param \Spryker\Zed\ProductListStorage\Business\ProductAbstract\ProductAbstractReaderInterface $productAbstractReader
+     * @var array
+     */
+    protected $listsCache = [];
+
+    /**
      * @param \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface $productListFacade
      * @param \Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface $productListStorageRepository
      * @param bool $isSendingToQueue
      */
     public function __construct(
-        ProductAbstractReaderInterface $productAbstractReader,
         ProductListStorageToProductListFacadeInterface $productListFacade,
         ProductListStorageRepositoryInterface $productListStorageRepository,
         bool $isSendingToQueue
     ) {
         $this->productListFacade = $productListFacade;
         $this->productListStorageRepository = $productListStorageRepository;
-        $this->productAbstractReader = $productAbstractReader;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -60,6 +57,8 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
      */
     public function publish(array $productConcreteIds): void
     {
+        $this->listsCache = $this->productListFacade->getProductListsIdsByIdProductIn($productConcreteIds);
+
         $productConcreteProductListStorageEntities = $this->findProductConcreteProductListStorageEntities($productConcreteIds);
         $indexedProductConcreteProductListStorageEntities = $this->indexProductConcreteProductListStorageEntities($productConcreteProductListStorageEntities);
         foreach ($productConcreteIds as $idProductConcrete) {
@@ -117,15 +116,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
      */
     protected function findProductConcreteBlacklistIdsByIdProductConcrete(int $idProductConcrete): array
     {
-        $productAbstractIds = $this->productAbstractReader->findProductAbstractIdsByProductConcreteIds([$idProductConcrete]);
-        $idProductAbstract = reset($productAbstractIds);
-
-        $blacklistIds = array_merge(
-            $this->productListFacade->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete),
-            $this->productListFacade->getProductAbstractBlacklistIdsIdProductAbstract($idProductAbstract)
-        );
-
-        return array_unique($blacklistIds);
+        return $this->listsCache[$idProductConcrete][SpyProductListTableMap::COL_TYPE_BLACKLIST] ?? [];
     }
 
     /**
@@ -135,15 +126,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
      */
     protected function findProductConcreteWhitelistIdsByIdProductConcrete(int $idProductConcrete): array
     {
-        $productAbstractIds = $this->productAbstractReader->findProductAbstractIdsByProductConcreteIds([$idProductConcrete]);
-        $idProductAbstract = reset($productAbstractIds);
-
-        $whitelistIds = array_merge(
-            $this->productListFacade->getProductAbstractWhitelistIdsByIdProductConcrete($idProductConcrete),
-            $this->productListFacade->getCategoryWhitelistIdsByIdProductAbstract($idProductAbstract)
-        );
-
-        return array_unique($whitelistIds);
+        return $this->listsCache[$idProductConcrete][SpyProductListTableMap::COL_TYPE_WHITELIST] ?? [];
     }
 
     /**
