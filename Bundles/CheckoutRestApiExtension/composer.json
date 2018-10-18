@@ -1,5 +1,6 @@
 {
   "name": "spryker/checkout-rest-api-extension",
+  "type": "library",
   "description": "CheckoutRestApiExtension module",
   "license": "proprietary",
   "require": {
