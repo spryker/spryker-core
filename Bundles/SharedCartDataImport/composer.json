@@ -1,0 +1,44 @@
+{
+  "name": "spryker/shared-cart-data-import",
+  "type": "library",
+  "description": "SharedCartDataImport module",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.1",
+    "spryker/company-user": "^1.0.0 || ^2.0.0",
+    "spryker/data-import": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/quote": "^2.0.0",
+    "spryker/shared-cart": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/company": "*",
+    "spryker/company-business-unit": "*",
+    "spryker/customer": "*",
+    "spryker/permission": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\SharedCartDataImport\\Helper\\": "tests/SprykerTest/Zed/SharedCartDataImport/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
