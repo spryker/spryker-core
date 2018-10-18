@@ -299,7 +299,7 @@ class PluginHandler implements PluginHandlerInterface
      * @param string $pattern
      * @param string $resourceType
      *
-     * @return array
+     * @return string[]
      */
     protected function getDefaultMethodSummary(string $pattern, string $resourceType): array
     {

@@ -51,7 +51,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
         $methodComponent->setMethod($pathMethodDataTransfer->getMethod());
 
         $summary = $pathMethodDataTransfer->getSummary();
-        $formattedSummary = implode(PHP_EOL, $summary);
+        $formattedSummary = $this->getFormattedSummary($summary);
 
         $methodComponent->setSummary($formattedSummary);
         $methodComponent->addTag($pathMethodDataTransfer->getResource());
@@ -72,6 +72,16 @@ class PathMethodRenderer implements PathMethodRendererInterface
         }
 
         return [$pathMethodDataTransfer->getPath() => $methodComponent->toArray()];
+    }
+
+    /**
+     * @param string[] $summary
+     *
+     * @return string
+     */
+    protected function getFormattedSummary(array $summary): string
+    {
+        return implode(PHP_EOL, $summary);
     }
 
     /**
