@@ -18,7 +18,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  */
-class ProductAbstractPackgingUnitEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
+class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -29,7 +29,7 @@ class ProductAbstractPackgingUnitEventResourceRepositoryPlugin extends AbstractP
      */
     public function getResourceName(): string
     {
-        return ProductPackagingUnitStorageConfig::PRODUCT_CONCRETE_MEASUREMENT_UNIT_RESOURCE_NAME;
+        return ProductPackagingUnitStorageConfig::PRODUCT_ABSTRACT_PACKAGING_RESOURCE_NAME;
     }
 
     /**
@@ -43,11 +43,7 @@ class ProductAbstractPackgingUnitEventResourceRepositoryPlugin extends AbstractP
      */
     public function getData(array $ids = []): array
     {
-        if (!empty($ids)) {
-            return $this->getFacade()->getSalesUnitsByIds($ids);
-        }
-
-        return $this->getFacade()->getSalesUnits();
+        return $this->getFacade()->findProductAbstractIdsByProductPackagingUnitTypeIds($ids);
     }
 
     /**

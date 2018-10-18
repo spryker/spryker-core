@@ -83,10 +83,10 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function getProductAbstractPackagingUnitStorageEntities(array $productAbstractIds): array
+    public function getProductAbstractPackagingStorageEntities(array $productAbstractIds): array
     {
         return $this->productPackagingUnitStorageRepository
-            ->findProductAbstractPackagingUnitStorageByProductAbstractIds($productAbstractIds);
+            ->findProductAbstractPackagingStorageEntitiesByProductAbstractIds($productAbstractIds);
     }
 
     /**

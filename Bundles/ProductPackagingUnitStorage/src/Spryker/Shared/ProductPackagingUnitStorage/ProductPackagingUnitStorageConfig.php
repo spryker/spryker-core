@@ -15,9 +15,19 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
      * Specification:
      * - Queue name as used for processing price messages
      *
+     * @deprecated Use ProductPackagingUnitStorageConfig::PRODUCT_ABSTRACT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE instead.
+     *
      * @api
      */
     public const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing price messages
+     *
+     * @api
+     */
+    public const PRODUCT_ABSTRACT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -29,7 +39,7 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, this will be used for key generating
      *
      * @api
      */
@@ -37,9 +47,9 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, this will be used for key generating
      *
-     * @deprecated Use Spryker\Shared\ProductPackagingUnitStorage\PRODUCT_ABSTRACT_PACKAGING_RESOURCE_NAME::PRODUCT_ABSTRACT_PACKAGING_RESOURCE_NAME
+     * @deprecated Use ProductPackagingUnitStorageConfig::PRODUCT_ABSTRACT_PACKAGING_RESOURCE_NAME instead.
      *
      * @api
      */

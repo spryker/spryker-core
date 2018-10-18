@@ -21,5 +21,6 @@ interface ProductPackagingStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function getProductAbstractPackagingUnitStorageEntities(array $productAbstractIds): array;
+    public function getProductAbstractPackagingStorageEntities(array $productAbstractIds): array;
 }
+``

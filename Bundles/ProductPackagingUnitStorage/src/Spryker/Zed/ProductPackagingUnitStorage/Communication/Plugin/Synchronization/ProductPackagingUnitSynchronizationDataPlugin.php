@@ -7,16 +7,13 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
-
 /**
- * @deprecated Use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductAbstractPackagingUnitSynchronizationDataPlugin
+ * @deprecated Use ProductAbstractPackagingSynchronizationDataPlugin instead.
  *
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  */
-class ProductPackagingUnitSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class ProductPackagingUnitSynchronizationDataPlugin extends ProductAbstractPackagingSynchronizationDataPlugin
 {
 }

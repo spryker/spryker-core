@@ -19,7 +19,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function findProductAbstractPackagingUnitStorageByProductAbstractIds(array $productAbstractIds): array
+    public function findProductAbstractPackagingStorageEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
         if (!$productAbstractIds) {
             return [];
@@ -66,10 +66,17 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     /**
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function findAllProductAbstractPackagingUnitStorageEntities(): array
+    public function findAllProductAbstractPackagingStorageEntities(): array
     {
         $query = $this->getFactory()->createSpyProductAbstractPackagingStorageQuery();
 
-        return $this->buildQueryFromCriteria($query)->find();
+        $productAbstractPackagings = $this->buildQueryFromCriteria($query)->find();
+
+        $result = [];
+        foreach ($productAbstractPackagings as $productAbstractPackaging) {
+            $result[] = $spyProductAbstractProductListStorage;
+        }
+
+        return $result;
     }
 }

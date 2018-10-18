@@ -18,7 +18,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  */
-class ProductAbstractPackgingSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
     /**
      * @api
@@ -27,7 +27,7 @@ class ProductAbstractPackgingSynchronizationDataPlugin extends AbstractPlugin im
      */
     public function getResourceName(): string
     {
-        return ProductPackagingUnitStorageConfig::PRODUCT_PACKAGING_UNIT_RESOURCE_NAME;
+        return ProductPackagingUnitStorageConfig::PRODUCT_ABSTRACT_PACKAGING_RESOURCE_NAME;
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductAbstractPackgingSynchronizationDataPlugin extends AbstractPlugin im
      */
     public function getQueueName(): string
     {
-        return ProductPackagingUnitStorageConfig::PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE;
+        return ProductPackagingUnitStorageConfig::PRODUCT_ABSTRACT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE;
     }
 
     /**
@@ -67,7 +67,7 @@ class ProductAbstractPackgingSynchronizationDataPlugin extends AbstractPlugin im
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getConfig()->getProductAbstractPackagingUnitSynchronizationPoolName();
+        return $this->getConfig()->getProductAbstractPackagingSynchronizationPoolName();
     }
 
     /**
@@ -79,29 +79,31 @@ class ProductAbstractPackgingSynchronizationDataPlugin extends AbstractPlugin im
      */
     public function getData(array $ids = [])
     {
-        $spyProductAbstractPackagingUnitStoragEntities = $this->findSpyProductAbstractPackagingUnitStoragEntities($ids);
+        $spyProductAbstractPackagingStorageEntities = $this->findSpyProductAbstractPackagingStorageEntities($ids);
         $synchronizationDataTransfers = [];
-        foreach ($spyProductAbstractPackagingUnitStoragEntities as $spyProductAbstractPackagingUnitStoragEntity) {
+        foreach ($spyProductAbstractPackagingStorageEntities as $spyProductAbstractPackagingStoragEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
             /** @var string $data */
-            $data = $spyProductAbstractPackagingUnitStoragEntity->getData();
+            $data = $spyProductAbstractPackagingStoragEntity->getData();
             $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($spyProductAbstractProductListStorageEntity->getKey());
+            $synchronizationDataTransfer->setKey($spyProductAbstractPackagingStoragEntity->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
+
         return $synchronizationDataTransfers;
     }
 
     /**
      * @param array $ids
      *
-     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
      */
-    protected function findSpyProductAbstractPackagingUnitStoragEntities(array $ids = []): array
+    protected function findSpyProductAbstractPackagingStorageEntities(array $ids = []): array
     {
         if (empty($ids)) {
-            return $this->getRepository()->findAllProductAbstractPackagingUnitStorageEntities();
+            return $this->getRepository()->findAllProductAbstractPackagingStorageEntities();
         }
-        return $this->getRepository()->findProductAbstractPackagingUnitStorageByProductAbstractIds($ids);
+
+        return $this->getRepository()->findProductAbstractPackagingStorageEntitiesByProductAbstractIds($ids);
     }
 }

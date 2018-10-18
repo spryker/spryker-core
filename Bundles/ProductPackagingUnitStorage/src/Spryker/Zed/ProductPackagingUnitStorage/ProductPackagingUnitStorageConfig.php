@@ -20,6 +20,8 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use ProductPackagingUnitStorageConfig::getProductAbstractPackagingSynchronizationPoolName() instead.
+     *
      * @return string|null
      */
     public function getProductPackagingUnitSynchronizationPoolName(): ?string
@@ -30,7 +32,7 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getProductAbstractPackagingUnitSynchronizationPoolName(): ?string
+    public function getProductAbstractPackagingSynchronizationPoolName(): ?string
     {
         return null;
     }

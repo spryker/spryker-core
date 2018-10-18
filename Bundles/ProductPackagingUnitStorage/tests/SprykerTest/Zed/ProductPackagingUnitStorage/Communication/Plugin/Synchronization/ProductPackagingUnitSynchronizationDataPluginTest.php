@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageBusinessFactory;
 use Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacade;
-use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductAbstractPackgingSynchronizationDataPlugin;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductAbstractPackagingSynchronizationDataPlugin;
 use SprykerTest\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfigMock;
 
 /**
@@ -61,7 +61,7 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
      */
     public function testGetDataWithIds(): void
     {
-        $productPackagingUnitSynchronizationDataPlugin = $this->getProductPackagingUnitSynchronizationDataPlugin();
+        $productAbstractPackagingSynchronizationDataPlugin = $this->getProductAbstractPackagingSynchronizationDataPlugin();
         $synchronizationDataTransfers = $productPackagingUnitSynchronizationDataPlugin->getData([
             static::TEST_INVALID_ID,
         ]);
@@ -77,7 +77,7 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
         $this->tester->assertStorageDatabaseTableIsEmpty();
         $this->haveBoxProductPackagingUnit();
 
-        $productPackagingUnitSynchronizationDataPlugin = $this->getProductPackagingUnitSynchronizationDataPlugin();
+        $productAbstractPackagingSynchronizationDataPlugin  = $this->getProductAbstractPackagingSynchronizationDataPlugin();
         $synchronizationDataTransfers = $productPackagingUnitSynchronizationDataPlugin->getData();
 
         $this->assertNotEmpty($synchronizationDataTransfers);
@@ -131,10 +131,10 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductAbstractPackgingSynchronizationDataPlugin
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductAbstractPackagingSynchronizationDataPlugin
      */
-    protected function getProductPackagingUnitSynchronizationDataPlugin(): ProductAbstractPackgingSynchronizationDataPlugin
+    protected function getProductAbstractPackagingSynchronizationDataPlugin(): ProductAbstractPackagingSynchronizationDataPlugin
     {
-        return new ProductAbstractPackgingSynchronizationDataPlugin();
+        return new ProductAbstractPackagingSynchronizationDataPlugin();
     }
 }
