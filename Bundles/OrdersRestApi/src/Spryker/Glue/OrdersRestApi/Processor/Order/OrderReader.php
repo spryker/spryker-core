@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
@@ -64,6 +65,33 @@ class OrderReader implements OrderReaderInterface
         }
 
         return $this->getOrderListAttributes($restRequest);
+    }
+
+    /**
+     * @param string $orderReference
+     * @param string $customerReference
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface?|null
+     */
+    public function getOrderByOrderReference(string $orderReference, string $customerReference): ?RestResourceInterface
+    {
+        $orderTransfer = (new OrderTransfer())
+            ->setOrderReference($orderReference)
+            ->setCustomerReference($customerReference);
+        $orderTransfer = $this->salesClient->getCustomerOrderByOrderReference($orderTransfer);
+
+        if ($orderTransfer->getItems()->count() === 0) {
+            return null;
+        }
+
+        $restOrderDetailsAttributesTransfer = $this->orderResourceMapper->mapOrderTransferToRestOrderDetailsAttributesTransfer($orderTransfer);
+
+        $restResource = $this->restResourceBuilder->createRestResource(
+            OrdersRestApiConfig::RESOURCE_ORDERS,
+            $orderReference,
+            $restOrderDetailsAttributesTransfer
+        );
+        return $restResource;
     }
 
     /**

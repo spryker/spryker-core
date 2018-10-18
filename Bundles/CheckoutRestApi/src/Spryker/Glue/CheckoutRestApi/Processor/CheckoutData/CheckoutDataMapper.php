@@ -9,7 +9,6 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
@@ -17,9 +16,23 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 
 class CheckoutDataMapper implements CheckoutDataMapperInterface
 {
+    /**
+     * @var \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig $config
+     */
+    public function __construct(CheckoutRestApiConfig $config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
@@ -66,7 +79,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
                 (new RestPaymentMethodAttributesTransfer())->fromArray(
                     $paymentMethodTransfer->toArray(),
                     true
-                )
+                )->setRequiredResponseData($this->config->getRequiredPaymentDataForMethod($paymentMethodTransfer->getMethodName()))
             );
         }
     }
@@ -98,7 +111,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     public function mapRestCheckoutRequestAttributesTransferToQuoteTransfer(QuoteTransfer $quoteTransfer, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): QuoteTransfer
     {
         $this->mapRestAddressTransfersToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
-        $this->mapRestPaymentsToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
+        $this->mapPaymentsToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
         $this->mapRestShipmentTransferToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
         $this->mapRestVoucherCodeToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
 
@@ -113,12 +126,15 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      */
     protected function mapRestAddressTransfersToQuoteTransfer(QuoteTransfer $quoteTransfer, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): void
     {
+        $restCheckoutRequestAttributesTransfer->getQuote()->requireBillingAddress();
         $quoteTransfer->setBillingAddress(
             (new AddressTransfer())->fromArray(
                 $restCheckoutRequestAttributesTransfer->getQuote()->getBillingAddress()->toArray(),
                 true
             )
         );
+
+        $restCheckoutRequestAttributesTransfer->getQuote()->requireShippingAddress();
         $quoteTransfer->setShippingAddress(
             (new AddressTransfer())->fromArray(
                 $restCheckoutRequestAttributesTransfer->getQuote()->getShippingAddress()->toArray(),
@@ -133,15 +149,14 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return void
      */
-    protected function mapRestPaymentsToQuoteTransfer(QuoteTransfer $quoteTransfer, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): void
+    protected function mapPaymentsToQuoteTransfer(QuoteTransfer $quoteTransfer, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): void
     {
-        foreach ($restCheckoutRequestAttributesTransfer->getQuote()->getPayments() as $restPaymentTransfer) {
-            $quoteTransfer->addPayment(
-                (new PaymentTransfer())->fromArray(
-                    $restPaymentTransfer->toArray(),
-                    true
-                )
-            );
+        foreach ($restCheckoutRequestAttributesTransfer->getQuote()->getPayments() as $paymentTransfer) {
+            if ($quoteTransfer->getTotals() !== null && $quoteTransfer->getTotals()->getPriceToPay() !== null) {
+                $paymentTransfer->setAmount($quoteTransfer->getTotals()->getPriceToPay());
+            }
+            $quoteTransfer->addPayment($paymentTransfer);
+            $quoteTransfer->setPayment($paymentTransfer);
         }
     }
 
@@ -153,6 +168,8 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      */
     protected function mapRestShipmentTransferToQuoteTransfer(QuoteTransfer $quoteTransfer, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): void
     {
+        $restCheckoutRequestAttributesTransfer->getQuote()->requireShipment();
+
         $quoteTransfer->setShipment(
             (new ShipmentTransfer())->fromArray(
                 $restCheckoutRequestAttributesTransfer->getQuote()->getShipment()->toArray()
