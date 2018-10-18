@@ -27,6 +27,7 @@ class PriceProductMerchantRelationshipDependencyProvider extends AbstractBundleD
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addPriceProductFacade($container);
+        $container = $this->addMerchantRelationshipFacade($container);
 
         return $container;
     }
