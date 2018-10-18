@@ -14,7 +14,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Client\Customer\CustomerClientInterface getClient()
  */
-class CustomerTransferSessionGetPlugin extends AbstractPlugin implements CustomerSessionGetPluginInterface
+class CustomerTransferSessionRefreshPlugin extends AbstractPlugin implements CustomerSessionGetPluginInterface
 {
     /**
      * {@inheritdoc}
