@@ -61,7 +61,8 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - TODO.
+     *  - Retrieves product lists for product abstract ids and its categories.
+     *  - Return format is: [idProductAbstract => [type => [idProductList...]].
      *
      * @api
      *
@@ -73,7 +74,8 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - TODO.
+     *  - Retrieves product lists for product ids and its abstract products.
+     *  - Return format is: [idProduct => [type => [idProductList...]].
      *
      * @api
      *
