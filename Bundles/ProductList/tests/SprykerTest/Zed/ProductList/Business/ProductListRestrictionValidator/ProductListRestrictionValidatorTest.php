@@ -150,6 +150,30 @@ class ProductListRestrictionValidatorTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFilterRestrictedProductConcreteSkusWithEmptyWhitelist(): void
+    {
+        // Assign
+        $customerBlacklistIds = [];
+        $customerWhitelistIds = [2];
+
+        $this->productListReaderMock
+            ->method('getConcreteProductSkusInWhitelists')
+            ->willReturn([]);
+
+        $cartSkus = ['x', 'y', 'z'];
+        $expectedSku = ['x', 'y', 'z'];
+
+        // Act
+        $filteredSkus = $this->createProductListRestrictionValidator()
+            ->filterRestrictedProductConcreteSkus($cartSkus, $customerBlacklistIds, $customerWhitelistIds);
+
+        // Assert
+        $this->assertSame($filteredSkus, $expectedSku);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface
      */
     protected function createProductListRestrictionValidator(): ProductListRestrictionValidatorInterface

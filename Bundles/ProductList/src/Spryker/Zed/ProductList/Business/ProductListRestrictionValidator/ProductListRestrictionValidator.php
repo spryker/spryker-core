@@ -111,6 +111,10 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         if (!empty($customerWhitelistIds)) {
             $productConcreteSkusInWhitelist = $this->productListReader
                 ->getConcreteProductSkusInWhitelists($productConcreteSkus, $customerWhitelistIds);
+
+            if (empty($productConcreteSkusInWhitelist)) {
+                return $productConcreteSkus;
+            }
         }
 
         if (!empty($customerBlacklistIds)) {
