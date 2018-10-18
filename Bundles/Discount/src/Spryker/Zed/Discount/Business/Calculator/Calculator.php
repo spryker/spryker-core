@@ -177,7 +177,7 @@ class Calculator implements CalculatorInterface
      */
     protected function setSuccessfulDiscountAddMessage(DiscountTransfer $discountTransfer)
     {
-        if ($discountTransfer->getAmount() === 0) {
+        if (!$discountTransfer->getAmount()) {
             return;
         }
 
