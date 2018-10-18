@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use Exception;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Shared\Oms\OmsConfig;
@@ -117,6 +118,8 @@ class Finder implements FinderInterface
      * @param int $idOrder
      * @param string $flag
      *
+     * @throws \Exception
+     *
      * @return bool
      */
     public function isOrderFlagged($idOrder, $flag)
@@ -124,6 +127,10 @@ class Finder implements FinderInterface
         $order = $this->queryContainer
             ->querySalesOrderById($idOrder)
             ->findOne();
+
+        if ($order === null) {
+            throw new Exception('Order not found for id ' . $idOrder);
+        }
 
         $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
 
@@ -134,6 +141,8 @@ class Finder implements FinderInterface
      * @param int $idOrder
      * @param string $flag
      *
+     * @throws \Exception
+     *
      * @return bool
      */
     public function isOrderFlaggedAll($idOrder, $flag)
@@ -141,6 +150,10 @@ class Finder implements FinderInterface
         $order = $this->queryContainer
             ->querySalesOrderById($idOrder)
             ->findOne();
+
+        if ($order === null) {
+            throw new Exception('Order not found for id ' . $idOrder);
+        }
 
         $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
 

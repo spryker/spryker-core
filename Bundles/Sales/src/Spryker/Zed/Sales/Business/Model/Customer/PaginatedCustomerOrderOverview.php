@@ -119,7 +119,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $ordersQuery
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\Collection
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function paginateOrderCollection(OrderListTransfer $orderListTransfer, SpySalesOrderQuery $ordersQuery)
     {
@@ -145,6 +145,9 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
 
         $orderListTransfer->setPagination($paginationTransfer);
 
-        return $paginationModel->getResults();
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $collection */
+        $collection = $paginationModel->getResults();
+
+        return $collection;
     }
 }

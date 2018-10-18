@@ -129,7 +129,9 @@ class CustomerForm extends AbstractType
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
             'choices_as_values' => true,
-            'required' => false,
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
 
         return $this;

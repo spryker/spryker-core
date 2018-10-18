@@ -79,7 +79,9 @@ class PaginatedCustomerOrderReader extends CustomerOrderReader
 
         $orderListTransfer->setPagination($paginationTransfer);
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection $orderEntities */
-        return $paginationModel->getResults();
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $collection */
+        $collection = $paginationModel->getResults();
+
+        return $collection;
     }
 }
