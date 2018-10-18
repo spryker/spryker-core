@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
@@ -68,7 +69,7 @@ class AddController extends AbstractController
                     $productAbstractTransfer->getSku()
                 ));
 
-                return $this->createRedirectResponseAfterAdd($idProductAbstract);
+                return $this->createRedirectResponseAfterAdd($idProductAbstract, $request);
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
@@ -87,16 +88,18 @@ class AddController extends AbstractController
 
     /**
      * @param int $idProductAbstract
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createRedirectResponseAfterAdd($idProductAbstract)
+    protected function createRedirectResponseAfterAdd(int $idProductAbstract, Request $request)
     {
-        return $this->redirectResponse(sprintf(
-            '/product-management/edit?%s=%d',
-            self::PARAM_ID_PRODUCT_ABSTRACT,
-            $idProductAbstract
-        ));
+        $params = $request->query->all();
+        $params[static::PARAM_ID_PRODUCT_ABSTRACT] = $idProductAbstract;
+
+        return $this->redirectResponse(
+            urldecode(Url::generate('/product-management/edit', $params)->build())
+        );
     }
 
     /**

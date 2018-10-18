@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -81,11 +82,9 @@ class EditController extends AddController
                     $productAbstractTransfer->getSku()
                 ));
 
-                return $this->redirectResponse(sprintf(
-                    '/product-management/edit?%s=%d',
-                    self::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idProductAbstract
-                ));
+                return $this->redirectResponse(
+                    urldecode(Url::generate('/product-management/edit', $request->query->all())->build())
+                );
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
@@ -183,14 +182,10 @@ class EditController extends AddController
                     $productConcreteTransfer->getSku()
                 ));
 
-                return $this->redirectResponse(sprintf(
-                    '/product-management/edit/variant?%s=%d&%s=%d&type=%s',
-                    self::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idProductAbstract,
-                    self::PARAM_ID_PRODUCT,
-                    $idProduct,
-                    $type
-                ));
+                return $this->createRedirectResponseAfterUpdate(
+                    $productConcreteTransfer->getIdProductConcrete(),
+                    $request
+                );
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
@@ -229,6 +224,22 @@ class EditController extends AddController
 
         return $this->jsonResponse(
             $variantTable->fetchData()
+        );
+    }
+
+    /**
+     * @param int $idConcreteProduct
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function createRedirectResponseAfterUpdate(int $idConcreteProduct, Request $request): RedirectResponse
+    {
+        $params = $request->query->all();
+        $params[static::PARAM_ID_PRODUCT] = $idConcreteProduct;
+
+        return $this->redirectResponse(
+            urldecode(Url::generate('/product-management/edit/variant', $params)->build())
         );
     }
 }
