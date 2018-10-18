@@ -27,7 +27,9 @@ class PriceProductVolumeGuiConfig extends AbstractBundleConfig
     protected const VOLUME_PRICE_TYPE = 'volume_prices';
 
     protected const EMPTY_ROWS_QUANTITY = 3;
+    protected const POW_BASE_VALUE = 10;
     protected const DEFAULT_SCALE = 2;
+    protected const DEFAULT_DIVISOR = 1;
 
     /**
      * @return string
@@ -64,8 +66,24 @@ class PriceProductVolumeGuiConfig extends AbstractBundleConfig
     /**
      * @return int
      */
+    public function getPowBaseValue(): int
+    {
+        return static::POW_BASE_VALUE;
+    }
+
+    /**
+     * @return int
+     */
     public function getDefaultScale(): int
     {
         return static::DEFAULT_SCALE;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefaultDivisor(): int
+    {
+        return static::DEFAULT_DIVISOR;
     }
 }

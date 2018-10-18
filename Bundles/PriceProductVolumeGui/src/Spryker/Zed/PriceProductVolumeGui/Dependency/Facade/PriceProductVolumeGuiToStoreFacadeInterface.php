@@ -10,12 +10,6 @@ namespace Spryker\Zed\PriceProductVolumeGui\Dependency\Facade;
 interface PriceProductVolumeGuiToStoreFacadeInterface
 {
     /**
-     *
-     * Specification:
-     *  - Read store by store name
-     *
-     * @api
-     *
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer

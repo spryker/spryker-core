@@ -10,11 +10,6 @@ namespace Spryker\Zed\PriceProductVolumeGui\Dependency\Facade;
 interface PriceProductVolumeGuiToCurrencyFacadeInterface
 {
     /**
-     * Specification:
-     * - Returns CurrencyTransfer object for given ISO code
-     *
-     * @api
-     *
      * @param string $isoCode
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductVolumeGui\Communication\Form;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
+use Closure;
 use Generated\Shared\Transfer\PriceProductVolumeItemTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider;
@@ -57,6 +57,24 @@ class PriceVolumeCollectionFormType extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE);
+        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_DIVISOR);
+        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS);
+
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+                return [Constraint::DEFAULT_GROUP, static::VALIDATION_VOLUMES_GROUP];
+            },
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -70,7 +88,7 @@ class PriceVolumeCollectionFormType extends AbstractType
             'entry_options' => [
                 'label' => false,
                 'data_class' => PriceProductVolumeItemTransfer::class,
-                'constraints' => $this->getVolumesConstants(),
+                'constraints' => $this->getVolumesConstraints(),
                 PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
             ],
         ]);
@@ -173,12 +191,11 @@ class PriceVolumeCollectionFormType extends AbstractType
      */
     protected function addPriceField(FormBuilderInterface $builder, array $options, string $name): self
     {
-        $currencyTransfer = $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_TRANSFER];
         $builder->add($name, MoneyType::class, [
             'label' => false,
             'required' => false,
-            'divisor' => $this->getDivisor($currencyTransfer),
-            'scale' => $this->getFractionDigits($currencyTransfer, $options),
+            'divisor' => $options[PriceVolumeCollectionDataProvider::OPTION_DIVISOR],
+            'scale' => $options[PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS],
             'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
             'attr' => ['readonly' => 'readonly'],
         ]);
@@ -187,89 +204,45 @@ class PriceVolumeCollectionFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE);
-        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_TRANSFER);
-        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_DEFAULT_SCALE);
-
-        $resolver->setDefaults([
-            'validation_groups' => function (FormInterface $form) {
-                return [Constraint::DEFAULT_GROUP, static::VALIDATION_VOLUMES_GROUP];
-            },
-        ]);
-    }
-
-    /**
      * @return array
      */
-    protected function getVolumesConstants(): array
+    protected function getVolumesConstraints(): array
     {
-        $savedPriceProductVolumeItemTransfers = [];
-
-        $volumesConstants[] = new Callback([
-            'callback' => function (PriceProductVolumeItemTransfer $priceProductVolumeItemTransfer, ExecutionContextInterface $context) use (&$savedPriceProductVolumeItemTransfers) {
-                if (empty(array_filter($priceProductVolumeItemTransfer->toArray()))) {
-                    return;
-                }
-
-                if (!$priceProductVolumeItemTransfer->getQuantity()) {
-                    $context->addViolation('Quantity Should not be empty.');
-                }
-
-                if (!$priceProductVolumeItemTransfer->getNetPrice() && !$priceProductVolumeItemTransfer->getGrossPrice()) {
-                    $context->addViolation(sprintf('Set up net or gross price for "quantity": %d.', $priceProductVolumeItemTransfer->getQuantity()));
-                }
-
-                foreach ($savedPriceProductVolumeItemTransfers as $savedPriceProductVolumeItemTransfer) {
-                    if ($priceProductVolumeItemTransfer->getQuantity() === $savedPriceProductVolumeItemTransfer->getQuantity()) {
-                        $context->addViolation(sprintf('Quantity "%d" is duplicate.', $priceProductVolumeItemTransfer->getQuantity()));
-                    }
-                }
-
-                $savedPriceProductVolumeItemTransfers[] = $priceProductVolumeItemTransfer;
-            },
+        $volumesConstraints[] = new Callback([
+            'callback' => $this->getVolumesConstraintsCallback(),
             'groups' => [static::VALIDATION_VOLUMES_GROUP],
         ]);
 
-        return $volumesConstants;
+        return $volumesConstraints;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     *
-     * @return int
+     * @return \Closure
      */
-    protected function getDivisor(CurrencyTransfer $currencyTransfer): int
+    protected function getVolumesConstraintsCallback(): Closure
     {
-        $fractionDigits = $currencyTransfer->getFractionDigits();
+        $savedPriceProductVolumeItemTransfers = [];
 
-        $divisor = 1;
-        if ($fractionDigits) {
-            $divisor = pow(10, $fractionDigits);
-        }
+        return function (PriceProductVolumeItemTransfer $priceProductVolumeItemTransfer, ExecutionContextInterface $context) use (&$savedPriceProductVolumeItemTransfers) {
+            if (empty(array_filter($priceProductVolumeItemTransfer->toArray()))) {
+                return;
+            }
 
-        return $divisor;
-    }
+            if (!$priceProductVolumeItemTransfer->getQuantity()) {
+                $context->addViolation('Quantity Should not be empty.');
+            }
 
-    /**
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param array $options
-     *
-     * @return int
-     */
-    protected function getFractionDigits(CurrencyTransfer $currencyTransfer, array $options): int
-    {
-        $fractionDigits = $currencyTransfer->getFractionDigits();
+            if (!$priceProductVolumeItemTransfer->getNetPrice() && !$priceProductVolumeItemTransfer->getGrossPrice()) {
+                $context->addViolation(sprintf('Set up net or gross price for "quantity": %d.', $priceProductVolumeItemTransfer->getQuantity()));
+            }
 
-        if ($fractionDigits !== null) {
-            return $fractionDigits;
-        }
+            foreach ($savedPriceProductVolumeItemTransfers as $savedPriceProductVolumeItemTransfer) {
+                if ($priceProductVolumeItemTransfer->getQuantity() === $savedPriceProductVolumeItemTransfer->getQuantity()) {
+                    $context->addViolation(sprintf('Quantity "%d" is duplicate.', $priceProductVolumeItemTransfer->getQuantity()));
+                }
+            }
 
-        return $options[PriceVolumeCollectionDataProvider::OPTION_DEFAULT_SCALE];
+            $savedPriceProductVolumeItemTransfers[] = $priceProductVolumeItemTransfer;
+        };
     }
 }

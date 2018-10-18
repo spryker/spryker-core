@@ -10,11 +10,6 @@ namespace Spryker\Zed\PriceProductVolumeGui\Dependency\Service;
 interface PriceProductVolumeGuiToUtilEncodingServiceInterface
 {
     /**
-     * Specification:
-     * - Encodes given value to JSON string.
-     *
-     * @api
-     *
      * @param array $value
      * @param int|null $options
      * @param int|null $depth
@@ -24,11 +19,6 @@ interface PriceProductVolumeGuiToUtilEncodingServiceInterface
     public function encodeJson($value, $options = null, $depth = null);
 
     /**
-     * Specification:
-     * - Decodes given JSON string, returns array or stdObject.
-     *
-     * @api
-     *
      * @param string $jsonValue
      * @param bool $assoc
      * @param int|null $depth

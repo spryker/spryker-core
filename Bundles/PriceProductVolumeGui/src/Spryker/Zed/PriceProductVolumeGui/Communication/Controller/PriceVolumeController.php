@@ -97,7 +97,7 @@ class PriceVolumeController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function executeAction(FormInterface $priceVolumeCollectionFormType, PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    protected function executeAction(FormInterface $priceVolumeCollectionFormType, PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         $priceProductTransfer = $this->savePriceProduct(
             $priceVolumeCollectionFormType->getData(),

@@ -13,11 +13,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 interface PriceProductVolumeGuiToPriceProductFacadeInterface
 {
     /**
-     * Specification:
-     * - Reads abstract product prices from database.
-     *
-     * @api
-     *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
@@ -29,12 +24,6 @@ interface PriceProductVolumeGuiToPriceProductFacadeInterface
     ): array;
 
     /**
-     * Specification:
-     * - Reads abstract and concrete product prices from database.
-     * - Concrete prices overwrites abstracts for matching price types.
-     *
-     * @api
-     *
      * @param int $idProductConcrete
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
@@ -48,11 +37,6 @@ interface PriceProductVolumeGuiToPriceProductFacadeInterface
     ): array;
 
     /**
-     * Specification:
-     *  - Generates checksum hash for price data field.
-     *
-     * @api
-     *
      * @param array $priceData
      *
      * @return string
@@ -60,11 +44,6 @@ interface PriceProductVolumeGuiToPriceProductFacadeInterface
     public function generatePriceDataChecksum(array $priceData): string;
 
     /**
-     * Specification:
-     *  - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer

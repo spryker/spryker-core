@@ -44,6 +44,16 @@ class PriceVolumeFormType extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -109,15 +119,5 @@ class PriceVolumeFormType extends AbstractType
         ]);
 
         return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE);
     }
 }

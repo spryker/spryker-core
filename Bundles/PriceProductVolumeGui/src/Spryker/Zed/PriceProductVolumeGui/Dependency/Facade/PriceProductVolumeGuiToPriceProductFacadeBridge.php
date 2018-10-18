@@ -26,10 +26,6 @@ class PriceProductVolumeGuiToPriceProductFacadeBridge implements PriceProductVol
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
@@ -44,10 +40,6 @@ class PriceProductVolumeGuiToPriceProductFacadeBridge implements PriceProductVol
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProductConcrete
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
@@ -64,10 +56,6 @@ class PriceProductVolumeGuiToPriceProductFacadeBridge implements PriceProductVol
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param array $priceData
      *
      * @return string
@@ -78,10 +66,6 @@ class PriceProductVolumeGuiToPriceProductFacadeBridge implements PriceProductVol
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer

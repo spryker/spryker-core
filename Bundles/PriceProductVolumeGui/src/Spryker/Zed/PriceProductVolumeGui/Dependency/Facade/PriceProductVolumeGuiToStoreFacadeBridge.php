@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductVolumeGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class PriceProductVolumeGuiToStoreFacadeBridge implements PriceProductVolumeGuiToStoreFacadeInterface
 {
     /**
@@ -23,15 +25,11 @@ class PriceProductVolumeGuiToStoreFacadeBridge implements PriceProductVolumeGuiT
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName($storeName)
+    public function getStoreByName($storeName): StoreTransfer
     {
         return $this->storeFacade->getStoreByName($storeName);
     }

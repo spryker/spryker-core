@@ -25,6 +25,8 @@ class PriceVolumeCollectionDataProvider
     public const OPTION_CURRENCY_CODE = 'currency_code';
     public const OPTION_CURRENCY_TRANSFER = 'currency_transfer';
     public const OPTION_DEFAULT_SCALE = 'default_scale';
+    public const OPTION_DIVISOR = 'divisor';
+    public const OPTION_FRACTION_DIGITS = 'fraction_digits';
 
     protected const MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Abstract Id "%d".';
     protected const MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Concrete Id "%d".';
@@ -143,10 +145,12 @@ class PriceVolumeCollectionDataProvider
      */
     public function getOptions(string $currencyCode): array
     {
+        $currencyTransfer = $this->getCurrencyByCode($currencyCode);
+
         return [
             static::OPTION_CURRENCY_CODE => $currencyCode,
-            static::OPTION_CURRENCY_TRANSFER => $this->getCurrencyByCode($currencyCode),
-            static::OPTION_DEFAULT_SCALE => $this->config->getDefaultScale(),
+            static::OPTION_DIVISOR => $this->getDivisor($currencyTransfer),
+            static::OPTION_FRACTION_DIGITS => $this->getFractionDigits($currencyTransfer),
         ];
     }
 
@@ -272,5 +276,37 @@ class PriceVolumeCollectionDataProvider
     protected function getCurrencyByCode(string $currencyCode): CurrencyTransfer
     {
         return $this->currencyFacade->fromIsoCode($currencyCode);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return int
+     */
+    protected function getDivisor(CurrencyTransfer $currencyTransfer): int
+    {
+        $fractionDigits = $currencyTransfer->getFractionDigits();
+
+        if ($fractionDigits) {
+            return pow($this->config->getPowBaseValue(), $fractionDigits);
+        }
+
+        return $this->config->getDefaultDivisor();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return int
+     */
+    protected function getFractionDigits(CurrencyTransfer $currencyTransfer): int
+    {
+        $fractionDigits = $currencyTransfer->getFractionDigits();
+
+        if ($fractionDigits) {
+            return $fractionDigits;
+        }
+
+        return $this->config->getDefaultScale();
     }
 }

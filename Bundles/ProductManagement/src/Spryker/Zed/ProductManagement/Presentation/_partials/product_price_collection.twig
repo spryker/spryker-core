@@ -2,7 +2,7 @@
 {% set numberOfGrossPriceTypes = moneyValueFormViewCollection.vars.priceTypes.GROSS_MODE|length %}
 {% set numberOfNetPriceTypes = moneyValueFormViewCollection.vars.priceTypes.NET_MODE|length %}
 {% set currencies = moneyValueFormViewCollection.vars.currencies %}
-{% set volumePrices = moneyValueFormViewCollection.vars.volumePrices ?? [] %}
+{% set volumePrices = moneyValueFormViewCollection.vars.volumePrices | default([]) %}
 
 {% set priceModeGross = 'GROSS_MODE' %}
 {% set priceModeNet = 'NET_MODE' %}

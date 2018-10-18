@@ -29,6 +29,7 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addPriceProductFacade($container);
         $container = $this->addStoreFacade($container);
