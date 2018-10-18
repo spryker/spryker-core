@@ -12,13 +12,11 @@ use Generated\Shared\Transfer\PriceProductVolumeItemTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -47,10 +45,6 @@ class PriceVolumeCollectionFormType extends AbstractType
     {
         $this
             ->addVolumesField($builder, $options)
-            ->addIdStoreField($builder)
-            ->addIdCurrencyField($builder)
-            ->addIdProductAbstractField($builder)
-            ->addIdProductConcreteField($builder)
             ->addNetPriceField($builder, $options)
             ->addGrossPriceField($builder, $options);
     }
@@ -91,66 +85,6 @@ class PriceVolumeCollectionFormType extends AbstractType
                 PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
             ],
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdStoreField(FormBuilderInterface $builder): self
-    {
-        $builder->add(static::FIELD_ID_STORE, HiddenType::class, [
-            'constraints' => [
-                new NotBlank(['message' => 'Id store not defined.']),
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdCurrencyField(FormBuilderInterface $builder): self
-    {
-        $builder->add(static::FIELD_ID_CURRENCY, HiddenType::class, [
-            'constraints' => [
-                new NotBlank(['message' => 'Id currency not defined.']),
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdProductAbstractField(FormBuilderInterface $builder): self
-    {
-        $builder->add(static::FIELD_ID_PRODUCT_ABSTRACT, HiddenType::class, [
-            'constraints' => [
-                new NotBlank(['message' => 'Id product abstract not defined.']),
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdProductConcreteField(FormBuilderInterface $builder): self
-    {
-        $builder->add(static::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class);
 
         return $this;
     }

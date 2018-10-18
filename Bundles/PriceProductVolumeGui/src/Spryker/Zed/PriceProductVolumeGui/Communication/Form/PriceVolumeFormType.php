@@ -61,7 +61,7 @@ class PriceVolumeFormType extends AbstractType
     protected function addQuantityField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_QUANTITY, TextType::class, [
-            'label' => 'Quantity',
+            'label' => false,
             'required' => false,
             'constraints' => [
                 new Required(),

@@ -120,7 +120,7 @@ class PriceVolumeCollectionDataProvider
                 ->findProductConcretePricesWithoutPriceExtraction($idProductConcrete, $idProductAbstract, $priceProductCriteriaTransfer);
         }
 
-        if (!$priceProductTransfers) {
+        if (empty($priceProductTransfers)) {
             $priceProductTransfers = $this->priceProductFacade
                 ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
 
