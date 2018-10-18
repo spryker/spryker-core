@@ -54,6 +54,14 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createEmptyGuestCartRestResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
