@@ -83,6 +83,23 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
     }
 
     /**
+     * @param string $idQuote
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createGuestCartNotFoundErrorRestResponse(string $idQuote): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND, $idQuote));
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MessageTransfer[] $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
