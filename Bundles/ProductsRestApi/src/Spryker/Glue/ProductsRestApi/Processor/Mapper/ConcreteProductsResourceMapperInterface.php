@@ -7,14 +7,14 @@
 
 namespace Spryker\Glue\ProductsRestApi\Processor\Mapper;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer;
 
 interface ConcreteProductsResourceMapperInterface
 {
     /**
      * @param array $concreteProductData
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
      */
-    public function mapConcreteProductsResponseAttributesTransferToRestResponse(array $concreteProductData): RestResourceInterface;
+    public function mapConcreteProductsDataToConcreteProductsRestAttributes(array $concreteProductData): ConcreteProductsRestAttributesTransfer;
 }
