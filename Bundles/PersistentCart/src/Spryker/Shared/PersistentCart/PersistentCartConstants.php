@@ -18,5 +18,5 @@ interface PersistentCartConstants
      *
      * @api
      */
-    public const PERSISTENT_CART_ANONYMOUS_PREFIX = 'PERSISTENT_CART_ANONYMOUS_PREFIX';
+    public const PERSISTENT_CART_ANONYMOUS_PREFIX = 'PERSISTENT_CART:PERSISTENT_CART_ANONYMOUS_PREFIX';
 }

@@ -14,6 +14,7 @@ use Spryker\Glue\Kernel\Container;
 class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
     public const PLUGINS_CUSTOMER_POST_REGISTER = 'PLUGINS_CUSTOMER_POST_REGISTER';
 
     /**
