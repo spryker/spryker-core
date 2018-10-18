@@ -17,6 +17,10 @@ use Spryker\Client\Kernel\AbstractPlugin;
 class CustomerTransferRefreshPlugin extends AbstractPlugin implements CustomerSessionGetPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Retrieves customer by either provided id, email or restore password key.
+     * - Updates customer in session. 
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
