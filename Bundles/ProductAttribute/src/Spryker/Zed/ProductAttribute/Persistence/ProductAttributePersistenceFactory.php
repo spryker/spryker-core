@@ -12,6 +12,8 @@ use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductAttribute\Persistence\Mapper\ProductAttributeMapper;
+use Spryker\Zed\ProductAttribute\Persistence\Mapper\ProductAttributeMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductAttribute\ProductAttributeConfig getConfig()
@@ -49,5 +51,13 @@ class ProductAttributePersistenceFactory extends AbstractPersistenceFactory
     public function createProductManagementAttributeValueTranslationQuery()
     {
         return SpyProductManagementAttributeValueTranslationQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Persistence\Mapper\ProductAttributeMapperInterface
+     */
+    public function createProductAttributeMapper(): ProductAttributeMapperInterface
+    {
+        return new ProductAttributeMapper();
     }
 }

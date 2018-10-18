@@ -10,12 +10,15 @@ namespace Spryker\Zed\CmsBlock\Business\Model;
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
 use Spryker\Shared\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockMappingAmbiguousException;
 use Spryker\Zed\CmsBlock\Business\Exception\MissingCmsBlockGlossaryKeyMapping;
+use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
+use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToEventFacadeInterface;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface;
 use Spryker\Zed\CmsBlock\Dependency\QueryContainer\CmsBlockToGlossaryQueryContainerInterface;
@@ -54,24 +57,32 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     protected $touchFacade;
 
     /**
+     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToEventFacadeInterface
+     */
+    protected $eventFacade;
+
+    /**
      * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
      * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface $glossaryFacade
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryKeyGeneratorInterface $cmsBlockGlossaryKeyGenerator
      * @param \Spryker\Zed\CmsBlock\Dependency\QueryContainer\CmsBlockToGlossaryQueryContainerInterface $glossaryQueryContainer
      * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface $touchFacade
+     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToEventFacadeInterface $eventFacade
      */
     public function __construct(
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
         CmsBlockToGlossaryInterface $glossaryFacade,
         CmsBlockGlossaryKeyGeneratorInterface $cmsBlockGlossaryKeyGenerator,
         CmsBlockToGlossaryQueryContainerInterface $glossaryQueryContainer,
-        CmsBlockToTouchInterface $touchFacade
+        CmsBlockToTouchInterface $touchFacade,
+        CmsBlockToEventFacadeInterface $eventFacade
     ) {
         $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
         $this->glossaryFacade = $glossaryFacade;
         $this->cmsBlockGlossaryKeyGenerator = $cmsBlockGlossaryKeyGenerator;
         $this->glossaryQueryContainer = $glossaryQueryContainer;
         $this->touchFacade = $touchFacade;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -124,8 +135,19 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
             $idCmsBlockGlossaryMapping = $this->saveCmsGlossaryKeyMapping($glossaryPlaceholder);
             $glossaryPlaceholder->setIdCmsBlockGlossaryKeyMapping($idCmsBlockGlossaryMapping);
 
-            $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $glossaryPlaceholder->getFkCmsBlock());
+            $this->triggerSyncEvents($glossaryPlaceholder->getFkCmsBlock());
         }
+    }
+
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return void
+     */
+    protected function triggerSyncEvents(int $idCmsBlock): void
+    {
+        $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $idCmsBlock);
+        $this->eventFacade->trigger(CmsBlockEvents::CMS_BLOCK_PUBLISH, (new EventEntityTransfer())->setId($idCmsBlock));
     }
 
     /**

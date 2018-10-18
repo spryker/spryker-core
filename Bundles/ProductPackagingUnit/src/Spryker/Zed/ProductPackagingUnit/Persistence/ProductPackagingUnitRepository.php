@@ -91,6 +91,8 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     /**
      * @module Product
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null

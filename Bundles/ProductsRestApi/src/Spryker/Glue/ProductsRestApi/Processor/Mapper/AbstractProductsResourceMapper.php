@@ -8,44 +8,23 @@
 namespace Spryker\Glue\ProductsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
 class AbstractProductsResourceMapper implements AbstractProductsResourceMapperInterface
 {
     protected const KEY_PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
-    /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
-        $this->restResourceBuilder = $restResourceBuilder;
-    }
 
     /**
      * @param array $abstractProductData
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer
      */
-    public function mapAbstractProductsResponseAttributesTransferToRestResponse(array $abstractProductData): RestResourceInterface
+    public function mapAbstractProductsDataToAbstractProductsRestAttributes(array $abstractProductData): AbstractProductsRestAttributesTransfer
     {
-        $restAbstractProductsAttributesTransfer = (new AbstractProductsRestAttributesTransfer())
-            ->fromArray($abstractProductData, true);
-        $this->changeIdsToSkus($restAbstractProductsAttributesTransfer);
+        $restAbstractProductsAttributesTransfer = (new AbstractProductsRestAttributesTransfer())->fromArray($abstractProductData, true);
 
-        return $this->restResourceBuilder->createRestResource(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            $restAbstractProductsAttributesTransfer->getSku(),
-            $restAbstractProductsAttributesTransfer
-        );
+        return $this->changeIdsToSkus($restAbstractProductsAttributesTransfer);
     }
 
     /**
