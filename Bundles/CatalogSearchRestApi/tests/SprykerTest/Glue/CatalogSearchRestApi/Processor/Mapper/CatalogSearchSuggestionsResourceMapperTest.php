@@ -11,11 +11,10 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
 use Spryker\Client\Currency\CurrencyClient;
-use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientBridge;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 
 /**
  * Auto-generated group annotations
@@ -58,11 +57,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     {
         parent::setUp();
 
-        $this->mockCurrencyClient();
-
-        $this->catalogSearchSuggestionsResourceMapper = new CatalogSearchSuggestionsResourceMapper(
-            new CatalogSearchRestApiToCurrencyClientBridge($this->currencyClientMock)
-        );
+        $this->catalogSearchSuggestionsResourceMapper = new CatalogSearchSuggestionsResourceMapper();
     }
 
     /**
@@ -86,7 +81,6 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
 
         $attributes = $restCatalogSearchSuggestionsAttributes;
 
-        $this->assertEquals(static::REQUESTED_CURRENCY, $restCatalogSearchSuggestionsAttributes->getCurrency());
         $this->assertEmpty($attributes->getCompletion());
         $this->assertEmpty($attributes->getProducts());
         $this->assertEmpty($attributes->getCategories());
@@ -110,10 +104,9 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
             $searchSuggestionsResponseDataMock
         );
 
-        $this->assertEquals(static::REQUESTED_CURRENCY, $restCatalogSearchSuggestionsAttributes->getCurrency());
         foreach ($restCatalogSearchSuggestionsAttributes->getProducts() as $product) {
-            $this->assertArrayHasKey('abstract_sku', $product);
-            $this->assertArrayHasKey('abstract_name', $product);
+            $this->assertArrayHasKey('abstractSku', $product);
+            $this->assertArrayHasKey('abstractName', $product);
             $this->assertArrayHasKey('price', $product);
             $this->assertArrayHasKey('images', $product);
             $this->assertArrayNotHasKey('id_product_abstract', $product);
@@ -150,9 +143,9 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getResourceBuilder(): RestResourceBuilderInterface
+    protected function getResourceBuilder(): MockObject
     {
         return $this->getMockBuilder(RestResourceBuilder::class)
             ->enableProxyingToOriginalMethods()

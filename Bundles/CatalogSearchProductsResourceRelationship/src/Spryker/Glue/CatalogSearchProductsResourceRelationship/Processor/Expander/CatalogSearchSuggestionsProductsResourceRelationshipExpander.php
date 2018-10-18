@@ -13,7 +13,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements CatalogSearchSuggestionsProductsResourceRelationshipExpanderInterface
 {
-    protected const KEY_ABSTRACT_SKU = 'abstract_sku';
+    protected const KEY_ABSTRACT_SKU = 'abstractSku';
 
     /**
      * @var \Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface
@@ -39,8 +39,8 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
         foreach ($resources as $resource) {
             /** @var \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $attributes */
             $attributes = $resource->getAttributes();
-            if ($attributes->getProducts()) {
-                $this->addAbstractProductsToResource($attributes->getProducts(), $resource, $restRequest);
+            if ($attributes->getProducts() !== null) {
+                $this->addAbstractProductsToResource($attributes->getProducts()->getArrayCopy(), $resource, $restRequest);
             }
         }
     }

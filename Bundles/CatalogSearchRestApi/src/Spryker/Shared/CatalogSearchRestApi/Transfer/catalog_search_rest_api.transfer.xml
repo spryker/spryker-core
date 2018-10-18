@@ -59,9 +59,21 @@
 
     <transfer name="RestCatalogSearchSuggestionsAttributes">
         <property name="completion" type="string[]"/>
-        <property name="products" type="array"/>
+        <property name="products" type="RestCatalogSearchSuggestionProductsAttributes[]"/>
         <property name="categories" type="array"/>
         <property name="cmsPages" type="array"/>
+    </transfer>
+
+    <transfer name="RestCatalogSearchSuggestionProductsAttributes">
+        <property name="images" type="RestCatalogSearchSuggestionProductImageAttributes[]"/>
+        <property name="price" type="int"/>
+        <property name="abstractName" type="string"/>
+        <property name="abstractSku" type="string"/>
+    </transfer>
+
+    <transfer name="RestCatalogSearchSuggestionProductImageAttributes">
+        <property name="externalUrlSmall" type="string"/>
+        <property name="externalUrlLarge" type="string"/>
     </transfer>
 
     <transfer name="RestPriceProductAttributes">
