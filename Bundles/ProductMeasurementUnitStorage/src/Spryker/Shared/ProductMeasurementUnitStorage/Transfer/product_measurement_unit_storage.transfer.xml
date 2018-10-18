@@ -33,7 +33,7 @@
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="baseMeasurementUnit" type="ProductMeasurementUnit" />
+        <property name="baseMeasurementUnitName" type="string" />
     </transfer>
 
 </transfers>

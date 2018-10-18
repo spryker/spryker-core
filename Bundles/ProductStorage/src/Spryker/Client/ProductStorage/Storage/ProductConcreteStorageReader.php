@@ -163,6 +163,21 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
+     * @param string $mappingType
+     * @param string $identifier
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array
+    {
+        return $this->findProductConcreteStorageDataByMapping(
+            $mappingType,
+            $identifier,
+            $this->localeClient->getCurrentLocale()
+        );
+    }
+
+    /**
      * @param string $reference
      * @param string $localeName
      *

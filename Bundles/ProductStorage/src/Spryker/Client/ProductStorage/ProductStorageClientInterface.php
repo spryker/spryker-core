@@ -144,4 +144,16 @@ interface ProductStorageClientInterface
      * @return bool
      */
     public function isProductConcreteRestricted(int $idProductConcrete): bool;
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string $identifier
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier);
 }

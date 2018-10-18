@@ -68,6 +68,6 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
             return $productConcreteTransfer;
         }
 
-        return $productConcreteTransfer->setBaseMeasurementUnit($productMeasurementUnitTransfer);
+        return $productConcreteTransfer->setBaseMeasurementUnitName($productMeasurementUnitTransfer->getName());
     }
 }

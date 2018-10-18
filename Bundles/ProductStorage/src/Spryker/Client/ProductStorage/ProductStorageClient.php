@@ -187,4 +187,21 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
             ->createProductConcreteStorageReader()
             ->findProductConcreteStorageDataByMapping($mappingType, $identifier, $localeName);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string $identifier
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array
+    {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->findProductConcreteStorageDataByMappingForCurrentLocale($mappingType, $identifier);
+    }
 }
