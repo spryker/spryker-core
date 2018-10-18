@@ -14,7 +14,7 @@ use Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactor
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapter;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapter;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapter;
-use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeBridge;
+use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreBridge;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
 
 /**
@@ -80,18 +80,18 @@ class RestRequestValidatorFacadeTest extends Unit
             RestRequestValidatorBusinessFactory::class,
             [
                 'getConfig',
-                'getStoreFacade',
                 'getFinderAdapter',
                 'getFilesystemAdapter',
                 'getYamlAdapter',
+                'getStore',
             ]
         );
 
         $mockFactory = $this->addMockConfig($mockFactory);
-        $mockFactory = $this->addMockStoreFacade($mockFactory);
         $mockFactory = $this->addMockFinderAdapter($mockFactory);
         $mockFactory = $this->addMockFilesystemAdapter($mockFactory);
         $mockFactory = $this->addMockYamlAdapter($mockFactory);
+        $mockFactory = $this->addStore($mockFactory);
 
         return $mockFactory;
     }
@@ -145,27 +145,27 @@ class RestRequestValidatorFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockStoreFacade(MockObject $mockFactory): MockObject
+    protected function addStore(MockObject $mockFactory): MockObject
     {
-        $mockStoreFacade = $this->createPartialMock(
-            RestRequestValidatorToStoreFacadeBridge::class,
+        $mockStore = $this->createPartialMock(
+            RestRequestValidatorToStoreBridge::class,
             [
-                'getAllStores',
+                'getAllowedStores',
             ]
         );
 
-        $mockStoreFacade
-            ->method('getAllStores')
+        $mockStore
+            ->method('getAllowedStores')
             ->willReturn(
                 [
-                    (new StoreTransfer())->fromArray(['name' => static::STORE_DE]),
-                    (new StoreTransfer())->fromArray(['name' => static::STORE_AT]),
+                    static::STORE_DE,
+                    static::STORE_AT,
                 ]
             );
 
         $mockFactory
-            ->method('getStoreFacade')
-            ->willReturn($mockStoreFacade);
+            ->method('getStore')
+            ->willReturn($mockStore);
 
         return $mockFactory;
     }

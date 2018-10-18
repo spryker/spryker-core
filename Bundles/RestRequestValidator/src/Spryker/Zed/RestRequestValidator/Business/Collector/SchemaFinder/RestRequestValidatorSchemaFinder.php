@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface;
+use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
 
 class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFinderInterface
@@ -24,19 +24,19 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     protected $config;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface
      */
     protected $store;
 
     /**
      * @param \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface $finder
      * @param \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig $config
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface $store
      */
     public function __construct(
         RestRequestValidatorToFinderAdapterInterface $finder,
         RestRequestValidatorConfig $config,
-        Store $store
+        RestRequestValidatorToStoreInterface $store
     ) {
         $this->finder = $finder;
         $this->config = $config;

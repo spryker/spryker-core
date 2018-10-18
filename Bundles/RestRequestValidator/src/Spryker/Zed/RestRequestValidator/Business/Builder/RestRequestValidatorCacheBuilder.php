@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Builder;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollectorInterface;
 use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaMergerInterface;
 use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface;
+use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface;
 
 class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuilderInterface
 {
@@ -30,7 +30,7 @@ class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuild
     protected $restRequestValidatorCacheSaver;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface
      */
     protected $store;
 
@@ -38,13 +38,13 @@ class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuild
      * @param \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollectorInterface $restRequestValidatorCacheCollector
      * @param \Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaMergerInterface $restRequestValidatorSchemaMerger
      * @param \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface $restRequestValidatorCacheSaver
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface $store
      */
     public function __construct(
         RestRequestValidatorCacheCollectorInterface $restRequestValidatorCacheCollector,
         RestRequestValidatorSchemaMergerInterface $restRequestValidatorSchemaMerger,
         RestRequestValidatorCacheSaverInterface $restRequestValidatorCacheSaver,
-        Store $store
+        RestRequestValidatorToStoreInterface $store
     ) {
         $this->restRequestValidatorCacheCollector = $restRequestValidatorCacheCollector;
         $this->restRequestValidatorSchemaMerger = $restRequestValidatorSchemaMerger;

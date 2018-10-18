@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCacheBuilder;
 use Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCacheBuilderInterface;
@@ -22,6 +21,7 @@ use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSav
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
+use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorDependencyProvider;
 
 /**
@@ -111,10 +111,10 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface
      */
-    public function getStore(): Store
+    public function getStore(): RestRequestValidatorToStoreInterface
     {
-        return Store::getInstance();
+        return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::STORE);
     }
 }
