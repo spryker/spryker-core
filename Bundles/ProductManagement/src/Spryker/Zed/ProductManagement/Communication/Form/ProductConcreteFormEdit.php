@@ -62,10 +62,10 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addStockForm($builder, $options)
             ->addImageLocalizedForms($builder)
             ->addAssignBundledProductForm($builder, $options)
-            ->addBundledProductsToBeRemoved($builder)
-            ->addFormBuildPlugins($builder, $options);
+            ->addBundledProductsToBeRemoved($builder);
 
-        $this->executeProductConcreteFormExpanderPlugins($builder, $options);
+        $this->executeProductConcreteFormExpanderPlugins($builder, $options)
+            ->executeProductConcreteEditFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -382,7 +382,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
      *
      * @return $this
      */
-    protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options): self
+    protected function executeProductConcreteEditFormExpanderPlugins(FormBuilderInterface $builder, array $options): self
     {
         /** @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface $plugin */
         foreach ($this->getFactory()->getProductConcreteEditFormExpanderPlugins() as $plugin) {

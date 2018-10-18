@@ -168,8 +168,9 @@ class ProductFormAdd extends AbstractType
             ->addTaxRateField($builder, $options)
             ->addSeoLocalizedForms($builder)
             ->addImageLocalizedForms($builder)
-            ->addStoreRelationForm($builder)
-            ->executeProductAbstractFormExpanderPlugins($builder, $options);
+            ->addStoreRelationForm($builder);
+
+        $this->executeProductAbstractFormExpanderPlugins($builder, $options);
     }
 
     /**
