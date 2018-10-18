@@ -104,6 +104,7 @@
         <property name="comment" type="string"/>
         <property name="email" type="string"/>
         <property name="country" type="string"/>
+        <property name="iso2Code" type="string"/>
     </transfer>
 
     <transfer name="RestOrderPayment">
