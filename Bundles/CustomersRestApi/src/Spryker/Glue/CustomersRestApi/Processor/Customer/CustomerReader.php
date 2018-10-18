@@ -110,10 +110,7 @@ class CustomerReader implements CustomerReaderInterface
      */
     public function findCustomer(RestRequestInterface $restRequest): CustomerResponseTransfer
     {
-        $customerReference = !empty($restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS))
-            ? $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId()
-            : $restRequest->getResource()->getId();
-        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference ?? '');
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getResource()->getId());
 
         return $this->customerClient->findCustomerByReference($customerTransfer);
     }
