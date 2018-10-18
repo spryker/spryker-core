@@ -18,19 +18,19 @@ use Traversable;
 
 class DiscountsTable extends AbstractTable
 {
-    const TABLE_COL_PERIOD = self::TYPE_COL_PERIOD;
-    const TABLE_COL_TYPE = 'Type';
-    const TYPE_COL_PERIOD = 'Period';
-    const TABLE_COL_ACTIONS = 'Actions';
-    const TABLE_COL_STORE = 'Store';
+    public const TABLE_COL_PERIOD = self::TYPE_COL_PERIOD;
+    public const TABLE_COL_TYPE = 'Type';
+    public const TYPE_COL_PERIOD = 'Period';
+    public const TABLE_COL_ACTIONS = 'Actions';
+    public const TABLE_COL_STORE = 'Store';
 
-    const URL_PARAM_ID_DISCOUNT = 'id-discount';
-    const URL_PARAM_VISIBILITY = 'visibility';
-    const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    public const URL_PARAM_ID_DISCOUNT = 'id-discount';
+    public const URL_PARAM_VISIBILITY = 'visibility';
+    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
-    const DATE_FORMAT = 'Y-m-d';
-    const BUTTON_ACTIVATE = 'Activate';
-    const BUTTON_DEACTIVATE = 'Deactivate';
+    public const DATE_FORMAT = 'Y-m-d';
+    public const BUTTON_ACTIVATE = 'Activate';
+    public const BUTTON_DEACTIVATE = 'Deactivate';
 
     /**
      * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery

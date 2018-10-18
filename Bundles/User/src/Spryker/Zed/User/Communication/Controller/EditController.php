@@ -23,22 +23,22 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class EditController extends AbstractController
 {
-    const PARAM_ID_USER = 'id-user';
-    const USER_LISTING_URL = '/user';
+    public const PARAM_ID_USER = 'id-user';
+    public const USER_LISTING_URL = '/user';
 
-    const MESSAGE_USER_CREATE_SUCCESS = 'User was created successfully.';
-    const MESSAGE_USER_UPDATE_SUCCESS = 'User was updated successfully.';
-    const MESSAGE_USER_ACTIVATE_SUCCESS = 'User was activated successfully.';
-    const MESSAGE_USER_DEACTIVATE_SUCCESS = 'User was deactivated successfully.';
-    const MESSAGE_USER_DELETE_SUCCESS = 'User was deleted successfully.';
-    const MESSAGE_PASSWORD_UPDATE_SUCCESS = 'User password was updated successfully.';
+    public const MESSAGE_USER_CREATE_SUCCESS = 'User was created successfully.';
+    public const MESSAGE_USER_UPDATE_SUCCESS = 'User was updated successfully.';
+    public const MESSAGE_USER_ACTIVATE_SUCCESS = 'User was activated successfully.';
+    public const MESSAGE_USER_DEACTIVATE_SUCCESS = 'User was deactivated successfully.';
+    public const MESSAGE_USER_DELETE_SUCCESS = 'User was deleted successfully.';
+    public const MESSAGE_PASSWORD_UPDATE_SUCCESS = 'User password was updated successfully.';
 
-    const MESSAGE_USER_CREATE_ERROR = 'User entity was not created.';
-    const MESSAGE_USER_UPDATE_ERROR = 'User entity was not updated.';
-    const MESSAGE_USER_ACTIVATE_ERROR = 'User was not activated.';
-    const MESSAGE_USER_DEACTIVATE_ERROR = 'User was not deactivated.';
-    const MESSAGE_USER_DELETE_ERROR = 'User was not deleted.';
-    const MESSAGE_ID_USER_EXTRACT_ERROR = 'Missing user id!';
+    public const MESSAGE_USER_CREATE_ERROR = 'User entity was not created.';
+    public const MESSAGE_USER_UPDATE_ERROR = 'User entity was not updated.';
+    public const MESSAGE_USER_ACTIVATE_ERROR = 'User was not activated.';
+    public const MESSAGE_USER_DEACTIVATE_ERROR = 'User was not deactivated.';
+    public const MESSAGE_USER_DELETE_ERROR = 'User was not deleted.';
+    public const MESSAGE_ID_USER_EXTRACT_ERROR = 'Missing user id!';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -73,6 +73,7 @@ class EditController extends AbstractController
                 $this->addAclGroups($formData, $userTransfer);
 
                 $this->addSuccessMessage(static::MESSAGE_USER_CREATE_SUCCESS);
+
                 return $this->redirectResponse(static::USER_LISTING_URL);
             }
 
@@ -93,6 +94,7 @@ class EditController extends AbstractController
 
         if (empty($idUser)) {
             $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
+
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
@@ -116,6 +118,7 @@ class EditController extends AbstractController
             $this->addAclGroups($formData, $userTransfer);
 
             $this->addSuccessMessage(static::MESSAGE_USER_UPDATE_SUCCESS);
+
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
@@ -136,6 +139,7 @@ class EditController extends AbstractController
 
         if (empty($idUser)) {
             $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
+
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
@@ -143,10 +147,12 @@ class EditController extends AbstractController
 
         if ($updateStatus) {
             $this->addSuccessMessage(static::MESSAGE_USER_ACTIVATE_SUCCESS);
+
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
         $this->addErrorMessage(static::MESSAGE_USER_ACTIVATE_ERROR);
+
         return $this->redirectResponse(static::USER_LISTING_URL);
     }
 
@@ -161,6 +167,13 @@ class EditController extends AbstractController
 
         if (empty($idUser)) {
             $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
+        if ($this->isCurrentUser($idUser)) {
+            $this->addErrorMessage(static::MESSAGE_USER_DEACTIVATE_ERROR);
+
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
@@ -168,10 +181,12 @@ class EditController extends AbstractController
 
         if ($updateStatus) {
             $this->addSuccessMessage(static::MESSAGE_USER_DEACTIVATE_SUCCESS);
+
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
         $this->addErrorMessage(static::MESSAGE_USER_DEACTIVATE_ERROR);
+
         return $this->redirectResponse(static::USER_LISTING_URL);
     }
 
@@ -192,6 +207,13 @@ class EditController extends AbstractController
 
         if (empty($idUser)) {
             $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
+        if ($this->isCurrentUser($idUser)) {
+            $this->addErrorMessage(static::MESSAGE_USER_DELETE_ERROR);
+
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
@@ -199,10 +221,12 @@ class EditController extends AbstractController
 
         if ($userTransfer->getStatus() === SpyUserTableMap::COL_STATUS_DELETED) {
             $this->addSuccessMessage(static::MESSAGE_USER_DELETE_SUCCESS);
+
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
         $this->addErrorMessage(static::MESSAGE_USER_DELETE_ERROR);
+
         return $this->redirectResponse(static::USER_LISTING_URL);
     }
 
@@ -272,5 +296,17 @@ class EditController extends AbstractController
         foreach ($userGroups->getGroups() as $groupTransfer) {
             $groupPlugin->removeUserFromGroup($idUser, $groupTransfer->getIdAclGroup());
         }
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return bool
+     */
+    protected function isCurrentUser(int $idUser): bool
+    {
+        $currentUser = $this->getFacade()->getCurrentUser();
+
+        return $currentUser->getIdUser() === $idUser;
     }
 }

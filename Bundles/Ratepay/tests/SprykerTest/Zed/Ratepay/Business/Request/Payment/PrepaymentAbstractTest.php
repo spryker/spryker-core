@@ -27,7 +27,7 @@ abstract class PrepaymentAbstractTest extends AbstractFacadeTest
     /**
      * @const Payment method code.
      */
-    const PAYMENT_METHOD = RatepayConstants::PREPAYMENT;
+    public const PAYMENT_METHOD = RatepayConstants::PREPAYMENT;
 
     /**
      * @return \Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer

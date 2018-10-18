@@ -19,9 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractCmsBlockController extends AbstractController
 {
-    const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
-    const REDIRECT_URL_DEFAULT = '/cms-block-gui/list-block';
-    const MESSAGE_CMS_BLOCK_INVALID_ID_ERROR = 'CMS block with provided ID doesn’t exist.';
+    public const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
+    public const REDIRECT_URL_DEFAULT = '/cms-block-gui/list-block';
+    public const MESSAGE_CMS_BLOCK_INVALID_ID_ERROR = 'CMS block with provided ID doesn’t exist.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

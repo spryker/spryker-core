@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class KeyController extends AbstractController
 {
-    const TERM = 'term';
+    public const TERM = 'term';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

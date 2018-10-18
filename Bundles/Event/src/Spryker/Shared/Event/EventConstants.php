@@ -18,7 +18,7 @@ interface EventConstants
      *
      * @api
      */
-    const LOG_FILE_PATH = 'EVENT_LOG_FILE_PATH';
+    public const LOG_FILE_PATH = 'EVENT_LOG_FILE_PATH';
 
     /**
      * Specification:
@@ -26,7 +26,23 @@ interface EventConstants
      *
      * @api
      */
-    const LOGGER_ACTIVE = 'LOGGER_ACTIVE';
+    public const LOGGER_ACTIVE = 'LOGGER_ACTIVE';
+
+    /**
+     * Specification:
+     * - Maximum amount of retrying on failing message
+     *
+     * @api
+     */
+    public const MAX_RETRY_ON_FAIL = 'MAX_RETRY_ON_FAIL';
+
+    /**
+     * Specification:
+     * - Number of event messages for bulk operation
+     *
+     * @api
+     */
+    public const EVENT_CHUNK = 'EVENT_CHUNK';
 
     /**
      * Specification:
@@ -34,7 +50,15 @@ interface EventConstants
      *
      * @api
      */
-    const EVENT_QUEUE = 'event';
+    public const EVENT_QUEUE = 'event';
+
+    /**
+     * Specification:
+     * - Retry queue name as used when with asynchronous event handling
+     *
+     * @api
+     */
+    public const EVENT_QUEUE_RETRY = 'event.retry';
 
     /**
      * Specification:
@@ -42,5 +66,5 @@ interface EventConstants
      *
      * @api
      */
-    const EVENT_QUEUE_ERROR = 'event.error';
+    public const EVENT_QUEUE_ERROR = 'event.error';
 }

@@ -18,7 +18,7 @@ interface QueueConstants
      *
      * @api
      */
-    const QUEUE_SERVER_ID = 'QUEUE_SERVER_ID';
+    public const QUEUE_SERVER_ID = 'QUEUE_SERVER_ID';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ interface QueueConstants
      *
      * @api
      */
-    const QUEUE_ADAPTER_CONFIGURATION = 'QUEUE_ADAPTER_CONFIGURATION';
+    public const QUEUE_ADAPTER_CONFIGURATION = 'QUEUE_ADAPTER_CONFIGURATION';
 
     /**
      * Specification:
@@ -34,7 +34,7 @@ interface QueueConstants
      *
      * @api
      */
-    const QUEUE_ADAPTER_CONFIGURATION_DEFAULT = 'QUEUE_ADAPTER_CONFIGURATION_DEFAULT';
+    public const QUEUE_ADAPTER_CONFIGURATION_DEFAULT = 'QUEUE_ADAPTER_CONFIGURATION_DEFAULT';
 
     /**
      * Specification:
@@ -42,7 +42,7 @@ interface QueueConstants
      *
      * @api
      */
-    const QUEUE_WORKER_INTERVAL_MILLISECONDS = 'QUEUE_WORKER_INTERVAL_MILLISECONDS';
+    public const QUEUE_WORKER_INTERVAL_MILLISECONDS = 'QUEUE_WORKER_INTERVAL_MILLISECONDS';
 
     /**
      * Specification:
@@ -50,7 +50,7 @@ interface QueueConstants
      *
      * @api
      */
-    const QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS = 'QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS';
+    public const QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS = 'QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS';
 
     /**
      * Specification:
@@ -58,7 +58,7 @@ interface QueueConstants
      *
      * @api
      */
-    const QUEUE_WORKER_MAX_THRESHOLD_SECONDS = 'QUEUE_WORKER_MAX_THRESHOLD_SECONDS';
+    public const QUEUE_WORKER_MAX_THRESHOLD_SECONDS = 'QUEUE_WORKER_MAX_THRESHOLD_SECONDS';
 
     /**
      * Specification:
@@ -66,7 +66,7 @@ interface QueueConstants
      *
      * @api
      */
-    const QUEUE_WORKER_OUTPUT_FILE_NAME = 'QUEUE_WORKER_OUTPUT_FILE_NAME';
+    public const QUEUE_WORKER_OUTPUT_FILE_NAME = 'QUEUE_WORKER_OUTPUT_FILE_NAME';
 
     /**
      * Specification:
@@ -74,7 +74,7 @@ interface QueueConstants
      *
      * @api
      */
-    const QUEUE_WORKER_LOG_ACTIVE = 'QUEUE_WORKER_LOG_ACTIVE';
+    public const QUEUE_WORKER_LOG_ACTIVE = 'QUEUE_WORKER_LOG_ACTIVE';
 
     /**
      * Specification:
@@ -82,7 +82,7 @@ interface QueueConstants
      *
      * @api
      */
-    const QUEUE_DEFAULT_RECEIVER = 'QUEUE_DEFAULT_RECEIVER';
+    public const QUEUE_DEFAULT_RECEIVER = 'QUEUE_DEFAULT_RECEIVER';
 
     /**
      * Specification:
@@ -90,5 +90,13 @@ interface QueueConstants
      *
      * @api
      */
-    const QUEUE_WORKER_MESSAGE_CHECK_OPTION = 'QUEUE_WORKER_MESSAGE_CHECK_OPTION';
+    public const QUEUE_WORKER_MESSAGE_CHECK_OPTION = 'QUEUE_WORKER_MESSAGE_CHECK_OPTION';
+
+    /**
+     * Specification:
+     * - This option lets the worker to run over a loop until there is no message in the queues
+     *
+     * @api
+     */
+    public const QUEUE_WORKER_LOOP = 'QUEUE_WORKER_LOOP';
 }

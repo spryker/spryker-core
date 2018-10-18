@@ -30,17 +30,17 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsBlockForm extends AbstractType
 {
-    const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
-    const FIELD_STORE_RELATION = 'storeRelation';
-    const FIELD_FK_TEMPLATE = 'fkTemplate';
-    const FIELD_NAME = 'name';
-    const FIELD_IS_ACTIVE = 'is_active';
-    const FIELD_VALID_FROM = 'validFrom';
-    const FIELD_VALID_TO = 'validTo';
+    public const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
+    public const FIELD_STORE_RELATION = 'storeRelation';
+    public const FIELD_FK_TEMPLATE = 'fkTemplate';
+    public const FIELD_NAME = 'name';
+    public const FIELD_IS_ACTIVE = 'is_active';
+    public const FIELD_VALID_FROM = 'validFrom';
+    public const FIELD_VALID_TO = 'validTo';
 
-    const OPTION_TEMPLATE_CHOICES = 'template_choices';
+    public const OPTION_TEMPLATE_CHOICES = 'template_choices';
 
-    const GROUP_UNIQUE_BLOCK_CHECK = 'unique_block_check';
+    public const GROUP_UNIQUE_BLOCK_CHECK = 'unique_block_check';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

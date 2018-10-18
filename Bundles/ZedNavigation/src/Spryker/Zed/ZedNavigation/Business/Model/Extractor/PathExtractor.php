@@ -11,9 +11,9 @@ use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter;
 
 class PathExtractor implements PathExtractorInterface
 {
-    const URI = 'uri';
-    const LABEL = 'label';
-    const TITLE = 'title';
+    public const URI = 'uri';
+    public const LABEL = 'label';
+    public const TITLE = 'title';
 
     /**
      * @param array $menu

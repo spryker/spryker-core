@@ -10,6 +10,8 @@ namespace Spryker\Zed\Cart\Business;
 use Spryker\Zed\Cart\Business\Model\Operation;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserver;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface;
+use Spryker\Zed\Cart\Business\Model\QuoteCleaner;
+use Spryker\Zed\Cart\Business\Model\QuoteCleanerInterface;
 use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
@@ -52,6 +54,14 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteChangeObserver(),
             $this->getMessengerFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cart\Business\Model\QuoteCleanerInterface
+     */
+    public function createQuoteCleaner(): QuoteCleanerInterface
+    {
+        return new QuoteCleaner();
     }
 
     /**

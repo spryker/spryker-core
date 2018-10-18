@@ -7,16 +7,15 @@
 
 namespace Spryker\Shared\Transfer\Log\Processor;
 
-use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
 class TransferSanitizerProcessor
 {
-    const EXTRA = 'transfer';
-    const CONTEXT_KEY = 'transfer';
-    const RECORD_EXTRA = 'extra';
-    const RECORD_CONTEXT = 'context';
+    public const EXTRA = 'transfer';
+    public const CONTEXT_KEY = 'transfer';
+    public const RECORD_EXTRA = 'extra';
+    public const RECORD_CONTEXT = 'context';
 
     /**
      * @var \Spryker\Shared\Log\Sanitizer\SanitizerInterface
@@ -62,10 +61,6 @@ class TransferSanitizerProcessor
         $transferArray = $transfer->toArray();
 
         foreach ($transferArray as $key => $value) {
-            if ($value instanceof ArrayObject) {
-                $data[$key] = [];
-            }
-
             if (is_array($value) && (current($value) instanceof TransferInterface)) {
                 foreach ($value as $position => $transfer) {
                     $value[$position] = $this->transferToArray($transfer);

@@ -14,7 +14,7 @@ use Spryker\Shared\Kernel\ContainerGlobals;
 
 class ZedRequestClientServiceProvider implements ServiceProviderInterface
 {
-    const CLIENT_ZED_REQUEST = 'zed request client';
+    public const CLIENT_ZED_REQUEST = 'zed request client';
 
     /**
      * @param \Silex\Application $app

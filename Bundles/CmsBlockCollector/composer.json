@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block-collector",
+  "type": "library",
   "description": "CmsBlockCollector module",
   "license": "proprietary",
   "require": {
