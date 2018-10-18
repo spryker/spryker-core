@@ -28,7 +28,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     protected const PRODUCT_ABSTRACT_ID = 'PRODUCT_ABSTRACT_ID';
 
     /**
-     * @uses\Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES
+     * @uses \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES
      */
     protected const DEFAULT_AMOUNT_DEFAULT_VALUE = 1;
 
