@@ -18,7 +18,6 @@ use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
-use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface;
 
 class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 {

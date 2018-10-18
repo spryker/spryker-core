@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-/**
- * @deprecated Not in use anymore, will be removed with next major.
- */
 namespace Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 
+/**
+ * @deprecated Not in use anymore, will be removed with next major.
+ */
 interface PriceProductMerchantRelationshipToPriceProductFacadeInterface
 {
     /**
