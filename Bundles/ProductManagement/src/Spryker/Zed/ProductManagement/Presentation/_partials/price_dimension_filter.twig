@@ -1,0 +1,12 @@
+
+{% for subForm in priceDimensionForm.children %}
+    {% for child in subForm %}
+        <div class="form-group">
+            {% if child.vars.attr.template_path is defined %}
+                {% include child.vars.attr.template_path with {'form': child} %}
+            {% else %}
+                {{ form_widget(child) }}
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endfor %}

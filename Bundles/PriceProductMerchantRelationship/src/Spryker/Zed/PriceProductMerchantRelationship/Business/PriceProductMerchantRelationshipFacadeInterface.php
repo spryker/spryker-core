@@ -65,7 +65,8 @@ interface PriceProductMerchantRelationshipFacadeInterface
 
     /**
      * Specification:
-     *  - Adds specific dimension type to the PriceProductDimensionTransfer
+     *  - Adds specific dimension type to the PriceProductDimensionTransfer.
+     *  - Adds specific merchant relationship price dimension data to the PriceProductDimensionTransfer.
      *
      * @api
      *
