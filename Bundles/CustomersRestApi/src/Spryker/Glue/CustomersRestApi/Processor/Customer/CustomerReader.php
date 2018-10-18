@@ -74,21 +74,18 @@ class CustomerReader implements CustomerReaderInterface
     public function getCustomerByCustomerReference(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        $customerResource = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)
-            ?? $restRequest->getResource();
+        $customerResourceId = $restRequest->getResource()->getId();
 
-        $customerResponseTransfer = $customerResource->getId()
+        if (!empty($customerResourceId) && !$this->restApiValidator->isSameCustomerReference($restRequest)) {
+            return $this->restApiError->addCustomerNotFoundError($restResponse);
+        }
+
+        $customerResponseTransfer = $customerResourceId
             ? $this->findCustomer($restRequest)
             : $this->findCurrentCustomer($restRequest);
 
-        $restResponse = $this->restApiValidator->validateCustomerResponseTransfer(
-            $customerResponseTransfer,
-            $restRequest,
-            $restResponse
-        );
-
-        if (count($restResponse->getErrors()) > 0) {
-            return $restResponse;
+        if (!$customerResponseTransfer->getHasCustomer()) {
+            return $this->restApiError->addCustomerNotFoundError($restResponse);
         }
 
         $restCustomersResponseAttributesTransfer = $this

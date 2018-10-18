@@ -54,7 +54,7 @@ class RestApiValidator implements RestApiValidatorInterface
             return $this->apiErrors->addCustomerNotFoundError($restResponse);
         }
 
-        if (!$this->isSameCustomerReference($restRequest) && !$this->isEmptyCustomerReference($restRequest)) {
+        if (!$this->isSameCustomerReference($restRequest)) {
             return $this->apiErrors->addCustomerUnauthorizedError($restResponse);
         }
 
@@ -116,18 +116,6 @@ class RestApiValidator implements RestApiValidatorInterface
         $customerResource = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS) ?? $restRequest->getResource();
 
         return $restRequest->getUser()->getNaturalIdentifier() === $customerResource->getId();
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return bool
-     */
-    public function isEmptyCustomerReference(RestRequestInterface $restRequest): bool
-    {
-        $customerResource = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS) ?? $restRequest->getResource();
-
-        return empty($customerResource->getId());
     }
 
     /**
