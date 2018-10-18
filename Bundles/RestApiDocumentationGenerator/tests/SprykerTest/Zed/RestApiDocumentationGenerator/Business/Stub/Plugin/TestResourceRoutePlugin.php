@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Fixture\Plugin;
+namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Fixture\RestTestAttributesTransfer;
+use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\RestTestAttributesTransfer;
 
 class TestResourceRoutePlugin implements ResourceRoutePluginInterface
 {

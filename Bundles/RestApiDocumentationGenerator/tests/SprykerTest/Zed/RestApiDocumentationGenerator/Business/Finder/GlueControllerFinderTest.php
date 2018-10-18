@@ -14,7 +14,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumen
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyFinderAdapter;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Fixture\Plugin\TestResourceRoutePlugin;
+use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRoutePlugin;
 
 /**
  * Auto-generated group annotations
@@ -28,7 +28,7 @@ use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Fixture\Plugin\TestRe
  */
 class GlueControllerFinderTest extends Unit
 {
-    protected const CONTROLLER_SOURCE_DIRECTORY = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/RestApiDocumentationGenerator/tests/SprykerTest/Zed/RestApiDocumentationGenerator/Business/Fixture/Controller/';
+    protected const CONTROLLER_SOURCE_DIRECTORY = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/RestApiDocumentationGenerator/tests/SprykerTest/Zed/RestApiDocumentationGenerator/Business/Stub/Controller/';
     protected const CONTROLLER_FILE_NAME = 'TestResourceController.php';
 
     /**
