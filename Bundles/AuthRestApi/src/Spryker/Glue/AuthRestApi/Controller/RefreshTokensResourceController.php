@@ -17,6 +17,20 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class RefreshTokensResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Refresh customer's auth token."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "401": "Failed to authenticate user"
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestRefreshTokensAttributesTransfer $restRefreshTokensAttributesTransfer
      *

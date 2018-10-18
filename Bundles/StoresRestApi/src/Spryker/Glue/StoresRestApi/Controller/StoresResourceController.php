@@ -17,6 +17,17 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class StoresResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getResource": {
+     *          "summary": [
+     *              "Retrieve current store data."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ]
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

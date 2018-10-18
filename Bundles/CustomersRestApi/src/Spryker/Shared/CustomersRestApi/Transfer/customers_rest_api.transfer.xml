@@ -11,10 +11,10 @@
         <property name="salutation" type="string" />
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
-        <property name="email" type="string"/>
+        <property name="email" type="string" restRequestParameter="required" />
         <property name="password" type="string" />
         <property name="confirmPassword" type="string" />
-        <property name="acceptedTerms" type="bool"/>
+        <property name="acceptedTerms" type="bool" restRequestParameter="required" />
     </transfer>
 
     <transfer name="RestCustomersResponseAttributes">
@@ -39,8 +39,8 @@
 
     <transfer name="RestAddressAttributes">
         <property name="salutation" type="string" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
+        <property name="firstName" type="string" restRequestParameter="required" />
+        <property name="lastName" type="string" restRequestParameter="required" />
         <property name="address1" type="string" />
         <property name="address2" type="string" />
         <property name="address3" type="string" />
@@ -55,9 +55,9 @@
     </transfer>
 
     <transfer name="RestCustomerPasswordAttributes">
-        <property name="password" type="string" />
-        <property name="newPassword" type="string" />
-        <property name="confirmPassword" type="string" />
+        <property name="password" type="string" restRequestParameter="required" />
+        <property name="newPassword" type="string" restRequestParameter="required" />
+        <property name="confirmPassword" type="string" restRequestParameter="required" />
     </transfer>
 
     <transfer name="Address">

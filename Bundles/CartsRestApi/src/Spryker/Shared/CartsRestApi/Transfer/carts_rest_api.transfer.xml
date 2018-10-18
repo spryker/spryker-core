@@ -12,8 +12,8 @@
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
-        <property name="sku" type="string" />
-        <property name="quantity" type="int" />
+        <property name="sku" type="string" restRequestParameter="required" />
+        <property name="quantity" type="int" restRequestParameter="required" />
         <property name="groupKey" type="string" />
         <property name="amount" type="int" />
         <property name="calculations" type="RestCartItemCalculations" />
