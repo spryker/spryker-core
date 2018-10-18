@@ -56,16 +56,6 @@ class PriceProductVolumeGuiToPriceProductFacadeBridge implements PriceProductVol
     }
 
     /**
-     * @param array $priceData
-     *
-     * @return string
-     */
-    public function generatePriceDataChecksum(array $priceData): string
-    {
-        return $this->priceProductFacade->generatePriceDataChecksum($priceData);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer

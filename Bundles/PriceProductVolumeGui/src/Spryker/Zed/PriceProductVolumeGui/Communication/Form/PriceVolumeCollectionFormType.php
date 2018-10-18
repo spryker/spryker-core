@@ -15,7 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -68,7 +67,7 @@ class PriceVolumeCollectionFormType extends AbstractType
         $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS);
 
         $resolver->setDefaults([
-            'validation_groups' => function (FormInterface $form) {
+            'validation_groups' => function () {
                 return [Constraint::DEFAULT_GROUP, static::VALIDATION_VOLUMES_GROUP];
             },
         ]);
@@ -208,6 +207,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      */
     protected function getVolumesConstraints(): array
     {
+        $volumesConstraints = [];
         $volumesConstraints[] = new Callback([
             'callback' => $this->getVolumesConstraintsCallback(),
             'groups' => [static::VALIDATION_VOLUMES_GROUP],

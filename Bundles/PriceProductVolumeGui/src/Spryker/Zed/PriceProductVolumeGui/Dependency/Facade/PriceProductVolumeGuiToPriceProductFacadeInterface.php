@@ -37,13 +37,6 @@ interface PriceProductVolumeGuiToPriceProductFacadeInterface
     ): array;
 
     /**
-     * @param array $priceData
-     *
-     * @return string
-     */
-    public function generatePriceDataChecksum(array $priceData): string;
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer

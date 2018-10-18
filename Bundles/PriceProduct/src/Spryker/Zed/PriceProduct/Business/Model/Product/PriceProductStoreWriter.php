@@ -11,11 +11,14 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGeneratorInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter\PriceProductStoreWriterPluginExecutorInterface;
+use Spryker\Zed\PriceProduct\Dependency\Service\PriceProductToUtilEncodingServiceInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
+use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface;
 
 class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 {
@@ -52,12 +55,24 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     protected $priceProductDefaultWriter;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGeneratorInterface
+     */
+    protected $priceDataChecksumGenerator;
+
+    /**
+     * @var \Spryker\Zed\PriceProduct\Dependency\Service\PriceProductToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter\PriceProductStoreWriterPluginExecutorInterface $priceProductStoreWriterPluginExecutor
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $priceProductConfig
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface $priceProductDefaultWriter
+     * @param \Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGeneratorInterface $priceDataChecksumGenerator
+     * @param \Spryker\Zed\PriceProduct\Dependency\Service\PriceProductToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
@@ -65,7 +80,9 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         PriceProductRepositoryInterface $priceProductRepository,
         PriceProductStoreWriterPluginExecutorInterface $priceProductStoreWriterPluginExecutor,
         PriceProductConfig $priceProductConfig,
-        PriceProductDefaultWriterInterface $priceProductDefaultWriter
+        PriceProductDefaultWriterInterface $priceProductDefaultWriter,
+        PriceDataChecksumGeneratorInterface $priceDataChecksumGenerator,
+        PriceProductToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductEntityManager = $priceProductEntityManager;
@@ -73,6 +90,8 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         $this->priceProductStoreWriterPluginExecutor = $priceProductStoreWriterPluginExecutor;
         $this->priceProductConfig = $priceProductConfig;
         $this->priceProductDefaultWriter = $priceProductDefaultWriter;
+        $this->priceDataChecksumGenerator = $priceDataChecksumGenerator;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -90,20 +109,23 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
             ->requireFkCurrency()
             ->requireFkStore();
 
-        $priceProduceStoreEntity = $this->findPriceProductStoreEntity(
+        $priceProductStoreEntity = $this->findPriceProductStoreEntity(
             $priceProductTransfer,
             $moneyValueTransfer
         );
 
-        $priceProduceStoreEntity->fromArray($moneyValueTransfer->toArray());
+        $priceProductStoreEntity->fromArray($moneyValueTransfer->toArray());
 
-        $priceProduceStoreEntity
+        $priceProductStoreEntity
             ->setGrossPrice($moneyValueTransfer->getGrossAmount())
             ->setNetPrice($moneyValueTransfer->getNetAmount())
-            ->setFkPriceProduct($priceProductTransfer->getIdPriceProduct())
-            ->save();
+            ->setFkPriceProduct($priceProductTransfer->getIdPriceProduct());
 
-        $moneyValueTransfer->setIdEntity($priceProduceStoreEntity->getIdPriceProductStore());
+        $priceProductStoreEntity = $this->setPriceDataChecksum($moneyValueTransfer, $priceProductStoreEntity);
+
+        $priceProductStoreEntity->save();
+
+        $moneyValueTransfer->setIdEntity($priceProductStoreEntity->getIdPriceProductStore());
 
         $priceProductTransfer = $this->persistPriceProductDimension($priceProductTransfer);
 
@@ -124,6 +146,21 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
             $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore
+     */
+    protected function setPriceDataChecksum(MoneyValueTransfer $moneyValueTransfer, SpyPriceProductStore $priceProductStoreEntity): SpyPriceProductStore
+    {
+        if (!empty($moneyValueTransfer->getPriceData())) {
+            $priceProductStoreEntity->setPriceDataChecksum($this->generatePriceDataChecksumByPriceData($moneyValueTransfer->getPriceData()));
+        }
+
+        return $priceProductStoreEntity;
     }
 
     /**
@@ -198,5 +235,23 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
             ->filterByGrossPrice($moneyValueTransfer->getGrossAmount())
             ->filterByPriceDataChecksum($moneyValueTransfer->getPriceDataChecksum())
             ->findOneOrCreate();
+    }
+
+    /**
+     * @param string $priceData
+     *
+     * @return string|null
+     */
+    protected function generatePriceDataChecksumByPriceData(string $priceData): ?string
+    {
+        $priceData = $this->utilEncodingService->decodeJson($priceData);
+
+        if (empty($priceData)) {
+            return null;
+        }
+
+        $priceDataArray = get_object_vars($priceData);
+
+        return $this->priceDataChecksumGenerator->generatePriceDataChecksum($priceDataArray);
     }
 }

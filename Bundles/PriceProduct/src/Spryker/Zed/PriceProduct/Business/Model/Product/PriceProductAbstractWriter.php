@@ -36,11 +36,6 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
     protected $priceProductDefaultWriter;
 
     /**
-     * @var array|\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
-     */
-    protected $priceDimensionAbstractSaverPlugins;
-
-    /**
      * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface
      */
     protected $priceProductEntityManager;
@@ -56,30 +51,35 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
     protected $priceProductStoreWriter;
 
     /**
+     * @var array|\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     */
+    protected $priceDimensionAbstractSaverPlugins;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceTypeReader
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface $priceProductDefaultWriter
-     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[] $priceDimensionAbstractSaverPlugins
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface $priceProductStoreWriter
+     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[] $priceDimensionAbstractSaverPlugins
      */
     public function __construct(
         PriceProductTypeReaderInterface $priceTypeReader,
         PriceProductQueryContainerInterface $priceProductQueryContainer,
         PriceProductDefaultWriterInterface $priceProductDefaultWriter,
-        array $priceDimensionAbstractSaverPlugins,
         PriceProductEntityManagerInterface $priceProductEntityManager,
         PriceProductConfig $config,
-        PriceProductStoreWriterInterface $priceProductStoreWriter
+        PriceProductStoreWriterInterface $priceProductStoreWriter,
+        array $priceDimensionAbstractSaverPlugins = []
     ) {
         $this->priceTypeReader = $priceTypeReader;
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductDefaultWriter = $priceProductDefaultWriter;
-        $this->priceDimensionAbstractSaverPlugins = $priceDimensionAbstractSaverPlugins;
         $this->priceProductEntityManager = $priceProductEntityManager;
         $this->config = $config;
         $this->priceProductStoreWriter = $priceProductStoreWriter;
+        $this->priceDimensionAbstractSaverPlugins = $priceDimensionAbstractSaverPlugins;
     }
 
     /**

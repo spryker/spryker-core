@@ -55,7 +55,6 @@ class PriceProductVolumeGuiCommunicationFactory extends AbstractCommunicationFac
     public function createPriceVolumeCollectionDataMapper(): PriceVolumeCollectionDataMapperInterface
     {
         return new PriceVolumeCollectionDataMapper(
-            $this->getPriceProductFacade(),
             $this->getUtilEncodingService(),
             $this->getConfig()
         );

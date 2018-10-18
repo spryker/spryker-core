@@ -53,6 +53,7 @@ use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterfac
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterface;
+use Spryker\Zed\PriceProduct\Dependency\Service\PriceProductToUtilEncodingServiceInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
 
@@ -249,10 +250,10 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->createPriceTypeReader(),
             $this->getQueryContainer(),
             $this->createPriceProductDefaultWriter(),
-            $this->getPriceDimensionAbstractSaverPlugins(),
             $this->getEntityManager(),
             $this->getConfig(),
-            $this->createPriceProductStoreWriter()
+            $this->createPriceProductStoreWriter(),
+            $this->getPriceDimensionAbstractSaverPlugins()
         );
     }
 
@@ -291,7 +292,9 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createPriceProductStoreWriterPluginExecutor(),
             $this->getConfig(),
-            $this->createPriceProductDefaultWriter()
+            $this->createPriceProductDefaultWriter(),
+            $this->createPriceDataChecksumGenerator(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -375,6 +378,14 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductService(): PriceProductServiceInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::SERVICE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Dependency\Service\PriceProductToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): PriceProductToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**

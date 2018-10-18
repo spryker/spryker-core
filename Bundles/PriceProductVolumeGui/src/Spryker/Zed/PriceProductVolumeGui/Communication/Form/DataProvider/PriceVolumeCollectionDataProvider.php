@@ -86,6 +86,8 @@ class PriceVolumeCollectionDataProvider
      */
     public function getData(PriceProductTransfer $priceProductTransfer, int $idProductAbstract, ?int $idProductConcrete): array
     {
+        $data = [];
+
         $data[PriceVolumeCollectionFormType::FIELD_ID_STORE] = $priceProductTransfer->getMoneyValue()->getFkStore();
         $data[PriceVolumeCollectionFormType::FIELD_ID_CURRENCY] = $priceProductTransfer->getMoneyValue()->getFkCurrency();
         $data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_ABSTRACT] = $idProductAbstract;
@@ -113,7 +115,7 @@ class PriceVolumeCollectionDataProvider
         $priceProductCriteriaTransfer = $this->createPriceProductCriteriaTransfer($storeName, $currencyCode, $priceDimension);
         $priceProductTransfers = [];
 
-        if ($idProductConcrete) {
+        if ($idProductConcrete !== null) {
             $priceProductTransfers = $this->priceProductFacade
                 ->findProductConcretePricesWithoutPriceExtraction($idProductConcrete, $idProductAbstract, $priceProductCriteriaTransfer);
         }
@@ -217,8 +219,7 @@ class PriceVolumeCollectionDataProvider
 
         $priceProductDimensionTransfer = $this->createPriceProductDimensionTransfer($priceDimension);
 
-        $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
-        $priceProductCriteriaTransfer
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
             ->setIdCurrency($idCurrency)
             ->setIdStore($idStore)
             ->setPriceType($this->config->getPriceTypeDefaultName())

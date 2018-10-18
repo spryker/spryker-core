@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataMapper;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\PriceVolumeCollectionFormType;
-use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig;
 
@@ -19,11 +18,6 @@ use Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig;
  */
 class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapperInterface
 {
-    /**
-     * @var \Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeInterface
-     */
-    protected $priceProductFacade;
-
     /**
      * @var \Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilEncodingServiceInterface
      */
@@ -35,16 +29,13 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
     protected $config;
 
     /**
-     * @param \Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig $config
      */
     public function __construct(
-        PriceProductVolumeGuiToPriceProductFacadeInterface $priceProductFacade,
         PriceProductVolumeGuiToUtilEncodingServiceInterface $utilEncodingService,
         PriceProductVolumeGuiConfig $config
     ) {
-        $this->priceProductFacade = $priceProductFacade;
         $this->utilEncodingService = $utilEncodingService;
         $this->config = $config;
     }
@@ -62,8 +53,7 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
         $priceProductTransfer->getMoneyValue()
             ->setPriceData($this->utilEncodingService->encodeJson($priceData))
             ->setFkStore($data[PriceVolumeCollectionFormType::FIELD_ID_STORE])
-            ->setFkCurrency($data[PriceVolumeCollectionFormType::FIELD_ID_CURRENCY])
-            ->setPriceDataChecksum($this->priceProductFacade->generatePriceDataChecksum($priceData));
+            ->setFkCurrency($data[PriceVolumeCollectionFormType::FIELD_ID_CURRENCY]);
 
         return $priceProductTransfer;
     }
@@ -88,12 +78,12 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]|null
+     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
      */
-    protected function getPriceProductVolumeItemArray(array $data): ?array
+    protected function getPriceProductVolumeItemArray(array $data): array
     {
         if (!isset($data[PriceVolumeCollectionFormType::FIELD_VOLUMES])) {
-            return null;
+            return [];
         }
 
         $rawPriceProductVolumeItemTransfers = $data[PriceVolumeCollectionFormType::FIELD_VOLUMES];
