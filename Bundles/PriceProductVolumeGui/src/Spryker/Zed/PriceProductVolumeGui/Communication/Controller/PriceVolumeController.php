@@ -120,7 +120,11 @@ class PriceVolumeController extends AbstractController
     {
         $priceVolumeCollectionFormType = $this->getFactory()
             ->getPriceVolumeCollectionFormType(
-                $dataProvider->getData($priceProductTransfer, $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT), $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)),
+                $dataProvider->getData(
+                    $priceProductTransfer,
+                    $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
+                    $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)
+                ),
                 $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
             )->handleRequest($request);
 
@@ -261,7 +265,7 @@ class PriceVolumeController extends AbstractController
     protected function getUrlOptions(string $fragment): array
     {
         return [
-            self::PARAM_URL_FRAGMENT => sprintf(static::PARAM_URL_FRAGMENT_DEFAULT_VALUE, $fragment),
+            static::PARAM_URL_FRAGMENT => sprintf(static::PARAM_URL_FRAGMENT_DEFAULT_VALUE, $fragment),
         ];
     }
 }

@@ -27,6 +27,7 @@ class PriceVolumeFormType extends AbstractType
     protected const FIELD_NET_PRICE = 'net_price';
     protected const FIELD_GROSS_PRICE = 'gross_price';
     protected const MINIMUM_QUANTITY = 2;
+    protected const MINIMUM_PRICE_VALUE = 0;
     protected const MESSAGE_QUANTITY_ERROR = 'The quantity you have entered is invalid.';
 
     /**
@@ -118,7 +119,7 @@ class PriceVolumeFormType extends AbstractType
             'divisor' => $options[PriceVolumeCollectionDataProvider::OPTION_DIVISOR],
             'scale' => $options[PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS],
             'constraints' => [
-                new GreaterThanOrEqual(0),
+                new GreaterThanOrEqual(static::MINIMUM_PRICE_VALUE),
             ],
         ]);
 

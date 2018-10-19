@@ -243,13 +243,11 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
      */
     protected function generatePriceDataChecksumByPriceData(string $priceData): ?string
     {
-        $priceData = $this->utilEncodingService->decodeJson($priceData);
+        $priceDataArray = $this->utilEncodingService->decodeJson($priceData, true);
 
-        if (empty($priceData)) {
+        if (empty($priceDataArray)) {
             return null;
         }
-
-        $priceDataArray = get_object_vars($priceData);
 
         return $this->priceDataChecksumGenerator->generatePriceDataChecksum($priceDataArray);
     }

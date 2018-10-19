@@ -28,6 +28,8 @@ class PriceVolumeCollectionDataProvider
     public const OPTION_DIVISOR = 'divisor';
     public const OPTION_FRACTION_DIGITS = 'fraction_digits';
 
+    protected const VOLUME_PRICES = 'volume_prices';
+
     protected const MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Abstract Id "%d".';
     protected const MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Concrete Id "%d".';
 
@@ -110,8 +112,13 @@ class PriceVolumeCollectionDataProvider
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function getPriceProductTransfer(int $idProductAbstract, ?int $idProductConcrete, string $storeName, string $currencyCode, array $priceDimension): PriceProductTransfer
-    {
+    public function getPriceProductTransfer(
+        int $idProductAbstract,
+        ?int $idProductConcrete,
+        string $storeName,
+        string $currencyCode,
+        array $priceDimension
+    ): PriceProductTransfer {
         $priceProductCriteriaTransfer = $this->createPriceProductCriteriaTransfer($storeName, $currencyCode, $priceDimension);
         $priceProductTransfers = [];
 
@@ -177,14 +184,14 @@ class PriceVolumeCollectionDataProvider
     protected function getPreSavedVolumes(PriceProductTransfer $priceProductTransfer): array
     {
         $priceProductVolumeItemTransfers = [];
-        $preSavedVolumes = $this->utilEncodingService->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData());
-        if (!$preSavedVolumes || !$preSavedVolumes->volume_prices) {
+        $volumePrices = $this->utilEncodingService->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData(), true);
+        if (!$volumePrices || !$volumePrices[static::VOLUME_PRICES]) {
             return $priceProductVolumeItemTransfers;
         }
 
-        foreach ($preSavedVolumes->volume_prices as $preSavedVolume) {
+        foreach ($volumePrices[static::VOLUME_PRICES] as $volumePrice) {
             $priceProductVolumeItemTransfers[] = (new PriceProductVolumeItemTransfer())
-                ->fromArray(get_object_vars($preSavedVolume), true);
+                ->fromArray($volumePrice, true);
         }
 
         return $priceProductVolumeItemTransfers;
