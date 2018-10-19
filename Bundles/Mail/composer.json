@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/glossary": "^3.0.0",
     "spryker/kernel": "^3.0.0",
-    "swiftmailer/swiftmailer": "^6.1"
+    "swiftmailer/swiftmailer": "^5.4.5 || ^6.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
