@@ -15,6 +15,8 @@ interface CheckoutRestApiFacadeInterface
     /**
      * Specification:
      * - Takes QuoteTransfer and returns CheckoutDataTransfer.
+     * - Response will contain the payment and shipment methods
+     * filtered by the provided Quote data (addresses, payment and shipment methods).
      *
      * @api
      *
