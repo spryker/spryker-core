@@ -53,6 +53,7 @@ class EditController extends AbstractController
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
             'idCategory' => $this->castId($request->query->get(CategoryConstants::PARAM_ID_CATEGORY)),
             'localeCollection' => $localeProvider->getLocaleCollection(),
+            'categoryFormEditTabs' => $this->getFactory()->createCategoryFormEditTabs()->createView(),
         ]);
     }
 

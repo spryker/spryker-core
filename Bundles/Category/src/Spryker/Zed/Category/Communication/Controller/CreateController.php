@@ -53,6 +53,7 @@ class CreateController extends AbstractController
             'categoryForm' => $form->createView(),
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
             'localeCollection' => $localeProvider->getLocaleCollection(),
+            'categoryFormCreateTabs' => $this->getFactory()->createCategoryFormAddTabs()->createView(),
         ]);
     }
 
