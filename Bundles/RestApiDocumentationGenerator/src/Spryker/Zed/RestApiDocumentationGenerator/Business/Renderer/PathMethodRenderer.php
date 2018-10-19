@@ -50,10 +50,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
         $methodComponent = new PathMethodSpecificationComponent();
         $methodComponent->setMethod($pathMethodDataTransfer->getMethod());
 
-        $summary = $pathMethodDataTransfer->getSummary();
-        $formattedSummary = $this->getFormattedSummary($summary);
-
-        $methodComponent->setSummary($formattedSummary);
+        $methodComponent->setSummary($this->getFormattedSummary($pathMethodDataTransfer));
         $methodComponent->addTag($pathMethodDataTransfer->getResource());
 
         $this->addResponseComponents($methodComponent, $pathMethodDataTransfer->getResponseSchemas());
@@ -75,13 +72,13 @@ class PathMethodRenderer implements PathMethodRendererInterface
     }
 
     /**
-     * @param string[] $summary
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
      *
      * @return string
      */
-    protected function getFormattedSummary(array $summary): string
+    protected function getFormattedSummary(RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer): string
     {
-        return implode(PHP_EOL, $summary);
+        return implode(PHP_EOL, $pathMethodDataTransfer->getSummary());
     }
 
     /**
