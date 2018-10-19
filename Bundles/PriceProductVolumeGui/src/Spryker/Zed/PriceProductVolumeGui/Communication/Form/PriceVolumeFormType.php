@@ -51,6 +51,8 @@ class PriceVolumeFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE);
+        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_DIVISOR);
+        $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS);
     }
 
     /**
@@ -113,6 +115,8 @@ class PriceVolumeFormType extends AbstractType
             'label' => $label,
             'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
             'required' => false,
+            'divisor' => $options[PriceVolumeCollectionDataProvider::OPTION_DIVISOR],
+            'scale' => $options[PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS],
             'constraints' => [
                 new GreaterThanOrEqual(0),
             ],

@@ -83,6 +83,8 @@ class PriceVolumeCollectionFormType extends AbstractType
                 'data_class' => PriceProductVolumeItemTransfer::class,
                 'constraints' => $this->getVolumesConstraints(),
                 PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
+                PriceVolumeCollectionDataProvider::OPTION_DIVISOR => $options[PriceVolumeCollectionDataProvider::OPTION_DIVISOR],
+                PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS => $options[PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS],
             ],
         ]);
 

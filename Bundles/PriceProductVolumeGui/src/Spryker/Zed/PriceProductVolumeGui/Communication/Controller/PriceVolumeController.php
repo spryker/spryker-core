@@ -180,6 +180,7 @@ class PriceVolumeController extends AbstractController
             static::REQUEST_PARAM_ID_PRODUCT_CONCRETE => $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE),
             static::REQUEST_PARAM_STORE_NAME => $request->get(static::REQUEST_PARAM_STORE_NAME),
             static::REQUEST_PARAM_CURRENCY_CODE => $request->get(static::REQUEST_PARAM_CURRENCY_CODE),
+            static::REQUEST_PARAM_PRICE_DIMENSION => $request->get(static::REQUEST_PARAM_PRICE_DIMENSION, []),
         ];
 
         return $this->generateUrl(static::PRICE_PRODUCT_VOLUME_EDIT_URL, $query);
@@ -211,7 +212,7 @@ class PriceVolumeController extends AbstractController
             static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT => $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
         ];
 
-        return $this->generateUrl(static::PRODUCT_CONCRETE_EDIT_URL, $query, $this->getUrlOptions('price'));
+        return $this->generateUrl(static::PRODUCT_CONCRETE_EDIT_URL, array_merge($query,$this->getDefaultProductExitUrlQuery($request)), $this->getUrlOptions('price'));
     }
 
     /**
@@ -225,7 +226,19 @@ class PriceVolumeController extends AbstractController
             static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT => $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
         ];
 
-        return $this->generateUrl(static::PRODUCT_ABSTRACT_EDIT_URL, $query, $this->getUrlOptions('price_and_tax'));
+        return $this->generateUrl(static::PRODUCT_ABSTRACT_EDIT_URL, array_merge($query,$this->getDefaultProductExitUrlQuery($request)), $this->getUrlOptions('price_and_tax'));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function getDefaultProductExitUrlQuery(Request $request): array
+    {
+        return [
+            static::REQUEST_PARAM_PRICE_DIMENSION => $request->get(static::REQUEST_PARAM_PRICE_DIMENSION, []),
+        ];
     }
 
     /**
