@@ -15,19 +15,9 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
      * Specification:
      * - Queue name as used for processing price messages
      *
-     * @deprecated Use ProductPackagingUnitStorageConfig::PRODUCT_ABSTRACT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE instead.
-     *
      * @api
      */
     public const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
-
-    /**
-     * Specification:
-     * - Queue name as used for processing price messages
-     *
-     * @api
-     */
-    public const PRODUCT_ABSTRACT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:

@@ -57,7 +57,7 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
      */
     public function getQueueName(): string
     {
-        return ProductPackagingUnitStorageConfig::PRODUCT_ABSTRACT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE;
+        return ProductPackagingUnitStorageConfig::PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE;
     }
 
     /**

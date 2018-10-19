@@ -12,7 +12,7 @@ interface ProductPackagingUnitStorageRepositoryInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
      */
     public function findProductAbstractPackagingStorageEntitiesByProductAbstractIds(array $productAbstractIds): array;
 
@@ -24,7 +24,7 @@ interface ProductPackagingUnitStorageRepositoryInterface
     public function findPackagingProductsByProductAbstractId(int $idProductAbstract): array;
 
     /**
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
      */
     public function findAllProductAbstractPackagingStorageEntities(): array;
 }

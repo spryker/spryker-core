@@ -17,7 +17,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
      */
     public function findProductAbstractPackagingStorageEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
@@ -64,19 +64,12 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
      */
     public function findAllProductAbstractPackagingStorageEntities(): array
     {
         $query = $this->getFactory()->createSpyProductAbstractPackagingStorageQuery();
 
-        $productAbstractPackagings = $this->buildQueryFromCriteria($query)->find();
-
-        $result = [];
-        foreach ($productAbstractPackagings as $productAbstractPackaging) {
-            $result[] = $spyProductAbstractProductListStorage;
-        }
-
-        return $result;
+        return $this->buildQueryFromCriteria($query)->find();
     }
 }
