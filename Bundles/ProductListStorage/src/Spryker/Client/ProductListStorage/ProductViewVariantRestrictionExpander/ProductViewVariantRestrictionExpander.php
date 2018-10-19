@@ -113,7 +113,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
             }
 
             [$attributeKey, $attributeValue] = explode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $filteredAttributeVariantKey);
-            $filteredSuperAttributes[$attributeKey][] = $attributeValue;
+            $filteredSuperAttributes[$attributeKey][$attributeValue] = $attributeValue;
         }
 
         return $filteredSuperAttributes;
@@ -176,7 +176,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
                 continue;
             }
 
-            $availableAttributes[$attributeKey] = $availableValues;
+            $availableAttributes[$attributeKey] = $attributeValues;
         }
 
         return $availableAttributes;
@@ -298,7 +298,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
      */
     protected function getAttributeKeyValue(string $attributeKey, string $attributeValue): string
     {
-        return implode(ProductConfig::VARIANT_LEAF_NODE_ID, [
+        return implode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, [
             $attributeKey,
             $attributeValue,
         ]);
