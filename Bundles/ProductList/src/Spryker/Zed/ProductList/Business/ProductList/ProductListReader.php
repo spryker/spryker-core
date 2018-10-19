@@ -60,24 +60,24 @@ class ProductListReader implements ProductListReaderInterface
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return array
      */
-    public function getProductListsIdsByIdProductIn(array $productConcreteIds): array
+    public function getProductListsByProductIds(array $productIds): array
     {
         $concreteToAbstractMap = $this->productListRepository
-            ->findProductAbstractIdsByProductConcreteIds($productConcreteIds);
+            ->getProductAbstractIdsByProductIds($productIds);
 
         $productConcreteLists = $this->mapProductListIdsByIdProductConcreteAndType(
-            $this->productListRepository->getProductListIdsByProductConcreteIdsIn($productConcreteIds)
+            $this->productListRepository->getProductListIdsByProductIds($productIds)
         );
 
-        $productAbstractLists = $this->getProductAbstractListsIdsByIdProductAbstractIn(
+        $productAbstractLists = $this->getProductAbstractListsByProductAbstractIds(
             array_values($concreteToAbstractMap)
         );
 
-        return $this->mergeConcreteAndAbstractLists($productConcreteLists, $productAbstractLists, $concreteToAbstractMap);
+        return $this->mergeProductConcreteAndProductAbstractLists($productConcreteLists, $productAbstractLists, $concreteToAbstractMap);
     }
 
     /**
@@ -87,19 +87,19 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return array
      */
-    protected function mergeConcreteAndAbstractLists(array $productConcreteLists, array $productAbstractLists, array $concreteToAbstractMap): array
+    protected function mergeProductConcreteAndProductAbstractLists(array $productConcreteLists, array $productAbstractLists, array $concreteToAbstractMap): array
     {
-        $mergedLists = [];
+        $mergedProductConcreteAndProductAbstractLists = [];
         foreach ($productConcreteLists as $idProductConcrete => $productConcreteList) {
             $idProductAbstract = $concreteToAbstractMap[$idProductConcrete];
 
-            $mergedLists[$idProductConcrete] = array_merge(
+            $mergedProductConcreteAndProductAbstractLists[$idProductConcrete] = array_merge(
                 $productConcreteList,
                 $productAbstractLists[$idProductAbstract] ?? []
             );
         }
 
-        return $mergedLists;
+        return $mergedProductConcreteAndProductAbstractLists;
     }
 
     /**
@@ -107,7 +107,7 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return array
      */
-    public function getProductAbstractListsIdsByIdProductAbstractIn(array $productAbstractIds): array
+    public function getProductAbstractListsByProductAbstractIds(array $productAbstractIds): array
     {
         $productListIds = $this->filterProductListIds(
             $this->getProductListsByIdProductAbstractIn($productAbstractIds),
@@ -167,7 +167,7 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return array
      */
-    protected function filterProductListIds(array $productListIds, $productConcreteCountByProductAbstractIds): array
+    protected function filterProductListIds(array $productListIds, array $productConcreteCountByProductAbstractIds): array
     {
         return array_filter($productListIds, function (array $item) use ($productConcreteCountByProductAbstractIds) {
             if ($item[ProductListRepository::COL_TYPE] === $this->getWhitelistEnumValue()) {
@@ -211,7 +211,7 @@ class ProductListReader implements ProductListReaderInterface
      */
     protected function getCategoryProductList(array $productAbstractIds): array
     {
-        return $this->productListRepository->getCategoryProductList($productAbstractIds);
+        return $this->productListRepository->getProductListCategory($productAbstractIds);
     }
 
     /**
@@ -231,7 +231,7 @@ class ProductListReader implements ProductListReaderInterface
      */
     protected function getProductListsByIdProductAbstractIn(array $productAbstractIds): array
     {
-        return $this->productListRepository->getProductListsByIdProductAbstractIn($productAbstractIds);
+        return $this->productListRepository->getProductListsByProductAbstractIds($productAbstractIds);
     }
 
     /**

@@ -77,7 +77,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     {
         return $this->getFactory()
             ->createProductListReader()
-            ->getProductAbstractListsIdsByIdProductAbstractIn($productAbstractIds);
+            ->getProductAbstractListsByProductAbstractIds($productAbstractIds);
     }
 
     /**
@@ -93,7 +93,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     {
         return $this->getFactory()
             ->createProductListReader()
-            ->getProductListsIdsByIdProductIn($productConcreteIds);
+            ->getProductListsByProductIds($productConcreteIds);
     }
 
     /**

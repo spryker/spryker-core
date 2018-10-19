@@ -33,7 +33,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
     /**
      * @var array
      */
-    protected $productListsCache = [];
+    protected $productListBuffer = [];
 
     /**
      * @param \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface $productListFacade
@@ -57,7 +57,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     public function publish(array $productAbstractIds): void
     {
-        $this->productListsCache = $this->productListFacade->getProductAbstractListsIdsByIdProductAbstractIn($productAbstractIds);
+        $this->productListBuffer = $this->productListFacade->getProductAbstractListsIdsByIdProductAbstractIn($productAbstractIds);
 
         $productAbstractProductListStorageEntities = $this->findProductAbstractProductListStorageEntities($productAbstractIds);
         $indexedProductAbstractProductListStorageEntities = $this->indexProductAbstractProductListStorageEntities($productAbstractProductListStorageEntities);
@@ -116,7 +116,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     protected function findProductAbstractBlacklistIds(int $idProductAbstract): array
     {
-        return $this->productListsCache[$idProductAbstract][SpyProductListTableMap::COL_TYPE_BLACKLIST] ?? [];
+        return $this->productListBuffer[$idProductAbstract][SpyProductListTableMap::COL_TYPE_BLACKLIST] ?? [];
     }
 
     /**
@@ -126,7 +126,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     protected function findProductAbstractWhitelistIds(int $idProductAbstract): array
     {
-        return $this->productListsCache[$idProductAbstract][SpyProductListTableMap::COL_TYPE_WHITELIST] ?? [];
+        return $this->productListBuffer[$idProductAbstract][SpyProductListTableMap::COL_TYPE_WHITELIST] ?? [];
     }
 
     /**

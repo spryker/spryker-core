@@ -75,7 +75,9 @@ interface ProductListFacadeInterface
     /**
      * Specification:
      *  - Retrieves product lists for product ids and its abstract products.
-     *  - Return format is: [idProduct => [type => [idProductList...]].
+     *  - Returns product list where keys are product concrete IDs, values are arrays with product list ids by type.
+     *
+     * Example [1 => ['blacklist' => [3]].
      *
      * @api
      *

@@ -19,18 +19,18 @@ interface ProductListReaderInterface
     public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return array
      */
-    public function getProductListsIdsByIdProductIn(array $productConcreteIds): array;
+    public function getProductListsByProductIds(array $productIds): array;
 
     /**
      * @param int[] $productAbstractIds
      *
      * @return array
      */
-    public function getProductAbstractListsIdsByIdProductAbstractIn(array $productAbstractIds): array;
+    public function getProductAbstractListsByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @param int $idProductAbstract

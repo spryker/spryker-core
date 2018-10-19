@@ -133,11 +133,11 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
+    public function getProductAbstractIdsByProductIds(array $productIds): array
     {
         /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
         $productQuery = $this->getFactory()
@@ -145,17 +145,17 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_ID_PRODUCT]);
 
         return $productQuery
-            ->filterByIdProduct_In($productConcreteIds)
+            ->filterByIdProduct_In($productIds)
             ->find()
             ->toKeyValue(SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $productIds
      *
      * @return array
      */
-    public function getProductListIdsByProductConcreteIdsIn(array $productConcreteIds): array
+    public function getProductListIdsByProductIds(array $productIds): array
     {
         /** @var \Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery $productListProductConcreteQuery */
         $productListProductConcreteQuery = $this->getFactory()
@@ -168,7 +168,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->withColumn(SpyProductListTableMap::COL_TYPE, static::COL_TYPE);
 
         return $productListProductConcreteQuery
-            ->filterByFkProduct_In($productConcreteIds)
+            ->filterByFkProduct_In($productIds)
             ->innerJoinSpyProductList()
             ->groupByFkProductList()
             ->find()
@@ -378,11 +378,14 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
+     * @module Category
+     * @module ProductCategory
+     *
      * @param int[] $productAbstractIds
      *
      * @return array
      */
-    public function getCategoryProductList(array $productAbstractIds): array
+    public function getProductListCategory(array $productAbstractIds): array
     {
         return $this->getFactory()
             ->createProductListCategoryQuery()
@@ -414,7 +417,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      *
      * @return array
      */
-    public function getProductListsByIdProductAbstractIn(array $productAbstractIds): array
+    public function getProductListsByProductAbstractIds(array $productAbstractIds): array
     {
         return $this->getFactory()
             ->createProductListProductConcreteQuery()
