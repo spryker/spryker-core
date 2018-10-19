@@ -47,10 +47,11 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
      * @api
      *
      * @param string $customerReference
+     * @package int $idStore
      *
-     * @return null|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByCustomerAndStore(string $customerReference, int $idStore): ?QuoteTransfer
+    public function findQuoteByCustomerReferenceAndIdStore(string $customerReference, int $idStore): ?QuoteTransfer
     {
         $quoteQuery = $this->getFactory()->createQuoteQuery()
             ->filterByFkStore($idStore)
