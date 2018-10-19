@@ -281,5 +281,4 @@ $(document).ready(function() {
                 hidden.val(inputValue);
         });
     });
-
 });

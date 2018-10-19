@@ -1,5 +1,6 @@
 {
   "name": "spryker/rest-api-documentation-generator-extension",
+  "type": "library",
   "description": "RestApiDocumentationGeneratorExtension module",
   "license": "proprietary",
   "require": {
