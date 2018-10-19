@@ -35,12 +35,4 @@ interface CategoryRepositoryInterface
      * @return bool
      */
     public function checkSameLevelCategoryByNameExists(string $nodeName, CategoryTransfer $categoryTransfer): bool;
-
-    /**
-     * @param int[] $idsCategory
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
-    public function getCategoryTransferCollectionByCategoryIds(array $idsCategory, int $idLocale): CategoryCollectionTransfer;
 }

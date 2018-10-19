@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\ProductCategory\Persistence\Mapper;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface CategoryMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $spyProductCategoryCollection
+     * @param \Orm\Zed\Category\Persistence\SpyCategory[]|\Propel\Runtime\Collection\ObjectCollection $categoryEntities
+     * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
      *
-     * @return int[]
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getIdsCategoryList(ObjectCollection $spyProductCategoryCollection): array;
+    public function mapCategoryCollection(ObjectCollection $categoryEntities, CategoryCollectionTransfer $categoryCollectionTransfer): CategoryCollectionTransfer;
 }

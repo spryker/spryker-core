@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
-use Generated\Shared\Transfer\CategoryCollectionTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
-
 class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterface
 {
     /**
@@ -33,16 +30,5 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     public function touchCategoryActive($idCategory)
     {
         $this->categoryFacade->touchCategoryActive($idCategory);
-    }
-
-    /**
-     * @param int[] $idsCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
-    public function getCategoryTransferCollectionByCategoryIds(array $idsCategory, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
-    {
-        return $this->categoryFacade->getCategoryTransferCollectionByCategoryIds($idsCategory, $localeTransfer);
     }
 }

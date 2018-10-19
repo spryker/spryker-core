@@ -503,18 +503,4 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Returns all categories by their IDs.
-     * - The data of the returned categories are localized based on the given locale transfer.
-     *
-     * @api
-     *
-     * @param int[] $idsCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
-    public function getCategoryTransferCollectionByCategoryIds(array $idsCategory, LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 }

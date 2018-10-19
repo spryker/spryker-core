@@ -7,22 +7,70 @@
 
 namespace Spryker\Zed\ProductCategory\Persistence\Mapper;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Category\Persistence\SpyCategory;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class CategoryMapper implements CategoryMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $spyProductCategoryCollection
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $spyCategory
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return int[]
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function getIdsCategoryList(ObjectCollection $spyProductCategoryCollection): array
+    protected function mapCategory(SpyCategory $spyCategory, CategoryTransfer $categoryTransfer): CategoryTransfer
     {
-        $idsCategory = [];
-        /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategory $spyProductCategory */
-        foreach ($spyProductCategoryCollection as $spyProductCategory) {
-            $idsCategory[] = $spyProductCategory->getFkCategory();
+        return $categoryTransfer->fromArray($spyCategory->toArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function mapLocalizedAttributes(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer): void
+    {
+        foreach ($categoryEntity->getAttributes() as $attribute) {
+            $localeTransfer = new LocaleTransfer();
+            $localeTransfer->fromArray($attribute->getLocale()->toArray(), true);
+
+            $categoryLocalizedAttributesTransfer = new CategoryLocalizedAttributesTransfer();
+            $categoryLocalizedAttributesTransfer->fromArray($attribute->toArray(), true);
+            $categoryLocalizedAttributesTransfer->setLocale($localeTransfer);
+
+            $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
         }
-        return $idsCategory;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]|\Propel\Runtime\Collection\ObjectCollection $productCategoryEntities
+     * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function mapCategoryCollection(ObjectCollection $productCategoryEntities, CategoryCollectionTransfer $categoryCollectionTransfer): CategoryCollectionTransfer
+    {
+        /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategory $productCategoryEntity */
+        foreach ($productCategoryEntities as $productCategoryEntity) {
+            $categoryEntity = $productCategoryEntity->getSpyCategory();
+            if ($categoryEntity === null) {
+                continue;
+            }
+            $categoryTransfer = $this->mapCategory($categoryEntity, new CategoryTransfer());
+            $this->mapLocalizedAttributes($categoryEntity, $categoryTransfer);
+
+            foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttribute) {
+                $categoryTransfer->fromArray($localizedAttribute->toArray(), true);
+            }
+
+            $categoryCollectionTransfer->addCategory($categoryTransfer);
+        }
+
+        return $categoryCollectionTransfer;
     }
 }

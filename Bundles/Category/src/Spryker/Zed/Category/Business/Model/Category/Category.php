@@ -143,16 +143,4 @@ class Category implements CategoryInterface
 
         return $categoryCollectionTransfer;
     }
-
-    /**
-     * @param int[] $idsCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
-    public function getCategoryTransferCollectionByCategoryIds(array $idsCategory, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
-    {
-        return $this->categoryRepository
-            ->getCategoryTransferCollectionByCategoryIds($idsCategory, $localeTransfer->getIdLocale());
-    }
 }

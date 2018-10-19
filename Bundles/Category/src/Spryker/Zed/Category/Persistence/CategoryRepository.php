@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -116,49 +114,5 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->endUse()
             ->endUse()
             ->exists();
-    }
-
-    /**
-     * @param int[] $idsCategory
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
-    public function getCategoryTransferCollectionByCategoryIds(array $idsCategory, int $idLocale): CategoryCollectionTransfer
-    {
-        $spyCategoryCollection = $this->queryCategoryCollectionByCategoryIds($idsCategory, $idLocale)->find();
-
-        return $this->getFactory()
-            ->createCategoryMapper()
-            ->mapCategoryCollection($spyCategoryCollection, new CategoryCollectionTransfer());
-    }
-
-    /**
-     * @param int[] $idsCategory
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
-     */
-    protected function queryCategoryCollectionByCategoryIds(array $idsCategory, int $idLocale): SpyCategoryQuery
-    {
-        return $this->getFactory()->createCategoryQuery()
-            ->joinAttribute()
-            ->innerJoinNode()
-            ->addAnd(
-                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-                $idLocale,
-                Criteria::EQUAL
-            )
-            ->addAnd(
-                SpyCategoryTableMap::COL_ID_CATEGORY,
-                $idsCategory,
-                Criteria::IN
-            )
-            ->withColumn(SpyCategoryTableMap::COL_ID_CATEGORY, 'id_category')
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
-            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'category_key')
-            ->withColumn(SpyCategoryTableMap::COL_IS_ACTIVE, 'is_active')
-            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
-            ->addAscendingOrderByColumn(SpyCategoryAttributeTableMap::COL_NAME);
     }
 }

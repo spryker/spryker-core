@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductCategory\Persistence;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -17,30 +19,49 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductCategoryRepository extends AbstractRepository implements ProductCategoryRepositoryInterface
 {
+    protected const TABLE_JOIN_CATEGORY = 'Category';
+
     /**
      * @param int $idProductAbstract
+     * @param int $idLocale
      *
-     * @return int[]
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function findCategoryIdsByIdProductAbstract(int $idProductAbstract): array
+    public function getCategoryTransferCollectionByIdProductAbstract(int $idProductAbstract, int $idLocale): CategoryCollectionTransfer
     {
-        $spyProductCategoryCollection = $this->queryCategoriesByIdProductAbstract($idProductAbstract)->find();
+        $spyCategoryCollection = $this->queryCategoriesByIdProductAbstract($idProductAbstract, $idLocale)->find();
 
-        return $this->getFactory()->createCategoryMapper()->getIdsCategoryList($spyProductCategoryCollection);
+        return $this->getFactory()
+            ->createCategoryMapper()
+            ->mapCategoryCollection($spyCategoryCollection, new CategoryCollectionTransfer());
     }
 
     /**
      * @param int $idProductAbstract
+     * @param int $idLocale
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
-    protected function queryCategoriesByIdProductAbstract(int $idProductAbstract): SpyProductCategoryQuery
+    protected function queryCategoriesByIdProductAbstract(int $idProductAbstract, int $idLocale): SpyProductCategoryQuery
     {
         return $this->getFactory()->createProductCategoryQuery()
+            ->innerJoinWithSpyCategory()
+            ->useSpyCategoryQuery()
+            ->joinAttribute()
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
+            ->addAnd(
+                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+                $idLocale,
+                Criteria::EQUAL
+            )
+            ->addAscendingOrderByColumn(SpyCategoryAttributeTableMap::COL_NAME)
+            ->endUse()
             ->addAnd(
                 SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
                 $idProductAbstract,
                 Criteria::EQUAL
-            );
+            )
+            ->groupByFkCategory()
+            ->groupBy(SpyCategoryAttributeTableMap::COL_NAME);
     }
 }

@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\ProductCategory\Persistence;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
+
 interface ProductCategoryRepositoryInterface
 {
     /**
      * @param int $idProductAbstract
+     * @param int $idLocale
      *
-     * @return int[]
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function findCategoryIdsByIdProductAbstract(int $idProductAbstract): array;
+    public function getCategoryTransferCollectionByIdProductAbstract(int $idProductAbstract, int $idLocale): CategoryCollectionTransfer;
 }

@@ -15,7 +15,7 @@ use Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface;
 class CategoryReader implements CategoryReaderInterface
 {
     /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
+     * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface
      */
     protected $categoryRepository;
 
@@ -44,8 +44,6 @@ class CategoryReader implements CategoryReaderInterface
      */
     public function getCategoryTransferCollectionByIdProductAbstract(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
-        $idsCategory = $this->categoryRepository->findCategoryIdsByIdProductAbstract($idProductAbstract);
-
-        return $this->categoryFacade->getCategoryTransferCollectionByCategoryIds($idsCategory, $localeTransfer);
+        return $this->categoryRepository->getCategoryTransferCollectionByIdProductAbstract($idProductAbstract, $localeTransfer->getIdLocale());
     }
 }
