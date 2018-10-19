@@ -27,7 +27,7 @@ interface CategoryImageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageTransfer
      */
-    public function saveProductImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer;
+    public function saveCategoryImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer;
 
     /**
      * Specification:

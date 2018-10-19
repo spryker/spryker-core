@@ -28,7 +28,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
      *
      * @return \Generated\Shared\Transfer\CategoryImageTransfer
      */
-    public function saveProductImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer
+    public function saveCategoryImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer
     {
         return $this->getFactory()
             ->createCategoryImageWriter()
