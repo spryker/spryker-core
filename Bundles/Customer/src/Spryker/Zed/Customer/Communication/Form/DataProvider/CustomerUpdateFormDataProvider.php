@@ -28,6 +28,10 @@ class CustomerUpdateFormDataProvider extends CustomerFormDataProvider
             ->queryCustomerById($idCustomer)
             ->findOne();
 
+        if ($customerEntity === null) {
+            return [];
+        }
+
         $data = $customerEntity->toArray();
         $data[CustomerForm::FIELD_LOCALE] = $customerEntity->getLocale();
 

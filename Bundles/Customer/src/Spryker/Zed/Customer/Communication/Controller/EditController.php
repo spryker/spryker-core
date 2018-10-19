@@ -32,9 +32,17 @@ class EditController extends AbstractController
         $idCustomer = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
         $dataProvider = $this->getFactory()->createCustomerUpdateFormDataProvider();
+        $formData = $dataProvider->getData($idCustomer);
+
+        if ($formData === []) {
+            $this->addErrorMessage(sprintf('Customer with id %s doesn\'t exist', $idCustomer));
+
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
+        }
+
         $form = $this->getFactory()
             ->createCustomerUpdateForm(
-                $dataProvider->getData($idCustomer),
+                $formData,
                 $dataProvider->getOptions($idCustomer)
             )
             ->handleRequest($request);

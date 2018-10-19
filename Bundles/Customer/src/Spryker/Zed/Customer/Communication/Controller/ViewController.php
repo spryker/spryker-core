@@ -36,7 +36,13 @@ class ViewController extends AbstractController
 
         $idCustomer = $this->castId($idCustomer);
 
-        $customerTransfer = $this->loadCustomerTransfer($idCustomer);
+        $customerTransfer = $this->findCustomer($idCustomer);
+
+        if ($customerTransfer === null) {
+            $this->addErrorMessage(sprintf('Customer with id %s doesn\'t exist', $idCustomer));
+
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
+        }
 
         $addressTable = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
@@ -90,6 +96,8 @@ class ViewController extends AbstractController
     }
 
     /**
+     * @deprecated use `findCustomer()` instead.
+     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -144,5 +152,18 @@ class ViewController extends AbstractController
         }
 
         return $blockResponse->getContent();
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function findCustomer(int $idCustomer): ?CustomerTransfer
+    {
+        $customerTransfer = $this->createCustomerTransfer();
+        $customerTransfer->setIdCustomer($idCustomer);
+
+        return $this->getFacade()->findCustomerById($customerTransfer);
     }
 }

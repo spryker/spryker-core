@@ -18,6 +18,8 @@ class CustomerConfig extends AbstractBundleConfig
     public const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
     public const ERROR_CODE_CUSTOMER_INVALID_EMAIL = 4002;
 
+    public const REDIRECT_URL_DEFAULT = '/customer';
+
     /**
      * @return string
      */
@@ -86,5 +88,13 @@ class CustomerConfig extends AbstractBundleConfig
     public function getCustomerDetailExternalBlocksUrls()
     {
         return [];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultRedirectUrl(): string
+    {
+        return static::REDIRECT_URL_DEFAULT;
     }
 }
