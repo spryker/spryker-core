@@ -65,7 +65,7 @@ class CartsResourceController extends AbstractController
      *              "Accept-Language"
      *          ],
      *          "responses": {
-     *              "500": "Can not create a cart"
+     *              "500": "Can not create a cart."
      *          }
      *     }
      * })
@@ -90,7 +90,7 @@ class CartsResourceController extends AbstractController
      *              "Accept-Language"
      *          ],
      *          "responses": {
-     *              "500": "Can not delete a cart"
+     *              "500": "Can not delete a cart."
      *          }
      *     }
      * })

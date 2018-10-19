@@ -25,7 +25,7 @@ class CatalogSearchResourceController extends AbstractController
      *              "Accept-Language"
      *          ],
      *          "responses": {
-     *              "400": "Invalid currency"
+     *              "400": "Invalid currency."
      *          }
      *     }
      * })

@@ -26,7 +26,7 @@ class RefreshTokensResourceController extends AbstractController
      *              "Accept-Language"
      *          ],
      *          "responses": {
-     *              "401": "Failed to authenticate user"
+     *              "401": "Failed to authenticate user."
      *          }
      *     }
      * })

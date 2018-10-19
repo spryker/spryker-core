@@ -27,7 +27,7 @@ class WishlistsResourceController extends AbstractController
      *              "Accept-Language"
      *          ],
      *          "responses": {
-     *              "404": "Wishlist was not found"
+     *              "404": "Wishlist was not found."
      *          }
      *     },
      *     "getCollection": {

@@ -27,8 +27,8 @@ class AccessTokensResourceController extends AbstractController
      *              "Accept-Language"
      *          ],
      *          "responses": {
-     *              "401": "Failed to authenticate user",
-     *              "403": "Unauthorized request"
+     *              "401": "Failed to authenticate user.",
+     *              "403": "Unauthorized request."
      *          }
      *     }
      * })
