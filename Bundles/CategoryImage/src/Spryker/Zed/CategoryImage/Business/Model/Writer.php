@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\CategoryImage\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryImageTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImage;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage;
+use Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -31,15 +33,23 @@ class Writer implements WriterInterface
     protected $categoryImageEntityManager;
 
     /**
+     * @var \Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface $categoryImageRepository
      * @param \Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface $categoryImageEntityManager
+     * @param \Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface $localeFacade
      */
     public function __construct(
         CategoryImageRepositoryInterface $categoryImageRepository,
-        CategoryImageEntityManagerInterface $categoryImageEntityManager
+        CategoryImageEntityManagerInterface $categoryImageEntityManager,
+        CategoryImageToLocaleInterface $localeFacade
     ) {
         $this->categoryImageRepository = $categoryImageRepository;
         $this->categoryImageEntityManager = $categoryImageEntityManager;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -203,7 +213,7 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */
-    public function createCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer
+    public function createCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer)
     {
         return $this->saveCategoryImageSet($categoryImageSetTransfer);
     }
@@ -213,7 +223,7 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */
-    public function updateCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer
+    public function updateCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer)
     {
         return $this->saveCategoryImageSet($categoryImageSetTransfer);
     }
@@ -324,6 +334,8 @@ class Writer implements WriterInterface
      */
     public function createCategoryImageSetCollection(CategoryTransfer $categoryTransfer)
     {
+        $categoryTransfer = $this->addLocalizedImageSetsToCategoryTransfer($categoryTransfer);
+
         foreach ($categoryTransfer->getImageSets() as $imageSetTransfer) {
             $imageSetTransfer->setIdCategory(
                 $categoryTransfer
@@ -342,8 +354,41 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
+    protected function addLocalizedImageSetsToCategoryTransfer(CategoryTransfer $categoryTransfer): CategoryTransfer
+    {
+        $categoryTransfer->setImageSets(new ArrayObject());
+        $imageSets = $categoryTransfer->getImageSetsDefault();
+        foreach ($imageSets as $imageSet) {
+            $imageSetTransfer = new CategoryImageSetTransfer();
+            $imageSetTransfer->fromArray($imageSet, true);
+            $categoryTransfer->addImageSet($imageSetTransfer);
+        }
+
+        $localeCollection = $this->localeFacade->getLocaleCollection();
+        foreach ($localeCollection as $localeTransfer) {
+            $localeName = ucwords($localeTransfer->getLocaleName());
+            $localeName = str_replace('_', '', $localeName);
+            $imageSets = $categoryTransfer->{'getImageSets' . $localeName}();
+            foreach ($imageSets as $imageSet) {
+                $imageSetTransfer = new CategoryImageSetTransfer();
+                $imageSetTransfer->fromArray($imageSet, true);
+                $imageSetTransfer->setLocale($localeTransfer);
+                $categoryTransfer->addImageSet($imageSetTransfer);
+            }
+        }
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
     public function updateCategoryImageSetCollection(CategoryTransfer $categoryTransfer)
     {
+        $categoryTransfer = $this->addLocalizedImageSetsToCategoryTransfer($categoryTransfer);
+
         foreach ($categoryTransfer->getImageSets() as $imageSetTransfer) {
             $imageSetTransfer->setIdCategory(
                 $categoryTransfer

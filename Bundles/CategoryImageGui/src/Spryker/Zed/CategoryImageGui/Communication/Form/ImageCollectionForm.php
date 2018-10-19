@@ -22,7 +22,7 @@ class ImageCollectionForm extends AbstractType
     public const FIELD_IMAGE_LARGE = 'external_url_large';
     public const FIELD_SORT_ORDER = 'sort_order';
     public const FIELD_IMAGE_PREVIEW = 'image_preview';
-    public const FIELD_IMAGE_PREVIEW_LARGE_URL = 'image_preview_large_url';
+    public const FIELD_IMAGE_PREVIEW_LARGE_URL = 'imagePreviewLargeUrl';
     public const FIELD_FK_IMAGE_SET_ID = 'fk_image_set_id';
 
     public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';

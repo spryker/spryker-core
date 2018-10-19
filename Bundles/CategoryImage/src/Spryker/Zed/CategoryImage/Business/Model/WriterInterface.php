@@ -46,14 +46,14 @@ interface WriterInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */
-    public function createCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer;
+    public function createCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */
-    public function updateCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer;
+    public function updateCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer

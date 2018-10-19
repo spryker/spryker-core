@@ -17,11 +17,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CategoryImageEntityManager extends AbstractEntityManager implements CategoryImageEntityManagerInterface
 {
     /**
-     * @param int $idCategoryImage
+     * @param int|null $idCategoryImage
      *
      * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImage
      */
-    public function findOrCreateCategoryImageById(int $idCategoryImage): SpyCategoryImage
+    public function findOrCreateCategoryImageById(?int $idCategoryImage): SpyCategoryImage
     {
         return $this->getFactory()
             ->createCategoryImageQuery()
@@ -30,11 +30,11 @@ class CategoryImageEntityManager extends AbstractEntityManager implements Catego
     }
 
     /**
-     * @param int $idCategoryImageSet
+     * @param int|null $idCategoryImageSet
      *
      * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet
      */
-    public function findOrCreateCategoryImageSetById(int $idCategoryImageSet): SpyCategoryImageSet
+    public function findOrCreateCategoryImageSetById(?int $idCategoryImageSet): SpyCategoryImageSet
     {
         return $this->getFactory()
             ->createCategoryImageSetQuery()

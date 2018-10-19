@@ -24,9 +24,9 @@
 
             {{ form_start(categoryForm) }}
                 {% do categoryForm.localized_attributes.setRendered %}
-            {% do categoryForm.imageSets_default.setRendered %}
-            {% do categoryForm.imageSets_en_US.setRendered %}
-            {% do categoryForm.imageSets_de_DE.setRendered %}
+                {% do categoryForm.imageSets_default.setRendered %}
+                {% do categoryForm.imageSets_en_US.setRendered %}
+                {% do categoryForm.imageSets_de_DE.setRendered %}
                 {{ form_widget(categoryForm) }}
                 <hr />
                 <p><strong>{{ 'Translations' | trans }}</strong></p>

@@ -29,6 +29,7 @@ class CreateController extends AbstractController
     public function indexAction(Request $request)
     {
         $this->getFacade()->syncCategoryTemplate();
+        $localeProvider = $this->getFactory()->createLocaleProvider();
 
         $idParentNode = $this->readParentNodeId($request);
         $form = $this->getFactory()->createCategoryCreateForm($idParentNode);
@@ -51,6 +52,7 @@ class CreateController extends AbstractController
         return $this->viewResponse([
             'categoryForm' => $form->createView(),
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
+            'localeCollection' => $localeProvider->getLocaleCollection(),
         ]);
     }
 

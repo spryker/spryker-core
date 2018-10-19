@@ -38,10 +38,6 @@ class ImageSetForm extends AbstractType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefaults([
-            'required' => false,
-        ]);
-
         $validationGroups = [
             Constraint::DEFAULT_GROUP,
             self::VALIDATION_GROUP_IMAGE_COLLECTION,

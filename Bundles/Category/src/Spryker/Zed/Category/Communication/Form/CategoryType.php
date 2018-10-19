@@ -46,6 +46,12 @@ class CategoryType extends AbstractType
 
     public const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
+    public const FORM_IMAGE_SET = 'image_set';
+
+    public const IMAGES_FORM_NAME = 'imageSets';
+
+    public const DEFAULT_LOCALE = 'default';
+
     /**
      * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]
      */

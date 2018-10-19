@@ -1,17 +1,18 @@
 {
-  "name": "spryker/category-image-gui",
+  "name": "spryker/category-image-storage",
   "type": "library",
-  "description": "CategoryImageGui module",
+  "description": "CategoryImageStorage module",
   "license": "proprietary",
   "require": {
-    "spryker/category-extension": "*",
-    "spryker/gui": "*",
+    "spryker/category": "*",
+    "spryker/category-image": "*",
+    "spryker/event-behavior": "*",
     "spryker/kernel": "*",
-    "spryker/locale": "*",
-    "spryker/symfony": "*"
+    "spryker/propel-orm": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/event": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -33,5 +34,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/event": "ADD SUGGEST DESCRIPTION"
   }
 }

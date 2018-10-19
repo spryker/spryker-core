@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\CategoryImage\Business\Transfer\CategoryImageTransferMapperInterface;
+use Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface;
 
 class Reader implements ReaderInterface
@@ -26,15 +27,23 @@ class Reader implements ReaderInterface
     protected $transferMapper;
 
     /**
+     * @var \Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface $categoryImageRepository
      * @param \Spryker\Zed\CategoryImage\Business\Transfer\CategoryImageTransferMapperInterface $categoryImageTransferMapper
+     * @param \Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface $localeFacade
      */
     public function __construct(
         CategoryImageRepositoryInterface $categoryImageRepository,
-        CategoryImageTransferMapperInterface $categoryImageTransferMapper
+        CategoryImageTransferMapperInterface $categoryImageTransferMapper,
+        CategoryImageToLocaleInterface $localeFacade
     ) {
         $this->categoryImageRepository = $categoryImageRepository;
         $this->transferMapper = $categoryImageTransferMapper;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -83,6 +92,21 @@ class Reader implements ReaderInterface
         }
 
         $categoryTransfer->setImageSets(new ArrayObject($imageSetCollection));
+
+        foreach ($categoryTransfer->getImageSets() as $imageSet) {
+            if ($imageSet->getLocale() === null) {
+                $categoryTransfer->addImageSetDefault($imageSet->toArray());
+                continue;
+            }
+            $localeCollection = $this->localeFacade->getLocaleCollection();
+            foreach ($localeCollection as $localeTransfer) {
+                if ($localeTransfer->getLocaleName() === $imageSet->getLocale()->getLocaleName()) {
+                    $localeName = ucwords($localeTransfer->getLocaleName());
+                    $localeName = str_replace('_', '', $localeName);
+                    $categoryTransfer->{'addImageSet' . $localeName}($imageSet->toArray());
+                }
+            }
+        }
 
         return $categoryTransfer;
     }

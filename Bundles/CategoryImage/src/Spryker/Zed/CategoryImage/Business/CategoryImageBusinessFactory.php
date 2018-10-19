@@ -31,7 +31,8 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     {
         return new Reader(
             $this->getRepository(),
-            $this->createTransferGenerator()
+            $this->createTransferGenerator(),
+            $this->getLocaleFacade()
         );
     }
 
@@ -60,7 +61,8 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     {
         return new Writer(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getLocaleFacade()
         );
     }
 
