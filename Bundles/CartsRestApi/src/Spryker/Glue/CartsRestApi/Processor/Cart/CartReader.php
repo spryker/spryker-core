@@ -66,7 +66,7 @@ class CartReader implements CartReaderInterface
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
                 ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_NOT_FOUND, $uuidQuote));
+                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_NOT_FOUND);
 
             return $restResponse->addError($restErrorTransfer);
         }

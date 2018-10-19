@@ -104,7 +104,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
 
         $quoteResponseTransfer = $this->guestCartReader->getQuoteTransferByUuid($parentResource->getId(), $restRequest);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->guestCartRestResponseBuilder->createGuestCartNotFoundErrorRestResponse($parentResource->getId());
+            return $this->guestCartRestResponseBuilder->createGuestCartNotFoundErrorRestResponse();
         }
 
         return $this->addItemToQuote($quoteResponseTransfer->getQuoteTransfer(), $restCartItemsAttributesTransfer);
