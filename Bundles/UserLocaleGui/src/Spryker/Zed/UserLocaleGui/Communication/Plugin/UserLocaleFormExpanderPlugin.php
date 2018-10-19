@@ -28,7 +28,7 @@ class UserLocaleFormExpanderPlugin extends AbstractPlugin implements UserFormExp
     public function buildForm(FormBuilderInterface $builder): void
     {
         $this->getFactory()
-        ->createUserLocaleFormExpander()
-        ->buildForm($builder);
+            ->createUserLocaleFormExpander()
+            ->buildForm($builder);
     }
 }
