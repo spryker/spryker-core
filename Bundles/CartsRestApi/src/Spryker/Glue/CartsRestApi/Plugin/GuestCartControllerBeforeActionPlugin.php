@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CartsRestApi\Plugin;
 
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -30,18 +29,8 @@ class GuestCartControllerBeforeActionPlugin extends AbstractPlugin implements Co
      */
     public function beforeAction(string $action, RestRequestInterface $restRequest): void
     {
-        if ($restRequest->getUser()) {
-            return;
-        }
-
-        $customerReference = $restRequest->getHttpRequest()->headers->get(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID);
-        if (empty($customerReference)) {
-            return;
-        }
-
-        $customerReference = $this->getFactory()
-            ->getPersistentCartClient()
-            ->generateGuestCartCustomerReference($customerReference);
-        $restRequest->setUser('', $customerReference);
+        $this->getFactory()
+            ->createRestRequestUpdater()
+            ->updateRestRequestWithAnonymousCustomerId($restRequest);
     }
 }
