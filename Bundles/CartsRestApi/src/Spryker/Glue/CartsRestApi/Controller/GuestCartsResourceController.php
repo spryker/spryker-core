@@ -23,6 +23,12 @@ class GuestCartsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $idQuote = $restRequest->getResource()->getId();
+
+        if ($idQuote !== null) {
+            return $this->getFactory()->createCartReader()->readByIdentifier($idQuote, $restRequest);
+        }
+
         return $this->getFactory()->createGuestCartReader()->readCurrentCustomerCarts($restRequest);
     }
 }
