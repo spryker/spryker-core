@@ -119,5 +119,5 @@ interface QuoteFacadeInterface
      *
      * @return void
      */
-    public function cleanExpiredGuestCart(): void;
+    public function deleteExpiredGuestCart(): void;
 }

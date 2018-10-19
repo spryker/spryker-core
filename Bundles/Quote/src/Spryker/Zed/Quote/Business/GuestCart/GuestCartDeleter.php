@@ -12,7 +12,7 @@ use DateTime;
 use Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface;
 use Spryker\Zed\Quote\QuoteConfig;
 
-class GuestCartCleaner implements GuestCartCleanerInterface
+class GuestCartDeleter implements GuestCartDeleterInterface
 {
     /**
      * @var \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface
@@ -43,6 +43,6 @@ class GuestCartCleaner implements GuestCartCleanerInterface
         $lifetimeInterval = new DateInterval($lifetime);
         $lifetimeLimitDate = (new DateTime())->sub($lifetimeInterval);
 
-        $this->entityManager->cleanExpiredGuestCart($lifetimeLimitDate);
+        $this->entityManager->deleteExpiredGuestCart($lifetimeLimitDate);
     }
 }

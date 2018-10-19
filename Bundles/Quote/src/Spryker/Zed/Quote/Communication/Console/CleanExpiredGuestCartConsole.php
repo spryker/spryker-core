@@ -37,6 +37,6 @@ class CleanExpiredGuestCartConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $this->getFacade()->cleanExpiredGuestCart();
+        $this->getFacade()->deleteExpiredGuestCart();
     }
 }

@@ -46,10 +46,10 @@ class GuestCartCleanerTest extends Unit
         $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
-        $this->tester->setConfig(QuoteConstants::GUEST_CART_LIFETIME, static::CONFIG_LIFETIME_ONE_SECOND);
+        $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_SECOND);
         sleep(1);
 
-        $this->tester->getFacade()->cleanExpiredGuestCart();
+        $this->tester->getFacade()->deleteExpiredGuestCart();
         $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
         $this->assertNull($findQuoteResponseTransfer->getQuoteTransfer(), static::MESSAGE_SHOULD_BE_DELETED);
     }
@@ -65,9 +65,9 @@ class GuestCartCleanerTest extends Unit
         $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
-        $this->tester->setConfig(QuoteConstants::GUEST_CART_LIFETIME, static::CONFIG_LIFETIME_ONE_HOUR);
+        $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_HOUR);
 
-        $this->tester->getFacade()->cleanExpiredGuestCart();
+        $this->tester->getFacade()->deleteExpiredGuestCart();
         $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
         $this->assertNotNull($findQuoteResponseTransfer->getQuoteTransfer(), static::MESSAGE_SHOULD_NOT_BE_DELETED);
     }

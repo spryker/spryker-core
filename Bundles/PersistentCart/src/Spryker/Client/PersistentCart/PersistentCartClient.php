@@ -70,6 +70,8 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
      */
     public function generateGuestCartCustomerReference(string $customerReference): string
     {
-        return $this->getFactory()->createGuestCartCustomerReferenceGenerator()->generateGuestCartCustomerReference($customerReference);
+        return $this->getFactory()
+            ->createGuestCartCustomerReferenceGenerator()
+            ->generateGuestCartCustomerReference($customerReference);
     }
 }

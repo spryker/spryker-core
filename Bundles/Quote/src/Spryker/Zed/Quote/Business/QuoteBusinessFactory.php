@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Quote\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Quote\Business\GuestCart\GuestCartCleaner;
-use Spryker\Zed\Quote\Business\GuestCart\GuestCartCleanerInterface;
+use Spryker\Zed\Quote\Business\GuestCart\GuestCartDeleter;
+use Spryker\Zed\Quote\Business\GuestCart\GuestCartDeleterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteDeleter;
 use Spryker\Zed\Quote\Business\Model\QuoteDeleterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteReader;
@@ -78,11 +78,11 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Business\GuestCart\GuestCartCleanerInterface
+     * @return \Spryker\Zed\Quote\Business\GuestCart\GuestCartDeleterInterface
      */
-    public function createGuestCartCleaner(): GuestCartCleanerInterface
+    public function createGuestCartDeleter(): GuestCartDeleterInterface
     {
-        return new GuestCartCleaner(
+        return new GuestCartDeleter(
             $this->getEntityManager(),
             $this->getConfig()
         );

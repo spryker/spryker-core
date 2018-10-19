@@ -139,8 +139,8 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
      *
      * @return void
      */
-    public function cleanExpiredGuestCart(): void
+    public function deleteExpiredGuestCart(): void
     {
-        $this->getFactory()->createGuestCartCleaner()->cleanExpiredGuestCart();
+        $this->getFactory()->createGuestCartDeleter()->cleanExpiredGuestCart();
     }
 }

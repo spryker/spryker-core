@@ -31,5 +31,5 @@ interface QuoteEntityManagerInterface
      *
      * @return void
      */
-    public function cleanExpiredGuestCart(DateTime $lifetimeLimitDate): void;
+    public function deleteExpiredGuestCart(DateTime $lifetimeLimitDate): void;
 }

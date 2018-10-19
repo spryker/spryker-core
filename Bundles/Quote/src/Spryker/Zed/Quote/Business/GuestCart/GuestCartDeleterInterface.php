@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Quote\Business\GuestCart;
 
-interface GuestCartCleanerInterface
+interface GuestCartDeleterInterface
 {
     /**
      * @return void

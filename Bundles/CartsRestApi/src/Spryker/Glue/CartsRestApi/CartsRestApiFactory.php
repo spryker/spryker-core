@@ -43,6 +43,8 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReader;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdater;
+use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilder;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
@@ -220,6 +222,14 @@ class CartsRestApiFactory extends AbstractFactory
             $this->createCartsResourceMapper(),
             $this->createCartItemsResourceMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdaterInterface
+     */
+    public function createRestRequestUpdater(): RestRequestUpdaterInterface
+    {
+        return new RestRequestUpdater($this->getPersistentCartClient());
     }
 
     /**
