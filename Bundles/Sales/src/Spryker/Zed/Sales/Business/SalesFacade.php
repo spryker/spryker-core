@@ -10,6 +10,7 @@ namespace Spryker\Zed\Sales\Business;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -37,6 +38,24 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createOrderHydrator()
             ->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * Specification:
+     *  - Returns persisted order information stored into OrderTransfer
+     *  - Hydrates order by calling HydrateOrderPlugin's registered in project dependency provider.
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
+    {
+        return $this->getFactory()
+            ->createOrderReader()
+            ->findOrderByIdSalesOrder($idSalesOrder);
     }
 
     /**
@@ -105,6 +124,23 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createPaginatedCustomerOrderReader()
             ->getOrders($orderListTransfer, $idCustomer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getPaginatedCustomerOrdersOverview(OrderListTransfer $orderListTransfer, $idCustomer): OrderListTransfer
+    {
+        return $this->getFactory()
+            ->createPaginatedCustomerOrderOverview()
+            ->getOrdersOverview($orderListTransfer, $idCustomer);
     }
 
     /**
@@ -268,5 +304,21 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createOrderExpander()
             ->expandSalesOrder($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer
+    {
+        return $this->getFactory()
+            ->createExpenseWriter()
+            ->createSalesExpense($expenseTransfer);
     }
 }
