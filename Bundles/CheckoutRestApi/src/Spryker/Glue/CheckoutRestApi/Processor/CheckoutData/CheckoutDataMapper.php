@@ -152,9 +152,6 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     protected function mapPaymentsToQuoteTransfer(QuoteTransfer $quoteTransfer, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): void
     {
         foreach ($restCheckoutRequestAttributesTransfer->getQuote()->getPayments() as $paymentTransfer) {
-            if ($quoteTransfer->getTotals() !== null && $quoteTransfer->getTotals()->getPriceToPay() !== null) {
-                $paymentTransfer->setAmount($quoteTransfer->getTotals()->getPriceToPay());
-            }
             $quoteTransfer->addPayment($paymentTransfer);
             $quoteTransfer->setPayment($paymentTransfer);
         }

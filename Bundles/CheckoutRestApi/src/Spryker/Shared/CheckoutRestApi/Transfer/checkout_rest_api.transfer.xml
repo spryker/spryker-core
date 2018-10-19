@@ -9,35 +9,6 @@
         <property name="paymentMethods" type="PaymentMethods"/>
     </transfer>
 
-    <transfer name="Addresses">
-        <property name="addresses" type="Address[]" singular="Address" />
-    </transfer>
-
-    <transfer name="Address">
-        <property name="idCustomerAddress" type="int" />
-        <property name="email" type="string" />
-        <property name="salutation" type="string" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="address1" type="string" />
-        <property name="address2" type="string" />
-        <property name="address3" type="string" />
-        <property name="company" type="string" />
-        <property name="city" type="string" />
-        <property name="zipCode" type="string" />
-        <property name="phone" type="string" />
-        <property name="comment" type="string" />
-        <property name="state" type="string" />
-        <property name="isDeleted" type="bool" />
-        <property name="isDefaultBilling" type="bool" />
-        <property name="isDefaultShipping" type="bool" />
-        <property name="fkCountry" type="int" />
-        <property name="fkRegion" type="int" />
-        <property name="iso2Code" type="string" />
-        <property name="anonymizedAt" type="string" />
-        <property name="country" type="Country" />
-    </transfer>
-
     <transfer name="ShipmentMethods">
         <property name="methods" type="ShipmentMethod[]" singular="method" />
     </transfer>
