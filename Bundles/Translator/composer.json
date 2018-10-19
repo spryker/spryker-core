@@ -1,19 +1,18 @@
 {
-  "name": "spryker/user-locale",
+  "name": "spryker/translator",
   "type": "library",
-  "description": "UserLocale module",
+  "description": "Translator module",
   "license": "proprietary",
   "require": {
-    "spryker/acl": "^3.0.0",
+    "spryker/application-extension": "^1.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/locale": "^3.0.0",
-    "spryker/user": "^3.0.0",
-    "spryker/user-extension": "^1.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/twig": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
-    "spryker/silex": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -37,7 +36,6 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/installer": "If you want to use Installer plugin, minimum required version: 4.0.1",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies, minimum required version: 2.0.1"
+    "spryker/installer": "If you want to use Installer plugins. Minimum required version: 4.0.1"
   }
 }

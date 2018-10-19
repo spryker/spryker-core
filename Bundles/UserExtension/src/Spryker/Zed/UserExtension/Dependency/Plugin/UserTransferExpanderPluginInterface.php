@@ -21,5 +21,5 @@ interface UserTransferExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function expandTransfer(UserTransfer $userTransfer): UserTransfer;
+    public function expandUserTransfer(UserTransfer $userTransfer): UserTransfer;
 }

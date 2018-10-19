@@ -9,6 +9,7 @@ namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\Application\EventListener\KernelLogListener;
 use Spryker\Shared\Log\LoggerTrait;
+use Spryker\Zed\Application\ApplicationDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -26,5 +27,13 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
         return new KernelLogListener(
             $this->getLogger()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ApplicationExtension\Dependency\Plugin\TwigTranslatorExtensionPluginInterface[]
+     */
+    public function getTwigTranslatorExtensionPlugins(): array
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::PLUGINS_TWIG_ENVIRONMENT_EXTENSION);
     }
 }

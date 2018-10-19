@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\UserTransfer;
 interface UserPreSavePluginInterface
 {
     /**
-     * Specification
+     * Specification:
      * - Prepares UserTransfer before saving it.
      *
      * @api

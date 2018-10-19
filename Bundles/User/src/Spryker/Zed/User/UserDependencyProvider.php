@@ -19,7 +19,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_USER_TABLE_CONFIG_EXPANDER = 'PLUGINS_USER_TABLE_CONFIG_EXPANDER';
     public const PLUGINS_USER_TABLE_DATA_EXPANDER = 'PLUGINS_USER_TABLE_DATA_EXPANDER';
     public const PLUGINS_POST_SAVE = 'PLUGINS_POST_SAVE';
-    public const PLUGINS_PRE_SAVE = 'PLUGINS_PRE_SAVE';
+    public const PLUGINS_USER_PRE_SAVE = 'PLUGINS_USER_PRE_SAVE';
     public const PLUGINS_USER_TRANSFER_EXPANDER = 'PLUGINS_USER_TRANSFER_EXPANDER';
     public const PLUGINS_USER_FORM_EXPANDER = 'PLUGINS_USER_FORM_EXPANDER';
     public const CLIENT_SESSION = 'client session';
@@ -34,7 +34,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addSession($container);
         $container = $this->addPostSavePlugins($container);
-        $container = $this->addPreSavePlugins($container);
+        $container = $this->addUserPreSavePlugins($container);
         $container = $this->addUserTransferExpanderPlugins($container);
 
         return $container;
@@ -172,10 +172,10 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPreSavePlugins(Container $container): Container
+    protected function addUserPreSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRE_SAVE] = function (): array {
-            return $this->getPreSavePlugins();
+        $container[static::PLUGINS_USER_PRE_SAVE] = function (): array {
+            return $this->getUserPreSavePlugins();
         };
 
         return $container;
@@ -184,7 +184,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface[]
      */
-    protected function getPreSavePlugins(): array
+    protected function getUserPreSavePlugins(): array
     {
         return [];
     }

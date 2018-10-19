@@ -171,7 +171,7 @@ class User implements UserInterface
             $userEntity = new SpyUser();
         }
 
-        $this->executePreSavePlugins($userTransfer);
+        $userTransfer = $this->executePreSavePlugins($userTransfer);
         $modifiedUser = $userTransfer->modifiedToArray();
 
         unset($modifiedUser[UserTransfer::PASSWORD]);
@@ -456,7 +456,7 @@ class User implements UserInterface
         $userTransfer = new UserTransfer();
         $userTransfer->fromArray($userEntity->toArray(), true);
 
-        $userTransfer = $this->expandUserTransfer($userTransfer);
+        $userTransfer = $this->executeUserTransferExpanderPlugins($userTransfer);
 
         return $userTransfer;
     }
@@ -466,10 +466,10 @@ class User implements UserInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function expandUserTransfer(UserTransfer $userTransfer): UserTransfer
+    protected function executeUserTransferExpanderPlugins(UserTransfer $userTransfer): UserTransfer
     {
         foreach ($this->userTransferExpanderPlugins as $userTransferExpanderPlugin) {
-            $userTransfer = $userTransferExpanderPlugin->expandTransfer($userTransfer);
+            $userTransfer = $userTransferExpanderPlugin->expandUserTransfer($userTransfer);
         }
 
         return $userTransfer;

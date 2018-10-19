@@ -20,4 +20,20 @@ class UserLocaleConfig extends AbstractBundleConfig
     {
         return static::DEFAULT_LOCALE;
     }
+
+    /**
+     * @return array
+     */
+    public function getInstallerUsers(): array
+    {
+        return [
+            [
+                'firstName' => 'Admin',
+                'lastName' => 'German',
+                'password' => 'change123',
+                'userName' => 'admin_de@spryker.com',
+                'locale' => 'de_DE',
+            ],
+        ];
+    }
 }

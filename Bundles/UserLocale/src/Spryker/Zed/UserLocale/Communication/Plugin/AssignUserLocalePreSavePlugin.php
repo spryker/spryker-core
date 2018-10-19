@@ -16,9 +16,11 @@ use Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface;
  * @method \Spryker\Zed\UserLocale\Communication\UserLocaleCommunicationFactory getFactory()
  * @method \Spryker\Zed\UserLocale\Business\UserLocaleFacadeInterface getFacade()
  */
-class AssignLocaleUserPreSavePlugin extends AbstractPlugin implements UserPreSavePluginInterface
+class AssignUserLocalePreSavePlugin extends AbstractPlugin implements UserPreSavePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
