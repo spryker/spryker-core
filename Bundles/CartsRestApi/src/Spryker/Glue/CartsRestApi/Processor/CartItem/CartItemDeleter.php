@@ -78,11 +78,11 @@ class CartItemDeleter implements CartItemDeleterInterface
         $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idQuote, $restRequest);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createQuoteNotFoundError($idQuote);
+            return $this->createQuoteNotFoundError();
         }
 
         if ($this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier) === null) {
-            return $this->createQuoteItemNotFoundError($itemIdentifier);
+            return $this->createQuoteItemNotFoundError();
         }
 
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
@@ -172,31 +172,27 @@ class CartItemDeleter implements CartItemDeleterInterface
     }
 
     /**
-     * @param string $idQuote
-     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteNotFoundError(string $idQuote): RestResponseInterface
+    protected function createQuoteNotFoundError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND, $idQuote));
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
 
     /**
-     * @param string $sku
-     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteItemNotFoundError(string $sku): RestResponseInterface
+    protected function createQuoteItemNotFoundError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ITEM_NOT_FOUND, $sku));
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ITEM_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
