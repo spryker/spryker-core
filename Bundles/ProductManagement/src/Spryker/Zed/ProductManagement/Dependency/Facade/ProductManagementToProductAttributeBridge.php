@@ -61,4 +61,14 @@ class ProductManagementToProductAttributeBridge implements ProductManagementToPr
     {
         return $this->productAttributeFacade->getProductAttributeCollection();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array
+    {
+        return $this->productAttributeFacade->getUniqueSuperAttributesFromConcreteProducts($productConcreteTransfers);
+    }
 }

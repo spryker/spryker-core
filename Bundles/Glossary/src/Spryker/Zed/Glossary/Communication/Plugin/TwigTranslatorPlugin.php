@@ -20,12 +20,12 @@ use Twig_SimpleFilter;
 class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements TranslatorInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer|null
      */
     protected $localeTransfer;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $localeName;
 
@@ -139,7 +139,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     /**
      * @api
      *
-     * @return string
+     * @return string|null
      */
     public function getLocale()
     {

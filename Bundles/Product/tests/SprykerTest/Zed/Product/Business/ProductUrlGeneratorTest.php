@@ -30,12 +30,12 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextBridge;
  */
 class ProductUrlGeneratorTest extends Unit
 {
-    const PRODUCT_NAME = [
+    public const PRODUCT_NAME = [
         'en_US' => 'Product name en_US',
         'de_DE' => 'Product name de_DE',
     ];
 
-    const ID_PRODUCT_ABSTRACT = 1;
+    public const ID_PRODUCT_ABSTRACT = 1;
 
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface

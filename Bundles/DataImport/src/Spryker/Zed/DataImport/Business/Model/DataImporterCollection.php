@@ -19,7 +19,7 @@ class DataImporterCollection implements
     DataImportBeforeImportHookInterface,
     DataImportAfterImportHookInterface
 {
-    const IMPORT_TYPE = 'full';
+    public const IMPORT_TYPE = 'full';
 
     /**
      * @var \Spryker\Zed\DataImport\Business\Model\DataImporterInterface[]

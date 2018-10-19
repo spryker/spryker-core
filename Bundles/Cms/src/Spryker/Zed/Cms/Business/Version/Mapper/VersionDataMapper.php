@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Generated\Shared\Transfer\CmsVersionTransfer;
-use Orm\Zed\Cms\Persistence\Base\SpyCmsGlossaryKeyMapping;
+use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
@@ -142,7 +142,7 @@ class VersionDataMapper implements VersionDataMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsGlossaryKeyMapping $spyCmsGlossaryKeyMapping
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping $spyCmsGlossaryKeyMapping
      *
      * @return \ArrayObject
      */

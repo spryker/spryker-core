@@ -11,7 +11,7 @@ use Spryker\Shared\Twig\TwigFunction;
 
 abstract class AbstractButtonFunction extends TwigFunction
 {
-    const DEFAULT_CSS_CLASSES = 'undefined';
+    public const DEFAULT_CSS_CLASSES = 'undefined';
 
     /**
      * @return string

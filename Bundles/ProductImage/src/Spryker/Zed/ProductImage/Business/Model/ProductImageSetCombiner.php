@@ -43,10 +43,12 @@ class ProductImageSetCombiner implements ProductImageSetCombinerInterface
      */
     public function getCombinedAbstractImageSets($idProductAbstract, $idLocale)
     {
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $abstractDefaultImageSets */
         $abstractDefaultImageSets = $this->productImageQueryContainer
             ->queryDefaultAbstractProductImageSets($idProductAbstract)
             ->find();
 
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $abstractLocalizedImageSets */
         $abstractLocalizedImageSets = $this->productImageQueryContainer
             ->queryLocalizedAbstractProductImageSets($idProductAbstract, $idLocale)
             ->find();
@@ -64,10 +66,12 @@ class ProductImageSetCombiner implements ProductImageSetCombinerInterface
      */
     public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale)
     {
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $concreteDefaultImageSets */
         $concreteDefaultImageSets = $this->productImageQueryContainer
             ->queryDefaultConcreteProductImageSets($idProductConcrete)
             ->find();
 
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $concreteLocalizedImageSets */
         $concreteLocalizedImageSets = $this->productImageQueryContainer
             ->queryLocalizedConcreteProductImageSets($idProductConcrete, $idLocale)
             ->find();

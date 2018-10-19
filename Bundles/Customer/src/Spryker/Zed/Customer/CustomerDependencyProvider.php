@@ -21,26 +21,27 @@ use Spryker\Zed\Kernel\Container;
 
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
-    const FACADE_COUNTRY = 'FACADE_COUNTRY';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
-    const FACADE_MAIL = 'FACADE_MAIL';
+    public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+    public const FACADE_COUNTRY = 'FACADE_COUNTRY';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_MAIL = 'FACADE_MAIL';
 
     /**
      * @deprecated use SERVICE_UTIL_DATE_TIME instead
      */
-    const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
-    const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+    public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
+    public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
-    const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
 
-    const STORE = 'STORE';
+    public const STORE = 'STORE';
 
-    const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
-    const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
-    const PLUGINS_POST_CUSTOMER_REGISTRATION = 'PLUGINS_POST_CUSTOMER_REGISTRATION';
+    public const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
+    public const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
+    public const PLUGINS_POST_CUSTOMER_REGISTRATION = 'PLUGINS_POST_CUSTOMER_REGISTRATION';
+    public const PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER = 'PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER';
 
     public const SUB_REQUEST_HANDLER = 'SUB_REQUEST_HANDLER';
 
@@ -79,6 +80,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addSubRequestHandler($container);
+        $container = $this->provideCustomerTableActionPlugins($container);
 
         return $container;
     }
@@ -300,6 +302,28 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
      */
     protected function getPostCustomerRegistrationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function provideCustomerTableActionPlugins($container): Container
+    {
+        $container[static::PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER] = function () {
+            return $this->getCustomerTableActionExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface[]
+     */
+    protected function getCustomerTableActionExpanderPlugins(): array
     {
         return [];
     }

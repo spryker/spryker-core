@@ -10,6 +10,8 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
+use Generated\Shared\Transfer\ResponseMessageTransfer;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface;
 use Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -17,6 +19,8 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 class CompanyBusinessUnitCreator implements CompanyBusinessUnitCreatorInterface
 {
     use TransactionTrait;
+
+    protected const MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS = 'message.business_unit.create';
 
     /**
      * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface
@@ -29,15 +33,23 @@ class CompanyBusinessUnitCreator implements CompanyBusinessUnitCreatorInterface
     protected $companyBusinessUnitConfig;
 
     /**
+     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface
+     */
+    protected $pluginExecutor;
+
+    /**
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface $companyBusinessUnitEntityManager
      * @param \Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig $companyBusinessUnitConfig
+     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface $pluginExecutor
      */
     public function __construct(
         CompanyBusinessUnitEntityManagerInterface $companyBusinessUnitEntityManager,
-        CompanyBusinessUnitConfig $companyBusinessUnitConfig
+        CompanyBusinessUnitConfig $companyBusinessUnitConfig,
+        CompanyBusinessUnitWriterPluginExecutorInterface $pluginExecutor
     ) {
         $this->companyBusinessUnitEntityManager = $companyBusinessUnitEntityManager;
         $this->companyBusinessUnitConfig = $companyBusinessUnitConfig;
+        $this->pluginExecutor = $pluginExecutor;
     }
 
     /**
@@ -49,7 +61,8 @@ class CompanyBusinessUnitCreator implements CompanyBusinessUnitCreatorInterface
     {
         $companyBusinessUnitResponseTransfer = (new CompanyBusinessUnitResponseTransfer())
             ->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer)
-            ->setIsSuccessful(true);
+            ->setIsSuccessful(true)
+            ->addMessage((new ResponseMessageTransfer())->setText(static::MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS));
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyBusinessUnitResponseTransfer) {
             return $this->executeCreateTransaction($companyBusinessUnitResponseTransfer);
@@ -91,6 +104,7 @@ class CompanyBusinessUnitCreator implements CompanyBusinessUnitCreatorInterface
     {
         $companyBusinessUnitTransfer = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer = $this->companyBusinessUnitEntityManager->saveCompanyBusinessUnit($companyBusinessUnitTransfer);
+        $companyBusinessUnitTransfer = $this->pluginExecutor->executePostSavePlugins($companyBusinessUnitTransfer);
         $companyBusinessUnitResponseTransfer->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer);
 
         return $companyBusinessUnitResponseTransfer;
