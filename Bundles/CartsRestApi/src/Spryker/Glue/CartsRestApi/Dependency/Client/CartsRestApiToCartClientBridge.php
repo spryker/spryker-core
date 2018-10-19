@@ -74,7 +74,7 @@ class CartsRestApiToCartClientBridge implements CartsRestApiToCartClientInterfac
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote()
+    public function getQuote(): QuoteTransfer
     {
         return $this->cartClient->getQuote();
     }

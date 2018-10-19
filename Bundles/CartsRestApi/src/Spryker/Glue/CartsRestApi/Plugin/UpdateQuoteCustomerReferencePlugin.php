@@ -8,8 +8,6 @@
 namespace Spryker\Glue\CartsRestApi\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
@@ -20,7 +18,7 @@ class UpdateQuoteCustomerReferencePlugin extends AbstractPlugin implements Custo
 {
     /**
      * {@inheritdoc}
-     *  - Updates guest customer stored cart with registered customer reference.
+     *  - Updates cart of guest customer with customer reference after registration.
      *
      * @api
      *
@@ -30,14 +28,8 @@ class UpdateQuoteCustomerReferencePlugin extends AbstractPlugin implements Custo
      */
     public function postRegister(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference());
-        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
-            ->setIdQuote($this->getFactory()->getQuoteClient()->getQuote()->getIdQuote())
-            ->setCustomer($customerTransfer)
-            ->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
-        $this->getFactory()->getPersistentCartClient()->updateQuote($quoteUpdateRequestTransfer);
-
-        return $customerTransfer;
+        return $this->getFactory()
+            ->createGuestCartUpdater()
+            ->updateGuestCartCustomerReferenceOnRegistration($customerTransfer);
     }
 }

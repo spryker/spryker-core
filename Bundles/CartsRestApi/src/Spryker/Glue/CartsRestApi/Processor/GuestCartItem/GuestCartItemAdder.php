@@ -13,8 +13,8 @@ use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
-use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreatorInterface;
+use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -38,9 +38,9 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
     protected $zedRequestClient;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface
      */
-    protected $cartReader;
+    protected $guestCartReader;
 
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreatorInterface
@@ -61,7 +61,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface $cartClient
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface $quoteClient
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface $zedRequestClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
+     * @param \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface $guestCartReader
      * @param \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreatorInterface $guestCartCreator
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
@@ -70,7 +70,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         CartsRestApiToCartClientInterface $cartClient,
         CartsRestApiToQuoteClientInterface $quoteClient,
         CartsRestApiToZedRequestClientInterface $zedRequestClient,
-        CartReaderInterface $cartReader,
+        GuestCartReaderInterface $guestCartReader,
         GuestCartCreatorInterface $guestCartCreator,
         CartItemsResourceMapperInterface $cartItemsResourceMapper,
         GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
@@ -78,7 +78,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         $this->cartClient = $cartClient;
         $this->quoteClient = $quoteClient;
         $this->zedRequestClient = $zedRequestClient;
-        $this->cartReader = $cartReader;
+        $this->guestCartReader = $guestCartReader;
         $this->guestCartCreator = $guestCartCreator;
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
         $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
@@ -96,14 +96,13 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
     ): RestResponseInterface {
         $parentResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_GUEST_CARTS);
         if (!$parentResource) {
-            $quoteResponseTransfers = $this->cartReader->getCustomerQuotes();
-            $quotes = $quoteResponseTransfers->getQuotes();
-            $quoteTransfer = $quotes[0] ?? $this->guestCartCreator->createQuoteTransfer($restRequest);
+            $quoteTransfer = $this->guestCartReader->getCustomerQuote($restRequest)
+                ?? $this->guestCartCreator->createQuoteTransfer($restRequest);
 
             return $this->addItemToQuote($quoteTransfer, $restCartItemsAttributesTransfer);
         }
 
-        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($parentResource->getId(), $restRequest);
+        $quoteResponseTransfer = $this->guestCartReader->getQuoteTransferByUuid($parentResource->getId(), $restRequest);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->guestCartRestResponseBuilder->createGuestCartNotFoundErrorRestResponse($parentResource->getId());
         }

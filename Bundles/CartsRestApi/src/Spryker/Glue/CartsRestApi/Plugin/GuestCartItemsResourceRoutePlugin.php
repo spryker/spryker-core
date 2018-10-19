@@ -18,6 +18,7 @@ class GuestCartItemsResourceRoutePlugin extends AbstractPlugin implements Resour
 {
     /**
      * {@inheritdoc}
+     *  - Configures available actions for guest-cart-items resource.
      *
      * @api
      *

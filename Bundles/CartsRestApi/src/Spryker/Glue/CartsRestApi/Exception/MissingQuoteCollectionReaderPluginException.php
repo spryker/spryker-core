@@ -9,6 +9,6 @@ namespace Spryker\Glue\CartsRestApi\Exception;
 
 use Exception;
 
-class CartRestApiNotImplementedException extends Exception
+class MissingQuoteCollectionReaderPluginException extends Exception
 {
 }

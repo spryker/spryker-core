@@ -19,6 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
 class GuestCartValidatorPlugin extends AbstractPlugin implements ValidateRestRequestPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -27,7 +31,7 @@ class GuestCartValidatorPlugin extends AbstractPlugin implements ValidateRestReq
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
         return $this->getFactory()
-            ->createGuestCartValidator()
+            ->createAnonymousCustomerUniqueIdValidator()
             ->validate($httpRequest, $restRequest);
     }
 }

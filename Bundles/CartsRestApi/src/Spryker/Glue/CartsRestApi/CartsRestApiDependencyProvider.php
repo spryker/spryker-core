@@ -8,15 +8,13 @@
 namespace Spryker\Glue\CartsRestApi;
 
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientBridge;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientBridge;
-use Spryker\Glue\CartsRestApi\Exception\CartRestApiNotImplementedException;
+use Spryker\Glue\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Shared\Kernel\Store;
 
 class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -25,10 +23,6 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const PLUGIN_QUOTE_COLLECTION_READER = 'PLUGIN_QUOTE_COLLECTION_READER';
-    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    public const STORE = 'STORE';
-
-    protected const EXCEPTION_MESSAGE_READER_NOT_IMPLEMENTED = 'Reader not implemented on project level';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -44,8 +38,6 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addQuoteCollectionReaderPlugin($container);
-        $container = $this->addCustomerClient($container);
-        $container = $this->addStore($container);
 
         return $container;
     }
@@ -121,40 +113,17 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @throws \Spryker\Glue\CartsRestApi\Exception\CartRestApiNotImplementedException
+     * @throws \Spryker\Glue\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException
      *
      * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
      */
     protected function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
     {
-        throw new CartRestApiNotImplementedException(static::EXCEPTION_MESSAGE_READER_NOT_IMPLEMENTED);
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addCustomerClient(Container $container): Container
-    {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
-            return new CartsRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addStore(Container $container): Container
-    {
-        $container[static::STORE] = function () {
-            return Store::getInstance();
-        };
-
-        return $container;
+        throw new MissingQuoteCollectionReaderPluginException(sprintf(
+            'Missing instance of %s! You need to configure QuoteCollectionReaderPlugin ' .
+            'in your own CartsRestApiDependencyProvider::getQuoteCollectionReaderPlugin() ' .
+            'to be able to read quote collection.',
+            QuoteCollectionReaderPluginInterface::class
+        ));
     }
 }

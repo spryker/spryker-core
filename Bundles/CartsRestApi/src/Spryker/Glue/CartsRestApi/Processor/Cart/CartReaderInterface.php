@@ -38,7 +38,9 @@ interface CartReaderInterface
     public function getQuoteTransferByUuid(string $uuidQuote, RestRequestInterface $restRequest): QuoteResponseTransfer;
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getCustomerQuotes(): QuoteCollectionTransfer;
+    public function getCustomerQuotes(RestRequestInterface $restRequest): QuoteCollectionTransfer;
 }

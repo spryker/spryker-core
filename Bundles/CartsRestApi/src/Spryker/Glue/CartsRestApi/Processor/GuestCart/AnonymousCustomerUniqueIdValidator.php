@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Processor\Cart;
+namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -13,7 +13,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GuestCartValidator implements GuestCartValidatorInterface
+class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdValidatorInterface
 {
     protected const GUEST_CART_RESOURCES = [
         CartsRestApiConfig::RESOURCE_GUEST_CARTS,

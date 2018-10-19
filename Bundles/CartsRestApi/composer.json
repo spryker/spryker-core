@@ -7,7 +7,6 @@
     "php": ">=7.1",
     "spryker/cart": "^5.1.0",
     "spryker/carts-rest-api-extension": "^1.0.0",
-    "spryker/customer": "^1.0.0",
     "spryker/customers-rest-api-extension": "^1.0.0",
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
