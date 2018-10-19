@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityBridge;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyBridge;

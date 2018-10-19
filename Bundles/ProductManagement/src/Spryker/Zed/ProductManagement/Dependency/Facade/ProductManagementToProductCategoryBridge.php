@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 class ProductManagementToProductCategoryBridge implements ProductManagementToProductCategoryInterface
 {
     /**
-     * @var \Spryker\Zed\Category\Business\CategoryFacadeInterface
+     * @var \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface
      */
     protected $categoryFacade;
 
