@@ -506,7 +506,7 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Returns all categories that are assigned to the given abstract product.
+     * - Returns all categories by their IDs.
      * - The data of the returned categories are localized based on the given locale transfer.
      *
      * @api

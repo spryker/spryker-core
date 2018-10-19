@@ -42,5 +42,5 @@ interface CategoryRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function findCategoryTransferCollectionByCategoryIds(array $idsCategory, int $idLocale): CategoryCollectionTransfer;
+    public function getCategoryTransferCollectionByCategoryIds(array $idsCategory, int $idLocale): CategoryCollectionTransfer;
 }

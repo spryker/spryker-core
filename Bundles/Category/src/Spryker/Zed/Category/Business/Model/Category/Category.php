@@ -153,6 +153,6 @@ class Category implements CategoryInterface
     public function getCategoryTransferCollectionByCategoryIds(array $idsCategory, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
         return $this->categoryRepository
-            ->findCategoryTransferCollectionByCategoryIds($idsCategory, $localeTransfer->getIdLocale());
+            ->getCategoryTransferCollectionByCategoryIds($idsCategory, $localeTransfer->getIdLocale());
     }
 }

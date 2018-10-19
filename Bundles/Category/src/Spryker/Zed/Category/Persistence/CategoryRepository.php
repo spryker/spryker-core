@@ -124,7 +124,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function findCategoryTransferCollectionByCategoryIds(array $idsCategory, int $idLocale): CategoryCollectionTransfer
+    public function getCategoryTransferCollectionByCategoryIds(array $idsCategory, int $idLocale): CategoryCollectionTransfer
     {
         $spyCategoryCollection = $this->queryCategoryCollectionByCategoryIds($idsCategory, $idLocale)->find();
 

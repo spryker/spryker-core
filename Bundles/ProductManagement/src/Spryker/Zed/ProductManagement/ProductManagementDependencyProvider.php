@@ -36,7 +36,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 {
     public const STORE = 'STORE';
 
-    public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
@@ -80,10 +79,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
-        };
-
-        $container[static::FACADE_CATEGORY] = function (Container $container) {
-            return new ProductManagementToCategoryBridge($container->getLocator()->category()->facade());
         };
 
         $container[static::FACADE_LOCALE] = function (Container $container) {
@@ -151,10 +146,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         };
 
         $container = $this->addProductBundleFacade($container);
-
-        $container[static::FACADE_CATEGORY] = function (Container $container) {
-            return new ProductManagementToCategoryBridge($container->getLocator()->category()->facade());
-        };
 
         $container[static::FACADE_PRODUCT_CATEGORY] = function (Container $container) {
             return new ProductManagementToProductCategoryBridge($container->getLocator()->productCategory()->facade());
