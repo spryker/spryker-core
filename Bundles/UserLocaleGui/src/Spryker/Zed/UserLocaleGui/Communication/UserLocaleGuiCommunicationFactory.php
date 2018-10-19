@@ -8,12 +8,11 @@
 namespace Spryker\Zed\UserLocaleGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\UserLocaleGui\Communication\FormExpander\DataProvider\LocaleChoiceFormDataProvider;
 use Spryker\Zed\UserLocaleGui\Communication\FormExpander\UserLocaleFormExpander;
-use Spryker\Zed\UserLocaleGui\Communication\FormExpander\UserLocaleFormExpanderInterface;
-use Spryker\Zed\UserLocaleGui\Communication\Mapper\LocaleMapper;
-use Spryker\Zed\UserLocaleGui\Communication\Mapper\LocaleMapperInterface;
 use Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleBridgeInterface;
 use Spryker\Zed\UserLocaleGui\UserLocaleGuiDependencyProvider;
+use Symfony\Component\Form\FormTypeInterface;
 
 class UserLocaleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -26,18 +25,18 @@ class UserLocaleGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\UserLocaleGui\Communication\Mapper\LocaleMapperInterface
+     * @return \Symfony\Component\Form\FormTypeInterface
      */
-    public function createLocaleMapper(): LocaleMapperInterface
+    public function createUserLocaleFormExpander(): FormTypeInterface
     {
-        return new LocaleMapper();
+        return new UserLocaleFormExpander();
     }
 
     /**
-     * @return \Spryker\Zed\UserLocaleGui\Communication\FormExpander\UserLocaleFormExpanderInterface
+     * @return \Spryker\Zed\UserLocaleGui\Communication\FormExpander\DataProvider\LocaleChoiceFormDataProvider
      */
-    public function createUserLocaleFormExpander(): UserLocaleFormExpanderInterface
+    public function createLocaleChoiceFormDataProvider(): LocaleChoiceFormDataProvider
     {
-        return new UserLocaleFormExpander($this->getLocaleFacade(), $this->createLocaleMapper());
+        return new LocaleChoiceFormDataProvider($this->getLocaleFacade());
     }
 }
