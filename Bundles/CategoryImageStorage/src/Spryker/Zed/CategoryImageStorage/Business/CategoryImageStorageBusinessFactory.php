@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CategoryImageStorage\CategoryImageStorageConfig getConfig()
- * @method \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepository getRepository()
+ * @method \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepositoryInterface getRepository()
  */
 class CategoryImageStorageBusinessFactory extends AbstractBusinessFactory
 {

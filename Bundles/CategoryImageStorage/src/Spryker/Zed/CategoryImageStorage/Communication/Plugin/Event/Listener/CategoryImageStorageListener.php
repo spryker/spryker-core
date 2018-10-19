@@ -14,7 +14,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 /**
  * @method \Spryker\Zed\CategoryImageStorage\Communication\CategoryImageStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryImageStorage\Business\CategoryImageStorageFacadeInterface getFacade()
- * @method \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepository getRepository()
+ * @method \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepositoryInterface getRepository()
  */
 class CategoryImageStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

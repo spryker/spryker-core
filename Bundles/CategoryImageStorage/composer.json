@@ -8,7 +8,8 @@
     "spryker/category-image": "*",
     "spryker/event-behavior": "*",
     "spryker/kernel": "*",
-    "spryker/propel-orm": "*"
+    "spryker/propel-orm": "*",
+    "spryker/synchronization-extension": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

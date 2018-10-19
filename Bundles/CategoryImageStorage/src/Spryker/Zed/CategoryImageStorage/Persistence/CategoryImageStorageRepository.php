@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 /**
  * @method \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStoragePersistenceFactory getFactory()
  */
-class CategoryImageStorageRepository extends AbstractRepository
+class CategoryImageStorageRepository extends AbstractRepository implements CategoryImageStorageRepositoryInterface
 {
     public const FK_CATEGORY = 'fkCategory';
 

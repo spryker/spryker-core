@@ -18,4 +18,12 @@ class CategoryImageStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getProductImageSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }

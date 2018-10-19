@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\CategoryImageStorageTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 use Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorage;
 use Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToCategoryImageInterface;
-use Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepository;
+use Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepositoryInterface;
 
 class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
 {
@@ -24,7 +24,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     protected $categoryImageFacade;
 
     /**
-     * @var \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepository
+     * @var \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepositoryInterface
      */
     protected $repository;
 
@@ -35,10 +35,10 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
 
     /**
      * @param \Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToCategoryImageInterface $categoryImageFacade
-     * @param \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepository $repository
+     * @param \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepositoryInterface $repository
      * @param bool $isSendingToQueue
      */
-    public function __construct(CategoryImageStorageToCategoryImageInterface $categoryImageFacade, CategoryImageStorageRepository $repository, bool $isSendingToQueue)
+    public function __construct(CategoryImageStorageToCategoryImageInterface $categoryImageFacade, CategoryImageStorageRepositoryInterface $repository, bool $isSendingToQueue)
     {
         $this->categoryImageFacade = $categoryImageFacade;
         $this->repository = $repository;
