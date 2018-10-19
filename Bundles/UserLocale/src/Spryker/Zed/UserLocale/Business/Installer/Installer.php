@@ -73,10 +73,10 @@ class Installer implements InstallerInterface
         foreach ($this->userLocaleConfig->getInstallerUsers() as $user) {
             $userTransfer = new UserTransfer();
             $userTransfer->setFirstName($user['firstName']);
-            $userTransfer->setLastName('lastName');
-            $userTransfer->setPassword('password');
+            $userTransfer->setLastName($user['lastName']);
+            $userTransfer->setPassword($user['password']);
             $userTransfer->setFkLocale($this->getLocaleId($user['locale']));
-            $userTransfer->setUsername('userName');
+            $userTransfer->setUsername($user['userName']);
 
             $userTransfers[] = $this->userFacade->createUser($userTransfer);
         }
