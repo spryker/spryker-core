@@ -284,4 +284,54 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             ->getPropelPriceProductMerchantRelationshipQuery()
             ->findOneByIdPriceProductMerchantRelationship($idPriceProductMerchantRelationship);
     }
+
+    /**
+     * @return array
+     */
+    public function findAllPriceProductConcreteMerchantRelationshipStorageEntities(): array
+    {
+        return $this->getFactory()
+            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @param array $priceProductConcreteMerchantRelationshipStorageEntityIds
+     *
+     * @return array
+     */
+    public function findPriceProductConcreteMerchantRelationshipStorageEntitiesByIds(array $priceProductConcreteMerchantRelationshipStorageEntityIds): array
+    {
+        return $this->getFactory()
+            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
+            ->filterByIdPriceProductConcreteMerchantRelationshipStorage_In($priceProductConcreteMerchantRelationshipStorageEntityIds)
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @return array
+     */
+    public function findAllPriceProductAbstractMerchantRelationshipStorageEntities(): array
+    {
+        return $this->getFactory()
+            ->createPriceProductAbstractMerchantRelationshipStorageQuery()
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @param array $priceProductAbstractMerchantRelationshipStorageEntityIds
+     *
+     * @return array
+     */
+    public function findPriceProductAbstractMerchantRelationshipStorageEntitiesByIds(array $priceProductAbstractMerchantRelationshipStorageEntityIds): array
+    {
+        return $this->getFactory()
+            ->createPriceProductAbstractMerchantRelationshipStorageQuery()
+            ->filterByIdPriceProductAbstractMerchantRelationshipStorage_In($priceProductAbstractMerchantRelationshipStorageEntityIds)
+            ->find()
+            ->getArrayCopy();
+    }
 }
