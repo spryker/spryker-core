@@ -183,6 +183,10 @@ class ProductMoneyCollectionType extends AbstractCollectionType
             return $volumePrices;
         }
 
+        if ($priceProductTransfer->getPriceTypeName() !== $this->getFactory()->getConfig()->getPriceTypeDefault()) {
+            return $volumePrices;
+        }
+
         if (!empty($priceData) && isset($priceData->volume_prices)) {
             $volumePrices[$storeName][$currencyIsoCode] = $this
                 ->buildVolumePriceData(static::PRICE_PRODUCT_VOLUME_EDIT_URL, 'Price Product Volume Edit');
