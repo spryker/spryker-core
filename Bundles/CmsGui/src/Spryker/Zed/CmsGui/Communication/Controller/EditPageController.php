@@ -35,7 +35,6 @@ class EditPageController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        //todo: need to change
         $this->getFactory()
             ->getCmsFacade()
             ->syncTemplate(
