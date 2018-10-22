@@ -20,22 +20,6 @@ use Spryker\Glue\ProductLabelsRestApi\Processor\Reader\ProductLabelReaderInterfa
 class ProductLabelsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductStorageClientInterface
-     */
-    public function getProductStorageClient(): ProductLabelsRestApiToProductStorageClientInterface
-    {
-        return $this->getProvidedDependency(ProductLabelsRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
-    }
-
-    /**
-     * @return \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductLabelStorageClientInterface
-     */
-    public function getProductLabelStorageClient(): ProductLabelsRestApiToProductLabelStorageClientInterface
-    {
-        return $this->getProvidedDependency(ProductLabelsRestApiDependencyProvider::CLIENT_PRODUCT_LABEL_STORAGE);
-    }
-
-    /**
      * @return \Spryker\Glue\ProductLabelsRestApi\Processor\Reader\ProductLabelReaderInterface
      */
     public function createProductLabelReader(): ProductLabelReaderInterface
@@ -62,5 +46,21 @@ class ProductLabelsRestApiFactory extends AbstractFactory
     public function createProductLabelsResourceRelationshipExpander(): ProductLabelsResourceRelationshipExpanderInterface
     {
         return new ProductLabelsResourceRelationshipExpander($this->createProductLabelReader());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductStorageClientInterface
+     */
+    public function getProductStorageClient(): ProductLabelsRestApiToProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductLabelsRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductLabelStorageClientInterface
+     */
+    public function getProductLabelStorageClient(): ProductLabelsRestApiToProductLabelStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductLabelsRestApiDependencyProvider::CLIENT_PRODUCT_LABEL_STORAGE);
     }
 }

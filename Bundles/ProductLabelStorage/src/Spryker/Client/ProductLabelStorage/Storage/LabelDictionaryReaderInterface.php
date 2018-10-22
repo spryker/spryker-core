@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\ProductLabelStorage\Storage;
 
-use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
-
 interface LabelDictionaryReaderInterface
 {
     /**
@@ -36,20 +34,10 @@ interface LabelDictionaryReaderInterface
     public function findLabelByLocalizedName($labelName, $localeName);
 
     /**
-     * @deprecated use findLabelByKey() instead.
-     *
      * @param int $labelName
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
     public function findLabelByName($labelName, $localeName);
-
-    /**
-     * @param string $labelKey
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
-     */
-    public function findLabelByKey(string $labelKey, string $localeName): ?ProductLabelDictionaryItemTransfer;
 }

@@ -65,7 +65,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function findByKey(RestRequestInterface $restRequest): RestResponseInterface
+    public function findById(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -73,8 +73,8 @@ class ProductLabelReader implements ProductLabelReaderInterface
             return $this->addProductLabelMissingErrorToResponse($restResponse);
         }
 
-        $labelTransfer = $this->productLabelStorageClient->findLabelByKey(
-            urldecode($restRequest->getResource()->getId()),
+        $labelTransfer = $this->productLabelStorageClient->findLabels(
+            [$restRequest->getResource()->getId()],
             $restRequest->getMetadata()->getLocale()
         );
 
@@ -84,11 +84,11 @@ class ProductLabelReader implements ProductLabelReaderInterface
 
         $restProductLabelAttributesTransfer = $this
             ->productLabelMapper
-            ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer($labelTransfer);
+            ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer($labelTransfer[0]);
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,
-            $labelTransfer->getKey(),
+            (string)$labelTransfer[0]->getIdProductLabel(),
             $restProductLabelAttributesTransfer
         );
 
@@ -133,7 +133,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
 
             $productLabelResources[] = $this->restResourceBuilder->createRestResource(
                 ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,
-                $productLabel->getKey(),
+                (string)$productLabel->getIdProductLabel(),
                 $restProductLabelAttributesTransfer
             );
         }
@@ -164,9 +164,9 @@ class ProductLabelReader implements ProductLabelReaderInterface
     protected function addProductLabelMissingErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductLabelsRestApiConfig::RESPONSE_CODE_PRODUCT_LABEL_KYE_IS_MISSING)
+            ->setCode(ProductLabelsRestApiConfig::RESPONSE_CODE_PRODUCT_LABEL_ID_IS_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(ProductLabelsRestApiConfig::RESPONSE_DETAIL_PRODUCT_LABEL_KYE_IS_MISSING);
+            ->setDetail(ProductLabelsRestApiConfig::RESPONSE_DETAIL_PRODUCT_LABEL_ID_IS_MISSING);
 
         return $restResponse->addError($restErrorTransfer);
     }

@@ -18,6 +18,12 @@ use Spryker\Glue\ProductLabelsRestApi\ProductLabelsRestApiConfig;
 class ProductLabelsRelationshipByResourceIdPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * - Adds relationship to the abstract product by sku.
+     *
+     * @api
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -25,7 +31,9 @@ class ProductLabelsRelationshipByResourceIdPlugin extends AbstractPlugin impleme
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $this->getFactory()->createProductLabelsResourceRelationshipExpander()->addRelationshipsByAbstractSku($resources, $restRequest);
+        $this->getFactory()
+            ->createProductLabelsResourceRelationshipExpander()
+            ->addRelationshipsByAbstractSku($resources, $restRequest);
     }
 
     /**

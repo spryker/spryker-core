@@ -80,19 +80,6 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param string $labelKey
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
-     */
-    public function findLabelByKey(string $labelKey, string $localeName): ?ProductLabelDictionaryItemTransfer
-    {
-        return $this->dictionaryFactory
-            ->createDictionaryByKey()
-            ->findLabel($labelKey, $localeName);
-    }
-
-    /**
      * @param int[] $idsProductLabel
      * @param string $localeName
      *

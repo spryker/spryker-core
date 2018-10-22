@@ -7,17 +7,15 @@
 
 namespace Spryker\Glue\ProductLabelsRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
-
 interface ProductLabelsRestApiToProductLabelStorageClientInterface
 {
     /**
-     * @param string $labelKey
+     * @param array $idProductLabels
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelByKey(string $labelKey, string $localeName): ?ProductLabelDictionaryItemTransfer;
+    public function findLabels(array $idProductLabels, string $localeName): array;
 
     /**
      * @param int $idProductAbstract
