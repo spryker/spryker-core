@@ -39,7 +39,6 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_CHECKOUT = 'FACADE_CHECKOUT';
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
     public const FACADE_MANUAL_ORDER_ENTRY = 'FACADE_MANUAL_ORDER_ENTRY';
-    public const FACADE_PRICE = 'FACADE_PRICE';
 
     public const PAYMENT_SUB_FORMS = 'PAYMENT_SUB_FORMS';
 
