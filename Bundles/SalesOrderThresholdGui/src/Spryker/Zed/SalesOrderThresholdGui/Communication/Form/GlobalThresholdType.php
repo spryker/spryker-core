@@ -17,8 +17,10 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\SalesOrderThresholdGui\Communication\SalesOrderThresholdGuiCommunicationFactory getFactory()
@@ -46,7 +48,9 @@ class GlobalThresholdType extends AbstractType
     public const VALIDATION_GROUP_GENERAL = 'validation_group_general';
 
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
+    protected const VALUE_AMOUNT_LIMIT = 10000000000;
     protected const ERROR_MESSAGE_VALUE = 'Invalid Value.';
+    protected const ERROR_MESSAGE_VALUE_EXCEEDED_LIMIT = 'Value exceed allowed amount';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -145,6 +149,7 @@ class GlobalThresholdType extends AbstractType
             'required' => false,
             'constraints' => [
                 $this->createMoneyConstraint($options),
+                $this->createAmountConstraint(),
             ],
         ]);
 
@@ -183,6 +188,7 @@ class GlobalThresholdType extends AbstractType
             'required' => false,
             'constraints' => [
                 $this->createMoneyConstraint($options),
+                $this->createAmountConstraint(),
             ],
         ]);
 
@@ -203,6 +209,7 @@ class GlobalThresholdType extends AbstractType
             'required' => false,
             'constraints' => [
                 $this->createMoneyConstraint($options),
+                $this->createAmountConstraint(),
             ],
         ]);
 
@@ -297,6 +304,20 @@ class GlobalThresholdType extends AbstractType
             'pattern' => static::PATTERN_MONEY,
             'message' => static::ERROR_MESSAGE_VALUE,
             'groups' => $validationGroup,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Callback
+     */
+    protected function createAmountConstraint(): Callback
+    {
+        return new Callback([
+            'callback' => function ($amount, ExecutionContextInterface $context) {
+                if ($amount >= static::VALUE_AMOUNT_LIMIT) {
+                    $context->addViolation(static::ERROR_MESSAGE_VALUE_EXCEEDED_LIMIT);
+                }
+            },
         ]);
     }
 
