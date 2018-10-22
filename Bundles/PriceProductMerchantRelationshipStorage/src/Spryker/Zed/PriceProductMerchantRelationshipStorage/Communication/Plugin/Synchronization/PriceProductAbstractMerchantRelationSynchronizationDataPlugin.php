@@ -42,7 +42,7 @@ class PriceProductAbstractMerchantRelationSynchronizationDataPlugin extends Abst
      */
     public function hasStore(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -90,7 +90,7 @@ class PriceProductAbstractMerchantRelationSynchronizationDataPlugin extends Abst
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $ids = [])
+    public function getData(array $ids = []): array
     {
         $data = [];
         $priceProductAbstractMerchantRelationshipStorageEntities = $this->findPriceProductAbstractMerchantRelationshipStorageEntities($ids);
@@ -111,7 +111,7 @@ class PriceProductAbstractMerchantRelationSynchronizationDataPlugin extends Abst
      *
      * @return array
      */
-    protected function findPriceProductAbstractMerchantRelationshipStorageEntities(array $ids = [])
+    protected function findPriceProductAbstractMerchantRelationshipStorageEntities(array $ids = []): array
     {
         if (empty($ids)) {
             return $this->getRepository()

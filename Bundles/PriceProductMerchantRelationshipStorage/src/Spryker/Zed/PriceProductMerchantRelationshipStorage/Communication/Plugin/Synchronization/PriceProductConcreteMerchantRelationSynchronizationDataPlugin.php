@@ -42,7 +42,7 @@ class PriceProductConcreteMerchantRelationSynchronizationDataPlugin extends Abst
      */
     public function hasStore(): bool
     {
-        return true;
+        return false;
     }
 
     /**

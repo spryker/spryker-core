@@ -286,7 +286,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @return array
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
      */
     public function findAllPriceProductConcreteMerchantRelationshipStorageEntities(): array
     {
@@ -299,7 +299,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     /**
      * @param array $priceProductConcreteMerchantRelationshipStorageEntityIds
      *
-     * @return array
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
      */
     public function findPriceProductConcreteMerchantRelationshipStorageEntitiesByIds(array $priceProductConcreteMerchantRelationshipStorageEntityIds): array
     {
@@ -311,7 +311,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @return array
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[]
      */
     public function findAllPriceProductAbstractMerchantRelationshipStorageEntities(): array
     {
@@ -324,7 +324,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     /**
      * @param array $priceProductAbstractMerchantRelationshipStorageEntityIds
      *
-     * @return array
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[]
      */
     public function findPriceProductAbstractMerchantRelationshipStorageEntitiesByIds(array $priceProductAbstractMerchantRelationshipStorageEntityIds): array
     {
