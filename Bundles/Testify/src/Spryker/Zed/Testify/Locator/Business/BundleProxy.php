@@ -30,7 +30,7 @@ class BundleProxy extends KernelBundleProxy
     /**
      * @var string
      */
-    private $bundle;
+    private $moduleName;
 
     /**
      * @param \Spryker\Zed\Testify\Locator\Business\BusinessLocator $locator
@@ -41,32 +41,32 @@ class BundleProxy extends KernelBundleProxy
     }
 
     /**
-     * @param string $bundle
+     * @param string $moduleName
      *
      * @return $this
      */
-    public function setBundle($bundle)
+    public function setBundle($moduleName)
     {
-        parent::setBundle($bundle);
+        parent::setBundle($moduleName);
 
-        $this->bundle = ucfirst($bundle);
+        $this->moduleName = ucfirst($moduleName);
 
         return $this;
     }
 
     /**
-     * @param string $method
+     * @param string $methodName
      * @param array $arguments
      *
      * @return object
      */
-    public function __call($method, $arguments)
+    public function __call(string $methodName, array $arguments)
     {
-        if ($method === 'facade') {
-            return $this->createFacade($method, $arguments);
+        if ($methodName === 'facade') {
+            return $this->createFacade($methodName, $arguments);
         }
 
-        return parent::__call($method, $arguments);
+        return parent::__call($methodName, $arguments);
     }
 
     /**

@@ -10,14 +10,21 @@ namespace Spryker\Shared\Kernel;
 use LogicException;
 use Spryker\Shared\Kernel\Locator\LocatorInterface;
 
+/**
+ * @method \Spryker\Shared\Kernel\KernelConfig getSharedConfig()
+ */
 class BundleProxy
 {
-    public const LOCATOR_MATCHER_SUFFIX = 'Matcher';
+    private const LOCATOR_MATCHER_SUFFIX = 'Matcher';
+    private const INSTANCE = 'instance';
+    private const CLASS_NAME = 'className';
+
+    use SharedConfigResolverAwareTrait;
 
     /**
      * @var string
      */
-    private $bundle;
+    private $moduleName;
 
     /**
      * @var \Spryker\Shared\Kernel\Locator\LocatorInterface[]
@@ -30,18 +37,23 @@ class BundleProxy
     private $locatorMatcher;
 
     /**
-     * @var array
+     * @var bool|null
      */
-    protected static $cache = [];
+    private $isInstanceCacheEnabled;
 
     /**
-     * @param string $bundle
+     * @var array
+     */
+    private static $instanceCache = [];
+
+    /**
+     * @param string $moduleName
      *
      * @return $this
      */
-    public function setBundle($bundle)
+    public function setBundle($moduleName)
     {
-        $this->bundle = $bundle;
+        $this->moduleName = $moduleName;
 
         return $this;
     }
@@ -83,32 +95,63 @@ class BundleProxy
     }
 
     /**
-     * @param string $method
+     * @param string $methodName
      * @param array $arguments
      *
      * @throws \LogicException
      *
      * @return object
      */
-    public function __call($method, $arguments)
+    public function __call(string $methodName, array $arguments)
     {
-        $key = $this->bundle . '-' . $method;
-        if (isset(static::$cache[$key])) {
-            $locatedClassName = static::$cache[$key];
+        $cacheKey = $this->buildCacheKey($methodName);
 
-            return new $locatedClassName();
+        if (isset(static::$instanceCache[$cacheKey])) {
+            if ($this->isClassCacheEnabled()) {
+                return static::$instanceCache[$cacheKey][static::INSTANCE];
+            }
+
+            return new static::$instanceCache[$cacheKey][static::CLASS_NAME]();
         }
 
         foreach ($this->locator as $locator) {
             $matcher = $this->locatorMatcher[get_class($locator)];
-            if ($matcher->match($method)) {
-                $located = $locator->locate(ucfirst($this->bundle));
-                static::$cache[$key] = get_class($located);
+            if ($matcher->match($methodName)) {
+                $located = $locator->locate(ucfirst($this->moduleName));
+
+                if (!isset(static::$instanceCache[$cacheKey])) {
+                    static::$instanceCache[$cacheKey] = [];
+                }
+
+                static::$instanceCache[$cacheKey][static::INSTANCE] = $located;
+                static::$instanceCache[$cacheKey][static::CLASS_NAME] = get_class($located);
 
                 return $located;
             }
         }
 
-        throw new LogicException(sprintf('Could not map method "%s" to a locator!', $method));
+        throw new LogicException(sprintf('Could not map method "%s" to a locator!', $methodName));
+    }
+
+    /**
+     * @return bool
+     */
+    private function isClassCacheEnabled(): bool
+    {
+        if ($this->isInstanceCacheEnabled === null) {
+            $this->isInstanceCacheEnabled = $this->getSharedConfig()->isLocatorInstanceCacheEnabled();
+        }
+
+        return $this->isInstanceCacheEnabled;
+    }
+
+    /**
+     * @param string $methodName
+     *
+     * @return string
+     */
+    private function buildCacheKey(string $methodName): string
+    {
+        return $this->moduleName . '-' . $methodName;
     }
 }
