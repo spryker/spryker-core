@@ -123,7 +123,8 @@ class PersistentCartFactory extends AbstractFactory
         return new CustomerLoginQuoteSync(
             $this->createZedPersistentCartStub(),
             $this->getQuoteClient(),
-            $this->createQuoteUpdatePluginExecutor()
+            $this->createQuoteUpdatePluginExecutor(),
+            $this->getZedRequestClient()
         );
     }
 

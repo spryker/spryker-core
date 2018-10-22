@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface;
+use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 use Spryker\Shared\Quote\QuoteConfig;
 
 class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
@@ -32,18 +33,26 @@ class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
     protected $quoteUpdatePluginExecutor;
 
     /**
+     * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     */
+    protected $zedRequestClient;
+
+    /**
      * @param \Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface $persistentCartStub
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface $quoteUpdatePluginExecutor
+     * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestClient
      */
     public function __construct(
         PersistentCartStubInterface $persistentCartStub,
         PersistentCartToQuoteClientInterface $quoteClient,
-        QuoteUpdatePluginExecutorInterface $quoteUpdatePluginExecutor
+        QuoteUpdatePluginExecutorInterface $quoteUpdatePluginExecutor,
+        ZedRequestClientInterface $zedRequestClient
     ) {
         $this->quoteClient = $quoteClient;
         $this->persistentCartStub = $persistentCartStub;
         $this->quoteUpdatePluginExecutor = $quoteUpdatePluginExecutor;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -66,6 +75,7 @@ class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
         $quoteSyncRequestTransfer->setQuoteTransfer($quoteTransfer);
         $quoteSyncRequestTransfer->setCustomerTransfer($customerTransfer);
         $quoteResponseTransfer = $this->persistentCartStub->syncStorageQuote($quoteSyncRequestTransfer);
+        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         $this->quoteUpdatePluginExecutor->executePlugins($quoteResponseTransfer);
     }
