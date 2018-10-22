@@ -19,9 +19,4 @@
         <property name="quantityMax" type="int" />
         <property name="quantityInterval" type="int" />
     </transfer>
-
-    <transfer name="ProductView">
-        <property name="idProductConcrete" type="int" />
-        <property name="quantity" type="int" />
-    </transfer>
 </transfers>
