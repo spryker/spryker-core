@@ -77,7 +77,7 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
         $this->tester->assertStorageDatabaseTableIsEmpty();
         $this->haveBoxProductPackagingUnit();
 
-        $productAbstractPackagingSynchronizationDataPlugin  = $this->getProductAbstractPackagingSynchronizationDataPlugin();
+        $productAbstractPackagingSynchronizationDataPlugin = $this->getProductAbstractPackagingSynchronizationDataPlugin();
         $synchronizationDataTransfers = $productPackagingUnitSynchronizationDataPlugin->getData();
 
         $this->assertNotEmpty($synchronizationDataTransfers);
