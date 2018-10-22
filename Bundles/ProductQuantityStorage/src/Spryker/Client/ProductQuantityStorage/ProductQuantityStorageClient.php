@@ -9,8 +9,6 @@ namespace Spryker\Client\ProductQuantityStorage;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
-use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -55,14 +53,15 @@ class ProductQuantityStorageClient extends AbstractClient implements ProductQuan
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param int $idProduct
+     * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
+     * @return int
      */
-    public function validateProductQuantity(ProductViewTransfer $productViewTransfer): ProductQuantityValidationResponseTransfer
+    public function getNearestQuantity(int $idProduct, int $quantity): int
     {
         return $this->getFactory()
             ->createProductQuantityValidator()
-            ->validate($productViewTransfer);
+            ->getNearestQuantity($idProduct, $quantity);
     }
 }

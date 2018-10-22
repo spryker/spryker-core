@@ -7,15 +7,13 @@
 
 namespace Spryker\Client\ProductQuantityStorage\Validator;
 
-use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
-
 interface ProductQuantityValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param int $idProduct
+     * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
+     * @return int
      */
-    public function validate(ProductViewTransfer $productViewTransfer): ProductQuantityValidationResponseTransfer;
+    public function getNearestQuantity(int $idProduct, int $quantity): int;
 }

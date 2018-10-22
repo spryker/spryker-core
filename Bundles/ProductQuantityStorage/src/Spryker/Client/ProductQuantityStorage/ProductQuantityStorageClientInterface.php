@@ -9,8 +9,6 @@ namespace Spryker\Client\ProductQuantityStorage;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
-use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface ProductQuantityStorageClientInterface
 {
@@ -41,13 +39,14 @@ interface ProductQuantityStorageClientInterface
 
     /**
      * Specification:
-     * - Validates given quantity against the provided product quantity restrictions.
+     * - Retrieves the nearest valid quantity for a given product based on its product quantity restrictions.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param int $idProduct
+     * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
+     * @return int
      */
-    public function validateProductQuantity(ProductViewTransfer $productViewTransfer): ProductQuantityValidationResponseTransfer;
+    public function getNearestQuantity(int $idProduct, int $quantity): int;
 }

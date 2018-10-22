@@ -7,18 +7,10 @@
 
 namespace Spryker\Client\ProductQuantityStorage\Validator;
 
-use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
-use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
 class ProductQuantityValidator implements ProductQuantityValidatorInterface
 {
-    protected const ERROR_QUANTITY_MIN_NOT_FULFILLED = 'product-quantity.errors.quantity.min.failed';
-    protected const ERROR_QUANTITY_MAX_NOT_FULFILLED = 'product-quantity.errors.quantity.max.failed';
-    protected const ERROR_QUANTITY_INTERVAL_NOT_FULFILLED = 'product-quantity.errors.quantity.interval.failed';
-
     /**
      * @var \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface
      */
@@ -33,139 +25,35 @@ class ProductQuantityValidator implements ProductQuantityValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
-     */
-    public function validate(ProductViewTransfer $productViewTransfer): ProductQuantityValidationResponseTransfer
-    {
-        $productViewTransfer->requireIdProductConcrete();
-
-        $response = (new ProductQuantityValidationResponseTransfer())
-            ->setIsValid(true);
-
-        if (!$this->isApplicable($productViewTransfer)) {
-            return $response;
-        }
-
-        $productQuantityStorageTransfer = $this->findProductQuantityStorageTransfer($productViewTransfer);
-        if ($productQuantityStorageTransfer === null) {
-            return $response;
-        }
-
-        $quantity = $productViewTransfer->getQuantity();
-        $quantityMin = $productQuantityStorageTransfer->getQuantityMin();
-        $quantityMax = $productQuantityStorageTransfer->getQuantityMax();
-        $quantityInterval = $productQuantityStorageTransfer->getQuantityInterval();
-
-        $this->validateQuantityMin($quantity, $quantityMin, $response);
-        $this->validateQuantityInterval($quantity, $quantityMin, $quantityInterval, $response);
-        $this->validateQuantityMax($quantity, $quantityMax, $response);
-
-        return $response;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return bool
-     */
-    protected function isApplicable(ProductViewTransfer $productViewTransfer): bool
-    {
-        return $productViewTransfer->getQuantity() !== null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
-     */
-    protected function findProductQuantityStorageTransfer(ProductViewTransfer $productViewTransfer): ?ProductQuantityStorageTransfer
-    {
-        return $this->productQuantityStorageReader->findProductQuantityStorage($productViewTransfer->getIdProductConcrete());
-    }
-
-    /**
+     * @param int $idProduct
      * @param int $quantity
-     * @param int $quantityMin
-     * @param \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer $response
      *
-     * @return void
+     * @return int
      */
-    protected function validateQuantityMin(int $quantity, int $quantityMin, ProductQuantityValidationResponseTransfer $response): void
+    public function getNearestQuantity(int $idProduct, int $quantity): int
     {
-        if ($quantity >= $quantityMin) {
-            return;
+        $productQuantityTransfer = $this->productQuantityStorageReader->findProductQuantityStorage($idProduct);
+
+        if (!$productQuantityTransfer) {
+            return $quantity;
         }
 
-        $this->addViolationMessage(
-            $response,
-            static::ERROR_QUANTITY_MIN_NOT_FULFILLED,
-            [$quantity, $quantityMin]
-        );
-    }
+        $min = $productQuantityTransfer->getQuantityMin();
+        $max = $productQuantityTransfer->getQuantityMax();
+        $interval = $productQuantityTransfer->getQuantityInterval();
 
-    /**
-     * @param int $quantity
-     * @param int $quantityMin
-     * @param int $quantityInterval
-     * @param \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer $response
-     *
-     * @return void
-     */
-    protected function validateQuantityInterval(int $quantity, int $quantityMin, int $quantityInterval, ProductQuantityValidationResponseTransfer $response): void
-    {
-        // Shifted intervals: min = 5; interval = 3; Valid quantities: 5, 8, 11, ...
-        if (($quantity - $quantityMin) % $quantityInterval === 0) {
-            return;
+        if ($quantity < $min) {
+            return $min;
         }
 
-        $this->addViolationMessage(
-            $response,
-            static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED,
-            [$quantity, $quantityInterval]
-        );
-    }
-
-    /**
-     * @param int $quantity
-     * @param int|null $quantityMax
-     * @param \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer $response
-     *
-     * @return void
-     */
-    protected function validateQuantityMax(int $quantity, ?int $quantityMax, ProductQuantityValidationResponseTransfer $response): void
-    {
-        if ($quantityMax === null) {
-            return;
+        if ($max && $quantity > $max) {
+            $quantity = $max;
         }
 
-        if ($quantity <= $quantityMax) {
-            return;
+        if ($interval && ($quantity - $min) % $interval !== 0) {
+            $quantity = round(($quantity - $min) / $interval) * $interval + $min;
         }
 
-        $this->addViolationMessage(
-            $response,
-            static::ERROR_QUANTITY_MAX_NOT_FULFILLED,
-            [$quantity, $quantityMax]
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer $response
-     * @param string $glossaryKey
-     * @param string[] $replacements
-     *
-     * @return void
-     */
-    protected function addViolationMessage(ProductQuantityValidationResponseTransfer $response, string $glossaryKey, array $replacements): void
-    {
-        $response
-            ->setIsValid(false)
-            ->addMessage(
-                (new MessageTransfer())
-                    ->setValue($glossaryKey)
-                    ->setParameters($replacements)
-            );
+        return $quantity;
     }
 }
