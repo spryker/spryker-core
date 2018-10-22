@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductStorage\Storage;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
@@ -36,20 +37,28 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     protected $productAbstractRestrictionPlugins;
 
     /**
+     * @var \Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface
+     */
+    protected $productAbstractVariantsRestrictionFilter;
+
+    /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionPluginInterface[] $productAbstractRestrictionPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
         Store $store,
+        ProductAbstractVariantsRestrictionFilterInterface $productAbstractVariantsRestrictionFilter,
         array $productAbstractRestrictionPlugins = []
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->store = $store;
+        $this->productAbstractVariantsRestrictionFilter = $productAbstractVariantsRestrictionFilter;
         $this->productAbstractRestrictionPlugins = $productAbstractRestrictionPlugins;
     }
 
@@ -80,7 +89,12 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
 
         $key = $this->getStorageKey($idProductAbstract, $localeName);
 
-        return $this->storageClient->get($key);
+        $productAbstractStorageData = $this->storageClient->get($key);
+
+        $productAbstractStorageData = $this->productAbstractVariantsRestrictionFilter
+            ->filterAbstractProductVariantsData($productAbstractStorageData);
+
+        return $productAbstractStorageData;
     }
 
     /**

@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilter;
+use Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapper;
 use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
 use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader;
@@ -60,6 +62,7 @@ class ProductStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->getStore(),
+            $this->createProductAbstractVariantsRestrictionFilter(),
             $this->getProductAbstractRestrictionPlugins()
         );
     }
@@ -69,7 +72,10 @@ class ProductStorageFactory extends AbstractFactory
      */
     public function createProductStorageDataMapper()
     {
-        return new ProductStorageDataMapper($this->getStorageProductExpanderPlugins());
+        return new ProductStorageDataMapper(
+            $this->getStorageProductExpanderPlugins(),
+            $this->createProductAbstractVariantsRestrictionFilter()
+        );
     }
 
     /**
@@ -78,6 +84,16 @@ class ProductStorageFactory extends AbstractFactory
     public function createVariantExpander()
     {
         return new ProductVariantExpander($this->createProductConcreteStorageReader());
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface
+     */
+    public function createProductAbstractVariantsRestrictionFilter(): ProductAbstractVariantsRestrictionFilterInterface
+    {
+        return new ProductAbstractVariantsRestrictionFilter(
+            $this->createProductConcreteStorageReader()
+        );
     }
 
     /**
