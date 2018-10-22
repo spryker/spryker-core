@@ -30,6 +30,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const ACTION_CART_ITEMS_DELETE = 'delete';
 
     public const ACTION_GUEST_CARTS_GET = 'get';
+    public const ACTION_GUEST_CARTS_DELETE = 'delete';
 
     public const ACTION_GUEST_CART_ITEMS_POST = 'post';
     public const ACTION_GUEST_CART_ITEMS_PATCH = 'patch';

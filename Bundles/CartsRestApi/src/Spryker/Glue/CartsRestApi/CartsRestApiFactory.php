@@ -27,6 +27,8 @@ use Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValid
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValidatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreator;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreatorInterface;
+use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartDeleter;
+use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReader;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartUpdater;
@@ -166,6 +168,16 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartUpdater(
             $this->getQuoteClient(),
             $this->getPersistentCartClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartDeleterInterface
+     */
+    public function createGuestCartDeleter(): GuestCartDeleterInterface
+    {
+        return new GuestCartDeleter(
+            $this->getResourceBuilder()
         );
     }
 
