@@ -74,7 +74,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
 
         $unRestrictedAttributeVariants = [];
         foreach ($attributeVariantsIterator as $attributeVariantKey => $attributeVariantValue) {
-            if (!is_array($attributeVariantValue)) {
+            if (!$attributeVariantsIterator->callHasChildren()) {
                 continue;
             }
 
@@ -104,11 +104,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
         $filteredSuperAttributes = [];
         $filteredAttributeVariantsIterator = $this->createRecursiveIterator($filteredAttributeVariants);
         foreach ($filteredAttributeVariantsIterator as $filteredAttributeVariantKey => $filteredAttributeVariant) {
-            if (!is_array($filteredAttributeVariant)) {
-                continue;
-            }
-
-            if ($filteredAttributeVariantKey === ProductConfig::VARIANT_LEAF_NODE_ID) {
+            if (!$filteredAttributeVariantsIterator->callHasChildren()) {
                 continue;
             }
 
@@ -144,18 +140,6 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
 
             return $restrictedProductConcreteIds;
         }, []);
-    }
-
-    /**
-     * @param array $productConcreteIds
-     *
-     * @return array
-     */
-    protected function getUnRestrictedProductConcreteIds(array $productConcreteIds): array
-    {
-        return array_filter($productConcreteIds, function ($productConcreteId) {
-            return !$this->productConcreteRestrictionReader->isProductConcreteRestricted($productConcreteId);
-        });
     }
 
     /**
