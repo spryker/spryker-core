@@ -86,6 +86,7 @@ interface ShoppingListClientInterface
     /**
      * Specification:
      *  - Makes Zed request.
+     *  - Hydrates ShoppingListItem with provided optional params.
      *  - Add item to shopping list.
      *  - Updates customer permissions.
      *  - Get messages from zed request and put them to session.
@@ -93,10 +94,11 @@ interface ShoppingListClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer;
 
     /**
      * Specification:

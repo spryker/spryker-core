@@ -33,16 +33,6 @@ class ShoppingListToProductFacadeBridge implements ShoppingListToProductFacadeIn
     }
 
     /**
-     * @param string $sku
-     *
-     * @return int|null
-     */
-    public function findProductConcreteIdBySku($sku): ?int
-    {
-        return $this->productFacade->findProductConcreteIdBySku($sku);
-    }
-
-    /**
      * @param string[] $skus
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
