@@ -13,6 +13,7 @@ use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientBridge;
 use Spryker\Glue\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
+use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -23,6 +24,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const PLUGIN_QUOTE_COLLECTION_READER = 'PLUGIN_QUOTE_COLLECTION_READER';
+    public const PLUGIN_QUOTE_CREATOR = 'PLUGIN_QUOTE_CREATOR';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -38,6 +40,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addQuoteCollectionReaderPlugin($container);
+        $container = $this->addQuoteCreatorPlugin($container);
 
         return $container;
     }
@@ -105,8 +108,22 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteCollectionReaderPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_QUOTE_COLLECTION_READER] = function (Container $container) {
+        $container[static::PLUGIN_QUOTE_COLLECTION_READER] = function () {
             return $this->getQuoteCollectionReaderPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addQuoteCreatorPlugin(Container $container): Container
+    {
+        $container[static::PLUGIN_QUOTE_CREATOR] = function () {
+            return $this->getQuoteCreatorPlugin();
         };
 
         return $container;
@@ -124,6 +141,21 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
             'in your own CartsRestApiDependencyProvider::getQuoteCollectionReaderPlugin() ' .
             'to be able to read quote collection.',
             QuoteCollectionReaderPluginInterface::class
+        ));
+    }
+
+    /**
+     * @throws \Spryker\Glue\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException
+     *
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
+     */
+    protected function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
+    {
+        throw new MissingQuoteCollectionReaderPluginException(sprintf(
+            'Missing instance of %s! You need to configure QuoteCreatorPluginInterface ' .
+            'in your own CartsRestApiDependencyProvider::getQuoteCreatorPlugin() ' .
+            'to be able to create quote.',
+            QuoteCreatorPluginInterface::class
         ));
     }
 }

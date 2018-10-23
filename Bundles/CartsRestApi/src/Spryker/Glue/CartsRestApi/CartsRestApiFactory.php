@@ -45,11 +45,14 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReader;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreator;
+use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdater;
 use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilder;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
+use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -75,9 +78,9 @@ class CartsRestApiFactory extends AbstractFactory
     public function createCartCreator(): CartCreatorInterface
     {
         return new CartCreator(
-            $this->getResourceBuilder(),
             $this->createCartsResourceMapper(),
-            $this->getPersistentCartClient()
+            $this->getQuoteCreatorPlugin(),
+            $this->getResourceBuilder()
         );
     }
 
@@ -253,6 +256,17 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface
+     */
+    public function createSingleQuoteCreator(): SingleQuoteCreatorInterface
+    {
+        return new SingleQuoteCreator(
+            $this->createCartReader(),
+            $this->getPersistentCartClient()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValidatorInterface
      */
     public function createAnonymousCustomerUniqueIdValidator(): AnonymousCustomerUniqueIdValidatorInterface
@@ -314,5 +328,13 @@ class CartsRestApiFactory extends AbstractFactory
     public function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_COLLECTION_READER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
+     */
+    public function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_CREATOR);
     }
 }

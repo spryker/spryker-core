@@ -45,6 +45,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_FAILED_CREATING_QUOTE = '107';
     public const RESPONSE_CODE_MISSING_REQUIRED_PARAMETER = '108';
     public const RESPONSE_CODE_CUSTOMER_UNAUTHORIZED = '109';
+    public const RESPONSE_CODE_CUSTOMER_ALREADY_HAS_QUOTE = '110';
 
     public const EXCEPTION_MESSAGE_QUOTE_ID_MISSING = 'Quote uuid is missing.';
     public const EXCEPTION_MESSAGE_QUOTE_ITEM_NOT_FOUND = 'Item with the given group key not found in the cart.';
@@ -55,6 +56,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER = 'Quote uuid or item group key is not specified.';
     public const EXCEPTION_MESSAGE_QUOTE_NOT_FOUND = 'Quote with given uuid not found.';
     public const EXCEPTION_MESSAGE_CUSTOMER_UNAUTHORIZED = 'Customer unique id is missing.';
+    public const EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_QUOTE = 'Customer already has a quote.';
 
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 }
