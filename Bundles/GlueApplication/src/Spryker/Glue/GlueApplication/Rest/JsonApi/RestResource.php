@@ -24,7 +24,7 @@ class RestResource implements RestResourceInterface
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface[]
      */
-    protected $links;
+    protected $links = [];
 
     /**
      * @var array
