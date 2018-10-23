@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExec
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
-interface CompanyBusinessUnitTransferExpanderPluginExecutorInterface
+interface CompanyBusinessUnitPluginExecutorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer

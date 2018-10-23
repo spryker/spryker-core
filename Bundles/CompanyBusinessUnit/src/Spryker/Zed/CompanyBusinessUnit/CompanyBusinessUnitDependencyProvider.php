@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE = 'PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE';
-    public const PLUGINS_COMPANY_BUSINESS_UNIT_TRANSFER_EXPANDER = 'PLUGINS_COMPANY_BUSINESS_UNIT_TRANSFER_EXPANDER';
+    public const PLUGINS_COMPANY_BUSINESS_UNIT_EXPANDER = 'PLUGINS_COMPANY_BUSINESS_UNIT_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,7 +24,7 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCompanyBusinessUnitPostSavePlugins($container);
-        $container = $this->addCompanyBusinessUnitTransferExpanderPlugins($container);
+        $container = $this->addCompanyBusinessUnitExpanderPlugins($container);
 
         return $container;
     }
@@ -48,10 +48,10 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyBusinessUnitTransferExpanderPlugins(Container $container): Container
+    protected function addCompanyBusinessUnitExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_BUSINESS_UNIT_TRANSFER_EXPANDER] = function (Container $container) {
-            return $this->getCompanyBusinessUnitTransferExpanderPlugins();
+        $container[static::PLUGINS_COMPANY_BUSINESS_UNIT_EXPANDER] = function (Container $container) {
+            return $this->getCompanyBusinessUnitExpanderPlugins();
         };
 
         return $container;
@@ -66,9 +66,9 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitTransferExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[]
      */
-    protected function getCompanyBusinessUnitTransferExpanderPlugins(): array
+    protected function getCompanyBusinessUnitExpanderPlugins(): array
     {
         return [];
     }

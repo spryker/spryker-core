@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
-interface CompanyBusinessUnitTransferExpanderPluginInterface
+interface CompanyBusinessUnitExpanderPluginInterface
 {
     /**
      * Specification:

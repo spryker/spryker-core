@@ -8,10 +8,10 @@
 namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitTransferExpanderPluginExecutorInterface;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
 
-class CompanyBusinessUnitFinder implements CompanyBusinessUnitFinderInterface
+class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
 {
     /**
      * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface
@@ -19,17 +19,17 @@ class CompanyBusinessUnitFinder implements CompanyBusinessUnitFinderInterface
     protected $companyBusinessUnitRepository;
 
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitTransferExpanderPluginExecutorInterface
+     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface
      */
     protected $transferExpanderPluginExecutor;
 
     /**
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository
-     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitTransferExpanderPluginExecutorInterface $transferExpanderPluginExecutor
+     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface $transferExpanderPluginExecutor
      */
     public function __construct(
         CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository,
-        CompanyBusinessUnitTransferExpanderPluginExecutorInterface $transferExpanderPluginExecutor
+        CompanyBusinessUnitPluginExecutorInterface $transferExpanderPluginExecutor
     ) {
         $this->companyBusinessUnitRepository = $companyBusinessUnitRepository;
         $this->transferExpanderPluginExecutor = $transferExpanderPluginExecutor;

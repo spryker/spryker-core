@@ -10,10 +10,10 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitAssigner\CompanyBusinessUnitAssigner;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreator;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreatorInterface;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder\CompanyBusinessUnitFinder;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder\CompanyBusinessUnitFinderInterface;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitTransferExpanderPluginExecutor;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitTransferExpanderPluginExecutorInterface;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder\CompanyBusinessUnitReader;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder\CompanyBusinessUnitReaderInterface;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutor;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutor;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilder;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilderInterface;
@@ -74,23 +74,23 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitTransferExpanderPluginExecutorInterface
+     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface
      */
-    public function createCompanyBusinessUnitTransferExpanderPluginExecutor(): CompanyBusinessUnitTransferExpanderPluginExecutorInterface
+    public function createCompanyBusinessUnitPluginExecutor(): CompanyBusinessUnitPluginExecutorInterface
     {
-        return new CompanyBusinessUnitTransferExpanderPluginExecutor(
-            $this->getCompanyBusinessUnitTransferExpanderPlugins()
+        return new CompanyBusinessUnitPluginExecutor(
+            $this->getCompanyBusinessUnitExpanderPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder\CompanyBusinessUnitFinderInterface
+     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder\CompanyBusinessUnitReaderInterface
      */
-    public function createCompanyBusinessUnitFinder(): CompanyBusinessUnitFinderInterface
+    public function createCompanyBusinessUnitReader(): CompanyBusinessUnitReaderInterface
     {
-        return new CompanyBusinessUnitFinder(
+        return new CompanyBusinessUnitReader(
             $this->getRepository(),
-            $this->createCompanyBusinessUnitTransferExpanderPluginExecutor()
+            $this->createCompanyBusinessUnitPluginExecutor()
         );
     }
 
@@ -113,10 +113,10 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitTransferExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[]
      */
-    public function getCompanyBusinessUnitTransferExpanderPlugins(): array
+    public function getCompanyBusinessUnitExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CompanyBusinessUnitDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_TRANSFER_EXPANDER);
+        return $this->getProvidedDependency(CompanyBusinessUnitDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_EXPANDER);
     }
 }

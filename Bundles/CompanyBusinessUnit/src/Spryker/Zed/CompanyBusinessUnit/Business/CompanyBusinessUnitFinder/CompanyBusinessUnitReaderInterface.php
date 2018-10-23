@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
-interface CompanyBusinessUnitFinderInterface
+interface CompanyBusinessUnitReaderInterface
 {
     /**
      * @param int $idCompanyBusinessUnit

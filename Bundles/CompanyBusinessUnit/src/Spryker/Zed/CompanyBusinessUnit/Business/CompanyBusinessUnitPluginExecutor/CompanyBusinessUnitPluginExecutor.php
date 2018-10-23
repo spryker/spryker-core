@@ -9,15 +9,15 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExec
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
-class CompanyBusinessUnitTransferExpanderPluginExecutor implements CompanyBusinessUnitTransferExpanderPluginExecutorInterface
+class CompanyBusinessUnitPluginExecutor implements CompanyBusinessUnitPluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitTransferExpanderPluginInterface[]
+     * @var \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[]
      */
     protected $companyBusinessUnitTransferExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitTransferExpanderPluginInterface[] $companyBusinessUnitTransferExpanderPlugins
+     * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[] $companyBusinessUnitTransferExpanderPlugins
      */
     public function __construct(array $companyBusinessUnitTransferExpanderPlugins)
     {

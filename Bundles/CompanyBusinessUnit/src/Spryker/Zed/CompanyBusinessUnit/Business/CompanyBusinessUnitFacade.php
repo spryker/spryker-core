@@ -37,7 +37,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitTransfer {
         return $this->getFactory()
-            ->createCompanyBusinessUnitFinder()
+            ->createCompanyBusinessUnitReader()
             ->getCompanyBusinessUnitById(
                 $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
             );

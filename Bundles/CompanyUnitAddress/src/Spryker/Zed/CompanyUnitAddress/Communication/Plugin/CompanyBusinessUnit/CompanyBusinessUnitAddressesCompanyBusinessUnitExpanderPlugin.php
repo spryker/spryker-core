@@ -9,13 +9,13 @@ namespace Spryker\Zed\CompanyUnitAddress\Communication\Plugin\CompanyBusinessUni
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
-use Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitTransferExpanderPluginInterface;
+use Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface getFacade()
  */
-class CompanyBusinessUnitAddressesCompanyBusinessUnitTransferExpanderPlugin extends AbstractPlugin implements CompanyBusinessUnitTransferExpanderPluginInterface
+class CompanyBusinessUnitAddressesCompanyBusinessUnitExpanderPlugin extends AbstractPlugin implements CompanyBusinessUnitExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -32,8 +32,8 @@ class CompanyBusinessUnitAddressesCompanyBusinessUnitTransferExpanderPlugin exte
         $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
             ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
 
-        $addressCollection = $this->getFacade()->getCompanyUnitAddressCollection($companyUnitAddressCriteriaFilterTransfer);
-        $companyBusinessUnitTransfer->setAddressCollection($addressCollection);
+        $companyUnitAddressCollection = $this->getFacade()->getCompanyUnitAddressCollection($companyUnitAddressCriteriaFilterTransfer);
+        $companyBusinessUnitTransfer->setAddressCollection($companyUnitAddressCollection);
 
         return $companyBusinessUnitTransfer;
     }
