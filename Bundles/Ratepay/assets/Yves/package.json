@@ -3,6 +3,6 @@
   "name": "spryker-yves-ratepay",
   "version": "1.0.0",
   "dependencies": {
-    "jquery": "^3.3.1"
+    "jquery": "~3.3.1"
   }
 }
