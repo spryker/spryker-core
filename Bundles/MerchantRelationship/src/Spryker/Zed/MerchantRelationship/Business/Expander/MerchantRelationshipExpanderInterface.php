@@ -16,5 +16,5 @@ interface MerchantRelationshipExpanderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function expandMerchantRelationshipTransferByName(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
+    public function expandWithName(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
 }

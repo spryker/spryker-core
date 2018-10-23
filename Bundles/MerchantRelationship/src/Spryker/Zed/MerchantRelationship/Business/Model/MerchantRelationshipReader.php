@@ -55,8 +55,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
             throw new MerchantRelationshipNotFoundException();
         }
 
-        $merchantRelationshipTransfer = $this->merchantRelationshipExpander
-            ->expandMerchantRelationshipTransferByName($merchantRelationshipTransfer);
+        $merchantRelationshipTransfer = $this->merchantRelationshipExpander->expandWithName($merchantRelationshipTransfer);
 
         return $merchantRelationshipTransfer;
     }
@@ -99,7 +98,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
         $merchantRelationships = $this->repository->getMerchantRelationshipCollection();
 
         foreach ($merchantRelationships as $merchantRelationshipTransfer) {
-             $this->merchantRelationshipExpander->expandMerchantRelationshipTransferByName($merchantRelationshipTransfer);
+             $this->merchantRelationshipExpander->expandWithName($merchantRelationshipTransfer);
         }
 
         return $merchantRelationships;

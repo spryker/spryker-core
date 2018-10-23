@@ -18,7 +18,7 @@ class MerchantRelationshipExpander implements MerchantRelationshipExpanderInterf
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function expandMerchantRelationshipTransferByName(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    public function expandWithName(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
         $merchantRelationshipTransfer->setName($this->createMerchantRelationshipName($merchantRelationshipTransfer));
 

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\DataProvider;
 
-use Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\MerchantPriceDimensionForm;
+use Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\MerchantRelationshipPriceDimensionForm;
 use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface;
 
 class MerchantPriceDimensionFormDataProvider
@@ -33,7 +33,7 @@ class MerchantPriceDimensionFormDataProvider
         $merchantRelationshipChoices = $this->prepareMerchantRelationshipChoices();
 
         return [
-            MerchantPriceDimensionForm::OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES => $merchantRelationshipChoices,
+            MerchantRelationshipPriceDimensionForm::OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES => $merchantRelationshipChoices,
         ];
     }
 

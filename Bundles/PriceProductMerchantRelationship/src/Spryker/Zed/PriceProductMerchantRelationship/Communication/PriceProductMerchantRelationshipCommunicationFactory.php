@@ -9,24 +9,14 @@ namespace Spryker\Zed\PriceProductMerchantRelationship\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\DataProvider\MerchantPriceDimensionFormDataProvider;
-use Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\MerchantPriceDimensionForm;
 use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshipDependencyProvider;
-use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig getConfig()
  */
 class PriceProductMerchantRelationshipCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
-    public function createMerchantPriceDimensionForm(): FormTypeInterface
-    {
-        return new MerchantPriceDimensionForm();
-    }
-
     /**
      * @return \Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\DataProvider\MerchantPriceDimensionFormDataProvider
      */

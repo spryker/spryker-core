@@ -19,11 +19,6 @@ class PriceProductMerchantRelationshipConfig extends AbstractSharedConfig
     public const PRICE_GROSS_MODE = 'GROSS_MODE';
 
     /**
-     * @see \Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd
-     */
-    public const FORM_PRICE_DIMENSION = 'price_dimension';
-
-    /**
      * @return string
      */
     public function getPriceDimensionMerchantRelationship(): string

@@ -14,12 +14,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MerchantPriceDimensionForm extends AbstractType
+class MerchantRelationshipPriceDimensionForm extends AbstractType
 {
     public const OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES = 'merchant_relationship_choices';
 
-    public const FIELD_PLACEHOLDER_MERCHANT_RELATIONSHIP = 'Default prices';
-    public const FIELD_LABEL_MERCHANT_RELATIONSHIP = 'Merchant Price Dimension';
+    protected const FIELD_PLACEHOLDER_MERCHANT_RELATIONSHIP = 'Default prices';
+    protected const FIELD_LABEL_MERCHANT_RELATIONSHIP = 'Merchant Price Dimension';
 
     protected const TEMPLATE_PATH = '@PriceProductMerchantRelationship/ProductManagement/price_dimension.twig';
 

@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\Prod
 
 use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\MerchantPriceDimensionForm;
+use Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\MerchantRelationshipPriceDimensionForm;
 use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -19,6 +19,11 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MerchantRelationshipProductConcreteFormExpanderPlugin extends AbstractPlugin implements ProductConcreteFormExpanderPluginInterface
 {
+    /**
+     * @uses \Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd
+     */
+    protected const FORM_PRICE_DIMENSION = 'price_dimension';
+
     /**
      * {@inheritdoc}
      *  - Adds sub-form with merchant relationship dimension dropdown.
@@ -36,9 +41,9 @@ class MerchantRelationshipProductConcreteFormExpanderPlugin extends AbstractPlug
             ->createMerchantPriceDimensionFormDataProvider()
             ->getOptions();
 
-        $builder->get(PriceProductMerchantRelationshipConfig::FORM_PRICE_DIMENSION)->add(
+        $builder->get(static::FORM_PRICE_DIMENSION)->add(
             PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP,
-            MerchantPriceDimensionForm::class,
+            MerchantRelationshipPriceDimensionForm::class,
             $options
         );
 

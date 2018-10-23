@@ -182,9 +182,8 @@ class EditController extends AddController
                     $productConcreteTransfer->getSku()
                 ));
 
-                return $this->createRedirectResponseAfterUpdate(
-                    $productConcreteTransfer->getIdProductConcrete(),
-                    $request
+                return $this->redirectResponse(
+                    urldecode(Url::generate('/product-management/edit/variant', $request->query->all())->build())
                 );
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
@@ -224,22 +223,6 @@ class EditController extends AddController
 
         return $this->jsonResponse(
             $variantTable->fetchData()
-        );
-    }
-
-    /**
-     * @param int $idConcreteProduct
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function createRedirectResponseAfterUpdate(int $idConcreteProduct, Request $request): RedirectResponse
-    {
-        $params = $request->query->all();
-        $params[static::PARAM_ID_PRODUCT] = $idConcreteProduct;
-
-        return $this->redirectResponse(
-            urldecode(Url::generate('/product-management/edit/variant', $params)->build())
         );
     }
 }

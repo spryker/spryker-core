@@ -484,7 +484,7 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function addPriceDimensionForm(FormBuilderInterface $builder): self
+    protected function addPriceDimensionForm(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FORM_PRICE_DIMENSION,
@@ -728,8 +728,8 @@ class ProductFormAdd extends AbstractType
      */
     protected function executeProductAbstractFormExpanderPlugins(FormBuilderInterface $builder, array $options): self
     {
-        foreach ($this->getFactory()->getProductAbstractFormExpanderPlugins() as $abstractFormExpanderPlugin) {
-            $builder = $abstractFormExpanderPlugin->expand($builder, $options);
+        foreach ($this->getFactory()->getProductAbstractFormExpanderPlugins() as $formExpanderPlugin) {
+            $builder = $formExpanderPlugin->expand($builder, $options);
         }
 
         return $this;
