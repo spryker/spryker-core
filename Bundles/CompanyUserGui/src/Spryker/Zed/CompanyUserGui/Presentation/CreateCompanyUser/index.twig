@@ -1,0 +1,43 @@
+{% extends '@CompanyUserGui/_layout/layout.twig' %}
+
+{% set widget_title = 'Create Company User' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton(url(backButton), 'Back to Company Users' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+
+            {% for child in form %}
+                <div class="form-group">
+
+                    {% if "hidden" not in child.vars.block_prefixes %}
+                        {{ form_label(child) }}
+                        {{ form_errors(child) }}
+                    {% endif %}
+
+                    {% if child.vars.attr.template_path is defined %}
+                        {% include child.vars.attr.template_path with {'form': child} %}
+                    {% else %}
+                        {{ form_widget(child) }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

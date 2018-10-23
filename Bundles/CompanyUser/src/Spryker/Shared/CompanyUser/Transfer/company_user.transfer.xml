@@ -17,6 +17,7 @@
         <property name="company" type="Company" />
         <property name="fkCustomer" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="CompanyUserResponse">
@@ -34,6 +35,7 @@
         <property name="idCompany" type="int"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
+        <property name="companyUserIds" type="array"/>
     </transfer>
 
     <transfer name="Filter">

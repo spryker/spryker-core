@@ -40,6 +40,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+    public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
     public const FACADE_TOUCH = 'FACADE_TOUCH';
     public const FACADE_TAX = 'FACADE_TAX';
     public const FACADE_PRICE = 'FACADE_PRICE';

@@ -48,7 +48,7 @@ interface ResourceRoutePluginInterface extends ModuleNameAwareInterface
      * @api
      *
      * Specification:
-     *  - This method should return FQCN to transfer object. This object it will be automatically populated from POST/PATCH
+     *  - This method should return FQCN to transfer object. This object will be automatically populated from POST/PATCH
      * requests, and passed to REST controller actions as first argument. It is also used when creating JSONAPI resource objects.
      *
      * @return string

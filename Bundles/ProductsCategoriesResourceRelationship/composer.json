@@ -1,5 +1,6 @@
 {
   "name": "spryker/products-categories-resource-relationship",
+  "type": "library",
   "description": "ProductsCategoriesResourceRelationship module",
   "license": "proprietary",
   "require": {
