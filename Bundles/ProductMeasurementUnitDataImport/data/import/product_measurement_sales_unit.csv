@@ -18,11 +18,9 @@ sales_unit_16,218_1232,ITEM,1,1,1,1
 sales_unit_17,218_1232,KILO,2,1,1,1
 sales_unit_18,218_1232,GRAM,0.002,1,1,1
 sales_unit_19,218_1233,ITEM,1,1,1,1
-sales_unit_20,218_1233,KILO,1,1,1,1
-sales_unit_21,218_1233,GRAM,0.001,1,1,1
-sales_unit_22,218_1234,ITEM,1,1,1,1
-sales_unit_23,218_1234,KILO,2,1,1,1
-sales_unit_24,218_1234,GRAM,0.002,1,1,1
-sales_unit_25,218_1230,ITEM,1,1,1,1
-sales_unit_26,218_1230,KILO,10,1,1,0
-sales_unit_27,218_1230,GRAM,0.01,1,1,0
+sales_unit_20,218_1234,ITEM,1,1,1,1
+sales_unit_21,218_1234,KILO,2,1,1,1
+sales_unit_22,218_1234,GRAM,0.002,1,1,1
+sales_unit_23,218_1230,ITEM,1,1,1,1
+sales_unit_24,218_1230,KILO,10,1,1,0
+sales_unit_25,218_1230,GRAM,0.01,1,1,0
