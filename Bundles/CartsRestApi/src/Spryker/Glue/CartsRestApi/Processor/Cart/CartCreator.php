@@ -144,32 +144,46 @@ class CartCreator implements CartCreatorInterface
     protected function createFailedCreatingQuoteError(QuoteResponseTransfer $quoteResponseTransfer, RestResponseInterface $response): RestResponseInterface
     {
         if ($quoteResponseTransfer->getErrors()->count() === 0) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_QUOTE)
-                ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
-                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART);
-
-            return $response->addError($restErrorTransfer);
+            return $response->addError($this->createRestErrorMessageTransfer(
+                CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_QUOTE,
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+                CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART
+            ));
         }
 
         foreach ($quoteResponseTransfer->getErrors() as $error) {
             if ($error->getMessage() === CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_QUOTE) {
-                $restErrorTransfer = (new RestErrorMessageTransfer())
-                    ->setCode(CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_QUOTE)
-                    ->setStatus(Response::HTTP_METHOD_NOT_ALLOWED)
-                    ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_QUOTE);
-                $response->addError($restErrorTransfer);
+                $response->addError($this->createRestErrorMessageTransfer(
+                    CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_QUOTE,
+                    Response::HTTP_METHOD_NOT_ALLOWED,
+                    CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_QUOTE
+                ));
 
                 continue;
             }
 
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_QUOTE)
-                ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
-                ->setDetail($error->getMessage());
-            $response->addError($restErrorTransfer);
+            $response->addError($this->createRestErrorMessageTransfer(
+                CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_QUOTE,
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+                $error->getMessage()
+            ));
         }
 
         return $response;
+    }
+
+    /**
+     * @param string $code
+     * @param int $status
+     * @param string $detail
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createRestErrorMessageTransfer(string $code, int $status, string $detail): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode($code)
+            ->setStatus($status)
+            ->setDetail($detail);
     }
 }
