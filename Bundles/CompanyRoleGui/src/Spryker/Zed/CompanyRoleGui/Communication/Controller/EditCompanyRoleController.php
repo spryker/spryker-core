@@ -19,6 +19,7 @@ class EditCompanyRoleController extends AbstractController
     protected const URL_REDIRECT_LIST_COMPANY_ROLE = '/company-role-gui/list-company-role';
 
     protected const MESSAGE_SUCCESS_COMPANY_ROLE_UPDATE = 'Company role has been successfully updated';
+    protected const MESSAGE_ERROR_COMPANY_ROLE_DEFAULT_ROLE_NOT_CHANGED = 'Default role has not been changed. You should mark another role as “default” first.';
 
     protected const REQUEST_ID_COMPANY_ROLE = 'id-company-role';
 
@@ -38,6 +39,7 @@ class EditCompanyRoleController extends AbstractController
             ->handleRequest($request);
 
         if ($companyRoleForm->isSubmitted() && $companyRoleForm->isValid()) {
+            /** @var \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleFormData */
             $companyRoleFormData = $companyRoleForm->getData();
 
             $this->getFactory()
@@ -45,6 +47,10 @@ class EditCompanyRoleController extends AbstractController
                 ->update($companyRoleFormData);
 
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_ROLE_UPDATE);
+
+            if ($companyRoleFormData->isPropertyModified('isDefault') && $companyRoleFormData->getIsDefault() === false) {
+                $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_ROLE_DEFAULT_ROLE_NOT_CHANGED);
+            }
 
             return $this->redirectResponse(static::URL_REDIRECT_LIST_COMPANY_ROLE);
         }
