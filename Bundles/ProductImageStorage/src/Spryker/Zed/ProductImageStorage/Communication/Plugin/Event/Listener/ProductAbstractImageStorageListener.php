@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
@@ -34,6 +35,12 @@ class ProductAbstractImageStorageListener extends AbstractPlugin implements Even
         $productImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
         $productAbstractIds = $this->getQueryContainer()->queryProductAbstractIdsByProductImageIds($productImageIds)->find()->getData();
 
-        $this->getFacade()->publishProductAbstractImages($productAbstractIds);
+        if ($eventName === ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_DELETE) {
+            $this->getFacade()->unpublishProductAbstractImages($productAbstractIds);
+        }
+
+        if ($eventName === ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE || $eventName === ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_CREATE) {
+            $this->getFacade()->publishProductAbstractImages($productAbstractIds);
+        }
     }
 }
