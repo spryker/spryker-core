@@ -34,7 +34,7 @@ class EditController extends AbstractController
         $dataProvider = $this->getFactory()->createCustomerUpdateFormDataProvider();
         $formData = $dataProvider->getData($idCustomer);
 
-        if ($formData === []) {
+        if (!$formData) {
             $this->addErrorMessage(sprintf('Customer with id %s doesn\'t exist', $idCustomer));
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
