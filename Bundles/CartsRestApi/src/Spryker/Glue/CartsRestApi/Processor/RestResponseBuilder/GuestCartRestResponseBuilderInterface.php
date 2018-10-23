@@ -39,10 +39,10 @@ interface GuestCartRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createQuoteIdMissingError(): RestResponseInterface;
+    public function createGuestCartIdMissingError(): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedDeletingQuoteError(): RestResponseInterface;
+    public function createGuestCartDeleteFailedError(): RestResponseInterface;
 }

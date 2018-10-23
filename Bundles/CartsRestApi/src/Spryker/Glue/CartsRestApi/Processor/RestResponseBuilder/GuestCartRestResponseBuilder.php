@@ -121,7 +121,7 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createQuoteIdMissingError(): RestResponseInterface
+    public function createGuestCartIdMissingError(): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -136,7 +136,7 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedDeletingQuoteError(): RestResponseInterface
+    public function createGuestCartDeleteFailedError(): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 

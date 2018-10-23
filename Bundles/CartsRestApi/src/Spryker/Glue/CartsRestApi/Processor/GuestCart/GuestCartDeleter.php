@@ -35,9 +35,9 @@ class GuestCartDeleter implements GuestCartDeleterInterface
     {
         $idQuote = $restRequest->getResource()->getId();
         if ($idQuote === null) {
-            return $this->guestCartRestResponseBuilder->createQuoteIdMissingError();
+            return $this->guestCartRestResponseBuilder->createGuestCartIdMissingError();
         }
 
-        return $this->guestCartRestResponseBuilder->createFailedDeletingQuoteError();
+        return $this->guestCartRestResponseBuilder->createGuestCartDeleteFailedError();
     }
 }
