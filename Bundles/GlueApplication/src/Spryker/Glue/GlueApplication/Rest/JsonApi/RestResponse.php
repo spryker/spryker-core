@@ -14,7 +14,7 @@ class RestResponse implements RestResponseInterface
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface[]
      */
-    protected $links;
+    protected $links = [];
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
