@@ -11,6 +11,7 @@
     "spryker/price-product": "^2.0.0",
     "spryker/price-product-extension": "^1.0.0",
     "spryker/product": "^6.1.0",
+    "spryker/product-management-extension": "^1.1.0",
     "spryker/propel-orm": "^1.6.2",
     "spryker/symfony": "^3.1.5"
   },
