@@ -8,41 +8,41 @@
 namespace Spryker\Zed\SprykGui\Business\ChoiceLoader\Service;
 
 use Generated\Shared\Transfer\ModuleTransfer;
-use ReflectionClass;
-use Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderInterface;
+use ReflectionMethod;
+use Spryker\Zed\SprykGui\Business\ChoiceLoader\Common\AbstractMethodChoiceLoader;
 
-class ServiceMethodChoiceLoader implements ChoiceLoaderInterface
+class ServiceMethodChoiceLoader extends AbstractMethodChoiceLoader
 {
-    /**
-     * @var array
-     */
-    protected $internalMethods = [];
-
     /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return array
+     * @return string
      */
-    public function loadChoices(ModuleTransfer $moduleTransfer): array
+    protected function getClassName(ModuleTransfer $moduleTransfer): string
     {
         $dependentModule = $moduleTransfer->getDependentModule();
-        $serviceClassName = sprintf('\\Spryker\\Service\\%1$s\\%1$sService', $dependentModule->getName());
 
-        if (!class_exists($serviceClassName)) {
-            return [];
-        }
+        return sprintf('\\Spryker\\Service\\%1$s\\%1$sService', $dependentModule->getName());
+    }
 
-        $reflectionClass = new ReflectionClass($serviceClassName);
-        $reflectionMethods = $reflectionClass->getMethods();
+    /**
+     * @param \ReflectionMethod $reflectionMethod
+     *
+     * @return bool
+     */
+    protected function acceptMethod(ReflectionMethod $reflectionMethod): bool
+    {
+        return $reflectionMethod->isPublic();
+    }
 
-        $methods = [];
-
-        foreach ($reflectionMethods as $reflectionMethod) {
-            if ($reflectionMethod->isPublic() && !in_array($reflectionMethod->getName(), $this->internalMethods)) {
-                $methods[$reflectionMethod->getName()] = sprintf('%sService::%s()', $dependentModule->getName(), $reflectionMethod->getName());
-            }
-        }
-
-        return $methods;
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     * @param \ReflectionMethod $reflectionMethod
+     *
+     * @return string
+     */
+    protected function buildChoiceLabel(ModuleTransfer $moduleTransfer, ReflectionMethod $reflectionMethod): string
+    {
+        return sprintf('%sService::%s()', $moduleTransfer->getDependentModule()->getName(), $reflectionMethod->getName());
     }
 }

@@ -8,10 +8,10 @@
 namespace Spryker\Zed\SprykGui\Business\ChoiceLoader\Zed\Business;
 
 use Generated\Shared\Transfer\ModuleTransfer;
-use ReflectionClass;
-use Spryker\Zed\SprykGui\Business\ChoiceLoader\ChoiceLoaderInterface;
+use ReflectionMethod;
+use Spryker\Zed\SprykGui\Business\ChoiceLoader\Common\AbstractMethodChoiceLoader;
 
-class ZedFacadeMethodChoiceLoader implements ChoiceLoaderInterface
+class ZedFacadeMethodChoiceLoader extends AbstractMethodChoiceLoader
 {
     /**
      * @var array
@@ -25,28 +25,33 @@ class ZedFacadeMethodChoiceLoader implements ChoiceLoaderInterface
     /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return array
+     * @return string
      */
-    public function loadChoices(ModuleTransfer $moduleTransfer): array
+    protected function getClassName(ModuleTransfer $moduleTransfer): string
     {
         $dependentModule = $moduleTransfer->getDependentModule();
-        $facadeClassName = sprintf('\\Spryker\\Zed\\%1$s\\Business\\%1$sFacade', $dependentModule->getName());
 
-        if (!class_exists($facadeClassName)) {
-            return [];
-        }
+        return sprintf('\\Spryker\\Zed\\%1$s\\Business\\%1$sFacade', $dependentModule->getName());
+    }
 
-        $reflectionClass = new ReflectionClass($facadeClassName);
-        $reflectionMethods = $reflectionClass->getMethods();
+    /**
+     * @param \ReflectionMethod $reflectionMethod
+     *
+     * @return bool
+     */
+    protected function acceptMethod(ReflectionMethod $reflectionMethod): bool
+    {
+        return ($reflectionMethod->isPublic() && !in_array($reflectionMethod->getName(), $this->internalMethods));
+    }
 
-        $methods = [];
-
-        foreach ($reflectionMethods as $reflectionMethod) {
-            if ($reflectionMethod->isPublic() && !in_array($reflectionMethod->getName(), $this->internalMethods)) {
-                $methods[$reflectionMethod->getName()] = sprintf('%sFacade::%s()', $dependentModule->getName(), $reflectionMethod->getName());
-            }
-        }
-
-        return $methods;
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     * @param \ReflectionMethod $reflectionMethod
+     *
+     * @return string
+     */
+    protected function buildChoiceLabel(ModuleTransfer $moduleTransfer, ReflectionMethod $reflectionMethod): string
+    {
+        return sprintf('%sFacade::%s()', $moduleTransfer->getDependentModule()->getName(), $reflectionMethod->getName());
     }
 }

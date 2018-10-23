@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -26,6 +27,9 @@ class SprykMainForm extends AbstractType
     protected const SPRYK = 'spryk';
     protected const MODULE = 'module';
     protected const DEPENDENT_MODULE = 'dependentModule';
+    protected const ARGUMENTS = 'arguments';
+    protected const TYPE = 'type';
+    protected const MODULE_FILTER = 'moduleFilter';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -52,7 +56,7 @@ class SprykMainForm extends AbstractType
         $spryk = $options[static::SPRYK];
         $sprykDefinition = $this->getFacade()->getSprykDefinitionByName($spryk);
 
-        if (isset($sprykDefinition['arguments']['module']['type'])) {
+        if (isset($sprykDefinition[static::ARGUMENTS][static::MODULE][static::TYPE])) {
             $builder->add(static::MODULE, NewModuleType::class, ['sprykDefinition' => $sprykDefinition]);
             $this->addRunSprykButton($builder);
             $this->addCreateTemplateButton($builder);
@@ -61,16 +65,16 @@ class SprykMainForm extends AbstractType
         }
 
         $moduleOptions = [];
-        if (isset($sprykDefinition['arguments'][static::MODULE]['moduleFilter'])) {
-            $moduleOptions['moduleFilter'] = $sprykDefinition['arguments'][static::MODULE]['moduleFilter'];
+        if (isset($sprykDefinition[static::ARGUMENTS][static::MODULE][static::MODULE_FILTER])) {
+            $moduleOptions[static::MODULE_FILTER] = $sprykDefinition[static::ARGUMENTS][static::MODULE][static::MODULE_FILTER];
         }
 
         $builder->add(static::MODULE, ModuleChoiceType::class, $moduleOptions);
 
-        if (array_key_exists(static::DEPENDENT_MODULE, $sprykDefinition['arguments'])) {
+        if (array_key_exists(static::DEPENDENT_MODULE, $sprykDefinition[static::ARGUMENTS])) {
             $dependentModuleOptions = [];
-            if (isset($sprykDefinition['arguments'][static::DEPENDENT_MODULE]['moduleFilter'])) {
-                $dependentModuleOptions['moduleFilter'] = $sprykDefinition['arguments'][static::DEPENDENT_MODULE]['moduleFilter'];
+            if (isset($sprykDefinition[static::ARGUMENTS][static::DEPENDENT_MODULE][static::MODULE_FILTER])) {
+                $dependentModuleOptions[static::MODULE_FILTER] = $sprykDefinition[static::ARGUMENTS][static::DEPENDENT_MODULE][static::MODULE_FILTER];
             }
             $builder->add(static::DEPENDENT_MODULE, ModuleChoiceType::class, $dependentModuleOptions);
 
@@ -81,36 +85,45 @@ class SprykMainForm extends AbstractType
 
         $builder->get($typeToAddListenerTo)->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($options, $builder) {
             $form = $event->getForm()->getParent();
-            $moduleTransfer = $form->get(static::MODULE)->getData();
-            if ($moduleTransfer instanceof ModuleTransfer) {
-                if ($moduleTransfer->getName() && ($moduleTransfer->getOrganization() && $moduleTransfer->getOrganization()->getName())) {
-                    $form->remove('next');
+            $moduleTransfer = $this->getModuleTransferFromForm($form);
 
-                    if ($form->has(static::DEPENDENT_MODULE)) {
-                        $dependentModuleForm = $form->get(static::DEPENDENT_MODULE);
-                        $dependentModuleTransfer = $dependentModuleForm->getData();
+            if ($moduleTransfer->getName() && ($moduleTransfer->getOrganization() && $moduleTransfer->getOrganization()->getName())) {
+                $form->remove('next');
 
-                        $moduleTransfer->setDependentModule($dependentModuleTransfer);
-                    }
+                if ($form->has(static::DEPENDENT_MODULE)) {
+                    $dependentModuleForm = $form->get(static::DEPENDENT_MODULE);
+                    $dependentModuleTransfer = $dependentModuleForm->getData();
 
-                    $sprykDataProvider = $this->getFactory()->createSprykFormDataProvider();
-                    $sprykDetailsForm = $builder->getFormFactory()
-                        ->createNamedBuilder(
-                            'sprykDetails',
-                            SprykDetailsForm::class,
-                            $sprykDataProvider->getData($options[static::SPRYK], $moduleTransfer),
-                            $sprykDataProvider->getOptions($options[static::SPRYK], $moduleTransfer)
-                        )->getForm();
-
-                    $form->add($sprykDetailsForm);
-
-                    $this->addRunSprykButton($form);
-                    $this->addCreateTemplateButton($form);
-
-                    return;
+                    $moduleTransfer->setDependentModule($dependentModuleTransfer);
                 }
+
+                $sprykDataProvider = $this->getFactory()->createSprykFormDataProvider();
+                $sprykDetailsForm = $builder->getFormFactory()
+                    ->createNamedBuilder(
+                        'sprykDetails',
+                        SprykDetailsForm::class,
+                        $sprykDataProvider->getData($options[static::SPRYK], $moduleTransfer),
+                        $sprykDataProvider->getOptions($options[static::SPRYK], $moduleTransfer)
+                    )->getForm();
+
+                $form->add($sprykDetailsForm);
+
+                $this->addRunSprykButton($form);
+                $this->addCreateTemplateButton($form);
+
+                return;
             }
         });
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    protected function getModuleTransferFromForm(FormInterface $form): ModuleTransfer
+    {
+        return $form->get(static::MODULE)->getData();
     }
 
     /**

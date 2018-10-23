@@ -23,6 +23,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ModuleChoiceType extends AbstractType
 {
+    protected const ORGANIZATION = 'organization';
+    protected const APPLICATION = 'application';
+    protected const MODULE = 'module';
+    protected const MODULE_FILTER = 'moduleFilter';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -30,12 +35,12 @@ class ModuleChoiceType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault('moduleFilter', []);
+        $resolver->setDefault(static::MODULE_FILTER, []);
 
         $resolver->setDefaults([
             'choices' => function (Options $options) {
-                if ($options->offsetExists('moduleFilter')) {
-                    return $this->getFilteredModules($options->offsetGet('moduleFilter'));
+                if ($options->offsetExists(static::MODULE_FILTER)) {
+                    return $this->getFilteredModules($options->offsetGet(static::MODULE_FILTER));
                 }
 
                 return $this->getFacade()->getModules();
@@ -70,19 +75,21 @@ class ModuleChoiceType extends AbstractType
     protected function getFilteredModules(array $moduleFilter): array
     {
         $moduleFilterTransfer = new ModuleFilterTransfer();
-        if (isset($moduleFilter['organization'])) {
+        if (isset($moduleFilter[static::ORGANIZATION])) {
             $organizationTransfer = new OrganizationTransfer();
-            $organizationTransfer->setName($moduleFilter['organization']);
+            $organizationTransfer->setName($moduleFilter[static::ORGANIZATION]);
             $moduleFilterTransfer->setOrganization($organizationTransfer);
         }
-        if (isset($moduleFilter['application'])) {
+
+        if (isset($moduleFilter[static::APPLICATION])) {
             $applicationTransfer = new ApplicationTransfer();
-            $applicationTransfer->setName($moduleFilter['application']);
+            $applicationTransfer->setName($moduleFilter[static::APPLICATION]);
             $moduleFilterTransfer->setApplication($applicationTransfer);
         }
-        if (isset($moduleFilter['module'])) {
+
+        if (isset($moduleFilter[static::MODULE])) {
             $moduleTransfer = new ModuleTransfer();
-            $moduleTransfer->setName($moduleFilter['module']);
+            $moduleTransfer->setName($moduleFilter[static::MODULE]);
             $moduleFilterTransfer->setModule($moduleTransfer);
         }
 
