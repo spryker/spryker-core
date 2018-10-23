@@ -11,7 +11,8 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientBridge;
 use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPlugin;
-use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 
 class ProductPageSearchDependencyProvider extends AbstractDependencyProvider
 {
@@ -19,6 +20,7 @@ class ProductPageSearchDependencyProvider extends AbstractDependencyProvider
     public const PLUGIN_PRODUCT_CONCRETE_PAGE_SEARCH_QUERY = 'PLUGIN_PRODUCT_CONCRETE_PAGE_SEARCH_QUERY';
     public const PLUGINS_PRODUCT_CONCRETE_PAGE_SEARCH_RESULT_FORMATTER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_SEARCH_RESULT_FORMATTER';
     public const PLUGINS_PRODUCT_CONCRETE_PAGE_SEARCH_QUERY_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_SEARCH_QUERY_EXPANDER';
+    public const PLUGIN_PAGINATION_CONFIG_BUILDER = 'PLUGIN_PAGINATION_CONFIG_BUILDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -31,6 +33,7 @@ class ProductPageSearchDependencyProvider extends AbstractDependencyProvider
         $container = $this->addProductConcretePageSearchResultFormatterPlugins($container);
         $container = $this->addProductConcretePageSearchQueryPlugin($container);
         $container = $this->addProductConcretePageSearchQueryExpanderPlugins($container);
+        $container = $this->addPaginationConfigBuilderPlugin($container);
 
         return $container;
     }
@@ -94,9 +97,23 @@ class ProductPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
      */
-    protected function createProductConcretePageSearchQueryPlugin(): ProductConcretePageSearchQueryPluginInterface
+    protected function addPaginationConfigBuilderPlugin(Container $container)
+    {
+        $container[static::PLUGIN_PAGINATION_CONFIG_BUILDER] = function (Container $container) {
+            return new PaginationConfigBuilder();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    protected function createProductConcretePageSearchQueryPlugin(): QueryInterface
     {
         return new ProductConcretePageSearchQueryPlugin();
     }

@@ -7,16 +7,46 @@
 
 namespace Spryker\Client\ProductPageSearch;
 
+use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 
 class ProductPageSearchConfig extends AbstractBundleConfig
 {
+    protected const PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME = 'ipp';
+    protected const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 10;
+    protected const PAGINATION_VALID_ITEMS_PER_PAGE = [
+        10,
+    ];
+
     /**
      * @return int
      */
     public function getFullTextBoostedBoostingValue()
     {
         return $this->get(ProductPageSearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE);
+    }
+
+    /**
+     * @return string
+     */
+    public function getItemsPerPageParameterName(): string
+    {
+        return static::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PaginationConfigTransfer
+     */
+    public function getPaginationConfig()
+    {
+        $paginationConfigTransfer = new PaginationConfigTransfer();
+        $paginationConfigTransfer
+            ->setParameterName('page')
+            ->setItemsPerPageParameterName(static::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME)
+            ->setDefaultItemsPerPage(static::PAGINATION_DEFAULT_ITEMS_PER_PAGE)
+            ->setValidItemsPerPageOptions(static::PAGINATION_VALID_ITEMS_PER_PAGE);
+
+        return $paginationConfigTransfer;
     }
 }

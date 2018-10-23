@@ -15,12 +15,14 @@ use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 
 /**
- * @method \Spryker\Client\ProductPageSearch\ProductPageSearchFactory getFactory()S
+ * @method \Spryker\Client\ProductPageSearch\ProductPageSearchFactory getFactory()
  */
-class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements ProductConcretePageSearchQueryPluginInterface
+class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchStringSetterInterface
 {
     /**
      * @var \Elastica\Query
@@ -32,10 +34,10 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Pro
      */
     protected $searchString;
 
-    /**
-     * @var int
-     */
-    protected $limit;
+    public function __construct()
+    {
+        $this->createQuery();
+    }
 
     /**
      * @return \Elastica\Query
@@ -53,27 +55,17 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Pro
     public function setSearchString($searchString)
     {
         $this->searchString = $searchString;
-    }
-
-    /**
-     * @param int $limit
-     *
-     * @return void
-     */
-    public function setLimit(int $limit): void
-    {
-        $this->limit = $limit;
+        $this->createQuery();
     }
 
     /**
      * @return \Elastica\Query
      */
-    public function buildQuery(): Query
+    protected function createQuery(): Query
     {
         $this->query = new Query();
         $this->addFulltextSearchToQuery();
         $this->setQuerySource();
-        $this->setQueryLimit();
 
         return $this->query;
     }
@@ -135,16 +127,6 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Pro
         $boolQuery->addMust($typeFilter);
 
         return $boolQuery;
-    }
-
-    /**
-     * @return void
-     */
-    protected function setQueryLimit(): void
-    {
-        if ($this->limit) {
-            $this->query->setSize($this->limit);
-        }
     }
 
     /**

@@ -9,17 +9,24 @@ namespace Spryker\Client\ProductPageSearch\ProductConcreteReader;
 
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientInterface;
+use Spryker\Client\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
 class ProductConcreteReader implements ProductConcreteReaderInterface
 {
+    /**
+     * @var \Spryker\Client\ProductPageSearch\ProductPageSearchConfig
+     */
+    protected $config;
+
     /**
      * @var \Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientInterface
      */
     protected $searchClient;
 
     /**
-     * @var \Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface
+     * @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected $productConcretePageSearchQueryPlugin;
 
@@ -34,17 +41,20 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     protected $productConcretePageSearchResultFormatterPlugins;
 
     /**
+     * @param \Spryker\Client\ProductPageSearch\ProductPageSearchConfig $config
      * @param \Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientInterface $searchClient
-     * @param \Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface $productConcretePageSearchQueryPlugin
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $productConcretePageSearchQueryPlugin
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[] $productConcretePageSearchQueryExpanderPlugins
      * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $productConcretePageSearchResultFormatterPlugins
      */
     public function __construct(
+        ProductPageSearchConfig $config,
         ProductPageSearchToSearchClientInterface $searchClient,
         QueryInterface $productConcretePageSearchQueryPlugin,
         array $productConcretePageSearchQueryExpanderPlugins,
         array $productConcretePageSearchResultFormatterPlugins
     ) {
+        $this->config = $config;
         $this->searchClient = $searchClient;
         $this->productConcretePageSearchQueryPlugin = $productConcretePageSearchQueryPlugin;
         $this->productConcretePageSearchQueryExpanderPlugins = $productConcretePageSearchQueryExpanderPlugins;
@@ -58,7 +68,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      */
     public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
     {
-        $this->buildProductConcretePageSearchQueryPlugin($productConcreteCriteriaFilterTransfer);
+        $this->mapFilters($productConcreteCriteriaFilterTransfer);
         $this->expandQuery($productConcreteCriteriaFilterTransfer->getRequestParams() ?? []);
 
         return $this->searchClient->search($this->productConcretePageSearchQueryPlugin, $this->productConcretePageSearchResultFormatterPlugins);
@@ -69,17 +79,45 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      *
      * @return void
      */
-    protected function buildProductConcretePageSearchQueryPlugin(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): void
+    protected function mapFilters(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): void
     {
-        if ($productConcreteCriteriaFilterTransfer->getSearchString()) {
-            $this->productConcretePageSearchQueryPlugin->setSearchString($productConcreteCriteriaFilterTransfer->getSearchString());
+        $this->mapSearchString($productConcreteCriteriaFilterTransfer);
+        $this->mapLimit($productConcreteCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
+     *
+     * @return void
+     */
+    protected function mapSearchString(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): void
+    {
+        if (!$this->productConcretePageSearchQueryPlugin instanceof SearchStringSetterInterface) {
+            return;
         }
 
-        if ($productConcreteCriteriaFilterTransfer->getLimit()) {
-            $this->productConcretePageSearchQueryPlugin->setLimit($productConcreteCriteriaFilterTransfer->getLimit());
+        if (empty($productConcreteCriteriaFilterTransfer->getSearchString())) {
+            return;
         }
 
-        $this->productConcretePageSearchQueryPlugin->buildQuery();
+        $this->productConcretePageSearchQueryPlugin->setSearchString($productConcreteCriteriaFilterTransfer->getSearchString());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
+     *
+     * @return void
+     */
+    protected function mapLimit(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): void
+    {
+        if (!$productConcreteCriteriaFilterTransfer->getLimit()) {
+            return;
+        }
+
+        $requestParams = $productConcreteCriteriaFilterTransfer->getRequestParams() ?? [];
+        $requestParams[$this->config->getItemsPerPageParameterName()] = $productConcreteCriteriaFilterTransfer->getLimit();
+
+        $productConcreteCriteriaFilterTransfer->setRequestParams($requestParams);
     }
 
     /**

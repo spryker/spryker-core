@@ -9,9 +9,9 @@ namespace Spryker\Client\ProductPageSearch;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientInterface;
-use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface;
 use Spryker\Client\ProductPageSearch\ProductConcreteReader\ProductConcreteReader;
 use Spryker\Client\ProductPageSearch\ProductConcreteReader\ProductConcreteReaderInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
  * @method \Spryker\Client\ProductPageSearch\ProductPageSearchConfig getConfig()
@@ -24,6 +24,7 @@ class ProductPageSearchFactory extends AbstractFactory
     public function createProductConcreteReader(): ProductConcreteReaderInterface
     {
         return new ProductConcreteReader(
+            $this->getConfig(),
             $this->getSearchClient(),
             $this->getProductConcretePageSearchQueryPlugin(),
             $this->getProductConcretePageSearchQueryExpanderPlugins(),
@@ -48,9 +49,9 @@ class ProductPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    public function getProductConcretePageSearchQueryPlugin(): ProductConcretePageSearchQueryPluginInterface
+    public function getProductConcretePageSearchQueryPlugin(): QueryInterface
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_CONCRETE_PAGE_SEARCH_QUERY);
     }
@@ -69,5 +70,16 @@ class ProductPageSearchFactory extends AbstractFactory
     public function getProductPageSearchConfig(): ProductPageSearchConfig
     {
         return $this->getConfig();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface
+     */
+    public function getPaginationConfigBuilder()
+    {
+        $paginationConfigBuilder = $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGIN_PAGINATION_CONFIG_BUILDER);
+        $paginationConfigBuilder->setPagination($this->getConfig()->getPaginationConfig());
+
+        return $paginationConfigBuilder;
     }
 }
