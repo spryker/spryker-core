@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -7,11 +8,14 @@
 namespace Spryker\Glue\GlueApplication\Rest\Response;
 
 use Generated\Shared\Transfer\RestPageOffsetsTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ResponsePagination implements ResponsePaginationInterface
 {
+    protected const LINK_PATTERN = '\\%1$s\\%2$s\\%3$s';
+
     /**
      * @var string
      */
@@ -55,10 +59,10 @@ class ResponsePagination implements ResponsePaginationInterface
         }
 
         $offsetLinks = [
-            'next' => $domain . $pageOffsetsTransfer->getNextOffset() . $limit,
-            'prev' => $domain . $pageOffsetsTransfer->getPrevOffset() . $limit,
-            'last' => $domain . $pageOffsetsTransfer->getLastOffset() . $limit,
-            'first' => $domain . 0 . $limit,
+            RestLinkInterface::LINK_NEXT => sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getNextOffset(), $limit),
+            RestLinkInterface::LINK_PREV => sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getPrevOffset(), $limit),
+            RestLinkInterface::LINK_LAST => sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getLastOffset(), $limit),
+            RestLinkInterface::LINK_FIRST => sprintf(static::LINK_PATTERN, $domain, 0, $limit),
         ];
 
         return array_merge(
