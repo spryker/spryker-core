@@ -45,6 +45,7 @@ class UserLocaleDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addUserFacade($container);
         $container = $this->addAclFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }

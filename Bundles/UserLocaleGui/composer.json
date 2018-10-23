@@ -1,18 +1,17 @@
 {
-  "name": "spryker/translator",
+  "name": "spryker/user-locale-gui",
   "type": "library",
-  "description": "Translator module",
+  "description": "UserLocaleGui module",
   "license": "proprietary",
   "require": {
-    "spryker/application-extension": "^1.0.0",
+    "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/twig": "^3.0.0"
+    "spryker/user-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/installer": "*",
-    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -34,8 +33,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/installer": "If you want to use Installer plugins. Minimum required version: 4.0.1"
   }
 }
