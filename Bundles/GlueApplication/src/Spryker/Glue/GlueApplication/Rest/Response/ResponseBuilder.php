@@ -204,11 +204,11 @@ class ResponseBuilder implements ResponseBuilderInterface
             $linkParts[] = $restRequest->getResource()->getType();
             $queryString = $restRequest->getQueryString();
             if (strlen($queryString)) {
-                $linkParts[] = '?' . $queryString;
+                $queryString = '?' . $queryString;
             }
 
             return $this->formatLinks([
-                RestResourceInterface::RESOURCE_LINKS_SELF => implode('/', $linkParts),
+                RestResourceInterface::RESOURCE_LINKS_SELF => implode('/', $linkParts) . $queryString,
             ]);
         }
 
