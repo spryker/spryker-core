@@ -10,6 +10,13 @@ namespace Spryker\Glue\ProductPricesRestApi\Dependency\Client;
 interface ProductPricesRestApiToCurrencyClientInterface
 {
     /**
+     * @param string $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function fromIsoCode($isoCode);
+
+    /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent();

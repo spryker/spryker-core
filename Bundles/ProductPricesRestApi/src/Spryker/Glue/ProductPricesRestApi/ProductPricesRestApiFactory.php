@@ -17,8 +17,16 @@ use Spryker\Glue\ProductPricesRestApi\Processor\AbstractProductPrices\AbstractPr
 use Spryker\Glue\ProductPricesRestApi\Processor\AbstractProductPrices\AbstractProductPricesReaderInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReader;
 use Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReaderInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencySetter;
+use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencySetterInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyValidator;
+use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyValidatorInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapper;
 use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeSetter;
+use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeSetterInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeValidator;
+use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeValidatorInterface;
 
 class ProductPricesRestApiFactory extends AbstractFactory
 {
@@ -59,6 +67,38 @@ class ProductPricesRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createProductPricesMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyValidatorInterface
+     */
+    public function createCurrencyValidator(): CurrencyValidatorInterface
+    {
+        return new CurrencyValidator($this->getCurrencyClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeValidatorInterface
+     */
+    public function createPriceModeValidator(): PriceModeValidatorInterface
+    {
+        return new PriceModeValidator($this->getPriceClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencySetterInterface
+     */
+    public function createCurrencySetter(): CurrencySetterInterface
+    {
+        return new CurrencySetter($this->getCurrencyClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeSetterInterface
+     */
+    public function createPriceModeSetter(): PriceModeSetterInterface
+    {
+        return new PriceModeSetter($this->getPriceClient());
     }
 
     /**
