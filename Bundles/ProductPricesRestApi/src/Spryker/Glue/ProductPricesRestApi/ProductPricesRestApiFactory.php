@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ProductPricesRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface;
@@ -27,7 +28,8 @@ class ProductPricesRestApiFactory extends AbstractFactory
     public function createProductPricesMapper(): ProductPricesMapperInterface
     {
         return new ProductPricesMapper(
-            $this->getPriceClient()
+            $this->getPriceClient(),
+            $this->getCurrencyClient()
         );
     }
 
@@ -89,5 +91,13 @@ class ProductPricesRestApiFactory extends AbstractFactory
     public function getPriceClient(): ProductPricesRestApiToPriceClientInterface
     {
         return $this->getProvidedDependency(ProductPricesRestApiDependencyProvider::CLIENT_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface
+     */
+    public function getCurrencyClient(): ProductPricesRestApiToCurrencyClientInterface
+    {
+        return $this->getProvidedDependency(ProductPricesRestApiDependencyProvider::CLIENT_CURRENCY);
     }
 }

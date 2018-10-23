@@ -9,6 +9,7 @@ namespace Spryker\Glue\ProductPricesRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientBridge;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientBridge;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductClientBridge;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientBridge;
@@ -20,6 +21,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+    public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -29,11 +31,11 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-
         $container = $this->addPriceProductStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceProductClient($container);
         $container = $this->addPriceClient($container);
+        $container = $this->addCurrencyClient($container);
 
         return $container;
     }
@@ -96,6 +98,22 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
         $container[static::CLIENT_PRICE] = function (Container $container) {
             return new ProductPricesRestApiToPriceClientBridge(
                 $container->getLocator()->price()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCurrencyClient(Container $container): Container
+    {
+        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+            return new ProductPricesRestApiToCurrencyClientBridge(
+                $container->getLocator()->currency()->client()
             );
         };
 
