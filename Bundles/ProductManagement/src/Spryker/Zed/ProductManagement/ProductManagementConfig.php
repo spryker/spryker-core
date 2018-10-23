@@ -23,6 +23,11 @@ class ProductManagementConfig extends AbstractBundleConfig
     public const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d G:i';
 
     /**
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     */
+    protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+
+    /**
      * @return string
      */
     public function getImageUrlPrefix()
@@ -44,5 +49,21 @@ class ProductManagementConfig extends AbstractBundleConfig
     public function getValidityTimeFormat()
     {
         return static::VALIDITY_DATE_TIME_FORMAT;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasVolumePriceSupport(): bool
+    {
+        return $this->get(ProductManagementConstants::HAS_VOLUME_PRICE_SUPPORT, false);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceTypeDefault(): string
+    {
+        return static::PRICE_TYPE_DEFAULT;
     }
 }

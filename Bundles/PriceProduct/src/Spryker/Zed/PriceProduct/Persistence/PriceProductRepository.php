@@ -205,6 +205,15 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
             $priceProductStoreQuery->filterByFkCurrency($priceProductCriteriaTransfer->getIdCurrency());
         }
 
+        if ($priceProductCriteriaTransfer->getPriceType()) {
+            $priceProductStoreQuery
+                ->usePriceProductQuery()
+                    ->usePriceTypeQuery()
+                        ->filterByName($priceProductCriteriaTransfer->getPriceType())
+                    ->endUse()
+                ->endUse();
+        }
+
         $this->getFactory()
             ->createPriceProductDimensionQueryExpander()
             ->expandPriceProductStoreQueryWithPriceDimension($priceProductStoreQuery, $priceProductCriteriaTransfer);

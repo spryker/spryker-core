@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Price;
 
 use Countable;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractCollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -21,6 +22,10 @@ use Symfony\Component\Form\FormView;
  */
 class ProductMoneyCollectionType extends AbstractCollectionType
 {
+    protected const PRICE_PRODUCT_VOLUME_EDIT_URL = '/price-product-volume-gui/price-volume/edit';
+    protected const PRICE_PRODUCT_VOLUME_ADD_URL = '/price-product-volume-gui/price-volume/add';
+    protected const PRICE_PRODUCT_VOLUME_KEY = 'volumePrices';
+
     /**
      * @var string
      */
@@ -117,8 +122,12 @@ class ProductMoneyCollectionType extends AbstractCollectionType
 
         $priceTable = [];
         $currencies = [];
+        $optionalParameters = [];
+
         foreach ($formViewCollection as $productMoneyTypeFormView) {
             $moneyValueFormView = $productMoneyTypeFormView['moneyValue'];
+            $optionalParameters = $this->buildOptionalParameters($productMoneyTypeFormView, $moneyValueFormView, $optionalParameters);
+
             $priceTypes = $this->buildPriceTypeList($productMoneyTypeFormView, $priceTypes);
             $priceTable = $this->buildPriceFormViewTable($productMoneyTypeFormView, $moneyValueFormView, $priceTable);
 
@@ -131,6 +140,78 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $formViewCollection->vars['priceTable'] = $priceTable;
         $formViewCollection->vars['priceTypes'] = $priceTypes;
         $formViewCollection->vars['currencies'] = $currencies;
+
+        $formViewCollection->vars = array_merge($optionalParameters, $formViewCollection->vars);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $productMoneyTypeFormView
+     * @param \Symfony\Component\Form\FormView $moneyValueFormView
+     * @param array $optionalParameters
+     *
+     * @return array
+     */
+    protected function buildOptionalParameters(FormView $productMoneyTypeFormView, FormView $moneyValueFormView, array $optionalParameters): array
+    {
+        if ($this->getFactory()->getConfig()->hasVolumePriceSupport()) {
+            $optionalParameters[static::PRICE_PRODUCT_VOLUME_KEY] = $optionalParameters[static::PRICE_PRODUCT_VOLUME_KEY] ?? [];
+            $optionalParameters[static::PRICE_PRODUCT_VOLUME_KEY] = $this->buildVolumePriceList($productMoneyTypeFormView, $moneyValueFormView, $optionalParameters[static::PRICE_PRODUCT_VOLUME_KEY]);
+        }
+
+        return $optionalParameters;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $productMoneyTypeFormView
+     * @param \Symfony\Component\Form\FormView $moneyValueFormView
+     * @param array $volumePrices
+     *
+     * @return array
+     */
+    protected function buildVolumePriceList(FormView $productMoneyTypeFormView, FormView $moneyValueFormView, array $volumePrices): array
+    {
+        $storeName = $moneyValueFormView->vars['store_name'];
+        $currencyIsoCode = $this->extractCurrencyTransfer($moneyValueFormView)->getCode();
+        $moneyValueTransfer = $this->extractMoneyValueTransfer($moneyValueFormView);
+        $utilEncodingService = $this->getFactory()->getUtilEncoding();
+        $priceData = $utilEncodingService->decodeJson($moneyValueTransfer->getPriceData());
+        $priceProductTransfer = $this->extractPriceProductTransfer($productMoneyTypeFormView);
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        if (!$priceProductTransfer->getIdPriceProduct()
+            || (!$moneyValueTransfer->getGrossAmount() && !$moneyValueTransfer->getNetAmount())) {
+            return $volumePrices;
+        }
+
+        if ($priceProductTransfer->getPriceTypeName() !== $this->getFactory()->getConfig()->getPriceTypeDefault()) {
+            return $volumePrices;
+        }
+
+        if (!empty($priceData) && isset($priceData->volume_prices)) {
+            $volumePrices[$storeName][$currencyIsoCode] = $this
+                ->buildVolumePriceData(static::PRICE_PRODUCT_VOLUME_EDIT_URL, 'Price Product Volume Edit');
+
+            return $volumePrices;
+        }
+
+        $volumePrices[$storeName][$currencyIsoCode] = $this
+            ->buildVolumePriceData(static::PRICE_PRODUCT_VOLUME_ADD_URL, 'Price Product Volume Add');
+
+        return $volumePrices;
+    }
+
+    /**
+     * @param string $url
+     * @param string $title
+     *
+     * @return string[]
+     */
+    protected function buildVolumePriceData(string $url, string $title): array
+    {
+        return [
+            'url' => $url,
+            'title' => $title,
+        ];
     }
 
     /**
@@ -268,10 +349,30 @@ class ProductMoneyCollectionType extends AbstractCollectionType
     /**
      * @param \Symfony\Component\Form\FormView $moneyValueFormView
      *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     */
+    protected function extractMoneyValueTransfer(FormView $moneyValueFormView): MoneyValueTransfer
+    {
+        return $moneyValueFormView->vars['value'];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $productMoneyTypeFormView
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function extractPriceProductTransfer(FormView $productMoneyTypeFormView): PriceProductTransfer
+    {
+        return $productMoneyTypeFormView->vars['value'];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $moneyValueFormView
+     *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     protected function extractCurrencyTransfer(FormView $moneyValueFormView)
     {
-        return $moneyValueFormView->vars['value']->getCurrency();
+        return $this->extractMoneyValueTransfer($moneyValueFormView)->getCurrency();
     }
 }

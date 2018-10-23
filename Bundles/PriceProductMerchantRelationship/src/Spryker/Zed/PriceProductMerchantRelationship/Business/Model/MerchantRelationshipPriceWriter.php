@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductMerchantRelationship\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
-use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipEntityManagerInterface;
 use Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipRepositoryInterface;
 
@@ -26,23 +25,15 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
     protected $priceProductMerchantRelationshipRepository;
 
     /**
-     * @var \Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToPriceProductFacadeInterface
-     */
-    protected $priceProductFacade;
-
-    /**
      * @param \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipEntityManagerInterface $priceProductMerchantRelationshipEntityManager
      * @param \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipRepositoryInterface $priceProductMerchantRelationshipRepository
-     * @param \Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToPriceProductFacadeInterface $priceProductFacade
      */
     public function __construct(
         PriceProductMerchantRelationshipEntityManagerInterface $priceProductMerchantRelationshipEntityManager,
-        PriceProductMerchantRelationshipRepositoryInterface $priceProductMerchantRelationshipRepository,
-        PriceProductMerchantRelationshipToPriceProductFacadeInterface $priceProductFacade
+        PriceProductMerchantRelationshipRepositoryInterface $priceProductMerchantRelationshipRepository
     ) {
         $this->priceProductMerchantRelationshipEntityManager = $priceProductMerchantRelationshipEntityManager;
         $this->priceProductMerchantRelationshipRepository = $priceProductMerchantRelationshipRepository;
-        $this->priceProductFacade = $priceProductFacade;
     }
 
     /**
@@ -60,8 +51,6 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
         $priceDimensionTransfer->requireIdMerchantRelationship();
 
         $idPriceProductStoreBeforeUpdate = $priceProductTransfer->getMoneyValue()->getIdEntity();
-
-        $priceProductTransfer = $this->priceProductFacade->persistPriceProductStore($priceProductTransfer);
 
         if (!$this->isPriceStoreRelationChanged($priceProductTransfer, $idPriceProductStoreBeforeUpdate)) {
             return $priceProductTransfer;
