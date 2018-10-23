@@ -177,7 +177,7 @@ class CartsRestApiFactory extends AbstractFactory
     public function createGuestCartDeleter(): GuestCartDeleterInterface
     {
         return new GuestCartDeleter(
-            $this->getResourceBuilder()
+            $this->createGuestCartRestResponseBuilder()
         );
     }
 
