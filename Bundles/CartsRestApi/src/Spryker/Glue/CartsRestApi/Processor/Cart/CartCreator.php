@@ -143,22 +143,33 @@ class CartCreator implements CartCreatorInterface
      */
     protected function createFailedCreatingQuoteError(QuoteResponseTransfer $quoteResponseTransfer, RestResponseInterface $response): RestResponseInterface
     {
+        if ($quoteResponseTransfer->getErrors()->count() === 0) {
+            $restErrorTransfer = (new RestErrorMessageTransfer())
+                ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_QUOTE)
+                ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART);
+
+            return $response->addError($restErrorTransfer);
+        }
+
         foreach ($quoteResponseTransfer->getErrors() as $error) {
             if ($error->getMessage() === CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_QUOTE) {
                 $restErrorTransfer = (new RestErrorMessageTransfer())
                     ->setCode(CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_QUOTE)
                     ->setStatus(Response::HTTP_METHOD_NOT_ALLOWED)
                     ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_QUOTE);
+                $response->addError($restErrorTransfer);
 
-                return $response->addError($restErrorTransfer);
+                continue;
             }
+
+            $restErrorTransfer = (new RestErrorMessageTransfer())
+                ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_QUOTE)
+                ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+                ->setDetail($error->getMessage());
+            $response->addError($restErrorTransfer);
         }
 
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_QUOTE)
-            ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART);
-
-        return $response->addError($restErrorTransfer);
+        return $response;
     }
 }

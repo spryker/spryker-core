@@ -20,7 +20,9 @@ class SingleQuoteCreatorPlugin extends AbstractPlugin implements QuoteCreatorPlu
 {
     /**
      * {@inheritdoc}
-     *  - Checks that customer don't have a quote already
+     *  - Creates a single quote for customer.
+     *  - Checks that customer don't have a quote already.
+     *  - Returns QuoteResponseTransfer with error if customer already have a quote.
      *
      * @api
      *

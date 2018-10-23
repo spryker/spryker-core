@@ -55,7 +55,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER = 'Quote uuid or item group key is not specified.';
     public const EXCEPTION_MESSAGE_QUOTE_NOT_FOUND = 'Quote with given uuid not found.';
     public const EXCEPTION_MESSAGE_CUSTOMER_UNAUTHORIZED = 'Customer unique id is missing.';
-    public const EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_QUOTE = 'A customer already has a quote.';
+    public const EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_QUOTE = 'Customer already has a quote.';
 
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 }
