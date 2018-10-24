@@ -10,6 +10,7 @@ namespace Spryker\Client\PersistentCart;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface;
+use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToStoreClientInterface;
 use Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerLoginQuoteSync;
 use Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerLoginQuoteSyncInterface;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\ChangeRequestExtendPluginExecutor;
@@ -100,6 +101,14 @@ class PersistentCartFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToStoreClientInterface
+     */
+    public function getStoreClient(): PersistentCartToStoreClientInterface
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
      * @return \Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface
      */
     public function createQuoteUpdatePluginExecutor(): QuoteUpdatePluginExecutorInterface
@@ -123,7 +132,8 @@ class PersistentCartFactory extends AbstractFactory
         return new CustomerLoginQuoteSync(
             $this->createZedPersistentCartStub(),
             $this->getQuoteClient(),
-            $this->createQuoteUpdatePluginExecutor()
+            $this->createQuoteUpdatePluginExecutor(),
+            $this->getStoreClient()
         );
     }
 

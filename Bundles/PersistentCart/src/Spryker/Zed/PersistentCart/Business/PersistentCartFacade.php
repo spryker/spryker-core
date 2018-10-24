@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -122,6 +123,8 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     /**
      * {@inheritdoc}
      *
+     * @deprecated Use syncStorageQuoteWithStore() instead.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
@@ -131,6 +134,20 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteStorageSynchronizer()->syncStorageQuote($quoteSyncRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function syncStorageQuoteWithStore(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteStorageSynchronizer()->syncStorageQuoteWithStore($quoteSyncRequestTransfer);
     }
 
     /**

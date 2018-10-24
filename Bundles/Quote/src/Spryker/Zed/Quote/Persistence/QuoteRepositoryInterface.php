@@ -28,6 +28,19 @@ interface QuoteRepositoryInterface
 
     /**
      * Specification:
+     * - Find quote by customer reference and ID store.
+     *
+     * @api
+     *
+     * @param string $customerReference
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteByCustomerAndStore(string $customerReference, int $idStore): ?QuoteTransfer;
+
+    /**
+     * Specification:
      * - Find quote by quote id.
      *
      * @api

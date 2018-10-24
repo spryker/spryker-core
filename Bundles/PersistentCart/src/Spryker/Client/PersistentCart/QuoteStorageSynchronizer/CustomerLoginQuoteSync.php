@@ -10,6 +10,7 @@ namespace Spryker\Client\PersistentCart\QuoteStorageSynchronizer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface;
+use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToStoreClientInterface;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface;
 use Spryker\Shared\Quote\QuoteConfig;
@@ -32,6 +33,11 @@ class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
     protected $quoteUpdatePluginExecutor;
 
     /**
+     * @var \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface $persistentCartStub
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface $quoteUpdatePluginExecutor
@@ -39,11 +45,13 @@ class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
     public function __construct(
         PersistentCartStubInterface $persistentCartStub,
         PersistentCartToQuoteClientInterface $quoteClient,
-        QuoteUpdatePluginExecutorInterface $quoteUpdatePluginExecutor
+        QuoteUpdatePluginExecutorInterface $quoteUpdatePluginExecutor,
+        PersistentCartToStoreClientInterface $storeClient
     ) {
         $this->quoteClient = $quoteClient;
         $this->persistentCartStub = $persistentCartStub;
         $this->quoteUpdatePluginExecutor = $quoteUpdatePluginExecutor;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -65,7 +73,11 @@ class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
         $quoteSyncRequestTransfer = new QuoteSyncRequestTransfer();
         $quoteSyncRequestTransfer->setQuoteTransfer($quoteTransfer);
         $quoteSyncRequestTransfer->setCustomerTransfer($customerTransfer);
-        $quoteResponseTransfer = $this->persistentCartStub->syncStorageQuote($quoteSyncRequestTransfer);
+        $storeTransfer = $this->storeClient->getCurrentStore();
+        if (!$storeTransfer->getIdStore() && $storeTransfer->getName()) {
+            $storeTransfer = $this->storeClient->getStoreByName($storeTransfer->getName());
+        }
+        $quoteResponseTransfer = $this->persistentCartStub->syncStorageQuoteWithStore($quoteSyncRequestTransfer, $storeTransfer);
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         $this->quoteUpdatePluginExecutor->executePlugins($quoteResponseTransfer);
     }

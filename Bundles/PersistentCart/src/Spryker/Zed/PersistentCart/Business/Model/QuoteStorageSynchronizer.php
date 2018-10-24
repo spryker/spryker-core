@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Quote\QuoteConfig as SharedQuoteConfig;
 use Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface;
@@ -57,7 +58,11 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     }
 
     /**
+     * @deprecated Use syncStorageQuoteWithStore() instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
+     *
+     * @throws \Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
@@ -69,6 +74,36 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
         $customerTransfer = $quoteSyncRequestTransfer->getCustomerTransfer();
         $quoteTransfer = $quoteSyncRequestTransfer->getQuoteTransfer();
         $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomer($customerTransfer);
+
+        if ($customerQuoteTransfer->getIsSuccessful()) {
+            $quoteTransfer = $this->mergeQuotes($quoteTransfer, $customerQuoteTransfer->getQuoteTransfer());
+        }
+
+        $quoteTransfer->setCustomer($customerTransfer);
+        if (count($quoteTransfer->getItems())) {
+            $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+        }
+
+        return $this->quoteResponseExpander->expand($this->saveQuote($quoteTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @throws \Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function syncStorageQuoteWithStore(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
+    {
+        $this->assertDatabaseStorageStrategy();
+        $this->validateRequest($quoteSyncRequestTransfer);
+
+        $customerTransfer = $quoteSyncRequestTransfer->getCustomerTransfer();
+        $quoteTransfer = $quoteSyncRequestTransfer->getQuoteTransfer();
+        $storeTransfer = $quoteTransfer->getStore();
+        $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
 
         if ($customerQuoteTransfer->getIsSuccessful()) {
             $quoteTransfer = $this->mergeQuotes($quoteTransfer, $customerQuoteTransfer->getQuoteTransfer());
