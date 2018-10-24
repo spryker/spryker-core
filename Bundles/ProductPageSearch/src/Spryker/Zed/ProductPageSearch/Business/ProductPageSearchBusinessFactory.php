@@ -31,8 +31,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getProductPageDataExpanderPlugins(),
             $this->getProductPageDataLoaderPlugins(),
             $this->createProductPageMapper(),
-            $this->createProductPageWriter(),
-            $this->getRepository()
+            $this->createProductPageWriter()
         );
     }
 

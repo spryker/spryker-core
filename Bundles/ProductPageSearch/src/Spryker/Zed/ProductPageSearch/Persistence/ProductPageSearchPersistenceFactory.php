@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
-use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
@@ -72,15 +71,5 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     public function getCategoryAttributeQuery()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::QUERY_CONTAINER_CATEGORY);
-    }
-
-    /**
-     * @param array $productAbstractIds
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
-     */
-    public function getProductAbstractByIdsQuery(array $productAbstractIds): SpyProductAbstractLocalizedAttributesQuery
-    {
-        return $this->getQueryContainer()->queryProductAbstractByIds($productAbstractIds);
     }
 }

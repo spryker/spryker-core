@@ -16,7 +16,6 @@ use Spryker\Zed\ProductPageSearch\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface;
-use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface;
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
 {
@@ -51,32 +50,24 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected $productPageSearchWriter;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface
-     */
-    protected $repository;
-
-    /**
      * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[] $productPageDataLoaderPlugins
      * @param \Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface $productPageSearchMapper
      * @param \Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface $productPageSearchWriter
-     * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface $repository
      */
     public function __construct(
         ProductPageSearchQueryContainerInterface $queryContainer,
         array $pageDataExpanderPlugins,
         array $productPageDataLoaderPlugins,
         ProductPageSearchMapperInterface $productPageSearchMapper,
-        ProductPageSearchWriterInterface $productPageSearchWriter,
-        ProductPageSearchRepositoryInterface $repository
+        ProductPageSearchWriterInterface $productPageSearchWriter
     ) {
         $this->queryContainer = $queryContainer;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
         $this->productPageDataLoaderPlugins = $productPageDataLoaderPlugins;
         $this->productPageSearchMapper = $productPageSearchMapper;
         $this->productPageSearchWriter = $productPageSearchWriter;
-        $this->repository = $repository;
     }
 
     /**
@@ -400,7 +391,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      */
     protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
     {
-        return $this->repository->findProductAbstractLocalizedEntitiesByIds($productAbstractIds);
+        return $this->queryContainer->queryProductAbstractByIds($productAbstractIds)->find()->getData();
     }
 
     /**
