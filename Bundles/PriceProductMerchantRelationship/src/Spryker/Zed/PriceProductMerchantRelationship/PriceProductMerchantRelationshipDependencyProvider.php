@@ -37,20 +37,6 @@ class PriceProductMerchantRelationshipDependencyProvider extends AbstractBundleD
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
-        $container = parent::provideCommunicationLayerDependencies($container);
-
-        $container = $this->addMerchantRelationshipFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addPriceProductFacade(Container $container): Container
     {
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {

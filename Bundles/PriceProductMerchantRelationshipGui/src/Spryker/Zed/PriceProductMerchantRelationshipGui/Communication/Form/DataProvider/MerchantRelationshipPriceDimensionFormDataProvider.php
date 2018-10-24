@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\DataProvider;
+namespace Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Form\DataProvider;
 
-use Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\MerchantRelationshipPriceDimensionForm;
-use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface;
+use Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Form\MerchantRelationshipPriceDimensionForm;
+use Spryker\Zed\PriceProductMerchantRelationshipGui\Dependency\Facade\PriceProductMerchantRelationshipGuiToMerchantRelationshipFacadeInterface;
 
-class MerchantPriceDimensionFormDataProvider
+class MerchantRelationshipPriceDimensionFormDataProvider
 {
     /**
-     * @var \Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface
+     * @var \Spryker\Zed\PriceProductMerchantRelationshipGui\Dependency\Facade\PriceProductMerchantRelationshipGuiToMerchantRelationshipFacadeInterface
      */
     protected $merchantRelationshipFacade;
 
     /**
-     * @param \Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface $merchantRelationshipFacade
+     * @param \Spryker\Zed\PriceProductMerchantRelationshipGui\Dependency\Facade\PriceProductMerchantRelationshipGuiToMerchantRelationshipFacadeInterface $merchantRelationshipFacade
      */
-    public function __construct(PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface $merchantRelationshipFacade)
+    public function __construct(PriceProductMerchantRelationshipGuiToMerchantRelationshipFacadeInterface $merchantRelationshipFacade)
     {
         $this->merchantRelationshipFacade = $merchantRelationshipFacade;
     }

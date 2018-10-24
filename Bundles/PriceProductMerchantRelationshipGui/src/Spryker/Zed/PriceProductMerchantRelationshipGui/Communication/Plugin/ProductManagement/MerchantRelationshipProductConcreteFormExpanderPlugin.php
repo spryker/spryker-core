@@ -5,22 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\ProductManagement;
+namespace Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Plugin\ProductManagement;
 
 use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceProductMerchantRelationship\Communication\Form\MerchantRelationshipPriceDimensionForm;
-use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface;
+use Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Form\MerchantRelationshipPriceDimensionForm;
+use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @method \Spryker\Zed\PriceProductMerchantRelationship\Communication\PriceProductMerchantRelationshipCommunicationFactory getFactory()
- * @method \Spryker\Zed\PriceProductMerchantRelationship\Business\PriceProductMerchantRelationshipFacadeInterface getFacade()
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\PriceProductMerchantRelationshipGuiCommunicationFactory getFactory()
  */
-class MerchantRelationshipProductAbstractFormExpanderPlugin extends AbstractPlugin implements ProductAbstractFormExpanderPluginInterface
+class MerchantRelationshipProductConcreteFormExpanderPlugin extends AbstractPlugin implements ProductConcreteFormExpanderPluginInterface
 {
     /**
-     * @uses \Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd
+     * @uses \Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd::FORM_PRICE_DIMENSION
      */
     protected const FORM_PRICE_DIMENSION = 'price_dimension';
 

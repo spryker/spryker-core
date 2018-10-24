@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 interface PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
-     */
-    public function getMerchantRelationshipCollection(): array;
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer

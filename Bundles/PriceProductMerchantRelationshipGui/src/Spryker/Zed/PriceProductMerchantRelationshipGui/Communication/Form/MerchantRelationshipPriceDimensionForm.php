@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Form;
+namespace Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Form;
 
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
@@ -21,7 +21,7 @@ class MerchantRelationshipPriceDimensionForm extends AbstractType
     protected const FIELD_PLACEHOLDER_MERCHANT_RELATIONSHIP = 'Default prices';
     protected const FIELD_LABEL_MERCHANT_RELATIONSHIP = 'Merchant Price Dimension';
 
-    protected const TEMPLATE_PATH = '@PriceProductMerchantRelationship/ProductManagement/price_dimension.twig';
+    protected const TEMPLATE_PATH = '@PriceProductMerchantRelationshipGui/ProductManagement/price_dimension.twig';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

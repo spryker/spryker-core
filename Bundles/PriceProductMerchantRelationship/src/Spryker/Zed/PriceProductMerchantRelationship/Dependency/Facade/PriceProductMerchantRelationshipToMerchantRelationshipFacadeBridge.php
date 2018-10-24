@@ -25,14 +25,6 @@ class PriceProductMerchantRelationshipToMerchantRelationshipFacadeBridge impleme
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
-     */
-    public function getMerchantRelationshipCollection(): array
-    {
-        return $this->merchantRelationshipFacade->getMerchantRelationshipCollection();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
