@@ -53,7 +53,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     protected const ZED_API_SSL_ENABLED = 'ZED_API_SSL_ENABLED';
 
-    protected const ZED_REQUEST_ERROR = 'Failed to complete request with server authority %s:%s.
+    protected const ZED_REQUEST_ERROR = 'Failed to complete request with server authority %s.
 Configured with %s %s:%s in %s. Error: Stacktrace:';
 
     /**
@@ -175,9 +175,9 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     protected function getConfigServerPort()
     {
         if (Config::get(static::ZED_API_SSL_ENABLED)) {
-            return Config::get(ApplicationConstants::PORT_SSL_ZED) ?: static::DEFAULT_PORT;
+            return Config::get(ApplicationConstants::PORT_SSL_ZED) ?: static::DEFAULT_SSL_PORT;
         }
-        return Config::get(ApplicationConstants::PORT_ZED) ?: static::DEFAULT_SSL_PORT;
+        return Config::get(ApplicationConstants::PORT_ZED) ?: static::DEFAULT_PORT;
     }
 
     /**
@@ -206,13 +206,12 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
         } catch (GuzzleRequestException $e) {
             $configHostName = Config::get(ApplicationConstants::HOST_ZED);
             $configServerPort = $this->getConfigServerPort();
-            $hostName = $request->getUri()->getHost();
-            $portName = $request->getUri()->getPort() ?: static::DEFAULT_PORT;
+            $hostSchema = $request->getUri()->getScheme();
+            $hostAuthority = $hostSchema . '://' . $request->getUri()->getAuthority();
             $configFileName = $this->getConfigFilePathName();
             $message = sprintf(
                 static::ZED_REQUEST_ERROR,
-                $hostName,
-                $portName,
+                $hostAuthority,
                 $this->setSslStatusMessage(),
                 $configHostName,
                 $configServerPort,
