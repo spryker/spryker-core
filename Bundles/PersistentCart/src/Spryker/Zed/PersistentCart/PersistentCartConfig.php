@@ -12,11 +12,16 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PersistentCartConfig extends AbstractBundleConfig
 {
+    protected const DEFAULT_PERSISTENT_CART_ANONYMOUS_PREFIX = 'anonymous:';
+
     /**
      * @return string
      */
     public function getPersistentCartAnonymousPrefix(): string
     {
-        return $this->get(PersistentCartConstants::PERSISTENT_CART_ANONYMOUS_PREFIX);
+        return $this->get(
+            PersistentCartConstants::PERSISTENT_CART_ANONYMOUS_PREFIX,
+            static::DEFAULT_PERSISTENT_CART_ANONYMOUS_PREFIX
+        );
     }
 }
