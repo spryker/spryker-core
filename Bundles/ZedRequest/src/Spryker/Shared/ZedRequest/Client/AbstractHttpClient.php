@@ -32,7 +32,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     public const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
     /**
-     * @deprecated
+     * @deprecated not valid constant name. Use ZED_REQUEST_ERROR instead
      */
     public const HOST_NAME_ERROR =
         'Incorrect HOST_ZED config, expected `%s`, got `%s`. Set the URLs in your Shared/config_default_%s.php or env specific config files.';
@@ -42,10 +42,17 @@ abstract class AbstractHttpClient implements HttpClientInterface
     public const HEADER_INTERNAL_REQUEST = 'X-Internal-Request';
     public const HEADER_HOST_ZED = 'X-Zed-Host';
     protected const SERVER_HTTP_HOST = 'HTTP_HOST';
+    protected const SERVER_PORT = 'SERVER_PORT';
+    protected const DEFAULT_PORT = 80;
 
-    protected const ZED_REQUEST_ERROR = 'Attempted to make request to Zed %s.
-Configured host for Zed is %s.
-Failures here are usually due to network errors or redirection loops.';
+    protected const CONFIG_FILE_PREFIX = '/config/Shared/config_';
+    protected const CONFIG_FILE_SUFFIX = '.php';
+
+    protected const DEFAULT_CONFIG = 'default';
+
+    protected const ZED_REQUEST_ERROR = 'Attempted to request Zed at %s:%s but failed.
+Zed is configured to %s:%s.
+Configuration loaded from %s. Error:';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
@@ -140,6 +147,16 @@ Failures here are usually due to network errors or redirection loops.';
     abstract public function getHeaders();
 
     /**
+     * @return string
+     */
+    protected function getConfigFilePathName(): string
+    {
+        return APPLICATION_ROOT_DIR .
+            static::CONFIG_FILE_PREFIX . static::DEFAULT_CONFIG .
+            static::CONFIG_FILE_SUFFIX;
+    }
+
+    /**
      * @param string $pathInfo
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
@@ -165,8 +182,18 @@ Failures here are usually due to network errors or redirection loops.';
         } catch (GuzzleRequestException $e) {
             $symfonyRequest = SymfonyRequest::createFromGlobals();
             $hostName = $symfonyRequest->server->get(static::SERVER_HTTP_HOST);
+            $serverPort = $symfonyRequest->server->get(static::SERVER_PORT);
             $configuredHostName = $request->getUri()->getHost();
-            $message = sprintf(static::ZED_REQUEST_ERROR, $hostName, $configuredHostName);
+            $configuredPortName = $request->getUri()->getPort() ?? static::DEFAULT_PORT;
+            $configFileName = $this->getConfigFilePathName();
+            $message = sprintf(
+                static::ZED_REQUEST_ERROR,
+                $hostName,
+                $serverPort,
+                $configuredHostName,
+                $configuredPortName,
+                $configFileName
+            );
             $response = $e->getResponse();
             if ($response) {
                 $message .= PHP_EOL . PHP_EOL . $response->getBody();
