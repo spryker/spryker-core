@@ -163,9 +163,9 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     }
 
     /**
-     * @param array $productAbstractIdIndexes
+     * @param int[] $productAbstractIdIndexes
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\EventEntityTransfer[]
      */
     protected function generateProductAbstractEventEntityTransfers(array $productAbstractIdIndexes): array
     {
