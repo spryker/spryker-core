@@ -7,6 +7,7 @@
 namespace Spryker\Glue\GlueApplication\Rest;
 
 use Exception;
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Controller\ErrorControllerInterface;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -112,17 +113,12 @@ class ControllerFilter implements ControllerFilterInterface
             }
 
             $restRequest = $this->requestFormatter->formatRequest($httpRequest);
+            $restErrorCollectionTransfer = $this->validatedRequest($controller, $httpRequest, $restRequest);
 
-            if (!$controller instanceof ErrorControllerInterface) {
-                $restErrorMessageTransfer = $this->restRequestValidator->validate($httpRequest, $restRequest);
-            }
-
-            if (!$restErrorMessageTransfer) {
+            if (!$restErrorCollectionTransfer || !$restErrorCollectionTransfer->getRestErrors()->count()) {
                 $restResponse = $this->executeAction($controller, $action, $restRequest);
             } else {
-                $restResponse = $this->restResourceBuilder
-                    ->createRestResponse()
-                    ->addError($restErrorMessageTransfer);
+                $restResponse = $this->createErrorResponse($restErrorCollectionTransfer);
             }
 
             $httpResponse = $this->responseFormatter->format($restResponse, $restRequest);
@@ -207,5 +203,35 @@ class ControllerFilter implements ControllerFilterInterface
         }
 
         $this->getLogger()->error($exception->getMessage(), ['trace' => $exception->getTraceAsString()]);
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Controller\AbstractController $controller
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
+     */
+    protected function validatedRequest(AbstractController $controller, Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
+    {
+        $restErrorCollectionTransfer = null;
+        if (!$controller instanceof ErrorControllerInterface) {
+            $restErrorCollectionTransfer = $this->restRequestValidator->validate($httpRequest, $restRequest);
+        }
+        return $restErrorCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollectionTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createErrorResponse(RestErrorCollectionTransfer $restErrorCollectionTransfer): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        foreach ($restErrorCollectionTransfer->getRestErrors() as $restErrorMessageTransfer) {
+            $restResponse->addError($restErrorMessageTransfer);
+        }
+        return $restResponse;
     }
 }
