@@ -69,7 +69,7 @@ class CartCreator implements CartCreatorInterface
         $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($restRequest, $quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createFailedCreatingQuoteError($quoteResponseTransfer, $restResponse);
+            return $this->createFailedCreatingCartError($quoteResponseTransfer, $restResponse);
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(
@@ -141,29 +141,29 @@ class CartCreator implements CartCreatorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createFailedCreatingQuoteError(QuoteResponseTransfer $quoteResponseTransfer, RestResponseInterface $response): RestResponseInterface
+    protected function createFailedCreatingCartError(QuoteResponseTransfer $quoteResponseTransfer, RestResponseInterface $response): RestResponseInterface
     {
         if ($quoteResponseTransfer->getErrors()->count() === 0) {
             return $response->addError($this->createRestErrorMessageTransfer(
-                CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_QUOTE,
+                CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART,
                 Response::HTTP_INTERNAL_SERVER_ERROR,
                 CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART
             ));
         }
 
         foreach ($quoteResponseTransfer->getErrors() as $error) {
-            if ($error->getMessage() === CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_QUOTE) {
+            if ($error->getMessage() === CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART) {
                 $response->addError($this->createRestErrorMessageTransfer(
-                    CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_QUOTE,
-                    Response::HTTP_METHOD_NOT_ALLOWED,
-                    CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_QUOTE
+                    CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART,
+                    Response::HTTP_UNPROCESSABLE_ENTITY,
+                    CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART
                 ));
 
                 continue;
             }
 
             $response->addError($this->createRestErrorMessageTransfer(
-                CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_QUOTE,
+                CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART,
                 Response::HTTP_INTERNAL_SERVER_ERROR,
                 $error->getMessage()
             ));

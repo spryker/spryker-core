@@ -68,7 +68,6 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
      */
     public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
         $cartResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS,
             $quoteTransfer->getUuid(),
@@ -79,7 +78,7 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
             $cartResource->addRelationship($this->createGuestCartItemResource($itemTransfer, $cartResource->getId()));
         }
 
-        return $restResponse->addResource($cartResource);
+        return $this->createEmptyGuestCartRestResponse()->addResource($cartResource);
     }
 
     /**
@@ -87,14 +86,12 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
      */
     public function createGuestCartNotFoundErrorRestResponse(): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND);
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND);
 
-        return $restResponse->addError($restErrorTransfer);
+        return $this->createEmptyGuestCartRestResponse()->addError($restErrorTransfer);
     }
 
     /**
@@ -104,7 +101,7 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
      */
     public function createGuestCartErrorRestResponseFromErrorMessageTransfer(array $errors): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->createEmptyGuestCartRestResponse();
 
         foreach ($errors as $messageTransfer) {
             $restErrorMessageTransfer = (new RestErrorMessageTransfer())
@@ -123,29 +120,12 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
      */
     public function createGuestCartIdMissingError(): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_ID_MISSING)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ID_MISSING);
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING);
 
-        return $restResponse->addError($restErrorTransfer);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createGuestCartDeleteFailedError(): RestResponseInterface
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_QUOTE)
-            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_QUOTE);
-
-        return $restResponse->addError($restErrorTransfer);
+        return $this->createEmptyGuestCartRestResponse()->addError($restErrorTransfer);
     }
 
     /**

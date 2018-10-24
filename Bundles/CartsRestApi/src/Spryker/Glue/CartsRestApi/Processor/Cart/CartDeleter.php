@@ -55,15 +55,15 @@ class CartDeleter implements CartDeleterInterface
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        $idQuote = $restRequest->getResource()->getId();
-        if ($idQuote === null) {
-            return $this->createQuoteIdMissingError($restResponse);
+        $idCart = $restRequest->getResource()->getId();
+        if ($idCart === null) {
+            return $this->createCartIdMissingError($restResponse);
         }
 
-        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idQuote, $restRequest);
+        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idCart, $restRequest);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createQuoteNotFoundError($restResponse);
+            return $this->createCartNotFoundError($restResponse);
         }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
@@ -71,7 +71,7 @@ class CartDeleter implements CartDeleterInterface
 
         $quoteResponseTransfer = $this->persistentCartClient->deleteQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createFailedDeletingQuoteError($restResponse);
+            return $this->createFailedDeletingCartError($restResponse);
         }
 
         return $restResponse;
@@ -82,12 +82,12 @@ class CartDeleter implements CartDeleterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteIdMissingError(RestResponseInterface $response): RestResponseInterface
+    protected function createCartIdMissingError(RestResponseInterface $response): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_ID_MISSING)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ID_MISSING);
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING);
 
         return $response->addError($restErrorTransfer);
     }
@@ -97,12 +97,12 @@ class CartDeleter implements CartDeleterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteNotFoundError(RestResponseInterface $response): RestResponseInterface
+    protected function createCartNotFoundError(RestResponseInterface $response): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND);
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND);
 
         return $response->addError($restErrorTransfer);
     }
@@ -112,12 +112,12 @@ class CartDeleter implements CartDeleterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createFailedDeletingQuoteError(RestResponseInterface $response): RestResponseInterface
+    protected function createFailedDeletingCartError(RestResponseInterface $response): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_QUOTE)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_QUOTE);
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART);
 
         return $response->addError($restErrorTransfer);
     }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Plugin;
+namespace Spryker\Glue\CartsRestApi\Plugin\CustomerPostRegister;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface;
@@ -14,7 +14,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
-class UpdateQuoteCustomerReferencePlugin extends AbstractPlugin implements CustomerPostRegisterPluginInterface
+class UpdateCartCustomerReferencePlugin extends AbstractPlugin implements CustomerPostRegisterPluginInterface
 {
     /**
      * {@inheritdoc}

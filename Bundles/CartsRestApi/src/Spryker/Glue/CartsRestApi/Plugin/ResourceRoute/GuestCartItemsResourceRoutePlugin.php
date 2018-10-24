@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Plugin;
+namespace Spryker\Glue\CartsRestApi\Plugin\ResourceRoute;
 
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;

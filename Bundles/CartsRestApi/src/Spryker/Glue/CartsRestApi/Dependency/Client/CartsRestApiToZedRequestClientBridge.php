@@ -25,7 +25,7 @@ class CartsRestApiToZedRequestClientBridge implements CartsRestApiToZedRequestCl
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getLastResponseErrorMessages()
+    public function getLastResponseErrorMessages(): array
     {
         return $this->zedRequestClient->getLastResponseErrorMessages();
     }

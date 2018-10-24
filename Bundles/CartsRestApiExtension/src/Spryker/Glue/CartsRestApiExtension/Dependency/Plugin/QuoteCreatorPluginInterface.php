@@ -15,7 +15,7 @@ interface QuoteCreatorPluginInterface
 {
     /**
      * Specification:
-     *  - This plugin method is used for extending cart creator in cart module.
+     *  - This plugin method is used to create quote in CartsRestApi module.
      *
      * @api
      *

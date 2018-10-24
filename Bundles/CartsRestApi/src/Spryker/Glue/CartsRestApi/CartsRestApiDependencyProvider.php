@@ -12,6 +12,7 @@ use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClie
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientBridge;
 use Spryker\Glue\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException;
+use Spryker\Glue\CartsRestApi\Exception\MissingQuoteCreatorPluginException;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
@@ -145,13 +146,13 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @throws \Spryker\Glue\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException
+     * @throws \Spryker\Glue\CartsRestApi\Exception\MissingQuoteCreatorPluginException
      *
      * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
      */
     protected function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
     {
-        throw new MissingQuoteCollectionReaderPluginException(sprintf(
+        throw new MissingQuoteCreatorPluginException(sprintf(
             'Missing instance of %s! You need to configure QuoteCreatorPluginInterface ' .
             'in your own CartsRestApiDependencyProvider::getQuoteCreatorPlugin() ' .
             'to be able to create quote.',

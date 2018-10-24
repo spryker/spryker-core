@@ -17,12 +17,12 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface GuestCartReaderInterface extends CartReaderInterface
 {
     /**
-     * @param string $uuidQuote
+     * @param string $uuidCart
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readByIdentifier(string $uuidQuote, RestRequestInterface $restRequest): RestResponseInterface;
+    public function readByIdentifier(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -32,12 +32,12 @@ interface GuestCartReaderInterface extends CartReaderInterface
     public function readCurrentCustomerCarts(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
-     * @param string $uuidQuote
+     * @param string $uuidCart
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteTransferByUuid(string $uuidQuote, RestRequestInterface $restRequest): QuoteResponseTransfer;
+    public function getQuoteTransferByUuid(string $uuidCart, RestRequestInterface $restRequest): QuoteResponseTransfer;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

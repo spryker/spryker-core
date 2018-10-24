@@ -62,7 +62,7 @@ class GuestCartCreator implements GuestCartCreatorInterface
         $quoteResponseTransfer = $this->persistentCartClient->createQuote($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createFailedCreatingQuoteError($restResponse);
+            return $this->createFailedCreatingCartError($restResponse);
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(
@@ -100,10 +100,10 @@ class GuestCartCreator implements GuestCartCreatorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createFailedCreatingQuoteError(RestResponseInterface $response): RestResponseInterface
+    protected function createFailedCreatingCartError(RestResponseInterface $response): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_QUOTE)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART)
             ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
             ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART);
 

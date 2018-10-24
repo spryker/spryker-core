@@ -21,7 +21,7 @@ class GuestCartItemDeleter extends CartItemDeleter implements GuestCartItemDelet
     protected function findCartIdentifier(RestRequestInterface $restRequest): ?string
     {
         $cartResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_GUEST_CARTS);
-        if ($cartResource !== null) {
+        if ($cartResource) {
             return $cartResource->getId();
         }
 

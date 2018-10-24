@@ -37,12 +37,13 @@ class RestRequestUpdater implements RestRequestUpdaterInterface
             return;
         }
 
-        $customerReference = $restRequest->getHttpRequest()->headers->get(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID);
-        if (empty($customerReference)) {
+        $anonymousCustomerUniqueId = $restRequest->getHttpRequest()->headers
+            ->get(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID);
+        if (empty($anonymousCustomerUniqueId)) {
             return;
         }
 
-        $customerReference = $this->persistentCartClient->generateGuestCartCustomerReference($customerReference);
+        $customerReference = $this->persistentCartClient->generateGuestCartCustomerReference($anonymousCustomerUniqueId);
         $restRequest->setUser('', $customerReference);
     }
 }

@@ -80,19 +80,19 @@ class CartItemUpdater implements CartItemUpdaterInterface
         $sku = '';
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $idQuote = $this->findCartIdentifier($restRequest);
+        $idCart = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
-        if ($this->isRequestValid($idQuote, $itemIdentifier)) {
+        if ($this->isRequestValid($idCart, $itemIdentifier)) {
             return $this->createMissingRequiredParameterError();
         }
 
-        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idQuote, $restRequest);
+        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idCart, $restRequest);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createQuoteNotFoundError();
+            return $this->createCartNotFoundError();
         }
 
         if ($this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier) === null) {
-            return $this->createQuoteItemNotFoundError();
+            return $this->createCartItemNotFoundError();
         }
 
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
@@ -148,12 +148,12 @@ class CartItemUpdater implements CartItemUpdaterInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteNotFoundError(): RestResponseInterface
+    protected function createCartNotFoundError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND);
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
@@ -161,12 +161,12 @@ class CartItemUpdater implements CartItemUpdaterInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteItemNotFoundError(): RestResponseInterface
+    protected function createCartItemNotFoundError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ITEM_NOT_FOUND);
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
@@ -185,13 +185,13 @@ class CartItemUpdater implements CartItemUpdaterInterface
     }
 
     /**
-     * @param string|null $idQuote
+     * @param string|null $idCart
      * @param string|null $itemIdentifier
      *
      * @return bool
      */
-    protected function isRequestValid(?string $idQuote, ?string $itemIdentifier): bool
+    protected function isRequestValid(?string $idCart, ?string $itemIdentifier): bool
     {
-        return ($idQuote === null || $itemIdentifier === null);
+        return ($idCart === null || $itemIdentifier === null);
     }
 }

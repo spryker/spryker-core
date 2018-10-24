@@ -69,26 +69,26 @@ class CartItemDeleter implements CartItemDeleterInterface
         $sku = '';
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $idQuote = $this->findCartIdentifier($restRequest);
+        $idCart = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
-        if ($this->isRequestValid($idQuote, $itemIdentifier)) {
+        if ($this->isRequestValid($idCart, $itemIdentifier)) {
             return $this->createMissingRequiredParameterError();
         }
 
-        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idQuote, $restRequest);
+        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idCart, $restRequest);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createQuoteNotFoundError();
+            return $this->createCartNotFoundError();
         }
 
         if ($this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier) === null) {
-            return $this->createQuoteItemNotFoundError();
+            return $this->createCartItemNotFoundError();
         }
 
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         $this->cartClient->removeItem($sku, $itemIdentifier);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createFailedDeletingQuoteItemError($restResponse);
+            return $this->createFailedDeletingCartItemError($restResponse);
         }
 
         return $restResponse;
@@ -148,12 +148,12 @@ class CartItemDeleter implements CartItemDeleterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createFailedDeletingQuoteItemError(RestResponseInterface $response): RestResponseInterface
+    protected function createFailedDeletingCartItemError(RestResponseInterface $response): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_QUOTE_ITEM)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART_ITEM)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_QUOTE_ITEM);
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM);
 
         return $response->addError($restErrorTransfer);
     }
@@ -161,25 +161,12 @@ class CartItemDeleter implements CartItemDeleterInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteIdMissingError(): RestResponseInterface
+    protected function createCartNotFoundError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_ID_MISSING)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ID_MISSING);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createQuoteNotFoundError(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND);
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
@@ -187,12 +174,12 @@ class CartItemDeleter implements CartItemDeleterInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteItemNotFoundError(): RestResponseInterface
+    protected function createCartItemNotFoundError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ITEM_NOT_FOUND);
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
@@ -211,13 +198,13 @@ class CartItemDeleter implements CartItemDeleterInterface
     }
 
     /**
-     * @param string|null $idQuote
+     * @param string|null $idCart
      * @param string|null $itemIdentifier
      *
      * @return bool
      */
-    protected function isRequestValid(?string $idQuote, ?string $itemIdentifier): bool
+    protected function isRequestValid(?string $idCart, ?string $itemIdentifier): bool
     {
-        return ($idQuote === null || $itemIdentifier === null);
+        return ($idCart === null || $itemIdentifier === null);
     }
 }

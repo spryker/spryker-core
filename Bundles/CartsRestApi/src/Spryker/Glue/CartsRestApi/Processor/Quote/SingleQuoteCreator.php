@@ -46,9 +46,9 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
     public function createQuote(RestRequestInterface $restRequest, QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteCollectionTransfer = $this->cartReader->getCustomerQuotes($restRequest);
-        if ($quoteCollectionTransfer->getQuotes()->count() > 0) {
+        if ($quoteCollectionTransfer->getQuotes()->count()) {
             $quoteErrorTransfer = (new QuoteErrorTransfer())
-                ->setMessage(CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_QUOTE);
+                ->setMessage(CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART);
 
             return (new QuoteResponseTransfer())
                 ->addError($quoteErrorTransfer)

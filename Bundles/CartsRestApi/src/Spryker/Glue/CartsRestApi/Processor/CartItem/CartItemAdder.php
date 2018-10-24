@@ -88,13 +88,13 @@ class CartItemAdder implements CartItemAdderInterface
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $idQuote = $this->findCartIdentifier($restRequest);
-        if ($idQuote === null) {
-            return $this->createQuoteIdMissingError();
+        $idCart = $this->findCartIdentifier($restRequest);
+        if ($idCart === null) {
+            return $this->createCartIdMissingError();
         }
-        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idQuote, $restRequest);
+        $quoteResponseTransfer = $this->cartReader->getQuoteTransferByUuid($idCart, $restRequest);
         if (!$quoteResponseTransfer->getIsSuccessful() || $quoteResponseTransfer->getQuoteTransfer() === null) {
-            return $this->createQuoteNotFoundError();
+            return $this->createCartNotFoundError();
         }
 
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
@@ -148,12 +148,12 @@ class CartItemAdder implements CartItemAdderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteIdMissingError(): RestResponseInterface
+    protected function createCartIdMissingError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_ID_MISSING)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ID_MISSING);
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
@@ -161,12 +161,12 @@ class CartItemAdder implements CartItemAdderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteNotFoundError(): RestResponseInterface
+    protected function createCartNotFoundError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND);
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }

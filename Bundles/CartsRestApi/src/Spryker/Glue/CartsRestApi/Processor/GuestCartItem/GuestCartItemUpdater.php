@@ -21,7 +21,7 @@ class GuestCartItemUpdater extends CartItemUpdater implements GuestCartItemUpdat
     protected function findCartIdentifier(RestRequestInterface $restRequest): ?string
     {
         $cartResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_GUEST_CARTS);
-        if ($cartResource !== null) {
+        if ($cartResource) {
             return $cartResource->getId();
         }
 

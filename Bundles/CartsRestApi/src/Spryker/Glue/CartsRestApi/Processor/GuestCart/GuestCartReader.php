@@ -65,8 +65,11 @@ class GuestCartReader extends CartReader implements GuestCartReaderInterface
     {
         $quoteResponseTransfers = $this->getCustomerQuotes($restRequest);
         $quotes = $quoteResponseTransfers->getQuotes();
+        if (!$quotes->count()) {
+            return null;
+        }
 
-        return $quotes[0] ?? null;
+        return $quotes->offsetGet(0);
     }
 
     /**

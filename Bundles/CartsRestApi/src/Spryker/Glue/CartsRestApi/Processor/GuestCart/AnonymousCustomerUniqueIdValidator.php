@@ -15,10 +15,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdValidatorInterface
 {
-    protected const GUEST_CART_RESOURCES = [
-        CartsRestApiConfig::RESOURCE_GUEST_CARTS,
-        CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
-    ];
+    /**
+     * @var \Spryker\Glue\CartsRestApi\CartsRestApiConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
+     */
+    public function __construct(CartsRestApiConfig $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
@@ -33,12 +41,12 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
         }
 
         if (empty($httpRequest->headers->get(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID))
-            && in_array($restRequest->getResource()->getType(), static::GUEST_CART_RESOURCES, true)
+            && in_array($restRequest->getResource()->getType(), $this->config->getGuestCartResources(), true)
         ) {
             return (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
-                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_UNAUTHORIZED);
+                ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
+                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
         }
 
         return null;
