@@ -343,11 +343,10 @@ $(document).ready(function(){
     $('.gui-table-data').on('init.dt', function () {
         var $rows = $(this).find('tbody tr'),
             $lastRows = $rows.slice(-2),
-            $dropdownMenus = $lastRows.find('.column-Actions button.dropdown-toggle').next(),
-            className = $dropdownMenus.attr("class").split(' ')[0];
+            $dropdownMenus = $lastRows.find('.column-Actions button.dropdown-toggle').next();
 
-        if(className === 'dropdown-menu') {
-            $dropdownMenus.addClass(className + '--top');
+        if($dropdownMenus.hasClass('dropdown-menu')) {
+            $dropdownMenus.addClass('dropdown-menu--top');
         }
     });
 });
