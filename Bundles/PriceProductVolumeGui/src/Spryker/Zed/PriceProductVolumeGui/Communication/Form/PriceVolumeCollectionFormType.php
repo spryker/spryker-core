@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @method \Spryker\Zed\PriceProductVolumeGui\Business\PriceProductVolumeGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductVolumeGui\Communication\PriceProductVolumeGuiCommunicationFactory getFactory()
  */
 class PriceVolumeCollectionFormType extends AbstractType

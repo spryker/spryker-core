@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\PriceProductVolumeGui\Communication\PriceProductVolumeGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\PriceProductVolumeGui\Business\PriceProductVolumeGuiFacadeInterface getFacade()
  */
 class PriceVolumeController extends AbstractController
 {
@@ -216,7 +215,7 @@ class PriceVolumeController extends AbstractController
             static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT => $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
         ];
 
-        return $this->generateUrl(static::PRODUCT_CONCRETE_EDIT_URL, array_merge($query,$this->getDefaultProductExitUrlQuery($request)), $this->getUrlOptions('price'));
+        return $this->generateUrl(static::PRODUCT_CONCRETE_EDIT_URL, array_merge($query, $this->getDefaultProductExitUrlQuery($request)), $this->getUrlOptions('price'));
     }
 
     /**
@@ -230,7 +229,7 @@ class PriceVolumeController extends AbstractController
             static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT => $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
         ];
 
-        return $this->generateUrl(static::PRODUCT_ABSTRACT_EDIT_URL, array_merge($query,$this->getDefaultProductExitUrlQuery($request)), $this->getUrlOptions('price_and_tax'));
+        return $this->generateUrl(static::PRODUCT_ABSTRACT_EDIT_URL, array_merge($query, $this->getDefaultProductExitUrlQuery($request)), $this->getUrlOptions('price_and_tax'));
     }
 
     /**

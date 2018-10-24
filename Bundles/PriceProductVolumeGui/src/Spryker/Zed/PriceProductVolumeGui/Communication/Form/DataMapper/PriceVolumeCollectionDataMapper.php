@@ -13,7 +13,6 @@ use Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiTo
 use Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig;
 
 /**
- * @method \Spryker\Zed\PriceProductVolumeGui\Business\PriceProductVolumeGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductVolumeGui\Communication\PriceProductVolumeGuiCommunicationFactory getFactory()
  */
 class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapperInterface

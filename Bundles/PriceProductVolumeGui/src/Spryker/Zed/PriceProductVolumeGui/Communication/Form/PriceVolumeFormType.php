@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductVolumeGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +19,6 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 
 /**
- * @method \Spryker\Zed\PriceProductVolumeGui\Business\PriceProductVolumeGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductVolumeGui\Communication\PriceProductVolumeGuiCommunicationFactory getFactory()
  */
 class PriceVolumeFormType extends AbstractType
@@ -123,6 +123,23 @@ class PriceVolumeFormType extends AbstractType
             ],
         ]);
 
+        $builder->get($name)->addModelTransformer($this->getPriceModelTransformer());
+
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function getPriceModelTransformer(): CallbackTransformer
+    {
+        return new CallbackTransformer(
+            function ($priceValue) {
+                return $priceValue;
+            },
+            function ($priceValue) {
+                return (int)$priceValue;
+            }
+        );
     }
 }
