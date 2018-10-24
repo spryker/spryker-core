@@ -50,6 +50,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     protected const DEFAULT_CONFIG = 'default';
 
+    protected const ZED_API_SSL_ENABLED = 'ZED_API_SSL_ENABLED';
+
     protected const ZED_REQUEST_ERROR = 'Attempted to request Zed at %s:%s but failed.
 Zed is configured to %s:%s.
 Configuration loaded from %s. Error:';
@@ -157,6 +159,17 @@ Configuration loaded from %s. Error:';
     }
 
     /**
+     * @return int
+     */
+    protected function getConfigServerPort()
+    {
+        if (Config::get(static::ZED_API_SSL_ENABLED)) {
+            return Config::get(ApplicationConstants::PORT_SSL_ZED) ?: static::DEFAULT_PORT;
+        }
+        return Config::get(ApplicationConstants::PORT_ZED) ?: static::DEFAULT_PORT;
+    }
+
+    /**
      * @param string $pathInfo
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
@@ -180,17 +193,17 @@ Configuration loaded from %s. Error:';
         try {
             $response = $this->sendRequest($request, $requestTransfer, $requestOptions);
         } catch (GuzzleRequestException $e) {
-            $hostName = Config::get(ApplicationConstants::HOST_ZED);
-            $serverPort = Config::get(ApplicationConstants::PORT_ZED) ?: static::DEFAULT_PORT;
-            $configuredHostName = $request->getUri()->getHost();
-            $configuredPortName = $request->getUri()->getPort() ?: static::DEFAULT_PORT;
+            $configHostName = Config::get(ApplicationConstants::HOST_ZED);
+            $configServerPort = $this->getConfigServerPort();
+            $hostName = $request->getUri()->getHost();
+            $portName = $request->getUri()->getPort() ?: static::DEFAULT_PORT;
             $configFileName = $this->getConfigFilePathName();
             $message = sprintf(
                 static::ZED_REQUEST_ERROR,
                 $hostName,
-                $serverPort,
-                $configuredHostName,
-                $configuredPortName,
+                $portName,
+                $configHostName,
+                $configServerPort,
                 $configFileName
             );
             $response = $e->getResponse();
