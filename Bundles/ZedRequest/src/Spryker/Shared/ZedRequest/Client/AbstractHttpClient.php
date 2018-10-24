@@ -44,6 +44,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected const SERVER_HTTP_HOST = 'HTTP_HOST';
     protected const SERVER_PORT = 'SERVER_PORT';
     protected const DEFAULT_PORT = 80;
+    protected const DEFAULT_SSL_PORT = 443;
 
     protected const CONFIG_FILE_PREFIX = '/config/Shared/config_';
     protected const CONFIG_FILE_SUFFIX = '.php';
@@ -176,7 +177,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
         if (Config::get(static::ZED_API_SSL_ENABLED)) {
             return Config::get(ApplicationConstants::PORT_SSL_ZED) ?: static::DEFAULT_PORT;
         }
-        return Config::get(ApplicationConstants::PORT_ZED) ?: static::DEFAULT_PORT;
+        return Config::get(ApplicationConstants::PORT_ZED) ?: static::DEFAULT_SSL_PORT;
     }
 
     /**
