@@ -19,7 +19,7 @@ class CustomerTransferSessionRefreshPlugin extends AbstractPlugin implements Cus
     /**
      * {@inheritdoc}
      * - Retrieves customer by either provided id, email or restore password key.
-     * - Retrieves the fresh customer data from persistence and keeps the existing session only data.
+     * - Expands the provided CustomerTransfer with persistence and stores it to session.
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
