@@ -577,8 +577,8 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
     protected function addProductSearchEvents(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_SEARCH_CREATE, new ProductSearchListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_SEARCH_UPDATE, new ProductSearchListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_SEARCH_DELETE, new ProductSearchListener());
+            ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_CREATE, new ProductSearchListener())
+            ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_UPDATE, new ProductSearchListener())
+            ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_DELETE, new ProductSearchListener());
     }
 }

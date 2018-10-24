@@ -27,7 +27,6 @@
         <property name="categoryNames" type="array" />
         <property name="sortedCategories" type="array" />
         <property name="productImages" type="array" />
-        <property name="isSearchable" type="bool" />
     </transfer>
 
     <transfer name="ProductPageLoad">

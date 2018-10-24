@@ -77,7 +77,8 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->withColumn(SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET, 'id_image_set');
 
         $query
-            ->joinWith('SpyProduct.SpyProductSearch');
+            ->rightJoinWith('SpyProduct.SpyProductSearch')
+            ->addJoinCondition('SpyProductSearch', sprintf('(spy_product_search.fk_locale = %s AND spy_product_search.is_searchable = true)', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE));
 
         return $query;
     }

@@ -17,7 +17,6 @@ use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  */
 class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
 {

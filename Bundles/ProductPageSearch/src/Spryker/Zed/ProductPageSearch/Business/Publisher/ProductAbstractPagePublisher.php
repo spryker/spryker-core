@@ -230,12 +230,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $isRefresh
         );
 
-        if (!$productPageSearchTransfer->getIsSearchable()) {
-            $this->deleteProductAbstractPageSearchEntity($productAbstractPageSearchEntity);
-
-            return;
-        }
-
         $productPageSearchTransfer->setStore($storeName);
         $productPageSearchTransfer->setLocale($localeName);
 
