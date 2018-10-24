@@ -19,13 +19,13 @@ use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
 use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
@@ -180,11 +180,10 @@ Configuration loaded from %s. Error:';
         try {
             $response = $this->sendRequest($request, $requestTransfer, $requestOptions);
         } catch (GuzzleRequestException $e) {
-            $symfonyRequest = SymfonyRequest::createFromGlobals();
-            $hostName = $symfonyRequest->server->get(static::SERVER_HTTP_HOST);
-            $serverPort = $symfonyRequest->server->get(static::SERVER_PORT);
+            $hostName = Config::get(ApplicationConstants::HOST_ZED);
+            $serverPort = Config::get(ApplicationConstants::PORT_ZED) ?: static::DEFAULT_PORT;
             $configuredHostName = $request->getUri()->getHost();
-            $configuredPortName = $request->getUri()->getPort() ?? static::DEFAULT_PORT;
+            $configuredPortName = $request->getUri()->getPort() ?: static::DEFAULT_PORT;
             $configFileName = $this->getConfigFilePathName();
             $message = sprintf(
                 static::ZED_REQUEST_ERROR,
