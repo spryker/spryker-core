@@ -26,7 +26,7 @@ class GuestCartsResourceController extends AbstractController
         $idQuote = $restRequest->getResource()->getId();
 
         if ($idQuote !== null) {
-            return $this->getFactory()->createCartReader()->readByIdentifier($idQuote, $restRequest);
+            return $this->getFactory()->createGuestCartReader()->readByIdentifier($idQuote, $restRequest);
         }
 
         return $this->getFactory()->createGuestCartReader()->readCurrentCustomerCarts($restRequest);
