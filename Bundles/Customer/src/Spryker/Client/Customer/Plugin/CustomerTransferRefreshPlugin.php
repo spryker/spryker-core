@@ -12,7 +12,7 @@ use Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
- * @deprecated Will be removed without replacement
+ * @deprecated Use CustomerTransferSessionRefreshPlugin instead.
  *
  * @method \Spryker\Client\Customer\CustomerClientInterface getClient()
  */
