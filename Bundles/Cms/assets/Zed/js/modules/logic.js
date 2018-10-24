@@ -340,12 +340,15 @@ $(document).ready(function(){
         });
     });
 
-    $('.gui-table-data').on( 'init.dt', function () {
-        var $rows = $(this).find('tbody tr').slice(-2),
-            $arrList = $rows.find('.column-Actions button.dropdown-toggle').next(),
-            className = $arrList.attr("class").split(' ')[0];
+    $('.gui-table-data').on('init.dt', function () {
+        var $rows = $(this).find('tbody tr'),
+            $lastRows = $rows.slice(-2),
+            $dropdownMenus = $lastRows.find('.column-Actions button.dropdown-toggle').next(),
+            className = $dropdownMenus.attr("class").split(' ')[0];
 
-        $arrList.addClass(className + '--top');
+        if(className === 'dropdown-menu') {
+            $dropdownMenus.addClass(className + '--top');
+        }
     });
 });
 
