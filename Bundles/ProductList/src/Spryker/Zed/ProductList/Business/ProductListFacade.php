@@ -49,7 +49,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * @deprecated for better method naming, use getProductBlacklistIdsByIdProductAbstract() instead.
+     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProductAbstract() instead.
      *
      * {@inheritdoc}
      *
@@ -81,7 +81,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * @deprecated for better method naming, use getProductWhitelistIdsByIdProductAbstract() instead.
+     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProductAbstract() instead.
      *
      * {@inheritdoc}
      *
@@ -129,7 +129,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * @deprecated Misleading method name, use getProductBlacklistIdsByIdProductConcrete() instead.
+     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProduct() instead.
      *
      * {@inheritdoc}
      *
@@ -141,7 +141,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      */
     public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array
     {
-        return $this->getProductBlacklistIdsByIdProductConcrete($idProductConcrete);
+        return $this->getProductBlacklistIdsByIdProduct($idProductConcrete);
     }
 
     /**
@@ -153,15 +153,15 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @return int[]
      */
-    public function getProductBlacklistIdsByIdProductConcrete(int $idProductConcrete): array
+    public function getProductBlacklistIdsByIdProduct(int $idProductConcrete): array
     {
         return $this->getFactory()
             ->createProductListReader()
-            ->getProductBlacklistIdsByIdProductConcrete($idProductConcrete);
+            ->getProductBlacklistIdsByIdProduct($idProductConcrete);
     }
 
     /**
-     * @deprecated Misleading method name, use getProductWhitelistIdsByIdProductConcrete() instead.
+     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProduct() instead.
      *
      * {@inheritdoc}
      *
@@ -173,7 +173,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      */
     public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array
     {
-        return $this->getProductWhitelistIdsByIdProductConcrete($idProductConcrete);
+        return $this->getProductWhitelistIdsByIdProduct($idProductConcrete);
     }
 
     /**
@@ -185,11 +185,11 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @return int[]
      */
-    public function getProductWhitelistIdsByIdProductConcrete(int $idProductConcrete): array
+    public function getProductWhitelistIdsByIdProduct(int $idProductConcrete): array
     {
         return $this->getFactory()
             ->createProductListReader()
-            ->getProductWhitelistIdsByIdProductConcrete($idProductConcrete);
+            ->getProductWhitelistIdsByIdProduct($idProductConcrete);
     }
 
     /**

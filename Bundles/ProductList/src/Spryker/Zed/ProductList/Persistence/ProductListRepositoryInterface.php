@@ -80,7 +80,7 @@ interface ProductListRepositoryInterface
      *
      * @return string[]
      */
-    public function getConcreteProductSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array;
+    public function getProductConcreteSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array;
 
     /**
      * @param string[] $productConcreteSkus

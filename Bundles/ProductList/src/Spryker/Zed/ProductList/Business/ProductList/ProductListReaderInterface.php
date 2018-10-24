@@ -44,14 +44,14 @@ interface ProductListReaderInterface
      *
      * @return int[]
      */
-    public function getProductBlacklistIdsByIdProductConcrete(int $idProductConcrete): array;
+    public function getProductBlacklistIdsByIdProduct(int $idProductConcrete): array;
 
     /**
      * @param int $idProductConcrete
      *
      * @return int[]
      */
-    public function getProductWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
+    public function getProductWhitelistIdsByIdProduct(int $idProductConcrete): array;
 
     /**
      * @param string[] $productConcreteSkus
@@ -59,7 +59,7 @@ interface ProductListReaderInterface
      *
      * @return array
      */
-    public function getConcreteProductSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array;
+    public function getProductConcreteSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array;
 
     /**
      * @param string[] $productConcreteSkus

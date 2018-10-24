@@ -62,17 +62,17 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int[] $customerBlacklistIds
-     * @param int[] $customerWhitelistIds
+     * @param int[] $blacklistIds
+     * @param int[] $whitelistIds
      *
      * @return void
      */
     protected function removeRestrictedItemsFromQuote(
         QuoteTransfer $quoteTransfer,
-        array $customerBlacklistIds,
-        array $customerWhitelistIds
+        array $blacklistIds,
+        array $whitelistIds
     ): void {
-        if (!$customerBlacklistIds && !$customerWhitelistIds) {
+        if (!$blacklistIds && !$whitelistIds) {
             return;
         }
 
@@ -80,7 +80,7 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
             return $itemTransfer->getSku();
         }, $quoteTransfer->getItems()->getArrayCopy());
 
-        $restrictedProductConcreteSkus = $this->productListRestrictionValidator->filterRestrictedProductConcreteSkus($quoteSkus, $customerBlacklistIds, $customerWhitelistIds);
+        $restrictedProductConcreteSkus = $this->productListRestrictionValidator->filterRestrictedProductConcreteSkus($quoteSkus, $blacklistIds, $whitelistIds);
 
         if (empty($restrictedProductConcreteSkus)) {
             return;

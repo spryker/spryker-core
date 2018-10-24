@@ -133,7 +133,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      *
      * @return string[]
      */
-    public function getConcreteProductSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array
+    public function getProductConcreteSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array
     {
         return $this->getConcreteProductSkusInList(
             $productConcreteSkus,
@@ -181,17 +181,27 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
+     * @module Product
+     *
      * @param string[] $productConcreteSkus
      * @param string $listType
-     * @param array $listIds
+     * @param array $productListIds
      *
      * @return string[]
      */
-    protected function getConcreteProductSkusInList(array $productConcreteSkus, string $listType, array $listIds): array
+    protected function getConcreteProductSkusInList(array $productConcreteSkus, string $listType, array $productListIds): array
     {
+        if (empty($productConcreteSkus)) {
+            return [];
+        }
+
+        if (empty($productListIds)) {
+            return [];
+        }
+
         return $this->getFactory()
             ->createProductListProductConcreteQuery()
-            ->filterByFkProductList_In($listIds)
+            ->filterByFkProductList_In($productListIds)
             ->useSpyProductQuery()
                 ->filterBySku_In($productConcreteSkus)
             ->endUse()

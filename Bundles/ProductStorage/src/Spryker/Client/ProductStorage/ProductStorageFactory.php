@@ -8,8 +8,8 @@
 namespace Spryker\Client\ProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilter;
-use Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface;
+use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter;
+use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapper;
 use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
 use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader;
@@ -62,7 +62,7 @@ class ProductStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->getStore(),
-            $this->createProductAbstractVariantsRestrictionFilter(),
+            $this->createProductAbstractAttributeMapRestrictionFilter(),
             $this->getProductAbstractRestrictionPlugins()
         );
     }
@@ -74,7 +74,7 @@ class ProductStorageFactory extends AbstractFactory
     {
         return new ProductStorageDataMapper(
             $this->getStorageProductExpanderPlugins(),
-            $this->createProductAbstractVariantsRestrictionFilter()
+            $this->createProductAbstractAttributeMapRestrictionFilter()
         );
     }
 
@@ -87,11 +87,11 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface
+     * @return \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface
      */
-    public function createProductAbstractVariantsRestrictionFilter(): ProductAbstractVariantsRestrictionFilterInterface
+    public function createProductAbstractAttributeMapRestrictionFilter(): ProductAbstractAttributeMapRestrictionFilterInterface
     {
-        return new ProductAbstractVariantsRestrictionFilter(
+        return new ProductAbstractAttributeMapRestrictionFilter(
             $this->createProductConcreteStorageReader()
         );
     }

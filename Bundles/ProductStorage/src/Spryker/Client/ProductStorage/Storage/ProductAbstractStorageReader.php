@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductStorage\Storage;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface;
+use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
@@ -37,7 +37,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     protected $productAbstractRestrictionPlugins;
 
     /**
-     * @var \Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface
+     * @var \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface
      */
     protected $productAbstractVariantsRestrictionFilter;
 
@@ -45,14 +45,14 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Shared\Kernel\Store $store
-     * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
+     * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionPluginInterface[] $productAbstractRestrictionPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
         Store $store,
-        ProductAbstractVariantsRestrictionFilterInterface $productAbstractVariantsRestrictionFilter,
+        ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter,
         array $productAbstractRestrictionPlugins = []
     ) {
         $this->storageClient = $storageClient;
@@ -89,12 +89,12 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
 
         $key = $this->getStorageKey($idProductAbstract, $localeName);
 
-        $productAbstractStorageData = $this->storageClient->get($key);
+        $productStorageData = $this->storageClient->get($key);
 
-        $productAbstractStorageData = $this->productAbstractVariantsRestrictionFilter
-            ->filterAbstractProductVariantsData($productAbstractStorageData);
+        $productStorageData = $this->productAbstractVariantsRestrictionFilter
+            ->filterAbstractProductVariantsData($productStorageData);
 
-        return $productAbstractStorageData;
+        return $productStorageData;
     }
 
     /**

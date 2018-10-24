@@ -14,7 +14,7 @@ interface ProductListStorageToProductListFacadeInterface
      *
      * @return int[]
      */
-    public function getProductBlacklistIdsIdProductAbstract(int $idProductAbstract): array;
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract
@@ -35,14 +35,14 @@ interface ProductListStorageToProductListFacadeInterface
      *
      * @return int[]
      */
-    public function getProductBlacklistIdsByIdProductConcrete(int $idProductConcrete): array;
+    public function getProductBlacklistIdsByIdProduct(int $idProductConcrete): array;
 
     /**
      * @param int $idProductConcrete
      *
      * @return int[]
      */
-    public function getProductWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
+    public function getProductWhitelistIdsByIdProduct(int $idProductConcrete): array;
 
     /**
      * @param int[] $productListIds

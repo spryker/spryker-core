@@ -108,7 +108,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     protected function findProductAbstractBlacklistIds(int $idProductAbstract): array
     {
-        return $this->productListFacade->getProductBlacklistIdsIdProductAbstract($idProductAbstract);
+        return $this->productListFacade->getProductBlacklistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**

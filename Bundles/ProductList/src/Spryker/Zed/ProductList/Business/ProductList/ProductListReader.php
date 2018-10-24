@@ -81,7 +81,7 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return int[]
      */
-    public function getProductBlacklistIdsByIdProductConcrete(int $idProductConcrete): array
+    public function getProductBlacklistIdsByIdProduct(int $idProductConcrete): array
     {
         return $this->productListRepository->getConcreteProductBlacklistIds($idProductConcrete);
     }
@@ -91,7 +91,7 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return int[]
      */
-    public function getProductWhitelistIdsByIdProductConcrete(int $idProductConcrete): array
+    public function getProductWhitelistIdsByIdProduct(int $idProductConcrete): array
     {
         return $this->productListRepository->getConcreteProductWhitelistIds($idProductConcrete);
     }
@@ -102,9 +102,9 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return string[]
      */
-    public function getConcreteProductSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array
+    public function getProductConcreteSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array
     {
-        return $this->productListRepository->getConcreteProductSkusInBlacklists($productConcreteSkus, $blackListIds);
+        return $this->productListRepository->getProductConcreteSkusInBlacklists($productConcreteSkus, $blackListIds);
     }
 
     /**

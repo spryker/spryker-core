@@ -14,7 +14,7 @@ interface ProductListSearchToProductListFacadeInterface
      *
      * @return int[]
      */
-    public function getProductBlacklistIdsIdProductAbstract(int $idProductAbstract): array;
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract

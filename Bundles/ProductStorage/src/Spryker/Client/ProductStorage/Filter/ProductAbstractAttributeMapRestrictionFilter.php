@@ -12,7 +12,7 @@ use RecursiveIteratorIterator;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
 use Spryker\Shared\Product\ProductConfig;
 
-class ProductAbstractVariantsRestrictionFilter implements ProductAbstractVariantsRestrictionFilterInterface
+class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAttributeMapRestrictionFilterInterface
 {
     protected const KEY_PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
@@ -32,42 +32,42 @@ class ProductAbstractVariantsRestrictionFilter implements ProductAbstractVariant
     }
 
     /**
-     * @param array $productAbstractStorageData
+     * @param array $productStorageData
      *
      * @return array
      */
-    public function filterAbstractProductVariantsData(array $productAbstractStorageData): array
+    public function filterAbstractProductVariantsData(array $productStorageData): array
     {
         $restrictedProductConcreteIds = $this->getRestrictedProductConcreteIds(
-            $productAbstractStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS]
+            $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS]
         );
 
         if (empty($restrictedProductConcreteIds)) {
-            return $productAbstractStorageData;
+            return $productStorageData;
         }
 
-        $productAbstractStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS] = $this->filterProductConcreteIds(
-            $productAbstractStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS],
+        $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS] = $this->filterProductConcreteIds(
+            $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS],
             $restrictedProductConcreteIds
         );
 
-        $productAbstractStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS] = $this->filterAttributeVariants(
-            $productAbstractStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS],
+        $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS] = $this->filterAttributeVariants(
+            $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS],
             $restrictedProductConcreteIds
         );
 
-        $productAbstractStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES] = $this->filterSuperAttributes(
-            $productAbstractStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES],
-            $productAbstractStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS]
+        $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES] = $this->filterSuperAttributes(
+            $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES],
+            $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS]
         );
 
-        return $productAbstractStorageData;
+        return $productStorageData;
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
-     * @return array
+     * @return int[]
      */
     protected function getRestrictedProductConcreteIds(array $productConcreteIds): array
     {
@@ -81,10 +81,10 @@ class ProductAbstractVariantsRestrictionFilter implements ProductAbstractVariant
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      * @param int[] $restrictedProductConcreteIds
      *
-     * @return array
+     * @return int[]
      */
     protected function filterProductConcreteIds(array $productConcreteIds, array $restrictedProductConcreteIds): array
     {
@@ -115,8 +115,8 @@ class ProductAbstractVariantsRestrictionFilter implements ProductAbstractVariant
                 continue;
             }
 
-            $variantPath = $this->buildVariantPath($attributeVariantsIterator, $attributeVariantKey, $attributeVariantValue);
-            $unRestrictedAttributeVariants = array_merge_recursive($unRestrictedAttributeVariants, $variantPath);
+            $attributeVariantPath = $this->buildAttributeVariantPath($attributeVariantsIterator, $attributeVariantKey, $attributeVariantValue);
+            $unRestrictedAttributeVariants = array_merge_recursive($unRestrictedAttributeVariants, $attributeVariantPath);
         }
 
         return $unRestrictedAttributeVariants;
@@ -151,19 +151,19 @@ class ProductAbstractVariantsRestrictionFilter implements ProductAbstractVariant
      *
      * @return array
      */
-    protected function buildVariantPath(
+    protected function buildAttributeVariantPath(
         RecursiveIteratorIterator $iterator,
         string $attributeVariantKey,
         array $attributeVariantValue
     ): array {
-        $variantPath[$attributeVariantKey] = $attributeVariantValue;
+        $attributeVariantPath[$attributeVariantKey] = $attributeVariantValue;
         for ($i = $iterator->getDepth() - 1; $i >= 0; $i--) {
-            $variantPath = [
-                $iterator->getSubIterator($i)->key() => $variantPath,
+            $attributeVariantPath = [
+                $iterator->getSubIterator($i)->key() => $attributeVariantPath,
             ];
         }
 
-        return $variantPath;
+        return $attributeVariantPath;
     }
 
     /**

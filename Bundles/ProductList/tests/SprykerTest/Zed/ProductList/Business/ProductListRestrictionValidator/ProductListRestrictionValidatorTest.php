@@ -55,7 +55,7 @@ class ProductListRestrictionValidatorTest extends Unit
         $customerWhitelistIds = [];
 
         $this->productListReaderMock
-            ->method('getConcreteProductSkusInBlacklists')
+            ->method('getProductConcreteSkusInBlacklists')
             ->willReturn(['x']);
 
         $cartSkus = ['x', 'y'];
@@ -107,7 +107,7 @@ class ProductListRestrictionValidatorTest extends Unit
             ->willReturn(['y']);
 
         $this->productListReaderMock
-            ->method('getConcreteProductSkusInBlacklists')
+            ->method('getProductConcreteSkusInBlacklists')
             ->willReturn(['x']);
 
         $cartSkus = ['x', 'y', 'z'];
@@ -135,7 +135,7 @@ class ProductListRestrictionValidatorTest extends Unit
             ->willReturn(['y']);
 
         $this->productListReaderMock
-            ->method('getConcreteProductSkusInBlacklists')
+            ->method('getProductConcreteSkusInBlacklists')
             ->willReturn(['x', 'y']);
 
         $cartSkus = ['x', 'y', 'z'];

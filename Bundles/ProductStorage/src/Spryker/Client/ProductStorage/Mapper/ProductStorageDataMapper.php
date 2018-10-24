@@ -8,7 +8,7 @@
 namespace Spryker\Client\ProductStorage\Mapper;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface;
+use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 
 class ProductStorageDataMapper implements ProductStorageDataMapperInterface
 {
@@ -18,17 +18,17 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
     protected $productAbstractStorageExpanderPlugins;
 
     /**
-     * @var \Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface
+     * @var \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface
      */
     protected $productAbstractVariantsRestrictionFilter;
 
     /**
      * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[] $storageProductExpanderPlugins
-     * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractVariantsRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
+     * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
      */
     public function __construct(
         array $storageProductExpanderPlugins,
-        ProductAbstractVariantsRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
+        ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
     ) {
         $this->productAbstractStorageExpanderPlugins = $storageProductExpanderPlugins;
         $this->productAbstractVariantsRestrictionFilter = $productAbstractVariantsRestrictionFilter;

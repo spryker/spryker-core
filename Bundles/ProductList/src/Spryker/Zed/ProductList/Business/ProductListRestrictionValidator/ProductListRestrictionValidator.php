@@ -116,7 +116,7 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
 
         if (!empty($customerBlacklistIds)) {
             $productConcreteSkusInBlacklist = $this->productListReader
-                ->getConcreteProductSkusInBlacklists($productConcreteSkus, $customerBlacklistIds);
+                ->getProductConcreteSkusInBlacklists($productConcreteSkus, $customerBlacklistIds);
 
             $restrictedProductConcreteSkus = array_merge($productConcreteSkusInBlacklist, $restrictedProductConcreteSkus);
         }

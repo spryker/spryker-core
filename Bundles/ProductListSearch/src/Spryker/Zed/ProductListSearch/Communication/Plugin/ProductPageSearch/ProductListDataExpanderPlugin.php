@@ -35,7 +35,7 @@ class ProductListDataExpanderPlugin extends AbstractPlugin implements ProductPag
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void
     {
         $idProductAbstract = $this->getIdProductAbstract($productData);
-        $blacklistIds = $this->getFactory()->getProductListFacade()->getProductBlacklistIdsIdProductAbstract($idProductAbstract);
+        $blacklistIds = $this->getFactory()->getProductListFacade()->getProductBlacklistIdsByIdProductAbstract($idProductAbstract);
         $whitelistIds = $this->getFactory()->getProductListFacade()->getProductWhitelistIdsByIdProductAbstract($idProductAbstract);
         $productAbstractPageSearchTransfer->setProductListMap(null);
 

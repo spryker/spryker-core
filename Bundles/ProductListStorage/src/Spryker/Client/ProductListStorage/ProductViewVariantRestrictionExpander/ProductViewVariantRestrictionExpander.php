@@ -86,8 +86,8 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
                 continue;
             }
 
-            $variantPath = $this->buildVariantPath($attributeVariantsIterator, $attributeVariantKey, $attributeVariantValue);
-            $unRestrictedAttributeVariants = array_merge_recursive($unRestrictedAttributeVariants, $variantPath);
+            $attributeVariantPath = $this->buildAttributeVariantPath($attributeVariantsIterator, $attributeVariantKey, $attributeVariantValue);
+            $unRestrictedAttributeVariants = array_merge_recursive($unRestrictedAttributeVariants, $attributeVariantPath);
         }
 
         return $unRestrictedAttributeVariants;
@@ -116,10 +116,10 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      * @param int[] $restrictedProductConcreteIds
      *
-     * @return array
+     * @return int[]
      */
     protected function filterProductConcreteIds(array $productConcreteIds, array $restrictedProductConcreteIds): array
     {
@@ -127,9 +127,9 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
-     * @return array
+     * @return int[]
      */
     protected function getRestrictedProductConcreteIds(array $productConcreteIds): array
     {
@@ -235,19 +235,19 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
      *
      * @return array
      */
-    protected function buildVariantPath(
+    protected function buildAttributeVariantPath(
         RecursiveIteratorIterator $iterator,
         string $attributeVariantKey,
         array $attributeVariantValue
     ): array {
-        $variantPath[$attributeVariantKey] = $attributeVariantValue;
+        $attributeVariantPath[$attributeVariantKey] = $attributeVariantValue;
         for ($i = $iterator->getDepth() - 1; $i >= 0; $i--) {
-            $variantPath = [
-                $iterator->getSubIterator($i)->key() => $variantPath,
+            $attributeVariantPath = [
+                $iterator->getSubIterator($i)->key() => $attributeVariantPath,
             ];
         }
 
-        return $variantPath;
+        return $attributeVariantPath;
     }
 
     /**

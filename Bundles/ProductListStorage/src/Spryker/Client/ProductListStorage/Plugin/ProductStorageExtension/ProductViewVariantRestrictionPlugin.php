@@ -17,7 +17,7 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpander
 class ProductViewVariantRestrictionPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
-     * @deprecated Use it only if the version you have of `ProductStorage` doesn't support filtering restricted products.
+     * @deprecated Will be removed without replacement. Do not use it with spryker/product-storage ^1.4.0.
      *
      * {@inheritdoc}
      *
