@@ -10,7 +10,7 @@ namespace Spryker\Zed\Propel\Business\Model\Schema\Validator;
 use ArrayObject;
 use Generated\Shared\Transfer\SchemaValidationErrorTransfer;
 use Generated\Shared\Transfer\SchemaValidationTransfer;
-use Pyz\Zed\Propel\PropelConfig;
+use Spryker\Zed\Propel\PropelConfig;
 use SimpleXMLElement;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
 use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface;
@@ -81,9 +81,10 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     }
 
     /**
-     * @param string $indexName
+     * @param \SimpleXMLElement $xml
+     * @param string filename
      *
-     * @return bool
+     * @return void
      */
     protected function validateIdentifierNames($xml, $fileName)
     {
@@ -107,7 +108,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     }
 
     /**
-     * @param string $indexName
+     * @param string $name
      *
      * @return bool
      */
