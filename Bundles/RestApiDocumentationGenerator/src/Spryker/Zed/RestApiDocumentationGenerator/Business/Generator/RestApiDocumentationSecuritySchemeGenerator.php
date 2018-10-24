@@ -8,7 +8,7 @@
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
 use Generated\Shared\Transfer\RestApiDocumentationSecuritySchemeTransfer;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SecuritySchemeRenderer;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SecuritySchemeRendererInterface;
 
 class RestApiDocumentationSecuritySchemeGenerator implements RestApiDocumentationSecuritySchemeGeneratorInterface
 {
@@ -27,9 +27,9 @@ class RestApiDocumentationSecuritySchemeGenerator implements RestApiDocumentatio
     protected $securitySchemeRenderer;
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SecuritySchemeRenderer $securitySchemeRenderer
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SecuritySchemeRendererInterface $securitySchemeRenderer
      */
-    public function __construct(SecuritySchemeRenderer $securitySchemeRenderer)
+    public function __construct(SecuritySchemeRendererInterface $securitySchemeRenderer)
     {
         $this->securitySchemeRenderer = $securitySchemeRenderer;
 

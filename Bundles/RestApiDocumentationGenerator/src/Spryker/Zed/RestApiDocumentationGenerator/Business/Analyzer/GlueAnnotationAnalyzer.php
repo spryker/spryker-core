@@ -48,7 +48,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
             $parameters[] = $this->parsePhpTokens($tokens);
         }
 
-        if (!$parameters) {
+        if (!array_filter($parameters)) {
             return $pathAnnotations;
         }
         $pathAnnotations = $pathAnnotations->fromArray(array_replace_recursive(...$parameters), true);
