@@ -97,6 +97,8 @@ class AddressWriter implements AddressWriterInterface
         $customerTransfer = $this->customerClient->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer);
         $addressesTransfer = $customerTransfer->getAddresses();
 
+        $lastAddedAddress = ($addressesTransfer->getAddresses())[$addressesTransfer->getAddresses()->count() - 1];
+
         if (!$addressesTransfer->getAddresses()->count()) {
             return $this->restApiError->addAddressNotSavedError($restResponse);
         }
@@ -104,13 +106,13 @@ class AddressWriter implements AddressWriterInterface
         $restAddressAttributesTransfer = $this
             ->addressesResourceMapper
             ->mapAddressTransferToRestAddressAttributesTransfer(
-                $addressesTransfer->getAddresses()[$addressesTransfer->getAddresses()->count() - 1],
+                $lastAddedAddress,
                 $customerTransfer
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_ADDRESSES,
-            $addressTransfer->getUuid(),
+            $lastAddedAddress->getUuid(),
             $restAddressAttributesTransfer
         );
 
