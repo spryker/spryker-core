@@ -17,6 +17,12 @@ class PropelConfig extends AbstractBundleConfig
     public const DB_ENGINE_MYSQL = 'mysql';
     public const DB_ENGINE_PGSQL = 'pgsql';
 
+    /**
+     * Specification:
+     *  This also applies to all identifiers in Postgres such as table names, fields, etc.
+     *  Postgres will truncate everyhing beyond this limit. It can be modified by editing
+     *  the sourcecode of postgres, which is not advised.
+     */
     public const POSTGRES_INDEX_NAME_MAX_LENGTH = 63;
 
     /**

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Propel\Business\Model\Schema\Validator;
 use ArrayObject;
 use Generated\Shared\Transfer\SchemaValidationErrorTransfer;
 use Generated\Shared\Transfer\SchemaValidationTransfer;
+use Pyz\Zed\Propel\PropelConfig;
 use SimpleXMLElement;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
 use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface;
@@ -80,6 +81,42 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     }
 
     /**
+     * @param string $indexName
+     *
+     * @return bool
+     */
+    protected function validateIdentifierNames($xml)
+    {
+        $elements = array_merge(
+            $xml->xpath('/database/table/index/@name'),
+            $xml->xpath('/database/table/@name'),
+            $xml->xpath('/database/table/foreign-key/@name'),
+            $xml->xpath('/database/table/id-method-parameter/@value')
+        );
+        foreach ($elements as $element) {
+            $attributeValue = $element->__toString();
+            if ($this->isLongerThanIdentifierMaxLength($attributeValue )) {
+                $this->addError(sprintf(
+                    'There is a problem with %s. The identifier "%s" has a length beyond the maximum identifier length "%s". Your database will persist a truncated identifier leading to more problems!',
+                    $filename,
+                    $attributeValue,
+                    PropelConfig::POSTGRES_INDEX_NAME_MAX_LENGTH
+                ));
+            }
+        }
+    }
+
+    /**
+     * @param string $indexName
+     *
+     * @return bool
+     */
+    protected function isLongerThanIdentifierMaxLength(string $name): bool
+    {
+        return (mb_strlen($name) > PropelConfig::POSTGRES_INDEX_NAME_MAX_LENGTH);
+    }
+
+    /**
      * @return array
      */
     protected function getSchemaFilesForValidation(): array
@@ -138,6 +175,8 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     protected function validateSchema(SimpleXMLElement $mergeTargetXmlElement, ArrayObject $schemaXmlElements, $fileName): void
     {
         foreach ($schemaXmlElements as $schemaXmlElement) {
+            $this->validateIdentifierNames($schemaXmlElement);
+
             $mergeTargetXmlElement = $this->validateSchemasRecursive($mergeTargetXmlElement, $schemaXmlElement, $fileName);
         }
     }
