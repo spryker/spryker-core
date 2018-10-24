@@ -57,15 +57,30 @@ class PriceProductMapper implements PriceProductMapperInterface
 
                 if ($priceMode === PriceProductStorageConfig::PRICE_GROSS_MODE) {
                     $priceProductTransfer->getMoneyValue()->setGrossAmount($priceValue);
-                    $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductStorageConfig::PRICE_DATA]);
+                    $priceProductTransfer = $this->setPriceData($priceProductTransfer, $prices);
 
                     continue;
                 }
 
                 $priceProductTransfer->getMoneyValue()->setNetAmount($priceValue);
-                $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductStorageConfig::PRICE_DATA]);
+                $priceProductTransfer = $this->setPriceData($priceProductTransfer, $prices);
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param array $prices
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function setPriceData(PriceProductTransfer $priceProductTransfer, array $prices): PriceProductTransfer
+    {
+        if (isset($prices[PriceProductStorageConfig::PRICE_DATA])) {
+            $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductStorageConfig::PRICE_DATA]);
+        }
+
+        return $priceProductTransfer;
     }
 
     /**
