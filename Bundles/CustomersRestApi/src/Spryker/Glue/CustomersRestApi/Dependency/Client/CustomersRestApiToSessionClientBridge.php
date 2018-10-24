@@ -7,6 +7,9 @@
 
 namespace Spryker\Glue\CustomersRestApi\Dependency\Client;
 
+/**
+ * @deprecated Will be removed in the next major.
+ */
 class CustomersRestApiToSessionClientBridge implements CustomersRestApiToSessionClientInterface
 {
     /**

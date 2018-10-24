@@ -183,6 +183,8 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * @return \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientInterface
      */
     public function getSessionClient(): CustomersRestApiToSessionClientInterface
