@@ -197,7 +197,7 @@ class ProductOptionGroupSaverTest extends MockProvider
     protected function createProductOptionRepositoryMock(): ProductOptionRepositoryInterface
     {
         $productOptionRepositoryMock = $this->getMockBuilder(ProductOptionRepositoryInterface::class)->getMock();
-        $productOptionRepositoryMock->method('findChangedProductOptionGroupProductAbstractIdIndexes')->willReturn([]);
+        $productOptionRepositoryMock->method('findProductAbstractWithDifferentStateIdIndexes')->willReturn([]);
 
         return $productOptionRepositoryMock;
     }
