@@ -8,11 +8,8 @@
 namespace SprykerTest\Zed\CompanyRole\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\DataBuilder\CompanyResponseBuilder;
-use Generated\Shared\DataBuilder\CompanyRoleBuilder;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
 
 /**
  * Auto-generated group annotations
@@ -34,98 +31,141 @@ class CompanyRoleFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyRoleByIdShouldReturnCorrectData()
+    public function testGetCompanyRoleByIdShouldReturnCorrectData(): void
     {
-        $existingCompanyRole = $this->haveCompanyRole([
-            CompanyRoleTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
+        // Prepare
+        $companyTransfer = $this->tester->haveCompany();
+        $existingCompanyRole = $this->tester->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
-        $companyRoleTransfer = (new CompanyRoleBuilder([
-            CompanyRoleTransfer::ID_COMPANY_ROLE => $existingCompanyRole->getIdCompanyRole(),
-        ]))->build();
 
-        $resultCompanyRoleTransfer = $this->getFacade()->getCompanyRoleById($companyRoleTransfer);
+        // Action
+        $resultCompanyRoleTransfer = $this->getFacade()->getCompanyRoleById(
+            (new CompanyRoleTransfer())
+                ->setIdCompanyRole($existingCompanyRole->getIdCompanyRole())
+        );
 
-        $this->tester->assertEquals($existingCompanyRole->getName(), $resultCompanyRoleTransfer->getName());
+        // Assert
+        $this->assertEquals($existingCompanyRole->getName(), $resultCompanyRoleTransfer->getName());
     }
 
     /**
      * @return void
      */
-    public function testCreateCompanyRoleShouldReturnIsSuccess()
+    public function testCreateCompanyRoleShouldReturnIsSuccess(): void
     {
-        $companyRoleTransfer = (new CompanyRoleBuilder([
-            CompanyRoleTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
-        ]))->build();
+        // Prepare
+        $companyTransfer = $this->tester->haveCompany();
+        $companyRoleTransfer = $this->tester->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
 
+        // Action
         $companyRoleResponseTransfer = $this->getFacade()->create($companyRoleTransfer);
 
-        $this->tester->assertTrue($companyRoleResponseTransfer->getIsSuccessful());
+        // Assert
+        $this->assertTrue($companyRoleResponseTransfer->getIsSuccessful());
     }
 
     /**
      * @return void
      */
-    public function testCreateCompanyRoleByCompanyShouldReturnIsSuccess()
+    public function testCreateCompanyRoleByCompanyShouldReturnIsSuccess(): void
     {
-        $companyResponseTransfer = (new CompanyResponseBuilder([
-            CompanyResponseTransfer::COMPANY_TRANSFER => $this->haveCompany(),
-            CompanyResponseTransfer::IS_SUCCESSFUL => true,
-        ]))->build();
+        // Prepare
+        $companyTransfer = $this->tester->haveCompany();
+        $companyResponseTransfer = (new CompanyResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setCompanyTransfer($companyTransfer);
 
+        // Action
         $companyResponseTransfer = $this->getFacade()->createByCompany($companyResponseTransfer);
 
-        $this->tester->assertTrue($companyResponseTransfer->getIsSuccessful());
-        $this->tester->assertEmpty($companyResponseTransfer->getMessages());
+        // Assert
+        $this->assertTrue($companyResponseTransfer->getIsSuccessful());
+        $this->assertEmpty($companyResponseTransfer->getMessages());
     }
 
     /**
      * @return void
      */
-    public function testUpdateCompanyRoleShouldUpdateSuccessfully()
+    public function testUpdateCompanyRoleShouldUpdateSuccessfully(): void
     {
-        $existingCompanyRole = $this->haveCompanyRole([
-            CompanyRoleTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
-        ])->setName('Updated Name');
-        $companyRoleTransfer = (new CompanyRoleBuilder([
+        // Prepare
+        $companyTransfer = $this->tester->haveCompany();
+        $existingCompanyRole = $this->tester->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyRoleTransfer::NAME => 'Updated Name',
+        ]);
+        $companyRoleTransfer = $this->tester->haveCompanyRole([
             CompanyRoleTransfer::ID_COMPANY_ROLE => $existingCompanyRole->getIdCompanyRole(),
-        ]))->build();
+        ]);
 
+        // Action
         $this->getFacade()->update($existingCompanyRole);
         $resultCompanyRoleTransfer = $this->getFacade()->getCompanyRoleById($companyRoleTransfer);
 
-        $this->tester->assertEquals('Updated Name', $resultCompanyRoleTransfer->getName());
+        // Assert
+        $this->assertEquals('Updated Name', $resultCompanyRoleTransfer->getName());
     }
 
     /**
      * @return void
      */
-    public function testDeleteCompanyRoleShouldReturnIsSuccess()
+    public function testDeleteCompanyRoleShouldReturnIsSuccess(): void
     {
-        $companyResponseTransfer = $this->haveCompanyRole([
-            CompanyRoleTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
+        // Prepare
+        $companyTransfer = $this->tester->haveCompany();
+        $companyResponseTransfer = $this->tester->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
 
+        // Action
         $companyResponseTransfer = $this->getFacade()->delete($companyResponseTransfer);
 
-        $this->tester->assertTrue($companyResponseTransfer->getIsSuccessful());
+        // Assert
+        $this->assertTrue($companyResponseTransfer->getIsSuccessful());
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return void
      */
-    protected function haveCompany(): CompanyTransfer
+    public function testFindDefaultCompanyRoleByIdCompanyReturnNullIfNonFound(): void
     {
-        return $this->tester->haveCompany();
+        // Prepare
+        $companyTransfer = $this->tester->haveCompany();
+        $companyRoleTransfer = $this->tester->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyRoleTransfer::IS_DEFAULT => false,
+        ]);
+
+        // Action
+        $resultCompanyRoleTransfer = $this->getFacade()
+            ->findDefaultCompanyRoleByIdCompany($companyTransfer->getIdCompany());
+
+        // Assert
+        $this->assertNull($resultCompanyRoleTransfer);
     }
 
     /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     * @return void
      */
-    protected function haveCompanyRole(array $seedData = []): CompanyRoleTransfer
+    public function testFindDefaultCompanyRoleByIdCompany(): void
     {
-        return $this->tester->haveCompanyRole($seedData);
+        // Prepare
+        $companyTransfer = $this->tester->haveCompany();
+        $companyRoleTransfer = $this->tester->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyRoleTransfer::IS_DEFAULT => true,
+        ]);
+
+        // Action
+        $resultCompanyRoleTransfer = $this->getFacade()
+            ->findDefaultCompanyRoleByIdCompany($companyTransfer->getIdCompany());
+
+        // Assert
+        $this->assertNotNull($resultCompanyRoleTransfer);
+        $this->assertSame($resultCompanyRoleTransfer->getIdCompanyRole(), $companyRoleTransfer->getIdCompanyRole());
     }
 
     /**

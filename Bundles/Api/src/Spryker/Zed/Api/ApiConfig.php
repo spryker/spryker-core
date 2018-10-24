@@ -130,4 +130,25 @@ class ApiConfig extends AbstractBundleConfig
 
         return array_unique($methods);
     }
+
+    /**
+     * @return array
+     */
+    public function getSafeHeaderDataKeys(): array
+    {
+        return [
+            'origin',
+            'range',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getSafeServerDataKeys(): array
+    {
+        return [
+            'REQUEST_URI',
+        ];
+    }
 }

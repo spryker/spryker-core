@@ -13,8 +13,6 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
-use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductAbstractMerchantRelationshipStorageTableMap;
-use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductConcreteMerchantRelationshipStorageTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -91,13 +89,19 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
+     * Returns array in format:
+     * [
+     *    [sku, id_product_abstract, id_store, id_merchant_relationship_id, id_company_business_unit],
+     *    ...,
+     * ]
+     *
      * @param array $businessUnitIds
      *
      * @return array
      */
-    public function findPriceProductStoresByCompanyBusinessUnitAbstractProducts(array $businessUnitIds): array
+    public function getProductAbstractPriceDataByCompanyBusinessUnitIds(array $businessUnitIds): array
     {
-        $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitProducts($businessUnitIds);
+        $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitIds($businessUnitIds);
         $priceProductStoreQuery = $this->queryProductsAbstract($priceProductStoreQuery)
             ->select([
                 static::COL_PRODUCT_ABSTRACT_SKU,
@@ -113,13 +117,19 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @param array $businessUnitProducts
+     * Returns array in format:
+     * [
+     *    [sku, id_product, id_store, id_merchant_relationship_id, id_company_business_unit],
+     *    ...,
+     * ]
+     *
+     * @param array $businessUnitIds
      *
      * @return array
      */
-    public function findPriceProductStoresByCompanyBusinessUnitConcreteProducts(array $businessUnitProducts): array
+    public function getProductConcretePriceDataByCompanyBusinessUnitIds(array $businessUnitIds): array
     {
-        $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitProducts($businessUnitProducts);
+        $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitIds($businessUnitIds);
         $priceProductStoreQuery = $this->queryProducts($priceProductStoreQuery)
             ->select([
                 static::COL_PRODUCT_CONCRETE_SKU,
@@ -161,38 +171,17 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @param array $concreteProducts
+     * @param int $idCompanyBusinessUnit
+     * @param array $productConcreteIds
      *
      * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
      */
-    public function findExistingPriceProductConcreteMerchantRelationshipStorageEntities(array $concreteProducts): array
+    public function findExistingPriceProductConcreteMerchantRelationshipStorageEntities(int $idCompanyBusinessUnit, array $productConcreteIds): array
     {
-        $query = $this->getFactory()->createPriceProductConcreteMerchantRelationshipStorageQuery();
+        $query = $this->getFactory()->createPriceProductConcreteMerchantRelationshipStorageQuery()
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->filterByFkProduct_In($productConcreteIds);
 
-        $whereGroups = [];
-        foreach ($concreteProducts as $index => $product) {
-            $merchantRelationshipConditionName = 'b_cond' . $index;
-            $productConditionName = 'p_cond' . $index;
-            $combineConditionName = 'and_cond' . $index;
-
-            $query->condition(
-                $merchantRelationshipConditionName,
-                SpyPriceProductConcreteMerchantRelationshipStorageTableMap::COL_FK_COMPANY_BUSINESS_UNIT . ' = ?',
-                (int)$product[MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT]
-            )->condition(
-                $productConditionName,
-                SpyPriceProductConcreteMerchantRelationshipStorageTableMap::COL_FK_PRODUCT . ' = ?',
-                $product[static::COL_PRODUCT_CONCRETE_ID_PRODUCT]
-            )->combine(
-                [$merchantRelationshipConditionName, $productConditionName],
-                Criteria::LOGICAL_AND,
-                $combineConditionName
-            );
-
-            $whereGroups[] = $combineConditionName;
-        }
-
-        $query->where($whereGroups, Criteria::LOGICAL_OR);
         $priceProductMerchantRelationshipStorageEntities = $query->find();
 
         $priceProductMerchantRelationshipStorageEntityMap = [];
@@ -205,40 +194,18 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @param array $concreteProducts
+     * @param int $idCompanyBusinessUnit
+     * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[]
      */
-    public function findExistingPriceProductAbstractMerchantRelationshipStorageEntities(array $concreteProducts): array
+    public function findExistingPriceProductAbstractMerchantRelationshipStorageEntities(int $idCompanyBusinessUnit, array $productAbstractIds): array
     {
-        $query = $this->getFactory()->createPriceProductAbstractMerchantRelationshipStorageQuery();
+        $query = $this->getFactory()->createPriceProductAbstractMerchantRelationshipStorageQuery()
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->filterByFkProductAbstract_In($productAbstractIds);
 
-        $whereGroups = [];
-        foreach ($concreteProducts as $index => $product) {
-            $merchantRelationshipConditionName = 'b_cond' . $index;
-            $productConditionName = 'p_cond' . $index;
-            $combineConditionName = 'and_cond' . $index;
-
-            $query->condition(
-                $merchantRelationshipConditionName,
-                SpyPriceProductAbstractMerchantRelationshipStorageTableMap::COL_FK_COMPANY_BUSINESS_UNIT . ' = ?',
-                (int)$product[MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT]
-            )->condition(
-                $productConditionName,
-                SpyPriceProductAbstractMerchantRelationshipStorageTableMap::COL_FK_PRODUCT_ABSTRACT . ' = ?',
-                (int)$product[static::COL_PRODUCT_ABSTRACT_ID_PRODUCT]
-            )->combine(
-                [$merchantRelationshipConditionName, $productConditionName],
-                Criteria::LOGICAL_AND,
-                $combineConditionName
-            );
-
-            $whereGroups[] = $combineConditionName;
-        }
-
-        $priceProductMerchantRelationshipStorageEntities = $query
-            ->where($whereGroups, Criteria::LOGICAL_OR)
-            ->find();
+        $priceProductMerchantRelationshipStorageEntities = $query->find();
 
         $priceProductMerchantRelationshipStorageEntityMap = [];
         foreach ($priceProductMerchantRelationshipStorageEntities as $priceProductMerchantRelationshipStorageEntity) {
@@ -254,7 +221,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
      */
-    protected function queryPriceProductStoreByCompanyBusinessUnitProducts(array $businessUnitIds): SpyPriceProductStoreQuery
+    protected function queryPriceProductStoreByCompanyBusinessUnitIds(array $businessUnitIds): SpyPriceProductStoreQuery
     {
         return $this->getFactory()
             ->getPropelPriceProductStoreQuery()
