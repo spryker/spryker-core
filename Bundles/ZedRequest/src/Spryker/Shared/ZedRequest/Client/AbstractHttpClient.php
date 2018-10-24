@@ -52,9 +52,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     protected const ZED_API_SSL_ENABLED = 'ZED_API_SSL_ENABLED';
 
-    protected const ZED_REQUEST_ERROR = 'Attempted to request Zed at %s:%s but failed.
-Zed is configured to %s:%s.
-Configuration loaded from %s. Error:';
+    protected const ZED_REQUEST_ERROR = 'Failed to complete request with server authority %s:%s.
+Configured with %s %s:%s in %s. Error: Stacktrace:';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
@@ -159,6 +158,17 @@ Configuration loaded from %s. Error:';
     }
 
     /**
+     * @return string
+     */
+    protected function setSslStatusMessage(): string
+    {
+        if (Config::get(static::ZED_API_SSL_ENABLED)) {
+            return '(SSL Enabled)';
+        }
+        return '(SSL Disabled)';
+    }
+
+    /**
      * @return int
      */
     protected function getConfigServerPort()
@@ -202,6 +212,7 @@ Configuration loaded from %s. Error:';
                 static::ZED_REQUEST_ERROR,
                 $hostName,
                 $portName,
+                $this->setSslStatusMessage(),
                 $configHostName,
                 $configServerPort,
                 $configFileName
