@@ -11,6 +11,32 @@
                 <bundle>company-business-unit-gui</bundle>
                 <controller>list-company-business-unit</controller>
                 <action>index</action>
+                <pages>
+                    <add-company-business-unit>
+                        <label>Create Company Business Unit</label>
+                        <title>Create Company Business Unit</title>
+                        <bundle>company-business-unit-gui</bundle>
+                        <controller>add-company-business-unit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </add-company-business-unit>
+                    <edit-company-business-unit>
+                        <label>Edit Company Business Unit</label>
+                        <title>Edit Company Business Unit</title>
+                        <bundle>company-business-unit-gui</bundle>
+                        <controller>edit-company-business-unit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </edit-company-business-unit>
+                    <delete-company-business-unit>
+                        <label>Remove Company Business Unit</label>
+                        <title>Remove Company Business Unit</title>
+                        <bundle>company-business-unit-gui</bundle>
+                        <controller>delete-company-business-unit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </delete-company-business-unit>
+                </pages>
             </company-business-unit-gui>
         </pages>
     </company-gui>
