@@ -20,6 +20,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_RESOURCE_RELATIONSHIP = 'PLUGIN_RESOURCE_RELATIONSHIP';
     public const PLUGIN_VALIDATE_HTTP_REQUEST = 'PLUGIN_VALIDATE_HTTP_REQUEST';
     public const PLUGIN_VALIDATE_REST_REQUEST = 'PLUGIN_VALIDATE_REST_REQUEST';
+    public const PLUGIN_REST_REQUEST_VALIDATOR = 'PLUGIN_REST_REQUEST_VALIDATOR';
     public const PLUGIN_FORMAT_REQUEST = 'PLUGIN_FORMAT_REQUEST';
     public const PLUGIN_FORMAT_RESPONSE_DATA = 'PLUGIN_FORMAT_RESPONSE_DATA';
     public const PLUGIN_FORMAT_RESPONSE_HEADERS = 'PLUGIN_FORMAT_RESPONSE_HEADERS';
@@ -45,6 +46,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addResourceRelationshipPlugins($container);
         $container = $this->addValidateHttpRequestPlugins($container);
         $container = $this->addValidateRestRequestPlugins($container);
+        $container = $this->addRestRequestValidatorPlugins($container);
         $container = $this->addFormatRequestPlugins($container);
         $container = $this->addFormatResponseDataPlugins($container);
         $container = $this->addFormatResponseHeadersPlugins($container);
@@ -133,6 +135,20 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGIN_VALIDATE_REST_REQUEST] = function (Container $container) {
             return $this->getValidateRestRequestPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRestRequestValidatorPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_REST_REQUEST_VALIDATOR] = function (Container $container) {
+            return $this->getRestRequestValidatorPlugins();
         };
 
         return $container;
@@ -289,6 +305,14 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
      */
     protected function getValidateRestRequestPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface[]
+     */
+    protected function getRestRequestValidatorPlugins(): array
     {
         return [];
     }
