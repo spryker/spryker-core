@@ -24,7 +24,7 @@
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
 
-        <index name="spy_price_product_merchant_relationship-index-fk_product_abstract">
+        <index name="spy_price_product_merchant_relationship-index-fk_p_a">
             <index-column name="fk_product_abstract"/>
         </index>
 

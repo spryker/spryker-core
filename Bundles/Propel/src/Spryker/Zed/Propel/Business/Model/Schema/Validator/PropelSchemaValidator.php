@@ -85,20 +85,20 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
      *
      * @return bool
      */
-    protected function validateIdentifierNames($xml)
+    protected function validateIdentifierNames($xml, $fileName)
     {
         $elements = array_merge(
             $xml->xpath('/database/table/index/@name'),
             $xml->xpath('/database/table/@name'),
-            $xml->xpath('/database/table/foreign-key/@name'),
+            $xml->xpath('/database/table/foreign-key/reference/@local'),
             $xml->xpath('/database/table/id-method-parameter/@value')
         );
         foreach ($elements as $element) {
             $attributeValue = $element->__toString();
-            if ($this->isLongerThanIdentifierMaxLength($attributeValue )) {
+            if ($this->isLongerThanIdentifierMaxLength($attributeValue)) {
                 $this->addError(sprintf(
-                    'There is a problem with %s. The identifier "%s" has a length beyond the maximum identifier length "%s". Your database will persist a truncated identifier leading to more problems!',
-                    $filename,
+                    'There is a problem with %s . The identifier "%s" has a length beyond the maximum identifier length "%s". Your database will persist a truncated identifier leading to more problems!',
+                    $fileName,
                     $attributeValue,
                     PropelConfig::POSTGRES_INDEX_NAME_MAX_LENGTH
                 ));
@@ -175,7 +175,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     protected function validateSchema(SimpleXMLElement $mergeTargetXmlElement, ArrayObject $schemaXmlElements, $fileName): void
     {
         foreach ($schemaXmlElements as $schemaXmlElement) {
-            $this->validateIdentifierNames($schemaXmlElement);
+            $this->validateIdentifierNames($schemaXmlElement, $fileName);
 
             $mergeTargetXmlElement = $this->validateSchemasRecursive($mergeTargetXmlElement, $schemaXmlElement, $fileName);
         }
