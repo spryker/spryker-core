@@ -10,6 +10,7 @@ namespace Spryker\Client\Customer\Zed;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CustomerStub implements CustomerStubInterface
@@ -98,6 +99,20 @@ class CustomerStub implements CustomerStubInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function get(CustomerTransfer $customerTransfer)
+    {
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
+        $customerTransfer = $this->zedStub->call('/customer/gateway/customer', $customerTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function getByEmailAndStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): CustomerTransfer
     {
         /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
         $customerTransfer = $this->zedStub->call('/customer/gateway/customer', $customerTransfer);

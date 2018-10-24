@@ -10,6 +10,7 @@ namespace Spryker\Client\Customer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface CustomerClientInterface
 {
@@ -200,6 +201,19 @@ interface CustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomerByEmail(CustomerTransfer $customerTransfer);
+
+    /**
+     * Specification:
+     * - Retrieves customer information by customer email and store.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function getCustomerByEmailAndStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): CustomerTransfer;
 
     /**
      * Specification:

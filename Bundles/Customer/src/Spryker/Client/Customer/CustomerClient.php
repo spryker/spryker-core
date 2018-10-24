@@ -10,6 +10,7 @@ namespace Spryker\Client\Customer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -188,6 +189,25 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         $customerTransfer = $this->getFactory()
             ->createZedCustomerStub()
             ->get($customerTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function getCustomerByEmailAndStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): CustomerTransfer
+    {
+        $customerTransfer = $this->getFactory()
+            ->createZedCustomerStub()
+            ->getByEmailAndStore($customerTransfer, $storeTransfer);
 
         return $customerTransfer;
     }
