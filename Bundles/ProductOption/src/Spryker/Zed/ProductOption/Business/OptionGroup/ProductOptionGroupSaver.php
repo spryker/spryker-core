@@ -134,12 +134,12 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         $this->touchProductOptionGroupAbstractProducts($productOptionGroupEntity);
 
         if (!$isActive) {
-            $productAbstractProductOptionGroupDeleteIdIndexes = $this->productOptionRepository->findChangedProductOptionGroupProductAbstractIdIndexes(
+            $productAbstractIdIndexes = $this->productOptionRepository->findProductAbstractWithDifferentStateIdIndexes(
                 $productOptionGroupEntity->getIdProductOptionGroup(),
                 $isActive
             );
 
-            $this->triggerProductAbstractProductOptionGroupDeleteEvent($productAbstractProductOptionGroupDeleteIdIndexes);
+            $this->triggerProductAbstractDeleteEvent($productAbstractIdIndexes);
         }
 
         $productOptionGroupEntity->setActive($isActive);
@@ -152,18 +152,31 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
      *
      * @return void
      */
-    protected function triggerProductAbstractProductOptionGroupDeleteEvent(array $productAbstractIdIndexes): void
+    protected function triggerProductAbstractDeleteEvent(array $productAbstractIdIndexes): void
     {
+        $eventEntityTransfers = $this->generateProductAbstractEventEntityTransfers($productAbstractIdIndexes);
+
+        $this->eventFacade->triggerBulk(
+            ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_DELETE,
+            $eventEntityTransfers
+        );
+    }
+
+    /**
+     * @param array $productAbstractIdIndexes
+     *
+     * @return array
+     */
+    protected function generateProductAbstractEventEntityTransfers(array $productAbstractIdIndexes): array
+    {
+        $eventEntityTransfers = [];
         foreach ($productAbstractIdIndexes as $idProductAbstract) {
-            $eventTransfer = (new EventEntityTransfer())->setForeignKeys([
+            $eventEntityTransfers[] = (new EventEntityTransfer())->setForeignKeys([
                 SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT => $idProductAbstract,
             ]);
-
-            $this->eventFacade->trigger(
-                ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_DELETE,
-                $eventTransfer
-            );
         }
+
+        return $eventEntityTransfers;
     }
 
     /**

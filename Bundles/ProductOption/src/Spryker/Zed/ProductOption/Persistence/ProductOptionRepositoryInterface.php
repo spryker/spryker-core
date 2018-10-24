@@ -11,9 +11,9 @@ interface ProductOptionRepositoryInterface
 {
     /**
      * @param int $idProductOptionGroup
-     * @param bool $isActive
+     * @param bool $currentIsActiveState
      *
      * @return int[]
      */
-    public function findChangedProductOptionGroupProductAbstractIdIndexes(int $idProductOptionGroup, bool $isActive): array;
+    public function findProductAbstractWithDifferentStateIdIndexes(int $idProductOptionGroup, bool $currentIsActiveState): array;
 }

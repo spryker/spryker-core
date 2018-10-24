@@ -18,16 +18,16 @@ class ProductOptionRepository extends AbstractRepository implements ProductOptio
 {
     /**
      * @param int $idProductOptionGroup
-     * @param bool $isActive
+     * @param bool $currentIsActiveState
      *
      * @return int[]
      */
-    public function findChangedProductOptionGroupProductAbstractIdIndexes(int $idProductOptionGroup, bool $isActive): array
+    public function findProductAbstractWithDifferentStateIdIndexes(int $idProductOptionGroup, bool $currentIsActiveState): array
     {
         $productOptionGroupProductAbstractIdIndexes = $this->getFactory()
             ->createProductOptionGroupQuery()
             ->filterByIdProductOptionGroup($idProductOptionGroup)
-            ->filterByActive($isActive, Criteria::NOT_EQUAL)
+            ->filterByActive($currentIsActiveState, Criteria::NOT_EQUAL)
             ->joinWithSpyProductAbstractProductOptionGroup()
             ->select(SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->find()
