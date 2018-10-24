@@ -124,7 +124,6 @@ class EditController extends AbstractController
 
         return $this->viewResponse([
             'userForm' => $userForm->createView(),
-            'idUser' => $idUser,
         ]);
     }
 
