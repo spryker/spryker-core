@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class QuoteConfig extends AbstractBundleConfig
 {
-    protected const DEFAULT_GUEST_CART_LIFETIME = 'P01M';
+    protected const DEFAULT_GUEST_QUOTE_LIFETIME = 'P01M';
 
     /**
      * @return string
@@ -42,8 +42,8 @@ class QuoteConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getGuestCartLifetime(): string
+    public function getGuestQuoteLifetime(): string
     {
-        return $this->get(QuoteConstants::GUEST_QUOTE_LIFETIME, static::DEFAULT_GUEST_CART_LIFETIME);
+        return $this->get(QuoteConstants::GUEST_QUOTE_LIFETIME, static::DEFAULT_GUEST_QUOTE_LIFETIME);
     }
 }

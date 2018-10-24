@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Quote\Business\GuestCart;
+namespace Spryker\Zed\Quote\Business\GuestQuote;
 
 use DateInterval;
 use DateTime;
 use Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface;
 use Spryker\Zed\Quote\QuoteConfig;
 
-class GuestCartDeleter implements GuestCartDeleterInterface
+class GuestQuoteDeleter implements GuestQuoteDeleterInterface
 {
     /**
      * @var \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface
@@ -37,12 +37,12 @@ class GuestCartDeleter implements GuestCartDeleterInterface
     /**
      * @return void
      */
-    public function cleanExpiredGuestCart(): void
+    public function deleteExpiredGuestQuote(): void
     {
-        $lifetime = $this->config->getGuestCartLifetime();
+        $lifetime = $this->config->getGuestQuoteLifetime();
         $lifetimeInterval = new DateInterval($lifetime);
         $lifetimeLimitDate = (new DateTime())->sub($lifetimeInterval);
 
-        $this->entityManager->deleteExpiredGuestCart($lifetimeLimitDate);
+        $this->entityManager->deleteExpiredGuestQuotes($lifetimeLimitDate);
     }
 }

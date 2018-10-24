@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Quote\Business\GuestCart;
+namespace Spryker\Zed\Quote\Business\GuestQuote;
 
-interface GuestCartDeleterInterface
+interface GuestQuoteDeleterInterface
 {
     /**
      * @return void
      */
-    public function cleanExpiredGuestCart(): void;
+    public function deleteExpiredGuestQuote(): void;
 }

@@ -58,7 +58,7 @@ class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityMan
      *
      * @return void
      */
-    public function deleteExpiredGuestCart(DateTime $lifetimeLimitDate): void
+    public function deleteExpiredGuestQuotes(DateTime $lifetimeLimitDate): void
     {
         do {
             $quoteEntities = $this->getFactory()

@@ -14,10 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Quote\Business\QuoteFacadeInterface getFacade()
  */
-class CleanExpiredGuestCartConsole extends Console
+class DeleteExpiredGuestQuoteConsole extends Console
 {
-    protected const COMMAND_NAME = 'quote:guest-cart:clean-expired';
-    protected const COMMAND_DESCRIPTION = 'Delete all expired guest carts';
+    protected const COMMAND_NAME = 'quote:delete-expired-guest-quotes';
+    protected const COMMAND_DESCRIPTION = 'Delete all expired guest quotes.';
 
     /**
      * @return void
@@ -37,6 +37,6 @@ class CleanExpiredGuestCartConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $this->getFacade()->deleteExpiredGuestCart();
+        $this->getFacade()->deleteExpiredGuestQuote();
     }
 }

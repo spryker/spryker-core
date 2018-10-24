@@ -153,6 +153,6 @@ class PersistentCartFactory extends AbstractFactory
      */
     public function createGuestCartCustomerReferenceGenerator(): GuestCartCustomerReferenceGeneratorInterface
     {
-        return new GuestCartCustomerReferenceGenerator($this->getConfig()->getPersistentCartAnonymousPrefix());
+        return new GuestCartCustomerReferenceGenerator($this->getConfig());
     }
 }

@@ -7,19 +7,21 @@
 
 namespace Spryker\Client\PersistentCart\GuestCartCustomerReferenceGenerator;
 
+use Spryker\Client\PersistentCart\PersistentCartConfig;
+
 class GuestCartCustomerReferenceGenerator implements GuestCartCustomerReferenceGeneratorInterface
 {
     /**
-     * @var string
+     * @var \Spryker\Client\PersistentCart\PersistentCartConfig
      */
-    protected $persistentCartAnonymousPrefix;
+    protected $config;
 
     /**
-     * @param string $persistentCartAnonymousPrefix
+     * @param \Spryker\Client\PersistentCart\PersistentCartConfig $config
      */
-    public function __construct(string $persistentCartAnonymousPrefix)
+    public function __construct(PersistentCartConfig $config)
     {
-        $this->persistentCartAnonymousPrefix = $persistentCartAnonymousPrefix;
+        $this->config = $config;
     }
 
     /**
@@ -29,6 +31,6 @@ class GuestCartCustomerReferenceGenerator implements GuestCartCustomerReferenceG
      */
     public function generateGuestCartCustomerReference(string $customerReference): string
     {
-        return $this->persistentCartAnonymousPrefix . $customerReference;
+        return $this->config->getPersistentCartAnonymousPrefix() . $customerReference;
     }
 }

@@ -112,12 +112,12 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     *  - Removes all expired guest carts from database.
-     *  - Guest cart lifetime is configured on application level.
+     *  - Removes all expired guest quotes from database.
+     *  - Guest quote lifetime is configured on application level.
      *
      * @api
      *
      * @return void
      */
-    public function deleteExpiredGuestCart(): void;
+    public function deleteExpiredGuestQuote(): void;
 }
