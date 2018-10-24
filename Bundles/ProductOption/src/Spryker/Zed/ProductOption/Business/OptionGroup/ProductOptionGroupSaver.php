@@ -131,16 +131,16 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
             );
         }
 
-        $this->touchProductOptionGroupAbstractProducts($productOptionGroupEntity);
-
         if (!$isActive) {
             $productAbstractIdIndexes = $this->productOptionRepository->findProductAbstractWithDifferentStateIdIndexes(
                 $productOptionGroupEntity->getIdProductOptionGroup(),
                 $isActive
             );
 
-            $this->triggerProductAbstractDeleteEvent($productAbstractIdIndexes);
+            $this->triggerProductAbstractBulkDeleteEvent($productAbstractIdIndexes);
         }
+
+        $this->touchProductOptionGroupAbstractProducts($productOptionGroupEntity);
 
         $productOptionGroupEntity->setActive($isActive);
 
@@ -152,7 +152,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
      *
      * @return void
      */
-    protected function triggerProductAbstractDeleteEvent(array $productAbstractIdIndexes): void
+    protected function triggerProductAbstractBulkDeleteEvent(array $productAbstractIdIndexes): void
     {
         $eventEntityTransfers = $this->generateProductAbstractEventEntityTransfers($productAbstractIdIndexes);
 
