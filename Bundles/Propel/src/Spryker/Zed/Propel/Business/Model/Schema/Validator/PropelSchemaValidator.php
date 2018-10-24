@@ -10,10 +10,10 @@ namespace Spryker\Zed\Propel\Business\Model\Schema\Validator;
 use ArrayObject;
 use Generated\Shared\Transfer\SchemaValidationErrorTransfer;
 use Generated\Shared\Transfer\SchemaValidationTransfer;
-use Spryker\Zed\Propel\PropelConfig;
 use SimpleXMLElement;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
 use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface;
+use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaValidator implements PropelSchemaValidatorInterface
