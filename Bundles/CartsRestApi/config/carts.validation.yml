@@ -1,7 +1,7 @@
 carts:
   post:
     priceMode:
-      - NotNull
+      - NotBlank
       - Choice:
         choices: [NET_MODE, GROSS_MODE]
     currency:
@@ -16,16 +16,10 @@ items:
       - NotBlank
       - Type:
         type: numeric
-    amount:
-      - Type:
-        type: numeric
   patch:
     sku:
       - NotBlank
     quantity:
       - NotBlank
-      - Type:
-        type: numeric
-    amount:
       - Type:
         type: numeric
