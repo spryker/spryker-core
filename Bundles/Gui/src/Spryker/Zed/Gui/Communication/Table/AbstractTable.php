@@ -238,7 +238,7 @@ abstract class AbstractTable
     {
         $callback = function (&$value, $key) use ($safeColumns) {
             if (!in_array($key, $safeColumns)) {
-                $value = \twig_escape_filter(new Twig_Environment(new Twig_Loader_Filesystem()), $value);
+                $value = twig_escape_filter(new Twig_Environment(new Twig_Loader_Filesystem()), $value);
             }
 
             return $value;
