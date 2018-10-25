@@ -8,13 +8,13 @@
 namespace Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CartExtension\Dependency\Plugin\ItemsPostReloadPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface getFacade()
  */
-class AddThresholdMessagesCartPostReloadItemsPlugin extends AbstractPlugin implements ItemsPostReloadPluginInterface
+class AddThresholdMessagesCartPostReloadItemsPlugin extends AbstractPlugin implements PostReloadItemsPluginInterface
 {
     /**
      * {@inheritdoc}

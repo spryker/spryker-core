@@ -9,7 +9,7 @@ namespace Spryker\Zed\CartExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ItemsPostReloadPluginInterface
+interface PostReloadItemsPluginInterface
 {
     /**
      * Specification:

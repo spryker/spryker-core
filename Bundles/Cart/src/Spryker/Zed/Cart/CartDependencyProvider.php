@@ -26,7 +26,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_CHANGE_OBSERVER = 'PLUGINS_QUOTE_CHANGE_OBSERVER';
     public const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
     public const PLUGINS_CART_REMOVE_ITEM_STRATEGY = 'PLUGINS_CART_REMOVE_ITEM_STRATEGY';
-    public const PLUGINS_ITEMS_POST_RELOAD = 'PLUGINS_ITEMS_POST_RELOAD';
+    public const PLUGINS_POST_RELOAD_ITEMS = 'PLUGINS_POST_RELOAD_ITEMS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -48,7 +48,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteChangeObserverPlugins($container);
         $container = $this->addCartAddItemStrategyPlugins($container);
         $container = $this->addCartRemoveItemStrategyPlugins($container);
-        $container = $this->addItemsPostReloadPlugins($container);
+        $container = $this->addPostReloadItemsPlugins($container);
 
         return $container;
     }
@@ -206,10 +206,10 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addItemsPostReloadPlugins(Container $container): Container
+    protected function addPostReloadItemsPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ITEMS_POST_RELOAD] = function (Container $container): array {
-            return $this->getItemsPostReloadPlugins($container);
+        $container[static::PLUGINS_POST_RELOAD_ITEMS] = function (Container $container): array {
+            return $this->getPostReloadItemsPlugins($container);
         };
 
         return $container;
@@ -308,9 +308,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\ItemsPostReloadPluginInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[]
      */
-    protected function getItemsPostReloadPlugins(Container $container): array
+    protected function getPostReloadItemsPlugins(Container $container): array
     {
         return [];
     }

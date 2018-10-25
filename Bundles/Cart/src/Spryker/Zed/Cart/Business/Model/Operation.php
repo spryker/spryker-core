@@ -72,9 +72,9 @@ class Operation implements OperationInterface
     protected $terminationPlugins = [];
 
     /**
-     * @var array|\Spryker\Zed\CartExtension\Dependency\Plugin\ItemsPostReloadPluginInterface[]
+     * @var array|\Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[]
      */
-    protected $itemsPostReloadPlugins = [];
+    protected $postReloadItemsPlugins = [];
 
     /**
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
@@ -85,7 +85,7 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[] $postSavePlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[] $terminationPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface[] $cartRemovalPreCheckPlugins
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\ItemsPostReloadPluginInterface[] $itemsPostReloadPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[] $postReloadItemsPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
@@ -96,7 +96,7 @@ class Operation implements OperationInterface
         array $postSavePlugins,
         array $terminationPlugins,
         array $cartRemovalPreCheckPlugins,
-        array $itemsPostReloadPlugins
+        array $postReloadItemsPlugins
     ) {
         $this->cartStorageProvider = $cartStorageProvider;
         $this->calculationFacade = $calculationFacade;
@@ -106,7 +106,7 @@ class Operation implements OperationInterface
         $this->postSavePlugins = $postSavePlugins;
         $this->terminationPlugins = $terminationPlugins;
         $this->cartRemovalPreCheckPlugins = $cartRemovalPreCheckPlugins;
-        $this->itemsPostReloadPlugins = $itemsPostReloadPlugins;
+        $this->postReloadItemsPlugins = $postReloadItemsPlugins;
     }
 
     /**
@@ -234,8 +234,8 @@ class Operation implements OperationInterface
      */
     protected function executeItemsPostReloadPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($this->itemsPostReloadPlugins as $itemsPostReloadPlugin) {
-            $quoteTransfer = $itemsPostReloadPlugin->postReloadItems($quoteTransfer);
+        foreach ($this->postReloadItemsPlugins as $postReloadItemPlugin) {
+            $quoteTransfer = $postReloadItemPlugin->postReloadItems($quoteTransfer);
         }
 
         return $quoteTransfer;
