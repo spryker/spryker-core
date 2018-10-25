@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyRole\Communication\Plugin\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -41,22 +42,44 @@ class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements Compa
      */
     protected function assignDefaultRoleToCompanyUser(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
-        if ($companyUserResponseTransfer->getCompanyUser()->getCompanyRoleCollection() !== null &&
-            $companyUserResponseTransfer->getCompanyUser()->getCompanyRoleCollection()->getRoles()->count()
-        ) {
+        if (!$companyUserResponseTransfer->getCompanyUser() || !$companyUserResponseTransfer->getCompanyUser()->getFkCompany()) {
+            return $companyUserResponseTransfer->setIsSuccessful(false);
+        }
+
+        if ($this->haveRoleAlready($companyUserResponseTransfer->getCompanyUser())) {
             return $companyUserResponseTransfer;
         }
 
-        $defaultCompanyRole = $this->getFacade()->getDefaultCompanyRole();
-        $companyRoleCollectionTransfer = (new CompanyRoleCollectionTransfer())
-            ->addRole($defaultCompanyRole);
+        $defaultCompanyRoleTransfer = $this->getFacade()->findDefaultCompanyRoleByIdCompany(
+            $companyUserResponseTransfer->getCompanyUser()->getFkCompany()
+        );
+
+        if (!$defaultCompanyRoleTransfer) {
+            return $companyUserResponseTransfer->setIsSuccessful(false);
+        }
 
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
-        $companyUserTransfer->setCompanyRoleCollection($companyRoleCollectionTransfer);
 
-        $this->getFacade()->saveCompanyUser($companyUserTransfer);
+        if (!$companyUserTransfer->getCompanyRoleCollection()) {
+            $companyUserTransfer->setCompanyRoleCollection(new CompanyRoleCollectionTransfer());
+        }
+
+        $companyUserTransfer->getCompanyRoleCollection()->addRole($defaultCompanyRoleTransfer);
         $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
 
+        $this->getFacade()->saveCompanyUser($companyUserTransfer);
+
         return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return bool
+     */
+    protected function haveRoleAlready(CompanyUserTransfer $companyUserTransfer)
+    {
+        return $companyUserTransfer->getCompanyRoleCollection() !== null &&
+            $companyUserTransfer->getCompanyRoleCollection()->getRoles()->count() > 0;
     }
 }

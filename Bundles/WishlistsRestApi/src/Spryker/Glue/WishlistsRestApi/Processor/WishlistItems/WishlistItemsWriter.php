@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
@@ -23,6 +24,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WishlistItemsWriter implements WishlistItemsWriterInterface
 {
+    protected const SELF_LINK_FORMAT_PATTERN = '%s/%s/%s/%s';
+
     /**
      * @var \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface
      */
@@ -98,10 +101,20 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
             return $restResponse->addError($restErrorTransfer);
         }
 
-        $itemResource = $this->wishlistItemsResourceMapper
-            ->mapWishlistItemTransferToRestResource($wishlistItemTransfer, $wishlistUuid);
+        $restWishlistItemsAttributesTransfer = $this->wishlistItemsResourceMapper
+            ->mapWishlistItemTransferToRestWishlistItemsAttributes($wishlistItemTransfer);
 
-        return $restResponse->addResource($itemResource);
+        $wishlistItemResource = $this->restResourceBuilder->createRestResource(
+            WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
+            $restWishlistItemsAttributesTransfer->getSku(),
+            $restWishlistItemsAttributesTransfer
+        );
+        $wishlistItemResource->addLink(
+            RestResourceInterface::RESOURCE_LINKS_SELF,
+            $this->createSelfLinkForWishlistItem($wishlistUuid, $restWishlistItemsAttributesTransfer->getSku())
+        );
+
+        return $restResponse->addResource($wishlistItemResource);
     }
 
     /**
@@ -129,7 +142,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_ID)
                 ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_ID);
+                ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_SKU);
 
             return $restResponse->addError($restErrorTransfer);
         }
@@ -187,5 +200,22 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
             ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NOT_FOUND);
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param string $wishlistResourceId
+     * @param string $wishlistItemResourceId
+     *
+     * @return string
+     */
+    protected function createSelfLinkForWishlistItem(string $wishlistResourceId, string $wishlistItemResourceId): string
+    {
+        return sprintf(
+            static::SELF_LINK_FORMAT_PATTERN,
+            WishlistsRestApiConfig::RESOURCE_WISHLISTS,
+            $wishlistResourceId,
+            WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
+            $wishlistItemResourceId
+        );
     }
 }
