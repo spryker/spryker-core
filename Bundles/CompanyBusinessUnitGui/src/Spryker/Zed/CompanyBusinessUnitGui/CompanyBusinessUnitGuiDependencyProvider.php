@@ -29,11 +29,26 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addCompanyBusinessUnitQuery($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addCompanyFacade($container);
         $container = $this->addCompanyBusinessUnitFormExpanderPlugins($container);
         $container = $this->addCompanyBusinessUnitEditFormExpanderPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addCompanyBusinessUnitFacade($container);
 
         return $container;
     }
