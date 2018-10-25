@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
-class SchemaSpecificationComponent implements SpecificationComponentInterface
+class SchemaSpecificationComponent extends AbstractSpecificationComponent
 {
     protected const KEY_PROPERTIES = 'properties';
     protected const KEY_REQUIRED = 'required';

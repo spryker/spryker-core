@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer;
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRouteCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Handler\PluginHandlerInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Processor\RestApiMethodProcessorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -29,9 +29,9 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     protected const PATTERN_PATH_ID = '{%sId}';
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Handler\PluginHandlerInterface
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Processor\RestApiMethodProcessorInterface
      */
-    protected $pluginHandler;
+    protected $methodProcessor;
 
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
@@ -54,18 +54,18 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     protected $textInflector;
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Handler\PluginHandlerInterface $pluginHandler
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Processor\RestApiMethodProcessorInterface $methodProcessor
      * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface $textInflector
      */
     public function __construct(
-        PluginHandlerInterface $pluginHandler,
+        RestApiMethodProcessorInterface $methodProcessor,
         array $resourceRoutesPluginsProviderPlugins,
         GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser,
         RestApiDocumentationGeneratorToTextInflectorInterface $textInflector
     ) {
-        $this->pluginHandler = $pluginHandler;
+        $this->methodProcessor = $methodProcessor;
         $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
         $this->glueAnnotationsAnalyser = $glueAnnotationsAnalyser;
         $this->textInflector = $textInflector;
@@ -94,9 +94,9 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
         }
 
         return [
-            static::KEY_PATHS => $this->pluginHandler->getGeneratedPaths(),
-            static::KEY_SCHEMAS => $this->pluginHandler->getGeneratedSchemas(),
-            static::KEY_SECURITY_SCHEMES => $this->pluginHandler->getGeneratedSecuritySchemes(),
+            static::KEY_PATHS => $this->methodProcessor->getGeneratedPaths(),
+            static::KEY_SCHEMAS => $this->methodProcessor->getGeneratedSchemas(),
+            static::KEY_SECURITY_SCHEMES => $this->methodProcessor->getGeneratedSecuritySchemes(),
         ];
     }
 
@@ -113,7 +113,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             return;
         }
 
-        $this->pluginHandler->addGetResourcePath(
+        $this->methodProcessor->addGetResourcePath(
             $plugin,
             $resourcePath,
             $this->resourceRouteCollection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED],
@@ -135,7 +135,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             return;
         }
 
-        $this->pluginHandler->addPostResourcePath(
+        $this->methodProcessor->addPostResourcePath(
             $plugin,
             $resourcePath,
             $this->resourceRouteCollection->get(Request::METHOD_POST)[static::KEY_IS_PROTECTED],
@@ -156,7 +156,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             return;
         }
 
-        $this->pluginHandler->addPatchResourcePath(
+        $this->methodProcessor->addPatchResourcePath(
             $plugin,
             $resourcePath . '/' . $this->getResourceIdFromResourceType($plugin->getResourceType()),
             $this->resourceRouteCollection->get(Request::METHOD_PATCH)[static::KEY_IS_PROTECTED],
@@ -177,7 +177,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             return;
         }
 
-        $this->pluginHandler->addDeleteResourcePath(
+        $this->methodProcessor->addDeleteResourcePath(
             $plugin,
             $resourcePath . '/' . $this->getResourceIdFromResourceType($plugin->getResourceType()),
             $this->resourceRouteCollection->get(Request::METHOD_DELETE)[static::KEY_IS_PROTECTED],

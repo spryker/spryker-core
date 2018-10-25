@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
-class PathResponseSpecificationComponent implements SpecificationComponentInterface
+class PathResponseSpecificationComponent extends AbstractSpecificationComponent
 {
     protected const KEY_APPLICATION_JSON = 'application/json';
     protected const KEY_CONTENT = 'content';

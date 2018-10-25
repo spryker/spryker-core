@@ -55,7 +55,7 @@ class RestApiDocumentationGeneratorFacadeTest extends Unit
         $this->swaggerGeneratorFacade->generateOpenApiSpecification();
 
         $finder = new Finder();
-        $finder->in($this->getConfig()->getTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
+        $finder->in($this->getConfig()->getGeneratedFileTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
         $this->assertCount(1, $finder);
     }
 
@@ -66,7 +66,7 @@ class RestApiDocumentationGeneratorFacadeTest extends Unit
     {
         $this->swaggerGeneratorFacade->generateOpenApiSpecification();
         $finder = new Finder();
-        $finder->in($this->getConfig()->getTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
+        $finder->in($this->getConfig()->getGeneratedFileTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
 
         foreach ($finder as $fileInfo) {
             $parsedFile = Yaml::parseFile($fileInfo->getPathname());
@@ -88,7 +88,7 @@ class RestApiDocumentationGeneratorFacadeTest extends Unit
     protected function tearDown(): void
     {
         $finder = new Finder();
-        $finder->in($this->getConfig()->getTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
+        $finder->in($this->getConfig()->getGeneratedFileTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
         if ($finder->count() > 0) {
             foreach ($finder as $fileInfo) {
                 unlink($fileInfo->getPathname());

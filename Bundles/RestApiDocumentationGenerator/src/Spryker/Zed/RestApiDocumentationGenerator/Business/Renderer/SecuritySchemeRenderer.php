@@ -9,23 +9,9 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer;
 
 use Generated\Shared\Transfer\RestApiDocumentationSecuritySchemeTransfer;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SecuritySchemeSpecificationComponent;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface;
 
 class SecuritySchemeRenderer implements SecuritySchemeRendererInterface
 {
-    /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface
-     */
-    protected $specificationComponentValidator;
-
-    /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface $specificationComponentValidator
-     */
-    public function __construct(SpecificationComponentValidatorInterface $specificationComponentValidator)
-    {
-        $this->specificationComponentValidator = $specificationComponentValidator;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\RestApiDocumentationSecuritySchemeTransfer $securitySchemeTransfer
      *
@@ -38,7 +24,7 @@ class SecuritySchemeRenderer implements SecuritySchemeRendererInterface
         $securitySchemeComponent->setType($securitySchemeTransfer->getType());
         $securitySchemeComponent->setScheme($securitySchemeTransfer->getScheme());
 
-        if ($this->specificationComponentValidator->isValid($securitySchemeComponent)) {
+        if ($securitySchemeComponent->isValid()) {
             return $securitySchemeComponent->toArray();
         }
 

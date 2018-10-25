@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
-class SecuritySchemeSpecificationComponent implements SpecificationComponentInterface
+class SecuritySchemeSpecificationComponent extends AbstractSpecificationComponent
 {
     protected const KEY_TYPE = 'type';
     protected const KEY_SCHEME = 'scheme';

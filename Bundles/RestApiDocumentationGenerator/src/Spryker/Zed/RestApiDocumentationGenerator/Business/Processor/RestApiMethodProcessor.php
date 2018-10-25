@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Handler;
+namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Processor;
 
 use Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer;
 use Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer;
@@ -15,7 +15,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocument
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSecuritySchemeGeneratorInterface;
 
-class PluginHandler implements PluginHandlerInterface
+class RestApiMethodProcessor implements RestApiMethodProcessorInterface
 {
     protected const PATTERN_SUMMARY_GET_RESOURCE = 'Get %s';
     protected const PATTERN_SUMMARY_GET_COLLECTION = 'Get collection of %s';

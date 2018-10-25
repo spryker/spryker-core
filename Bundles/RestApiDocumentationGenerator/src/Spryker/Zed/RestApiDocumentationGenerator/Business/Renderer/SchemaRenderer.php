@@ -11,23 +11,9 @@ use Generated\Shared\Transfer\RestApiDocumentationSchemaDataTransfer;
 use Generated\Shared\Transfer\RestApiDocumentationSchemaPropertyTransfer;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaPropertySpecificationComponent;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\SchemaSpecificationComponent;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface;
 
 class SchemaRenderer implements SchemaRendererInterface
 {
-    /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface
-     */
-    protected $specificationComponentValidator;
-
-    /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface $specificationComponentValidator
-     */
-    public function __construct(SpecificationComponentValidatorInterface $specificationComponentValidator)
-    {
-        $this->specificationComponentValidator = $specificationComponentValidator;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\RestApiDocumentationSchemaDataTransfer $schemaDataTransfer
      *
@@ -44,7 +30,7 @@ class SchemaRenderer implements SchemaRendererInterface
             $schemaComponent->setRequired($schemaDataTransfer->getRequired());
         }
 
-        if ($this->specificationComponentValidator->isValid($schemaComponent)) {
+        if ($schemaComponent->isValid()) {
             return $schemaComponent->toArray();
         }
 
@@ -71,7 +57,7 @@ class SchemaRenderer implements SchemaRendererInterface
             $propertyComponent->setItemsSchemaReference($property->getItemsReference());
         }
 
-        if ($this->specificationComponentValidator->isValid($propertyComponent)) {
+        if ($propertyComponent->isValid()) {
             $schemaComponent->addProperty($propertyComponent);
         }
     }

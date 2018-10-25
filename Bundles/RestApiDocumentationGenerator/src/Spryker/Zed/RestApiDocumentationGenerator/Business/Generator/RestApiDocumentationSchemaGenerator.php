@@ -28,15 +28,15 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected const KEY_SELF = 'self';
     protected const KEY_TYPE = 'type';
 
-    protected const VALUE_BOOLEAN = 'boolean';
-    protected const VALUE_INTEGER = 'integer';
-    protected const VALUE_NUMBER = 'number';
-    protected const VALUE_STRING = 'string';
+    protected const VALUE_TYPE_BOOLEAN = 'boolean';
+    protected const VALUE_TYPE_INTEGER = 'integer';
+    protected const VALUE_TYPE_NUMBER = 'number';
+    protected const VALUE_TYPE_STRING = 'string';
 
     protected const DATA_TYPES_MAPPING_LIST = [
-        'int' => self::VALUE_INTEGER,
-        'bool' => self::VALUE_BOOLEAN,
-        'float' => self::VALUE_NUMBER,
+        'int' => self::VALUE_TYPE_INTEGER,
+        'bool' => self::VALUE_TYPE_BOOLEAN,
+        'float' => self::VALUE_TYPE_NUMBER,
     ];
 
     protected const PATTERN_SCHEMA_REFERENCE = '#/components/schemas/%s';
@@ -306,7 +306,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected function addRequestDataSchema(string $schemaName, string $ref): void
     {
         $schemaData = $this->createSchemaDataTransfer($schemaName);
-        $schemaData->addProperty($this->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_STRING));
+        $schemaData->addProperty($this->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
         $schemaData->addProperty($this->createReferencePropertyTransfer(static::KEY_ATTRIBUTES, $ref));
 
         $this->addSchemaData($schemaData);
@@ -336,8 +336,8 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected function addResponseDataSchema(string $schemaName, string $ref): void
     {
         $schemaData = $this->createSchemaDataTransfer($schemaName);
-        $schemaData->addProperty($this->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_STRING));
-        $schemaData->addProperty($this->createTypePropertyTransfer(static::KEY_ID, static::VALUE_STRING));
+        $schemaData->addProperty($this->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
+        $schemaData->addProperty($this->createTypePropertyTransfer(static::KEY_ID, static::VALUE_TYPE_STRING));
         $schemaData->addProperty($this->createReferencePropertyTransfer(static::KEY_ATTRIBUTES, $ref));
         $schemaData->addProperty($this->createReferencePropertyTransfer(static::KEY_LINKS, static::SCHEMA_NAME_LINKS));
 
@@ -405,7 +405,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected function addDefaultLinksSchema(): void
     {
         $linksSchema = $this->createSchemaDataTransfer(static::SCHEMA_NAME_LINKS);
-        $linksSchema->addProperty($this->createTypePropertyTransfer(static::KEY_SELF, static::VALUE_STRING));
+        $linksSchema->addProperty($this->createTypePropertyTransfer(static::KEY_SELF, static::VALUE_TYPE_STRING));
 
         $this->addSchemaData($linksSchema);
     }
@@ -416,8 +416,8 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected function addDefaultRelationshipsSchema(): void
     {
         $relationshipsSchema = $this->createSchemaDataTransfer(static::SCHEMA_NAME_RELATIONSHIPS);
-        $relationshipsSchema->addProperty($this->createTypePropertyTransfer(static::KEY_ID, static::VALUE_STRING));
-        $relationshipsSchema->addProperty($this->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_STRING));
+        $relationshipsSchema->addProperty($this->createTypePropertyTransfer(static::KEY_ID, static::VALUE_TYPE_STRING));
+        $relationshipsSchema->addProperty($this->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
 
         $this->addSchemaData($relationshipsSchema);
     }

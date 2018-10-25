@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Handler;
+namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Processor;
 
 use Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 
-interface PluginHandlerInterface
+interface RestApiMethodProcessorInterface
 {
     /**
      * @return array

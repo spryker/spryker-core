@@ -18,4 +18,9 @@ interface SpecificationComponentInterface
      * @return array
      */
     public function getRequiredProperties(): array;
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool;
 }

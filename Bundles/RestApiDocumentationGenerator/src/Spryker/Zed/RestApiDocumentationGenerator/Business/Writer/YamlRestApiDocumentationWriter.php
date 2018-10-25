@@ -15,7 +15,6 @@ use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfi
 class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterface
 {
     protected const GENERATED_FILE_POSTFIX = '.schema.yml';
-    protected const TARGET_DIRECTORY_PERMISSIONS = 0775;
 
     protected const OPENAPI_VERSION = '3.0.0';
 
@@ -96,10 +95,10 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
         return [
             static::KEY_OPENAPI => static::OPENAPI_VERSION,
             static::KEY_INFO => [
-                static::KEY_VERSION => $this->restApiDocumentationGeneratorConfig->getInfoApiVersion(),
-                static::KEY_TITLE => $this->restApiDocumentationGeneratorConfig->getInfoApiTitle(),
+                static::KEY_VERSION => $this->restApiDocumentationGeneratorConfig->getApiDocumentationVersionInfo(),
+                static::KEY_TITLE => $this->restApiDocumentationGeneratorConfig->getApiDocumentationTitleInfo(),
                 static::KEY_LICENSE => [
-                    static::KEY_NAME => $this->restApiDocumentationGeneratorConfig->getInfoApiInfoLicenceName(),
+                    static::KEY_NAME => $this->restApiDocumentationGeneratorConfig->getApiDocumentationLicenceNameInfo(),
                 ],
             ],
             static::KEY_SERVERS => [
@@ -120,9 +119,9 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
      */
     protected function resolveGeneratedFileName(): string
     {
-        return $this->restApiDocumentationGeneratorConfig->getTargetDirectory()
+        return $this->restApiDocumentationGeneratorConfig->getGeneratedFileTargetDirectory()
             . DIRECTORY_SEPARATOR
-            . $this->restApiDocumentationGeneratorConfig->getGeneratedFileName()
+            . $this->restApiDocumentationGeneratorConfig->getGeneratedFileNamePrefix()
             . static::GENERATED_FILE_POSTFIX;
     }
 }

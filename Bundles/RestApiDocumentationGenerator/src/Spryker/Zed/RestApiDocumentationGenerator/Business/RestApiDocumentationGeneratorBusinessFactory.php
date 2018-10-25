@@ -27,16 +27,14 @@ use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocument
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSecuritySchemeGenerator;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSecuritySchemeGeneratorInterface;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Handler\PluginHandler;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Handler\PluginHandlerInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Processor\RestApiMethodProcessor;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Processor\RestApiMethodProcessorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathMethodRenderer;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathMethodRendererInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SchemaRenderer;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SchemaRendererInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SecuritySchemeRenderer;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SecuritySchemeRendererInterface;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidator;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\YamlRestApiDocumentationWriter;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFilesystemInterface;
@@ -115,7 +113,7 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     public function createResourcePluginAnalyzer(): ResourcePluginAnalyzerInterface
     {
         return new ResourcePluginAnalyzer(
-            $this->createPluginHandler(),
+            $this->createRestApiMethodProcessor(),
             $this->getResourceRoutesPluginsProviderPlugins(),
             $this->createGlueAnnotationAnalyzer(),
             $this->getTextInflector()
@@ -139,11 +137,11 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
-     * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Handler\PluginHandlerInterface
+     * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Processor\RestApiMethodProcessorInterface
      */
-    public function createPluginHandler(): PluginHandlerInterface
+    public function createRestApiMethodProcessor(): RestApiMethodProcessorInterface
     {
-        return new PluginHandler(
+        return new RestApiMethodProcessor(
             $this->createRestApiDocumentationPathGenerator(),
             $this->createRestApiDocumentationSchemaGenerator(),
             $this->createRestApiDocumentationSecuritySchemaGenerator()
@@ -151,19 +149,11 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
-     * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface
-     */
-    public function createComponentValidator(): SpecificationComponentValidatorInterface
-    {
-        return new SpecificationComponentValidator();
-    }
-
-    /**
      * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathMethodRendererInterface
      */
     public function createPathMethodRenderer(): PathMethodRendererInterface
     {
-        return new PathMethodRenderer($this->createComponentValidator());
+        return new PathMethodRenderer();
     }
 
     /**
@@ -171,7 +161,7 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
      */
     public function createSchemaRenderer(): SchemaRendererInterface
     {
-        return new SchemaRenderer($this->createComponentValidator());
+        return new SchemaRenderer();
     }
 
     /**
@@ -179,7 +169,7 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
      */
     public function createSecuritySchemeRenderer(): SecuritySchemeRendererInterface
     {
-        return new SecuritySchemeRenderer($this->createComponentValidator());
+        return new SecuritySchemeRenderer();
     }
 
     /**
@@ -187,7 +177,7 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
      */
     public function createSecuritySchemaRenderer(): SecuritySchemeRenderer
     {
-        return new SecuritySchemeRenderer($this->createComponentValidator());
+        return new SecuritySchemeRenderer();
     }
 
     /**
@@ -198,7 +188,7 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
         return new GlueControllerFinder(
             $this->getFinder(),
             $this->getTextInflector(),
-            $this->getConfig()->getAnnotationsSourceDirectories()
+            $this->getConfig()->getAnnotationSourceDirectories()
         );
     }
 

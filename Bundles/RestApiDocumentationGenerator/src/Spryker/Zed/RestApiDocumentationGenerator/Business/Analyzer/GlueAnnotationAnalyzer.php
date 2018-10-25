@@ -11,6 +11,24 @@ use Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface;
 
+/**
+ * Specification
+ *  - Parses a .php file and checks if it contain a PHPDock annotation in specific format of Glue annotations.
+ *  - Glue annotation are start with @Glue tag and all the parameters are written inside brackets in JSON format, e.g.:
+ *  - @Glue("gerResource": {"summary": "Some endpoint summary"}}) will define summary for endpoint's GET method.
+ *  - All parameters should start by defining the method they're relate.
+ *  - Method could be one of the following:
+ *      - getResource - GET method, that returns exactly one resource and don't contains id in path (e.g. /search);
+ *      - getResourceById - GET method, that returns exactly one resource and should contain id in path (e.g. /wishlists/{wishlistId});
+ *      - getCollection - GET method, that returns collection of resources (e.g. /wishlists);
+ *      - post, patch, delete - respectively POST, PATCH and DELETE methods representation.
+ *  - Method's parameters may consist of:
+ *      - "summary" - method's summary - array of strings;
+ *      - "headers" - additional headers, that can be passed with request - array of strings;
+ *      - "responseClass" - defines FQCN of transfer, that represents response object - string;
+ *      - "isEmptyResponse" - defines is endpoint don't have a response body data (e.g. /customer-forgotten-password)
+ *      - "responses" - defines all possible error responses, in format "code": "message" - JSON object
+ */
 class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
 {
     protected const PATTERN_REGEX_GLUE_ANNOTATION = '/(?<=@Glue\(\n)(.|\n)*?(?=(\s\*\n)*?\))/';

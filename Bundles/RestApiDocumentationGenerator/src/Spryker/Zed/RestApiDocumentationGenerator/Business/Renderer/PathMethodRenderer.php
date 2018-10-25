@@ -14,7 +14,6 @@ use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathMe
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathParameterSpecificationComponent;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathRequestSpecificationComponent;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component\PathResponseSpecificationComponent;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface;
 
 class PathMethodRenderer implements PathMethodRendererInterface
 {
@@ -26,19 +25,6 @@ class PathMethodRenderer implements PathMethodRendererInterface
     protected const PARAMETER_LOCATION_HEADER = 'header';
     protected const PARAMETER_SCHEMA_TYPE_STRING = 'string';
     protected const PARAMETER_SECURITY_BEARER_AUTH = 'BearerAuth';
-
-    /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface
-     */
-    protected $specificationComponentValidator;
-
-    /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\SpecificationComponentValidatorInterface $specificationComponentValidator
-     */
-    public function __construct(SpecificationComponentValidatorInterface $specificationComponentValidator)
-    {
-        $this->specificationComponentValidator = $specificationComponentValidator;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
@@ -86,7 +72,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
                 $responseComponent->setJsonSchemaRef($responseSchema->getSchemaReference());
             }
 
-            if ($this->specificationComponentValidator->isValid($responseComponent)) {
+            if ($responseComponent->isValid()) {
                 $methodComponent->addResponse($responseComponent);
             }
         }
@@ -105,7 +91,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
         $requestComponent->setRequired(true);
         $requestComponent->setJsonSchemaRef($schemaDataTransfer->getSchemaReference());
 
-        if ($this->specificationComponentValidator->isValid($requestComponent)) {
+        if ($requestComponent->isValid()) {
             $methodComponent->setRequest($requestComponent);
         }
     }
@@ -126,7 +112,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
             $parameterComponent->setDescription($this->getDescriptionFromIdParameter($parameter));
             $parameterComponent->setSchemaType(static::PARAMETER_SCHEMA_TYPE_STRING);
 
-            if ($this->specificationComponentValidator->isValid($parameterComponent)) {
+            if ($parameterComponent->isValid()) {
                 $methodComponent->addParameter($parameterComponent);
             }
         }
@@ -147,7 +133,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
             $parameterComponent->setRequired(false);
             $parameterComponent->setSchemaType(static::PARAMETER_SCHEMA_TYPE_STRING);
 
-            if ($this->specificationComponentValidator->isValid($parameterComponent)) {
+            if ($parameterComponent->isValid()) {
                 $methodComponent->addParameter($parameterComponent);
             }
         }

@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RestApiDocumentationGeneratorConsole extends Console
 {
     protected const COMMAND_NAME = 'api:generate:open-api-specification';
-    protected const DESCRIPTION = 'Generates Open API specification file in YAML format';
+    protected const DESCRIPTION = 'Generates Open API specification file for implemented REST API endpoints in YAML format';
 
     /**
      * @return void
@@ -34,12 +34,10 @@ class RestApiDocumentationGeneratorConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return void
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->getFacade()->generateOpenApiSpecification();
-
-        return static::CODE_SUCCESS;
     }
 }

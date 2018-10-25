@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
-class PathMethodSpecificationComponent implements SpecificationComponentInterface
+class PathMethodSpecificationComponent extends AbstractSpecificationComponent
 {
     protected const KEY_PARAMETERS = 'parameters';
     protected const KEY_REQUEST_BODY = 'requestBody';

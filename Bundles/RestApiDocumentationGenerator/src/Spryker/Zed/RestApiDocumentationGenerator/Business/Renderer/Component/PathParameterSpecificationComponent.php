@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
-class PathParameterSpecificationComponent implements SpecificationComponentInterface
+/**
+ * @SuppressWarnings(PHPMD.ShortVariable)
+ */
+class PathParameterSpecificationComponent extends AbstractSpecificationComponent
 {
     protected const KEY_DESCRIPTION = 'description';
     protected const KEY_IN = 'in';

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Dependency\External;
 
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\IOException as SprykerIOException;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 
 class RestApiDocumentationGeneratorToSymfonyFilesystemAdapter implements RestApiDocumentationGeneratorToFilesystemInterface
@@ -25,21 +27,33 @@ class RestApiDocumentationGeneratorToSymfonyFilesystemAdapter implements RestApi
      * @param string $filename
      * @param string $content
      *
+     * @throws \Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\IOException
+     *
      * @return void
      */
     public function dumpFile(string $filename, string $content): void
     {
-        $this->filesystem->dumpFile($filename, $content);
+        try {
+            $this->filesystem->dumpFile($filename, $content);
+        } catch (IOException $e) {
+            throw new SprykerIOException($e->getMessage(), $e->getCode(), $e->getPrevious());
+        }
     }
 
     /**
      * @param string|iterable<array,\Traversable> $dirs
      * @param int $mode
      *
+     * @throws \Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\IOException
+     *
      * @return void
      */
     public function mkdir($dirs, int $mode = self::PERMISSION_ALL): void
     {
-        $this->filesystem->mkdir($dirs, $mode);
+        try {
+            $this->filesystem->mkdir($dirs, $mode);
+        } catch (IOException $e) {
+            throw new SprykerIOException($e->getMessage(), $e->getCode(), $e->getPrevious());
+        }
     }
 }
