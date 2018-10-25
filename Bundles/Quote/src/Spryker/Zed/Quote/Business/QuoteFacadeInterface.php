@@ -57,7 +57,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Find quote for customer using current store.
+     * - Find quote for customer using a store.
      *
      * @api
      *
