@@ -24,9 +24,6 @@ class Cronjobs
     protected const JENKINS_URL_API_CSRF_TOKEN = 'crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)';
     protected const JENKINS_CSRF_TOKEN_NAME = 'crumb';
 
-    protected const TEMPLATE_MESSAGE_ERROR_CURL = 'cURL error: %s  while calling Jenkins URL %s';
-    protected const TEMPLATE_MESSAGE_ERROR_CSRF = 'Please check %s in your config.';
-
     /**
      * @var array
      */
@@ -525,13 +522,13 @@ $command</command>";
      */
     protected function getExceptionMessage(string $errorMessage, string $url): string
     {
-        $curlErrorMessage = sprintf(static::TEMPLATE_MESSAGE_ERROR_CURL, $errorMessage, $url);
+        $curlErrorMessageTemplate = 'cURL error: %s  while calling Jenkins URL %s';
+        $csrfErrorMessageTemplate = 'Please check %s in your config.';
+
+        $curlErrorMessage = sprintf($curlErrorMessageTemplate, $errorMessage, $url);
 
         if (mb_stripos($curlErrorMessage, static::JENKINS_CSRF_TOKEN_NAME)) {
-            $crumbErrorMessage = sprintf(
-                static::TEMPLATE_MESSAGE_ERROR_CSRF,
-                SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED
-            );
+            $crumbErrorMessage = sprintf($csrfErrorMessageTemplate, SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED);
 
             return $curlErrorMessage . PHP_EOL . $crumbErrorMessage;
         }
