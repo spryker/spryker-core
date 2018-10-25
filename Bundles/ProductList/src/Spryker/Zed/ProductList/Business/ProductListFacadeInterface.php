@@ -49,7 +49,8 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product blacklist ids by product abstract id.
+     *  - Retrieves product list IDs with type "blacklist".
+     *  - Retrieves the product list IDs for product concretes related to the given product abstract id.
      *
      * @api
      *
@@ -89,7 +90,8 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product whitelist ids by product abstract id.
+     *  - Retrieves product list IDs with type "whitelist".
+     *  - Retrieves the product list IDs for product concretes related to the given product abstract id.
      *
      * @api
      *
@@ -127,7 +129,7 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product blacklist ids by product concrete id.
+     *  - Retrieves product list IDs with type "blacklist" by product concrete id.
      *
      * @api
      *
@@ -153,7 +155,7 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product whitelist ids by product concrete id.
+     *  - Retrieves product list IDs with type "whitelist" by product concrete id.
      *
      * @api
      *

@@ -25,6 +25,8 @@ use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductL
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationReaderInterface;
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationWriter;
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationWriterInterface;
+use Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRestrictionFilter;
+use Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRestrictionFilterInterface;
 use Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidator;
 use Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface;
 use Spryker\Zed\ProductList\Business\RestrictedItemsFilter\RestrictedItemsFilter;
@@ -47,7 +49,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     {
         return new RestrictedItemsFilter(
             $this->getMessengerFacade(),
-            $this->createProductListRestrictionValidator()
+            $this->createProductListRestrictionFilter()
         );
     }
 
@@ -57,6 +59,16 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     public function createProductListRestrictionValidator(): ProductListRestrictionValidatorInterface
     {
         return new ProductListRestrictionValidator(
+            $this->createProductListRestrictionFilter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRestrictionFilterInterface
+     */
+    public function createProductListRestrictionFilter(): ProductListRestrictionFilterInterface
+    {
+        return new ProductListRestrictionFilter(
             $this->createProductListReader()
         );
     }

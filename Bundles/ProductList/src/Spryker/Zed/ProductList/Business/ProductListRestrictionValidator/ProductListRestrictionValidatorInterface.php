@@ -18,13 +18,4 @@ interface ProductListRestrictionValidatorInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateItemAddition(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
-
-    /**
-     * @param string[] $productConcreteSkus
-     * @param int[] $customerBlacklistIds
-     * @param int[] $customerWhitelistIds
-     *
-     * @return string[]
-     */
-    public function filterRestrictedProductConcreteSkus(array $productConcreteSkus, array $customerBlacklistIds, array $customerWhitelistIds): array;
 }

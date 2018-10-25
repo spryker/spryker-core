@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductList\Business\ProductListRestrictionValidator;
+namespace SprykerTest\Zed\ProductList\Business\ProductListRestrictionFilter;
 
 use Codeception\Test\Unit;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface;
-use Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidator;
-use Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface;
+use Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRestrictionFilter;
+use Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRestrictionFilterInterface;
 
 /**
  * Auto-generated group annotations
@@ -19,11 +19,11 @@ use Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductList
  * @group Zed
  * @group ProductList
  * @group Business
- * @group ProductListRestrictionValidator
- * @group ProductListRestrictionValidatorTest
+ * @group ProductListRestrictionFilter
+ * @group ProductListRestrictionFilterTest
  * Add your own group annotations below this line
  */
-class ProductListRestrictionValidatorTest extends Unit
+class ProductListRestrictionFilterTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ProductList\ProductListBusinessTester
@@ -62,7 +62,7 @@ class ProductListRestrictionValidatorTest extends Unit
         $expectedSku = ['x'];
 
         // Act
-        $filteredSkus = $this->createProductListRestrictionValidator()
+        $filteredSkus = $this->createProductListRestrictionFilter()
             ->filterRestrictedProductConcreteSkus($cartSkus, $customerBlacklistIds, $customerWhitelistIds);
 
         // Assert
@@ -86,7 +86,7 @@ class ProductListRestrictionValidatorTest extends Unit
         $expectedSku = ['x'];
 
         // Act
-        $filteredSkus = $this->createProductListRestrictionValidator()
+        $filteredSkus = $this->createProductListRestrictionFilter()
             ->filterRestrictedProductConcreteSkus($cartSkus, $customerBlacklistIds, $customerWhitelistIds);
 
         // Assert
@@ -114,7 +114,7 @@ class ProductListRestrictionValidatorTest extends Unit
         $expectedSku = ['x', 'z'];
 
         // Act
-        $filteredSkus = $this->createProductListRestrictionValidator()
+        $filteredSkus = $this->createProductListRestrictionFilter()
             ->filterRestrictedProductConcreteSkus($cartSkus, $customerBlacklistIds, $customerWhitelistIds);
 
         // Assert
@@ -142,7 +142,7 @@ class ProductListRestrictionValidatorTest extends Unit
         $expectedSku = ['x', 'y', 'z'];
 
         // Act
-        $filteredSkus = $this->createProductListRestrictionValidator()
+        $filteredSkus = $this->createProductListRestrictionFilter()
             ->filterRestrictedProductConcreteSkus($cartSkus, $customerBlacklistIds, $customerWhitelistIds);
 
         // Assert
@@ -166,7 +166,7 @@ class ProductListRestrictionValidatorTest extends Unit
         $expectedSku = ['x', 'y', 'z'];
 
         // Act
-        $filteredSkus = $this->createProductListRestrictionValidator()
+        $filteredSkus = $this->createProductListRestrictionFilter()
             ->filterRestrictedProductConcreteSkus($cartSkus, $customerBlacklistIds, $customerWhitelistIds);
 
         // Assert
@@ -174,11 +174,11 @@ class ProductListRestrictionValidatorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface
+     * @return \Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRestrictionFilterInterface
      */
-    protected function createProductListRestrictionValidator(): ProductListRestrictionValidatorInterface
+    protected function createProductListRestrictionFilter(): ProductListRestrictionFilterInterface
     {
-        return new ProductListRestrictionValidator(
+        return new ProductListRestrictionFilter(
             $this->productListReaderMock
         );
     }

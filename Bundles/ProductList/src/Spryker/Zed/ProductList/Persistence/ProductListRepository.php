@@ -241,6 +241,8 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
+     * @module Product
+     *
      * @param int $idProductAbstract
      *
      * @return int[]
@@ -268,6 +270,8 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
+     * @module Product
+     *
      * @param int $idProductAbstract
      *
      * @return int[]
@@ -371,6 +375,8 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
+     * @module Product
+     *
      * @param int[] $productListIds
      *
      * @return int[]

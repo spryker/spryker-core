@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface;
+use Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRestrictionFilterInterface;
 
 class ProductListRestrictionValidator implements ProductListRestrictionValidatorInterface
 {
@@ -19,17 +19,17 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
     protected const MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED = 'product-cart.info.restricted-product.removed';
 
     /**
-     * @var \Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface
+     * @var \Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRestrictionFilterInterface
      */
-    protected $productListReader;
+    protected $productListRestrictionFilter;
 
     /**
-     * @param \Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface $productListReader
+     * @param \Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRestrictionFilterInterface $productListRestrictionFilter
      */
     public function __construct(
-        ProductListReaderInterface $productListReader
+        ProductListRestrictionFilterInterface $productListRestrictionFilter
     ) {
-        $this->productListReader = $productListReader;
+        $this->productListRestrictionFilter = $productListRestrictionFilter;
     }
 
     /**
@@ -56,7 +56,12 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
             return $itemTransfer->getSku();
         }, $cartChangeTransfer->getItems()->getArrayCopy());
 
-        $restrictedProductConcreteSkus = $this->filterRestrictedProductConcreteSkus($cartChangeSkus, $customerBlacklistIds, $customerWhitelistIds);
+        $restrictedProductConcreteSkus = $this->productListRestrictionFilter
+            ->filterRestrictedProductConcreteSkus(
+                $cartChangeSkus,
+                $customerBlacklistIds,
+                $customerWhitelistIds
+            );
 
         if (empty($restrictedProductConcreteSkus)) {
             return $cartPreCheckResponseTransfer;
@@ -93,38 +98,6 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
     }
 
     /**
-     * @param string[] $productConcreteSkus
-     * @param int[] $customerBlacklistIds
-     * @param int[] $customerWhitelistIds
-     *
-     * @return string[]
-     */
-    public function filterRestrictedProductConcreteSkus(array $productConcreteSkus, array $customerBlacklistIds, array $customerWhitelistIds): array
-    {
-        if (empty($productConcreteSkus)) {
-            return [];
-        }
-
-        $restrictedProductConcreteSkus = [];
-
-        if (!empty($customerWhitelistIds)) {
-            $productConcreteSkusInWhitelist = $this->productListReader
-                ->getConcreteProductSkusInWhitelists($productConcreteSkus, $customerWhitelistIds);
-
-            $restrictedProductConcreteSkus = array_diff($productConcreteSkus, $productConcreteSkusInWhitelist);
-        }
-
-        if (!empty($customerBlacklistIds)) {
-            $productConcreteSkusInBlacklist = $this->productListReader
-                ->getProductConcreteSkusInBlacklists($productConcreteSkus, $customerBlacklistIds);
-
-            $restrictedProductConcreteSkus = array_merge($productConcreteSkusInBlacklist, $restrictedProductConcreteSkus);
-        }
-
-        return array_unique($restrictedProductConcreteSkus);
-    }
-
-    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
      *
@@ -136,7 +109,7 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         $cartPreCheckResponseTransfer->addMessage(
             (new MessageTransfer())
                 ->setValue(static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED)
-                ->setParameters(['%sku%' => $sku])
+                ->setParameters([static::MESSAGE_PARAM_SKU => $sku])
         );
     }
 }

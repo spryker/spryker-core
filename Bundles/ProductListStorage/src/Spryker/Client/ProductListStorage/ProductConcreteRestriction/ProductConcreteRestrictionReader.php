@@ -69,7 +69,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
         array $customerWhitelistIds,
         array $customerBlacklistIds
     ): bool {
-        if (!$customerBlacklistIds && !$customerWhitelistIds) {
+        if (empty($customerBlacklistIds) || empty($customerWhitelistIds)) {
             return false;
         }
 
@@ -90,6 +90,6 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
             return $isProductInBlacklist || !$isProductInWhitelist;
         }
 
-        return !empty($customerWhitelistIds);
+        return false;
     }
 }
