@@ -51,7 +51,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByCustomerAndStore(string $customerReference, int $idStore): ?QuoteTransfer
+    public function findQuoteByCustomerReferenceAndIdStore(string $customerReference, int $idStore): ?QuoteTransfer
     {
         $quoteQuery = $this->getFactory()->createQuoteQuery()
             ->joinWithSpyStore()

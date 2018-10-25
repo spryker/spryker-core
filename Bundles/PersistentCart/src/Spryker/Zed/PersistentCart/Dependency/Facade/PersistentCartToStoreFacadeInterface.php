@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\PersistentCart\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface PersistentCartToStoreFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer;
+    public function getCurrentStore();
 }
