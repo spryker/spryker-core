@@ -60,14 +60,16 @@ class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityMan
      */
     public function deleteExpiredGuestQuotes(DateTime $lifetimeLimitDate): void
     {
+        $query = $this->getFactory()
+            ->createQuoteQuery();
+        $query->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN);
+
+        $query->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
+            ->where(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE . Criteria::ISNULL)
+            ->limit(static::BATCH_SIZE_LIMIT);
+
         do {
-            $quoteEntities = $this->getFactory()
-                ->createQuoteQuery()
-                ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
-                ->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
-                ->where(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE . Criteria::ISNULL)
-                ->limit(static::BATCH_SIZE_LIMIT)
-                ->find();
+            $quoteEntities = $query->find();
 
             foreach ($quoteEntities as $quoteEntity) {
                 $quoteEntity->delete();
