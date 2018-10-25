@@ -218,7 +218,7 @@ class Operation implements OperationInterface
         $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
         $quoteTransfer = $this->recalculate($quoteTransfer);
 
-        $quoteTransfer = $this->executeItemsPostReloadPlugins($quoteTransfer);
+        $quoteTransfer = $this->executePostReloadItemsPlugins($quoteTransfer);
 
         if ($this->isTerminated(static::TERMINATION_EVENT_NAME_RELOAD, $cartChangeTransfer, $quoteTransfer)) {
             return $originalQuoteTransfer;
@@ -232,7 +232,7 @@ class Operation implements OperationInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function executeItemsPostReloadPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function executePostReloadItemsPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($this->postReloadItemsPlugins as $postReloadItemPlugin) {
             $quoteTransfer = $postReloadItemPlugin->postReloadItems($quoteTransfer);
