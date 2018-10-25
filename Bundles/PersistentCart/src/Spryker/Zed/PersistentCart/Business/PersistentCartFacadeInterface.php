@@ -148,8 +148,6 @@ interface PersistentCartFacadeInterface
      * - Saves quote to DB
      * - Throws QuoteSynchronizationNotAvailable exception if database quote storage strategy is not used
      *
-     * @deprecated Use syncStorageQuoteWithStore() instead.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
@@ -157,20 +155,6 @@ interface PersistentCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
-     * - Merge provided quote with quote from DB for provided customer and current store
-     * - Saves quote to DB
-     * - Throws QuoteSynchronizationNotAvailable exception if database quote storage strategy is not used
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function syncStorageQuoteWithStore(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

@@ -30,11 +30,6 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     protected $quoteFacade;
 
     /**
-     * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface
      */
     protected $quoteResponseExpander;
@@ -45,24 +40,29 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     protected $quoteMerger;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface $quoteMerger
+     * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         PersistentCartToCartFacadeInterface $cartFacade,
         PersistentCartToQuoteFacadeInterface $quoteFacade,
-        PersistentCartToStoreFacadeInterface $storeFacade,
         QuoteResponseExpanderInterface $quoteResponseExpander,
-        QuoteMergerInterface $quoteMerger
+        QuoteMergerInterface $quoteMerger,
+        PersistentCartToStoreFacadeInterface $storeFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
-        $this->storeFacade = $storeFacade;
         $this->quoteResponseExpander = $quoteResponseExpander;
         $this->quoteMerger = $quoteMerger;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -77,7 +77,7 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
 
         $customerTransfer = $quoteSyncRequestTransfer->getCustomerTransfer();
         $quoteTransfer = $quoteSyncRequestTransfer->getQuoteTransfer();
-        $storeTransfer = $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName());
+        $storeTransfer = $this->storeFacade->getCurrentStore();
         $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
 
         if ($customerQuoteTransfer->getIsSuccessful()) {

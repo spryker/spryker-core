@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
+use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface;
 
 class QuoteResolver implements QuoteResolverInterface
 {
@@ -37,18 +38,26 @@ class QuoteResolver implements QuoteResolverInterface
     protected $messengerFacade;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         PersistentCartToQuoteFacadeInterface $quoteFacade,
         QuoteResponseExpanderInterface $quoteResponseExpander,
-        PersistentCartToMessengerFacadeInterface $messengerFacade
+        PersistentCartToMessengerFacadeInterface $messengerFacade,
+        PersistentCartToStoreFacadeInterface $storeFacade
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->quoteResponseExpander = $quoteResponseExpander;
         $this->messengerFacade = $messengerFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -124,7 +133,8 @@ class QuoteResolver implements QuoteResolverInterface
     protected function resolveDefaultCustomerQuote(CustomerTransfer $customerTransfer): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
-        $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomer($customerTransfer);
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
         if ($customerQuoteTransfer->getIsSuccessful()) {
             $quoteTransfer = $customerQuoteTransfer->getQuoteTransfer();
         }

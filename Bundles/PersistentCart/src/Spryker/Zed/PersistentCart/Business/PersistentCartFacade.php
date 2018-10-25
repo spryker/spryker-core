@@ -122,8 +122,6 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     /**
      * {@inheritdoc}
      *
-     * @deprecated Use syncStorageQuoteWithStore() instead.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
@@ -133,20 +131,6 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteStorageSynchronizer()->syncStorageQuote($quoteSyncRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function syncStorageQuoteWithStore(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
-    {
-        return $this->getFactory()->createQuoteStorageSynchronizer()->syncStorageQuoteWithStore($quoteSyncRequestTransfer);
     }
 
     /**

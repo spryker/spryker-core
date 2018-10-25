@@ -25,12 +25,10 @@ class PersistentCartToStoreFacadeBridge implements PersistentCartToStoreFacadeIn
     }
 
     /**
-     * @param string $storeName
-     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName(string $storeName): StoreTransfer
+    public function getCurrentStore(): StoreTransfer
     {
-        return $this->storeFacade->getStoreByName($storeName);
+        return $this->storeFacade->getCurrentStore();
     }
 }

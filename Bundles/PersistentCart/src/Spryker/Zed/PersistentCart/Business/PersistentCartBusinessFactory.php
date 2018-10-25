@@ -69,7 +69,8 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
         return new QuoteResolver(
             $this->getQuoteFacade(),
             $this->createQuoteResponseExpander(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getStoreFacade()
         );
     }
 
@@ -81,9 +82,9 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
         return new QuoteStorageSynchronizer(
             $this->getCartFacade(),
             $this->getQuoteFacade(),
-            $this->getStoreFacade(),
             $this->createQuoteResponseExpander(),
-            $this->createQuoteMerger()
+            $this->createQuoteMerger(),
+            $this->getStoreFacade()
         );
     }
 

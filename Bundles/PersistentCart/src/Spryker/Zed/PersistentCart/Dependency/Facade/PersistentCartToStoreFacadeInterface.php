@@ -12,9 +12,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface PersistentCartToStoreFacadeInterface
 {
     /**
-     * @param string $storeName
-     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName(string $storeName): StoreTransfer;
+    public function getCurrentStore(): StoreTransfer;
 }
