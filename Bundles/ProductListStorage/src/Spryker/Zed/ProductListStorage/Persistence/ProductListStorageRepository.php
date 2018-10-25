@@ -109,6 +109,30 @@ class ProductListStorageRepository extends AbstractRepository implements Product
     }
 
     /**
+     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     */
+    public function findAllProductAbstractProductListStorageEntities(): array
+    {
+        $productAbstractProductListStorageCollection = $this->getFactory()
+            ->createProductAbstractProductListStorageQuery()
+            ->find();
+
+        return $productAbstractProductListStorageCollection->getArrayCopy();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
+     */
+    public function findAllProductConcreteProductListStorageEntities(): array
+    {
+        $productConcreteProductListStorageCollection = $this->getFactory()
+            ->createProductConcreteProductListStorageQuery()
+            ->find();
+
+        return $productConcreteProductListStorageCollection->getArrayCopy();
+    }
+
+    /**
      * @module ProductList
      *
      * @param int[] $productListIds

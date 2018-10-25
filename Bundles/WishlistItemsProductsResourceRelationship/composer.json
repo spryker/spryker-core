@@ -1,5 +1,6 @@
 {
   "name": "spryker/wishlist-items-products-resource-relationship",
+  "type": "library",
   "description": "WishlistItemsProductsResourceRelationship module",
   "license": "proprietary",
   "require": {

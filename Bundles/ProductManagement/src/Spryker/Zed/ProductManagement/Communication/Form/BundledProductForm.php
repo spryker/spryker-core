@@ -11,8 +11,8 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
@@ -69,10 +69,7 @@ class BundledProductForm extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-                new Regex([
-                    'pattern' => self::NUMERIC_PATTERN,
-                    'message' => 'Invalid quantity provided. Valid values "0-9".',
-                ]),
+                new GreaterThan(0),
             ],
         ]);
 

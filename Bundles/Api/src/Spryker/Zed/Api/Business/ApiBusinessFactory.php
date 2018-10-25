@@ -9,6 +9,7 @@ namespace Spryker\Zed\Api\Business;
 
 use Spryker\Zed\Api\ApiDependencyProvider;
 use Spryker\Zed\Api\Business\Model\Dispatcher;
+use Spryker\Zed\Api\Business\Model\Filter\ApiRequestTransferFilter;
 use Spryker\Zed\Api\Business\Model\Processor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\FindActionPostProcessor;
@@ -337,5 +338,21 @@ class ApiBusinessFactory extends AbstractBusinessFactory
         return new FindActionPostProcessor(
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Filter\ApiRequestTransferFilterInterface
+     */
+    public function createRequestTransferFilter()
+    {
+        return new ApiRequestTransferFilter($this->getApiRequestTransferFilterPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface[]
+     */
+    protected function getApiRequestTransferFilterPlugins()
+    {
+        return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_API_REQUEST_TRANSFER_FILTER);
     }
 }

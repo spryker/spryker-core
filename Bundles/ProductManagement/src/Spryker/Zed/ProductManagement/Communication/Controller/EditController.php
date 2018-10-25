@@ -100,6 +100,7 @@ class EditController extends AddController
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
+            'superAttributesCount' => $this->getFactory()->createProductAttributeHelper()->getProductAbstractSuperAttributesCount($productAbstractTransfer),
             'concreteProductCollection' => $concreteProductCollection,
             'localeCollection' => $localeProvider->getLocaleCollection(),
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
@@ -163,6 +164,10 @@ class EditController extends AddController
                 $productConcreteTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()
                     ->buildProductConcreteTransfer($productAbstractTransfer, $form, $idProduct);
+
+                $productConcreteTransfer = $this->getFactory()
+                    ->getProductBundleFacade()
+                    ->saveBundledProducts($productConcreteTransfer);
 
                 $this->getFactory()
                     ->getProductFacade()

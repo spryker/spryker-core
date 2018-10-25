@@ -30,11 +30,35 @@ interface EventConstants
 
     /**
      * Specification:
+     * - Maximum amount of retrying on failing message
+     *
+     * @api
+     */
+    public const MAX_RETRY_ON_FAIL = 'MAX_RETRY_ON_FAIL';
+
+    /**
+     * Specification:
+     * - Number of event messages for bulk operation
+     *
+     * @api
+     */
+    public const EVENT_CHUNK = 'EVENT_CHUNK';
+
+    /**
+     * Specification:
      * - Queue name as used when with asynchronous event handling
      *
      * @api
      */
     public const EVENT_QUEUE = 'event';
+
+    /**
+     * Specification:
+     * - Retry queue name as used when with asynchronous event handling
+     *
+     * @api
+     */
+    public const EVENT_QUEUE_RETRY = 'event.retry';
 
     /**
      * Specification:

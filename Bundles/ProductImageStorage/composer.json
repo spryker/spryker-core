@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-image-storage",
+  "type": "library",
   "description": "ProductImageStorage module",
   "license": "proprietary",
   "require": {

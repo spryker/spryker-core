@@ -1,5 +1,6 @@
 {
   "name": "spryker/availability",
+  "type": "library",
   "description": "Availability module",
   "license": "proprietary",
   "require": {

@@ -83,7 +83,7 @@ class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearch
      */
     protected function isPriceProductDimensionEnabled(): bool
     {
-        return \defined('\Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DIMENSION_DEFAULT');
+        return defined('\Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DIMENSION_DEFAULT');
     }
 
     /**

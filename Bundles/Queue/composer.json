@@ -1,5 +1,6 @@
 {
   "name": "spryker/queue",
+  "type": "library",
   "description": "Queue module",
   "license": "proprietary",
   "require": {

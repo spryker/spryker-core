@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlock;
 
+use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToEventFacadeBridge;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryBridge;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleBridge;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchBridge;
@@ -17,6 +18,7 @@ use Spryker\Zed\Kernel\Container;
 class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const FACADE_EVENT = 'FACADE_EVENT';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
@@ -33,6 +35,7 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addTouchFacade($container);
+        $container = $this->addEventFacade($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addGlossaryQueryContainer($container);
@@ -50,6 +53,20 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
             return new CmsBlockToTouchBridge($container->getLocator()->touch()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventFacade(Container $container): Container
+    {
+        $container[static::FACADE_EVENT] = function (Container $container) {
+            return new CmsBlockToEventFacadeBridge($container->getLocator()->event()->facade());
         };
 
         return $container;
