@@ -1,5 +1,6 @@
 {
   "name": "spryker/carts-rest-api-extension",
+  "type": "library",
   "description": "CartsRestApiExtension module",
   "license": "proprietary",
   "require": {
@@ -9,6 +10,9 @@
     "spryker/code-sniffer": "*",
     "spryker/glue-application": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/glue-application": "If you want to use RestRequestInterface"
   },
   "autoload": {
     "psr-4": {
@@ -24,8 +28,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/glue-application": "If you want to use RestRequestInterface"
   }
 }

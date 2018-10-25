@@ -1,5 +1,6 @@
 {
   "name": "spryker/customers-rest-api-extension",
+  "type": "library",
   "description": "CustomersRestApiExtension module",
   "license": "proprietary",
   "require": {
