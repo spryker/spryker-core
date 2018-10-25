@@ -23,6 +23,8 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
      *
      * @api
      *
+     * @deprecated Use findQuoteByCustomerReferenceAndIdStore() instead.
+     *
      * @param string $customerReference
      *
      * @return null|\Generated\Shared\Transfer\QuoteTransfer

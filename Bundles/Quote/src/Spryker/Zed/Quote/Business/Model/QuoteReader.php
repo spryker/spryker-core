@@ -39,6 +39,8 @@ class QuoteReader implements QuoteReaderInterface
     }
 
     /**
+     * @deprecated Use findQuoteByCustomerAndStore() instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

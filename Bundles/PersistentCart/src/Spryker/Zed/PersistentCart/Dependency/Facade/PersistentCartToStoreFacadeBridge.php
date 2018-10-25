@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PersistentCart\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class PersistentCartToStoreFacadeBridge implements PersistentCartToStoreFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class PersistentCartToStoreFacadeBridge implements PersistentCartToStoreFacadeIn
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(): StoreTransfer
     {
         return $this->storeFacade->getCurrentStore();
     }

@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface QuoteReaderInterface
 {
     /**
+     * @deprecated Use findQuoteByCustomerAndStore() instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

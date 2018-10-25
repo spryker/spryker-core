@@ -53,9 +53,9 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     /**
      * {@inheritdoc}
      *
-     * @deprecated Use findQuoteByCustomerAndStore() instead.
-     *
      * @api
+     *
+     * @deprecated Use findQuoteByCustomerAndStore() instead.
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
