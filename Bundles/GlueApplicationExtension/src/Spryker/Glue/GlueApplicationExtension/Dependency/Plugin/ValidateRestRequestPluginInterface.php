@@ -10,14 +10,19 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface instead.
+ */
 interface ValidateRestRequestPluginInterface
 {
     /**
-     * @api
-     *
      * Specification:
-     *  - Validates Rest resource request request before further processing, it is executed after formatting http request to resource.
-     * Terminates on first failure. Proceeds to next plugin if null returned.
+     * - Validates Rest resource request request before further processing, it is executed after formatting http request to resource.
+     * - Terminates on first failure.
+     * - Proceeds to next plugin if null returned.
+     * - Returns single error message.
+     *
+     * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
