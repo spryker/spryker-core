@@ -175,14 +175,9 @@ class CustomerWriter implements CustomerWriterInterface
         RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        if ($restRequest->getResource()->getId()) {
-            return $this->restApiError->addCustomerNotFoundError($restResponse);
-        }
-
         $customerResponseTransfer = $this->customerReader->getCurrentCustomer($restRequest);
 
-        if (!$customerResponseTransfer->getHasCustomer()) {
+        if (!$customerResponseTransfer->getHasCustomer() || $restRequest->getResource()->getId()) {
             return $this->restApiError->addCustomerNotFoundError($restResponse);
         }
 
