@@ -82,7 +82,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
 
     /**
      * @param \SimpleXMLElement $xml
-     * @param string filename
+     * @param string $fileName
      *
      * @return void
      */
