@@ -65,6 +65,7 @@ addresses:
       - Expression:
         expression: 'this.iso2Code || value'
     iso2Code:
+      - NotBlank
       - Expression:
         expression: 'this.country || value'
   patch:
@@ -90,6 +91,7 @@ addresses:
       - Expression:
         expression: 'this.iso2Code || value'
     iso2Code:
+      - NotBlank
       - Expression:
         expression: 'this.country || value'
 
