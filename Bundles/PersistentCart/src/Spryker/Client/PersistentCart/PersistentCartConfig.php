@@ -8,23 +8,17 @@
 namespace Spryker\Client\PersistentCart;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
-use Spryker\Shared\PersistentCart\PersistentCartConstants;
 
+/**
+ * @method \Spryker\Shared\PersistentCart\PersistentCartConfig getSharedConfig()
+ */
 class PersistentCartConfig extends AbstractBundleConfig
 {
-    protected const DEFAULT_PERSISTENT_CART_ANONYMOUS_PREFIX = 'anonymous:';
-
     /**
-     * Specification:
-     *  - Returns persistent cart anonymous prefix.
-     *
      * @return string
      */
     public function getPersistentCartAnonymousPrefix(): string
     {
-        return $this->get(
-            PersistentCartConstants::PERSISTENT_CART_ANONYMOUS_PREFIX,
-            static::DEFAULT_PERSISTENT_CART_ANONYMOUS_PREFIX
-        );
+        return $this->getSharedConfig()->getPersistentCartAnonymousPrefix();
     }
 }

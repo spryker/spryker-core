@@ -5,20 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart;
+namespace Spryker\Shared\PersistentCart;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractBundleConfig;
 
-/**
- * @method \Spryker\Shared\PersistentCart\PersistentCartConfig getSharedConfig()
- */
 class PersistentCartConfig extends AbstractBundleConfig
 {
+    /**
+     * Persistent cart anonymous prefix.
+     */
+    protected const PERSISTENT_CART_ANONYMOUS_PREFIX = 'anonymous:';
+
     /**
      * @return string
      */
     public function getPersistentCartAnonymousPrefix(): string
     {
-        return $this->getSharedConfig()->getPersistentCartAnonymousPrefix();
+        return static::PERSISTENT_CART_ANONYMOUS_PREFIX;
     }
 }
