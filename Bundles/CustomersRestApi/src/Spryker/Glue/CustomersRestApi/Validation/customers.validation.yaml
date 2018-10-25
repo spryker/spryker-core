@@ -92,3 +92,32 @@ addresses:
     iso2Code:
       - Expression:
         expression: 'this.country || value'
+
+customer-password:
+  patch:
+    password:
+      - NotBlank
+    newPassword:
+      - NotBlank
+    confirmPassword:
+      - NotBlank
+      - IdenticalTo:
+        propertyPath: newPassword
+
+customer-forgotten-password:
+  post:
+    email:
+      - NotBlank
+      - EmailConstraint
+
+customer-restore-password:
+  patch:
+    restorePasswordKey:
+      - NotBlank
+    password:
+      - NotBlank
+    confirmPassword:
+      - NotBlank
+      - IdenticalTo:
+        propertyPath: password
+
