@@ -53,9 +53,12 @@ class ResponseBuilder implements ResponseBuilderInterface
         RestResponseInterface $restResponse,
         RestRequestInterface $restRequest
     ): array {
+        $response = [];
+
         if (count($restResponse->getResources()) === 0) {
             $response[RestResponseInterface::RESPONSE_DATA] = [];
             $response[RestResponseInterface::RESPONSE_LINKS] = $this->buildCollectionLink($restRequest);
+
             return $response;
         }
 
@@ -169,7 +172,7 @@ class ResponseBuilder implements ResponseBuilderInterface
     {
         $formattedLinks = [];
         foreach ($links as $key => $link) {
-            if (\is_array($link)) {
+            if (is_array($link)) {
                 $link['href'] = $this->domainName . '/' . $link['href'];
                 $formattedLinks[$key] = $link;
                 continue;
