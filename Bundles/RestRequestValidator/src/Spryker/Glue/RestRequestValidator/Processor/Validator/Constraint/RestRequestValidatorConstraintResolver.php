@@ -18,6 +18,8 @@ use Symfony\Component\Validator\Constraints\Collection;
 
 class RestRequestValidatorConstraintResolver implements RestRequestValidatorConstraintResolverInterface
 {
+    protected const FIELDS = 'fields';
+
     /**
      * @var \Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface
      */
@@ -62,7 +64,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
         }
 
         $constraints = $this->constraintCollectionAdapter->createCollection(
-            ['fields' => $initializedConstraintCollection] + $this->getConstraintCollectionOptions()
+            [static::FIELDS => $initializedConstraintCollection] + $this->getConstraintCollectionOptions()
         );
 
         return $constraints;
@@ -117,7 +119,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     {
         return function (array $validatorConfig): Constraint {
             $shortClassName = key($validatorConfig);
-            $parameters = reset($validatorConfig);
+            $parameters = $this->getParameters(reset($validatorConfig));
 
             $className = $this->resolveConstraintClassName($shortClassName);
 
@@ -149,5 +151,30 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     protected function getConstraintCollectionOptions(): array
     {
         return $this->config->getConstraintCollectionOptions();
+    }
+
+    /**
+     * @param array|null $constraintParameters
+     *
+     * @return array|null
+     */
+    protected function getParameters(?array $constraintParameters = null): ?array
+    {
+        if ($constraintParameters === null) {
+            return $constraintParameters;
+        }
+
+        if (isset($constraintParameters[static::FIELDS])) {
+            $configResult = [];
+            foreach ($constraintParameters[static::FIELDS] as $fieldName => $validators) {
+                if ($validators !== null) {
+                    $configResult[$fieldName] = $this->mapFieldConstrains($validators);
+                }
+            }
+
+            return [static::FIELDS => $configResult] + $this->getConstraintCollectionOptions();
+        }
+
+        return $constraintParameters;
     }
 }
