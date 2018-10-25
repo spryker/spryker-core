@@ -10,7 +10,6 @@ namespace Spryker\Client\Customer\Zed;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 
 interface CustomerStubInterface
 {
@@ -55,14 +54,6 @@ interface CustomerStubInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function get(CustomerTransfer $customerTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function getByEmailAndStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): CustomerTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

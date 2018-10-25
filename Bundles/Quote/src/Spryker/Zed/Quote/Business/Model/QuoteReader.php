@@ -106,7 +106,7 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return QuoteResponseTransfer
      */
-    protected function setQuoteResponseTransfer(QuoteResponseTransfer $quoteResponseTransfer, QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    protected function setQuoteResponseTransfer(QuoteResponseTransfer $quoteResponseTransfer, ?QuoteTransfer $quoteTransfer=null): QuoteResponseTransfer
     {
         if (!$quoteTransfer) {
             $quoteResponseTransfer->setIsSuccessful(false);

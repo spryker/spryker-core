@@ -5,17 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PersistentCart\Dependency\Client;
+namespace Spryker\Zed\PersistentCart\Dependency\Facade;
 
 use Generated\Shared\Transfer\StoreTransfer;
 
-interface PersistentCartToStoreClientInterface
+interface PersistentCartToStoreFacadeInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore(): StoreTransfer;
-
     /**
      * @param string $storeName
      *

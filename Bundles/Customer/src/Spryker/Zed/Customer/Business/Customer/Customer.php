@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -139,25 +138,10 @@ class Customer implements CustomerInterface
     public function get(CustomerTransfer $customerTransfer)
     {
         $customerEntity = $this->getCustomer($customerTransfer);
-        $customerTransfer = $this->hydrateCustomerTransferFromEntity($customerTransfer, $customerEntity);
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
 
-        $customerTransfer = $this->customerExpander->expand($customerTransfer);
-
-        return $customerTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function getByEmailAndStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): CustomerTransfer
-    {
-        $customerEntity = $this->getCustomerByEmailAndStore($customerTransfer, $storeTransfer);
-//        $customerEntity = $this->getCustomer($customerTransfer);
-        $customerTransfer = $this->hydrateCustomerTransferFromEntity($customerTransfer, $customerEntity);
-
+        $customerTransfer = $this->attachAddresses($customerTransfer, $customerEntity);
+        $customerTransfer = $this->attachLocale($customerTransfer, $customerEntity);
         $customerTransfer = $this->customerExpander->expand($customerTransfer);
 
         return $customerTransfer;
@@ -690,38 +674,6 @@ class Customer implements CustomerInterface
             $customerTransfer->getIdCustomer(),
             $customerTransfer->getEmail(),
             $customerTransfer->getRestorePasswordKey()
-        ));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
-     */
-    protected function getCustomerByEmailAndStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): SpyCustomer
-    {
-        if (!$customerTransfer->getEmail()) {
-            throw new CustomerNotFoundException(sprintf(
-                'Customer not found by email `%s` and store ID `%s`.',
-                $customerTransfer->getEmail(),
-                $storeTransfer->getIdStore()
-            ));
-        }
-
-        $customerEntity = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
-            ->findOne();
-
-        if ($customerEntity !== null) {
-            return $customerEntity;
-        }
-
-        throw new CustomerNotFoundException(sprintf(
-            'Customer not found by email `%s` and store ID `%s`.',
-            $customerTransfer->getEmail(),
-            $storeTransfer->getIdStore()
         ));
     }
 

@@ -11,13 +11,11 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientBridge;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientBridge;
-use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToStoreClientBridge;
 
 class PersistentCartDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
-    public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const PLUGINS_QUOTE_UPDATE = 'PLUGINS_QUOTE_UPDATE';
     public const PLUGINS_CHANGE_REQUEST_EXTEND = 'PLUGINS_CHANGE_REQUEST_EXTEND';
@@ -31,7 +29,6 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addCustomerClient($container);
         $container = $this->addQuoteClient($container);
-        $container = $this->addStoreClient($container);
         $container = $this->addQuoteUpdatePlugins($container);
         $container = $this->addChangeRequestExtendPlugins($container);
         $container = $this->addZedRequestClient($container);
@@ -62,20 +59,6 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new PersistentCartToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addStoreClient(Container $container): Container
-    {
-        $container[static::CLIENT_STORE] = function (Container $container) {
-            return new PersistentCartToStoreClientBridge($container->getLocator()->store()->client());
         };
 
         return $container;

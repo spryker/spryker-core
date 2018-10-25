@@ -9,13 +9,10 @@ namespace Spryker\Zed\PersistentCart\Business\Model;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 
 interface QuoteStorageSynchronizerInterface
 {
     /**
-     * @deprecated Use syncStorageQuoteWithStore() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
      *
      * @throws \Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable
@@ -23,13 +20,4 @@ interface QuoteStorageSynchronizerInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
-     *
-     * @throws \Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function syncStorageQuoteWithStore(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer;
 }

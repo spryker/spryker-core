@@ -81,6 +81,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
         return new QuoteStorageSynchronizer(
             $this->getCartFacade(),
             $this->getQuoteFacade(),
+            $this->getStoreFacade(),
             $this->createQuoteResponseExpander(),
             $this->createQuoteMerger()
         );
@@ -163,6 +164,14 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     public function getQuoteFacade()
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::FACADE_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface
+     */
+    public function getStoreFacade()
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::FACADE_STORE);
     }
 
     /**

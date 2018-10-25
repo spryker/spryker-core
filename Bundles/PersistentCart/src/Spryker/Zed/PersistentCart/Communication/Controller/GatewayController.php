@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -92,8 +91,6 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @deprecated Use syncStorageQuoteWithStoreAction() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -101,16 +98,6 @@ class GatewayController extends AbstractGatewayController
     public function syncStorageQuoteAction(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->syncStorageQuote($quoteSyncRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function syncStorageQuoteWithStoreAction(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
-    {
-        return $this->getFacade()->syncStorageQuoteWithStore($quoteSyncRequestTransfer);
     }
 
     /**

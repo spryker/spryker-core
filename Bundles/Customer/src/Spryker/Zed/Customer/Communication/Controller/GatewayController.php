@@ -10,7 +10,6 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -109,21 +108,6 @@ class GatewayController extends AbstractGatewayController
         try {
             return $this->getFacade()
                 ->getCustomer($customerTransfer);
-        } catch (CustomerNotFoundException $e) {
-            return new CustomerTransfer();
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function getCustomerByEmailAndStoreAction(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): CustomerTransfer
-    {
-        try {
-            return $this->getFacade()->getCustomerByEmailAndStore($customerTransfer, $storeTransfer);
         } catch (CustomerNotFoundException $e) {
             return new CustomerTransfer();
         }

@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
 
 class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInterface
@@ -110,8 +109,6 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
     }
 
     /**
-     * @deprecated Use syncStorageQuoteWithStore() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -120,19 +117,6 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/sync-storage-quote', $quoteSyncRequestTransfer);
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function syncStorageQuoteWithStore(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedStub->call('/persistent-cart/gateway/sync-storage-quote-with-store', $quoteSyncRequestTransfer);
 
         return $quoteResponseTransfer;
     }

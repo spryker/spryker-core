@@ -11,11 +11,11 @@ use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Quote\QuoteConfig as SharedQuoteConfig;
 use Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
+use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface;
 
 class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
 {
@@ -30,6 +30,11 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     protected $quoteFacade;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface
      */
     protected $quoteResponseExpander;
@@ -42,27 +47,26 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     /**
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface $quoteMerger
      */
     public function __construct(
         PersistentCartToCartFacadeInterface $cartFacade,
         PersistentCartToQuoteFacadeInterface $quoteFacade,
+        PersistentCartToStoreFacadeInterface $storeFacade,
         QuoteResponseExpanderInterface $quoteResponseExpander,
         QuoteMergerInterface $quoteMerger
     ) {
         $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
+        $this->storeFacade = $storeFacade;
         $this->quoteResponseExpander = $quoteResponseExpander;
         $this->quoteMerger = $quoteMerger;
     }
 
     /**
-     * @deprecated Use syncStorageQuoteWithStore() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
-     *
-     * @throws \Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
@@ -73,36 +77,7 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
 
         $customerTransfer = $quoteSyncRequestTransfer->getCustomerTransfer();
         $quoteTransfer = $quoteSyncRequestTransfer->getQuoteTransfer();
-        $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomer($customerTransfer);
-
-        if ($customerQuoteTransfer->getIsSuccessful()) {
-            $quoteTransfer = $this->mergeQuotes($quoteTransfer, $customerQuoteTransfer->getQuoteTransfer());
-        }
-
-        $quoteTransfer->setCustomer($customerTransfer);
-        if (count($quoteTransfer->getItems())) {
-            $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
-        }
-
-        return $this->quoteResponseExpander->expand($this->saveQuote($quoteTransfer));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @throws \Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function syncStorageQuoteWithStore(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
-    {
-        $this->assertDatabaseStorageStrategy();
-        $this->validateRequest($quoteSyncRequestTransfer);
-
-        $customerTransfer = $quoteSyncRequestTransfer->getCustomerTransfer();
-        $quoteTransfer = $quoteSyncRequestTransfer->getQuoteTransfer();
-        $storeTransfer = $quoteTransfer->getStore();
+        $storeTransfer = $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName());
         $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
 
         if ($customerQuoteTransfer->getIsSuccessful()) {
