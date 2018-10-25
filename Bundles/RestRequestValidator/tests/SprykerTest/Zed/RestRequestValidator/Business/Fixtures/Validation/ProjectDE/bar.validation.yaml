@@ -1,0 +1,11 @@
+endpoint_three:
+  post:
+    stringField:
+    - Regex:
+        pattern: '/\w*/'
+    integerField:
+    - Regex:
+        pattern: '/\d{6}/'
+  patch:
+    booleanField:
+    - IsFalse
