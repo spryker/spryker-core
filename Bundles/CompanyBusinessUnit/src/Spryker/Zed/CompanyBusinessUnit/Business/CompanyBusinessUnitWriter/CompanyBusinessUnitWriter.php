@@ -26,7 +26,6 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     protected const ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE = 'message.business_unit.update.cycle_dependency_error';
 
     protected const MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS = 'message.business_unit.update';
-    protected const MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS = 'message.business_unit.create';
     protected const MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS = 'message.business_unit.delete';
 
     protected const HIERARCHY_CYCLE_CHECK_DEPTH = 1000;
@@ -73,12 +72,6 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
             ->setIsSuccessful(true)
             ->addMessage((new ResponseMessageTransfer())->setText(static::MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS));
 
-        if (!$companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getIdCompanyBusinessUnit()) {
-            $companyBusinessUnitResponseTransfer
-                ->setMessages(new ArrayObject())
-                ->addMessage((new ResponseMessageTransfer())->setText(static::MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS));
-        }
-
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyBusinessUnitResponseTransfer) {
             return $this->executeUpdateTransaction($companyBusinessUnitResponseTransfer);
         });
@@ -121,9 +114,13 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
             return $companyBusinessUnitResponseTransfer;
         }
 
-        $idCompanyBusinessUnit = $companyBusinessUnitResponseTransfer
-            ->getCompanyBusinessUnitTransfer()
-            ->getIdCompanyBusinessUnit();
+        $companyBusinessUnitTransfer = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer();
+
+        $this->pluginExecutor->executePreDeletePlugins($companyBusinessUnitTransfer);
+
+        $companyBusinessUnitResponseTransfer->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer);
+
+        $idCompanyBusinessUnit = $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
 
         $this->entityManager->clearParentBusinessUnit($idCompanyBusinessUnit);
         $this->entityManager->deleteCompanyBusinessUnitById($idCompanyBusinessUnit);
