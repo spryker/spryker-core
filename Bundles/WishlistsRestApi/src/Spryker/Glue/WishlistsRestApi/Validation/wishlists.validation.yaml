@@ -5,9 +5,10 @@ wishlists:
       - Length:
         max: 256
   patch:
-    - NotBlank
-    - Length:
-      max: 256
+    name:
+      - NotBlank
+      - Length:
+        max: 256
 wishlist-items:
   post:
     sku:
