@@ -11,4 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceProductMerchantRelationshipGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP
+     */
+    public const PRICE_DIMENSION_MERCHANT_RELATIONSHIP = 'PRICE_DIMENSION_MERCHANT_RELATIONSHIP';
 }

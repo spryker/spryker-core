@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Plugin\ProductManagement;
 
-use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Form\MerchantRelationshipPriceDimensionForm;
+use Spryker\Zed\PriceProductMerchantRelationshipGui\PriceProductMerchantRelationshipGuiConfig;
 use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -41,7 +41,7 @@ class MerchantRelationshipProductConcreteFormExpanderPlugin extends AbstractPlug
             ->getOptions();
 
         $builder->get(static::FORM_PRICE_DIMENSION)->add(
-            PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP,
+            PriceProductMerchantRelationshipGuiConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP,
             MerchantRelationshipPriceDimensionForm::class,
             $options
         );

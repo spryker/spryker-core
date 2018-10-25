@@ -8,8 +8,8 @@
 namespace Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Form;
 
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\PriceProductMerchantRelationshipGui\PriceProductMerchantRelationshipGuiConfig;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -65,7 +65,7 @@ class MerchantRelationshipPriceDimensionForm extends AbstractType
             'label' => static::FIELD_LABEL_MERCHANT_RELATIONSHIP,
             'attr' => [
                 'template_path' => $this->getTemplatePath(),
-                'data-type' => PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP,
+                'data-type' => PriceProductMerchantRelationshipGuiConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP,
             ],
         ]);
 

@@ -1,8 +1,6 @@
 # PriceProductMerchantRelationshipGui Module
-[![Build Status](https://travis-ci.org/spryker/price-product-merchant-relationship-gui.svg)](https://travis-ci.org/spryker/price-product-merchant-relationship-gui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/price-product-merchant-relationship-gui/badge.svg)](https://coveralls.io/github/spryker/price-product-merchant-relationship-gui)
 
-This module contains database schema and required plugins for specific product prices per merchant relationship. 
+PriceProductMerchantRelationshipGui provides visual interface to manage price product merchant relationships.
 
 ## Installation
 
