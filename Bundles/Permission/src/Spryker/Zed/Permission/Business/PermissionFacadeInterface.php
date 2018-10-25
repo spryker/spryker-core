@@ -43,8 +43,8 @@ interface PermissionFacadeInterface
 
     /**
      * Specification:
-     * - Finds permission plugin stack registered in the permission client dependency provider
-     * - Adds permission plugin stack registered in the permission zed dependency provider
+     * - Finds permission plugin stack registered in the permission Client dependency provider
+     * - Adds permission plugin stack registered in the permission Zed dependency provider
      * - Adds new permission keys to permission table in a DB
      *
      * @api
