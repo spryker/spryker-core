@@ -232,7 +232,7 @@ class GlueControllerFilterPluginTest extends Unit
             Request::METHOD_GET,
             [
                 'page' => [
-                    'offset' => 0,
+                    'offset' => 2,
                     'limit' => 2,
                 ],
             ],
@@ -255,7 +255,7 @@ class GlueControllerFilterPluginTest extends Unit
         $this->assertPaginationKeys($content);
         $this->assertUri($content, RestLinkInterface::LINK_FIRST, 2, 0);
         $this->assertUri($content, RestLinkInterface::LINK_LAST, 2, 18);
-        $this->assertUri($content, RestLinkInterface::LINK_NEXT, 2, 2);
+        $this->assertUri($content, RestLinkInterface::LINK_NEXT, 2, 4);
         $this->assertUri($content, RestLinkInterface::LINK_PREV, 2, 0);
     }
 

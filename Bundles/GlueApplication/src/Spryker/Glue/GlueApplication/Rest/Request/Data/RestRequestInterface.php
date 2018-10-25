@@ -114,4 +114,18 @@ interface RestRequestInterface
      * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface[]
      */
     public function getFiltersByResource(string $resource): array;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
+     *
+     * @return void
+     */
+    public function setPage(PageInterface $page): void;
+
+    /**
+     * @param string[] $excludeParams
+     *
+     * @return string
+     */
+    public function getQueryString(array $excludeParams = []): string;
 }
