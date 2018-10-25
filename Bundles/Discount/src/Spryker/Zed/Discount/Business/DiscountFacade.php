@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
@@ -676,5 +677,22 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function checkDiscountChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void
     {
         $this->getFactory()->createQuoteChangeObserver()->checkDiscountChanges($resultQuoteTransfer, $sourceQuoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateVoucherDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteVoucherDiscountValidator($checkoutResponseTransfer)
+            ->validateVoucherDiscounts($quoteTransfer);
     }
 }
