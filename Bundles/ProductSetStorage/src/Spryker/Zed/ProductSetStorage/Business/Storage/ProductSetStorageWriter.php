@@ -107,8 +107,13 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
         ?SpyProductSetStorage $spyProductSetStorageEntity = null
     ) {
 
-        if (!$spyProductSetLocalizedEntity['SpyProductSet'][static::COL_IS_ACTIVE] && $spyProductSetStorageEntity) {
+        if (!$spyProductSetLocalizedEntity['SpyProductSet'][static::COL_IS_ACTIVE]) {
+            if (!$spyProductSetStorageEntity) {
+                return;
+            }
+
             $spyProductSetStorageEntity->delete();
+
             return;
         }
 
