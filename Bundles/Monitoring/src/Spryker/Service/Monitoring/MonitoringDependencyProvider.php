@@ -33,9 +33,9 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMonitoringExtensions(Container $container): Container
     {
-        $container[static::MONITORING_EXTENSIONS] = function () {
-            return $this->getMonitoringExtensions();
-        };
+        // Usually we make use of a closure here. This is not possible here as we use the MonitoringService in our SessionHandler which are part of the Request object.
+        // In another place we make use of the serialize function which will break if we would use the closure here. This will be fixed soon with an upcoming bug ticket.
+        $container[static::MONITORING_EXTENSIONS] = $this->getMonitoringExtensions();
 
         return $container;
     }
