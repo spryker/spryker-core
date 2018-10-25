@@ -15,7 +15,6 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProd
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductConcreteStorageWriter;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductConcreteStorageWriterInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageDependencyProvider;
 
 /**
@@ -56,7 +55,6 @@ class PriceProductMerchantRelationshipStorageBusinessFactory extends AbstractBus
     {
         return new PriceGrouper(
             $this->getPriceProductFacade(),
-            $this->getStoreFacade(),
             $this->getConfig()
         );
     }
@@ -67,13 +65,5 @@ class PriceProductMerchantRelationshipStorageBusinessFactory extends AbstractBus
     public function getPriceProductFacade(): PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::FACADE_PRICE_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeInterface
-     */
-    public function getStoreFacade(): PriceProductMerchantRelationshipStorageToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::FACADE_STORE);
     }
 }

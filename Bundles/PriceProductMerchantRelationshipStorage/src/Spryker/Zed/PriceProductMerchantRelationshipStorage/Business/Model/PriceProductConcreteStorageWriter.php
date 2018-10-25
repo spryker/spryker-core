@@ -45,6 +45,8 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param array $businessUnitProducts
      *
      * @return void
@@ -72,27 +74,12 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
      */
     public function publishByBusinessUnits(array $businessUnitIds): void
     {
-        foreach ($businessUnitIds as $idCompanyBusinessUnit) {
-            $this->priceProductMerchantRelationshipStorageEntityManager
-                ->deletePriceProductConcreteByCompanyBusinessUnit($idCompanyBusinessUnit);
-        }
+        $this->priceProductMerchantRelationshipStorageEntityManager
+            ->deletePriceProductConcreteByCompanyBusinessUnits($businessUnitIds);
 
         // re-publish remaining prices
         $concreteProducts = $this->priceProductMerchantRelationshipStorageRepository
             ->getProductConcretePriceDataByCompanyBusinessUnitIds($businessUnitIds);
-
-        $this->write($concreteProducts);
-    }
-
-    /**
-     * @param array $priceProductStoreIds
-     *
-     * @return void
-     */
-    public function publishByPriceProductStoreIds(array $priceProductStoreIds): void
-    {
-        $concreteProducts = $this->priceProductMerchantRelationshipStorageRepository
-            ->findPriceProductStoreListByIdsForConcrete($priceProductStoreIds);
 
         $this->write($concreteProducts);
     }

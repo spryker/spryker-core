@@ -19,6 +19,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param array $businessUnitProducts
      *
      * @return void
@@ -30,6 +32,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *  -
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param array $businessUnitProducts
      *

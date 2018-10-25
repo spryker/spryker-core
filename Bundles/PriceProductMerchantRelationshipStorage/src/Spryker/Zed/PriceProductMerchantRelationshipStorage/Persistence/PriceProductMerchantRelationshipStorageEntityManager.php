@@ -224,6 +224,8 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idCompanyBusinessUnit
      *
      * @return void
@@ -241,6 +243,21 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
+     * @param array $businessUnitIds
+     *
+     * @return void
+     */
+    public function deletePriceProductAbstractByCompanyBusinessUnits(
+        array $businessUnitIds
+    ): void {
+        SpyPriceProductAbstractMerchantRelationshipStorageQuery::create()
+            ->filterByFkCompanyBusinessUnit_In($businessUnitIds)
+            ->deleteAll();
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idCompanyBusinessUnit
      *
      * @return void
@@ -255,6 +272,19 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
         foreach ($priceProductConcreteMerchantRelationshipStorageEntities as $priceProductConcreteMerchantRelationshipStorageEntity) {
             $priceProductConcreteMerchantRelationshipStorageEntity->delete();
         }
+    }
+
+    /**
+     * @param array $businessUnitIds
+     *
+     * @return void
+     */
+    public function deletePriceProductConcreteByCompanyBusinessUnits(
+        array $businessUnitIds
+    ): void {
+        SpyPriceProductConcreteMerchantRelationshipStorageQuery::create()
+            ->filterByFkCompanyBusinessUnit_In($businessUnitIds)
+            ->deleteAll();
     }
 
     /**

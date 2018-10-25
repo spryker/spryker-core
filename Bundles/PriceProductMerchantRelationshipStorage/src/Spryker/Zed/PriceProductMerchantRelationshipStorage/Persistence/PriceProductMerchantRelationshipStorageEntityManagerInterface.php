@@ -54,6 +54,8 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
     ): void;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idCompanyBusinessUnit
      *
      * @return void
@@ -63,11 +65,31 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
     ): void;
 
     /**
+     * @param array $businessUnitIds
+     *
+     * @return void
+     */
+    public function deletePriceProductAbstractByCompanyBusinessUnits(
+        array $businessUnitIds
+    ): void;
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idCompanyBusinessUnit
      *
      * @return void
      */
     public function deletePriceProductConcreteByCompanyBusinessUnit(
         int $idCompanyBusinessUnit
+    ): void;
+
+    /**
+     * @param array $businessUnitIds
+     *
+     * @return void
+     */
+    public function deletePriceProductConcreteByCompanyBusinessUnits(
+        array $businessUnitIds
     ): void;
 }

@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade implements PriceProductMerchantRelationshipStorageFacadeInterface
 {
     /**
+     * @deprecated Will be removed without replacement.
      * {@inheritdoc}
      *
      * @api
@@ -30,6 +31,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
     }
 
     /**
+     * @deprecated Will be removed without replacement.
      * {@inheritdoc}
      *
      * @api

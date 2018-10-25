@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
@@ -43,6 +42,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     public const COL_PRODUCT_ABSTRACT_ID_PRODUCT = 'spy_product_abstract.id_product_abstract';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param array $priceProductStoreIds
      *
      * @return array
@@ -50,11 +51,13 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     public function findPriceProductStoreListByIdsForConcrete(array $priceProductStoreIds): array
     {
         $priceProductStoreQuery = $this->queryPriceProductStoreByIds($priceProductStoreIds);
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery */
         $priceProductStoreQuery = $this->queryProducts($priceProductStoreQuery)
+            ->joinWithStore()
             ->select([
                 static::COL_PRODUCT_CONCRETE_SKU,
                 static::COL_PRODUCT_CONCRETE_ID_PRODUCT,
-                PriceProductMerchantRelationshipStorageConstants::COL_PRICE_PRODUCT_STORE_FK_STORE,
+                PriceProductMerchantRelationshipStorageConstants::COL_STORE_NAME,
                 SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP,
             ])
             ->withColumn(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT, MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT)
@@ -65,7 +68,9 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @deprecated
+     * @module Store
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param array $priceProductStoreIds
      *
@@ -74,11 +79,13 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     public function findPriceProductStoreListByIdsForAbstract(array $priceProductStoreIds): array
     {
         $priceProductStoreQuery = $this->queryPriceProductStoreByIds($priceProductStoreIds);
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery */
         $priceProductStoreQuery = $this->queryProductsAbstract($priceProductStoreQuery)
+            ->joinWithStore()
             ->select([
                 static::COL_PRODUCT_ABSTRACT_SKU,
                 static::COL_PRODUCT_ABSTRACT_ID_PRODUCT,
-                PriceProductMerchantRelationshipStorageConstants::COL_PRICE_PRODUCT_STORE_FK_STORE,
+                PriceProductMerchantRelationshipStorageConstants::COL_STORE_NAME,
                 SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP,
             ])
             ->withColumn(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT, MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT)
@@ -89,6 +96,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
+     * @module Store
+     *
      * Returns array in format:
      * [
      *    [sku, id_product_abstract, id_store, id_merchant_relationship_id, id_company_business_unit],
@@ -102,11 +111,13 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     public function getProductAbstractPriceDataByCompanyBusinessUnitIds(array $businessUnitIds): array
     {
         $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitIds($businessUnitIds);
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery */
         $priceProductStoreQuery = $this->queryProductsAbstract($priceProductStoreQuery)
+            ->joinWithStore()
             ->select([
                 static::COL_PRODUCT_ABSTRACT_SKU,
                 static::COL_PRODUCT_ABSTRACT_ID_PRODUCT,
-                SpyPriceProductStoreTableMap::COL_FK_STORE,
+                PriceProductMerchantRelationshipStorageConstants::COL_STORE_NAME,
                 SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP,
             ])
             ->withColumn(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT, MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT)
@@ -117,6 +128,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
+     * @module Store
+     *
      * Returns array in format:
      * [
      *    [sku, id_product, id_store, id_merchant_relationship_id, id_company_business_unit],
@@ -130,11 +143,13 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     public function getProductConcretePriceDataByCompanyBusinessUnitIds(array $businessUnitIds): array
     {
         $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitIds($businessUnitIds);
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery */
         $priceProductStoreQuery = $this->queryProducts($priceProductStoreQuery)
+            ->joinWithStore()
             ->select([
                 static::COL_PRODUCT_CONCRETE_SKU,
                 static::COL_PRODUCT_CONCRETE_ID_PRODUCT,
-                SpyPriceProductStoreTableMap::COL_FK_STORE,
+                PriceProductMerchantRelationshipStorageConstants::COL_STORE_NAME,
                 SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP,
             ])
             ->withColumn(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT, MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT)
@@ -223,7 +238,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      */
     protected function queryPriceProductStoreByCompanyBusinessUnitIds(array $businessUnitIds): SpyPriceProductStoreQuery
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery */
+        $priceProductStoreQuery = $this->getFactory()
             ->getPropelPriceProductStoreQuery()
             ->joinWithPriceProductMerchantRelationship()
             ->addJoin(
@@ -236,6 +252,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
                 $businessUnitIds,
                 Criteria::IN
             )->combine(['cond1']);
+
+        return $priceProductStoreQuery;
     }
 
     /**
@@ -245,18 +263,23 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      */
     protected function queryPriceProductStoreByIds(array $priceProductStoreIds): SpyPriceProductStoreQuery
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery */
+        $priceProductStoreQuery = $this->getFactory()
             ->getPropelPriceProductStoreQuery()
+            ->filterByIdPriceProductStore($priceProductStoreIds, Criteria::IN)
             ->joinWithPriceProductMerchantRelationship()
             ->addJoin(
                 SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP,
                 SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_MERCHANT_RELATIONSHIP,
                 Criteria::LEFT_JOIN
-            )
-            ->filterByIdPriceProductStore($priceProductStoreIds, Criteria::IN);
+            );
+
+        return $priceProductStoreQuery;
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idMerchantRelationship
      *
      * @return array
@@ -265,15 +288,59 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     {
         return $this->getFactory()
             ->getPropelMerchantRelationshipToCompanyBusinessUnitQuery()
+            ->filterByFkMerchantRelationship($idMerchantRelationship)
             ->select([
                 SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
             ])
-            ->filterByFkMerchantRelationship($idMerchantRelationship)
             ->find()
             ->toArray();
     }
 
     /**
+     * @param array $priceProductMerchantRelationshipIds
+     *
+     * @return array
+     */
+    public function findCompanyBusinessUnitIdsByPriceProductMerchantRelationshipIdsForConcreteProducts(array $priceProductMerchantRelationshipIds): array
+    {
+        return $this->getFactory()
+            ->getPropelPriceProductMerchantRelationshipQuery()
+            ->useMerchantRelationshipQuery()
+                ->innerJoinWithSpyMerchantRelationshipToCompanyBusinessUnit()
+            ->endUse()
+            ->filterByIdPriceProductMerchantRelationship_In($priceProductMerchantRelationshipIds)
+            ->filterByFkProduct(null, Criteria::ISNOTNULL)
+            ->select([
+                SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
+            ])->groupBy(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT)
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param array $priceProductMerchantRelationshipIds
+     *
+     * @return array
+     */
+    public function findCompanyBusinessUnitIdsByPriceProductMerchantRelationshipIdsForAbstractProducts(array $priceProductMerchantRelationshipIds): array
+    {
+        return $this->getFactory()
+            ->getPropelPriceProductMerchantRelationshipQuery()
+            ->useMerchantRelationshipQuery()
+            ->innerJoinWithSpyMerchantRelationshipToCompanyBusinessUnit()
+            ->endUse()
+            ->filterByIdPriceProductMerchantRelationship_In($priceProductMerchantRelationshipIds)
+            ->filterByFkProductAbstract(null, Criteria::ISNOTNULL)
+            ->select([
+                SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
+            ])->groupBy(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT)
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $idPriceProductMerchantRelationship
      *
      * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship|null

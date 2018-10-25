@@ -29,9 +29,9 @@ class PriceProductMerchantRelationshipStorageConstants
     public const PRICE_PRODUCT_CONCRETE_MERCHANT_RELATIONSHIP_RESOURCE_NAME = 'price_product_concrete_merchant_relationship';
 
     /**
-     * @uses \Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap::COL_FK_STORE
+     * @uses \Orm\Zed\Store\Persistence\Map\SpyStoreTableMap::COL_NAME
      */
-    public const COL_PRICE_PRODUCT_STORE_FK_STORE = 'spy_price_product_store.fk_store';
+    public const COL_STORE_NAME = 'spy_store.name';
 
     /**
      * @uses \Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP
