@@ -26,7 +26,8 @@ class PriceVolumeFormType extends AbstractType
     public const FIELD_QUANTITY = 'quantity';
     protected const FIELD_NET_PRICE = 'net_price';
     protected const FIELD_GROSS_PRICE = 'gross_price';
-    protected const MINIMUM_QUANTITY = 2;
+
+    public const MINIMUM_QUANTITY = 1;
     protected const MINIMUM_PRICE_VALUE = 0;
     protected const MESSAGE_QUANTITY_ERROR = 'The quantity you have entered is invalid.';
 
@@ -69,7 +70,7 @@ class PriceVolumeFormType extends AbstractType
             'constraints' => [
                 new Required(),
                 new GreaterThanOrEqual(['value' => static::MINIMUM_QUANTITY, 'message' => static::MESSAGE_QUANTITY_ERROR]),
-                new Regex(['pattern' => '/[\d]+/', 'message' => static::MESSAGE_QUANTITY_ERROR]),
+//                new Regex(['pattern' => '/[\d]+/', 'message' => static::MESSAGE_QUANTITY_ERROR]),
             ],
         ]);
 
@@ -138,7 +139,7 @@ class PriceVolumeFormType extends AbstractType
                 return $priceValue;
             },
             function ($priceValue) {
-                return (int)$priceValue;
+                return $priceValue !== null ? (int)$priceValue : null;
             }
         );
     }

@@ -163,17 +163,36 @@ class PriceVolumeCollectionFormType extends AbstractType
                 return;
             }
 
-            if (!$priceProductVolumeItemTransfer->getQuantity()) {
-                $context->addViolation('Quantity Should not be empty.');
+            if ($priceProductVolumeItemTransfer->getQuantity() === null) {
+                $context
+                    ->buildViolation('Quantity should not be empty.')
+                    ->atPath(PriceVolumeFormType::FIELD_QUANTITY)
+                    ->addViolation();
+            }
+
+            if ($priceProductVolumeItemTransfer->getQuantity() && $priceProductVolumeItemTransfer->getQuantity() < 2) {
+                $context
+                    ->buildViolation('Quantity should be greater than 1.')
+                    ->atPath(PriceVolumeFormType::FIELD_QUANTITY)
+                    ->addViolation();
             }
 
             if (!$priceProductVolumeItemTransfer->getNetPrice() && !$priceProductVolumeItemTransfer->getGrossPrice()) {
-                $context->addViolation(sprintf('Set up net or gross price for "quantity": %d.', $priceProductVolumeItemTransfer->getQuantity()));
+
+                if ($priceProductVolumeItemTransfer->getQuantity() > PriceVolumeFormType::MINIMUM_QUANTITY) {
+                    $context
+                        ->buildViolation(sprintf('Set up net or gross price for "quantity": %d.', $priceProductVolumeItemTransfer->getQuantity()))
+                        ->atPath(PriceVolumeFormType::FIELD_QUANTITY)
+                        ->addViolation();
+                }
             }
 
             foreach ($savedPriceProductVolumeItemTransfers as $savedPriceProductVolumeItemTransfer) {
                 if ($priceProductVolumeItemTransfer->getQuantity() === $savedPriceProductVolumeItemTransfer->getQuantity()) {
-                    $context->addViolation(sprintf('Quantity "%d" is duplicate.', $priceProductVolumeItemTransfer->getQuantity()));
+                    $context
+                        ->buildViolation(sprintf('Quantity "%d" already exists.', $priceProductVolumeItemTransfer->getQuantity()))
+                        ->atPath(PriceVolumeFormType::FIELD_QUANTITY)
+                        ->addViolation();
                 }
             }
 
