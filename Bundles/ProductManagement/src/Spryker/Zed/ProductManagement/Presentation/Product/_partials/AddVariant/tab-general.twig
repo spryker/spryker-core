@@ -1,0 +1,58 @@
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Add General Information</h3>
+        <p>Below the name and description for your product can be edited for different locales (in different languages).</p>
+        <p><i>Note: The SKU is not editable after saving anymore.</i></p>
+    {% endfilter %}
+</div>
+
+{{ form_row(form.sku, { 'id': 'sku-input' }) }}
+
+{% if form.sku_autogenerate_checkbox is defined %}
+    {{ form_row(form.sku_autogenerate_checkbox, { 'id': 'sku-autogenerate-checkbox-input' }) }}
+{% endif %}
+
+
+
+{% if form.container_product_concrete_super_attributes is defined and form.container_product_concrete_super_attributes.form_product_concrete_super_attributes|length %}
+    {{ form_label(form.container_product_concrete_super_attributes.form_product_concrete_super_attributes) }}
+    {% for attributeForm in form.container_product_concrete_super_attributes.form_product_concrete_super_attributes %}
+        {{ form_label(attributeForm) }}
+        {{ form_widget(attributeForm) }}
+        {% if attributeForm.vars.errors|length %}
+            <div class="has-error">
+                {{ form_errors(attributeForm) }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% for localeTransfer in localeCollection %}
+    {% set formKey = 'general_' ~ localeTransfer.localeName %}
+
+    {% if form[formKey] is defined %}
+
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+            {% block content %}
+                {% for input in form[formKey] %}
+                    <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                        {{ form_label(input) }}
+                        {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
+                        {{ form_errors(input) }}
+                    </div>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endfor %}
+
+{{ form_row(form.valid_from) }}
+{{ form_row(form.valid_to) }}
+{# @uses CompanySupplier #}
+{% if form.companySuppliers is defined %}
+    {{ form_row(form.companySuppliers) }}
+{% endif %}
+
+{% block footer_js %}
+    <script src="/assets/js/spryker-zed-productmanagement-concrete-add.js"></script>
+{% endblock %}

@@ -15,6 +15,13 @@ interface CatalogSearchRestApiToPriceClientInterface
     public function getCurrentPriceMode();
 
     /**
+     * @param string $priceMode
+     *
+     * @return void
+     */
+    public function switchPriceMode(string $priceMode): void;
+
+    /**
      * @return string
      */
     public function getGrossPriceModeIdentifier();
@@ -23,4 +30,9 @@ interface CatalogSearchRestApiToPriceClientInterface
      * @return string
      */
     public function getNetPriceModeIdentifier();
+
+    /**
+     * @return string[]
+     */
+    public function getPriceModes();
 }

@@ -18,6 +18,10 @@
         <property name="detail" type="string" />
     </transfer>
 
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
     <transfer name="RestVersion">
         <property name="major" type="int" />
         <property name="minor" type="int" />

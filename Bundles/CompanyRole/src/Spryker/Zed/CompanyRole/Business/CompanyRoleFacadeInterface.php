@@ -191,7 +191,21 @@ interface CompanyRoleFacadeInterface
      *
      * @api
      *
+     * @deprecated Use CompanyRoleFacadeInterface::findDefaultCompanyRoleByIdCompany() instead.
+     *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
     public function getDefaultCompanyRole(): CompanyRoleTransfer;
+
+    /**
+     * Specification:
+     * - Finds default company role for a given company by company id.
+     *
+     * @api
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findDefaultCompanyRoleByIdCompany(int $idCompany): ?CompanyRoleTransfer;
 }
