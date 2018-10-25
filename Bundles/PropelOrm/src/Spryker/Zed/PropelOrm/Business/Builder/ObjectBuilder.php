@@ -13,7 +13,9 @@ namespace Spryker\Zed\PropelOrm\Business\Builder;
 
 use Propel\Generator\Builder\Om\ObjectBuilder as PropelObjectBuilder;
 use Propel\Generator\Model\Column;
+use Propel\Generator\Model\ForeignKey;
 use Propel\Generator\Model\IdMethod;
+use Propel\Generator\Model\MappingModel;
 use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\PlatformInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -24,6 +26,8 @@ use Spryker\Shared\PropelOrm\PropelOrmConstants;
 
 class ObjectBuilder extends PropelObjectBuilder
 {
+    protected const COMMENT_DOC_BLOCK_NULLABLE_PART = '|null';
+
     /**
      * @param \Propel\Generator\Model\Table $table
      */
@@ -346,5 +350,216 @@ class ObjectBuilder extends PropelObjectBuilder
         return \$result;
     }
 ";
+    }
+
+    /**
+     * Adds the accessor (getter) method for getting an fkey related object.
+     *
+     * @param string $script The script will be modified in this method.
+     * @param \Propel\Generator\Model\ForeignKey $fk
+     *
+     * @return void
+     */
+    protected function addFKAccessor(&$script, ForeignKey $fk)
+    {
+        $table = $this->getTable();
+
+        $varName = $this->getFKVarName($fk);
+
+        $fkQueryBuilder = $this->getNewStubQueryBuilder($fk->getForeignTable());
+        $fkObjectBuilder = $this->getNewObjectBuilder($fk->getForeignTable())->getStubObjectBuilder();
+        $returnDesc = '';
+        if ($interface = $fk->getInterface()) {
+            $className = $this->declareClass($interface);
+        } else {
+            $className = $this->getClassNameFromBuilder($fkObjectBuilder); // get the ClassName that has maybe a prefix
+            $returnDesc = "The associated $className object.";
+        }
+
+        $and = '';
+        $conditional = '';
+        $localColumns = []; // foreign key local attributes names
+
+        // If the related columns are a primary key on the foreign table
+        // then use findPk() instead of doSelect() to take advantage
+        // of instance pooling
+        $findPk = $fk->isForeignPrimaryKey();
+
+        foreach ($fk->getMapping() as $mapping) {
+            [$column, $rightValueOrColumn] = $mapping;
+
+            $cptype = $column->getPhpType();
+            $clo = $column->getLowercasedName();
+
+            if ($rightValueOrColumn instanceof Column) {
+                $localColumns[$rightValueOrColumn->getPosition()] = '$this->' . $clo;
+
+                if ($cptype == "int" || $cptype == "float" || $cptype == "double") {
+                    $conditional .= $and . "\$this->" . $clo . " != 0";
+                } elseif ($cptype == "string") {
+                    $conditional .= $and . "(\$this->" . $clo . " !== \"\" && \$this->" . $clo . " !== null)";
+                } else {
+                    $conditional .= $and . "\$this->" . $clo . " !== null";
+                }
+            } else {
+                $val = var_export($rightValueOrColumn, true);
+                $conditional .= $and . "\$this->" . $clo . " === " . $val;
+            }
+
+            $and = " && ";
+        }
+
+        ksort($localColumns); // restoring the order of the foreign PK
+        $localColumns = count($localColumns) > 1 ?
+            ('array(' . implode(', ', $localColumns) . ')') : reset($localColumns);
+
+        $script .= "
+
+    /**
+     * Get the associated $className object
+     *
+     * @param  ConnectionInterface \$con Optional Connection object.
+     * @return " . $this->getReturnTypeStringForModel($fk, $className) . " $returnDesc
+     * @throws PropelException
+     */
+    public function get" . $this->getFKPhpNameAffix($fk, false) . "(ConnectionInterface \$con = null)
+    {";
+        $script .= "
+        if (\$this->$varName === null && ($conditional)) {";
+        if ($findPk) {
+            $script .= "
+            \$this->$varName = " . $this->getClassNameFromBuilder($fkQueryBuilder) . "::create()->findPk($localColumns, \$con);";
+        } else {
+            $script .= "
+            \$this->$varName = " . $this->getClassNameFromBuilder($fkQueryBuilder) . "::create()
+                ->filterBy" . $this->getRefFKPhpNameAffix($fk, false) . "(\$this) // here
+                ->findOne(\$con);";
+        }
+        if ($fk->isLocalPrimaryKey()) {
+            $script .= "
+            // Because this foreign key represents a one-to-one relationship, we will create a bi-directional association.
+            \$this->{$varName}->set" . $this->getRefFKPhpNameAffix($fk, false) . "(\$this);";
+        } else {
+            $script .= "
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                \$this->{$varName}->add" . $this->getRefFKPhpNameAffix($fk, true) . "(\$this);
+             */";
+        }
+
+        $script .= "
+        }
+
+        return \$this->$varName;
+    }
+";
+    }
+
+    /**
+     * Add the comment for a default accessor method (a getter).
+     *
+     * @param string $script
+     * @param \Propel\Generator\Model\Column $column
+     *
+     * @return void
+     */
+    public function addDefaultAccessorComment(&$script, Column $column)
+    {
+        $clo = $column->getLowercasedName();
+        $returnType = $column->getTypeHint() ?: ($column->getPhpType() ?: null);
+
+        $script .= "
+    /**
+     * Get the [$clo] column value.
+     * " . $column->getDescription();
+        if ($column->isLazyLoad()) {
+            $script .= "
+     * @param      ConnectionInterface \$con An optional ConnectionInterface connection to use for fetching this lazy-loaded column.";
+        }
+        $script .= "
+     * @return " . $this->getReturnTypeStringForModel($column, $returnType) . "
+     */";
+    }
+
+    /**
+     * Add the comment for an enum accessor method.
+     *
+     * @param string $script
+     * @param \Propel\Generator\Model\Column $column
+     *
+     * @return void
+     */
+    public function addEnumAccessorComment(&$script, Column $column)
+    {
+        $clo = $column->getLowercasedName();
+
+        $script .= "
+    /**
+     * Get the [$clo] column value.
+     * " . $column->getDescription();
+        if ($column->isLazyLoad()) {
+            $script .= "
+     * @param      ConnectionInterface An optional ConnectionInterface connection to use for fetching this lazy-loaded column.";
+        }
+        $script .= "
+     * @return " . $this->getReturnTypeStringForModel($column, 'string') . "
+     * @throws \\Propel\\Runtime\\Exception\\PropelException
+     */";
+    }
+
+    /**
+     * @param \Propel\Generator\Model\MappingModel $model
+     * @param string $defaultValue
+     *
+     * @return string
+     */
+    protected function getReturnTypeStringForModel(MappingModel $model, string $defaultValue): string
+    {
+        if ($defaultValue) {
+            return $defaultValue . $this->getAdditionalReturnTypeForModel($model);
+        }
+
+        return 'mixed';
+    }
+
+    /**
+     * @param \Propel\Generator\Model\MappingModel $model
+     *
+     * @return string|null
+     */
+    protected function getAdditionalReturnTypeForModel(MappingModel $model): ?string
+    {
+        if ($model instanceof ForeignKey) {
+            return $this->getAdditionalReturnTypeForForeignKey($model);
+        }
+
+        if ($model instanceof Column) {
+            return $this->getAdditionalReturnTypeForColumn($model);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Propel\Generator\Model\ForeignKey $foreignKey
+     *
+     * @return string|null
+     */
+    protected function getAdditionalReturnTypeForForeignKey(ForeignKey $foreignKey): ?string
+    {
+        return $foreignKey->isAtLeastOneLocalColumnRequired() ? null : static::COMMENT_DOC_BLOCK_NULLABLE_PART;
+    }
+
+    /**
+     * @param \Propel\Generator\Model\Column $column
+     *
+     * @return string|null
+     */
+    protected function getAdditionalReturnTypeForColumn(Column $column): ?string
+    {
+        return $column->isNotNull() ? null : static::COMMENT_DOC_BLOCK_NULLABLE_PART;
     }
 }
