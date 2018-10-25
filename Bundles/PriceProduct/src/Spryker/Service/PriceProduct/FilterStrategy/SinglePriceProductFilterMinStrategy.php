@@ -37,7 +37,7 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
             }
         }
 
-        if ($minPriceProductTransfer && !$this->isMinHasPriceForMode($minPriceProductTransfer, $priceProductFilterTransfer->getPriceMode())) {
+        if ($minPriceProductTransfer && !$this->isMinimumPriceHasValueForPriceMode($minPriceProductTransfer, $priceProductFilterTransfer->getPriceMode())) {
             return null;
         }
 
@@ -82,22 +82,14 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
      *
      * @return bool
      */
-    protected function isMinHasPriceForMode(PriceProductTransfer $minPriceProductTransfer, string $priceMode): bool
+    protected function isMinimumPriceHasValueForPriceMode(PriceProductTransfer $minPriceProductTransfer, string $priceMode): bool
     {
         $moneyValueTransfer = $minPriceProductTransfer->getMoneyValue();
 
         if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
-            if ($moneyValueTransfer->getGrossAmount() === null) {
-                return false;
-            }
-
-            return true;
+            return $moneyValueTransfer->getGrossAmount() !== null;
         }
 
-        if ($moneyValueTransfer->getNetAmount() === null) {
-            return false;
-        }
-
-        return true;
+        return $moneyValueTransfer->getNetAmount() !== null;
     }
 }
