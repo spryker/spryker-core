@@ -61,13 +61,8 @@ addresses:
       - NotBlank
       - Length:
         min: 3
-    country:
-      - Expression:
-        expression: 'this.iso2Code || value'
     iso2Code:
       - NotBlank
-      - Expression:
-        expression: 'this.country || value'
   patch:
     salutation:
       - NotBlank
@@ -87,13 +82,8 @@ addresses:
       - NotBlank
       - Length:
         min: 3
-    country:
-      - Expression:
-        expression: 'this.iso2Code || value'
     iso2Code:
       - NotBlank
-      - Expression:
-        expression: 'this.country || value'
 
 customer-password:
   patch:
