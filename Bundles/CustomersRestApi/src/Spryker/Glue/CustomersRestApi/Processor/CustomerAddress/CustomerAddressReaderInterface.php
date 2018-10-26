@@ -12,10 +12,9 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 interface CustomerAddressReaderInterface
 {
     /**
-     * @param string $customerReference
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function getAddressesByCustomerReference(string $customerReference, RestResourceInterface $resource): RestResourceInterface;
+    public function getAddressesByCustomerReference(RestResourceInterface $resource): RestResourceInterface;
 }
