@@ -19,12 +19,15 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 
 class SetupConfig extends AbstractBundleConfig
 {
+    protected const PATH_FOR_JOBS_PHP = APPLICATION_ROOT_DIR . '/config/Zed/cronjobs/jobs.php';
+    protected const CRONJOBS_CONFIG_PATH = APPLICATION_ROOT_DIR . '/config/Zed/cronjobs/cron.conf';
+
     /**
      * @return string
      */
     public function getPathForJobsPHP(): string
     {
-        return $this->get(SetupConstants::CRONJOBS_PATH);
+        return static::PATH_FOR_JOBS_PHP;
     }
 
     /**
@@ -94,8 +97,8 @@ class SetupConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getJobsConfigPath(): string
+    public function getCronjobsConfigPath(): string
     {
-        return $this->get(SetupConstants::CRONJOBS_CONFIG_PATH);
+        return static::CRONJOBS_CONFIG_PATH;
     }
 }

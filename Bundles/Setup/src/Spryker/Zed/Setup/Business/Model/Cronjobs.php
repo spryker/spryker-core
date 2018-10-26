@@ -451,7 +451,7 @@ class Cronjobs
         $environment = Environment::getInstance();
         $environment_name = $environment->getEnvironment();
 
-        $cronjobsConfigPath = $this->config->getJobsConfigPath();
+        $cronjobsConfigPath = $this->config->getCronjobsConfigPath();
 
         if ($environment->isNotDevelopment()) {
             return "<command>[ -f " . APPLICATION_ROOT_DIR . "/deploy/vars ] &amp;&amp; . " . APPLICATION_ROOT_DIR . "/deploy/vars
