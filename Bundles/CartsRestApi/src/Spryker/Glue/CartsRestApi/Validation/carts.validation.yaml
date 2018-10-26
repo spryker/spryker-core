@@ -18,8 +18,6 @@ items:
       - Type:
         type: numeric
   patch:
-    groupKey:
-      - NotBlank
     quantity:
       - NotBlank
       - Type:
@@ -34,8 +32,6 @@ guest-cart-items:
       - Type:
         type: numeric
   patch:
-    groupKey:
-      - NotBlank
     quantity:
       - NotBlank
       - Type:
