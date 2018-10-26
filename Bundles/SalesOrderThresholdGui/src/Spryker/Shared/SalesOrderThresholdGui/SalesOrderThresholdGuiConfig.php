@@ -37,4 +37,7 @@ interface SalesOrderThresholdGuiConfig
      * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_STRATEGY_KEY_SOFT_FLEXIBLE_FEE
      */
     public const SOFT_TYPE_STRATEGY_FLEXIBLE = 'soft-minimum-threshold-flexible-fee';
+
+    public const VALUE_AMOUNT_LIMIT = 10000000000;
+
 }

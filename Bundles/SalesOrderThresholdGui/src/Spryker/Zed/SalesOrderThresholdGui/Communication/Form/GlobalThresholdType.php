@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form;
 
+use Spryker\Shared\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -48,7 +49,6 @@ class GlobalThresholdType extends AbstractType
     public const VALIDATION_GROUP_GENERAL = 'validation_group_general';
 
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
-    protected const VALUE_AMOUNT_LIMIT = 10000000000;
     protected const ERROR_MESSAGE_VALUE = 'Invalid Value.';
     protected const ERROR_MESSAGE_VALUE_EXCEEDED_LIMIT = 'Value exceed allowed amount';
 
@@ -314,7 +314,7 @@ class GlobalThresholdType extends AbstractType
     {
         return new Callback([
             'callback' => function ($amount, ExecutionContextInterface $context) {
-                if ($amount >= static::VALUE_AMOUNT_LIMIT) {
+                if ($amount >= SalesOrderThresholdGuiConfig::VALUE_AMOUNT_LIMIT) {
                     $context->addViolation(static::ERROR_MESSAGE_VALUE_EXCEEDED_LIMIT);
                 }
             },
