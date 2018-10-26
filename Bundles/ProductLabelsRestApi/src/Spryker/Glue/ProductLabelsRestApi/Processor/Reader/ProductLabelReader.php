@@ -81,14 +81,15 @@ class ProductLabelReader implements ProductLabelReaderInterface
         if (count($labelTransfers) < 1) {
             return $this->addProductLabelNotFoundErrorToRestResponse($restResponse);
         }
+        $labelTransfer = $labelTransfers[0];
 
         $restProductLabelAttributesTransfer = $this
             ->productLabelMapper
-            ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer($labelTransfers[0]);
+            ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer($labelTransfer);
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,
-            (string)$labelTransfers[0]->getIdProductLabel(),
+            (string)$labelTransfer->getIdProductLabel(),
             $restProductLabelAttributesTransfer
         );
 
