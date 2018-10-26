@@ -51,14 +51,21 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
      */
     public function publishByBusinessUnits(array $businessUnitIds): void
     {
-        $this->priceProductMerchantRelationshipStorageEntityManager
-            ->deletePriceProductAbstractByCompanyBusinessUnits($businessUnitIds);
-
-        // re-publish remaining prices
-        $abstractProducts = $this->priceProductMerchantRelationshipStorageRepository
+        $productAbstracts = $this->priceProductMerchantRelationshipStorageRepository
             ->getProductAbstractPriceDataByCompanyBusinessUnitIds($businessUnitIds);
 
-        $this->write($abstractProducts);
+        $businessUnitsProductAbstractIds = [];
+        foreach ($productAbstracts as $productAbstract) {
+            $businessUnitId = $productAbstract[MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT];
+            $businessUnitsProductAbstractIds[$businessUnitId][] = $productAbstract[PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_ABSTRACT_ID_PRODUCT];
+        }
+
+        foreach ($businessUnitsProductAbstractIds as $businessUnitId => $productAbstractIds) {
+            $this->priceProductMerchantRelationshipStorageEntityManager
+                ->cleanupPriceProductAbstractByCompanyBusinessUnit($businessUnitId, $productAbstractIds);
+        }
+
+        $this->write($productAbstracts);
     }
 
     /**
@@ -70,18 +77,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
      */
     public function publishByBusinessUnitProducts(array $businessUnitProducts): void
     {
-        foreach ($businessUnitProducts as $idCompanyBusinessUnit => $productAbstractIds) {
-            foreach ($productAbstractIds as $idProductAbstract) {
-                $this->priceProductMerchantRelationshipStorageEntityManager
-                    ->deletePriceProductAbstractByCompanyBusinessUnitAndIdProductAbstract($idCompanyBusinessUnit, $idProductAbstract);
-            }
-        }
-
-        // re-publish remaining prices
-        $abstractProducts = $this->priceProductMerchantRelationshipStorageRepository
-            ->getProductAbstractPriceDataByCompanyBusinessUnitIds(array_keys($businessUnitProducts));
-
-        $this->write($abstractProducts);
+        $this->publishByBusinessUnits(array_keys($businessUnitProducts));
     }
 
     /**
@@ -93,9 +89,9 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     {
         $productsGroupedByIdCompanyBusinessUnit = $this->groupProductsByIdCompanyBusinessUnit($productAbstracts);
 
-        foreach ($productsGroupedByIdCompanyBusinessUnit as $idCompanyBusinessUnit => $abstractProducts) {
+        foreach ($productsGroupedByIdCompanyBusinessUnit as $idCompanyBusinessUnit => $productAbstracts) {
             $priceProductMerchantRelationshipStorageTransfers = $this->priceGrouper->getGroupedPrices(
-                $abstractProducts,
+                $productAbstracts,
                 PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_ABSTRACT_ID_PRODUCT,
                 PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_ABSTRACT_SKU
             );
@@ -105,7 +101,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
             }
 
             $productAbstractIds = array_column(
-                $abstractProducts,
+                $productAbstracts,
                 PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_ABSTRACT_ID_PRODUCT
             );
             $priceProductMerchantRelationshipStorageEntityMap = $this->priceProductMerchantRelationshipStorageRepository

@@ -53,18 +53,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
      */
     public function publishByBusinessUnitProducts(array $businessUnitProducts): void
     {
-        foreach ($businessUnitProducts as $idCompanyBusinessUnit => $productIds) {
-            foreach ($productIds as $idProduct) {
-                $this->priceProductMerchantRelationshipStorageEntityManager
-                    ->deletePriceProductConcreteByCompanyBusinessUnitAndIdProduct($idCompanyBusinessUnit, $idProduct);
-            }
-        }
-
-        // re-publish remaining for BU prices
-        $concreteProducts = $this->priceProductMerchantRelationshipStorageRepository
-            ->getProductConcretePriceDataByCompanyBusinessUnitIds(array_keys($businessUnitProducts));
-
-        $this->write($concreteProducts);
+        $this->publishByBusinessUnits(array_keys($businessUnitProducts));
     }
 
     /**
@@ -74,14 +63,21 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
      */
     public function publishByBusinessUnits(array $businessUnitIds): void
     {
-        $this->priceProductMerchantRelationshipStorageEntityManager
-            ->deletePriceProductConcreteByCompanyBusinessUnits($businessUnitIds);
-
-        // re-publish remaining prices
-        $concreteProducts = $this->priceProductMerchantRelationshipStorageRepository
+        $productConcretes = $this->priceProductMerchantRelationshipStorageRepository
             ->getProductConcretePriceDataByCompanyBusinessUnitIds($businessUnitIds);
 
-        $this->write($concreteProducts);
+        $businessUnitsProductConcreteIds = [];
+        foreach ($productConcretes as $productConcrete) {
+            $businessUnitId = $productConcrete[MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT];
+            $businessUnitsProductConcreteIds[$businessUnitId][] = $productConcrete[PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_CONCRETE_ID_PRODUCT];
+        }
+
+        foreach ($businessUnitsProductConcreteIds as $businessUnitId => $productConcreteIds) {
+            $this->priceProductMerchantRelationshipStorageEntityManager
+                ->cleanupPriceProductConcreteByCompanyBusinessUnit($businessUnitId, $productConcreteIds);
+        }
+
+        $this->write($productConcretes);
     }
 
     /**
@@ -93,9 +89,9 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     {
         $productsGroupedByIdCompanyBusinessUnit = $this->groupProductsByIdCompanyBusinessUnit($productConcretes);
 
-        foreach ($productsGroupedByIdCompanyBusinessUnit as $idCompanyBusinessUnit => $concreteProducts) {
+        foreach ($productsGroupedByIdCompanyBusinessUnit as $idCompanyBusinessUnit => $productConcretes) {
             $groupedPrices = $this->priceGrouper->getGroupedPrices(
-                $concreteProducts,
+                $productConcretes,
                 PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_CONCRETE_ID_PRODUCT,
                 PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_CONCRETE_SKU
             );
@@ -105,7 +101,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
             }
 
             $productConcreteIds = array_column(
-                $concreteProducts,
+                $productConcretes,
                 PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_CONCRETE_ID_PRODUCT
             );
             $priceProductMerchantRelationshipStorageEntityMap = $this->priceProductMerchantRelationshipStorageRepository

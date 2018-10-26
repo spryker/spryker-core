@@ -12,6 +12,7 @@ use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductA
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorageQuery;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorageQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
@@ -184,6 +185,8 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idCompanyBusinessUnit
      * @param int $idProductAbstract
      *
@@ -204,6 +207,8 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idCompanyBusinessUnit
      * @param int $idProduct
      *
@@ -243,15 +248,18 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @param array $businessUnitIds
+     * @param int $businessUnitId
+     * @param array $abstractProductIds
      *
      * @return void
      */
-    public function deletePriceProductAbstractByCompanyBusinessUnits(
-        array $businessUnitIds
+    public function cleanupPriceProductAbstractByCompanyBusinessUnit(
+        int $businessUnitId,
+        array $abstractProductIds
     ): void {
         SpyPriceProductAbstractMerchantRelationshipStorageQuery::create()
-            ->filterByFkCompanyBusinessUnit_In($businessUnitIds)
+            ->filterByFkCompanyBusinessUnit($businessUnitId)
+            ->filterByFkProductAbstract($abstractProductIds, Criteria::NOT_IN)
             ->deleteAll();
     }
 
@@ -275,15 +283,18 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @param array $businessUnitIds
+     * @param int $businessUnitId
+     * @param array $productConcreteIds
      *
      * @return void
      */
-    public function deletePriceProductConcreteByCompanyBusinessUnits(
-        array $businessUnitIds
+    public function cleanupPriceProductConcreteByCompanyBusinessUnit(
+        int $businessUnitId,
+        array $productConcreteIds
     ): void {
         SpyPriceProductConcreteMerchantRelationshipStorageQuery::create()
-            ->filterByFkCompanyBusinessUnit_In($businessUnitIds)
+            ->filterByFkCompanyBusinessUnit($businessUnitId)
+            ->filterByFkProduct($productConcreteIds, Criteria::NOT_IN)
             ->deleteAll();
     }
 
