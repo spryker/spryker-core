@@ -48,16 +48,16 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     /**
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface $companyBusinessUnitEntityManager
-     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface $pluginExecutor
+     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface $companyBusinessUnitPluginExecutor
      */
     public function __construct(
         CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository,
         CompanyBusinessUnitEntityManagerInterface $companyBusinessUnitEntityManager,
-        CompanyBusinessUnitPluginExecutor $pluginExecutor
+        CompanyBusinessUnitPluginExecutor $companyBusinessUnitPluginExecutor
     ) {
         $this->repository = $companyBusinessUnitRepository;
         $this->entityManager = $companyBusinessUnitEntityManager;
-        $this->companyBusinessUnitPluginExecutor = $pluginExecutor;
+        $this->companyBusinessUnitPluginExecutor = $companyBusinessUnitPluginExecutor;
     }
 
     /**
