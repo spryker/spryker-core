@@ -14,7 +14,6 @@ use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder\CompanyBu
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder\CompanyBusinessUnitReaderInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutor;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutor;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilder;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilderInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter\CompanyBusinessUnitWriter;
@@ -37,7 +36,7 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
         return new CompanyBusinessUnitWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createCompanyBusinessUnitWriterPluginExecutor()
+            $this->createCompanyBusinessUnitPluginExecutor()
         );
     }
 
@@ -49,18 +48,7 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
         return new CompanyBusinessUnitCreator(
             $this->getEntityManager(),
             $this->getConfig(),
-            $this->createCompanyBusinessUnitWriterPluginExecutor()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface
-     */
-    protected function createCompanyBusinessUnitWriterPluginExecutor()
-    {
-        return new CompanyBusinessUnitWriterPluginExecutor(
-            $this->getCompanyBusinessUnitPostSavePlugins(),
-            $this->getCompanyBusinessUnitPreDeletePlugins()
+            $this->createCompanyBusinessUnitPluginExecutor()
         );
     }
 
@@ -80,7 +68,9 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     public function createCompanyBusinessUnitPluginExecutor(): CompanyBusinessUnitPluginExecutorInterface
     {
         return new CompanyBusinessUnitPluginExecutor(
-            $this->getCompanyBusinessUnitExpanderPlugins()
+            $this->getCompanyBusinessUnitExpanderPlugins(),
+            $this->getCompanyBusinessUnitPostSavePlugins(),
+            $this->getCompanyBusinessUnitPreDeletePlugins()
         );
     }
 

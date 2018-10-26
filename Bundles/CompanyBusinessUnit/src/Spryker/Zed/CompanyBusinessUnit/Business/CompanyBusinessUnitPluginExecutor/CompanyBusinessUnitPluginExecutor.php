@@ -17,11 +17,25 @@ class CompanyBusinessUnitPluginExecutor implements CompanyBusinessUnitPluginExec
     protected $companyBusinessUnitTransferExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[] $companyBusinessUnitTransferExpanderPlugins
+     * @var \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface[]
      */
-    public function __construct(array $companyBusinessUnitTransferExpanderPlugins)
+    protected $companyBusinessUnitPostSavePlugins;
+
+    /**
+     * @var \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface[]
+     */
+    protected $companyBusinessUnitPreDeletePlugins;
+
+    /**
+     * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[] $companyBusinessUnitTransferExpanderPlugins
+     * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface[] $companyBusinessUnitPostSavePlugins
+     * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface[] $companyBusinessUnitPreDeletePlugins
+     */
+    public function __construct(array $companyBusinessUnitTransferExpanderPlugins, array $companyBusinessUnitPostSavePlugins, array $companyBusinessUnitPreDeletePlugins)
     {
         $this->companyBusinessUnitTransferExpanderPlugins = $companyBusinessUnitTransferExpanderPlugins;
+        $this->companyBusinessUnitPostSavePlugins = $companyBusinessUnitPostSavePlugins;
+        $this->companyBusinessUnitPreDeletePlugins = $companyBusinessUnitPreDeletePlugins;
     }
 
     /**
@@ -37,5 +51,31 @@ class CompanyBusinessUnitPluginExecutor implements CompanyBusinessUnitPluginExec
         }
 
         return $companyBusinessUnitTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function executePostSavePlugins(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitTransfer
+    {
+        foreach ($this->companyBusinessUnitPostSavePlugins as $plugin) {
+            $companyBusinessUnitTransfer = $plugin->postSave($companyBusinessUnitTransfer);
+        }
+
+        return $companyBusinessUnitTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return void
+     */
+    public function executePreDeletePlugins(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): void
+    {
+        foreach ($this->companyBusinessUnitPreDeletePlugins as $plugin) {
+            $plugin->preDelete($companyBusinessUnitTransfer);
+        }
     }
 }

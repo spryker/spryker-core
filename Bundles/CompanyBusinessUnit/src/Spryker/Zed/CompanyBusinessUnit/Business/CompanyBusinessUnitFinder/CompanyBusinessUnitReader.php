@@ -21,7 +21,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
     /**
      * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface
      */
-    protected $transferExpanderPluginExecutor;
+    protected $companyBusinessUnitPluginExecutor;
 
     /**
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository
@@ -32,7 +32,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         CompanyBusinessUnitPluginExecutorInterface $transferExpanderPluginExecutor
     ) {
         $this->companyBusinessUnitRepository = $companyBusinessUnitRepository;
-        $this->transferExpanderPluginExecutor = $transferExpanderPluginExecutor;
+        $this->companyBusinessUnitPluginExecutor = $transferExpanderPluginExecutor;
     }
 
     /**
@@ -43,7 +43,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
     public function getCompanyBusinessUnitById(int $idCompanyBusinessUnit): CompanyBusinessUnitTransfer
     {
         $companyBusinessUnitTransfer = $this->companyBusinessUnitRepository->getCompanyBusinessUnitById($idCompanyBusinessUnit);
-        $companyBusinessUnitTransfer = $this->transferExpanderPluginExecutor->executeTransferExpanderPlugins($companyBusinessUnitTransfer);
+        $companyBusinessUnitTransfer = $this->companyBusinessUnitPluginExecutor->executeTransferExpanderPlugins($companyBusinessUnitTransfer);
 
         return $companyBusinessUnitTransfer;
     }
