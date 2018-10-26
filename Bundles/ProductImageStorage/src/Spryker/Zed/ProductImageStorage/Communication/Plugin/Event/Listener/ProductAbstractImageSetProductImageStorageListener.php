@@ -21,6 +21,11 @@ class ProductAbstractImageSetProductImageStorageListener extends AbstractPlugin 
 {
     use DatabaseTransactionHandlerTrait;
 
+    protected const PUBLISH_EVENTS = [
+        ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE,
+        ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE,
+    ];
+
     /**
      * @api
      *
@@ -39,7 +44,7 @@ class ProductAbstractImageSetProductImageStorageListener extends AbstractPlugin 
             $this->getFacade()->unpublishProductAbstractImages($productAbstractIds);
         }
 
-        if ($eventName === ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE || $eventName === ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE) {
+        if (in_array($eventName, static::PUBLISH_EVENTS)) {
             $this->getFacade()->publishProductAbstractImages($productAbstractIds);
         }
     }
