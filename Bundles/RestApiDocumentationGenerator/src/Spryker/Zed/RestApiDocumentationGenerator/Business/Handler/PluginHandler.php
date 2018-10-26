@@ -86,8 +86,13 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return void
      */
-    public function addGetResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, string $idResource, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    public function addGetResourcePath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        string $idResource,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $pathDataTransfer = $this->createPathDataTransfer(
             $plugin->getResourceType(),
@@ -109,8 +114,13 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return void
      */
-    public function addGetResourceByIdPath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, string $idResource, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    public function addGetResourceByIdPath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        string $idResource,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $pathDataTransfer = $this->createPathDataTransfer(
             $plugin->getResourceType(),
@@ -132,8 +142,13 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return void
      */
-    public function addGetResourceCollectionPath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, string $idResource, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    public function addGetResourceCollectionPath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        string $idResource,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $pathDataTransfer = $this->createPathDataTransfer(
             $plugin->getResourceType(),
@@ -154,8 +169,12 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return void
      */
-    public function addPostResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    public function addPostResourcePath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
         $requestSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addRequestSchemaForPlugin($plugin));
@@ -183,8 +202,12 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return void
      */
-    public function addPatchResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    public function addPatchResourcePath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
         $requestSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addRequestSchemaForPlugin($plugin));
@@ -212,8 +235,12 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return void
      */
-    public function addDeleteResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    public function addDeleteResourcePath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
 
         $pathDataTransfer = $this->createPathDataTransfer(

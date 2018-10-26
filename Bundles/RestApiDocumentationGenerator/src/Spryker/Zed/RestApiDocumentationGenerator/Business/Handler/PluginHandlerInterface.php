@@ -36,7 +36,13 @@ interface PluginHandlerInterface
      *
      * @return void
      */
-    public function addGetResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, string $idResource, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void;
+    public function addGetResourcePath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        string $idResource,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
@@ -47,7 +53,13 @@ interface PluginHandlerInterface
      *
      * @return void
      */
-    public function addGetResourceByIdPath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, string $idResource, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void;
+    public function addGetResourceByIdPath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        string $idResource,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
@@ -58,7 +70,13 @@ interface PluginHandlerInterface
      *
      * @return void
      */
-    public function addGetResourceCollectionPath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, string $idResource, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void;
+    public function addGetResourceCollectionPath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        string $idResource,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
@@ -68,7 +86,12 @@ interface PluginHandlerInterface
      *
      * @return void
      */
-    public function addPostResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void;
+    public function addPostResourcePath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
@@ -78,7 +101,12 @@ interface PluginHandlerInterface
      *
      * @return void
      */
-    public function addPatchResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void;
+    public function addPatchResourcePath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
@@ -88,5 +116,10 @@ interface PluginHandlerInterface
      *
      * @return void
      */
-    public function addDeleteResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void;
+    public function addDeleteResourcePath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void;
 }
