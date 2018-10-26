@@ -17,6 +17,7 @@ use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
@@ -537,6 +538,16 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testAddressExistsShouldReturnFalseIfIdCustomerAddressIsUndefined(): void
+    {
+        $addressTransfer = new AddressTransfer();
+
+        $this->assertFalse($this->getCustomerFacade()->addressExists($addressTransfer));
+    }
+
+    /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transfer
      * @param bool $hasEmail
      *
@@ -741,5 +752,13 @@ class CustomerFacadeTest extends Unit
         }
 
         return false;
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
+     */
+    protected function getCustomerFacade(): CustomerFacadeInterface
+    {
+        return $this->tester->getLocator()->customer()->facade();
     }
 }
