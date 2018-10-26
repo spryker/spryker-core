@@ -31,6 +31,17 @@ class AddressController extends AbstractController
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
 
+        $addressDetails = (new AddressTransfer())
+            ->setIdCustomerAddress($idCustomerAddress);
+
+        if (!$this->getFacade()->addressExists($addressDetails)) {
+            return $this->redirectResponse(sprintf(
+                '/customer/view?%s=%d',
+                CustomerConstants::PARAM_ID_CUSTOMER,
+                $idCustomer
+            ));
+        }
+
         $addressDetails = $this->getFacade()
             ->getAddress($customerAddress);
 

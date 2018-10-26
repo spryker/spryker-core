@@ -43,6 +43,13 @@ interface AddressInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
+     * @return bool
+     */
+    public function addressExists(AddressTransfer $addressTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
      * @return bool
