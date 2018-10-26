@@ -19,8 +19,7 @@ class ProductLabelsRelationshipByResourceIdPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritdoc}
-     *
-     * - Adds relationship to the abstract product by sku.
+     * - Adds product label relationship by abstract sku.
      *
      * @api
      *

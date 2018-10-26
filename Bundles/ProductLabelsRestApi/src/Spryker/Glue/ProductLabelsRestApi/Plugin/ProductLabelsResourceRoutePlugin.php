@@ -17,7 +17,6 @@ class ProductLabelsResourceRoutePlugin extends AbstractPlugin implements Resourc
 {
     /**
      * {@inheritdoc}
-     *
      * - Configures available actions for product labels resource.
      *
      * @api

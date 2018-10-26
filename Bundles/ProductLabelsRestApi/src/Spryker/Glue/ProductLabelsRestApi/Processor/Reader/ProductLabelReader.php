@@ -73,22 +73,22 @@ class ProductLabelReader implements ProductLabelReaderInterface
             return $this->addProductLabelMissingErrorToResponse($restResponse);
         }
 
-        $labelTransfer = $this->productLabelStorageClient->findLabels(
+        $labelTransfers = $this->productLabelStorageClient->findLabels(
             [$restRequest->getResource()->getId()],
             $restRequest->getMetadata()->getLocale()
         );
 
-        if (!$labelTransfer) {
+        if (count($labelTransfers) < 1) {
             return $this->addProductLabelNotFoundErrorToRestResponse($restResponse);
         }
 
         $restProductLabelAttributesTransfer = $this
             ->productLabelMapper
-            ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer($labelTransfer[0]);
+            ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer($labelTransfers[0]);
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,
-            (string)$labelTransfer[0]->getIdProductLabel(),
+            (string)$labelTransfers[0]->getIdProductLabel(),
             $restProductLabelAttributesTransfer
         );
 

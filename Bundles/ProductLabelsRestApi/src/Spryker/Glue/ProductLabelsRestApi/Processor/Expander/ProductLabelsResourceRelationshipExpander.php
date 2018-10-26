@@ -34,8 +34,10 @@ class ProductLabelsResourceRelationshipExpander implements ProductLabelsResource
     public function addRelationshipsByAbstractSku(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
+            $abstractSku = $resource->getId();
+
             $productLabels = $this->productLabelReader->findByAbstractSku(
-                $resource->getId(),
+                $abstractSku,
                 $restRequest->getMetadata()->getLocale()
             );
             foreach ($productLabels as $productLabel) {

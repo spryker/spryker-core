@@ -28,7 +28,7 @@ class ProductLabelsRestApiToProductLabelStorageClientBridge implements ProductLa
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabels(array $idProductLabels, string $localeName): array
+    public function findLabels(array $idProductLabels, string $localeName)
     {
         return $this->productLabelStorageClient->findLabels($idProductLabels, $localeName);
     }
@@ -39,7 +39,7 @@ class ProductLabelsRestApiToProductLabelStorageClientBridge implements ProductLa
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract(int $idProductAbstract, string $localeName): array
+    public function findLabelsByIdProductAbstract(int $idProductAbstract, string $localeName)
     {
         return $this->productLabelStorageClient->findLabelsByIdProductAbstract($idProductAbstract, $localeName);
     }
