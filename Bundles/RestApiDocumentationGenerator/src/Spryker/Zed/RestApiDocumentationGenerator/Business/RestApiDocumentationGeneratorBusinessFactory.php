@@ -35,8 +35,8 @@ use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SchemaRenderer;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SchemaRendererInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SecuritySchemeRenderer;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SecuritySchemeRendererInterface;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\YamlRestApiDocumentationWriter;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\OpenApiSpecificationWriterInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\YamlOpenApiSpecificationWriter;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFilesystemInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface;
@@ -55,7 +55,7 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     {
         return new RestApiDocumentationGenerator(
             $this->createResourcePluginAnalyzer(),
-            $this->createYamlRestApiDocumentationWriter()
+            $this->createYamlOpenApiSpecificationWriter()
         );
     }
 
@@ -88,11 +88,11 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
-     * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface
+     * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\OpenApiSpecificationWriterInterface
      */
-    public function createYamlRestApiDocumentationWriter(): RestApiDocumentationWriterInterface
+    public function createYamlOpenApiSpecificationWriter(): OpenApiSpecificationWriterInterface
     {
-        return new YamlRestApiDocumentationWriter(
+        return new YamlOpenApiSpecificationWriter(
             $this->getConfig(),
             $this->getYamlDumper(),
             $this->getFilesystem()

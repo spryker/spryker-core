@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
+/**
+ * Specification:
+ *  - This component describes a single response from an API Operation.
+ *  - This component covers Operation Object in OpenAPI specification format (see https://swagger.io/specification/#operationObject).
+ */
 class PathResponseSpecificationComponent extends AbstractSpecificationComponent
 {
     protected const KEY_APPLICATION_JSON = 'application/json';

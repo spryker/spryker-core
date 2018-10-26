@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
+/**
+ * Specification:
+ *  - This component describes a single Schema Object Property.
+ *  - This component partly covers Schema Object Properties in OpenAPI specification format (see https://swagger.io/specification/#schemaObject).
+ */
 class SchemaPropertySpecificationComponent extends AbstractSpecificationComponent
 {
     protected const KEY_TYPE = 'type';

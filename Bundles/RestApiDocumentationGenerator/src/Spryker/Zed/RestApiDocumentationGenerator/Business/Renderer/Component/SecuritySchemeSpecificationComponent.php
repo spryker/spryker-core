@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
+/**
+ * Specification:
+ *  - This component describes a security scheme that can be used by the operations.
+ *  - This component covers Security Scheme Object in OpenAPI specification format (see https://swagger.io/specification/#securitySchemeObject).
+ */
 class SecuritySchemeSpecificationComponent extends AbstractSpecificationComponent
 {
     protected const KEY_TYPE = 'type';

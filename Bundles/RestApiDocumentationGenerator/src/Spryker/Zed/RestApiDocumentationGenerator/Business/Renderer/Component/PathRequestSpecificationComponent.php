@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
+/**
+ * Specification:
+ *  - This component describes a single request body.
+ *  - It covers Request Body Object in OpenAPI specification format (see https://swagger.io/specification/#requestBodyObject)
+ */
 class PathRequestSpecificationComponent extends AbstractSpecificationComponent
 {
     protected const KEY_APPLICATION_JSON = 'application/json';

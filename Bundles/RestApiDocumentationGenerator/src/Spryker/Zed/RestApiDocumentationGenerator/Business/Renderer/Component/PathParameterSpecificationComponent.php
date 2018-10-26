@@ -8,6 +8,10 @@
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
 /**
+ * Specification:
+ *  - This component describes a single operation parameter.
+ *  - It covers Parameter Object in OpenAPI specification format (see https://swagger.io/specification/#parameterObject)
+ *
  * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class PathParameterSpecificationComponent extends AbstractSpecificationComponent

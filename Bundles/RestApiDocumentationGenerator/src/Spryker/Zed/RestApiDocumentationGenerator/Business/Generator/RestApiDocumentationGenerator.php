@@ -8,7 +8,7 @@
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\ResourcePluginAnalyzerInterface;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\OpenApiSpecificationWriterInterface;
 
 class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInterface
 {
@@ -18,15 +18,15 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
     protected $resourcePluginAnalyzer;
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\OpenApiSpecificationWriterInterface
      */
     protected $restApiDocumentationWriter;
 
     /**
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\ResourcePluginAnalyzerInterface $resourcePluginAnalyzer
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface $restApiDocumentationWriter
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\OpenApiSpecificationWriterInterface $restApiDocumentationWriter
      */
-    public function __construct(ResourcePluginAnalyzerInterface $resourcePluginAnalyzer, RestApiDocumentationWriterInterface $restApiDocumentationWriter)
+    public function __construct(ResourcePluginAnalyzerInterface $resourcePluginAnalyzer, OpenApiSpecificationWriterInterface $restApiDocumentationWriter)
     {
         $this->resourcePluginAnalyzer = $resourcePluginAnalyzer;
         $this->restApiDocumentationWriter = $restApiDocumentationWriter;

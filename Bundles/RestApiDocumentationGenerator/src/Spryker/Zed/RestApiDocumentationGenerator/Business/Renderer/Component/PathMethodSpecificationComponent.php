@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\Component;
 
+/**
+ * Specification:
+ *  - This component describes a single API operation on a path.
+ *  - This component covers Operation Object in OpenAPI specification format (see https://swagger.io/specification/#operationObject).
+ */
 class PathMethodSpecificationComponent extends AbstractSpecificationComponent
 {
     protected const KEY_PARAMETERS = 'parameters';

@@ -12,7 +12,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumen
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToYamlDumperInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig;
 
-class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterface
+class YamlOpenApiSpecificationWriter implements OpenApiSpecificationWriterInterface
 {
     protected const GENERATED_FILE_POSTFIX = '.schema.yml';
 

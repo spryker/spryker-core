@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RestApiDocumentationGeneratorConsole extends Console
 {
-    protected const COMMAND_NAME = 'api:generate:open-api-specification';
+    protected const COMMAND_NAME = 'rest-api:generate:open-api-specification';
     protected const DESCRIPTION = 'Generates Open API specification file for implemented REST API endpoints in YAML format';
 
     /**
