@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence\Propel;
 
-use Orm\Zed\ProductLabel\Persistence\Base\SpyProductLabelQuery as BaseSpyProductLabelQuery;
+use Spryker\Zed\ProductLabel\Persistence\Propel\AbstractSpyProductLabelQuery as BaseSpyProductLabelQuery;
 
+/**
+ * @deprecated Please use AbstractSpyProductLabelQuery instead.
+ */
 class SpyProductLabelQuery extends BaseSpyProductLabelQuery
 {
 }

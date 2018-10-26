@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-relation-storage",
+  "type": "library",
   "description": "ProductRelationStorage module",
   "license": "proprietary",
   "require": {
@@ -14,8 +15,13 @@
     "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/event": "*",
-    "spryker/propel-orm": "*"
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/propel-query-builder": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",

@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ProductDiscontinuedDataImport\Business\ProductDiscontinuedImportStep;
@@ -35,6 +35,7 @@ class ConcreteSkuToIdProductStep implements DataImportStepInterface
             /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
             $productQuery = SpyProductQuery::create()
                 ->select(SpyProductTableMap::COL_ID_PRODUCT);
+            /** @var string|int|null $idProduct */
             $idProduct = $productQuery
                 ->findOneBySku($concreteSku);
 

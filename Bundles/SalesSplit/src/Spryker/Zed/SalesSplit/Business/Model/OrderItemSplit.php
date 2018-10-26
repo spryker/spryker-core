@@ -19,7 +19,7 @@ use Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface;
 
 class OrderItemSplit implements OrderItemSplitInterface
 {
-    const SPLIT_MARKER = 'split#';
+    public const SPLIT_MARKER = 'split#';
 
     /**
      * @var \Propel\Runtime\Connection\ConnectionInterface

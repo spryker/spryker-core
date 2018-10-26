@@ -1,5 +1,6 @@
 {
   "name": "spryker/price-product-data-import",
+  "type": "library",
   "description": "PriceProductDataImport module",
   "license": "MIT",
   "require": {
@@ -14,6 +15,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

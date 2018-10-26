@@ -17,9 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ExportSynchronizedDataConsole extends Console
 {
-    const COMMAND_NAME = 'sync:data';
-    const DESCRIPTION = 'Exports synchronized data into queues';
-    const RESOURCE = 'resource';
+    public const COMMAND_NAME = 'sync:data';
+    public const DESCRIPTION = 'Exports synchronized data into queues';
+    public const RESOURCE = 'resource';
 
     /**
      * @return void
@@ -42,7 +42,7 @@ class ExportSynchronizedDataConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $resources = [];
-        if ($input && $input->getArgument(static::RESOURCE)) {
+        if ($input->getArgument(static::RESOURCE)) {
             $resourceString = $input->getArgument(static::RESOURCE);
             $resources = explode(',', $resourceString);
         }

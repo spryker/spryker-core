@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Development\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
+use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Spryker\Zed\Development\Communication\Form\BundlesFormType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,15 +19,15 @@ class BundleFormDataProvider
     protected $request;
 
     /**
-     * @var \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
+     * @var \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
     protected $bundleDependencyCollectionTransfer;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
+     * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $bundleDependencyCollectionTransfer
      */
-    public function __construct(Request $request, BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
+    public function __construct(Request $request, DependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
         $this->request = $request;
         $this->bundleDependencyCollectionTransfer = $bundleDependencyCollectionTransfer;
@@ -70,14 +70,14 @@ class BundleFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
+     * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $bundleDependencyCollectionTransfer
      *
      * @return array
      */
-    protected function getBundleNames(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
+    protected function getBundleNames(DependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
         $bundleNames = [];
-        foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
+        foreach ($bundleDependencyCollectionTransfer->getDependencyModules() as $dependencyBundleTransfer) {
             $hasDependencyInSource = false;
 
             foreach ($dependencyBundleTransfer->getDependencies() as $dependencyTransfer) {
@@ -87,7 +87,7 @@ class BundleFormDataProvider
             }
 
             if ($hasDependencyInSource) {
-                $bundleNames[] = $dependencyBundleTransfer->getBundle();
+                $bundleNames[] = $dependencyBundleTransfer->getModule();
             }
         }
 

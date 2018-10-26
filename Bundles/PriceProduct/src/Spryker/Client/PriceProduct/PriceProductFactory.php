@@ -66,10 +66,13 @@ class PriceProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProduct\PriceProductConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     * @return \Spryker\Client\PriceProduct\PriceProductConfig
      */
     public function getModuleConfig()
     {
-        return parent::getConfig();
+        /** @var \Spryker\Client\PriceProduct\PriceProductConfig $config */
+        $config = parent::getConfig();
+
+        return $config;
     }
 }

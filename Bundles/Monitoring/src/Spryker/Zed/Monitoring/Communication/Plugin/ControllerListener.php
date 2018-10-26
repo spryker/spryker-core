@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class ControllerListener extends AbstractPlugin implements EventSubscriberInterface
 {
-    const PRIORITY = -255;
+    public const PRIORITY = -255;
 
     /**
      * @var \Spryker\Service\Monitoring\MonitoringServiceInterface
@@ -105,7 +105,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     protected function isTransactionIgnorable(string $transaction): bool
     {
         foreach ($this->ignorableTransactions as $ignorableTransaction) {
-            if (strpos($transaction, $ignorableTransaction) !== false) {
+            if (strpos($transaction, $ignorableTransaction) === 0) {
                 return true;
             }
         }
@@ -120,9 +120,9 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
      */
     protected function getTransactionName(Request $request): string
     {
-        $module = $request->attributes->get('module');
-        $controller = $request->attributes->get('controller');
-        $action = $request->attributes->get('action');
+        $module = $request->attributes->get('module', 'n/a');
+        $controller = $request->attributes->get('controller', 'n/a');
+        $action = $request->attributes->get('action', 'n/a');
         $transactionName = $module . '/' . $controller . '/' . $action;
 
         return $transactionName;

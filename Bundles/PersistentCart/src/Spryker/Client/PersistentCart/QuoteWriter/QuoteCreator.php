@@ -37,8 +37,6 @@ class QuoteCreator implements QuoteCreatorInterface
     protected $zedRequestClient;
 
     /**
-     * QuoteCreator constructor.
-     *
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface $persistentCartStub
@@ -64,11 +62,11 @@ class QuoteCreator implements QuoteCreatorInterface
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteResponseTransfer = $this->persistentCartStub->createQuote($quoteTransfer);
+        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         }
         $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
-        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
 
         return $quoteResponseTransfer;
     }

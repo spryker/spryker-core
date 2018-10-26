@@ -14,8 +14,8 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
  */
 class AuthRestApiConfig extends AbstractBundleConfig
 {
-    public const RESOURCE_ACCESS_TOKENS = 'access_tokens';
-    public const RESOURCE_REFRESH_TOKENS = 'refresh_tokens';
+    public const RESOURCE_ACCESS_TOKENS = 'access-tokens';
+    public const RESOURCE_REFRESH_TOKENS = 'refresh-tokens';
 
     public const CLIENT_GRANT_PASSWORD = 'password';
     public const CLIENT_GRANT_REFRESH_TOKEN = 'refresh_token';

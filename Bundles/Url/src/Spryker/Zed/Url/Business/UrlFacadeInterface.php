@@ -224,7 +224,7 @@ interface UrlFacadeInterface
     /**
      * Specification:
      * - Checks if the provided URL redirect is valid or not.
-     * - Url redirect is invalid if it results in a redirect loop.
+     * - URL redirect is invalid if it results in a redirect loop.
      *
      * {@inheritdoc}
      *

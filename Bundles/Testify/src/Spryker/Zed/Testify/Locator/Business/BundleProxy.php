@@ -87,6 +87,7 @@ class BundleProxy extends KernelBundleProxy
         $container = $dependencyProvider->provideBusinessLayerDependencies(
             $container
         );
+        /** @var \Spryker\Zed\Kernel\Container $container */
         $container = $this->overwriteForTesting($container);
 
         $bundleConfig = $this->getBundleConfig($factory);

@@ -10,10 +10,12 @@ namespace SprykerTest\Zed\Search\Business\Model\Elasticsearch;
 use Codeception\Test\Unit;
 use Elastica\Client;
 use Elastica\Index;
+use Elastica\Response;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
+use Spryker\Zed\Search\SearchConfig;
 
 /**
  * Auto-generated group annotations
@@ -50,42 +52,71 @@ class IndexInstallerTest extends Unit
         $installer = new IndexInstaller(
             $this->createIndexDefinitionLoaderMock($indexDefinitions),
             $this->createElasticaClientMock($indexMock),
-            $this->createMessengerMock()
+            $this->createMessengerMock(),
+            $this->createSearchConfigMock()
         );
 
         $installer->install();
     }
 
     /**
+     * @uses \Elastica\Index::exists()
+     * @uses \Elastica\Index::create()
+     * @uses \Elastica\Index::setSettings()
+     *
      * @return void
      */
     public function testIndexInstallerDoesNotCreatesIndexesIfTheyExist()
     {
-        $indexDefinitions = [
-            $this->createIndexDefinition('foo'),
-        ];
-
         $indexMock = $this->getMockBuilder(Index::class)
             ->disableOriginalConstructor()
-            ->setMethods(['exists', 'create'])
+            ->setMethods(['exists', 'create', 'setSettings'])
             ->getMock();
 
         $indexMock->method('exists')->willReturn(true);
         $indexMock->expects($this->never())->method('create');
 
-        $installer = new IndexInstaller(
-            $this->createIndexDefinitionLoaderMock($indexDefinitions),
-            $this->createElasticaClientMock($indexMock),
-            $this->createMessengerMock()
-        );
+        $indexMock->method('setSettings')->willReturn(new Response(''));
+        $indexMock->expects($this->once())->method('setSettings');
 
-        $installer->install();
+        $indexInstallerMock = $this->createIndexInstallerMock($indexMock);
+        $indexInstallerMock->install();
     }
 
     /**
+     * @uses IndexInstaller::getIndexState()
+     *
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Elastica\Index $indexMock
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface
+     */
+    protected function createIndexInstallerMock($indexMock)
+    {
+        $indexDefinitions = [
+            $this->createIndexDefinition('foo', [
+                'index' => [
+                    'config' => 1,
+                ],
+            ]),
+        ];
+
+        return $this->getMockBuilder(IndexInstaller::class)
+            ->setConstructorArgs([
+                $this->createIndexDefinitionLoaderMock($indexDefinitions),
+                $this->createElasticaClientMock($indexMock),
+                $this->createMessengerMock(),
+                $this->createSearchConfigMock(),
+            ])
+            ->setMethods(['getIndexState'])
+            ->getMock();
+    }
+
+    /**
+     * @uses IndexDefinitionLoaderInterface::loadIndexDefinitions()
+     *
      * @param \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer[] $indexDefinitions
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */
     protected function createIndexDefinitionLoaderMock(array $indexDefinitions)
     {
@@ -102,9 +133,26 @@ class IndexInstallerTest extends Unit
     }
 
     /**
-     * @param \PHPUnit_Framework_MockObject_MockObject|\Elastica\Index $indexMock
+     * @uses SearchConfig::getBlacklistSettingsForIndexUpdate()
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Elastica\Client
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\SearchConfig
+     */
+    protected function createSearchConfigMock()
+    {
+        $searchConfigMock = $this->getMockBuilder(SearchConfig::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getBlacklistSettingsForIndexUpdate'])
+            ->getMock();
+
+        return $searchConfigMock;
+    }
+
+    /**
+     * @uses Client::getIndex()
+     *
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Elastica\Index $indexMock
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Client
      */
     protected function createElasticaClientMock($indexMock)
     {
@@ -121,7 +169,7 @@ class IndexInstallerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockBuilder|\Psr\Log\LoggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
     protected function createMessengerMock()
     {

@@ -15,17 +15,6 @@ class CompanyBusinessUnitDataImportHelper extends Module
     /**
      * @return void
      */
-    public function ensureDatabaseTableIsEmpty(): void
-    {
-        $this->getCompanyBusinessUnitQuery()
-            ->update(['FkParentCompanyBusinessUnit' => null]);
-        $this->getCompanyBusinessUnitQuery()
-            ->deleteAll();
-    }
-
-    /**
-     * @return void
-     */
     public function assertDatabaseTableIsEmpty(): void
     {
         $companyQuery = $this->getCompanyBusinessUnitQuery();

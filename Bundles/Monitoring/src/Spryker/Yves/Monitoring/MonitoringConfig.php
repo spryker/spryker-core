@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Monitoring;
 
+use Spryker\Shared\Monitoring\MonitoringConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class MonitoringConfig extends AbstractBundleConfig
@@ -16,6 +17,6 @@ class MonitoringConfig extends AbstractBundleConfig
      */
     public function getIgnorableTransactionRouteNames(): array
     {
-        return [];
+        return $this->get(MonitoringConstants::IGNORABLE_TRANSACTIONS, []);
     }
 }

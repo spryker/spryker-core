@@ -31,7 +31,7 @@ use Spryker\Zed\Oauth\OauthDependencyProvider;
 /**
  * @method \Spryker\Zed\Oauth\OauthConfig getConfig()
  * @method \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface getRepository()
- * @method \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface getEntityManager()()
+ * @method \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface getEntityManager()
  */
 class OauthBusinessFactory extends AbstractBusinessFactory
 {

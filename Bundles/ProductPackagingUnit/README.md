@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-packaging-unit.svg)](https://travis-ci.org/spryker/product-packaging-unit)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-packaging-unit/badge.svg)](https://coveralls.io/github/spryker/product-packaging-unit)
 
-This module provides basic Product Packaging Unit functionality.
+This module provides the core functionality for product packaging unit features.
 
 ## Installation
 

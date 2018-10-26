@@ -40,11 +40,11 @@ class NestedPriceRangeQuery extends NestedRangeQuery
         parent::setMinMaxValues($rangeValues);
 
         if ($this->minValue !== null) {
-            $this->minValue = $this->moneyPlugin->convertDecimalToInteger((float)$this->minValue);
+            $this->minValue = (string)$this->moneyPlugin->convertDecimalToInteger((float)$this->minValue);
         }
 
         if ($this->maxValue !== null) {
-            $this->maxValue = $this->moneyPlugin->convertDecimalToInteger((float)$this->maxValue);
+            $this->maxValue = (string)$this->moneyPlugin->convertDecimalToInteger((float)$this->maxValue);
         }
     }
 }

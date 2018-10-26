@@ -32,7 +32,7 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
-     * @param null|string $groupKey
+     * @param string|null $groupKey
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
@@ -41,7 +41,7 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
             if ($this->checkItem($itemTransfer, $sku, $groupKey)) {
                 $itemTransfer = clone $itemTransfer;
-                $itemTransfer->setQuantity($this->getBundledProductTotalQuantity($quoteTransfer, $groupKey));
+                $itemTransfer->setQuantity($this->getBundledProductTotalQuantity($quoteTransfer, $itemTransfer->getGroupKey()));
 
                 return $itemTransfer;
             }

@@ -176,7 +176,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     protected function findConcreteProductViewTransfer(int $idProduct, string $localeName): ?ProductViewTransfer
     {
         $productConcreteStorageData = $this->productStorageClient
-            ->getProductConcreteStorageData($idProduct, $localeName);
+            ->findProductConcreteStorageData($idProduct, $localeName);
         if (empty($productConcreteStorageData)) {
             return null;
         }

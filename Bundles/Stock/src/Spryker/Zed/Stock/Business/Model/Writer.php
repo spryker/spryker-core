@@ -21,9 +21,9 @@ class Writer implements WriterInterface
 {
     use TransactionTrait;
 
-    const TOUCH_STOCK_TYPE = 'stock-type';
-    const TOUCH_STOCK_PRODUCT = 'stock-product';
-    const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
+    public const TOUCH_STOCK_TYPE = 'stock-type';
+    public const TOUCH_STOCK_PRODUCT = 'stock-product';
+    public const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
     /**
      * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
@@ -31,7 +31,7 @@ class Writer implements WriterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Stock\Business\Model\Reader
+     * @var \Spryker\Zed\Stock\Business\Model\ReaderInterface
      */
     protected $reader;
 

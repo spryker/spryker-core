@@ -1,5 +1,6 @@
 {
   "name": "spryker/shipment-discount-connector",
+  "type": "library",
   "description": "ShipmentDiscountConnector module",
   "license": "proprietary",
   "require": {
@@ -11,9 +12,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/country": "*",
-    "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {

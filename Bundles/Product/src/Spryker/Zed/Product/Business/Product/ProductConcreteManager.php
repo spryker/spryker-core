@@ -51,12 +51,12 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
      */
-    private $attributeEncoder;
+    protected $attributeEncoder;
 
     /**
      * @var \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface
      */
-    private $productTransferMapper;
+    protected $productTransferMapper;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductRepositoryInterface
@@ -216,6 +216,27 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findProductConcretesBySkus(array $skus): array
+    {
+        $productConcreteEntities = $this->productQueryContainer
+            ->queryProduct()
+            ->filterBySku_In($skus)
+            ->find();
+
+        if (!$productConcreteEntities->getData()) {
+            return [];
+        }
+
+        $productConcreteTransfers = $this->productTransferMapper->convertProductCollection($productConcreteEntities);
+
+        return $productConcreteTransfers;
+    }
+
+    /**
      * @param string $concreteSku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -290,7 +311,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @param int $idConcrete
      *
-     * @return null|int
+     * @return int|null
      */
     public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
     {
@@ -305,6 +326,32 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
     {
         return $this->productRepository->findProductConcreteIdsByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteId(int $idProductConcrete): int
+    {
+        $productConcrete = $this->productQueryContainer
+            ->queryProduct()
+            ->filterByIdProduct($idProductConcrete)
+            ->findOne();
+
+        if (!$productConcrete) {
+            throw new MissingProductException(
+                sprintf(
+                    'Tried to retrieve a product concrete with id %s, but it does not exist.',
+                    $idProductConcrete
+                )
+            );
+        }
+
+        return $productConcrete->getFkProductAbstract();
     }
 
     /**
@@ -431,5 +478,25 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         }
 
         $this->productQueryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return array
+     */
+    public function getProductConcreteIdsByConcreteSkus(array $skus): array
+    {
+        return $this->productRepository->getProductConcreteIdsByConcreteSkus($skus);
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return array
+     */
+    public function getProductConcreteSkusByConcreteIds(array $productIds): array
+    {
+        return $this->productRepository->getProductConcreteSkusByConcreteIds($productIds);
     }
 }

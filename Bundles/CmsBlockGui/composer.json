@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block-gui",
+  "type": "library",
   "description": "CmsBlockGui module",
   "license": "proprietary",
   "require": {
@@ -14,9 +15,12 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/propel": "*",
+    "spryker/store": "*",
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {

@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class PermissionCustomerExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer

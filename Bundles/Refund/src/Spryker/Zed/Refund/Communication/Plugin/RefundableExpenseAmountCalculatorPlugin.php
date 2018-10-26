@@ -19,6 +19,8 @@ use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 class RefundableExpenseAmountCalculatorPlugin extends AbstractPlugin implements RefundCalculatorPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems

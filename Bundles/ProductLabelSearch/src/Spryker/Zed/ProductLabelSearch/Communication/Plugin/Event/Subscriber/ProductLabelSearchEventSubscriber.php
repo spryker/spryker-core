@@ -31,7 +31,6 @@ class ProductLabelSearchEventSubscriber extends AbstractPlugin implements EventS
         $this->addProductLabelProductAbstractCreateSearchListener($eventCollection);
         $this->addProductLabelProductAbstractUpdateSearchListener($eventCollection);
         $this->addProductLabelProductAbstractDeleteSearchListener($eventCollection);
-        $this->addProductLabelCreateSearchListener($eventCollection);
         $this->addProductLabelUpdateSearchListener($eventCollection);
         $this->addProductLabelDeleteSearchListener($eventCollection);
 
@@ -66,16 +65,6 @@ class ProductLabelSearchEventSubscriber extends AbstractPlugin implements EventS
     protected function addProductLabelProductAbstractDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelProductAbstractSearchListener());
-    }
-
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return void
-     */
-    protected function addProductLabelCreateSearchListener(EventCollectionInterface $eventCollection)
-    {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE, new ProductLabelSearchListener());
     }
 
     /**

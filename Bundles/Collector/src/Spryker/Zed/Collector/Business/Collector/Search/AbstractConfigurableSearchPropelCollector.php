@@ -95,6 +95,7 @@ abstract class AbstractConfigurableSearchPropelCollector extends AbstractSearchP
             return $storeWriter;
         }
 
+        /** @var \Spryker\Zed\Collector\Business\Exporter\Writer\Search\ConfigurableSearchWriterInterface $configurableSearchWriter */
         $configurableSearchWriter = $this->cloneWriter($storeWriter);
         $configurableSearchWriter->setSearchCollectorConfiguration($this->getCollectorConfiguration());
 

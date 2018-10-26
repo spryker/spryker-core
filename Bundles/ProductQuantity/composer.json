@@ -1,16 +1,18 @@
 {
   "name": "spryker/product-quantity",
+  "type": "library",
   "description": "ProductQuantity module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cart-extension": "^1.1.0",
+    "spryker/cart-extension": "^1.1.0 || ^2.0.0",
     "spryker/kernel": "^3.17.0",
     "spryker/product": "^6.0.0"
   },
   "require-dev": {
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

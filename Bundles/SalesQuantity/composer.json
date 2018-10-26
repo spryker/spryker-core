@@ -1,5 +1,6 @@
 {
   "name": "spryker/sales-quantity",
+  "type": "library",
   "description": "SalesQuantity module",
   "license": "proprietary",
   "require": {
@@ -12,6 +13,7 @@
   "require-dev": {
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

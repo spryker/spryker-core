@@ -10,6 +10,7 @@ namespace Spryker\Zed\SprykGui\Business;
 use Generated\Shared\Transfer\AccessibleTransferCollection;
 use Generated\Shared\Transfer\ClassInformationTransfer;
 use Generated\Shared\Transfer\ModuleCollectionTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -140,5 +141,34 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
     public function getSprykDefinitionByName(string $spryk): array
     {
         return $this->getFactory()->createSpryk()->getSprykDefinitionByName($spryk);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    public function buildOptions(ModuleTransfer $moduleTransfer): ModuleTransfer
+    {
+        return $this->getFactory()->createOptionBuilder()->build($moduleTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $choiceLoaderName
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return array
+     */
+    public function loadChoices(string $choiceLoaderName, ModuleTransfer $moduleTransfer): array
+    {
+        return $this->getFactory()->createChoiceLoader()->loadChoices($choiceLoaderName, $moduleTransfer);
     }
 }

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -78,13 +79,13 @@ class RestRequest implements RestRequestInterface
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
      * @param array $filters
      * @param array $sort
-     * @param null|\Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface|null $page
      * @param array $routeContext
      * @param array $parentResources
      * @param array $include
      * @param array $fields
      * @param bool $excludeRelationship
-     * @param null|\Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface $user
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null $user
      */
     public function __construct(
         RestResourceInterface $resource,
@@ -118,7 +119,7 @@ class RestRequest implements RestRequestInterface
     /**
      * @param string $type
      *
-     * @return null|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
     public function findParentResourceByType(string $type): ?RestResourceInterface
     {
@@ -281,5 +282,16 @@ class RestRequest implements RestRequestInterface
     public function getExcludeRelationship(): bool
     {
         return $this->excludeRelationship;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getAttributesDataFromRequest(): ?array
+    {
+        if (!isset($this->httpRequest->attributes->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_ATTRIBUTES])) {
+            return null;
+        }
+        return $this->httpRequest->attributes->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_ATTRIBUTES];
     }
 }

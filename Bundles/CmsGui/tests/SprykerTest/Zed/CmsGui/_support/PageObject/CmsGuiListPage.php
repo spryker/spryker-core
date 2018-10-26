@@ -9,5 +9,5 @@ namespace SprykerTest\Zed\CmsGui\PageObject;
 
 class CmsGuiListPage
 {
-    const URL = '/cms-gui/list-page';
+    public const URL = '/cms-gui/list-page';
 }

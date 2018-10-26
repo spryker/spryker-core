@@ -12,7 +12,7 @@ interface ProductDiscontinuedProductLabelConnectorToProductInterface
     /**
      * @param int $idProduct
      *
-     * @return null|int
+     * @return int|null
      */
     public function findProductAbstractIdByConcreteId(int $idProduct): ?int;
 

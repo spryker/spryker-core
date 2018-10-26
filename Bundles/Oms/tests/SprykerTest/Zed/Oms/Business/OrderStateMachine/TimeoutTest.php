@@ -25,9 +25,9 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
  */
 class TimeoutTest extends Unit
 {
-    const CONDITION_NAME = 'conditionName';
-    const EVENT_PAY = 'pay';
-    const EVENT_SHIP = 'ship';
+    public const CONDITION_NAME = 'conditionName';
+    public const EVENT_PAY = 'pay';
+    public const EVENT_SHIP = 'ship';
 
     /**
      * @return void
