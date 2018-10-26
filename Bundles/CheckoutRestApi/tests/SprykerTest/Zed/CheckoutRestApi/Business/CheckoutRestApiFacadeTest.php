@@ -188,7 +188,7 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function createShipmentMethodsTransfer(): AbstractTransfer
     {

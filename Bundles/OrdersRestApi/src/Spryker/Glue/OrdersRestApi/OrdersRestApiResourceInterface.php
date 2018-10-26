@@ -13,7 +13,7 @@ interface OrdersRestApiResourceInterface
 {
     /**
      * Specification:
-     * - Retrieves order by order reference.
+     * - Retrieves customer order by order reference.
      *
      * @api
      *
@@ -22,5 +22,5 @@ interface OrdersRestApiResourceInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findOrderByOrderReference(string $orderReference, string $customerReference): ?RestResourceInterface;
+    public function findCustomerOrderByOrderReference(string $orderReference, string $customerReference): ?RestResourceInterface;
 }

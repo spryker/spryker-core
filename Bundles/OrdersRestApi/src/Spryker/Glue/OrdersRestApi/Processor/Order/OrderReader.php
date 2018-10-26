@@ -91,6 +91,7 @@ class OrderReader implements OrderReaderInterface
             $orderReference,
             $restOrderDetailsAttributesTransfer
         );
+
         return $restResource;
     }
 

@@ -85,7 +85,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
 
         $quoteResponseTransfer = $this->quoteProcessor->validateQuote();
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->returnWithErrorMessagesResponse($this->zedRequestClient->getLastResponseErrorMessages());
+            return $this->createErrorMessagesResponse($this->zedRequestClient->getLastResponseErrorMessages());
         }
 
         $quoteTransfer = $this->quoteProcessor->updateQuoteWithDataFromRequest(
@@ -96,7 +96,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
 
         $checkoutResponseTransfer = $this->checkoutClient->placeOrder($quoteTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
-            return $this->returnWithCheckoutErrorResponse($checkoutResponseTransfer->getErrors(), $restRequest->getMetadata()->getLocale());
+            return $this->createCheckoutErrorResponse($checkoutResponseTransfer->getErrors(), $restRequest->getMetadata()->getLocale());
         }
 
         $this->quoteProcessor->clearQuote();
@@ -144,7 +144,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function returnWithCheckoutErrorResponse(ArrayObject $errors, string $currentLocale): RestResponseInterface
+    protected function createCheckoutErrorResponse(ArrayObject $errors, string $currentLocale): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -182,7 +182,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function returnWithErrorMessagesResponse(array $messageTransfers): RestResponseInterface
+    protected function createErrorMessagesResponse(array $messageTransfers): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 

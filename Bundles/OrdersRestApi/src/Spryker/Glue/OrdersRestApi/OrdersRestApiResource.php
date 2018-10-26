@@ -25,7 +25,7 @@ class OrdersRestApiResource extends AbstractRestResource implements OrdersRestAp
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findOrderByOrderReference(string $orderReference, string $customerReference): ?RestResourceInterface
+    public function findCustomerOrderByOrderReference(string $orderReference, string $customerReference): ?RestResourceInterface
     {
         return $this->getFactory()->createOrderReader()->getOrderByOrderReference($orderReference, $customerReference);
     }

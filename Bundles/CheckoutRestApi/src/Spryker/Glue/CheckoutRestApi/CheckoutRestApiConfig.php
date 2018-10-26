@@ -28,25 +28,8 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_ORDER_NOT_PLACED = 'Order could not be placed.';
     public const EXCEPTION_MESSAGE_QUOTE_NOT_FOUND = 'Quote could not be found.';
 
-    protected const PAYMENT_REQUIRED_DATA_COMMON = [
-        'paymentMethod' => '',
-        'paymentProvider' => '',
-        'paymentSelection' => '',
-    ];
-
-    protected const PAYMENT_REQUIRED_DATA = [
-        'dummyPaymentInvoice' => [
-            'dateOfBirth' => '',
-        ],
-        'dummyPaymentCreditCard' => [
-            'cardType' => '',
-            'cardNumber' => '',
-            'nameOnCard' => '',
-            'cardExpiresMonth' => '',
-            'cardExpiresYear' => '',
-            'cardSecurityCode' => '',
-        ],
-    ];
+    protected const PAYMENT_REQUIRED_DATA_COMMON = [];
+    protected const PAYMENT_REQUIRED_DATA = [];
 
     /**
      * @param string $methodName

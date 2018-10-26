@@ -119,10 +119,12 @@ class QuoteProcessor implements QuoteProcessorInterface
     ): void {
         if (!$restRequest->getUser()) {
             $quoteTransfer->setCustomer((new CustomerTransfer())->fromArray($restCheckoutRequestAttributesTransfer->getQuote()->getCustomer()->toArray(), true));
-        } else {
-            $customerResponseTransfer = $this->customerClient->findCustomerByReference((new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier()));
-            $quoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
+
+            return;
         }
+
+        $customerResponseTransfer = $this->customerClient->findCustomerByReference((new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier()));
+        $quoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
     }
 
     /**

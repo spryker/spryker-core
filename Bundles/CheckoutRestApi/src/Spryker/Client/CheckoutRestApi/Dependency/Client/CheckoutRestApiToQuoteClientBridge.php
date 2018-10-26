@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\CheckoutRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+
 class CheckoutRestApiToQuoteClientBridge implements CheckoutRestApiToQuoteClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class CheckoutRestApiToQuoteClientBridge implements CheckoutRestApiToQuoteClient
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote()
+    public function getQuote(): QuoteTransfer
     {
         return $this->quoteClient->getQuote();
     }
