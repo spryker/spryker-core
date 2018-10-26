@@ -11,7 +11,7 @@ carts:
 
 items:
   post:
-    groupKey:
+    sku:
       - NotBlank
     quantity:
       - NotBlank
@@ -27,7 +27,7 @@ items:
 
 guest-cart-items:
   post:
-    groupKey:
+    sku:
       - NotBlank
     quantity:
       - NotBlank
