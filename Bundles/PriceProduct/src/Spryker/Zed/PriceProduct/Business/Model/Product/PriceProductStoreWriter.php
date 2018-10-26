@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGeneratorInterface;
@@ -108,6 +109,10 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
             ->requireFkCurrency()
             ->requireFkStore();
 
+        if (!$priceProductTransfer->getIdPriceProduct()) {
+            $priceProductTransfer = $this->savePriceProductEntity($priceProductTransfer);
+        }
+
         $priceProductStoreEntity = $this->findPriceProductStoreEntity(
             $priceProductTransfer,
             $moneyValueTransfer
@@ -145,6 +150,36 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
             $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function savePriceProductEntity(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        $priceProductTransfer->requireFkPriceType()
+            ->requireIdProduct();
+
+        $idPriceProduct = $this->priceProductRepository
+            ->findIdPriceProduct($priceProductTransfer);
+
+        if ($idPriceProduct !== null) {
+            $priceProductTransfer->setIdPriceProduct($idPriceProduct);
+
+            return $priceProductTransfer;
+        }
+
+        $priceProductEntity = (new SpyPriceProduct())
+            ->setFkPriceType($priceProductTransfer->getFkPriceType())
+            ->setFkProduct($priceProductTransfer->getIdProduct());
+
+        $priceProductEntity->save();
+
+        $priceProductTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
+
+        return $priceProductTransfer;
     }
 
     /**
