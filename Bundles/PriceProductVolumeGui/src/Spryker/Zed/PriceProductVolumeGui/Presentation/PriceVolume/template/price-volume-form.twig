@@ -63,18 +63,19 @@
                     {{ form_errors(volume.quantity) }}
                 </td>
                 <td>
-                    {{ form_widget(volume.net_price) }}
-                    {{ form_errors(volume.net_price) }}
-                </td>
-                <td>
                     {{ form_widget(volume.gross_price) }}
                     {{ form_errors(volume.gross_price) }}
+                </td>
+                <td>
+                    {{ form_widget(volume.net_price) }}
+                    {{ form_errors(volume.net_price) }}
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
+    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans}}</a>
     <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save and add more rows' | trans }}"/>
     <input type="submit" name="save_and_exit" class="btn btn-primary safe-submit" value="{{ 'Save and exit' | trans }}"/>
 

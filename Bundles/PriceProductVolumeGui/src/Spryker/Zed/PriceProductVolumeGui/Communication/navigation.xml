@@ -13,7 +13,7 @@
         <pages>
             <price-product-volume-gui>
                 <label>Volume prices</label>
-                <visible>1</visible>
+                <visible>0</visible>
                 <pages>
                     <add>
                         <label>Add volume prices</label>
@@ -21,7 +21,7 @@
                         <bundle>price-product-volume-gui</bundle>
                         <controller>price-volume</controller>
                         <action>add</action>
-                        <visible>1</visible>
+                        <visible>0</visible>
                     </add>
                     <edit>
                         <label>Edit volume prices</label>
@@ -29,7 +29,7 @@
                         <bundle>price-product-volume-gui</bundle>
                         <controller>price-volume</controller>
                         <action>edit</action>
-                        <visible>1</visible>
+                        <visible>0</visible>
                     </edit>
                 </pages>
             </price-product-volume-gui>
