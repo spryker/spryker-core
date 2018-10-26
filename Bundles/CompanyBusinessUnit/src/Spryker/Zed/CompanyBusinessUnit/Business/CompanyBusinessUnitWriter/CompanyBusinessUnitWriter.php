@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutor;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -53,7 +53,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     public function __construct(
         CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository,
         CompanyBusinessUnitEntityManagerInterface $companyBusinessUnitEntityManager,
-        CompanyBusinessUnitPluginExecutor $companyBusinessUnitPluginExecutor
+        CompanyBusinessUnitPluginExecutorInterface $companyBusinessUnitPluginExecutor
     ) {
         $this->repository = $companyBusinessUnitRepository;
         $this->entityManager = $companyBusinessUnitEntityManager;
