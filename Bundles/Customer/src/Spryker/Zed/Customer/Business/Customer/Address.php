@@ -194,15 +194,13 @@ class Address implements AddressInterface
      *
      * @return bool
      */
-    public function addressExists(AddressTransfer $addressTransfer): bool
+    public function checkAddressExistsByIdCustomerAddress(AddressTransfer $addressTransfer): bool
     {
         if ($addressTransfer->getIdCustomerAddress() === null) {
             return false;
         }
 
-        $addressTransfer = $this->customerRepository->findCustomerAddressById($addressTransfer);
-
-        return $addressTransfer !== null;
+        return $this->customerRepository->findCustomerAddressById($addressTransfer) !== null;
     }
 
     /**

@@ -272,7 +272,7 @@ interface CustomerFacadeInterface
      *
      * @return bool
      */
-    public function addressExists(AddressTransfer $addressTransfer): bool;
+    public function checkAddressExistsByIdCustomerAddress(AddressTransfer $addressTransfer): bool;
 
     /**
      * Specification:

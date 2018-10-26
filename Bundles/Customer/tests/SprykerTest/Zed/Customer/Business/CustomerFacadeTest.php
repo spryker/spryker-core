@@ -540,11 +540,11 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddressExistsShouldReturnFalseIfIdCustomerAddressIsUndefined(): void
+    public function testCheckAddressExistsByIdCustomerAddressShouldReturnFalseIfIdCustomerAddressIsUndefined(): void
     {
         $addressTransfer = new AddressTransfer();
 
-        $this->assertFalse($this->getCustomerFacade()->addressExists($addressTransfer));
+        $this->assertFalse($this->getCustomerFacade()->checkAddressExistsByIdCustomerAddress($addressTransfer));
     }
 
     /**

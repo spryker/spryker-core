@@ -160,7 +160,13 @@ class AddressTable extends AbstractTable
             : null;
 
         if ($idCustomerAddress !== null) {
-            $buttons[] = $this->generateEditButton(sprintf('/customer/address/edit?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'Edit');
+            $buttons[] = $this->generateEditButton(sprintf(
+                '/customer/address/edit?%s=%d&%s=%d',
+                CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS,
+                $idCustomerAddress,
+                CustomerConstants::PARAM_ID_CUSTOMER,
+                $this->idCustomer
+            ), 'Edit');
         }
 
         return implode(' ', $buttons);
