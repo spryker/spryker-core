@@ -11,6 +11,8 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientInterface;
+use Spryker\Client\PersistentCart\GuestCartCustomerReferenceGenerator\GuestCartCustomerReferenceGenerator;
+use Spryker\Client\PersistentCart\GuestCartCustomerReferenceGenerator\GuestCartCustomerReferenceGeneratorInterface;
 use Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerLoginQuoteSync;
 use Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerLoginQuoteSyncInterface;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\ChangeRequestExtendPluginExecutor;
@@ -26,6 +28,9 @@ use Spryker\Client\PersistentCart\QuoteWriter\QuoteUpdaterInterface;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStub;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface;
 
+/**
+ * @method \Spryker\Client\PersistentCart\PersistentCartConfig getConfig()
+ */
 class PersistentCartFactory extends AbstractFactory
 {
     /**
@@ -142,5 +147,13 @@ class PersistentCartFactory extends AbstractFactory
     protected function getChangeRequestExtendPlugins(): array
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_CHANGE_REQUEST_EXTEND);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\GuestCartCustomerReferenceGenerator\GuestCartCustomerReferenceGeneratorInterface
+     */
+    public function createGuestCartCustomerReferenceGenerator(): GuestCartCustomerReferenceGeneratorInterface
+    {
+        return new GuestCartCustomerReferenceGenerator($this->getConfig());
     }
 }

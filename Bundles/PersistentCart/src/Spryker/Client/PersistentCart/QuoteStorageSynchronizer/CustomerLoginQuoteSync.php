@@ -75,6 +75,11 @@ class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
         $quoteSyncRequestTransfer->setQuoteTransfer($quoteTransfer);
         $quoteSyncRequestTransfer->setCustomerTransfer($customerTransfer);
         $quoteResponseTransfer = $this->persistentCartStub->syncStorageQuote($quoteSyncRequestTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return;
+        }
+
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         $this->quoteUpdatePluginExecutor->executePlugins($quoteResponseTransfer);
