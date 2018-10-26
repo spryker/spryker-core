@@ -1,0 +1,34 @@
+{% set hasAssignedPermissions = false %}
+{% set hasUnassignedPermissions = false %}
+
+{% for child in form if not hasAssignedPermissions or not hasUnassignedPermissions %}
+    {% if child.vars.data %}
+        {% set hasAssignedPermissions = true %}
+    {% else %}
+        {% set hasUnassignedPermissions = true %}
+    {% endif %}
+{% endfor %}
+
+<div id="company-role_permission_collection">
+    {% if hasAssignedPermissions %}
+        <div class="form-group">
+            <label>Assigned Permissions</label>
+            {% for child in form %}
+                {% if child.vars.data %}
+                    {{ form_widget(child) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if hasUnassignedPermissions %}
+        <div class="form-group">
+            <label>Unassigned Permissions</label>
+            {% for child in form %}
+                {% if not child.vars.data %}
+                    {{ form_widget(child) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

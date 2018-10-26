@@ -36,6 +36,8 @@ class PathRequestSpecificationComponent implements SpecificationComponentInterfa
      */
     public function toArray(): array
     {
+        $result = [];
+
         $result[static::KEY_DESCRIPTION] = $this->description;
         $result[static::KEY_REQUIRED] = $this->required;
         if ($this->jsonSchemaRef) {
