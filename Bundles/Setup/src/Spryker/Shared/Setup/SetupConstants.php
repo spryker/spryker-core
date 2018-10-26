@@ -14,4 +14,7 @@ interface SetupConstants
 {
     public const JENKINS_BASE_URL = 'JENKINS_BASE_URL';
     public const JENKINS_DIRECTORY = 'JENKINS_DIRECTORY';
+
+    public const CRONJOBS_PATH = 'SETUP:CRONJOBS_PATH';
+    public const CRONJOBS_CONFIG_PATH = 'SETUP:CRONJOBS_CONFIG_PATH';
 }

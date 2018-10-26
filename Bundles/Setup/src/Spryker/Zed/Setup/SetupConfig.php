@@ -22,15 +22,9 @@ class SetupConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getPathForJobsPHP()
+    public function getPathForJobsPHP(): string
     {
-        return implode(DIRECTORY_SEPARATOR, [
-            APPLICATION_ROOT_DIR,
-            'config',
-            'Zed',
-            'cronjobs',
-            'jobs.php',
-        ]);
+        return $this->get(SetupConstants::CRONJOBS_PATH);
     }
 
     /**
@@ -95,5 +89,13 @@ class SetupConfig extends AbstractBundleConfig
             BuildNavigationConsole::COMMAND_NAME,
             SearchConsole::COMMAND_NAME,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getJobsConfigPath(): string
+    {
+        return $this->get(SetupConstants::CRONJOBS_CONFIG_PATH);
     }
 }

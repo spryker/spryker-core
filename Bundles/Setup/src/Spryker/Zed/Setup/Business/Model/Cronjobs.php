@@ -450,20 +450,24 @@ class Cronjobs
     {
         $environment = Environment::getInstance();
         $environment_name = $environment->getEnvironment();
+
+        $cronjobsConfigPath = $this->config->getJobsConfigPath();
+
         if ($environment->isNotDevelopment()) {
             return "<command>[ -f " . APPLICATION_ROOT_DIR . "/deploy/vars ] &amp;&amp; . " . APPLICATION_ROOT_DIR . "/deploy/vars
 export APPLICATION_ENV=$environment_name
 export APPLICATION_STORE=$store
 cd \$destination_release_dir
-. ./config/Zed/cronjobs/cron.conf
+. $cronjobsConfigPath
 $command</command>";
         }
 
+        $applicationRoot = APPLICATION_ROOT_DIR;
         return "<command>
 export APPLICATION_ENV=$environment_name
 export APPLICATION_STORE=$store
-cd /data/shop/development/current
-. ./config/Zed/cronjobs/cron.conf
+cd $applicationRoot
+. $cronjobsConfigPath
 $command</command>";
     }
 
