@@ -388,6 +388,17 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Propel\Business\Model\Schema\Validator\PropelSchemaValidatorInterface
+     */
+    public function createSchemaXmlValidator()
+    {
+        $propelSchemaXmlValidator = new PropelSchemaValidator(
+        );
+
+        return $propelSchemaValidator;
+    }
+
+    /**
      * @return \Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface
      */
     protected function getUtilTextService()

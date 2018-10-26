@@ -81,43 +81,6 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     }
 
     /**
-     * @param \SimpleXMLElement $xml
-     * @param string $fileName
-     *
-     * @return void
-     */
-    protected function validateIdentifierNames($xml, $fileName)
-    {
-        $elements = array_merge(
-            $xml->xpath('/database/table/index/@name'),
-            $xml->xpath('/database/table/@name'),
-            $xml->xpath('/database/table/foreign-key/reference/@local'),
-            $xml->xpath('/database/table/id-method-parameter/@value')
-        );
-        foreach ($elements as $element) {
-            $attributeValue = $element->__toString();
-            if ($this->isLongerThanIdentifierMaxLength($attributeValue)) {
-                $this->addError(sprintf(
-                    'There is a problem with %s . The identifier "%s" has a length beyond the maximum identifier length "%s". Your database will persist a truncated identifier leading to more problems!',
-                    $fileName,
-                    $attributeValue,
-                    PropelConfig::POSTGRES_INDEX_NAME_MAX_LENGTH
-                ));
-            }
-        }
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    protected function isLongerThanIdentifierMaxLength(string $name): bool
-    {
-        return (mb_strlen($name) > PropelConfig::POSTGRES_INDEX_NAME_MAX_LENGTH);
-    }
-
-    /**
      * @return array
      */
     protected function getSchemaFilesForValidation(): array
