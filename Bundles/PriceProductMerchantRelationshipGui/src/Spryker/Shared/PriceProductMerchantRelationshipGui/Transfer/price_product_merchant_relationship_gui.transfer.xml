@@ -7,4 +7,14 @@
         <property name="idMerchantRelationship" type="int" />
     </transfer>
 
+    <transfer name="MerchantRelationship">
+        <property name="idMerchantRelationship" type="int" />
+        <property name="name" type="string" />
+        <property name="merchant" type="Merchant" />
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="name" dataBuilderRule="word"/>
+    </transfer>
+
 </transfers>
