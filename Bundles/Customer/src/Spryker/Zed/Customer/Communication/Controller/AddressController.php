@@ -40,7 +40,7 @@ class AddressController extends AbstractController
         if (!$this->getFacade()->checkAddressExistsByIdCustomerAddress($addressDetails)) {
             $this->addErrorMessage(sprintf(static::ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST, $idCustomerAddress));
 
-            $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER) ?? null;
+            $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
 
             return $this->redirectResponse(sprintf(
                 static::URL_CUSTOMER_VIEW,
