@@ -476,7 +476,7 @@ $command</command>";
      */
     protected function getJobConfigPath()
     {
-        return $this->config->getPathForJobsPHP();
+        return $this->config->getCronjobsDefinitionFilePath();
     }
 
     /**
