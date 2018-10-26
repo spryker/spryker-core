@@ -57,12 +57,15 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addProductAbstractIdHiddenField($builder)
             ->addProductConcreteIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
+            ->addPriceDimensionForm($builder)
             ->addPriceForm($builder, $options)
             ->addStockForm($builder, $options)
             ->addImageLocalizedForms($builder)
             ->addAssignBundledProductForm($builder, $options)
-            ->addBundledProductsToBeRemoved($builder)
-            ->addFormBuildPlugins($builder, $options);
+            ->addBundledProductsToBeRemoved($builder);
+
+        $this->executeProductConcreteFormExpanderPlugins($builder, $options)
+            ->executeProductConcreteEditFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -379,7 +382,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
      *
      * @return $this
      */
-    protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options): self
+    protected function executeProductConcreteEditFormExpanderPlugins(FormBuilderInterface $builder, array $options): self
     {
         /** @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface $plugin */
         foreach ($this->getFactory()->getProductConcreteEditFormExpanderPlugins() as $plugin) {
@@ -411,5 +414,20 @@ class ProductConcreteFormEdit extends ProductFormAdd
         }
 
         return $superAttributes;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function executeProductConcreteFormExpanderPlugins(FormBuilderInterface $builder, array $options): self
+    {
+        foreach ($this->getFactory()->getProductConcreteFormExpanderPlugins() as $concreteFormExpanderPlugin) {
+            $builder = $concreteFormExpanderPlugin->expand($builder, $options);
+        }
+
+        return $this;
     }
 }
