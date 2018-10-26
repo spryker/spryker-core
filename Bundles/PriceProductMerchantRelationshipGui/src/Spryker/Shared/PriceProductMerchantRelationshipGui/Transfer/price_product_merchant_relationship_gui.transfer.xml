@@ -5,6 +5,7 @@
 
     <transfer name="PriceProductDimension">
         <property name="idMerchantRelationship" type="int" />
+        <property name="type" type="string" />
     </transfer>
 
     <transfer name="MerchantRelationship">
