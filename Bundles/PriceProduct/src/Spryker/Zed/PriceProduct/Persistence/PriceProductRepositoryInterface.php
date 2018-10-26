@@ -92,5 +92,5 @@ interface PriceProductRepositoryInterface
      *
      * @return int|null
      */
-    public function findIdPriceProduct(PriceProductTransfer $priceProductTransfer): ?int;
+    public function findIdPriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): ?int;
 }
