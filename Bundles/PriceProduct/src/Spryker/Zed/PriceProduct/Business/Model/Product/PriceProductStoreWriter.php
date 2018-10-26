@@ -159,11 +159,12 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
      */
     protected function savePriceProductEntity(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        $priceProductTransfer->requireFkPriceType()
+        $priceProductTransfer
+            ->requireFkPriceType()
             ->requireIdProduct();
 
         $idPriceProduct = $this->priceProductRepository
-            ->findIdPriceProduct($priceProductTransfer);
+            ->findIdPriceProductForProductConcrete($priceProductTransfer);
 
         if ($idPriceProduct !== null) {
             $priceProductTransfer->setIdPriceProduct($idPriceProduct);

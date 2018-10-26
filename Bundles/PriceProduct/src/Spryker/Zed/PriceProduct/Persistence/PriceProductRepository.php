@@ -241,7 +241,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      *
      * @return int|null
      */
-    public function findIdPriceProduct(PriceProductTransfer $priceProductTransfer): ?int
+    public function findIdPriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): ?int
     {
         $priceProductEntity = $this->getFactory()
             ->createPriceProductQuery()

@@ -75,7 +75,7 @@
         </tbody>
     </table>
 
-    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans}}</a>
+    <a href="{{ back_url }}" class="btn btn-back">{{ 'Back' | trans}}</a>
     <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save and add more rows' | trans }}"/>
     <input type="submit" name="save_and_exit" class="btn btn-primary safe-submit" value="{{ 'Save and exit' | trans }}"/>
 

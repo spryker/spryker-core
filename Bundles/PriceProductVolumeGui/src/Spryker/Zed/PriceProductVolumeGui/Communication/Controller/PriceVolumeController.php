@@ -61,6 +61,7 @@ class PriceVolumeController extends AbstractController
             'form' => $priceVolumeCollectionFormType->createView(),
             'price_product' => $priceProductTransfer,
             'store_name' => $request->get(static::REQUEST_PARAM_STORE_NAME),
+            'back_url' => $this->getExitUrl($request),
         ]);
     }
 

@@ -15,7 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 
 /**
@@ -70,7 +69,6 @@ class PriceVolumeFormType extends AbstractType
             'constraints' => [
                 new Required(),
                 new GreaterThanOrEqual(['value' => static::MINIMUM_QUANTITY, 'message' => static::MESSAGE_QUANTITY_ERROR]),
-//                new Regex(['pattern' => '/[\d]+/', 'message' => static::MESSAGE_QUANTITY_ERROR]),
             ],
         ]);
 
