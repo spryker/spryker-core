@@ -8,16 +8,33 @@ carts:
       - NotBlank
     store:
       - NotBlank
+
 items:
   post:
-    sku:
+    groupKey:
       - NotBlank
     quantity:
       - NotBlank
       - Type:
         type: numeric
   patch:
-    sku:
+    groupKey:
+      - NotBlank
+    quantity:
+      - NotBlank
+      - Type:
+        type: numeric
+
+guest-cart-items:
+  post:
+    groupKey:
+      - NotBlank
+    quantity:
+      - NotBlank
+      - Type:
+        type: numeric
+  patch:
+    groupKey:
       - NotBlank
     quantity:
       - NotBlank
