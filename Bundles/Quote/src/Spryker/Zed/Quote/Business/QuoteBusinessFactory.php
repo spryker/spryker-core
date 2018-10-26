@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Quote\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Quote\Business\GuestQuote\GuestQuoteDeleter;
+use Spryker\Zed\Quote\Business\GuestQuote\GuestQuoteDeleterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteDeleter;
 use Spryker\Zed\Quote\Business\Model\QuoteDeleterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteReader;
@@ -73,6 +75,17 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getQuoteDeleteBeforePlugins(),
             $this->getQuoteDeleteAfterPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\GuestQuote\GuestQuoteDeleterInterface
+     */
+    public function createGuestQuoteDeleter(): GuestQuoteDeleterInterface
+    {
+        return new GuestQuoteDeleter(
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 

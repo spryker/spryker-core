@@ -248,7 +248,7 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestRequestValidator(): RestRequestValidatorInterface
     {
-        return new RestRequestValidator($this->getValidateRestRequestPlugins());
+        return new RestRequestValidator($this->getValidateRestRequestPlugins(), $this->getRestRequestValidatorPlugins());
     }
 
     /**
@@ -332,6 +332,14 @@ class GlueApplicationFactory extends AbstractFactory
     public function getValidateRestRequestPlugins(): array
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_VALIDATE_REST_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface[]
+     */
+    public function getRestRequestValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_REST_REQUEST_VALIDATOR);
     }
 
     /**
