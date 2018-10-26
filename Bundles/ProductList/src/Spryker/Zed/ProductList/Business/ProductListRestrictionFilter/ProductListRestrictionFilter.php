@@ -42,7 +42,7 @@ class ProductListRestrictionFilter implements ProductListRestrictionFilterInterf
 
         if (!empty($customerWhitelistIds)) {
             $productConcreteSkusInWhitelist = $this->productListReader
-                ->getConcreteProductSkusInWhitelists($productConcreteSkus, $customerWhitelistIds);
+                ->getProductConcreteSkusInWhitelists($productConcreteSkus, $customerWhitelistIds);
 
             $restrictedProductConcreteSkus = array_diff($productConcreteSkus, $productConcreteSkusInWhitelist);
         }

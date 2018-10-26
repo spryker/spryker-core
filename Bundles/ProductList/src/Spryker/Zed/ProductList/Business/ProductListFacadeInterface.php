@@ -121,11 +121,11 @@ interface ProductListFacadeInterface
      *
      * @deprecated Use ProductListFacadeInterface::getProductBlacklistIdsByIdProduct() instead.
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array;
+    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProduct): array;
 
     /**
      * Specification:
@@ -133,11 +133,11 @@ interface ProductListFacadeInterface
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getProductBlacklistIdsByIdProduct(int $idProductConcrete): array;
+    public function getProductBlacklistIdsByIdProduct(int $idProduct): array;
 
     /**
      * Specification:
@@ -147,11 +147,11 @@ interface ProductListFacadeInterface
      *
      * @deprecated Use ProductListFacadeInterface::getProductWhitelistIdsByIdProduct() instead.
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
+    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProduct): array;
 
     /**
      * Specification:
@@ -159,11 +159,11 @@ interface ProductListFacadeInterface
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getProductWhitelistIdsByIdProduct(int $idProductConcrete): array;
+    public function getProductWhitelistIdsByIdProduct(int $idProduct): array;
 
     /**
      * Specification:

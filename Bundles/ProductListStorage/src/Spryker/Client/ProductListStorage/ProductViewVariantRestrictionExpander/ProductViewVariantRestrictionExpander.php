@@ -43,7 +43,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
 
         $restrictedProductConcreteIds = $this->getRestrictedProductConcreteIds($productViewTransfer->getAttributeMap()->getProductConcreteIds());
 
-        if (!$restrictedProductConcreteIds) {
+        if (empty($restrictedProductConcreteIds)) {
             return $productViewTransfer;
         }
 

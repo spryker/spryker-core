@@ -102,27 +102,27 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getConcreteProductBlacklistIds(int $idProductConcrete): array
+    public function getConcreteProductBlacklistIds(int $idProduct): array
     {
         return $this->getConcreteProductListIdsForType(
-            $idProductConcrete,
+            $idProduct,
             SpyProductListTableMap::COL_TYPE_BLACKLIST
         );
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getConcreteProductWhitelistIds(int $idProductConcrete): array
+    public function getConcreteProductWhitelistIds(int $idProduct): array
     {
         return $this->getConcreteProductListIdsForType(
-            $idProductConcrete,
+            $idProduct,
             SpyProductListTableMap::COL_TYPE_WHITELIST
         );
     }
@@ -148,7 +148,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      *
      * @return string[]
      */
-    public function getConcreteProductSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array
+    public function getProductConcreteSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array
     {
         return $this->getConcreteProductSkusInList(
             $productConcreteSkus,
@@ -158,12 +158,12 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      * @param string $listType
      *
      * @return int[]
      */
-    protected function getConcreteProductListIdsForType(int $idProductConcrete, string $listType): array
+    protected function getConcreteProductListIdsForType(int $idProduct, string $listType): array
     {
         /** @var \Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery $productListProductConcreteQuery */
         $productListProductConcreteQuery = $this->getFactory()
@@ -171,7 +171,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST);
 
         return $productListProductConcreteQuery
-            ->filterByFkProduct($idProductConcrete)
+            ->filterByFkProduct($idProduct)
             ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
                 ->filterByType($listType)
             ->endUse()

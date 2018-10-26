@@ -40,18 +40,18 @@ interface ProductListReaderInterface
     public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer;
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getProductBlacklistIdsByIdProduct(int $idProductConcrete): array;
+    public function getProductBlacklistIdsByIdProduct(int $idProduct): array;
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getProductWhitelistIdsByIdProduct(int $idProductConcrete): array;
+    public function getProductWhitelistIdsByIdProduct(int $idProduct): array;
 
     /**
      * @param string[] $productConcreteSkus
@@ -67,7 +67,7 @@ interface ProductListReaderInterface
      *
      * @return array
      */
-    public function getConcreteProductSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array;
+    public function getProductConcreteSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array;
 
     /**
      * @param int[] $productListIds

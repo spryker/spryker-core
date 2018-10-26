@@ -31,18 +31,18 @@ interface ProductListStorageToProductListFacadeInterface
     public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getProductBlacklistIdsByIdProduct(int $idProductConcrete): array;
+    public function getProductBlacklistIdsByIdProduct(int $idProduct): array;
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getProductWhitelistIdsByIdProduct(int $idProductConcrete): array;
+    public function getProductWhitelistIdsByIdProduct(int $idProduct): array;
 
     /**
      * @param int[] $productListIds

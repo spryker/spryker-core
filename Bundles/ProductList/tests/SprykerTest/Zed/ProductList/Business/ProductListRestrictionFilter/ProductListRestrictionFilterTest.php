@@ -79,7 +79,7 @@ class ProductListRestrictionFilterTest extends Unit
         $customerWhitelistIds = [2];
 
         $this->productListReaderMock
-            ->method('getConcreteProductSkusInWhitelists')
+            ->method('getProductConcreteSkusInWhitelists')
             ->willReturn(['y']);
 
         $cartSkus = ['x', 'y'];
@@ -103,7 +103,7 @@ class ProductListRestrictionFilterTest extends Unit
         $customerWhitelistIds = [2];
 
         $this->productListReaderMock
-            ->method('getConcreteProductSkusInWhitelists')
+            ->method('getProductConcreteSkusInWhitelists')
             ->willReturn(['y']);
 
         $this->productListReaderMock
@@ -131,7 +131,7 @@ class ProductListRestrictionFilterTest extends Unit
         $customerWhitelistIds = [2];
 
         $this->productListReaderMock
-            ->method('getConcreteProductSkusInWhitelists')
+            ->method('getProductConcreteSkusInWhitelists')
             ->willReturn(['y']);
 
         $this->productListReaderMock
@@ -159,7 +159,7 @@ class ProductListRestrictionFilterTest extends Unit
         $customerWhitelistIds = [2];
 
         $this->productListReaderMock
-            ->method('getConcreteProductSkusInWhitelists')
+            ->method('getProductConcreteSkusInWhitelists')
             ->willReturn([]);
 
         $cartSkus = ['x', 'y', 'z'];

@@ -72,7 +72,7 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
         array $blacklistIds,
         array $whitelistIds
     ): void {
-        if (!$blacklistIds && !$whitelistIds) {
+        if (empty($blacklistIds) && empty($whitelistIds)) {
             return;
         }
 
