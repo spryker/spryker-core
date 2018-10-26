@@ -242,7 +242,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function deleteAddressAction(AddressTransfer $addressTransfer)
     {
@@ -252,10 +252,9 @@ class GatewayController extends AbstractGatewayController
             return $addressTransfer;
         } catch (AddressNotFoundException $e) {
             $this->setSuccess(false);
-            $addressTransfer = new AddressTransfer();
         }
 
-        return $addressTransfer;
+        return null;
     }
 
     /**
