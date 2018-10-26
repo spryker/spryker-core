@@ -9,12 +9,15 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Address;
 
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
+use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -98,12 +101,23 @@ class AddressWriter implements AddressWriterInterface
             return $this->restApiError->addAddressNotSavedError($restResponse);
         }
 
-        $restResource = $this
+        $restAddressAttributesTransfer = $this
             ->addressesResourceMapper
-            ->mapAddressTransferToRestResource(
+            ->mapAddressTransferToRestAddressAttributesTransfer(
                 $addressesTransfer->getAddresses()[$addressesTransfer->getAddresses()->count() - 1],
                 $customerTransfer
             );
+
+        $restResource = $this->restResourceBuilder->createRestResource(
+            CustomersRestApiConfig::RESOURCE_ADDRESSES,
+            $addressTransfer->getUuid(),
+            $restAddressAttributesTransfer
+        );
+
+        $restResource->addLink(
+            RestResourceInterface::RESOURCE_LINKS_SELF,
+            $this->createSelfLink($customerTransfer, $addressTransfer)
+        );
 
         $restResponse->addResource($restResource);
 
@@ -138,12 +152,23 @@ class AddressWriter implements AddressWriterInterface
 
         $customerTransfer = $this->customerClient->updateAddressAndCustomerDefaultAddresses($addressTransfer);
 
-        $restResource = $this
+        $restAddressAttributesTransfer = $this
             ->addressesResourceMapper
-            ->mapAddressTransferToRestResource(
+            ->mapAddressTransferToRestAddressAttributesTransfer(
                 $this->getAddressByUuid($customerTransfer->getAddresses(), $restRequest->getResource()->getId()),
                 $customerTransfer
             );
+
+        $restResource = $this->restResourceBuilder->createRestResource(
+            CustomersRestApiConfig::RESOURCE_ADDRESSES,
+            $addressTransfer->getUuid(),
+            $restAddressAttributesTransfer
+        );
+
+        $restResource->addLink(
+            RestResourceInterface::RESOURCE_LINKS_SELF,
+            $this->createSelfLink($customerTransfer, $addressTransfer)
+        );
 
         $restResponse->addResource($restResource);
 
@@ -193,5 +218,22 @@ class AddressWriter implements AddressWriterInterface
         }
 
         return new AddressTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function createSelfLink(CustomerTransfer $customerTransfer, AddressTransfer $addressTransfer): string
+    {
+        return sprintf(
+            CustomersRestApiConfig::FORMAT_SELF_LINK_ADDRESS_RESOURCE,
+            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
+            $customerTransfer->getCustomerReference(),
+            CustomersRestApiConfig::RESOURCE_ADDRESSES,
+            $addressTransfer->getUuid()
+        );
     }
 }

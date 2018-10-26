@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class QuoteChangeObserver implements QuoteChangeObserverInterface
 {
@@ -205,6 +206,10 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      */
     protected function isVoucherUsableForCurrentCurrency(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer): bool
     {
+        if ($discountTransfer->getCalculatorPlugin() === DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE) {
+            return true;
+        }
+
         $grossModeEnabled = $quoteTransfer->getPriceMode() === DiscountConfig::PRICE_MODE_GROSS;
         $netModeEnabled = $quoteTransfer->getPriceMode() === DiscountConfig::PRICE_MODE_NET;
 

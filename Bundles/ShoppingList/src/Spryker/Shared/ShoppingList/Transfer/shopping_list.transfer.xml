@@ -41,6 +41,7 @@
         <property name="quantity" type="int"/>
         <property name="sku" type="string" />
         <property name="idProduct" type="int" />
+        <property name="idProductAbstract" type="int" />
         <property name="shoppingListName" type="string" />
         <property name="product" type="StorageProduct" />
         <property name="idCompanyUser" type="int" />
@@ -95,9 +96,20 @@
         <property name="shoppingListOwnerId" type="int" />
     </transfer>
 
+    <transfer name="ShoppingListDismissRequest">
+        <property name="idShoppingList" type="int" />
+        <property name="idCompanyUser" type="int" />
+    </transfer>
+
     <transfer name="ShoppingListShareResponse">
         <property name="isSuccess" type="bool" />
         <property name="error" type="string" />
+    </transfer>
+
+    <transfer name="ShoppingListCompanyBusinessUnitBlacklist">
+        <property name="idShoppingListCompanyBusinessUnitBlacklist" type="int" />
+        <property name="fkShoppingListCompanyBusinessUnit" type="int" />
+        <property name="fkCompanyUser" type="int" />
     </transfer>
 
     <transfer name="ShoppingListPermissionGroup">
