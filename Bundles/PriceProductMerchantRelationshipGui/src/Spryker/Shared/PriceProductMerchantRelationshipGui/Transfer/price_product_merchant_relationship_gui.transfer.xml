@@ -15,7 +15,7 @@
     </transfer>
 
     <transfer name="Merchant">
-        <property name="name" dataBuilderRule="word"/>
+        <property name="name" type="string" />
     </transfer>
 
 </transfers>
