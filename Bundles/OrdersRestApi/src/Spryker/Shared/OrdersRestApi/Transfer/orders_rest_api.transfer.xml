@@ -7,6 +7,7 @@
         <property name="createdAt" type="string"/>
         <property name="totals" type="RestOrderTotalsAttributes"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="RestOrderDetailsAttributes">
@@ -15,6 +16,11 @@
         <property name="currencyIsoCode" type="string"/>
         <property name="items" type="RestOrderItemsAttributes[]" singular="item"/>
         <property name="expenses" type="RestOrderExpensesAttributes[]" singular="expense"/>
+        <property name="billingAddress" type="RestOrderAddress"/>
+        <property name="shippingAddress" type="RestOrderAddress"/>
+        <property name="priceMode" type="string"/>
+        <property name="payments" type="RestOrderPayment[]" singular="payment"/>
+        <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount"/>
     </transfer>
 
     <transfer name="RestOrderItemsAttributes">
@@ -23,6 +29,33 @@
         <property name="sumPrice" type="int"/>
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="quantity" type="int"/>
+        <property name="metadata" type="RestOrderItemMetadata"/>
+        <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount"/>
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
+        <property name="taxRate" type="float" />
+        <property name="unitNetPrice" type="int" />
+        <property name="sumNetPrice" type="int" />
+        <property name="unitPrice" type="int" />
+        <property name="sumPrice" type="int" />
+        <property name="unitTaxAmountFullAggregation" type="int" />
+        <property name="sumTaxAmountFullAggregation" type="int" />
+        <property name="refundableAmount" type="int" />
+        <property name="canceledAmount" type="int" />
+        <property name="sumSubtotalAggregation" type="int" />
+        <property name="unitSubtotalAggregation" type="int" />
+        <property name="unitProductOptionPriceAggregation" type="int" />
+        <property name="sumProductOptionPriceAggregation" type="int" />
+        <property name="unitExpensePriceAggregation" type="int" />
+        <property name="sumExpensePriceAggregation" type="int" />
+        <property name="unitDiscountAmountAggregation" type="int" />
+        <property name="sumDiscountAmountAggregation" type="int" />
+        <property name="unitDiscountAmountFullAggregation" type="int" />
+        <property name="sumDiscountAmountFullAggregation" type="int" />
+        <property name="unitPriceToPayAggregation" type="int" />
+        <property name="sumPriceToPayAggregation" type="int" />
+        <property name="taxRateAverageAggregation" type="float" />
+        <property name="taxAmountAfterCancellation" type="int" />
     </transfer>
 
     <transfer name="RestOrderTotalsAttributes">
@@ -35,8 +68,63 @@
     </transfer>
 
     <transfer name="RestOrderExpensesAttributes">
+        <property name="type" type="string"/>
         <property name="name" type="string"/>
         <property name="sumPrice" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="taxRate" type="float"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="sumNetPrice" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
+        <property name="unitTaxAmount" type="int"/>
+        <property name="sumTaxAmount" type="int"/>
+        <property name="unitPriceToPayAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="taxAmountAfterCancellation" type="int"/>
+    </transfer>
+
+    <transfer name="RestOrderAddress">
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="middleName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="company" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="poBox" type="string"/>
+        <property name="phone" type="string"/>
+        <property name="cellPhone" type="string"/>
+        <property name="description" type="string"/>
+        <property name="comment" type="string"/>
+        <property name="email" type="string"/>
+        <property name="country" type="string"/>
+        <property name="iso2Code" type="string"/>
+    </transfer>
+
+    <transfer name="RestOrderPayment">
+        <property name="amount" type="int"/>
+        <property name="paymentProvider" type="string"/>
+        <property name="paymentMethod" type="string"/>
+    </transfer>
+
+    <transfer name="RestOrderItemMetadata">
+        <property name="superAttributes" type="array" singular="superAttribute"/>
+        <property name="image" type="string"/>
+    </transfer>
+
+    <transfer name="RestCalculatedDiscount">
+        <property name="unitAmount" type="int"/>
+        <property name="sumAmount" type="int"/>
+        <property name="displayName" type="string"/>
+        <property name="description" type="string"/>
+        <property name="voucherCode" type="string"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
 </transfers>

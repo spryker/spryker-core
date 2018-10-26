@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Shared\ShoppingList\ShoppingListConfig;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
@@ -161,6 +160,11 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $businessUnitSharedShoppingLists = $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingLists(
                 $customerTransfer->getCompanyUserTransfer()->getFkCompanyBusinessUnit()
             );
+
+            $businessUnitSharedShoppingLists = $this->filterBlacklistedShoppingLists(
+                $businessUnitSharedShoppingLists,
+                $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
+            );
         }
 
         return $this->mergeShoppingListCollections($customerOwnShoppingLists, $customerSharedShoppingLists, $businessUnitSharedShoppingLists);
@@ -205,14 +209,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
-     */
-    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
-    {
-        return $this->shoppingListRepository->getShoppingListPermissionGroup();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
     public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
@@ -231,12 +227,15 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $companyUserPermissionCollectionTransfer = new PermissionCollectionTransfer();
 
         $companyUserOwnShoppingListIds = $this->findCompanyUserShoppingListIds($companyUserTransfer);
+        $companyBusinessUnitSharedShoppingListIds = $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingListsIds($companyUserTransfer->getFkCompanyBusinessUnit());
+        $companyBusinessUnitBlacklistedShoppingListIds = $this->shoppingListRepository->getBlacklistedShoppingListIdsByIdCompanyUser($companyUserTransfer->getIdCompanyUser());
+        $companyBusinessUnitSharedShoppingListIds = array_diff($companyBusinessUnitSharedShoppingListIds, $companyBusinessUnitBlacklistedShoppingListIds);
 
         $companyUserPermissionCollectionTransfer = $this->addReadPermissionToPermissionCollectionTransfer(
             $companyUserPermissionCollectionTransfer,
             array_merge(
                 $this->shoppingListRepository->findCompanyUserSharedShoppingListsIds($companyUserTransfer->getIdCompanyUser()),
-                $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingListsIds($companyUserTransfer->getFkCompanyBusinessUnit()),
+                $companyBusinessUnitSharedShoppingListIds,
                 $companyUserOwnShoppingListIds
             )
         );
@@ -249,6 +248,8 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $companyUserTransfer->getFkCompanyBusinessUnit(),
             ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
         );
+        $companyBusinessUnitBlacklistedShoppingListIds = $this->shoppingListRepository->getBlacklistedShoppingListIdsByIdCompanyUser($companyUserTransfer->getIdCompanyUser());
+        $companyBusinessUnitSharedShoppingListIds = array_diff($companyBusinessUnitSharedShoppingListIds, $companyBusinessUnitBlacklistedShoppingListIds);
 
         $companyUserPermissionCollectionTransfer = $this->addWritePermissionToPermissionCollectionTransfer(
             $companyUserPermissionCollectionTransfer,
@@ -383,8 +384,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
             if (!isset($keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()])) {
                 continue;
             }
-            $idProduct = $keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()]->getIdProductConcrete();
-            $shoppingListItemTransfer->setIdProduct($idProduct);
+
+            $productConcreteTransfer = $keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()];
+            $shoppingListItemTransfer->setIdProduct($productConcreteTransfer->getIdProductConcrete());
+            $shoppingListItemTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract());
         }
 
         return $shoppingListItemTransfers;
@@ -446,5 +449,24 @@ class ShoppingListReader implements ShoppingListReaderInterface
         }
 
         return $companyUserOwnShoppingListIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    protected function filterBlacklistedShoppingLists(ShoppingListCollectionTransfer $shoppingListCollectionTransfer, int $idCompanyUser): ShoppingListCollectionTransfer
+    {
+        $filteredShoppingListCollectionTransfer = new ShoppingListCollectionTransfer();
+        $blacklistedShoppingListsIds = $this->shoppingListRepository->getBlacklistedShoppingListIdsByIdCompanyUser($idCompanyUser);
+        foreach ($shoppingListCollectionTransfer->getShoppingLists() as $shoppingListTransfer) {
+            if (!in_array($shoppingListTransfer->getIdShoppingList(), $blacklistedShoppingListsIds, true)) {
+                $filteredShoppingListCollectionTransfer->addShoppingList($shoppingListTransfer);
+            }
+        }
+
+        return $filteredShoppingListCollectionTransfer;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -39,6 +40,11 @@ class RestResponse implements RestResponseInterface
      * @var array
      */
     protected $headers = [];
+
+    /**
+     * @var int
+     */
+    protected $status = 0;
 
     /**
      * @param int $totalItems
@@ -125,6 +131,26 @@ class RestResponse implements RestResponseInterface
     public function getLimit(): int
     {
         return $this->limit;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param int $status
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function setStatus(int $status): RestResponseInterface
+    {
+        $this->status = $status;
+
+        return $this;
     }
 
     /**

@@ -25,6 +25,20 @@ interface CustomersRestApiToCustomerClientInterface
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
+    public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function restorePassword(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
     public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
 
     /**
@@ -75,4 +89,11 @@ interface CustomersRestApiToCustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomer(CustomerTransfer $customerTransfer);
 }
