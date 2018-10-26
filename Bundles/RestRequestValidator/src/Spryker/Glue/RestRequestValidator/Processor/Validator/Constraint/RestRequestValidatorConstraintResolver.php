@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\Collection;
 class RestRequestValidatorConstraintResolver implements RestRequestValidatorConstraintResolverInterface
 {
     protected const FIELDS = 'fields';
+    protected const CONSTRAINTS = 'constraints';
 
     /**
      * @var \Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface
@@ -173,6 +174,18 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
             }
 
             return [static::FIELDS => $configResult] + $this->getConstraintCollectionOptions();
+        }
+
+        if (isset($constraintParameters[static::CONSTRAINTS])) {
+            $configResult = [];
+            foreach ($constraintParameters[static::CONSTRAINTS] as $fieldName => $validators) {
+                if ($validators !== null) {
+                    $validators = [$validators];
+                    $configResult = $this->mapFieldConstrains($validators);
+                }
+            }
+
+            return [static::CONSTRAINTS => $configResult];
         }
 
         return $constraintParameters;
