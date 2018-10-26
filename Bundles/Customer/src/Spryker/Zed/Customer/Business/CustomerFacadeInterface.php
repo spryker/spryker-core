@@ -264,7 +264,7 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Checks if customer address exists by customer id.
+     * - Checks if customer address exists by customer address id.
      *
      * @api
      *

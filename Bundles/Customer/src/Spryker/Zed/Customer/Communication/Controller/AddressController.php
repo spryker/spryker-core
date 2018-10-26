@@ -18,7 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddressController extends AbstractController
 {
-    protected const ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST = 'Customer Address with ID = %b does not exist';
+    protected const URL_CUSTOMER_LIST = '/customer';
+    protected const ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST = 'Customer Address with ID = %d does not exist';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -39,11 +40,7 @@ class AddressController extends AbstractController
         if (!$this->getFacade()->addressExists($addressDetails)) {
             $this->addErrorMessage(sprintf(static::ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST, $idCustomerAddress));
 
-            return $this->redirectResponse(sprintf(
-                '/customer/view?%s=%d',
-                CustomerConstants::PARAM_ID_CUSTOMER,
-                $idCustomer
-            ));
+            return $this->redirectResponse(static::URL_CUSTOMER_LIST);
         }
 
         $addressDetails = $this->getFacade()
