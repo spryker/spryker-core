@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider;
+use Spryker\Zed\PriceProductVolumeGui\Communication\Form\PriceVolumeCollectionFormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -60,6 +61,7 @@ class PriceVolumeController extends AbstractController
             'form' => $priceVolumeCollectionFormType->createView(),
             'price_product' => $priceProductTransfer,
             'store_name' => $request->get(static::REQUEST_PARAM_STORE_NAME),
+            'back_url' => $this->getExitUrl($request),
         ]);
     }
 
@@ -145,11 +147,14 @@ class PriceVolumeController extends AbstractController
                 $priceProductTransfer
             );
 
-        $priceProductTransfer = $this->getFactory()
+        if ($data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_CONCRETE] && !$priceProductTransfer->getIdProduct()) {
+            $priceProductTransfer->setIdPriceProduct(null);
+            $priceProductTransfer->setIdProduct($data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_CONCRETE]);
+        }
+
+        return $this->getFactory()
             ->getPriceProductFacade()
             ->persistPriceProductStore($priceProductTransfer);
-
-        return $priceProductTransfer;
     }
 
     /**
