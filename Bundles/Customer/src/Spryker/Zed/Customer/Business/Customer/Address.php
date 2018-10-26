@@ -184,9 +184,9 @@ class Address implements AddressInterface
     {
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-        $customerAddressEntity = $this->updateCustomerAddress($addressTransfer, $customer);
+        $addressEntity = $this->updateCustomerAddress($addressTransfer, $customer);
 
-        return $this->entityToAddressTransfer($customerAddressEntity);
+        return $this->entityToAddressTransfer($addressEntity);
     }
 
     /**
