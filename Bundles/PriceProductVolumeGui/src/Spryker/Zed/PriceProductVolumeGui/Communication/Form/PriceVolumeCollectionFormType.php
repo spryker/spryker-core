@@ -170,14 +170,14 @@ class PriceVolumeCollectionFormType extends AbstractType
                     ->addViolation();
             }
 
-            if ($priceProductVolumeItemTransfer->getQuantity() && $priceProductVolumeItemTransfer->getQuantity() < 2) {
+            if ($priceProductVolumeItemTransfer->getQuantity() <= PriceVolumeFormType::MINIMUM_QUANTITY && $priceProductVolumeItemTransfer->getQuantity() !== null) {
                 $context
                     ->buildViolation('Quantity should be greater than 1.')
                     ->atPath(PriceVolumeFormType::FIELD_QUANTITY)
                     ->addViolation();
             }
 
-            if (!$priceProductVolumeItemTransfer->getNetPrice() && !$priceProductVolumeItemTransfer->getGrossPrice()) {
+            if ($priceProductVolumeItemTransfer->getNetPrice() === null && $priceProductVolumeItemTransfer->getGrossPrice() === null) {
 
                 if ($priceProductVolumeItemTransfer->getQuantity() > PriceVolumeFormType::MINIMUM_QUANTITY) {
                     $context
