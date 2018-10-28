@@ -20,6 +20,9 @@ class VoucherDiscountCheckoutPreConditionPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritdoc}
+     * - Validates voucher discounts in Quote
+     * - Returns true if all Vouchers are valid
+     * - Returns false otherwise along with messages added to $checkoutResponseTransfer
      *
      * @api
      *
