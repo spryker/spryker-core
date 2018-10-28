@@ -56,7 +56,6 @@ use Spryker\Zed\Discount\Business\QueryString\Validator;
 use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserver;
 use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserverInterface;
 use Spryker\Zed\Discount\Business\QuoteVoucherDiscountValidator\QuoteVoucherDiscountValidator;
-use Spryker\Zed\Discount\Business\Voucher\CheckoutVoucherValidator;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
@@ -653,7 +652,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createQuoteVoucherDiscountValidator(CheckoutResponseTransfer $checkoutResponseTransfer): QuoteVoucherDiscountValidator
     {
         return new QuoteVoucherDiscountValidator(
-            $this->createCheckoutVoucherValidator(
+            $this->createVoucherValidatorForCheckout(
                 $checkoutResponseTransfer
             )
         );
@@ -662,11 +661,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Spryker\Zed\Discount\Business\Voucher\CheckoutVoucherValidator
+     * @return \Spryker\Zed\Discount\Business\Voucher\VoucherValidator
      */
-    public function createCheckoutVoucherValidator($checkoutResponseTransfer): CheckoutVoucherValidator
+    public function createVoucherValidatorForCheckout($checkoutResponseTransfer): VoucherValidator
     {
-        return new CheckoutVoucherValidator(
+        return new VoucherValidator(
             $this->getQueryContainer(),
             $this->createCheckoutResponseTransferTray($checkoutResponseTransfer)
         );

@@ -7,23 +7,22 @@
 
 namespace Spryker\Zed\Discount\Business\QuoteVoucherDiscountValidator;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Business\Voucher\CheckoutVoucherValidator;
+use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
 
 class QuoteVoucherDiscountValidator implements QuoteVoucherDiscountValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\Discount\Business\Voucher\CheckoutVoucherValidator
+     * @var \Spryker\Zed\Discount\Business\Voucher\VoucherValidator
      */
-    protected $checkoutVoucherValidator;
+    protected $voucherValidator;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Voucher\CheckoutVoucherValidator $checkoutVoucherValidator
+     * @param \Spryker\Zed\Discount\Business\Voucher\VoucherValidator $voucherValidator
      */
-    public function __construct(CheckoutVoucherValidator $checkoutVoucherValidator)
+    public function __construct(VoucherValidator $voucherValidator)
     {
-        $this->checkoutVoucherValidator = $checkoutVoucherValidator;
+        $this->voucherValidator = $voucherValidator;
     }
 
     /**
@@ -42,17 +41,9 @@ class QuoteVoucherDiscountValidator implements QuoteVoucherDiscountValidatorInte
         $isPassed = true;
 
         foreach ($voucherDiscounts as $discountTransfer) {
-            $isPassed = $isPassed && $this->checkoutVoucherValidator->isUsable($discountTransfer->getVoucherCode());
+            $isPassed = $isPassed && $this->voucherValidator->isUsable($discountTransfer->getVoucherCode());
         }
 
         return $isPassed;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    public function getCheckoutResponseTransfer(): CheckoutResponseTransfer
-    {
-        return $this->checkoutVoucherValidator->getCheckoutResponseTransfer();
     }
 }
