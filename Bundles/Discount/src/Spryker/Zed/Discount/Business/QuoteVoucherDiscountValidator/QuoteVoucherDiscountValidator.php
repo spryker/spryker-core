@@ -42,10 +42,10 @@ class QuoteVoucherDiscountValidator implements QuoteVoucherDiscountValidatorInte
         $isPassed = true;
 
         foreach ($voucherDiscounts as $discountTransfer) {
-            $isPassed &= $this->checkoutVoucherValidator->isUsable($discountTransfer->getVoucherCode());
+            $isPassed = $isPassed && $this->checkoutVoucherValidator->isUsable($discountTransfer->getVoucherCode());
         }
 
-        return (bool)$isPassed;
+        return $isPassed;
     }
 
     /**
