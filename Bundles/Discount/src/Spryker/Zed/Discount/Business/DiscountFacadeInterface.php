@@ -538,7 +538,7 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     * - Checks voucher discounts on checkout
+     * - Validates voucher discount codes when placing order
      *
      * @api
      *
