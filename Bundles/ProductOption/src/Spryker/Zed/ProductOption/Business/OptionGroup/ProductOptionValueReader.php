@@ -46,7 +46,6 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      */
     public function getProductOption($idProductOptionValue)
     {
-        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue|null $productOptionValueEntity */
         $productOptionValueEntity = $this->getOptionValueById($idProductOptionValue);
 
         if (!$productOptionValueEntity) {
@@ -123,7 +122,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     /**
      * @param int $idProductOptionValue
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue|null
      */
     protected function getOptionValueById($idProductOptionValue)
     {

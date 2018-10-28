@@ -75,7 +75,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
 
         $spyProductAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
 
-        if (!$productOptionEntities) {
+        if (empty($productOptionEntities)) {
             $this->deleteStorageData($spyProductAbstractOptionStorageEntities);
         }
 
@@ -102,8 +102,13 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      */
     protected function deleteStorageData(array $spyProductAbstractOptionStorageEntities)
     {
-        foreach ($spyProductAbstractOptionStorageEntities as $productAbstractOptionStorageEntity) {
-            $productAbstractOptionStorageEntity->delete();
+        foreach ($this->stores as $storeTransfer) {
+            $storeName = $storeTransfer->getName();
+            foreach ($spyProductAbstractOptionStorageEntities as $productAbstractOptionStorageEntity) {
+                if (isset($productAbstractOptionStorageEntity[$storeName])) {
+                    $productAbstractOptionStorageEntity[$storeName]->delete();
+                }
+            }
         }
     }
 

@@ -34,15 +34,4 @@ class ProductOptionToEventFacadeBridge implements ProductOptionToEventFacadeInte
     {
         $this->eventFacade->trigger($eventName, $transfer);
     }
-
-    /**
-     * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
-     *
-     * @return void
-     */
-    public function triggerBulk($eventName, array $transfers): void
-    {
-        $this->eventFacade->triggerBulk($eventName, $transfers);
-    }
 }

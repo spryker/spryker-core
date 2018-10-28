@@ -18,12 +18,4 @@ interface ProductOptionToEventFacadeInterface
      * @return void
      */
     public function trigger($eventName, TransferInterface $transfer);
-
-    /**
-     * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
-     *
-     * @return void
-     */
-    public function triggerBulk($eventName, array $transfers): void;
 }
