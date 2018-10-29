@@ -12,7 +12,7 @@
             <reference local="fk_price_product_store" foreign="id_price_product_store"/>
         </foreign-key>
 
-        <foreign-key name="spy_price_product_merchant_relationship-fk_merchant_relationship" foreignTable="spy_merchant_relationship" onDelete="CASCADE" phpName="MerchantRelationship" refPhpName="PriceProductMerchantRelationship">
+        <foreign-key name="spy_price_product_merchant_relationship-fk_m_r" foreignTable="spy_merchant_relationship" onDelete="CASCADE" phpName="MerchantRelationship" refPhpName="PriceProductMerchantRelationship">
             <reference local="fk_merchant_relationship" foreign="id_merchant_relationship"/>
         </foreign-key>
 
