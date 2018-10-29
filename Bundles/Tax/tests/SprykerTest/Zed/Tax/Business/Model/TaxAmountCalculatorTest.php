@@ -11,12 +11,7 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculator;
-use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface;
-use Spryker\Zed\Tax\Business\Model\Calculator\TaxAmountCalculator;
-use Spryker\Zed\Tax\Business\Model\Exception\CalculationException;
-use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
-use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
+use Spryker\Zed\Tax\Business\TaxFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -39,49 +34,61 @@ class TaxAmountCalculatorTest extends Unit
     protected $tester;
 
     /**
-     * @dataProvider getTestData
+     * @dataProvider getSeparateTestData
      *
      * @param float $taxRate
      * @param int $price
      * @param int $quantity
+     * @param int $expected
      *
      * @return void
      */
-    public function testRecalculatedSumTaxAmountForNonSplitModeAndSplitShouldBeNotEqual(
+    public function testRecalculationOfSumTaxAmountForNonSplitMode(
         float $taxRate,
         int $price,
-        int $quantity
+        int $quantity,
+        int $expected
     ) {
-        $taxAmountCalculatorMock = $this->createMockedTaxAmountCalculatorNotFixed();
+        $taxFacade = $this->getTaxFacade();
 
         $nonSplitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price * $quantity, static::DEFAULT_QUANTITY);
-
-        $splitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price, $quantity);
-
-        $this->assertCount(static::DEFAULT_QUANTITY, $nonSplitItemTransferCollection);
-        $this->assertCount($quantity, $splitItemTransferCollection);
-
         $calculableNonSplitObjectTransferMock = $this->createCalculableObjectTransferMock($nonSplitItemTransferCollection);
-        $calculableSplitObjectTransferMock = $this->createCalculableObjectTransferMock($splitItemTransferCollection);
 
-        $taxAmountCalculatorMock->recalculate($calculableNonSplitObjectTransferMock);
-        $taxAmountCalculatorMock->recalculate($calculableSplitObjectTransferMock);
+        $taxFacade->calculateTaxAmount($calculableNonSplitObjectTransferMock);
+        $recalculatedNonSplitSumTaxAmount = $this->sumTaxAmount($calculableNonSplitObjectTransferMock);
 
-        $recalculatedNonSplitSumTaxAmount = array_reduce(
-            $calculableNonSplitObjectTransferMock->getItems()->getArrayCopy(),
-            [$this, 'sumTaxAmountCalculatorCallback']
-        );
-
-        $recalculatedSplitSumTaxAmount = array_reduce(
-            $calculableSplitObjectTransferMock->getItems()->getArrayCopy(),
-            [$this, 'sumTaxAmountCalculatorCallback']
-        );
-
-        $this->assertNotEquals($recalculatedNonSplitSumTaxAmount, $recalculatedSplitSumTaxAmount);
+        $this->assertEquals($expected, $recalculatedNonSplitSumTaxAmount);
     }
 
     /**
-     * @dataProvider getTestData
+     * @dataProvider getSeparateTestData
+     *
+     * @param float $taxRate
+     * @param int $price
+     * @param int $quantity
+     * @param int $expected
+     *
+     * @return void
+     */
+    public function testRecalculationOfSumTaxAmountForSplitMode(
+        float $taxRate,
+        int $price,
+        int $quantity,
+        int $expected
+    ) {
+        $taxFacade = $this->getTaxFacade();
+
+        $splitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price, $quantity);
+        $calculableSplitObjectTransferMock = $this->createCalculableObjectTransferMock($splitItemTransferCollection);
+
+        $taxFacade->calculateTaxAmount($calculableSplitObjectTransferMock);
+        $recalculatedSplitSumTaxAmount = $this->sumTaxAmount($calculableSplitObjectTransferMock);
+
+        $this->assertEquals($expected, $recalculatedSplitSumTaxAmount);
+    }
+
+    /**
+     * @dataProvider getGroupTestData
      *
      * @param float $taxRate
      * @param int $price
@@ -94,30 +101,19 @@ class TaxAmountCalculatorTest extends Unit
         int $price,
         int $quantity
     ) {
-        $taxAmountCalculatorFixedMock = $this->createMockedTaxAmountCalculator();
+        $taxFacade = $this->getTaxFacade();
 
         $nonSplitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price * $quantity, static::DEFAULT_QUANTITY);
-
         $splitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price, $quantity);
-
-        $this->assertCount(static::DEFAULT_QUANTITY, $nonSplitItemTransferCollection);
-        $this->assertCount($quantity, $splitItemTransferCollection);
 
         $calculableNonSplitObjectTransferMock = $this->createCalculableObjectTransferMock($nonSplitItemTransferCollection);
         $calculableSplitObjectTransferMock = $this->createCalculableObjectTransferMock($splitItemTransferCollection);
 
-        $taxAmountCalculatorFixedMock->recalculate($calculableNonSplitObjectTransferMock);
-        $taxAmountCalculatorFixedMock->recalculate($calculableSplitObjectTransferMock);
+        $taxFacade->calculateTaxAmount($calculableNonSplitObjectTransferMock);
+        $taxFacade->calculateTaxAmount($calculableSplitObjectTransferMock);
 
-        $recalculatedNonSplitSumTaxAmount = array_reduce(
-            $calculableNonSplitObjectTransferMock->getItems()->getArrayCopy(),
-            [$this, 'sumTaxAmountCalculatorCallback']
-        );
-
-        $recalculatedSplitSumTaxAmount = array_reduce(
-            $calculableSplitObjectTransferMock->getItems()->getArrayCopy(),
-            [$this, 'sumTaxAmountCalculatorCallback']
-        );
+        $recalculatedNonSplitSumTaxAmount = $this->sumTaxAmount($calculableNonSplitObjectTransferMock);
+        $recalculatedSplitSumTaxAmount = $this->sumTaxAmount($calculableSplitObjectTransferMock);
 
         $this->assertEquals($recalculatedNonSplitSumTaxAmount, $recalculatedSplitSumTaxAmount);
     }
@@ -125,7 +121,7 @@ class TaxAmountCalculatorTest extends Unit
     /**
      * @return array
      */
-    public function getTestData()
+    public function getGroupTestData()
     {
         return [
             [7.25, 3400, 20],
@@ -137,15 +133,32 @@ class TaxAmountCalculatorTest extends Unit
     }
 
     /**
-     * @param int|null $total
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @return array
+     */
+    public function getSeparateTestData()
+    {
+        return [
+            [7.25, 124, 20, 180],
+            [10.11, 860, 5, 435],
+            [35.22, 32, 10, 113],
+            [28.45, 47, 13, 174],
+            [14.26, 56, 8, 64],
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return int
      */
-    protected function sumTaxAmountCalculatorCallback(?int $total, ItemTransfer $itemTransfer): int
+    protected function sumTaxAmount(CalculableObjectTransfer $calculableObjectTransfer): int
     {
-        $total += $itemTransfer->getSumTaxAmount();
-        return $total;
+        $items = $calculableObjectTransfer->getItems()->getArrayCopy();
+
+        return array_reduce($items, function (?int $total, ItemTransfer $itemTransfer) {
+            $total += $itemTransfer->getSumTaxAmount();
+            return $total;
+        });
     }
 
     /**
@@ -202,92 +215,10 @@ class TaxAmountCalculatorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Business\Model\Calculator\CalculatorInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
-    protected function createMockedTaxAmountCalculatorNotFixed()
+    protected function getTaxFacade(): TaxFacadeInterface
     {
-        $mockedPriceCalculationHelper = $this->createMockedPriceCalculationHelperNotFixed();
-
-        $mockedAccruedTaxCalculator = $this->createMockedAccruedTaxCalculator($mockedPriceCalculationHelper);
-
-        return $this->createMockedTaxAmountCalculator($mockedAccruedTaxCalculator);
-    }
-
-    /**
-     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface|null $mockedAccruedTaxCalculator
-     *
-     * @return \Spryker\Zed\Tax\Business\Model\Calculator\CalculatorInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createMockedTaxAmountCalculator(?AccruedTaxCalculatorInterface $mockedAccruedTaxCalculator = null)
-    {
-        if (!$mockedAccruedTaxCalculator) {
-            $mockedAccruedTaxCalculator = $this->createMockedAccruedTaxCalculator();
-        }
-
-        $taxAmountCalculatorMock = $this->getMockBuilder(TaxAmountCalculator::class)
-            ->setConstructorArgs([$mockedAccruedTaxCalculator])
-            ->setMethods(null)
-            ->getMock();
-
-        return $taxAmountCalculatorMock;
-    }
-
-    /**
-     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface|null $mockedPriceCalculationHelper
-     *
-     * @return \Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createMockedAccruedTaxCalculator(
-        ?PriceCalculationHelperInterface $mockedPriceCalculationHelper = null
-    ) {
-        if (!$mockedPriceCalculationHelper) {
-            $mockedPriceCalculationHelper = $this->createMockedPriceCalculationHelper();
-        }
-
-        $accruedTaxCalculatorMock = $this->getMockBuilder(AccruedTaxCalculator::class)
-            ->setConstructorArgs([$mockedPriceCalculationHelper])
-            ->setMethods(null)
-            ->getMock();
-
-        return $accruedTaxCalculatorMock;
-    }
-
-    /**
-     * @return \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createMockedPriceCalculationHelper()
-    {
-        $accruedTaxCalculatorMock = $this->getMockBuilder(PriceCalculationHelper::class)
-            ->setMethods(null)
-            ->getMock();
-
-        return $accruedTaxCalculatorMock;
-    }
-
-    /**
-     * @throws \Spryker\Zed\Tax\Business\Model\Exception\CalculationException
-     *
-     * @return \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createMockedPriceCalculationHelperNotFixed()
-    {
-        $accruedTaxCalculatorMock = $this->getMockBuilder(PriceCalculationHelper::class)
-            ->setMethods(['getTaxValueFromNetPrice'])
-            ->getMock();
-
-        $accruedTaxCalculatorMock->method('getTaxValueFromNetPrice')
-            ->willReturnCallback(function ($netPrice, $taxPercentage) {
-                $price = (int)$netPrice;
-
-                if ($price < 0) {
-                    throw new CalculationException('Invalid price value given.');
-                }
-
-                $amount = $netPrice * $taxPercentage / 100;
-
-                return (int)round($amount);
-            });
-
-        return $accruedTaxCalculatorMock;
+        return $this->tester->getLocator()->tax()->facade();
     }
 }
