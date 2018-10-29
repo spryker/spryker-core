@@ -1,0 +1,115 @@
+customers:
+  post:
+    email:
+      - NotBlank
+      - EmailConstraint
+    salutation:
+      - NotBlank
+      - Choice:
+        choices: [Mr, Mrs, Ms, Dr]
+    firstName:
+      - NotBlank
+    lastName:
+      - NotBlank
+    gender:
+      - NotBlank
+      - Choice:
+        choices: [Male, Female]
+    password:
+      - NotBlank
+    passwordConfirmation:
+      - NotBlank
+      - IdenticalTo:
+        propertyPath: password
+    acceptedTerms:
+      - NotBlank
+      - Type:
+        type: bool
+
+  patch:
+    salutation:
+      - NotBlank
+      - Choice:
+        choices: [Mr, Mrs, Ms, Dr]
+    firstName:
+      - NotBlank
+    lastName:
+      - NotBlank
+    gender:
+      - NotBlank
+      - Choice:
+        choices: [Male, Female]
+    dateOfBirth:
+      - Date
+addresses:
+  post:
+    salutation:
+      - NotBlank
+      - Choice:
+        choices: [Mr, Mrs, Ms, Dr]
+    firstName:
+      - NotBlank
+    lastName:
+      - NotBlank
+    address1:
+      - NotBlank
+    address2:
+      - NotBlank
+    zipCode:
+      - NotBlank
+    city:
+      - NotBlank
+      - Length:
+        min: 3
+    iso2Code:
+      - NotBlank
+  patch:
+    salutation:
+      - NotBlank
+      - Choice:
+        choices: [Mr, Mrs, Ms, Dr]
+    firstName:
+      - NotBlank
+    lastName:
+      - NotBlank
+    address1:
+      - NotBlank
+    address2:
+      - NotBlank
+    zipCode:
+      - NotBlank
+    city:
+      - NotBlank
+      - Length:
+        min: 3
+    iso2Code:
+      - NotBlank
+
+customer-password:
+  patch:
+    password:
+      - NotBlank
+    newPassword:
+      - NotBlank
+    confirmPassword:
+      - NotBlank
+      - IdenticalTo:
+        propertyPath: newPassword
+
+customer-forgotten-password:
+  post:
+    email:
+      - NotBlank
+      - EmailConstraint
+
+customer-restore-password:
+  patch:
+    restorePasswordKey:
+      - NotBlank
+    password:
+      - NotBlank
+    confirmPassword:
+      - NotBlank
+      - IdenticalTo:
+        propertyPath: password
+
