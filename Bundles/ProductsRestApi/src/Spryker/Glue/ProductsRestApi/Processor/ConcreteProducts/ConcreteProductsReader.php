@@ -63,7 +63,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
         $resourceIdentifier = $restRequest->getResource()->getId();
 
         if (empty($resourceIdentifier)) {
-            return $this->createConcreteSkuNotSpecifiedError($response);
+            return $this->addConcreteSkuNotSpecifiedError($response);
         }
 
         $concreteProductData = $this->productStorageClient
@@ -74,7 +74,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             );
 
         if (!$concreteProductData) {
-            return $this->createConcreteProductNotFoundError($response);
+            return $this->addConcreteProductNotFoundError($response);
         }
 
         $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
@@ -139,7 +139,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createConcreteSkuNotSpecifiedError(RestResponseInterface $response): RestResponseInterface
+    protected function addConcreteSkuNotSpecifiedError(RestResponseInterface $response): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED)
@@ -154,7 +154,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createConcreteProductNotFoundError(RestResponseInterface $response): RestResponseInterface
+    protected function addConcreteProductNotFoundError(RestResponseInterface $response): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT)
