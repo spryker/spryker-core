@@ -92,7 +92,7 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
             $taxAmount = $this->calculateTaxAmount(
                 $canceledTaxableAmount,
                 $expenseTransfer->getTaxRate(),
-                CalculationPriceMode::PRICE_MODE_GROSS
+                $calculableObjectTransfer->getPriceMode()
             );
 
             $expenseTransfer->setTaxAmountAfterCancellation($expenseTransfer->getSumTaxAmount() - $taxAmount);
