@@ -16,10 +16,6 @@ use Zend\Config\Reader\ReaderInterface;
 
 class ArchitectureSniffer implements ArchitectureSnifferInterface
 {
-    public const OPTION_PRIORITY = 'priority';
-    public const OPTION_STRICT = 'strict';
-    public const OPTION_DRY_RUN = 'dry-run';
-
     /**
      * @var string
      */
@@ -31,20 +27,13 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected $xmlReader;
 
     /**
-     * @var int
-     */
-    protected $defaultPriority;
-
-    /**
      * @param \Zend\Config\Reader\ReaderInterface $xmlReader
      * @param string $command
-     * @param int $defaultPriority
      */
-    public function __construct(ReaderInterface $xmlReader, $command, $defaultPriority)
+    public function __construct(ReaderInterface $xmlReader, string $command)
     {
         $this->xmlReader = $xmlReader;
         $this->command = $command;
-        $this->defaultPriority = $defaultPriority;
     }
 
     /**
@@ -126,14 +115,15 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     {
         $command = str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command);
 
-        $priority = !empty($options[static::OPTION_PRIORITY]) ? $options[static::OPTION_PRIORITY] : $this->defaultPriority;
+        $priority = $options[DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_PRIORITY];
+
         $command .= ' --minimumpriority ' . $priority;
 
-        if (!empty($options[static::OPTION_STRICT])) {
+        if (!empty($options[DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_STRICT])) {
             $command .= ' --strict';
         }
 
-        if (!empty($options[static::OPTION_DRY_RUN])) {
+        if (!empty($options[DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_DRY_RUN])) {
             $this->displayAndExit($command);
         }
 

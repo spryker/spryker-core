@@ -513,4 +513,21 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     {
         return $this->getFactory()->createModuleOverview()->getOverview();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $path
+     * @param array $options
+     *
+     * @return array
+     */
+    public function getArchitectureSnifferConfiguration(string $path, array $options = []): array
+    {
+        return $this->getFactory()
+            ->createArchitectureSnifferConfigurationBuilder()
+            ->getConfiguration($path, $options);
+    }
 }

@@ -412,4 +412,19 @@ interface DevelopmentFacadeInterface
      * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
      */
     public function getModuleOverview(): array;
+
+    /**
+     * Specification:
+     * - Validates all input options for module.
+     * - Parses architecture sniffer config file.
+     * - Merges and returns options for architecture sniffer .
+     *
+     * @api
+     *
+     * @param string $path
+     * @param array $options
+     *
+     * @return mixed
+     */
+    public function getArchitectureSnifferConfiguration(string $path, array $options = []);
 }
