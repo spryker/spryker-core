@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityBridge;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyBridge;
@@ -21,6 +20,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProd
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreBridge;
@@ -34,10 +34,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 {
     public const STORE = 'STORE';
 
-    public const FACADE_CATEGORY = 'FACADE_LOCALE';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
+    public const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
     public const FACADE_TOUCH = 'FACADE_TOUCH';
@@ -66,6 +66,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS = 'PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS';
     public const PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS = 'PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS';
     public const PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER';
+    public const PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER';
+    public const PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -76,10 +78,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
-        };
-
-        $container[static::FACADE_CATEGORY] = function (Container $container) {
-            return new ProductManagementToCategoryBridge($container->getLocator()->category()->facade());
         };
 
         $container[static::FACADE_LOCALE] = function (Container $container) {
@@ -144,8 +142,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container = $this->addProductBundleFacade($container);
 
-        $container[static::FACADE_CATEGORY] = function (Container $container) {
-            return new ProductManagementToCategoryBridge($container->getLocator()->category()->facade());
+        $container[static::FACADE_PRODUCT_CATEGORY] = function (Container $container) {
+            return new ProductManagementToProductCategoryBridge($container->getLocator()->productCategory()->facade());
         };
 
         $container[static::FACADE_LOCALE] = function (Container $container) {
@@ -223,6 +221,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductConcreteFormEditDataProviderExpanderPlugins($container);
         $container = $this->addProductFormTransferMapperExpanderPlugins($container);
         $container = $this->addProductConcreteFormEditTabsExpanderPlugins($container);
+        $container = $this->addProductAbstractFormExpanderPlugins($container);
+        $container = $this->addProductConcreteFormExpanderPlugins($container);
 
         return $container;
     }
@@ -352,6 +352,50 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
         };
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER] = function (Container $container) {
+            return $this->getProductAbstractFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
+     */
+    protected function getProductAbstractFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductConcreteFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER] = function (Container $container) {
+            return $this->getProductConcreteFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface[]
+     */
+    protected function getProductConcreteFormExpanderPlugins(): array
+    {
+        return [];
     }
 
     /**
