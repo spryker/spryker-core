@@ -108,7 +108,7 @@ class Discount implements DiscountInterface
             $this->getIdStore($quoteTransfer->getStore())
         );
 
-        [$applicableDiscounts, $nonApplicableDiscounts] = $this->filterApplicableAndNonApplicableDiscounts($activeDiscounts, $quoteTransfer);
+        [$applicableDiscounts, $nonApplicableDiscounts] = $this->filterDiscountsByApplicability($activeDiscounts, $quoteTransfer);
         $collectedDiscounts = $this->calculator->calculate($applicableDiscounts, $quoteTransfer);
 
         $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
@@ -187,7 +187,7 @@ class Discount implements DiscountInterface
      *
      * @return array
      */
-    protected function filterApplicableAndNonApplicableDiscounts(Collection $discounts, QuoteTransfer $quoteTransfer)
+    protected function filterDiscountsByApplicability(Collection $discounts, QuoteTransfer $quoteTransfer)
     {
         $uniqueVoucherDiscounts = [];
         $applicableDiscounts = [];
@@ -198,7 +198,7 @@ class Discount implements DiscountInterface
                 continue;
             }
 
-            if ($this->isVoucherDiscountEntity($discountEntity)) {
+            if ($this->isDiscountEntityOfTypeVoucher($discountEntity)) {
                 $uniqueVoucherDiscounts[$discountEntity->getIdDiscount()] = $discountEntity->getIdDiscount();
             }
 
@@ -264,7 +264,7 @@ class Discount implements DiscountInterface
      */
     protected function isDiscountApplicable(QuoteTransfer $quoteTransfer, SpyDiscount $discountEntity)
     {
-        if ($this->isVoucherDiscountEntity($discountEntity)) {
+        if ($this->isDiscountEntityOfTypeVoucher($discountEntity)) {
             if ($this->voucherValidator->isUsable($discountEntity->getVoucherCode()) === false) {
                 return false;
             }
@@ -309,7 +309,7 @@ class Discount implements DiscountInterface
      *
      * @return bool
      */
-    protected function isVoucherDiscountEntity(SpyDiscount $discountEntity): bool
+    protected function isDiscountEntityOfTypeVoucher(SpyDiscount $discountEntity): bool
     {
         return $discountEntity->getDiscountType() === DiscountConstants::TYPE_VOUCHER;
     }
