@@ -31,6 +31,13 @@
         <index name="spy_price_product_merchant_relationship-index-fk_product">
             <index-column name="fk_product"/>
         </index>
-    <id-method-parameter value="spy_price_product_merchant_relationship_pk_seq"/></table>
+
+        <index name="spy_price_product_merchant_relationship-index-fk_product">
+            <index-column name="fk_merchant_relationship"/>
+            <index-column name="fk_price_product_store"/>
+        </index>
+
+        <id-method-parameter value="spy_price_product_merchant_relationship_pk_seq"/>
+    </table>
 
 </database>
