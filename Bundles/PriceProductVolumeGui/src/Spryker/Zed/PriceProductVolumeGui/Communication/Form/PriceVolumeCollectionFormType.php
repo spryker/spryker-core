@@ -178,7 +178,6 @@ class PriceVolumeCollectionFormType extends AbstractType
             }
 
             if ($priceProductVolumeItemTransfer->getNetPrice() === null && $priceProductVolumeItemTransfer->getGrossPrice() === null) {
-
                 if ($priceProductVolumeItemTransfer->getQuantity() > PriceVolumeFormType::MINIMUM_QUANTITY) {
                     $context
                         ->buildViolation(sprintf('Set up net or gross price for "quantity": %d.', $priceProductVolumeItemTransfer->getQuantity()))
