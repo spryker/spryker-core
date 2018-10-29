@@ -32,8 +32,8 @@ class ProductStorageConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    public static function isCollectorCompatibilityMode()
+    public static function isCollectorCompatibilityMode(): bool
     {
-        return true;
+        return false;
     }
 }

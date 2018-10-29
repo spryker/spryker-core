@@ -15,7 +15,7 @@ class ProductImageStorageConfig
      *
      * @return bool
      */
-    public static function isCollectorCompatibilityMode()
+    public static function isCollectorCompatibilityMode(): bool
     {
         return false;
     }
