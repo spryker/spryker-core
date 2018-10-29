@@ -10,12 +10,17 @@ namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 use Exception;
 use PHPMD\RuleSetFactory;
 use PHPMD\TextUI\CommandLineOptions;
+use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
 use Zend\Config\Reader\ReaderInterface;
 
 class ArchitectureSniffer implements ArchitectureSnifferInterface
 {
+    public const OPTION_PRIORITY = 'priority';
+    public const OPTION_STRICT = 'strict';
+    public const OPTION_DRY_RUN = 'dry-run';
+
     /**
      * @var string
      */
@@ -27,13 +32,31 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected $xmlReader;
 
     /**
+     * @var int
+     */
+    protected $defaultPriority;
+
+    /**
+     * @var \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface
+     */
+    protected $configurationBuilder;
+
+    /**
      * @param \Zend\Config\Reader\ReaderInterface $xmlReader
      * @param string $command
+     * @param int $defaultPriority
+     * @param \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface $configurationBuilder
      */
-    public function __construct(ReaderInterface $xmlReader, string $command)
-    {
+    public function __construct(
+        ReaderInterface $xmlReader,
+        $command,
+        $defaultPriority,
+        SnifferConfigurationBuilderInterface $configurationBuilder
+    ) {
         $this->xmlReader = $xmlReader;
         $this->command = $command;
+        $this->defaultPriority = $defaultPriority;
+        $this->configurationBuilder = $configurationBuilder;
     }
 
     /**
@@ -81,6 +104,12 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     public function run($directory, array $options = [])
     {
+        $options = $this->configurationBuilder->getConfiguration($directory, $options);
+
+        if ($options === []) {
+            return $this->formatResult($options);
+        }
+
         $output = $this->runCommand($directory, $options);
         $results = $this->xmlReader->fromString($output);
 
@@ -115,15 +144,14 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     {
         $command = str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command);
 
-        $priority = $options[DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_PRIORITY];
-
+        $priority = !empty($options[static::OPTION_PRIORITY]) ? $options[static::OPTION_PRIORITY] : $this->defaultPriority;
         $command .= ' --minimumpriority ' . $priority;
 
-        if (!empty($options[DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_STRICT])) {
+        if (!empty($options[static::OPTION_STRICT])) {
             $command .= ' --strict';
         }
 
-        if (!empty($options[DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_DRY_RUN])) {
+        if (!empty($options[static::OPTION_DRY_RUN])) {
             $this->displayAndExit($command);
         }
 

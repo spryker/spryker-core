@@ -1767,8 +1767,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         $xml = $this->createXmlReader();
         $command = $this->getConfig()->getArchitectureSnifferCommand();
+        $defaultPriority = $this->getConfig()->getArchitectureSnifferDefaultPriority();
 
-        return new ArchitectureSniffer($xml, $command);
+        return new ArchitectureSniffer(
+            $xml,
+            $command,
+            $defaultPriority,
+            $this->createArchitectureSnifferConfigurationBuilder()
+        );
     }
 
     /**

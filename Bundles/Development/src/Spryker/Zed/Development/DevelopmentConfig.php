@@ -30,15 +30,6 @@ class DevelopmentConfig extends AbstractBundleConfig
         'Glue',
     ];
 
-    public const ARCHITECTURE_SNIFFER_OPTION_NAME_MODULE = 'module';
-    public const ARCHITECTURE_SNIFFER_OPTION_NAME_STRICT = 'strict';
-    public const ARCHITECTURE_SNIFFER_OPTION_NAME_DRY_RUN = 'dry-run';
-    public const ARCHITECTURE_SNIFFER_OPTION_NAME_PRIORITY = 'priority';
-
-    public const ARCHITECTURE_SNIFFER_CONFIG_NAME = 'architecture-sniffer';
-
-    public const ARCHITECTURE_SNIFFER_OPTION_VALUE_PRIORITY_SKIP = 0;
-
     /**
      * @return int
      */
@@ -420,7 +411,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getArchitectureSnifferDefaultPriority(): int
     {
-        return 0;
+        return 2;
     }
 
     /**

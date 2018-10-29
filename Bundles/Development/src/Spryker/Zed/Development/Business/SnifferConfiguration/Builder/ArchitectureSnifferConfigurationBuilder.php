@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\Development\Business\SnifferConfiguration\Builder;
 
+use Spryker\Zed\Development\Business\Exception\ArchitectureSniffer\InvalidTypeException;
 use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface;
-use Spryker\Zed\Development\DevelopmentConfig;
 
 class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBuilderInterface
 {
+    protected const CONFIG_NAME = 'architecture-sniffer';
+    protected const CONFIG_PRIORITY_NAME = 'priority';
+    protected const CONFIG_PRIORITY_SKIP_VALUE = 0;
+
     /**
      * @var \Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface
      */
@@ -47,11 +51,11 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
             $options
         );
 
-        if ($priority === DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_VALUE_PRIORITY_SKIP) {
+        if ($priority === static::CONFIG_PRIORITY_SKIP_VALUE) {
             return [];
         }
 
-        $options[DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_PRIORITY] = $priority;
+        $options[static::CONFIG_PRIORITY_NAME] = $priority;
 
         return $options;
     }
@@ -60,17 +64,23 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
      * @param array $moduleConfig
      * @param array $options
      *
+     * @throws \Spryker\Zed\Development\Business\Exception\ArchitectureSniffer\InvalidTypeException
+     *
      * @return int
      */
     protected function getPriority(array $moduleConfig, array $options = []): int
     {
-        $inputPriority = $options[DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_PRIORITY];
-
-        if ($inputPriority !== null && is_numeric($inputPriority)) {
-            return $inputPriority;
+        if (!isset($options[static::CONFIG_PRIORITY_NAME])) {
+            return $this->getConfigPriority($moduleConfig);
         }
 
-        return $this->getConfigPriority($moduleConfig);
+        $userPriorityOption = $options[static::CONFIG_PRIORITY_NAME];
+
+        if (!is_int($userPriorityOption)) {
+            throw new InvalidTypeException('Priority must be integer only.');
+        }
+
+        return $userPriorityOption;
     }
 
     /**
@@ -90,13 +100,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
             return $this->defaultPriorityLevel;
         }
 
-        $architectureSnifferPriority = $this->getArchitectureSnifferConfigPriority($architectureSnifferConfig);
-
-        if ($architectureSnifferPriority < 0) {
-            return $this->defaultPriorityLevel;
-        }
-
-        return $architectureSnifferPriority;
+        return $this->getArchitectureSnifferConfigPriority($architectureSnifferConfig);
     }
 
     /**
@@ -106,7 +110,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
      */
     protected function architectureSnifferConfigExists(array $moduleConfig): bool
     {
-        return isset($moduleConfig[DevelopmentConfig::ARCHITECTURE_SNIFFER_CONFIG_NAME]);
+        return isset($moduleConfig[static::CONFIG_NAME]);
     }
 
     /**
@@ -116,7 +120,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
      */
     protected function getArchitectureSnifferConfig(array $moduleConfig): array
     {
-        return $moduleConfig[DevelopmentConfig::ARCHITECTURE_SNIFFER_CONFIG_NAME];
+        return $moduleConfig[static::CONFIG_NAME];
     }
 
     /**
@@ -126,7 +130,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
      */
     protected function architectureSnifferConfigPriorityExists(array $architectureSnifferConfig): bool
     {
-        return isset($architectureSnifferConfig[DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_PRIORITY]);
+        return isset($architectureSnifferConfig[static::CONFIG_PRIORITY_NAME]);
     }
 
     /**
@@ -136,6 +140,6 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
      */
     protected function getArchitectureSnifferConfigPriority(array $architectureSnifferConfig): int
     {
-        return (int)$architectureSnifferConfig[DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_PRIORITY];
+        return (int)$architectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
     }
 }

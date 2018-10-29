@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Development\Communication\Console;
 
-use Spryker\Zed\Development\DevelopmentConfig;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,6 +24,10 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class CodeArchitectureSnifferConsole extends Console
 {
     protected const COMMAND_NAME = 'code:sniff:architecture';
+    protected const OPTION_MODULE = 'module';
+    protected const OPTION_STRICT = 'strict';
+    protected const OPTION_PRIORITY = 'priority';
+    protected const OPTION_DRY_RUN = 'dry-run';
     protected const ARGUMENT_SUB_PATH = 'path';
     protected const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
 
@@ -43,30 +46,10 @@ class CodeArchitectureSnifferConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Check architecture rules for project or core');
 
-        $this->addOption(
-            DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_MODULE,
-            'm',
-            InputOption::VALUE_OPTIONAL,
-            'Name of module to run architecture sniffer for. You can use dot syntax for namespaced ones, e.g. `SprykerEco.FooBar`. `Spryker.all`/`SprykerShop.all` is reserved for CORE internal usage.'
-        );
-        $this->addOption(
-            DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_PRIORITY,
-            'p',
-            InputOption::VALUE_OPTIONAL,
-            'Priority [1 (highest), 2 (medium), 3 (experimental)], defaults to ' . $this->getFactory()->getConfig()->getArchitectureSnifferDefaultPriority() . '.'
-        );
-        $this->addOption(
-            DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_STRICT,
-            's',
-            InputOption::VALUE_NONE,
-            'Also report those nodes with a @SuppressWarnings annotation'
-        );
-        $this->addOption(
-            DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_DRY_RUN,
-            'd',
-            InputOption::VALUE_NONE,
-            'Dry-Run the command, display it only'
-        );
+        $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of module to run architecture sniffer for. You can use dot syntax for namespaced ones, e.g. `SprykerEco.FooBar`. `Spryker.all`/`SprykerShop.all` is reserved for CORE internal usage.');
+        $this->addOption(static::OPTION_PRIORITY, 'p', InputOption::VALUE_OPTIONAL, 'Priority [1 (highest), 2 (medium), 3 (experimental)], defaults to 2.');
+        $this->addOption(static::OPTION_STRICT, 's', InputOption::VALUE_NONE, 'Also report those nodes with a @SuppressWarnings annotation');
+        $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
 
         $this->addArgument(static::ARGUMENT_SUB_PATH, InputArgument::OPTIONAL, 'Optional path or sub path element');
     }
@@ -79,7 +62,7 @@ class CodeArchitectureSnifferConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $module = $this->input->getOption(DevelopmentConfig::ARCHITECTURE_SNIFFER_OPTION_NAME_MODULE);
+        $module = $this->input->getOption(static::OPTION_MODULE);
         $isCore = strpos($module, '.') !== false;
         $message = sprintf('Run Architecture Sniffer for %s', $isCore ? 'CORE' : 'PROJECT');
 
@@ -127,19 +110,7 @@ class CodeArchitectureSnifferConsole extends Console
         }
 
         $output->writeln($path, OutputInterface::VERBOSITY_VERBOSE);
-
-        $architectureSnifferConfig = $this->getFacade()->getArchitectureSnifferConfiguration(
-            $path,
-            $this->input->getOptions()
-        );
-
-        if ($architectureSnifferConfig === []) {
-            $output->writeln('Module was skipped.');
-
-            return true;
-        }
-
-        $violations = $this->getFacade()->runArchitectureSniffer($path, $architectureSnifferConfig);
+        $violations = $this->getFacade()->runArchitectureSniffer($path, $this->input->getOptions());
         $count = $this->displayViolations($output, $violations);
         $output->writeln($count . ' violations found');
 
@@ -217,8 +188,6 @@ class CodeArchitectureSnifferConsole extends Console
             }
 
             foreach ($paths as $path) {
-                $violations = []; //todo: workaround!!
-
                 if ($subPath) {
                     $path .= trim($subPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
                 }
@@ -226,27 +195,15 @@ class CodeArchitectureSnifferConsole extends Console
                     $output->writeln('Path not found, skipping: ' . $path, OutputInterface::VERBOSITY_VERY_VERBOSE);
                     continue;
                 }
-
-                $architectureSnifferConfig = $this->getFacade()->getArchitectureSnifferConfiguration(
-                    $path,
-                    $this->input->getOptions()
-                );
-
-                if ($architectureSnifferConfig === []) {
-                    $output->writeln('Path was skipped.');
-
-                    continue;
-                }
-
                 $output->writeln('Checking path: ' . $path, OutputInterface::VERBOSITY_VERBOSE);
 
-                $violations = $this->getFacade()->runArchitectureSniffer($path, $architectureSnifferConfig);
+                $violations = $this->getFacade()->runArchitectureSniffer($path, $this->input->getOptions());
                 $count = $this->displayViolations($output, $violations);
                 $result += $count;
             }
         }
 
-        if (!isset($violations)) { //todo: wrong logic
+        if (!isset($violations)) {
             $output->writeln('<error>No paths found for checking</error>');
 
             return false;
@@ -265,17 +222,6 @@ class CodeArchitectureSnifferConsole extends Console
      */
     protected function runCustomPath(OutputInterface $output, $customPath)
     {
-        $architectureSnifferConfig = $this->getFacade()->getArchitectureSnifferConfiguration(
-            $customPath,
-            $this->input->getOptions()
-        );
-
-        if ($architectureSnifferConfig === []) {
-            $output->writeln('Module was skipped.');
-
-            return true;
-        }//todo: check
-
         $output->writeln($customPath, OutputInterface::VERBOSITY_VERBOSE);
 
         $violations = $this->getFacade()->runArchitectureSniffer($customPath, $this->input->getOptions());
