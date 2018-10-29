@@ -1,0 +1,12 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Categories' } %}
+    {% block widget_content %}
+        {% if categories is empty %}
+            <p>{{ 'No categories found.' }}</p>
+        {% endif %}
+        <ul>
+        {% for category in categories %}
+            <li class="active">#{{ category.idCategory }}: <a href="/product-category/assign?id-category={{ category.idCategory }}">{{ category.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endblock %}
+{% endembed %}
