@@ -20,17 +20,7 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 class SetupConfig extends AbstractBundleConfig
 {
     protected const CRONJOBS_DEFINITION_FILE_PATH = APPLICATION_ROOT_DIR . '/config/Zed/cronjobs/jobs.php';
-    protected const CRONJOBS_CONFIG_PATH = APPLICATION_ROOT_DIR . '/config/Zed/cronjobs/cron.conf';
-
-    /**
-     * @deprecated Use `getCronjobsDefinitionFilePath()` instead.
-     *
-     * @return string
-     */
-    public function getPathForJobsPHP(): string
-    {
-        return $this->getCronjobsDefinitionFilePath();
-    }
+    protected const CRONJOBS_CONFIG_FILE_PATH = APPLICATION_ROOT_DIR . '/config/Zed/cronjobs/cron.conf';
 
     /**
      * @return string
@@ -99,9 +89,9 @@ class SetupConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getCronjobsConfigPath(): string
+    public function getCronjobsConfigFilePath(): string
     {
-        return static::CRONJOBS_CONFIG_PATH;
+        return static::CRONJOBS_CONFIG_FILE_PATH;
     }
 
     /**
