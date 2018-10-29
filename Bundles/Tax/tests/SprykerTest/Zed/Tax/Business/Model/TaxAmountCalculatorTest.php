@@ -7,11 +7,8 @@
 
 namespace SprykerTest\Zed\Tax\Business\Model;
 
-use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Tax\Business\TaxFacadeInterface;
+use SprykerTest\Zed\Tax\TaxBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -25,13 +22,25 @@ use Spryker\Zed\Tax\Business\TaxFacadeInterface;
  */
 class TaxAmountCalculatorTest extends Unit
 {
-    protected const PRICE_MODE_NET = 'NET_MODE';
-    protected const DEFAULT_QUANTITY = 1;
-
     /**
      * @var \SprykerTest\Zed\Tax\TaxBusinessTester
      */
     protected $tester;
+
+    /**
+     * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
+     */
+    protected $taxFacade;
+
+    /**
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->taxFacade = $this->tester->getLocator()->tax()->facade();
+    }
 
     /**
      * @dataProvider getSeparateTestData
@@ -49,13 +58,11 @@ class TaxAmountCalculatorTest extends Unit
         int $quantity,
         int $expected
     ) {
-        $taxFacade = $this->getTaxFacade();
+        $nonSplitItemTransferCollection = $this->tester->createItemTransferCollection($taxRate, $price, $price * $quantity, TaxBusinessTester::DEFAULT_QUANTITY);
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($nonSplitItemTransferCollection);
 
-        $nonSplitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price * $quantity, static::DEFAULT_QUANTITY);
-        $calculableObjectTransfer = $this->createCalculableObjectTransfer($nonSplitItemTransferCollection);
-
-        $taxFacade->calculateTaxAmount($calculableObjectTransfer);
-        $recalculatedNonSplitSumTaxAmount = $this->sumTaxAmount($calculableObjectTransfer);
+        $this->taxFacade->calculateTaxAmount($calculableObjectTransfer);
+        $recalculatedNonSplitSumTaxAmount = $this->tester->sumTaxAmount($calculableObjectTransfer);
 
         $this->assertEquals($expected, $recalculatedNonSplitSumTaxAmount);
     }
@@ -76,13 +83,11 @@ class TaxAmountCalculatorTest extends Unit
         int $quantity,
         int $expected
     ) {
-        $taxFacade = $this->getTaxFacade();
+        $splitItemTransferCollection = $this->tester->createItemTransferCollection($taxRate, $price, $price, $quantity);
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($splitItemTransferCollection);
 
-        $splitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price, $quantity);
-        $calculableObjectTransfer = $this->createCalculableObjectTransfer($splitItemTransferCollection);
-
-        $taxFacade->calculateTaxAmount($calculableObjectTransfer);
-        $recalculatedSplitSumTaxAmount = $this->sumTaxAmount($calculableObjectTransfer);
+        $this->taxFacade->calculateTaxAmount($calculableObjectTransfer);
+        $recalculatedSplitSumTaxAmount = $this->tester->sumTaxAmount($calculableObjectTransfer);
 
         $this->assertEquals($expected, $recalculatedSplitSumTaxAmount);
     }
@@ -101,19 +106,17 @@ class TaxAmountCalculatorTest extends Unit
         int $price,
         int $quantity
     ) {
-        $taxFacade = $this->getTaxFacade();
+        $nonSplitItemTransferCollection = $this->tester->createItemTransferCollection($taxRate, $price, $price * $quantity, TaxBusinessTester::DEFAULT_QUANTITY);
+        $splitItemTransferCollection = $this->tester->createItemTransferCollection($taxRate, $price, $price, $quantity);
 
-        $nonSplitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price * $quantity, static::DEFAULT_QUANTITY);
-        $splitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price, $quantity);
+        $calculableNonSplitObjectTransfer = $this->tester->createCalculableObjectTransfer($nonSplitItemTransferCollection);
+        $calculableSplitObjectTransfer = $this->tester->createCalculableObjectTransfer($splitItemTransferCollection);
 
-        $calculableNonSplitObjectTransfer = $this->createCalculableObjectTransfer($nonSplitItemTransferCollection);
-        $calculableSplitObjectTransfer = $this->createCalculableObjectTransfer($splitItemTransferCollection);
+        $this->taxFacade->calculateTaxAmount($calculableNonSplitObjectTransfer);
+        $this->taxFacade->calculateTaxAmount($calculableSplitObjectTransfer);
 
-        $taxFacade->calculateTaxAmount($calculableNonSplitObjectTransfer);
-        $taxFacade->calculateTaxAmount($calculableSplitObjectTransfer);
-
-        $recalculatedNonSplitSumTaxAmount = $this->sumTaxAmount($calculableNonSplitObjectTransfer);
-        $recalculatedSplitSumTaxAmount = $this->sumTaxAmount($calculableSplitObjectTransfer);
+        $recalculatedNonSplitSumTaxAmount = $this->tester->sumTaxAmount($calculableNonSplitObjectTransfer);
+        $recalculatedSplitSumTaxAmount = $this->tester->sumTaxAmount($calculableSplitObjectTransfer);
 
         $this->assertEquals($recalculatedNonSplitSumTaxAmount, $recalculatedSplitSumTaxAmount);
     }
@@ -144,81 +147,5 @@ class TaxAmountCalculatorTest extends Unit
             [28.45, 47, 13, 174],
             [14.26, 56, 8, 64],
         ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return int
-     */
-    protected function sumTaxAmount(CalculableObjectTransfer $calculableObjectTransfer): int
-    {
-        $items = $calculableObjectTransfer->getItems()->getArrayCopy();
-
-        return array_reduce($items, function (?int $total, ItemTransfer $itemTransfer) {
-            $total += $itemTransfer->getSumTaxAmount();
-            return $total;
-        });
-    }
-
-    /**
-     * @param float $taxRate
-     * @param int $price
-     * @param int $sumPrice
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function createItemTransfer(float $taxRate, int $price, int $sumPrice): ItemTransfer
-    {
-        $itemTransfer = (new ItemTransfer())
-            ->setTaxRate($taxRate)
-            ->setUnitNetPrice($price)
-            ->setSumNetPrice($sumPrice)
-            ->setUnitPrice($price)
-            ->setSumPrice($sumPrice)
-            ->setOriginUnitNetPrice($price);
-
-        return $itemTransfer;
-    }
-
-    /**
-     * @param float $taxRate
-     * @param int $price
-     * @param int $sumPrice
-     * @param int $quantity
-     *
-     * @return array
-     */
-    protected function createItemTransferCollection(float $taxRate, int $price, int $sumPrice, int $quantity = 1): array
-    {
-        $items = [];
-
-        while ($quantity--) {
-            $items[] = $this->createItemTransfer($taxRate, $price, $sumPrice);
-        }
-
-        return $items;
-    }
-
-    /**
-     * @param array $itemTransferCollection
-     *
-     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
-     */
-    protected function createCalculableObjectTransfer(array $itemTransferCollection): CalculableObjectTransfer
-    {
-        $calculableObjectTransferMock = (new CalculableObjectTransfer())
-            ->setPriceMode(static::PRICE_MODE_NET)
-            ->setItems(new ArrayObject($itemTransferCollection));
-
-        return $calculableObjectTransferMock;
-    }
-
-    /**
-     * @return \Spryker\Zed\Tax\Business\TaxFacadeInterface
-     */
-    protected function getTaxFacade(): TaxFacadeInterface
-    {
-        return $this->tester->getLocator()->tax()->facade();
     }
 }
