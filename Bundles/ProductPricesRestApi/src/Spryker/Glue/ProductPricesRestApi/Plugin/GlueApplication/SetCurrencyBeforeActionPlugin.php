@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Glue\ProductPricesRestApi\Plugin\GlueApplication;
+
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface;
+use Spryker\Glue\Kernel\AbstractPlugin;
+
+/**
+ * @method \Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiFactory getFactory()
+ */
+class SetCurrencyBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface
+{
+    /**
+     * {@inheritdoc}
+     * - Sets the current currency.
+     * - Uses CurrencyClient to set currency.
+     * - Quote will be reloaded on switching currency.
+     *
+     * @param string $action
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    public function beforeAction(string $action, RestRequestInterface $restRequest): void
+    {
+        $this->getFactory()->createCurrencySetter()->setCurrency($restRequest);
+    }
+}

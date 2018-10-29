@@ -7,6 +7,7 @@
 namespace Spryker\Glue\CatalogSearchRestApi;
 
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCatalogClientInterface;
+use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchReader;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchReaderInterface;
@@ -44,11 +45,21 @@ class CatalogSearchRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
+     */
+    protected function getCurrencyClient(): CatalogSearchRestApiToCurrencyClientInterface
+    {
+        return $this->getProvidedDependency(CatalogSearchRestApiDependencyProvider::CLIENT_CURRENCY);
+    }
+
+    /**
      * @return \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapperInterface
      */
     public function createCatalogSearchResourceMapper(): CatalogSearchResourceMapperInterface
     {
-        return new CatalogSearchResourceMapper();
+        return new CatalogSearchResourceMapper(
+            $this->getCurrencyClient()
+        );
     }
 
     /**

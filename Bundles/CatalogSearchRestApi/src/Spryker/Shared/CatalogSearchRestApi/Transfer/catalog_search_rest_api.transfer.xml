@@ -67,6 +67,7 @@
         <property name="priceTypeName" type="string"/>
         <property name="grossAmount" type="int"/>
         <property name="netAmount" type="int"/>
+        <property name="currency" type="RestCurrency"/>
     </transfer>
 
     <transfer name="PriceModeConfiguration">
