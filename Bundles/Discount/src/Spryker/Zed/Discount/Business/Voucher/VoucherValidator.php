@@ -74,6 +74,7 @@ class VoucherValidator implements VoucherValidatorInterface
             return false;
         }
 
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool|null $voucherPoolEntity */
         $voucherPoolEntity = $discountVoucherEntity->getVoucherPool();
         if (!$voucherPoolEntity) {
             $this->addMessage(self::REASON_VOUCHER_CODE_POOL_MISSING);

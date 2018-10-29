@@ -9,6 +9,8 @@ namespace Spryker\Glue\WishlistsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Expander\WishlistRelationshipExpanderByResourceId;
+use Spryker\Glue\WishlistsRestApi\Processor\Expander\WishlistRelationshipExpanderByResourceIdInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapper;
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistsResourceMapper;
@@ -30,7 +32,8 @@ class WishlistsRestApiFactory extends AbstractFactory
         return new WishlistsReader(
             $this->getWishlistClient(),
             $this->getResourceBuilder(),
-            $this->createWishlistsResourceMapper()
+            $this->createWishlistsResourceMapper(),
+            $this->createWishlistItemsResourceMapper()
         );
     }
 
@@ -43,6 +46,7 @@ class WishlistsRestApiFactory extends AbstractFactory
             $this->getWishlistClient(),
             $this->getResourceBuilder(),
             $this->createWishlistsResourceMapper(),
+            $this->createWishlistItemsResourceMapper(),
             $this->createWishlistsReader()
         );
     }
@@ -73,10 +77,7 @@ class WishlistsRestApiFactory extends AbstractFactory
      */
     public function createWishlistsResourceMapper(): WishlistsResourceMapperInterface
     {
-        return new WishlistsResourceMapper(
-            $this->createWishlistItemsResourceMapper(),
-            $this->getResourceBuilder()
-        );
+        return new WishlistsResourceMapper();
     }
 
     /**
@@ -84,6 +85,14 @@ class WishlistsRestApiFactory extends AbstractFactory
      */
     public function createWishlistItemsResourceMapper(): WishlistItemsResourceMapperInterface
     {
-        return new WishlistItemsResourceMapper($this->getResourceBuilder());
+        return new WishlistItemsResourceMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\Expander\WishlistRelationshipExpanderByResourceIdInterface
+     */
+    public function createWishlistRelationshipExpanderByResourceId(): WishlistRelationshipExpanderByResourceIdInterface
+    {
+        return new WishlistRelationshipExpanderByResourceId($this->createWishlistsReader());
     }
 }
