@@ -103,6 +103,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getStockQueryContainer(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
+            $this->getPriceProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
@@ -126,6 +127,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getStockQueryContainer(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
+            $this->getPriceProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
@@ -168,6 +170,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getStockQueryContainer(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
+            $this->getPriceProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
@@ -592,6 +595,22 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductConcreteFormEditTabsExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
+     */
+    public function getProductAbstractFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface[]
+     */
+    public function getProductConcreteFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER);
     }
 
     /**
