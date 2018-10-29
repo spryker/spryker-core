@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -62,6 +62,22 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         $this->mapCartItems($quoteTransfer, $cartResource);
 
         return $cartResource;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCartsAttributesTransfer
+     */
+    public function mapQuoteTransferToRestCartsAttributesTransfer(QuoteTransfer $quoteTransfer): RestCartsAttributesTransfer
+    {
+        $restCartsAttributesTransfer = new RestCartsAttributesTransfer();
+
+        $this->setBaseCartData($quoteTransfer, $restCartsAttributesTransfer);
+        $this->setTotals($quoteTransfer, $restCartsAttributesTransfer);
+        $this->setDiscounts($quoteTransfer, $restCartsAttributesTransfer);
+
+        return $restCartsAttributesTransfer;
     }
 
     /**

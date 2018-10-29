@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -25,7 +25,7 @@ class CartsRestApiToZedRequestClientBridge implements CartsRestApiToZedRequestCl
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getLastResponseErrorMessages()
+    public function getLastResponseErrorMessages(): array
     {
         return $this->zedRequestClient->getLastResponseErrorMessages();
     }
