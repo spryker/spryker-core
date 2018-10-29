@@ -258,10 +258,10 @@ class PriceManager implements PriceManagerInterface
                 new PriceProductFilterTransfer(),
                 $itemTransfer
             )
-                ->setStoreName($this->findStoreName($quoteTransfer))
-                ->setPriceMode($quoteTransfer->getPriceMode())
-                ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
-                ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
+            ->setStoreName($this->findStoreName($quoteTransfer))
+            ->setPriceMode($quoteTransfer->getPriceMode())
+            ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
+            ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
 
         if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
             $priceProductFilterTransfer->setQuote($quoteTransfer);
