@@ -71,9 +71,9 @@ class OrderReader implements OrderReaderInterface
      * @param string $orderReference
      * @param string $customerReference
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface?|null
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function getOrderByOrderReference(string $orderReference, string $customerReference): ?RestResourceInterface
+    public function findOrderByOrderReference(string $orderReference, string $customerReference): ?RestResourceInterface
     {
         $orderTransfer = (new OrderTransfer())
             ->setOrderReference($orderReference)

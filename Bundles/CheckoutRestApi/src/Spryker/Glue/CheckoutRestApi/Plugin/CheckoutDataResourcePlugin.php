@@ -27,7 +27,7 @@ class CheckoutDataResourcePlugin extends AbstractPlugin implements ResourceRoute
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addPost(CheckoutRestApiConfig::ACTION_CHECKOUT_DATA_POST, false);
+        $resourceRouteCollection->addPost(CheckoutRestApiConfig::ACTION_CHECKOUT_DATA_POST);
 
         return $resourceRouteCollection;
     }

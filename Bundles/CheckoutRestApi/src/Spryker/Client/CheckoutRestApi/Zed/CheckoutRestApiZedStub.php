@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface;
 
-class CheckoutRestApiStub implements CheckoutRestApiStubInterface
+class CheckoutRestApiZedStub implements CheckoutRestApiZedStubInterface
 {
     /**
      * @var \Spryker\Client\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface

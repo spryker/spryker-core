@@ -17,6 +17,7 @@ class CheckoutResourcePlugin extends AbstractPlugin implements ResourceRoutePlug
 {
     /**
      * {@inheritdoc}
+     * - Configures available actions for checkout resource.
      *
      * @api
      *

@@ -9,18 +9,18 @@ namespace Spryker\Client\CheckoutRestApi;
 
 use Spryker\Client\CheckoutRestApi\Dependency\Client\CheckoutRestApiToQuoteClientInterface;
 use Spryker\Client\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface;
-use Spryker\Client\CheckoutRestApi\Zed\CheckoutRestApiStub;
-use Spryker\Client\CheckoutRestApi\Zed\CheckoutRestApiStubInterface;
+use Spryker\Client\CheckoutRestApi\Zed\CheckoutRestApiZedStub;
+use Spryker\Client\CheckoutRestApi\Zed\CheckoutRestApiZedStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CheckoutRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\CheckoutRestApi\Zed\CheckoutRestApiStubInterface
+     * @return \Spryker\Client\CheckoutRestApi\Zed\CheckoutRestApiZedStubInterface
      */
-    public function createZedStub(): CheckoutRestApiStubInterface
+    public function createCheckoutRestApiZedStub(): CheckoutRestApiZedStubInterface
     {
-        return new CheckoutRestApiStub($this->getZedRequestClient());
+        return new CheckoutRestApiZedStub($this->getZedRequestClient());
     }
 
     /**

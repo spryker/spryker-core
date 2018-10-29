@@ -10,7 +10,7 @@ namespace Spryker\Client\CheckoutRestApi\Zed;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutRestApiStubInterface
+interface CheckoutRestApiZedStubInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

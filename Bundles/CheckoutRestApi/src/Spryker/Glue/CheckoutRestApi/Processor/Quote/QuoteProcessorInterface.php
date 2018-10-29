@@ -10,7 +10,6 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\Quote;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface QuoteProcessorInterface
 {
@@ -19,25 +18,12 @@ interface QuoteProcessorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function getCustomerQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer;
+    public function findCustomerQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(): QuoteResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function updateQuoteWithDataFromRequest(
-        QuoteTransfer $quoteTransfer,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        RestRequestInterface $restRequest
-    ): QuoteTransfer;
 
     /**
      * @return void

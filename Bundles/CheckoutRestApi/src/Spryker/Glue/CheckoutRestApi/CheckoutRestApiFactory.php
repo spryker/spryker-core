@@ -18,6 +18,10 @@ use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReaderInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteCollectionReader;
+use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteCollectionReaderInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMerger;
+use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessor;
 use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface;
 use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
@@ -57,7 +61,16 @@ class CheckoutRestApiFactory extends AbstractFactory
     {
         return new QuoteProcessor(
             $this->getCartClient(),
-            $this->getQuoteCollectionReaderPlugin(),
+            $this->getQuoteCollectionReaderPlugin()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface
+     */
+    public function createQuoteMerger(): QuoteMergerInterface
+    {
+        return new QuoteMerger(
             $this->createCheckoutDataMapper(),
             $this->getCustomerClient()
         );
@@ -71,10 +84,19 @@ class CheckoutRestApiFactory extends AbstractFactory
         return new CheckoutProcessor(
             $this->getResourceBuilder(),
             $this->createQuoteProcessor(),
+            $this->createQuoteMerger(),
             $this->getCheckoutClient(),
             $this->getZedRequestClient(),
             $this->getGlossaryStorageClient()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteCollectionReaderInterface
+     */
+    public function createQuoteCollectionReader(): QuoteCollectionReaderInterface
+    {
+        return new QuoteCollectionReader($this->getCartClient());
     }
 
     /**

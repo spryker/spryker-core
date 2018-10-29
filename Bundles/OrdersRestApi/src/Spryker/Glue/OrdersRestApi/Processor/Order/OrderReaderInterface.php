@@ -26,5 +26,5 @@ interface OrderReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function getOrderByOrderReference(string $orderReference, string $customerReference): ?RestResourceInterface;
+    public function findOrderByOrderReference(string $orderReference, string $customerReference): ?RestResourceInterface;
 }

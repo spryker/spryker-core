@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CheckoutRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class CheckoutRestApiToCartClientBridge implements CheckoutRestApiToCartClientInterface
 {
@@ -38,5 +39,13 @@ class CheckoutRestApiToCartClientBridge implements CheckoutRestApiToCartClientIn
     public function clearQuote(): void
     {
         $this->cartClient->clearQuote();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote(): QuoteTransfer
+    {
+        return $this->cartClient->getQuote();
     }
 }

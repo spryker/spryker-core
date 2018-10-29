@@ -8,23 +8,23 @@
 namespace Spryker\Glue\OrdersRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\OrdersRestApi\OrdersRestApiResourceInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Order\OrderReaderInterface;
 
 class OrderByOrderReferenceResourceRelationshipExpander implements OrderByOrderReferenceResourceRelationshipExpanderInterface
 {
     protected const ORDER_REFERENCE = 'orderReference';
 
     /**
-     * @var \Spryker\Glue\OrdersRestApi\OrdersRestApiResourceInterface
+     * @var \Spryker\Glue\OrdersRestApi\Processor\Order\OrderReaderInterface
      */
-    protected $orderResource;
+    protected $orderReader;
 
     /**
-     * @param \Spryker\Glue\OrdersRestApi\OrdersRestApiResourceInterface $orderResource
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Order\OrderReaderInterface $orderReader
      */
-    public function __construct(OrdersRestApiResourceInterface $orderResource)
+    public function __construct(OrderReaderInterface $orderReader)
     {
-        $this->orderResource = $orderResource;
+        $this->orderReader = $orderReader;
     }
 
     /**
@@ -46,7 +46,7 @@ class OrderByOrderReferenceResourceRelationshipExpander implements OrderByOrderR
                 return;
             }
             $orderReference = $resource->getAttributes()->offsetGet(static::ORDER_REFERENCE);
-            $orderResource = $this->orderResource->findCustomerOrderByOrderReference($orderReference, $customerReference);
+            $orderResource = $this->orderReader->findOrderByOrderReference($orderReference, $customerReference);
             if ($orderResource !== null) {
                 $resource->addRelationship($orderResource);
             }

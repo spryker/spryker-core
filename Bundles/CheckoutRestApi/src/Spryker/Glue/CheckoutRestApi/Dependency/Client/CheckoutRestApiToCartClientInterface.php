@@ -18,4 +18,9 @@ interface CheckoutRestApiToCartClientInterface
      * @return mixed
      */
     public function clearQuote();
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote();
 }

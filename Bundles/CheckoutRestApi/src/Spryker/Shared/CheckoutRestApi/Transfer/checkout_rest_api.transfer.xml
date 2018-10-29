@@ -9,25 +9,6 @@
         <property name="paymentMethods" type="PaymentMethods"/>
     </transfer>
 
-    <transfer name="ShipmentMethods">
-        <property name="methods" type="ShipmentMethod[]" singular="method" />
-    </transfer>
-
-    <transfer name="ShipmentMethod">
-        <property name="idShipmentMethod" type="int" />
-        <property name="prices" type="MoneyValue[]" singular="price" />
-        <property name="storeCurrencyPrice" type="int" />
-        <property name="currencyIsoCode" type="string" />
-    </transfer>
-
-    <transfer name="PaymentMethods">
-        <property name="methods" singular="method" type="PaymentMethod[]" />
-    </transfer>
-
-    <transfer name="PaymentMethod">
-        <property name="methodName" type="string" />
-    </transfer>
-
     <transfer name="RestCheckoutRequestAttributes">
         <property name="quote" type="RestQuoteRequest"/>
     </transfer>
@@ -64,6 +45,7 @@
         <property name="iso2Code" type="string" />
         <property name="company" type="string" />
         <property name="phone" type="string" />
+        <property name="uuid" type="string" />
     </transfer>
 
     <transfer name="RestShipment">

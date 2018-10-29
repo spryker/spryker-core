@@ -43,15 +43,7 @@ class OrdersRestApiFactory extends AbstractFactory
      */
     public function createOrderByOrderReferenceResourceRelationshipExpander(): OrderByOrderReferenceResourceRelationshipExpanderInterface
     {
-        return new OrderByOrderReferenceResourceRelationshipExpander($this->createOrdersRestApiResource());
-    }
-
-    /**
-     * @return \Spryker\Glue\OrdersRestApi\OrdersRestApiResourceInterface
-     */
-    public function createOrdersRestApiResource(): OrdersRestApiResourceInterface
-    {
-        return new OrdersRestApiResource();
+        return new OrderByOrderReferenceResourceRelationshipExpander($this->createOrderReader());
     }
 
     /**

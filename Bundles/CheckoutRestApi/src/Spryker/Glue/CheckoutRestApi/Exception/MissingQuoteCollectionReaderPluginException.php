@@ -9,6 +9,6 @@ namespace Spryker\Glue\CheckoutRestApi\Exception;
 
 use Exception;
 
-class ReaderNotImplementedException extends Exception
+class MissingQuoteCollectionReaderPluginException extends Exception
 {
 }

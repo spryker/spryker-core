@@ -27,6 +27,6 @@ class CheckoutRestApiClient extends AbstractClient implements CheckoutRestApiCli
      */
     public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer
     {
-        return $this->getFactory()->createZedStub()->getCheckoutData($quoteTransfer);
+        return $this->getFactory()->createCheckoutRestApiZedStub()->getCheckoutData($quoteTransfer);
     }
 }

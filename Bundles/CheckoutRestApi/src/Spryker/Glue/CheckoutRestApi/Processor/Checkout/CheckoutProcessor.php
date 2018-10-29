@@ -16,6 +16,7 @@ use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCheckoutClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -35,6 +36,11 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $quoteProcessor;
 
     /**
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface
+     */
+    protected $quoteMerger;
+
+    /**
      * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCheckoutClientInterface
      */
     protected $checkoutClient;
@@ -52,6 +58,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface $quoteProcessor
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface $quoteMerger
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCheckoutClientInterface $checkoutClient
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
@@ -59,12 +66,14 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         QuoteProcessorInterface $quoteProcessor,
+        QuoteMergerInterface $quoteMerger,
         CheckoutRestApiToCheckoutClientInterface $checkoutClient,
         CheckoutRestApiToZedRequestClientInterface $zedRequestClient,
         CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->quoteProcessor = $quoteProcessor;
+        $this->quoteMerger = $quoteMerger;
         $this->checkoutClient = $checkoutClient;
         $this->zedRequestClient = $zedRequestClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
@@ -78,9 +87,9 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      */
     public function placeOrder(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
     {
-        $quoteTransfer = $this->quoteProcessor->getCustomerQuote($restCheckoutRequestAttributesTransfer);
+        $quoteTransfer = $this->quoteProcessor->findCustomerQuote($restCheckoutRequestAttributesTransfer);
         if ($quoteTransfer === null) {
-            return $this->createQuoteNotFoundErrorResponse();
+            return $this->createCartNotFoundErrorResponse();
         }
 
         $quoteResponseTransfer = $this->quoteProcessor->validateQuote();
@@ -88,7 +97,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             return $this->createErrorMessagesResponse($this->zedRequestClient->getLastResponseErrorMessages());
         }
 
-        $quoteTransfer = $this->quoteProcessor->updateQuoteWithDataFromRequest(
+        $quoteTransfer = $this->quoteMerger->updateQuoteWithDataFromRequest(
             $quoteTransfer,
             $restCheckoutRequestAttributesTransfer,
             $restRequest
@@ -96,26 +105,26 @@ class CheckoutProcessor implements CheckoutProcessorInterface
 
         $checkoutResponseTransfer = $this->checkoutClient->placeOrder($quoteTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
-            return $this->createCheckoutErrorResponse($checkoutResponseTransfer->getErrors(), $restRequest->getMetadata()->getLocale());
+            return $this->createPlaceOrderFailedErrorResponse($checkoutResponseTransfer->getErrors(), $restRequest->getMetadata()->getLocale());
         }
 
         $this->quoteProcessor->clearQuote();
 
-        return $this->createResponse($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
+        return $this->createOrderPlacedResponse($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
     }
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteNotFoundErrorResponse(): RestResponseInterface
+    protected function createCartNotFoundErrorResponse(): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $restResponse->addError(
             (new RestErrorMessageTransfer())
-                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
                 ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_QUOTE_NOT_FOUND)
+                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_CART_NOT_FOUND)
         );
 
         return $restResponse;
@@ -124,15 +133,15 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createDataInvalidErrorResponse(): RestResponseInterface
+    protected function createCheckoutDataInvalidErrorResponse(): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $restResponse->addError(
             (new RestErrorMessageTransfer())
-                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_DATA_INVALID)
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CHECKOUT_DATA_INVALID)
                 ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_DATA_INVALID)
+                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_CHECKOUT_DATA_INVALID)
         );
 
         return $restResponse;
@@ -144,7 +153,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createCheckoutErrorResponse(ArrayObject $errors, string $currentLocale): RestResponseInterface
+    protected function createPlaceOrderFailedErrorResponse(ArrayObject $errors, string $currentLocale): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -203,7 +212,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createResponse(string $orderReference): RestResponseInterface
+    protected function createOrderPlacedResponse(string $orderReference): RestResponseInterface
     {
         $restResource = $this->restResourceBuilder->createRestResource(
             CheckoutRestApiConfig::RESOURCE_CHECKOUT,
