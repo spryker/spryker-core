@@ -9,12 +9,12 @@ namespace Spryker\Zed\ProductValidity\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Business\Product\Observer\ProductConcreteUpdateObserverInterface;
+use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 
 /**
  * @method \Spryker\Zed\ProductValidity\Business\ProductValidityFacadeInterface getFacade()
  */
-class ProductValidityUpdatePlugin extends AbstractPlugin implements ProductConcreteUpdateObserverInterface
+class ProductValidityUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {
     /**
      * @api

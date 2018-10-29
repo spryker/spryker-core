@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,7 +30,16 @@ class DetailController extends AbstractController
     {
         $idSalesOrder = $this->castId($request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER));
 
-        $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
+        $orderTransfer = $this->getFacade()->findOrderByIdSalesOrder($idSalesOrder);
+
+        if ($orderTransfer === null) {
+            $this->addErrorMessage(sprintf(
+                'Sales order #%d not found.',
+                $idSalesOrder
+            ));
+
+            return $this->redirectResponse(Url::generate('/sales')->build());
+        }
 
         $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);

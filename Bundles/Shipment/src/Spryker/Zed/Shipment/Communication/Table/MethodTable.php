@@ -11,12 +11,12 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodPriceTableMap;
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 
 class MethodTable extends AbstractTable
 {
@@ -36,6 +36,8 @@ class MethodTable extends AbstractTable
     public const ID_METHOD_PARAMETER = 'id-method';
 
     public const PRICE_TAG = '<span class="label label-info">%s</span>';
+    public const STORE_TAG = '<div class="inline p-w-xs store-price" data-store-name="%1$s" data-store-id="%2$d" title="%1$s">%3$s</div>';
+    public const NO_PRICE_FOR_STORE_PLACEHOLDER = '-';
 
     /**
      * @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
@@ -48,13 +50,23 @@ class MethodTable extends AbstractTable
     protected $moneyFacade;
 
     /**
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery $methodQuery
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface $moneyFacade
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
      */
-    public function __construct(SpyShipmentMethodQuery $methodQuery, ShipmentToMoneyInterface $moneyFacade)
-    {
+    public function __construct(
+        SpyShipmentMethodQuery $methodQuery,
+        ShipmentToMoneyInterface $moneyFacade,
+        ShipmentToStoreInterface $storeFacade
+    ) {
         $this->methodQuery = $methodQuery;
         $this->moneyFacade = $moneyFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -179,9 +191,6 @@ class MethodTable extends AbstractTable
     }
 
     /**
-     * @uses MethodTable::getGrossMoneyTransfer
-     * @uses MethodTable::getNetMoneyTransfer
-     *
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param int $idShipmentMethod
      *
@@ -190,47 +199,22 @@ class MethodTable extends AbstractTable
     protected function getResult($method, $idShipmentMethod)
     {
         $methodPriceCollection = $method->getShipmentMethodPrices();
-        $grossMoneyTransferCollection = array_map([$this, 'getGrossMoneyTransfer'], $methodPriceCollection->getArrayCopy());
-        $netMoneyTransferCollection = array_map([$this, 'getNetMoneyTransfer'], $methodPriceCollection->getArrayCopy());
+        $grossMoneyTransferCollectionsGrouped = $this->getGrossPricesGroupedByStore($methodPriceCollection->getArrayCopy());
+        $netMoneyTransferCollectionsGrouped = $this->getNetPricesGroupedByStore($methodPriceCollection->getArrayCopy());
 
         return [
             SpyShipmentMethodTableMap::COL_IS_ACTIVE => '<span class="label '
                 . (($method->isActive()) ? 'label-success">Activated' : 'label-danger">Disabled') . '</span>',
             SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => $method->getShipmentCarrier()->getName(),
             SpyShipmentMethodTableMap::COL_NAME => $method->getName(),
-            SpyShipmentMethodPriceTableMap::COL_DEFAULT_GROSS_PRICE => $this->getPrices($grossMoneyTransferCollection),
-            SpyShipmentMethodPriceTableMap::COL_DEFAULT_NET_PRICE => $this->getPrices($netMoneyTransferCollection),
+            SpyShipmentMethodPriceTableMap::COL_DEFAULT_GROSS_PRICE => $this->getPricesFromGrouped($grossMoneyTransferCollectionsGrouped),
+            SpyShipmentMethodPriceTableMap::COL_DEFAULT_NET_PRICE => $this->getPricesFromGrouped($netMoneyTransferCollectionsGrouped),
             SpyShipmentMethodTableMap::COL_AVAILABILITY_PLUGIN => $method->getAvailabilityPlugin(),
             SpyShipmentMethodTableMap::COL_PRICE_PLUGIN => $method->getPricePlugin(),
             SpyShipmentMethodTableMap::COL_DELIVERY_TIME_PLUGIN => $method->getDeliveryTimePlugin(),
 
             self::ACTIONS => implode(' ', $this->createActionUrls($idShipmentMethod)),
-
         ];
-    }
-
-    /**
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice $methodPriceEntity
-     *
-     * @return \Generated\Shared\Transfer\MoneyTransfer
-     */
-    protected function getGrossMoneyTransfer(SpyShipmentMethodPrice $methodPriceEntity)
-    {
-        return (new MoneyTransfer())
-            ->setAmount($methodPriceEntity->getDefaultGrossPrice())
-            ->setCurrency((new CurrencyTransfer())->fromArray($methodPriceEntity->getCurrency()->toArray(), true));
-    }
-
-    /**
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice $methodPriceEntity
-     *
-     * @return \Generated\Shared\Transfer\MoneyTransfer
-     */
-    protected function getNetMoneyTransfer(SpyShipmentMethodPrice $methodPriceEntity)
-    {
-        return (new MoneyTransfer())
-            ->setAmount($methodPriceEntity->getDefaultNetPrice())
-            ->setCurrency((new CurrencyTransfer())->fromArray($methodPriceEntity->getCurrency()->toArray(), true));
     }
 
     /**
@@ -264,5 +248,67 @@ class MethodTable extends AbstractTable
         );
 
         return $urls;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice[] $methodPriceEntities
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer[][]
+     */
+    protected function getGrossPricesGroupedByStore(array $methodPriceEntities): array
+    {
+        $result = [];
+        foreach ($methodPriceEntities as $methodPriceEntity) {
+            if (!$methodPriceEntity->getDefaultGrossPrice()) {
+                continue;
+            }
+            $result[$methodPriceEntity->getFkStore()][] = (new MoneyTransfer())
+                ->setAmount($methodPriceEntity->getDefaultGrossPrice())
+                ->setCurrency((new CurrencyTransfer())->fromArray($methodPriceEntity->getCurrency()->toArray(), true));
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice[] $methodPriceEntities
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer[][]
+     */
+    protected function getNetPricesGroupedByStore(array $methodPriceEntities): array
+    {
+        $result = [];
+        foreach ($methodPriceEntities as $methodPriceEntity) {
+            if (!$methodPriceEntity->getDefaultNetPrice()) {
+                continue;
+            }
+            $result[$methodPriceEntity->getFkStore()][] = (new MoneyTransfer())
+                ->setAmount($methodPriceEntity->getDefaultNetPrice())
+                ->setCurrency((new CurrencyTransfer())->fromArray($methodPriceEntity->getCurrency()->toArray(), true));
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyTransfer[][] $groupedMoneyTransferCollection
+     *
+     * @return string
+     */
+    protected function getPricesFromGrouped(array $groupedMoneyTransferCollection): string
+    {
+        $result = '';
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $result .= sprintf(
+                static::STORE_TAG,
+                $storeTransfer->getName(),
+                $storeTransfer->getIdStore(),
+                (array_key_exists($storeTransfer->getIdStore(), $groupedMoneyTransferCollection)
+                    ? $this->getPrices($groupedMoneyTransferCollection[$storeTransfer->getIdStore()])
+                    : self::NO_PRICE_FOR_STORE_PLACEHOLDER)
+            );
+        }
+
+        return $result;
     }
 }
