@@ -14,6 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapperInterface;
+use Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpanderInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,18 +38,26 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     protected $concreteProductsResourceMapper;
 
     /**
+     * @var \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpanderInterface
+     */
+    protected $concreteProductAttributeTranslationExpander;
+
+    /**
      * @param \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper
+     * @param \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander
      */
     public function __construct(
         ProductsRestApiToProductStorageClientInterface $productStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper
+        ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper,
+        ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->concreteProductsResourceMapper = $concreteProductsResourceMapper;
+        $this->concreteProductAttributeTranslationExpander = $concreteProductAttributeTranslationExpander;
     }
 
     /**
@@ -86,6 +95,9 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 
         $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
             ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
+
+        $restConcreteProductsAttributesTransfer = $this->concreteProductAttributeTranslationExpander
+            ->addProductAttributeTranslation($restConcreteProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
