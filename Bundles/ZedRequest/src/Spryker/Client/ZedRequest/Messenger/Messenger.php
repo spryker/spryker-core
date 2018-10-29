@@ -140,7 +140,7 @@ class Messenger implements MessengerInterface
     protected function pushResponseErrorMessagesToMessenger(): void
     {
         foreach ($this->getResponsesErrorMessages() as $errorMessage) {
-            $this->messengerClient->addErrorMessage($errorMessage);
+            $this->messengerClient->addErrorMessage($errorMessage->getValue());
         }
     }
 
@@ -150,7 +150,7 @@ class Messenger implements MessengerInterface
     protected function pushResponseSuccessMessagesToMessenger(): void
     {
         foreach ($this->getResponsesSuccessMessages() as $successMessage) {
-            $this->messengerClient->addSuccessMessage($successMessage);
+            $this->messengerClient->addSuccessMessage($successMessage->getValue());
         }
     }
 
@@ -160,7 +160,7 @@ class Messenger implements MessengerInterface
     protected function pushResponseInfoMessagesToMessenger(): void
     {
         foreach ($this->getResponsesInfoMessages() as $infoMessage) {
-            $this->messengerClient->addInfoMessage($infoMessage);
+            $this->messengerClient->addInfoMessage($infoMessage->getValue());
         }
     }
 
