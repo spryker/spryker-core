@@ -26,11 +26,12 @@ class ProductOptionItemSorter implements ProductOptionItemSorterInterface
         $itemsWithoutOptions = [];
 
         foreach ($items as $itemTransfer) {
-            if (count($itemTransfer->getProductOptions()) > 0) {
-                $itemsWithOptions[] = $itemTransfer;
-            } else {
+            if (empty($itemTransfer->getProductOptions())) {
                 $itemsWithoutOptions[] = $itemTransfer;
+                continue;
             }
+
+            $itemsWithOptions[] = $itemTransfer;
         }
 
         $itemsWithOptions = $this->sortItemsBySku($itemsWithOptions);
