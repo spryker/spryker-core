@@ -26,7 +26,7 @@ use Spryker\Zed\Graph\GraphConfig;
  */
 class GraphCommunicationFactoryTest extends Unit
 {
-    const GRAPH_NAME = 'graph name';
+    public const GRAPH_NAME = 'graph name';
 
     /**
      * @return void

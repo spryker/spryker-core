@@ -14,7 +14,7 @@ use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterfac
 
 class AvailabilityStockFormDataProvider
 {
-    const DATA_CLASS = 'data_class';
+    public const DATA_CLASS = 'data_class';
 
     /**
      * @var \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface

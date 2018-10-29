@@ -16,8 +16,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -120,11 +122,22 @@ class OrderHydrator implements OrderHydratorInterface
             );
         }
 
+        $criteria = new Criteria();
+        $criteria->addDescendingOrderByColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM);
+
+        return $this->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateOrderTransferFromPersistenceBySalesOrder(SpySalesOrder $orderEntity): OrderTransfer
+    {
         $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems());
 
-        $orderTransfer = $this->createOrderTransfer($orderEntity);
-
-        return $orderTransfer;
+        return $this->createOrderTransfer($orderEntity);
     }
 
     /**
@@ -183,7 +196,9 @@ class OrderHydrator implements OrderHydratorInterface
      */
     public function hydrateOrderItemsToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
-        foreach ($orderEntity->getItems() as $orderItemEntity) {
+        $criteria = new Criteria();
+        $criteria->addAscendingOrderByColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM);
+        foreach ($orderEntity->getItems($criteria) as $orderItemEntity) {
             $itemTransfer = $this->hydrateOrderItemTransfer($orderItemEntity);
             $orderTransfer->addItem($itemTransfer);
         }

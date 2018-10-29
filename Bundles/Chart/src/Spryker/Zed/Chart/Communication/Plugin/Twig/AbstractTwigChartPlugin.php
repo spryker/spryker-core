@@ -20,7 +20,7 @@ use Twig_SimpleFunction;
  */
 abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigChartFunctionPluginInterface
 {
-    const TWIG_FUNCTION_NAME = 'chart';
+    public const TWIG_FUNCTION_NAME = 'chart';
 
     /**
      * @api

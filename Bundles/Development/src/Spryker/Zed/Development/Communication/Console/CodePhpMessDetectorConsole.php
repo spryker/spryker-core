@@ -17,11 +17,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CodePhpMessDetectorConsole extends Console
 {
-    const COMMAND_NAME = 'code:phpmd';
-    const OPTION_MODULE = 'module';
-    const OPTION_MODULE_ALL = 'all';
-    const OPTION_DRY_RUN = 'dry-run';
-    const OPTION_FORMAT = 'format';
+    public const COMMAND_NAME = 'code:phpmd';
+    public const OPTION_MODULE = 'module';
+    public const OPTION_MODULE_ALL = 'all';
+    public const OPTION_DRY_RUN = 'dry-run';
+    public const OPTION_FORMAT = 'format';
 
     /**
      * @return void

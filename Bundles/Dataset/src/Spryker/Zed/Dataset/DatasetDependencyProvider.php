@@ -15,9 +15,9 @@ use Spryker\Zed\Kernel\Container;
 
 class DatasetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'FACADE_LOCALE';
-    const PROPEL_DATASET_QUERY = 'PROPEL_DATASET_QUERY';
-    const CSV_ADAPTER = 'CSV_ADAPTER';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const PROPEL_DATASET_QUERY = 'PROPEL_DATASET_QUERY';
+    public const CSV_ADAPTER = 'CSV_ADAPTER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

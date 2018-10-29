@@ -1,0 +1,14 @@
+access-tokens:
+  post:
+    username:
+      - NotBlank
+      - EmailConstraint
+      - Regex:
+        pattern: '/^\w+/'
+    password:
+      - NotBlank
+
+refresh-tokens:
+  post:
+    refresh_token:
+    - Required

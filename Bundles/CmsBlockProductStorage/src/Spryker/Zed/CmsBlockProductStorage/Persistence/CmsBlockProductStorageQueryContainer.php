@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implements CmsBlockProductStorageQueryContainerInterface
 {
-    const NAME = 'name';
+    public const NAME = 'name';
 
     /**
      * @api

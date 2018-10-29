@@ -16,8 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContainerInterface
 {
-    const TO_URL = 'toUrl';
-    const STATUS = 'status';
+    public const TO_URL = 'toUrl';
+    public const STATUS = 'status';
 
     /**
      * @api

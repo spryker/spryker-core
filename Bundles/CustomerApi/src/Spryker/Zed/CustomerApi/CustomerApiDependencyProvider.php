@@ -15,11 +15,11 @@ use Spryker\Zed\Kernel\Container;
 
 class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
+    public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
 
-    const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
-    const QUERY_CONTAINER_API_QUERY_BUILDER = 'QUERY_CONTAINER_API_QUERY_BUILDER';
-    const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
+    public const QUERY_CONTAINER_API_QUERY_BUILDER = 'QUERY_CONTAINER_API_QUERY_BUILDER';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

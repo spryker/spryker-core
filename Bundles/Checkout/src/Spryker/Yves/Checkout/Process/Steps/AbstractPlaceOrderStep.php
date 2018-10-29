@@ -28,7 +28,7 @@ abstract class AbstractPlaceOrderStep extends AbstractBaseStep implements StepWi
     protected $externalRedirectUrl;
 
     /**
-     * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @var \Generated\Shared\Transfer\CheckoutResponseTransfer|null
      */
     protected $checkoutResponseTransfer;
 
@@ -38,7 +38,7 @@ abstract class AbstractPlaceOrderStep extends AbstractBaseStep implements StepWi
     protected $errorCodeToRouteMatching = [];
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $postConditionErrorRoute;
 
@@ -61,7 +61,7 @@ abstract class AbstractPlaceOrderStep extends AbstractBaseStep implements StepWi
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
@@ -126,7 +126,7 @@ abstract class AbstractPlaceOrderStep extends AbstractBaseStep implements StepWi
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getPostConditionErrorRoute()
     {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/messenger",
+  "type": "library",
   "description": "Messenger module",
   "license": "proprietary",
   "require": {

@@ -27,10 +27,10 @@ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
  */
 class PercentageTest extends Unit
 {
-    const ITEM_GROSS_PRICE_1000 = 1000;
-    const DISCOUNT_PERCENTAGE_10 = 1000;
-    const DISCOUNT_PERCENTAGE_100 = 10000;
-    const DISCOUNT_PERCENTAGE_200 = 20000;
+    public const ITEM_GROSS_PRICE_1000 = 1000;
+    public const DISCOUNT_PERCENTAGE_10 = 1000;
+    public const DISCOUNT_PERCENTAGE_100 = 10000;
+    public const DISCOUNT_PERCENTAGE_200 = 20000;
 
     /**
      * @return void

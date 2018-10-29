@@ -15,14 +15,14 @@ use Spryker\Shared\Storage\StorageConstants;
 
 class StorageInstanceBuilder
 {
-    const KV_NAMESPACE = 'Spryker\\Zed\\Collector\\Business\\Storage\\Adapter\\KeyValue\\';
-    const ADAPTER_READ_WRITE = 'ReadWrite';
-    const ADAPTER_READ = 'Read';
+    public const KV_NAMESPACE = 'Spryker\\Zed\\Collector\\Business\\Storage\\Adapter\\KeyValue\\';
+    public const ADAPTER_READ_WRITE = 'ReadWrite';
+    public const ADAPTER_READ = 'Read';
 
-    const KV_ADAPTER_REDIS = 'redis';
-    const SEARCH_ELASTICA_ADAPTER = 'elastica';
+    public const KV_ADAPTER_REDIS = 'redis';
+    public const SEARCH_ELASTICA_ADAPTER = 'elastica';
 
-    const DEFAULT_REDIS_DATABASE = 0;
+    public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
      * @var \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface[]|\Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface[]
@@ -176,7 +176,7 @@ class StorageInstanceBuilder
             $config = Config::get(SearchConstants::ELASTICA_PARAMETER__EXTRA);
         }
 
-        $config['protocol'] = ucfirst(Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT));
+        $config['transport'] = ucfirst(Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT));
         $config['port'] = Config::get(SearchConstants::ELASTICA_PARAMETER__PORT);
         $config['host'] = Config::get(SearchConstants::ELASTICA_PARAMETER__HOST);
 

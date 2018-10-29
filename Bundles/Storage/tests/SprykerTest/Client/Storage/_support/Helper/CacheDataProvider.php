@@ -12,18 +12,18 @@ use Spryker\Client\Storage\StorageConfig;
 
 class CacheDataProvider
 {
-    const TEST_TYPE_NEW_KEYS = 'TEST_TYPE_NEW_CACHE';
-    const TEST_TYPE_USED_KEYS = 'TEST_TYPE_USED_KEYS';
-    const TEST_TYPE_UNUSED_KEYS = 'TEST_TYPE_UNUSED_KEYS';
-    const TEST_TYPE_NEW_AND_USED_KEYS = 'TEST_TYPE_NEW_AND_USED_KEYS';
-    const TEST_TYPE_NEW_AND_USED_AND_UNUSED_KEYS = 'TEST_TYPE_NEW_AND_USED_AND_UNUSED_KEYS';
-    const TEST_TYPE_NO_KEYS = 'TEST_TYPE_NO_KEYS';
-    const TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS';
-    const TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS';
-    const TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS';
-    const TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS';
-    const TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS';
-    const OVER_LIMIT_SIZE = 50;
+    public const TEST_TYPE_NEW_KEYS = 'TEST_TYPE_NEW_CACHE';
+    public const TEST_TYPE_USED_KEYS = 'TEST_TYPE_USED_KEYS';
+    public const TEST_TYPE_UNUSED_KEYS = 'TEST_TYPE_UNUSED_KEYS';
+    public const TEST_TYPE_NEW_AND_USED_KEYS = 'TEST_TYPE_NEW_AND_USED_KEYS';
+    public const TEST_TYPE_NEW_AND_USED_AND_UNUSED_KEYS = 'TEST_TYPE_NEW_AND_USED_AND_UNUSED_KEYS';
+    public const TEST_TYPE_NO_KEYS = 'TEST_TYPE_NO_KEYS';
+    public const TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS';
+    public const TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS';
+    public const TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS';
+    public const TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS';
+    public const TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS';
+    public const OVER_LIMIT_SIZE = 50;
 
     /**
      * @var \Spryker\Client\Storage\StorageConfig
@@ -338,7 +338,7 @@ class CacheDataProvider
                     } else {
                         // When there are unused keys within the limit, the result contains the rest of the unused keys after removing the over limit ones
                         $inLimitUnusedKeysSize = $thirdDataset - self::OVER_LIMIT_SIZE;
-                        $key = $key = 'kv:key' . ($i + $thirdDataset - $inLimitUnusedKeysSize + 1);
+                        $key = 'kv:key' . ($i + $thirdDataset - $inLimitUnusedKeysSize + 1);
                         $value = $i < $inLimitUnusedKeysSize ? StorageClient::KEY_INIT :
                             ($i < $inLimitUnusedKeysSize + $thirdDataset ? StorageClient::KEY_USED : StorageClient::KEY_NEW);
                     }

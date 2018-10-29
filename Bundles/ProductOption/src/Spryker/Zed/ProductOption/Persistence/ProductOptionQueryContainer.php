@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOption\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -25,8 +26,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
-    const COL_MAX_TAX_RATE = 'MaxTaxRate';
-    const COL_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
+    public const COL_MAX_TAX_RATE = 'MaxTaxRate';
+    public const COL_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
 
     /**
      * @api
@@ -99,6 +100,22 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         return $this->getFactory()
             ->createProductOptionValueQuery()
             ->filterByIdProductOptionValue($idProductOptionValue);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryProductOptionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer)
+    {
+        $productOptionCriteriaTransfer->requireProductOptionIds();
+
+        return $this->getFactory()
+            ->createProductOptionValueQuery()
+            ->filterByIdProductOptionValue_In($productOptionCriteriaTransfer->getProductOptionIds());
     }
 
     /**

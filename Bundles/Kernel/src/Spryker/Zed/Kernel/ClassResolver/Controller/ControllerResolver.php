@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\ClassResolver\Controller\AbstractControllerResolver;
 
 class ControllerResolver extends AbstractControllerResolver
 {
-    const CLASS_NAME_PATTERN = '\\%s\\Zed\\%s%s\\Communication\\Controller\\%sController';
+    public const CLASS_NAME_PATTERN = '\\%s\\Zed\\%s%s\\Communication\\Controller\\%sController';
 
     /**
      * @return string

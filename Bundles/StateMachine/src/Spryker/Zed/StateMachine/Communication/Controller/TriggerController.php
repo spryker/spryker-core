@@ -18,15 +18,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TriggerController extends AbstractController
 {
-    const URL_PARAM_IDENTIFIER = 'identifier';
-    const URL_PARAM_ID_STATE = 'id-state';
-    const URL_PARAM_ID_PROCESS = 'id-process';
-    const URL_PARAM_STATE_MACHINE_NAME = 'state-machine-name';
-    const URL_PARAM_PROCESS_NAME = 'process-name';
-    const URL_PARAM_REDIRECT = 'redirect';
-    const URL_PARAM_EVENT = 'event';
+    public const URL_PARAM_IDENTIFIER = 'identifier';
+    public const URL_PARAM_ID_STATE = 'id-state';
+    public const URL_PARAM_ID_PROCESS = 'id-process';
+    public const URL_PARAM_STATE_MACHINE_NAME = 'state-machine-name';
+    public const URL_PARAM_PROCESS_NAME = 'process-name';
+    public const URL_PARAM_REDIRECT = 'redirect';
+    public const URL_PARAM_EVENT = 'event';
 
-    const DEFAULT_REDIRECT_URL = '/state-machine/list';
+    public const DEFAULT_REDIRECT_URL = '/state-machine/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

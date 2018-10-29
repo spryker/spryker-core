@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Merchant;
+namespace SprykerTest\Zed\Merchant\Business;
 
 use Codeception\Test\Unit;
 use Exception;
@@ -18,6 +18,7 @@ use Spryker\Zed\Merchant\Business\MerchantFacade;
  * @group SprykerTest
  * @group Zed
  * @group Merchant
+ * @group Business
  * @group Facade
  * @group MerchantFacadeTest
  * Add your own group annotations below this line
@@ -128,7 +129,6 @@ class MerchantFacadeTest extends Unit
     {
         $merchantTransfer = $this->tester->haveMerchant();
         $merchantTransfer
-            ->setIdMerchant(null)
             ->setMerchantKey(null)
             ->setName(null);
 
@@ -195,7 +195,7 @@ class MerchantFacadeTest extends Unit
      */
     public function testGetMerchantsReturnNotEmptyCollection(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->truncateMerchantRelations();
 
         $this->tester->haveMerchant();
         $this->tester->haveMerchant();
