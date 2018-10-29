@@ -161,31 +161,52 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
      */
     protected function getParameters(?array $constraintParameters = null): ?array
     {
-        if ($constraintParameters === null) {
+        if (!$constraintParameters) {
+            return null;
+        }
+
+        $constraintParameters = $this->processFieldsParameter($constraintParameters);
+        $constraintParameters = $this->processConstraintsParameter($constraintParameters);
+
+        return $constraintParameters;
+    }
+
+    /**
+     * @param array|null $constraintParameters
+     *
+     * @return array|null
+     */
+    protected function processFieldsParameter(?array $constraintParameters): ?array
+    {
+        if (!isset($constraintParameters[static::FIELDS])) {
             return $constraintParameters;
         }
 
-        if (isset($constraintParameters[static::FIELDS])) {
-            $configResult = [];
-            foreach ($constraintParameters[static::FIELDS] as $fieldName => $validators) {
-                if ($validators !== null) {
-                    $configResult[$fieldName] = $this->mapFieldConstrains($validators);
-                }
+        foreach ($constraintParameters[static::FIELDS] as $fieldName => $validators) {
+            if ($validators !== null) {
+                $constraintParameters[static::FIELDS][$fieldName] = $this->mapFieldConstrains($validators);
             }
-
-            return [static::FIELDS => $configResult] + $this->getConstraintCollectionOptions();
         }
 
-        if (isset($constraintParameters[static::CONSTRAINTS])) {
-            $configResult = [];
-            foreach ($constraintParameters[static::CONSTRAINTS] as $fieldName => $validators) {
-                if ($validators !== null) {
-                    $validators = [$validators];
-                    $configResult = $this->mapFieldConstrains($validators);
-                }
-            }
+        return $constraintParameters + $this->getConstraintCollectionOptions();
+    }
 
-            return [static::CONSTRAINTS => $configResult];
+    /**
+     * @param array|null $constraintParameters
+     *
+     * @return array|null
+     */
+    protected function processConstraintsParameter(?array $constraintParameters): ?array
+    {
+        if (!isset($constraintParameters[static::CONSTRAINTS])) {
+            return $constraintParameters;
+        }
+
+        foreach ($constraintParameters[static::CONSTRAINTS] as $validators) {
+            if ($validators !== null) {
+                $validators = [$validators];
+                $constraintParameters[static::CONSTRAINTS] = $this->mapFieldConstrains($validators);
+            }
         }
 
         return $constraintParameters;
