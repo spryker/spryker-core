@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityBridge;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyBridge;
@@ -21,6 +20,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProd
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreBridge;
@@ -35,10 +35,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 {
     public const STORE = 'STORE';
 
-    public const FACADE_CATEGORY = 'FACADE_LOCALE';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
+    public const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
     public const FACADE_TOUCH = 'FACADE_TOUCH';
@@ -78,10 +78,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
-        };
-
-        $container[static::FACADE_CATEGORY] = function (Container $container) {
-            return new ProductManagementToCategoryBridge($container->getLocator()->category()->facade());
         };
 
         $container[static::FACADE_LOCALE] = function (Container $container) {
@@ -150,8 +146,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container = $this->addProductBundleFacade($container);
 
-        $container[static::FACADE_CATEGORY] = function (Container $container) {
-            return new ProductManagementToCategoryBridge($container->getLocator()->category()->facade());
+        $container[static::FACADE_PRODUCT_CATEGORY] = function (Container $container) {
+            return new ProductManagementToProductCategoryBridge($container->getLocator()->productCategory()->facade());
         };
 
         $container[static::FACADE_LOCALE] = function (Container $container) {
