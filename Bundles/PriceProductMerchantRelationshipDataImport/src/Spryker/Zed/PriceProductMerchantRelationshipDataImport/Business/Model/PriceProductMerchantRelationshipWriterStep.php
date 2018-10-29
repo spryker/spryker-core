@@ -27,7 +27,11 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
     {
         $priceProductStoreEntity = $this->getPriceProductStoreEntityForMerchantRelationship($dataSet);
 
-        if ($priceProductStoreEntity->getPriceProductMerchantRelationships()->count() !== 0) {
+        if (SpyPriceProductMerchantRelationshipQuery::create()
+            ->filterByFkMerchantRelationship($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_MERCHANT_RELATIONSHIP])
+            ->filterByFkPriceProductStore($priceProductStoreEntity->getIdPriceProductStore())
+            ->exists()
+        ) {
             return;
         }
 
