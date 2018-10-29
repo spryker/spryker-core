@@ -61,6 +61,10 @@ class PriceManager implements PriceManagerInterface
         );
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if (!$this->hasPriceForProduct($itemTransfer, $cartChangeTransfer->getQuote())) {
+                continue;
+            }
+
             $this->setOriginUnitPrices($itemTransfer, $cartChangeTransfer->getQuote());
 
             if ($this->hasForcedUnitGrossPrice($itemTransfer)) {
@@ -92,6 +96,19 @@ class PriceManager implements PriceManagerInterface
         $this->setPrice($itemTransfer, $priceProductFilterTransfer, $priceMode);
 
         return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasPriceForProduct(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): bool
+    {
+        $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $quoteTransfer);
+
+        return $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer) !== null;
     }
 
     /**
@@ -241,10 +258,10 @@ class PriceManager implements PriceManagerInterface
                 new PriceProductFilterTransfer(),
                 $itemTransfer
             )
-            ->setStoreName($this->findStoreName($quoteTransfer))
-            ->setPriceMode($quoteTransfer->getPriceMode())
-            ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
-            ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
+                ->setStoreName($this->findStoreName($quoteTransfer))
+                ->setPriceMode($quoteTransfer->getPriceMode())
+                ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
+                ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
 
         if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
             $priceProductFilterTransfer->setQuote($quoteTransfer);
