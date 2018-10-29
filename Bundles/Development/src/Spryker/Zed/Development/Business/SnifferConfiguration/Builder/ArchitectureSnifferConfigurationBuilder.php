@@ -76,7 +76,9 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
 
         $userPriorityOption = $options[static::CONFIG_PRIORITY_NAME];
 
-        if (!is_int($userPriorityOption)) {
+        $isInteger = is_string($userPriorityOption) ? ctype_digit($userPriorityOption) : is_int($userPriorityOption);
+
+        if (!$isInteger) {
             throw new InvalidTypeException('Priority must be integer only.');
         }
 
