@@ -52,10 +52,10 @@ class TaxAmountCalculatorTest extends Unit
         $taxFacade = $this->getTaxFacade();
 
         $nonSplitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price * $quantity, static::DEFAULT_QUANTITY);
-        $calculableNonSplitObjectTransferMock = $this->createCalculableObjectTransferMock($nonSplitItemTransferCollection);
+        $calculableObjectTransfer = $this->createCalculableObjectTransfer($nonSplitItemTransferCollection);
 
-        $taxFacade->calculateTaxAmount($calculableNonSplitObjectTransferMock);
-        $recalculatedNonSplitSumTaxAmount = $this->sumTaxAmount($calculableNonSplitObjectTransferMock);
+        $taxFacade->calculateTaxAmount($calculableObjectTransfer);
+        $recalculatedNonSplitSumTaxAmount = $this->sumTaxAmount($calculableObjectTransfer);
 
         $this->assertEquals($expected, $recalculatedNonSplitSumTaxAmount);
     }
@@ -79,10 +79,10 @@ class TaxAmountCalculatorTest extends Unit
         $taxFacade = $this->getTaxFacade();
 
         $splitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price, $quantity);
-        $calculableSplitObjectTransferMock = $this->createCalculableObjectTransferMock($splitItemTransferCollection);
+        $calculableObjectTransfer = $this->createCalculableObjectTransfer($splitItemTransferCollection);
 
-        $taxFacade->calculateTaxAmount($calculableSplitObjectTransferMock);
-        $recalculatedSplitSumTaxAmount = $this->sumTaxAmount($calculableSplitObjectTransferMock);
+        $taxFacade->calculateTaxAmount($calculableObjectTransfer);
+        $recalculatedSplitSumTaxAmount = $this->sumTaxAmount($calculableObjectTransfer);
 
         $this->assertEquals($expected, $recalculatedSplitSumTaxAmount);
     }
@@ -106,14 +106,14 @@ class TaxAmountCalculatorTest extends Unit
         $nonSplitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price * $quantity, static::DEFAULT_QUANTITY);
         $splitItemTransferCollection = $this->createItemTransferCollection($taxRate, $price, $price, $quantity);
 
-        $calculableNonSplitObjectTransferMock = $this->createCalculableObjectTransferMock($nonSplitItemTransferCollection);
-        $calculableSplitObjectTransferMock = $this->createCalculableObjectTransferMock($splitItemTransferCollection);
+        $calculableNonSplitObjectTransfer = $this->createCalculableObjectTransfer($nonSplitItemTransferCollection);
+        $calculableSplitObjectTransfer = $this->createCalculableObjectTransfer($splitItemTransferCollection);
 
-        $taxFacade->calculateTaxAmount($calculableNonSplitObjectTransferMock);
-        $taxFacade->calculateTaxAmount($calculableSplitObjectTransferMock);
+        $taxFacade->calculateTaxAmount($calculableNonSplitObjectTransfer);
+        $taxFacade->calculateTaxAmount($calculableSplitObjectTransfer);
 
-        $recalculatedNonSplitSumTaxAmount = $this->sumTaxAmount($calculableNonSplitObjectTransferMock);
-        $recalculatedSplitSumTaxAmount = $this->sumTaxAmount($calculableSplitObjectTransferMock);
+        $recalculatedNonSplitSumTaxAmount = $this->sumTaxAmount($calculableNonSplitObjectTransfer);
+        $recalculatedSplitSumTaxAmount = $this->sumTaxAmount($calculableSplitObjectTransfer);
 
         $this->assertEquals($recalculatedNonSplitSumTaxAmount, $recalculatedSplitSumTaxAmount);
     }
@@ -205,7 +205,7 @@ class TaxAmountCalculatorTest extends Unit
      *
      * @return \Generated\Shared\Transfer\CalculableObjectTransfer
      */
-    protected function createCalculableObjectTransferMock(array $itemTransferCollection): CalculableObjectTransfer
+    protected function createCalculableObjectTransfer(array $itemTransferCollection): CalculableObjectTransfer
     {
         $calculableObjectTransferMock = (new CalculableObjectTransfer())
             ->setPriceMode(static::PRICE_MODE_NET)
