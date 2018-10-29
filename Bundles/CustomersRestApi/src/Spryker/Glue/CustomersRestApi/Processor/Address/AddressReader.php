@@ -76,7 +76,11 @@ class AddressReader implements AddressReaderInterface
     public function getAddressesByAddressUuid(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
+        $parentResource = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS);
+        if (!$parentResource) {
+            return $this->restApiError->addCustomerReferenceMissingError($restResponse);
+        }
+        $customerReference = $parentResource->getId();
 
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
