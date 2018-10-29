@@ -289,6 +289,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
                 $this->sortTable($current);
             }
         }
+        unset($current);
         ksort($priceTable);
     }
 
