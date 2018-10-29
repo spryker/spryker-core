@@ -9,6 +9,9 @@ namespace Spryker\Client\ProductListStorage\ProductViewVariantRestrictionExpande
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 
+/**
+ * @deprecated Will be removed without replacement. Do not use it with spryker/product-storage ^1.4.0.
+ */
 interface ProductViewVariantRestrictionExpanderInterface
 {
     /**

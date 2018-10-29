@@ -11,8 +11,13 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use Spryker\Client\ProductListStorage\ProductConcreteRestriction\ProductConcreteRestrictionReaderInterface;
-use Spryker\Shared\Product\ProductConfig;
+use Spryker\Shared\ProductListStorage\ProductListStorageConfig;
 
+/**
+ * @deprecated Will be removed without replacement. Do not use it with spryker/product-storage ^1.4.0.
+ *
+ * @see \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter
+ */
 class ProductViewVariantRestrictionExpander implements ProductViewVariantRestrictionExpanderInterface
 {
     /**
@@ -78,7 +83,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
                 continue;
             }
 
-            if (!array_key_exists(ProductConfig::VARIANT_LEAF_NODE_ID, $attributeVariantValue)) {
+            if (!array_key_exists(ProductListStorageConfig::VARIANT_LEAF_NODE_ID, $attributeVariantValue)) {
                 continue;
             }
 
@@ -108,7 +113,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
                 continue;
             }
 
-            [$attributeKey, $attributeValue] = explode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $filteredAttributeVariantKey);
+            [$attributeKey, $attributeValue] = explode(ProductListStorageConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $filteredAttributeVariantKey);
             $filteredSuperAttributes[$attributeKey][$attributeValue] = $attributeValue;
         }
 
@@ -185,7 +190,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
         }
 
         foreach ($availableAttributes as $availableAttributeKey) {
-            [$availableAttributeKey, $availableAttributeValue] = explode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $availableAttributeKey);
+            [$availableAttributeKey, $availableAttributeValue] = explode(ProductListStorageConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $availableAttributeKey);
             $availableAttributesForSelectedOptions[$availableAttributeKey][] = $availableAttributeValue;
         }
 
@@ -258,7 +263,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
      */
     protected function isRestrictedAttributeVariant(array $attributeVariantValue, array $restrictedProductIds): bool
     {
-        return in_array($attributeVariantValue[ProductConfig::VARIANT_LEAF_NODE_ID], $restrictedProductIds);
+        return in_array($attributeVariantValue[ProductListStorageConfig::VARIANT_LEAF_NODE_ID], $restrictedProductIds);
     }
 
     /**
@@ -282,7 +287,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
      */
     protected function getAttributeKeyValue(string $attributeKey, string $attributeValue): string
     {
-        return implode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, [
+        return implode(ProductListStorageConfig::ATTRIBUTE_MAP_PATH_DELIMITER, [
             $attributeKey,
             $attributeValue,
         ]);

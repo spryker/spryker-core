@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductStorage\Filter;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
-use Spryker\Shared\Product\ProductConfig;
+use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAttributeMapRestrictionFilterInterface
 {
@@ -39,26 +39,26 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
     public function filterAbstractProductVariantsData(array $productStorageData): array
     {
         $restrictedProductConcreteIds = $this->getRestrictedProductConcreteIds(
-            $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS]
+            $productStorageData[ProductStorageConstants::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS]
         );
 
         if (empty($restrictedProductConcreteIds)) {
             return $productStorageData;
         }
 
-        $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS] = $this->filterProductConcreteIds(
-            $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS],
+        $productStorageData[ProductStorageConstants::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS] = $this->filterProductConcreteIds(
+            $productStorageData[ProductStorageConstants::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS],
             $restrictedProductConcreteIds
         );
 
-        $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS] = $this->filterAttributeVariants(
-            $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS],
+        $productStorageData[ProductStorageConstants::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS] = $this->filterAttributeVariants(
+            $productStorageData[ProductStorageConstants::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS],
             $restrictedProductConcreteIds
         );
 
-        $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES] = $this->filterSuperAttributes(
-            $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES],
-            $productStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS]
+        $productStorageData[ProductStorageConstants::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES] = $this->filterSuperAttributes(
+            $productStorageData[ProductStorageConstants::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES],
+            $productStorageData[ProductStorageConstants::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS]
         );
 
         return $productStorageData;
@@ -107,7 +107,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
                 continue;
             }
 
-            if (!array_key_exists(ProductConfig::VARIANT_LEAF_NODE_ID, $attributeVariantValue)) {
+            if (!array_key_exists(ProductStorageConstants::VARIANT_LEAF_NODE_ID, $attributeVariantValue)) {
                 continue;
             }
 
@@ -137,7 +137,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
                 continue;
             }
 
-            [$attributeKey, $attributeValue] = explode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $filteredAttributeVariantKey);
+            [$attributeKey, $attributeValue] = explode(ProductStorageConstants::ATTRIBUTE_MAP_PATH_DELIMITER, $filteredAttributeVariantKey);
             $filteredSuperAttributes[$attributeKey][$attributeValue] = $attributeValue;
         }
 
@@ -174,7 +174,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
      */
     protected function isRestrictedAttributeVariant(array $attributeVariantValue, array $restrictedProductIds): bool
     {
-        return in_array($attributeVariantValue[ProductConfig::VARIANT_LEAF_NODE_ID], $restrictedProductIds);
+        return in_array($attributeVariantValue[ProductStorageConstants::VARIANT_LEAF_NODE_ID], $restrictedProductIds);
     }
 
     /**
@@ -198,7 +198,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
      */
     protected function getAttributeKeyValue(string $attributeKey, string $attributeValue): string
     {
-        return implode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, [
+        return implode(ProductStorageConstants::ATTRIBUTE_MAP_PATH_DELIMITER, [
             $attributeKey,
             $attributeValue,
         ]);
