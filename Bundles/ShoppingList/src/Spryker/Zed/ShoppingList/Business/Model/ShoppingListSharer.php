@@ -286,9 +286,8 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     {
         $idCompanyBusinessUnit = $shoppingListShareRequestTransfer->getIdCompanyBusinessUnit();
 
-        $isCompanyBusinessUnitSharedWithShoppingLists = $this->shoppingListRepository->isCompanyBusinessUnitSharedWithShoppingLists(
-            $idCompanyBusinessUnit
-        );
+        $isCompanyBusinessUnitSharedWithShoppingLists = $this->shoppingListRepository
+            ->isCompanyBusinessUnitSharedWithShoppingLists($idCompanyBusinessUnit);
 
         if (!$isCompanyBusinessUnitSharedWithShoppingLists) {
             return (new ShoppingListShareResponseTransfer())->setIsSuccess(false);
@@ -310,9 +309,8 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     {
         $idCompanyUser = $shoppingListShareRequestTransfer->getIdCompanyUser();
 
-        $isCompanyUserSharedWithShoppingLists = $this->shoppingListRepository->isCompanyUserSharedWithShoppingLists(
-            $idCompanyUser
-        );
+        $isCompanyUserSharedWithShoppingLists = $this->shoppingListRepository
+            ->isCompanyUserSharedWithShoppingLists($idCompanyUser);
 
         if (!$isCompanyUserSharedWithShoppingLists) {
             return (new ShoppingListShareResponseTransfer())->setIsSuccess(false);
