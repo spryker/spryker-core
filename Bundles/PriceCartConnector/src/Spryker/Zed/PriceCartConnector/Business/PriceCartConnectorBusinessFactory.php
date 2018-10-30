@@ -46,7 +46,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PriceCartConnector\Business\Filter\ItemFilterInterface
      */
-    public function createWithoutPriceItemsFilter(): ItemFilterInterface
+    public function createItemsWithoutPriceFilter(): ItemFilterInterface
     {
         return new ItemsWithoutPriceFilter(
             $this->getPriceFacade(),
