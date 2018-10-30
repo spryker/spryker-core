@@ -86,8 +86,13 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      *
      * @return void
      */
-    public function addGetResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, string $idResource, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    public function addGetResourcePath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        string $idResource,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $pathDataTransfer = $this->createPathDataTransfer(
             $plugin->getResourceType(),
@@ -97,19 +102,63 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
             $annotationTransfer
         );
 
-        if (!$annotationTransfer || (!$annotationTransfer->getGetResource() && !$annotationTransfer->getGetCollection())) {
-            $this->addGetResourcePathWithoutId($plugin, $pathDataTransfer);
+        $this->addGetResource($plugin, $pathDataTransfer);
+    }
 
-            return;
-        }
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $resourcePath
+     * @param bool $isProtected
+     * @param string $idResource
+     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     *
+     * @return void
+     */
+    public function addGetResourceByIdPath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        string $idResource,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
+        $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
+        $pathDataTransfer = $this->createPathDataTransfer(
+            $plugin->getResourceType(),
+            $resourcePath,
+            $isProtected,
+            $errorSchema,
+            $annotationTransfer
+        );
 
-        if ($annotationTransfer->getGetCollection()) {
-            $this->addGetCollectionPath($plugin, $pathDataTransfer);
-        }
+        $this->addGetResourceById($plugin, $pathDataTransfer, $idResource);
+    }
 
-        if ($annotationTransfer->getGetResource()) {
-            $this->addGetResourceWithId($plugin, $pathDataTransfer, $idResource);
-        }
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $resourcePath
+     * @param bool $isProtected
+     * @param string $idResource
+     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     *
+     * @return void
+     */
+    public function addGetResourceCollectionPath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        string $idResource,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
+        $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
+        $pathDataTransfer = $this->createPathDataTransfer(
+            $plugin->getResourceType(),
+            $resourcePath,
+            $isProtected,
+            $errorSchema,
+            $annotationTransfer
+        );
+
+        $this->addGetCollectionPath($plugin, $pathDataTransfer);
     }
 
     /**
@@ -120,8 +169,12 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      *
      * @return void
      */
-    public function addPostResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    public function addPostResourcePath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
         $requestSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addRequestSchemaForPlugin($plugin));
@@ -149,8 +202,12 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      *
      * @return void
      */
-    public function addPatchResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    public function addPatchResourcePath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
         $requestSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addRequestSchemaForPlugin($plugin));
@@ -178,8 +235,12 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      *
      * @return void
      */
-    public function addDeleteResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, bool $isProtected, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    public function addDeleteResourcePath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        bool $isProtected,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
 
         $pathDataTransfer = $this->createPathDataTransfer(
@@ -221,7 +282,7 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      *
      * @return void
      */
-    protected function addGetResourcePathWithoutId(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer): void
+    protected function addGetResource(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer): void
     {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
@@ -240,10 +301,10 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      *
      * @return void
      */
-    protected function addGetResourceWithId(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer, string $idResource): void
+    protected function addGetResourceById(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer, string $idResource): void
     {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin));
+        $responseSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
 
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource()));
@@ -299,11 +360,11 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      * @param string $pattern
      * @param string $resourceType
      *
-     * @return string
+     * @return string[]
      */
-    protected function getDefaultMethodSummary(string $pattern, string $resourceType): string
+    protected function getDefaultMethodSummary(string $pattern, string $resourceType): array
     {
-        return sprintf($pattern, str_replace('-', ' ', $resourceType));
+        return [sprintf($pattern, str_replace('-', ' ', $resourceType))];
     }
 
     /**

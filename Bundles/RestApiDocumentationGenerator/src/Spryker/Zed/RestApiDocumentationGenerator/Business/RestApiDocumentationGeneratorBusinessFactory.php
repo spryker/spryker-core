@@ -41,6 +41,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumen
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToYamlDumperInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\Service\RestApiDocumentationGeneratorToUtilEncodingServiceInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorDependencyProvider;
 
 /**
@@ -104,7 +105,10 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
      */
     public function createGlueAnnotationAnalyzer(): GlueAnnotationAnalyzerInterface
     {
-        return new GlueAnnotationAnalyzer($this->createGlueControllerFinder());
+        return new GlueAnnotationAnalyzer(
+            $this->createGlueControllerFinder(),
+            $this->getUtilEncodingService()
+        );
     }
 
     /**
@@ -190,6 +194,14 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
             $this->getTextInflector(),
             $this->getConfig()->getAnnotationSourceDirectories()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\RestApiDocumentationGenerator\Dependency\Service\RestApiDocumentationGeneratorToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): RestApiDocumentationGeneratorToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(RestApiDocumentationGeneratorDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**

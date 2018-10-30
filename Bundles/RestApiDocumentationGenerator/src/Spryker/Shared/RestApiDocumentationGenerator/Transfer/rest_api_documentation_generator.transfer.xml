@@ -6,7 +6,7 @@
     <transfer name="RestApiDocumentationPathMethodData">
         <property name="path" type="string" />
         <property name="method" type="string" />
-        <property name="summary" type="string" />
+        <property name="summary" type="string[]" />
         <property name="resource" type="string" />
         <property name="isProtected" type="bool" />
         <property name="headers" singular="header" type="string[]" />
@@ -41,7 +41,9 @@
     </transfer>
 
     <transfer name="RestApiDocumentationPathAnnotations">
-        <property name="get" type="RestApiDocumentationAnnotation" />
+        <property name="getCollection" type="RestApiDocumentationAnnotation" />
+        <property name="getResourceById" type="RestApiDocumentationAnnotation" />
+        <property name="getResource" type="RestApiDocumentationAnnotation" />
         <property name="post" type="RestApiDocumentationAnnotation" />
         <property name="patch" type="RestApiDocumentationAnnotation" />
         <property name="delete" type="RestApiDocumentationAnnotation" />

@@ -9,7 +9,9 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer;
 
 use Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\InvalidAnnotationFormatException;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\Service\RestApiDocumentationGeneratorToUtilEncodingServiceInterface;
 
 /**
  * Specification
@@ -31,11 +33,8 @@ use Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFind
  */
 class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
 {
-    protected const PATTERN_REGEX_GLUE_ANNOTATION = '/(?<=@Glue\(\n)(.|\n)*?(?=(\s\*\n)*?\))/';
-    protected const PATTERN_REGEX_TRIM_SYMBOLS = '/[^(\w\s),{,},\-,=,\.\n]*/';
-    protected const PATTERN_REGEX_TRIM_MULTI_SPACES = '/ {2,}/';
-    protected const PATTERN_REGEX_MULTI_LINE_ANNOTATION = '/(?<=\w=\{\n)(.|\n)+?(?=\n\})/';
-    protected const PATTERN_REGEX_ACTION_NAME = '/(\w)+Action/';
+    protected const PATTERN_REGEX_GLUE_ANNOTATION = '/(?<=@Glue\()(.|\n)*?(?=(\s\*\n)*?\))/';
+    protected const EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT = 'Invalid JSON format: %s in %s';
 
     /**
      * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface
@@ -43,11 +42,18 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
     protected $glueControllerFinder;
 
     /**
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface $glueControllerFinder
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Dependency\Service\RestApiDocumentationGeneratorToUtilEncodingServiceInterface
      */
-    public function __construct(GlueControllerFinderInterface $glueControllerFinder)
+    protected $utilEncodingService;
+
+    /**
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface $glueControllerFinder
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Dependency\Service\RestApiDocumentationGeneratorToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(GlueControllerFinderInterface $glueControllerFinder, RestApiDocumentationGeneratorToUtilEncodingServiceInterface $utilEncodingService)
     {
         $this->glueControllerFinder = $glueControllerFinder;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -82,16 +88,14 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
     protected function parsePhpTokens(array $phpTokens): array
     {
         $result = [];
-        $lastParsedParameters = [];
         $phpTokens = array_filter($phpTokens, 'is_array');
         foreach ($phpTokens as $phpToken) {
-            if ($phpToken[0] === T_DOC_COMMENT) {
-                $lastParsedParameters = $this->getParametersFromDocComment($phpToken[1]);
+            if ($phpToken[0] !== T_DOC_COMMENT) {
                 continue;
             }
-            if ($lastParsedParameters && $phpToken[0] === T_STRING && preg_match(static::PATTERN_REGEX_ACTION_NAME, $phpToken[1])) {
-                $result[strtolower(str_replace('Action', '', $phpToken[1]))] = $lastParsedParameters;
-                $lastParsedParameters = [];
+            $annotationsParsed = $this->getParametersFromDocComment($phpToken[1]);
+            if ($annotationsParsed) {
+                $result = $this->getDataFromAnnotationsParsed($annotationsParsed, $result);
             }
         }
 
@@ -115,133 +119,47 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
             return null;
         }
 
-        array_walk($matchesFiltered, $this->getGlueAnnotationFilter());
-
-        return $this->getResourceParametersFromAnnotations($matchesFiltered);
+        return $this->transformAnnotationsToArray($matchesFiltered);
     }
 
     /**
      * @param array $annotations
      *
+     * @throws \Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\InvalidAnnotationFormatException
+     *
      * @return array
      */
-    protected function getResourceParametersFromAnnotations(array $annotations): array
+    protected function transformAnnotationsToArray(array $annotations): array
     {
-        $parameters = [];
+        $annotationsTransformed = [];
         foreach ($annotations as $annotation) {
-            $annotationExploded = explode(PHP_EOL, $annotation);
-            $annotationExploded = $this->filterMultiLineAnnotations($annotationExploded);
-
-            foreach ($annotationExploded as $annotationParameter) {
-                if (preg_match('/\w*={.*}/', $annotationParameter)) {
-                    $parameters += $this->getArrayParameterFromAnnotation($annotationParameter);
-                    continue;
-                }
-
-                [$parameterName, $parameterValue] = explode('=', $annotationParameter);
-                $parameterValue = $this->filterParameter($parameterValue);
-                $parameters[$parameterName] = $parameterValue;
+            $annotation = trim(str_replace('*', '', $annotation));
+            $annotationDecoded = $this->utilEncodingService->decodeJson($annotation, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new InvalidAnnotationFormatException(
+                    sprintf(static::EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT, json_last_error_msg(), $annotation)
+                );
             }
+            $annotationsTransformed[] = $annotationDecoded;
         }
 
-        return $parameters;
+        return $annotationsTransformed;
     }
 
     /**
-     * @return callable
-     */
-    protected function getGlueAnnotationFilter(): callable
-    {
-        return function (&$match) {
-            $match = preg_replace(static::PATTERN_REGEX_TRIM_SYMBOLS, '', $match);
-            $match = preg_replace(static::PATTERN_REGEX_TRIM_MULTI_SPACES, '', $match);
-            $match = trim($match);
-            if (preg_match_all(static::PATTERN_REGEX_MULTI_LINE_ANNOTATION, $match, $matches, PREG_OFFSET_CAPTURE)) {
-                $match = $this->convertMultiLineAnnotationToSingleLine($match, $matches[0]);
-            }
-        };
-    }
-
-    /**
-     * @param array $annotationsExploded
+     * @param array $annotationsParsed
+     * @param array $result
      *
      * @return array
      */
-    protected function filterMultiLineAnnotations(array $annotationsExploded): array
+    protected function getDataFromAnnotationsParsed(array $annotationsParsed, array $result): array
     {
-        if (count($annotationsExploded) <= 1) {
-            return $annotationsExploded;
-        }
-
-        return array_map(function ($annotation) {
-            return trim($annotation, ", \t\n\r\0\x0B");
-        }, $annotationsExploded);
-    }
-
-    /**
-     * @param string $parameter
-     *
-     * @return mixed
-     */
-    protected function filterParameter(string $parameter)
-    {
-        if (filter_var($parameter, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE)) {
-            return filter_var($parameter, FILTER_VALIDATE_INT);
-        }
-
-        if (filter_var($parameter, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE)) {
-            return filter_var($parameter, FILTER_VALIDATE_FLOAT);
-        }
-
-        if (filter_var($parameter, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE)) {
-            return filter_var($parameter, FILTER_VALIDATE_BOOLEAN);
-        }
-
-        return trim($parameter, ", \t\n\r\0\x0B");
-    }
-
-    /**
-     * @param string $string
-     * @param string[] $matches
-     *
-     * @return string
-     */
-    protected function convertMultiLineAnnotationToSingleLine(string $string, array $matches): string
-    {
-        foreach ($matches as $key => $match) {
-            $replacement = implode('|', explode(PHP_EOL, $match[0]));
-            $position = (int)$match[1] - strlen(PHP_EOL) * (2 * $key + 1);
-            $length = strlen($match[0]) + 2 * strlen(PHP_EOL);
-            $string = substr_replace($string, $replacement, $position, $length);
-        }
-
-        return $string;
-    }
-
-    /**
-     * @param string $annotationParameter
-     *
-     * @return array
-     */
-    protected function getArrayParameterFromAnnotation(string $annotationParameter): array
-    {
-        $parameters = [];
-        [$parameterName, $parameterValues] = preg_split('/(?<=\w)*(=)(?=\{)/', $annotationParameter);
-        $parameterValues = trim($parameterValues, '{}|,');
-
-        $parameterValues = explode('|', $parameterValues);
-        foreach ($parameterValues as $parameterValue) {
-            if (preg_match('/\d*=./', $parameterValue)) {
-                [$code, $description] = explode('=', $parameterValue);
-                $parameters[$parameterName][$code] = $this->filterParameter($description);
-                continue;
-            }
-            $parameterValue = $this->filterParameter($parameterValue);
-            if (!isset($parameters[$parameterName]) || !in_array($parameterValue, $parameters[$parameterName], true)) {
-                $parameters[$parameterName][] = $parameterValue;
+        foreach ($annotationsParsed as $annotationParsed) {
+            foreach ($annotationParsed as $method => $values) {
+                $result[$method] = $values;
             }
         }
 
-        return $parameters;
+        return $result;
     }
 }
