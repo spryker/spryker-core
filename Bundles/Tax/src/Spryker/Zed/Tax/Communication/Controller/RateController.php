@@ -69,7 +69,8 @@ class RateController extends AbstractController
     {
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
 
-        $taxRateTransfer = $this->getFacade()->findTaxRate($idTaxRate);
+        $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider();
+        $taxRateTransfer = $taxRateFormDataProvider->getData($idTaxRate);
 
         if ($taxRateTransfer === null) {
             $this->addErrorMessage(sprintf('Tax rate with id %s doesn\'t exist', $idTaxRate));
@@ -77,9 +78,7 @@ class RateController extends AbstractController
             return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
 
-        $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider($taxRateTransfer);
-
-        $form = $this->getFactory()->getTaxRateForm($taxRateFormDataProvider);
+        $form = $this->getFactory()->getTaxRateForm($taxRateFormDataProvider, $taxRateTransfer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -119,7 +118,7 @@ class RateController extends AbstractController
     {
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
 
-        $taxRateTransfer = $this->getFacade()->findTaxRate($idTaxRate);
+        $taxRateTransfer = $this->getFactory()->createTaxRateFormDataProvider()->getData($idTaxRate);
 
         if ($taxRateTransfer === null) {
             $this->addErrorMessage(sprintf('Tax rate with id %s doesn\'t exist', $idTaxRate));
