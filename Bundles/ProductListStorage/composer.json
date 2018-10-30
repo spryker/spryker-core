@@ -13,7 +13,8 @@
     "spryker/product-list": "^1.1.0",
     "spryker/product-storage-extension": "^1.0.0",
     "spryker/storage": "^3.0.0",
-    "spryker/synchronization": "^1.0.0"
+    "spryker/synchronization": "^1.0.0",
+    "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

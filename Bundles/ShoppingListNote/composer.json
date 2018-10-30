@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/cart": "^5.3.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/shopping-list": "^1.0.0",
+    "spryker/shopping-list": "^1.0.0 || ^2.0.0",
     "spryker/shopping-list-extension": "^1.2.0"
   },
   "require-dev": {

@@ -28,6 +28,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatter;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractor;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractorInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\RequestResourceExtractor;
+use Spryker\Glue\GlueApplication\Rest\Request\RequestResourceExtractorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRelationshipLoader;
@@ -91,8 +93,7 @@ class GlueApplicationFactory extends AbstractFactory
     {
         return new RequestFormatter(
             $this->createRestRequestMetaDataExtractor(),
-            $this->createRestDecoderMatcher(),
-            $this->getResourceBuilder(),
+            $this->createRestRequestResourceExtractor(),
             $this->getFormatRequestPlugins()
         );
     }
@@ -247,7 +248,7 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestRequestValidator(): RestRequestValidatorInterface
     {
-        return new RestRequestValidator($this->getValidateRestRequestPlugins());
+        return new RestRequestValidator($this->getValidateRestRequestPlugins(), $this->getRestRequestValidatorPlugins());
     }
 
     /**
@@ -315,11 +316,30 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestResourceExtractorInterface
+     */
+    public function createRestRequestResourceExtractor(): RequestResourceExtractorInterface
+    {
+        return new RequestResourceExtractor(
+            $this->createRestResourceBuilder(),
+            $this->createRestDecoderMatcher()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
      */
     public function getValidateRestRequestPlugins(): array
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_VALIDATE_REST_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface[]
+     */
+    public function getRestRequestValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_REST_REQUEST_VALIDATOR);
     }
 
     /**
