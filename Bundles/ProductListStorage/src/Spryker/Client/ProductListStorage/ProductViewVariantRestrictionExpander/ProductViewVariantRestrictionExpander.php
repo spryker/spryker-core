@@ -14,8 +14,6 @@ use Spryker\Client\ProductListStorage\ProductConcreteRestriction\ProductConcrete
 use Spryker\Shared\ProductListStorage\ProductListStorageConfig;
 
 /**
- * @deprecated Will be removed without replacement. Do not use it with spryker/product-storage ^1.4.0.
- *
  * @see \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter
  */
 class ProductViewVariantRestrictionExpander implements ProductViewVariantRestrictionExpanderInterface
@@ -35,6 +33,10 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     }
 
     /**
+     * @see \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter::filterAbstractProductVariantsData()
+     *
+     * @deprecated Will be removed without replacement. Not recommended to use with spryker/product-storage ^1.4.0.
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
