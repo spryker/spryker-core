@@ -28,6 +28,8 @@ class RoleController extends AbstractController
     public const ACL_ROLE_LIST_URL = '/acl/role/index';
     public const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
 
+    protected const MESSAGE_ROLE_NOT_FOUND = "Role couldn't be found";
+
     /**
      * @return array
      */
@@ -104,10 +106,10 @@ class RoleController extends AbstractController
         }
 
         $dataProvider = $this->getFactory()->createAclRoleFormDataProvider();
-        $formData = $dataProvider->findData($idAclRole);
+        $formData = $dataProvider->getData($idAclRole);
 
         if (!$formData) {
-            $this->addErrorMessage("Role couldn't be found");
+            $this->addErrorMessage(static::MESSAGE_ROLE_NOT_FOUND);
 
             return $this->redirectResponse(static::ACL_ROLE_LIST_URL);
         }

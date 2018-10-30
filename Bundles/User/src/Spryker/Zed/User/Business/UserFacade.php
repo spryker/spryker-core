@@ -84,6 +84,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @inheritdoc
+     *
      * @api
      *
      * @param int $idUser

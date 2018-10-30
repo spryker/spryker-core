@@ -162,6 +162,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @inheritdoc
+     *
      * @api
      *
      * @param int $id

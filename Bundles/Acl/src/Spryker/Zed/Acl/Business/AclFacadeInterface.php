@@ -103,7 +103,7 @@ interface AclFacadeInterface
 
     /**
      * Specification:
-     * - get role transfer for existing role or null
+     * - Finds role by provided id if it exists.
      *
      * @api
      *

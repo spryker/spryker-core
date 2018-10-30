@@ -38,7 +38,7 @@ class UserFormDataProvider
      *
      * @return array|null
      */
-    public function findData($idUser)
+    public function getData($idUser)
     {
         $userTransfer = $this->userFacade->findUserById($idUser);
 

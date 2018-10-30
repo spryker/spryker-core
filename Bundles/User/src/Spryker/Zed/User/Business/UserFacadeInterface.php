@@ -56,7 +56,7 @@ interface UserFacadeInterface
 
     /**
      * Specification:
-     * - get user transfer for existing user or null
+     * - Returns user by id if it exists.
      *
      * @api
      *

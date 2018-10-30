@@ -23,6 +23,8 @@ class EditController extends AbstractController
 
     public const PAGE_USER = '/user';
 
+    protected const MESSAGE_USER_NOT_FOUND = "User couldn't be found";
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -47,7 +49,7 @@ class EditController extends AbstractController
         $userTransfer = $this->getUserTransfer($idUser);
 
         if (!$userTransfer->getIdUser()) {
-            $this->addErrorMessage("User couldn't be found");
+            $this->addErrorMessage(static::MESSAGE_USER_NOT_FOUND);
 
             return $this->redirectResponse(static::PAGE_USER);
         }
