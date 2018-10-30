@@ -272,6 +272,18 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
+     *  - Remove company user from shared shopping list.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function unShareShoppingListWithCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
      *  - Removes shopping list to company user relation if exists.
      *  - Adds shopping list to company user blacklist if company user business unit has access to shopping list.
      *  - Returns success if at least one action was executed.

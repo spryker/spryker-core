@@ -304,6 +304,30 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
      *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function unShareShoppingListCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    {
+        $idCompanyUser = $shoppingListShareRequestTransfer->getIdCompanyUser();
+
+        $isCompanyUserSharedWithShoppingLists = $this->shoppingListRepository->isCompanyUserSharedWithShoppingLists(
+            $idCompanyUser
+        );
+
+        if (!$isCompanyUserSharedWithShoppingLists) {
+            return (new ShoppingListShareResponseTransfer())->setIsSuccess(false);
+        }
+
+        return $this->getTransactionHandler()->handleTransaction(
+            function () use ($idCompanyUser) {
+                return $this->executeRemoveShoppingListCompanyUserTransaction($idCompanyUser);
+            }
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
      */
     protected function resolveShoppingList(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ?ShoppingListTransfer
@@ -378,6 +402,18 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     protected function executeRemoveShoppingListCompanyBusinessUnitTransaction(int $idCompanyBusinessUnit): ShoppingListShareResponseTransfer
     {
         $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnitsByCompanyBusinessUnitId($idCompanyBusinessUnit);
+
+        return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    protected function executeRemoveShoppingListCompanyUserTransaction(int $idCompanyUser): ShoppingListShareResponseTransfer
+    {
+        $this->shoppingListEntityManager->deleteShoppingListCompanyUserByCompanyUserId($idCompanyUser);
 
         return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
     }
