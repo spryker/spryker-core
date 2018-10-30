@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface CustomerTransferExpanderPluginInterface
 {
     /**
-     * Specification
+     * Specification:
      * - Expands the provided customer transfer object's data and returns the modified object.
      *
      * @api

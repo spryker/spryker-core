@@ -5,6 +5,14 @@
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
+{% form_theme form _self %}
+{% block percent_widget %}
+    <div class="input-group">
+        <span class="input-group-addon">%</span>
+        {{- block('form_widget_simple') -}}
+    </div>
+{% endblock percent_widget %}
+
 {% block action %}
     {{ backActionButton(url('/merchant-relationship-sales-order-threshold-gui'), 'Back to Merchant Relationship Thresholds' | trans) }}
 {% endblock %}

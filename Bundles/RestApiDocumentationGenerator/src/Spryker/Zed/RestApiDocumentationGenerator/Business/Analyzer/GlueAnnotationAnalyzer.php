@@ -16,7 +16,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\Dependency\Service\RestApiDocument
 class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
 {
     protected const PATTERN_REGEX_GLUE_ANNOTATION = '/(?<=@Glue\()(.|\n)*?(?=(\s\*\n)*?\))/';
-    protected const EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT = 'Invalid JSON format';
+    protected const EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT = 'Invalid JSON format: %s in %s';
 
     /**
      * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface
@@ -41,8 +41,6 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @throws \Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\InvalidAnnotationFormatException
-     *
      * @return \Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer
      */
     public function getResourceParametersFromPlugin(ResourceRoutePluginInterface $plugin): RestApiDocumentationPathAnnotationsTransfer
@@ -53,11 +51,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
         $parameters = [];
         foreach ($glueControllerFiles as $file) {
             $tokens = token_get_all(file_get_contents($file));
-            try {
-                $parameters[] = $this->parsePhpTokens($tokens);
-            } catch (InvalidAnnotationFormatException $e) {
-                throw new InvalidAnnotationFormatException('Invalid annotations format in ' . $file->getPathname());
-            }
+            $parameters[] = $this->parsePhpTokens($tokens);
         }
 
         if (!$parameters) {
@@ -119,15 +113,19 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
      */
     protected function transformAnnotationsToArray(array $annotations): array
     {
-        foreach ($annotations as &$annotation) {
+        $annotationsTransformed = [];
+        foreach ($annotations as $annotation) {
             $annotation = trim(str_replace('*', '', $annotation));
-            $annotation = $this->utilEncodingService->decodeJson($annotation, true);
+            $annotationDecoded = $this->utilEncodingService->decodeJson($annotation, true);
             if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new InvalidAnnotationFormatException(json_last_error_msg());
+                throw new InvalidAnnotationFormatException(
+                    sprintf(static::EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT, json_last_error_msg(), $annotation)
+                );
             }
+            $annotationsTransformed[] = $annotationDecoded;
         }
 
-        return $annotations;
+        return $annotationsTransformed;
     }
 
     /**

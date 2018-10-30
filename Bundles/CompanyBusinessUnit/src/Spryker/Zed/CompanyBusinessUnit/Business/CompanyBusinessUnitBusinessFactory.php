@@ -55,7 +55,8 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     protected function createCompanyBusinessUnitWriterPluginExecutor()
     {
         return new CompanyBusinessUnitWriterPluginExecutor(
-            $this->getCompanyBusinessUnitPostSavePlugins()
+            $this->getCompanyBusinessUnitPostSavePlugins(),
+            $this->getCompanyBusinessUnitPreDeletePlugins()
         );
     }
 
@@ -75,6 +76,14 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     protected function getCompanyBusinessUnitPostSavePlugins(): array
     {
         return $this->getProvidedDependency(CompanyBusinessUnitDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface[]
+     */
+    protected function getCompanyBusinessUnitPreDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyBusinessUnitDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_PRE_DELETE);
     }
 
     /**

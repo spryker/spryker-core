@@ -41,6 +41,7 @@
         <property name="quantity" type="int"/>
         <property name="sku" type="string" />
         <property name="idProduct" type="int" />
+        <property name="idProductAbstract" type="int" />
         <property name="shoppingListName" type="string" />
         <property name="product" type="StorageProduct" />
         <property name="idCompanyUser" type="int" />

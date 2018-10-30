@@ -228,7 +228,8 @@ class Method implements MethodInterface
     {
         $shipmentMethodEntity = $this->queryContainer
             ->queryActiveMethodsWithMethodPricesAndCarrierById($idShipmentMethod)
-            ->findOne();
+            ->find()
+            ->getFirst();
 
         if (!$shipmentMethodEntity) {
             return null;

@@ -318,6 +318,20 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function unShareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    {
+        return $this->getFactory()->createShoppingListSharer()->unShareShoppingListCompanyBusinessUnit($shoppingListShareRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
