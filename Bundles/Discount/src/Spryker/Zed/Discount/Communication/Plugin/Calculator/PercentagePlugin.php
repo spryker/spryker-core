@@ -43,7 +43,7 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
      */
     public function transformForPersistence($value)
     {
-        if (!is_float($value)) {
+        if (!is_numeric($value)) {
             return $value;
         }
 
