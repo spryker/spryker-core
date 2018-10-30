@@ -21,9 +21,9 @@ interface ProductLabelReaderInterface
 
     /**
      * @param string $sku
-     * @param string $locale
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findByAbstractSku(string $sku, string $locale): array;
+    public function findByAbstractSku(string $sku, string $localeName): array;
 }

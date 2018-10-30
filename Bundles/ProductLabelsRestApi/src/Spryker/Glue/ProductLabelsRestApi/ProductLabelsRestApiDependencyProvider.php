@@ -25,6 +25,7 @@ class ProductLabelsRestApiDependencyProvider extends AbstractBundleDependencyPro
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
+
         $container = $this->addProductStorageClientDependency($container);
         $container = $this->addProductLabelStorageClientDependency($container);
 

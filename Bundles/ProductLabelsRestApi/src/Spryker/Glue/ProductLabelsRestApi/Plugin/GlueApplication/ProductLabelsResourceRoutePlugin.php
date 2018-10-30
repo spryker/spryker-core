@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductLabelsRestApi\Plugin;
+namespace Spryker\Glue\ProductLabelsRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestProductLabelsAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
@@ -17,7 +17,7 @@ class ProductLabelsResourceRoutePlugin extends AbstractPlugin implements Resourc
 {
     /**
      * {@inheritdoc}
-     * - Configures available actions for product labels resource.
+     * - Configures available actions for product-labels resource.
      *
      * @api
      *

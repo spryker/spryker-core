@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductLabelsRestApi\Plugin\Relationship;
+namespace Spryker\Glue\ProductLabelsRestApi\Plugin\GlueApplication;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
@@ -19,7 +19,7 @@ class ProductLabelsRelationshipByResourceIdPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritdoc}
-     * - Adds product label relationship by abstract sku.
+     * - Adds product-labels relationship by abstract product sku.
      *
      * @api
      *
@@ -31,7 +31,7 @@ class ProductLabelsRelationshipByResourceIdPlugin extends AbstractPlugin impleme
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createProductLabelsResourceRelationshipExpander()
+            ->createProductLabelResourceRelationshipExpander()
             ->addRelationshipsByAbstractSku($resources, $restRequest);
     }
 

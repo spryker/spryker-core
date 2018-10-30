@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ProductLabelsRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestProductLabelsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -78,18 +79,20 @@ class ProductLabelReader implements ProductLabelReaderInterface
             $restRequest->getMetadata()->getLocale()
         );
 
-        if (count($labelTransfers) < 1) {
+        if (!count($labelTransfers)) {
             return $this->addProductLabelNotFoundErrorToRestResponse($restResponse);
         }
-        $labelTransfer = $labelTransfers[0];
 
         $restProductLabelAttributesTransfer = $this
             ->productLabelMapper
-            ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer($labelTransfer);
+            ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer(
+                reset($labelTransfers),
+                new RestProductLabelsAttributesTransfer()
+            );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,
-            (string)$labelTransfer->getIdProductLabel(),
+            $restRequest->getResource()->getId(),
             $restProductLabelAttributesTransfer
         );
 
@@ -98,24 +101,27 @@ class ProductLabelReader implements ProductLabelReaderInterface
 
     /**
      * @param string $sku
-     * @param string $locale
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findByAbstractSku(string $sku, string $locale): array
+    public function findByAbstractSku(string $sku, string $localeName): array
     {
         $abstractProductData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
             $sku,
-            $locale
+            $localeName
         );
+        if (!$abstractProductData) {
+            return [];
+        }
 
         $productLabels = $this->productLabelStorageClient->findLabelsByIdProductAbstract(
             $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT],
-            $locale
+            $localeName
         );
 
-        return $this->mapProductLabelDictionaryItemTransfersToRestResources($productLabels);
+        return $this->prepareRestResourceCollection($productLabels);
     }
 
     /**
@@ -123,14 +129,17 @@ class ProductLabelReader implements ProductLabelReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    protected function mapProductLabelDictionaryItemTransfersToRestResources(array $productLabels): array
+    protected function prepareRestResourceCollection(array $productLabels): array
     {
         $productLabelResources = [];
 
         foreach ($productLabels as $productLabel) {
             $restProductLabelAttributesTransfer = $this
                 ->productLabelMapper
-                ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer($productLabel);
+                ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer(
+                    $productLabel,
+                    new RestProductLabelsAttributesTransfer()
+                );
 
             $productLabelResources[] = $this->restResourceBuilder->createRestResource(
                 ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,

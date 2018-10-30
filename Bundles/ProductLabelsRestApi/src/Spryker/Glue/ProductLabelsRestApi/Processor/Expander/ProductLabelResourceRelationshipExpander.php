@@ -10,7 +10,7 @@ namespace Spryker\Glue\ProductLabelsRestApi\Processor\Expander;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductLabelsRestApi\Processor\Reader\ProductLabelReaderInterface;
 
-class ProductLabelsResourceRelationshipExpander implements ProductLabelsResourceRelationshipExpanderInterface
+class ProductLabelResourceRelationshipExpander implements ProductLabelResourceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\ProductLabelsRestApi\Processor\Reader\ProductLabelReaderInterface
@@ -29,9 +29,9 @@ class ProductLabelsResourceRelationshipExpander implements ProductLabelsResource
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return void
+     * @return array
      */
-    public function addRelationshipsByAbstractSku(array $resources, RestRequestInterface $restRequest): void
+    public function addRelationshipsByAbstractSku(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
             $abstractSku = $resource->getId();
@@ -44,5 +44,7 @@ class ProductLabelsResourceRelationshipExpander implements ProductLabelsResource
                 $resource->addRelationship($productLabel);
             }
         }
+
+        return $resources;
     }
 }
