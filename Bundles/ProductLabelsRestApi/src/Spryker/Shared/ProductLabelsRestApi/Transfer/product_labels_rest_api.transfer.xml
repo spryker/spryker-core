@@ -6,7 +6,7 @@
     <transfer name="RestProductLabelsAttributes">
         <property name="name" type="string"/>
         <property name="isExclusive" type="bool"/>
-        <property name="position" type="integer"/>
+        <property name="position" type="int"/>
         <property name="frontEndReference" type="string"/>
     </transfer>
 

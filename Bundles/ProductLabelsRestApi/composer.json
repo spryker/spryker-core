@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-labels-rest-api",
+  "type": "library",
   "description": "ProductLabelsRestApi module",
   "license": "proprietary",
   "require": {
