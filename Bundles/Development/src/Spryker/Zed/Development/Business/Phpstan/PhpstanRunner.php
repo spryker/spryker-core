@@ -142,7 +142,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $output->write($buffer);
         });
 
-        return $process->run();
+        return $process->getExitCode();
     }
 
     /**
