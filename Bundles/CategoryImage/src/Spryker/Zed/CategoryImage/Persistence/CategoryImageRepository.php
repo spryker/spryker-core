@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryImage\Persistence;
 
+use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -16,79 +17,94 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CategoryImageRepository extends AbstractRepository implements CategoryImageRepositoryInterface
 {
     /**
-     * @param int $categoryId
-     * @param array $excludeIdCategoryImageSets
-     *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet[]|\Propel\Runtime\Collection\ObjectCollection
+     * {@inheritdoc}
      */
-    public function findCategoryImageSetsByCategoryId(int $categoryId, array $excludeIdCategoryImageSets = [])
+    public function findCategoryImageSetsByCategoryId(int $categoryId, array $excludeIdCategoryImageSets = []): array
     {
-        return $this->getFactory()
+        $categoryImageSetEntityCollection = $this->getFactory()
             ->createCategoryImageSetQuery()
+            ->joinSpyCategoryImageSetToCategoryImage()
+            ->useSpyCategoryImageSetToCategoryImageQuery()
+            ->joinSpyCategoryImage()
+            ->endUse()
             ->filterByFkCategory($categoryId)
             ->filterByIdCategoryImageSet($excludeIdCategoryImageSets, Criteria::NOT_IN)
             ->find();
+
+        return $this->getFactory()
+            ->createCategoryImageMapper()
+            ->mapCategoryImageSetCollection($categoryImageSetEntityCollection);
     }
 
     /**
-     * @param int $idCategoryImageSet
-     *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet|\Orm\Zed\CategoryImage\Persistence\SpyCategoryImage|null
+     * {@inheritdoc}
      */
-    public function findImageSetById(int $idCategoryImageSet)
+    public function findCategoryImagesByCategoryImageSetId(int $idCategoryImageSet, array $excludeIdCategoryImage = []): array
     {
-        return $this->getFactory()
-            ->createCategoryImageSetQuery()
-            ->filterByIdCategoryImageSet($idCategoryImageSet)
-            ->useSpyCategoryImageSetToCategoryImageQuery(null, Criteria::LEFT_JOIN)
-            ->orderBySortOrder(Criteria::DESC)
-            ->endUse()
-            ->findOne();
-    }
-
-    /**
-     * @param int $idCategoryImageSet
-     * @param array $excludeIdCategoryImage
-     *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    public function findCategoryImageSetsToCategoryImageByCategoryImageSetId(int $idCategoryImageSet, array $excludeIdCategoryImage = [])
-    {
-        return $this->getFactory()
-            ->createCategoryImageSetToCategoryImageQuery()
-            ->useSpyCategoryImageQuery()
-            ->filterByIdCategoryImage($excludeIdCategoryImage, Criteria::NOT_IN)
-            ->endUse()
+        $categoryImageCollection = $this->getFactory()
+            ->createCategoryImageQuery()
+            ->useSpyCategoryImageSetToCategoryImageQuery()
             ->filterByFkCategoryImageSet($idCategoryImageSet)
+            ->filterByFkCategoryImage($excludeIdCategoryImage, Criteria::NOT_IN)
+            ->endUse()
             ->find();
+
+        $categoryImageSetEntity = $this->getFactory()
+            ->createCategoryImageSetQuery()
+            ->filterByIdCategoryImageSet()
+            ->findOne();
+
+        return $this->getFactory()
+            ->createCategoryImageMapper()
+            ->mapCategoryImageCollection($categoryImageCollection, $categoryImageSetEntity);
     }
 
     /**
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet[]|\Propel\Runtime\Collection\ObjectCollection
+     * {@inheritdoc}
      */
-    public function findDefaultCategoryImageSets(int $idCategory)
+    public function findDefaultCategoryImageSets(int $idCategory): array
     {
-        return $this->getFactory()
+        $categoryImageSets = $this->getFactory()
             ->createCategoryImageSetQuery()
             ->filterByFkCategory($idCategory)
             ->filterByFkLocale()
             ->find();
+
+        return $this->getFactory()
+            ->createCategoryImageMapper()
+            ->mapCategoryImageSetCollection($categoryImageSets);
     }
 
     /**
-     * @param int $idCategory
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet[]|\Propel\Runtime\Collection\ObjectCollection
+     * {@inheritdoc}
      */
-    public function findLocalizedCategoryImageSets(int $idCategory, int $idLocale)
+    public function findLocalizedCategoryImageSets(int $idCategory, int $idLocale): array
     {
-        return $this->getFactory()
+        $categoryImageSets = $this->getFactory()
             ->createCategoryImageSetQuery()
             ->filterByFkCategory($idCategory)
             ->filterByFkLocale($idLocale)
             ->find();
+
+        return $this->getFactory()
+            ->createCategoryImageMapper()
+            ->mapCategoryImageSetCollection($categoryImageSets);
+    }
+
+    /**
+     * @param int|null $idCategoryImageSet
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
+     */
+    public function findOrCreateCategoryImageSetById(?int $idCategoryImageSet): CategoryImageSetTransfer
+    {
+        $categoryImageSetEntity = $this->getFactory()
+            ->createCategoryImageSetQuery()
+            ->filterByIdCategoryImageSet($idCategoryImageSet)
+            ->findOneOrCreate();
+
+        return $this->getFactory()
+            ->createCategoryImageMapper()
+            ->mapCategoryImageSet($categoryImageSetEntity);
     }
 }

@@ -7,22 +7,43 @@
 
 namespace Spryker\Zed\CategoryImage;
 
-use Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocale;
+use Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CategoryImageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container = $this->addLocaleFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = $this->addLocaleFacade($container);
+
+        return $container;
+    }
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    protected function addLocaleFacade(Container $container): Container
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
-            return new CategoryImageToLocale($container->getLocator()->locale()->facade());
+            return new CategoryImageToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;

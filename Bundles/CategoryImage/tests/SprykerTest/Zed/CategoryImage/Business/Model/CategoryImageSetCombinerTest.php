@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\CategoryImage\Business\Model;
@@ -10,10 +10,9 @@ namespace SprykerTest\Zed\CategoryImage\Business\Model;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryImageTransfer;
-use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\CategoryImage\Business\Model\CategoryImageSetCombiner;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface;
-use Spryker\Zed\CategoryImage\Business\Model\Reader;
 
 /**
  * Auto-generated group annotations
@@ -22,68 +21,86 @@ use Spryker\Zed\CategoryImage\Business\Model\Reader;
  * @group CategoryImage
  * @group Business
  * @group Model
- * @group CategoryImageReaderTest
+ * @group CategoryImageSetCombinerTest
  * Add your own group annotations below this line
  */
-class CategoryImageReaderTest extends Unit
+class CategoryImageSetCombinerTest extends Unit
 {
-    public const CATEGORY_KEY = 'test-category';
     public const CATEGORY_IMAGE_SET_NAME = 'test-category-image-set';
     public const CATEGORY_IMAGE_URL_SMALL = 'url-small';
     public const CATEGORY_IMAGE_URL_LARGE = 'url-large';
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface
+     * @var \Spryker\Zed\CategoryImage\Business\Model\CategoryImageSetCombinerInterface;
      */
-    protected $repository;
+    private $categoryImageSetCombiner;
 
     /**
-     * @var \Spryker\Zed\CategoryImage\Business\Model\Reader
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface;
      */
-    protected $reader;
+    private $repository;
 
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    public function setUp()
     {
         $this->repository = $this->createRepositoryMock();
-        $this->reader = new Reader(
+        $this->categoryImageSetCombiner = new CategoryImageSetCombiner(
             $this->repository
         );
     }
 
     /**
-     * @return void
+     * @param string $categoryImageSetName1
+     * @param string $categoryImageSetName2
+     * @param int $expectedCount
+     *
+     * @dataProvider getCombinedCategoryImageSetDataProvider
      */
-    public function testExpandCategoryWithImageSetsEmpty()
-    {
-        $categoryTransfer = $this->createCategoryTransfer(1);
-        $this->repository->method('findCategoryImageSetsByCategoryId')
-            ->willReturn([]);
+    public function testGetCombinedCategoryImageSets(
+        string $categoryImageSetName1,
+        string $categoryImageSetName2,
+        int $expectedCount
+    ) {
+        $categoryImageTransfer = $this->createCategoryImageTransfer();
+        $categoryImageSetTransfer1 = $this->createCategoryImageSetTransfer(
+            $categoryImageTransfer,
+            $categoryImageSetName1
+        );
+        $categoryImageSetTransfer2 = $this->createCategoryImageSetTransfer(
+            $categoryImageTransfer,
+            $categoryImageSetName2
+        );
+        $this->repository
+            ->method('findDefaultCategoryImageSets')
+            ->willReturn([$categoryImageSetTransfer1]);
+        $this->repository
+            ->method('findLocalizedCategoryImageSets')
+            ->willReturn([$categoryImageSetTransfer2]);
 
-        $resultTransfer = $this->reader->expandCategoryWithImageSets($categoryTransfer);
-        $this->assertSame($categoryTransfer, $resultTransfer);
-        $this->assertEquals(0, count($categoryTransfer->getFormImageSets()));
+        $result = $this->categoryImageSetCombiner->getCombinedCategoryImageSets(1, 1);
+        $this->assertTrue(gettype($result) === 'array');
+        $this->assertEquals($expectedCount, count($result));
     }
 
-    public function testExpandCategoryWithImageSetNotEmpty()
+    /**
+     * @return array
+     */
+    public function getCombinedCategoryImageSetDataProvider(): array
     {
-        $categoryTransfer = $this->createCategoryTransfer(1);
-        $categoryImageTransfer = $this->createCategoryImageTransfer();
-        $categoryImageSetTransfer = $this->createCategoryImageSetTransfer(
-            1,
-            $categoryTransfer->getIdCategory(),
-            $categoryImageTransfer,
-            $this->createLocaleTransfer()
-        );
-        $this->repository->method('findCategoryImageSetsByCategoryId')
-            ->willReturn([$categoryImageSetTransfer]);
-
-        $resultTransfer = $this->reader->expandCategoryWithImageSets($categoryTransfer);
-        $this->assertSame($categoryTransfer, $resultTransfer);
-        $this->assertEquals(1, count($resultTransfer->getFormImageSets()));
-        $this->assertSame($categoryImageSetTransfer, $resultTransfer->getFormImageSets()[0]);
+        return [
+            'Same name for default and localized image sets' => [
+                static::CATEGORY_IMAGE_SET_NAME,
+                static::CATEGORY_IMAGE_SET_NAME,
+                1,
+            ],
+            'Different names for default and localized image sets' => [
+                static::CATEGORY_IMAGE_SET_NAME . '1',
+                static::CATEGORY_IMAGE_SET_NAME . '2',
+                2,
+            ],
+        ];
     }
 
     /**
@@ -99,37 +116,24 @@ class CategoryImageReaderTest extends Unit
     }
 
     /**
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    protected function createCategoryTransfer(int $idCategory): CategoryTransfer
-    {
-        $categoryTransfer = new CategoryTransfer();
-        $categoryTransfer->setCategoryKey(static::CATEGORY_KEY);
-        $categoryTransfer->setIdCategory($idCategory);
-        $categoryTransfer->setIsActive(true);
-
-        return $categoryTransfer;
-    }
-
-    /**
+     * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
+     * @param string $categoryImageSetName
      * @param int $idCategoryImageSet
      * @param int $idCategory
-     * @param CategoryImageTransfer $categoryImageTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */
     protected function createCategoryImageSetTransfer(
-        int $idCategoryImageSet,
-        int $idCategory,
         CategoryImageTransfer $categoryImageTransfer,
+        string $categoryImageSetName = self::CATEGORY_IMAGE_SET_NAME,
+        int $idCategoryImageSet = 1,
+        int $idCategory = 1,
         LocaleTransfer $localeTransfer = null
     ): CategoryImageSetTransfer {
         $categoryImageSetTransfer = new CategoryImageSetTransfer();
         $categoryImageSetTransfer->setIdCategoryImageSet($idCategoryImageSet)
-            ->setName(static::CATEGORY_IMAGE_SET_NAME)
+            ->setName($categoryImageSetName)
             ->setIdCategory($idCategory)
             ->addCategoryImage($categoryImageTransfer)
             ->setLocale($localeTransfer);

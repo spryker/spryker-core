@@ -7,21 +7,17 @@
 
 namespace Spryker\Zed\CategoryImage\Business\Model;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryImageTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImage;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage;
-use Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface;
+use Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class Writer implements WriterInterface
 {
-    use TransactionTrait;
+    public const LOCALIZED_CATEGORY_IMAGE_SET_PREFIX = 'image_set';
+
     /**
      * @var \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface
      */
@@ -33,80 +29,48 @@ class Writer implements WriterInterface
     protected $categoryImageEntityManager;
 
     /**
-     * @var \Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface
+     * @var \Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface
      */
-    protected $localeFacade;
+    private $localeProvider;
 
     /**
      * @param \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface $categoryImageRepository
      * @param \Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface $categoryImageEntityManager
-     * @param \Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface $localeProvider
      */
     public function __construct(
         CategoryImageRepositoryInterface $categoryImageRepository,
         CategoryImageEntityManagerInterface $categoryImageEntityManager,
-        CategoryImageToLocaleInterface $localeFacade
+        LocaleProviderInterface $localeProvider
     ) {
         $this->categoryImageRepository = $categoryImageRepository;
         $this->categoryImageEntityManager = $categoryImageEntityManager;
-        $this->localeFacade = $localeFacade;
+        $this->localeProvider = $localeProvider;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryImageTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function createCategoryImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer
+    public function createCategoryImageSetCollection(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
-        return $this->saveCategoryImage($categoryImageTransfer);
+        $this->saveFormCategoryImageSetCollection($categoryTransfer);
+
+        return $categoryTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryImageTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function updateCategoryImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer
+    public function updateCategoryImageSetCollection(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
-        return $this->saveCategoryImage($categoryImageTransfer);
-    }
+        $this->saveFormCategoryImageSetCollection($categoryTransfer);
+        $this->deleteMissingCategoryImageSetInCategory($categoryTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageTransfer
-     */
-    public function saveCategoryImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer
-    {
-        $categoryImageEntity = $this->categoryImageEntityManager->findOrCreateCategoryImageById(
-            $categoryImageTransfer->getIdCategoryImage()
-        );
-
-        $categoryImageEntity->fromArray($categoryImageTransfer->toArray());
-        $categoryImageEntity->save();
-
-        $categoryImageTransfer->setIdCategoryImage($categoryImageEntity->getIdCategoryImage());
-
-        return $categoryImageTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
-     *
-     * @return void
-     */
-    public function deleteCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): void
-    {
-        $categoryImageSetTransfer->requireIdCategoryImageSet();
-
-        $categoryImageSetEntity = $this->categoryImageRepository->findImageSetById(
-            $categoryImageSetTransfer->getIdCategoryImageSet()
-        );
-
-        if ($categoryImageSetEntity) {
-            $this->deleteCategoryImageSetEntity($categoryImageSetEntity);
-        }
+        return $categoryTransfer;
     }
 
     /**
@@ -114,21 +78,24 @@ class Writer implements WriterInterface
      *
      * @return void
      */
-    protected function deleteMissingCategoryImageSetInCategory(CategoryTransfer $categoryTransfer)
+    protected function saveFormCategoryImageSetCollection(CategoryTransfer $categoryTransfer): void
     {
-        $excludeIdCategoryImageSet = [];
-
-        foreach ($categoryTransfer->getImageSets() as $categoryImageSetTransfer) {
-            $excludeIdCategoryImageSet[] = $categoryImageSetTransfer->getIdCategoryImageSet();
+        $localizedImageSetCollection = $this->localizeCategoryImageSetCollection($categoryTransfer);
+        foreach ($localizedImageSetCollection as $imageSetTransfer) {
+            $this->saveCategoryImageSet($imageSetTransfer);
         }
+    }
 
-        $missingProductImageSets = $this->categoryImageRepository
-            ->findCategoryImageSetsByCategoryId(
-                $categoryTransfer->getIdCategory(),
-                $excludeIdCategoryImageSet
-            )->getArrayCopy();
-
-        $this->deleteCategoryImageSetEntities($missingProductImageSets);
+    /**
+     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $missingCategoryImageSetTransferCollection
+     *
+     * @return void
+     */
+    protected function deleteCategoryImageSetCollection(array $missingCategoryImageSetTransferCollection): void
+    {
+        foreach ($missingCategoryImageSetTransferCollection as $missingCategoryImageSetTransfer) {
+            $this->deleteCategoryImageSet($missingCategoryImageSetTransfer);
+        }
     }
 
     /**
@@ -136,76 +103,11 @@ class Writer implements WriterInterface
      *
      * @return void
      */
-    protected function deleteMissingProductImageInProductImageSet(CategoryImageSetTransfer $categoryImageSetTransfer)
+    protected function deleteCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): void
     {
-        $excludeIdCategoryImage = [];
-
-        foreach ($categoryImageSetTransfer->getCategoryImages() as $categoryImageTransfer) {
-            $excludeIdCategoryImage[] = $categoryImageTransfer->getIdCategoryImage();
-        }
-
-        $missingCategoryImageSetsToCategoryImage = $this->categoryImageRepository
-            ->findCategoryImageSetsToCategoryImageByCategoryImageSetId(
-                $categoryImageSetTransfer->getIdCategoryImageSet(),
-                $excludeIdCategoryImage
-            );
-
-        foreach ($missingCategoryImageSetsToCategoryImage as $categoryImageSetToCategoryImage) {
-            $this->deleteCategoryImageSetToCategoryImage($categoryImageSetToCategoryImage);
-        }
-    }
-
-    /**
-     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet[] $categoryImageSets
-     *
-     * @return void
-     */
-    protected function deleteCategoryImageSetEntities(array $categoryImageSets)
-    {
-        foreach ($categoryImageSets as $categoryImageSet) {
-            $this->deleteCategoryImageSetEntity($categoryImageSet);
-        }
-    }
-
-    /**
-     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet $categoryImageSet
-     *
-     * @return void
-     */
-    protected function deleteCategoryImageSetEntity(SpyCategoryImageSet $categoryImageSet)
-    {
-        foreach ($categoryImageSet->getSpyCategoryImageSetToCategoryImages() as $categoryImageSetToCategoryImage) {
-            $this->deleteCategoryImageSetToCategoryImage($categoryImageSetToCategoryImage);
-        }
-
-        $categoryImageSet->delete();
-    }
-
-    /**
-     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage $categoryImageSetToCategoryImage
-     *
-     * @return void
-     */
-    protected function deleteCategoryImageSetToCategoryImage(SpyCategoryImageSetToCategoryImage $categoryImageSetToCategoryImage): void
-    {
-        $categoryImage = $categoryImageSetToCategoryImage->getSpyCategoryImage();
-        $categoryImage->removeSpyCategoryImageSetToCategoryImage($categoryImageSetToCategoryImage);
-
-        $categoryImageSetToCategoryImage->delete();
-
-        $this->deleteOrphanCategoryImage($categoryImage);
-    }
-
-    /**
-     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImage $categoryImage
-     *
-     * @return void
-     */
-    protected function deleteOrphanCategoryImage(SpyCategoryImage $categoryImage): void
-    {
-        if ($categoryImage->getSpyCategoryImageSetToCategoryImages()->isEmpty()) {
-            $categoryImage->delete();
-        }
+        $this->categoryImageEntityManager->deleteCategoryImageSet(
+            $categoryImageSetTransfer->requireIdCategoryImageSet()
+        );
     }
 
     /**
@@ -213,77 +115,44 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */
-    public function createCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer)
-    {
-        return $this->saveCategoryImageSet($categoryImageSetTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
-     */
-    public function updateCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer)
-    {
-        return $this->saveCategoryImageSet($categoryImageSetTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
-     */
-    public function saveCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer)
-    {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($categoryImageSetTransfer) {
-            $this->executeSaveCategoryImageSetTransaction($categoryImageSetTransfer);
-        });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
-     */
-    protected function executeSaveCategoryImageSetTransaction(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer
+    protected function saveCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer
     {
         if ($categoryImageSetTransfer->getIdCategoryImageSet()) {
-            $this->deleteMissingProductImageInProductImageSet($categoryImageSetTransfer);
+            $this->deleteMissingCategoryImageSetToCategoryImage($categoryImageSetTransfer);
         }
 
-        $categoryImageSetEntity = $this->categoryImageEntityManager
-            ->findOrCreateCategoryImageSetById(
-                $categoryImageSetTransfer->getIdCategoryImageSet()
-            );
-
-        $categoryImageSetEntity = $this->mapCategoryImageSetEntity($categoryImageSetEntity, $categoryImageSetTransfer);
-        $categoryImageSetEntity->save();
-
-        $categoryImageSetTransfer->setIdCategoryImageSet(
-            $categoryImageSetEntity->getIdCategoryImageSet()
-        );
-
-        $categoryImageSetTransfer = $this->persistCategoryImageSetCollection($categoryImageSetTransfer);
+        $categoryImageSetTransfer = $this->categoryImageEntityManager->saveCategoryImageSet($categoryImageSetTransfer);
+        $categoryImageSetTransfer = $this->saveCategoryImageCollection($categoryImageSetTransfer);
 
         return $categoryImageSetTransfer;
     }
 
     /**
-     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet $categoryImageSetEntity
      * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
      *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet
+     * @return void
      */
-    protected function mapCategoryImageSetEntity(SpyCategoryImageSet $categoryImageSetEntity, CategoryImageSetTransfer $categoryImageSetTransfer)
+    protected function deleteMissingCategoryImageSetToCategoryImage(CategoryImageSetTransfer $categoryImageSetTransfer): void
     {
-        $categoryImageSetEntity->fromArray($categoryImageSetTransfer->toArray());
-        $categoryImageSetEntity->setFkCategory($categoryImageSetTransfer->getIdCategory());
+        $excludeIdCategoryImageCollection = [];
 
-        if ($categoryImageSetTransfer->getLocale()) {
-            $categoryImageSetEntity->setFkLocale($categoryImageSetTransfer->getLocale()->getIdLocale());
+        foreach ($categoryImageSetTransfer->getCategoryImages() as $categoryImageTransfer) {
+            $excludeIdCategoryImageCollection[] = $categoryImageTransfer->getIdCategoryImage();
         }
 
-        return $categoryImageSetEntity;
+        $missingCategoryImageCollection = $this->categoryImageRepository
+            ->findCategoryImagesByCategoryImageSetId(
+                $categoryImageSetTransfer->getIdCategoryImageSet(),
+                $excludeIdCategoryImageCollection
+            );
+
+        foreach ($missingCategoryImageCollection as $missingCategoryImage) {
+            $this->categoryImageEntityManager
+                ->deleteCategoryImageSetToCategoryImage(
+                    $categoryImageSetTransfer->getIdCategoryImageSet(),
+                    $missingCategoryImage->getIdCategoryImage()
+                );
+        }
     }
 
     /**
@@ -291,13 +160,13 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */
-    protected function persistCategoryImageSetCollection(CategoryImageSetTransfer $categoryImageSetTransfer)
+    protected function saveCategoryImageCollection(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer
     {
         foreach ($categoryImageSetTransfer->getCategoryImages() as $imageTransfer) {
             $imageTransfer = $this->saveCategoryImage($imageTransfer);
 
-            $this->persistCategoryImageRelation(
-                $categoryImageSetTransfer->requireIdCategoryImageSet()->getIdCategoryImageSet(),
+            $this->categoryImageEntityManager->saveCategoryImageSetToCategoryImage(
+                $categoryImageSetTransfer->getIdCategoryImageSet(),
                 $imageTransfer->getIdCategoryImage(),
                 $imageTransfer->getSortOrder()
             );
@@ -307,99 +176,70 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param int $idCategoryImageSet
-     * @param int $idCategoryImage
-     * @param int|null $sortOrder
+     * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\CategoryImageTransfer
      */
-    public function persistCategoryImageRelation(int $idCategoryImageSet, int $idCategoryImage, $sortOrder = null)
+    protected function saveCategoryImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer
     {
-        $categoryImageRelationEntity = $this->categoryImageEntityManager
-            ->findOrCreateCategoryImageRelation(
-                $idCategoryImageSet,
-                $idCategoryImage
-            );
-
-        $categoryImageRelationEntity->setSortOrder((int)$sortOrder);
-        $categoryImageRelationEntity->save();
-
-        return $categoryImageRelationEntity->getIdCategoryImageSetToCategoryImage();
+        return $this->categoryImageEntityManager->saveCategoryImage($categoryImageTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return void
      */
-    public function createCategoryImageSetCollection(CategoryTransfer $categoryTransfer)
+    protected function deleteMissingCategoryImageSetInCategory(CategoryTransfer $categoryTransfer): void
     {
-        $categoryTransfer = $this->addLocalizedImageSetsToCategoryTransfer($categoryTransfer);
+        $excludeIdCategoryImageSet = [];
 
-        foreach ($categoryTransfer->getImageSets() as $imageSetTransfer) {
-            $imageSetTransfer->setIdCategory(
-                $categoryTransfer
-                    ->requireIdCategory()
-                    ->getIdCategory()
+        foreach ($categoryTransfer->getFormImageSets() as $localizedImageSetCollection) {
+            $localizedIdCategoryImageSet = array_map(
+                function (CategoryImageSetTransfer $categoryImageSetTransfer) {
+                    return $categoryImageSetTransfer->getIdCategoryImageSet();
+                },
+                $localizedImageSetCollection
             );
-
-            $this->createCategoryImageSet($imageSetTransfer);
+            $excludeIdCategoryImageSet = array_merge(
+                $excludeIdCategoryImageSet,
+                array_filter($localizedIdCategoryImageSet)
+            );
         }
 
-        return $categoryTransfer;
+        $missingCategoryImageSetCollection = $this->categoryImageRepository
+            ->findCategoryImageSetsByCategoryId(
+                $categoryTransfer->getIdCategory(),
+                $excludeIdCategoryImageSet
+            );
+
+        $this->deleteCategoryImageSetCollection($missingCategoryImageSetCollection);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    protected function addLocalizedImageSetsToCategoryTransfer(CategoryTransfer $categoryTransfer): CategoryTransfer
+    protected function localizeCategoryImageSetCollection(CategoryTransfer $categoryTransfer): array
     {
-        $categoryTransfer->setImageSets(new ArrayObject());
-        $imageSets = $categoryTransfer->getImageSetsDefault();
-        foreach ($imageSets as $imageSet) {
-            $imageSetTransfer = new CategoryImageSetTransfer();
-            $imageSetTransfer->fromArray($imageSet, true);
-            $categoryTransfer->addImageSet($imageSetTransfer);
-        }
+        $localeCollection = $this->localeProvider->getLocaleCollection(true);
+        $localizedImageSetCollection = [];
 
-        $localeCollection = $this->localeFacade->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
-            $localeName = ucwords($localeTransfer->getLocaleName());
-            $localeName = str_replace('_', '', $localeName);
-            $imageSets = $categoryTransfer->{'getImageSets' . $localeName}();
-            foreach ($imageSets as $imageSet) {
-                $imageSetTransfer = new CategoryImageSetTransfer();
-                $imageSetTransfer->fromArray($imageSet, true);
+            $localeName = $localeTransfer->getLocaleName();
+            $imageSetTransferCollection = $categoryTransfer->getFormImageSets()[$localeName] ?? [];
+
+            /** @var \Generated\Shared\Transfer\CategoryImageSetTransfer $imageSetTransfer */
+            foreach ($imageSetTransferCollection as $imageSetTransfer) {
+                $imageSetTransfer->setIdCategory(
+                    $categoryTransfer->requireIdCategory()->getIdCategory()
+                );
                 $imageSetTransfer->setLocale($localeTransfer);
-                $categoryTransfer->addImageSet($imageSetTransfer);
+                $localizedImageSetCollection[] = $imageSetTransfer;
             }
         }
 
-        return $categoryTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function updateCategoryImageSetCollection(CategoryTransfer $categoryTransfer)
-    {
-        $categoryTransfer = $this->addLocalizedImageSetsToCategoryTransfer($categoryTransfer);
-
-        foreach ($categoryTransfer->getImageSets() as $imageSetTransfer) {
-            $imageSetTransfer->setIdCategory(
-                $categoryTransfer
-                    ->requireIdCategory()
-                    ->getIdCategory()
-            );
-
-            $this->updateCategoryImageSet($imageSetTransfer);
-        }
-
-        $this->deleteMissingCategoryImageSetInCategory($categoryTransfer);
-        return $categoryTransfer;
+        return $localizedImageSetCollection;
     }
 }

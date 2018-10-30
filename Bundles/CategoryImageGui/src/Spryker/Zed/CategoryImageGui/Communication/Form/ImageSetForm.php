@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\CategoryImageGui\Communication\Form;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,14 +21,16 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\CategoryImageGui\Communication\CategoryImageGuiCommunicationFactory getFactory()
+ */
 class ImageSetForm extends AbstractType
 {
-    public const FIELD_SET_ID = 'id_category_image_set';
-    public const FIELD_SET_NAME = 'name';
-    public const FIELD_SET_FK_LOCALE = 'fk_locale';
-    public const FIELD_SET_FK_CATEGORY = 'fk_category';
-
-    public const CATEGORY_IMAGES = 'category_images';
+    public const FIELD_ID = 'idCategoryImageSet';
+    public const FIELD_NAME = 'name';
+    public const FIELD_LOCALE = 'locale';
+    public const FIELD_CATEGORY = 'idCategory';
+    public const CATEGORY_IMAGES = 'categoryImages';
 
     public const VALIDATION_GROUP_IMAGE_COLLECTION = 'validation_group_image_collection';
 
@@ -44,6 +49,7 @@ class ImageSetForm extends AbstractType
         ];
 
         $resolver->setDefaults([
+            'data_class' => CategoryImageSetTransfer::class,
             'constraints' => new Valid(),
             'required' => false,
             'validation_groups' => function () use ($validationGroups) {
@@ -87,7 +93,7 @@ class ImageSetForm extends AbstractType
     protected function addSetIdField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_SET_ID, HiddenType::class, []);
+            ->add(self::FIELD_ID, HiddenType::class, []);
 
         return $this;
     }
@@ -100,7 +106,7 @@ class ImageSetForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_SET_NAME, TextType::class, [
+            ->add(self::FIELD_NAME, TextType::class, [
                 'required' => false,
                 'label' => 'Image Set Name',
             ]);
@@ -115,8 +121,9 @@ class ImageSetForm extends AbstractType
      */
     protected function addLocaleHiddenField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(self::FIELD_SET_FK_LOCALE, HiddenType::class, []);
+        $builder->add(self::FIELD_LOCALE, HiddenType::class);
+        $builder->get(static::FIELD_LOCALE)
+            ->addModelTransformer($this->getFactory()->createLocaleTransformer());
 
         return $this;
     }
@@ -128,8 +135,7 @@ class ImageSetForm extends AbstractType
      */
     protected function addCategoryHiddenField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(self::FIELD_SET_FK_CATEGORY, HiddenType::class, []);
+        $builder->add(self::FIELD_CATEGORY, HiddenType::class);
 
         return $this;
     }
@@ -166,6 +172,25 @@ class ImageSetForm extends AbstractType
                 ])],
             ]);
 
+        $builder->get(self::CATEGORY_IMAGES)->addModelTransformer(
+            $this->createArrayObjectModelTransformer()
+        );
+
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createArrayObjectModelTransformer(): CallbackTransformer
+    {
+        return new CallbackTransformer(
+            function ($value) {
+                return (array)$value;
+            },
+            function ($value) {
+                return new ArrayObject($value);
+            }
+        );
     }
 }

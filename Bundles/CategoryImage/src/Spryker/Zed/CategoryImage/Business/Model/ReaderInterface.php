@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CategoryImage\Business\Model;
 
-use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 
 interface ReaderInterface
@@ -18,13 +17,6 @@ interface ReaderInterface
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
     public function findCategoryImagesSetCollectionByCategoryId(int $idCategory): array;
-
-    /**
-     * @param int $idCategoryImageSet
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer|null
-     */
-    public function findCategoryImagesSetCollectionById(int $idCategoryImageSet): ?CategoryImageSetTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer

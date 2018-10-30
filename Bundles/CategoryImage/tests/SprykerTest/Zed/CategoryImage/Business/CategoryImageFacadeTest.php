@@ -293,8 +293,8 @@ class CategoryImageFacadeTest extends Unit
             $categoryTransfer
         );
 
-        $this->assertNotEmpty($categoryTransfer->getImageSets());
-        foreach ($categoryTransfer->getImageSets() as $imageSet) {
+        $this->assertNotEmpty($categoryTransfer->getFormImageSets());
+        foreach ($categoryTransfer->getFormImageSets() as $imageSet) {
             $this->assertNotEmpty($imageSet->getCategoryImages());
 
             foreach ($imageSet->getCategoryImages() as $image) {
@@ -325,13 +325,13 @@ class CategoryImageFacadeTest extends Unit
         $this->assertCategoryHasNumberOfCategoryImageSet($categoryImageSetTransfers->count());
 
         $categoryImageSetTransfers->append($categoryImageSetTransfer);
-        $categoryTransfer->setImageSets($categoryImageSetTransfers);
+        $categoryTransfer->setFormImageSets($categoryImageSetTransfers);
         $this->categoryImageFacade->updateCategoryImageSetCollection($categoryTransfer);
 
         $this->assertCategoryHasNumberOfCategoryImageSet($categoryImageSetTransfers->count());
 
         $categoryImageSetTransfers->offsetUnset($categoryImageSetTransfers->count() - 1);
-        $categoryTransfer->setImageSets($categoryImageSetTransfers);
+        $categoryTransfer->setFormImageSets($categoryImageSetTransfers);
         $this->categoryImageFacade->updateCategoryImageSetCollection($categoryTransfer);
 
         $this->assertCategoryHasNumberOfCategoryImageSet($categoryImageSetTransfers->count());
@@ -355,13 +355,13 @@ class CategoryImageFacadeTest extends Unit
             ->addCategoryImage($categoryImageTransfer);
 
         $categoryImageSetTransfers->append($categoryImageSetTransfer);
-        $categoryTransfer->setImageSets($categoryImageSetTransfers);
+        $categoryTransfer->setFormImageSets($categoryImageSetTransfers);
         $this->categoryImageFacade->updateCategoryImageSetCollection($categoryTransfer);
 
         $this->assertCategoryHasNumberOfCategoryImage($categoryImageSetTransfers->count());
 
         $categoryImageSetTransfers->offsetUnset($categoryImageSetTransfers->count() - 1);
-        $categoryTransfer->setImageSets($categoryImageSetTransfers);
+        $categoryTransfer->setFormImageSets($categoryImageSetTransfers);
         $this->categoryImageFacade->updateCategoryImageSetCollection($categoryTransfer);
 
         $this->assertCategoryHasNumberOfCategoryImage($categoryImageSetTransfers->count());

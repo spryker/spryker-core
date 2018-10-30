@@ -16,11 +16,6 @@
 
         <behavior name="timestampable"/>
 
-        <unique name="fk_locale-fk_category">
-            <unique-column name="fk_locale"/>
-            <unique-column name="fk_category"/>
-        </unique>
-
         <index name="spy_category_image_set-index-fk_category">
             <index-column name="fk_category" />
         </index>

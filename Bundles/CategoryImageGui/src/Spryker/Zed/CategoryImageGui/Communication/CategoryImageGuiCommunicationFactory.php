@@ -9,6 +9,7 @@ namespace Spryker\Zed\CategoryImageGui\Communication;
 
 use Spryker\Zed\CategoryImageGui\CategoryImageGuiDependencyProvider;
 use Spryker\Zed\CategoryImageGui\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\CategoryImageGui\Communication\Form\Transformer\LocaleTransformer;
 use Spryker\Zed\CategoryImageGui\Dependency\Facade\CategoryImageGuiToLocaleInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -20,6 +21,16 @@ class CategoryImageGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createLocaleProvider(): LocaleProvider
     {
         return new LocaleProvider(
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImageGui\Communication\Form\Transformer\LocaleTransformer
+     */
+    public function createLocaleTransformer(): LocaleTransformer
+    {
+        return new LocaleTransformer(
             $this->getLocaleFacade()
         );
     }

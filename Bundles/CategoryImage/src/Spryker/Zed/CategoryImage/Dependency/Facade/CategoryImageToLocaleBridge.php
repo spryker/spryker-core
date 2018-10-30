@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CategoryImage\Dependency\Facade;
 
-class CategoryImageToLocale implements CategoryImageToLocaleInterface
+use Generated\Shared\Transfer\LocaleTransfer;
+
+class CategoryImageToLocaleBridge implements CategoryImageToLocaleInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
@@ -51,7 +53,7 @@ class CategoryImageToLocale implements CategoryImageToLocaleInterface
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }
@@ -61,8 +63,18 @@ class CategoryImageToLocale implements CategoryImageToLocaleInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale)
+    public function getLocaleById($idLocale): LocaleTransfer
     {
         return $this->localeFacade->getLocaleById($idLocale);
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return bool
+     */
+    public function hasLocale(string $localeName): bool
+    {
+        return $this->localeFacade->hasLocale($localeName);
     }
 }

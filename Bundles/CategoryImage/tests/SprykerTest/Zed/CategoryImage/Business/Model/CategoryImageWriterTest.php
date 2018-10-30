@@ -10,10 +10,11 @@ namespace SprykerTest\Zed\ProductImage\Business\Model;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryImageTransfer;
-use Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocale;
+use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManager;
+use Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepository;
-use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\CategoryImage\Business\Model\Writer;
 
 /**
@@ -28,10 +29,23 @@ use Spryker\Zed\CategoryImage\Business\Model\Writer;
  */
 class CategoryImageWriterTest extends Unit
 {
+
+    public const CATEGORY_KEY = 'test-category';
+    public const CATEGORY_IMAGE_SET_NAME = 'test-category-image-set';
+    public const CATEGORY_IMAGE_URL_SMALL = 'url-small';
+    public const CATEGORY_IMAGE_URL_LARGE = 'url-large';
+
+    public const CATEGORY_ID_1 = 1;
+    public const CATEGORY_ID_2 = 2;
+
     /**
-     * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
     protected $repository;
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface;
+     */
+    protected $entityManager;
 
     /**
      * @var \Spryker\Zed\CategoryImage\Business\Model\WriterInterface
@@ -39,66 +53,163 @@ class CategoryImageWriterTest extends Unit
     protected $writer;
 
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
-     */
-    protected $localeFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface
-     */
-    protected $transferGenerator;
-
-    /**
      * @return void
      */
     protected function setUp()
     {
-        $this->localeFacade = new LocaleFacade();
+        $this->repository = $this->createRepositoryMock();
+        $this->entityManager = $this->createEntityManagerMock();
         $this->writer = new Writer(
-            new CategoryImageRepository(),
-            new CategoryImageEntityManager(),
-            new CategoryImageToLocale($this->localeFacade)
+            $this->repository,
+            $this->entityManager
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testPersistCategoryImage()
+    public function testSaveCategoryImageSet()
     {
-        $imageTransfer = new CategoryImageTransfer();
-        $imageTransfer
-            ->setSortOrder(11)
-            ->setExternalUrlLarge('large')
-            ->setExternalUrlSmall('small');
+        $missingCategoryImage = $this->createCategoryImageTransfer(1);
+        $categoryImage = $this->createCategoryImageTransfer(2);
+        $categoryImageSet = $this->createCategoryImageSetTransfer(3, 4, $categoryImage);
 
-        $imageTransfer = $this->writer
-            ->saveCategoryImage($imageTransfer);
+        $this->repository
+            ->expects($this->once())
+            ->method('findCategoryImagesByCategoryImageSetId')
+            ->willReturn([
+                $missingCategoryImage,
+            ]);
+        $this->entityManager
+            ->expects($this->once())
+            ->method('deleteCategoryImageSetToCategoryImage')
+            ->with($this->equalTo(
+                $categoryImageSet->getIdCategoryImageSet(),
+                $missingCategoryImage->getIdCategoryImage()
+            ));
+        $this->entityManager
+            ->method('saveCategoryImageSet')
+            ->willReturn($categoryImageSet);
+        $this->entityManager
+            ->method('saveCategoryImage')
+            ->willReturn($categoryImage);
 
-        $this->assertInstanceOf(CategoryImageTransfer::class, $imageTransfer);
+        $this->writer->saveCategoryImageSet($categoryImageSet);
+    }
+
+    public function testCreateCategoryImageSetCollection()
+    {
+        $categoryImageTransfer = $this->createCategoryImageTransfer(static::CATEGORY_ID_1);
+        $categoryImageSetTransfer = $this->createCategoryImageSetTransfer(1, static::CATEGORY_ID_2, $categoryImageTransfer);
+        $categoryTransfer = $this->createCategoryTransfer(11);
+        $categoryTransfer->addImageSet($categoryImageSetTransfer);
+
+        $this->repository
+            ->expects($this->once())
+            ->method('findCategoryImagesByCategoryImageSetId')
+            ->willReturn([]);
+        $this->entityManager
+            ->expects($this->never())
+            ->method('deleteCategoryImageSetToCategoryImage');
+        $this->entityManager
+            ->method('saveCategoryImageSet')
+            ->willReturn($categoryImageSetTransfer);
+        $this->entityManager
+            ->method('saveCategoryImage')
+            ->willReturn($categoryImageTransfer);
+
+        $this->assertNotEquals($categoryTransfer->getIdCategory(), $categoryImageSetTransfer->getIdCategory());
+        $this->writer->createCategoryImageSetCollection($categoryTransfer);
+        $this->assertEquals($categoryTransfer->getIdCategory(), $categoryImageSetTransfer->getIdCategory());
     }
 
     /**
-     * @return void
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface
      */
-    public function testPersistCategoryImageSet()
+    protected function createRepositoryMock()
     {
-        $imageTransfer = new CategoryImageTransfer();
-        $imageTransfer
-            ->setSortOrder(7)
-            ->setExternalUrlLarge('large')
-            ->setExternalUrlSmall('small');
+        return $this->getMockBuilder(CategoryImageRepository::class)
+            ->setMethodsExcept([])
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
 
-        $imageSetTransfer = new CategoryImageSetTransfer();
-        $imageSetTransfer
-            ->setIdCategory(1)
-            ->setName('Foo')
-            ->addCategoryImage($imageTransfer);
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface
+     */
+    protected function createEntityManagerMock(): CategoryImageEntityManagerInterface
+    {
+        return $this->getMockBuilder(CategoryImageEntityManager::class)
+            ->setMethodsExcept([])
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
 
-        $imageSetTransfer = $this->writer
-            ->saveCategoryImageSet($imageSetTransfer);
+    /**
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function createCategoryTransfer(int $idCategory): CategoryTransfer
+    {
+        $categoryTransfer = new CategoryTransfer();
+        $categoryTransfer->setCategoryKey(static::CATEGORY_KEY);
+        $categoryTransfer->setIdCategory($idCategory);
+        $categoryTransfer->setIsActive(true);
 
-        $this->assertInstanceOf(CategoryImageSetTransfer::class, $imageSetTransfer);
-        $this->assertInstanceOf(CategoryImageTransfer::class, $imageSetTransfer->getCategoryImages()[0]);
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param int $idCategoryImageSet
+     * @param int $idCategory
+     * @param CategoryImageTransfer|null $categoryImageTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
+     */
+    protected function createCategoryImageSetTransfer(
+        int $idCategoryImageSet,
+        int $idCategory,
+        CategoryImageTransfer $categoryImageTransfer = null,
+        LocaleTransfer $localeTransfer = null
+    ): CategoryImageSetTransfer {
+        if (!$categoryImageTransfer) {
+            $categoryImageTransfer = $this->createCategoryImageTransfer();
+        }
+
+        $categoryImageSetTransfer = new CategoryImageSetTransfer();
+        $categoryImageSetTransfer->setIdCategoryImageSet($idCategoryImageSet)
+            ->setName(static::CATEGORY_IMAGE_SET_NAME)
+            ->setIdCategory($idCategory)
+            ->addCategoryImage($categoryImageTransfer)
+            ->setLocale($localeTransfer);
+
+        return $categoryImageSetTransfer;
+    }
+
+    /**
+     * @param int $idCategoryImage
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageTransfer
+     */
+    protected function createCategoryImageTransfer(int $idCategoryImage = 1): CategoryImageTransfer
+    {
+        $categoryImageTransfer = new CategoryImageTransfer();
+        $categoryImageTransfer->setIdCategoryImage($idCategoryImage);
+        $categoryImageTransfer->setExternalUrlSmall(static::CATEGORY_IMAGE_URL_SMALL)
+            ->setExternalUrlLarge(static::CATEGORY_IMAGE_URL_LARGE);
+
+        return $categoryImageTransfer;
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function createLocaleTransfer(string $localeName = 'default'): LocaleTransfer
+    {
+        $localeTransfer = new LocaleTransfer();
+        $localeTransfer->setLocaleName($localeName);
+
+        return $localeTransfer;
     }
 }

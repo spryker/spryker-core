@@ -7,46 +7,48 @@
 
 namespace Spryker\Zed\CategoryImage\Persistence;
 
+use Generated\Shared\Transfer\CategoryImageSetTransfer;
+
 /**
  * @method \Spryker\Zed\CategoryImage\Persistence\CategoryImagePersistenceFactory getFactory()
  */
 interface CategoryImageRepositoryInterface
 {
     /**
-     * @param int $categoryId
+     * @param int $idCategory
      * @param array $excludeIdCategoryImageSets
      *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function findCategoryImageSetsByCategoryId(int $categoryId, array $excludeIdCategoryImageSets = []);
-
-    /**
-     * @param int $idCategoryImageSet
-     *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet|\Orm\Zed\CategoryImage\Persistence\SpyCategoryImage|null
-     */
-    public function findImageSetById(int $idCategoryImageSet);
-
-    /**
-     * @param int $idCategoryImageSet
-     * @param array $excludeIdCategoryImage
-     *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    public function findCategoryImageSetsToCategoryImageByCategoryImageSetId(int $idCategoryImageSet, array $excludeIdCategoryImage = []);
+    public function findCategoryImageSetsByCategoryId(int $idCategory, array $excludeIdCategoryImageSets = []): array;
 
     /**
      * @param int $idCategory
      *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function findDefaultCategoryImageSets(int $idCategory);
+    public function findDefaultCategoryImageSets(int $idCategory): array;
 
     /**
      * @param int $idCategory
      * @param int $idLocale
      *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function findLocalizedCategoryImageSets(int $idCategory, int $idLocale);
+    public function findLocalizedCategoryImageSets(int $idCategory, int $idLocale): array;
+
+    /**
+     * @param int|null $idCategoryImageSet
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
+     */
+    public function findOrCreateCategoryImageSetById(?int $idCategoryImageSet): CategoryImageSetTransfer;
+
+    /**
+     * @param int $idCategoryImageSet
+     * @param array $excludeIdCategoryImage
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageTransfer[]
+     */
+    public function findCategoryImagesByCategoryImageSetId(int $idCategoryImageSet, array $excludeIdCategoryImage = []): array;
 }

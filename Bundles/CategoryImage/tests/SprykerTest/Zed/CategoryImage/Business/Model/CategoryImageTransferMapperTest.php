@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\ProductImage\Business\Model;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Spryker\Zed\CategoryImage\Business\Transfer\CategoryImageTransferMapper;
-use Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocale;
+use Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleBridge;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepository;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\CategoryImage\Business\Model\Reader;
@@ -55,13 +55,13 @@ class CategoryImageTransferMapperTest extends Unit
         $this->repository = new CategoryImageRepository();
         $this->localeFacade = new LocaleFacade();
         $this->transferGenerator = new CategoryImageTransferMapper(
-            new CategoryImageToLocale($this->localeFacade)
+            new CategoryImageToLocaleBridge($this->localeFacade)
         );
 
         $this->reader = new Reader(
             $this->repository,
             $this->transferGenerator,
-            new CategoryImageToLocale($this->localeFacade)
+            new CategoryImageToLocaleBridge($this->localeFacade)
         );
     }
 

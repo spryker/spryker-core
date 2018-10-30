@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CategoryImage\Business;
 
-use Generated\Shared\Transfer\CategoryImageSetTransfer;
-use Generated\Shared\Transfer\CategoryImageTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -19,43 +17,6 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
 {
     /**
      * Specification:
-     * - Creates a new category image entity or updates an existing one if the ID is provided and the entity already exists.
-     * - Returns a CategoryImageTransfer with the ID of the persisted entity.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageTransfer
-     */
-    public function saveCategoryImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer
-    {
-        return $this->getFactory()
-            ->createCategoryImageWriter()
-            ->saveCategoryImage($categoryImageTransfer);
-    }
-
-    /**
-     * Specification:
-     * - Creates a new category image set entity or updates an existing one if the ID is provided and the entity already exists.
-     * - Creates new category image entities or update existing ones if their ID is provided and the entities already exists.
-     * - Returns a CategoryImageSetTransfer with the IDs of the persisted entities.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
-     */
-    public function saveCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer
-    {
-        return $this->getFactory()
-            ->createCategoryImageWriter()
-            ->saveCategoryImageSet($categoryImageSetTransfer);
-    }
-
-    /**
-     * Specification:
      * - Returns all category image sets from database for the given category id.
      *
      * @api
@@ -64,7 +25,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function getCategoryImagesSetCollectionByCategoryId(int $idCategory): array
+    public function findCategoryImagesSetCollectionByCategoryId(int $idCategory): array
     {
         return $this->getFactory()
             ->createCategoryImageReader()
@@ -129,22 +90,6 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
-     *
-     * @return void
-     */
-    public function deleteCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer)
-    {
-        $this->getFactory()
-            ->createCategoryImageWriter()
-            ->deleteCategoryImageSet($categoryImageSetTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idCategory
      * @param int $idLocale
      *
@@ -155,21 +100,5 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
         return $this->getFactory()
             ->createCategoryImageSetCombiner()
             ->getCombinedCategoryImageSets($idCategory, $idLocale);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idCategoryImageSet
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer|null
-     */
-    public function findProductImageSetById($idCategoryImageSet): ?CategoryImageSetTransfer
-    {
-        return $this->getFactory()
-            ->createCategoryImageReader()
-            ->findCategoryImagesSetCollectionById($idCategoryImageSet);
     }
 }

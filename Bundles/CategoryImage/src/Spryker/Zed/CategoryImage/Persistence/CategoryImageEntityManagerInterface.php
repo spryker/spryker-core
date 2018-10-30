@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CategoryImage\Persistence;
 
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImage;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet;
+use Generated\Shared\Transfer\CategoryImageSetTransfer;
+use Generated\Shared\Transfer\CategoryImageTransfer;
 
 /**
  * @method \Spryker\Zed\CategoryImage\Persistence\CategoryImagePersistenceFactory getFactory()
@@ -16,24 +16,40 @@ use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet;
 interface CategoryImageEntityManagerInterface
 {
     /**
-     * @param int $idCategoryImage
+     * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
      *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImage
+     * @return \Generated\Shared\Transfer\CategoryImageTransfer
      */
-    public function findOrCreateCategoryImageById(int $idCategoryImage): SpyCategoryImage;
+    public function saveCategoryImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
+     */
+    public function saveCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSet
+     *
+     * @return void
+     */
+    public function deleteCategoryImageSet(CategoryImageSetTransfer $categoryImageSet): void;
 
     /**
      * @param int $idCategoryImageSet
+     * @param int $idCategoryImage
+     * @param int|null $sortOrder
      *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet
+     * @return int
      */
-    public function findOrCreateCategoryImageSetById(int $idCategoryImageSet): SpyCategoryImageSet;
+    public function saveCategoryImageSetToCategoryImage(int $idCategoryImageSet, int $idCategoryImage, $sortOrder = null): int;
 
     /**
      * @param int $idCategoryImageSet
      * @param int $idCategoryImage
      *
-     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage
+     * @return void
      */
-    public function findOrCreateCategoryImageRelation(int $idCategoryImageSet, int $idCategoryImage);
+    public function deleteCategoryImageSetToCategoryImage(int $idCategoryImageSet, int $idCategoryImage): void;
 }

@@ -13,8 +13,8 @@ use Spryker\Zed\CategoryImage\Business\Model\Reader;
 use Spryker\Zed\CategoryImage\Business\Model\ReaderInterface;
 use Spryker\Zed\CategoryImage\Business\Model\Writer;
 use Spryker\Zed\CategoryImage\Business\Model\WriterInterface;
-use Spryker\Zed\CategoryImage\Business\Transfer\CategoryImageTransferMapper;
-use Spryker\Zed\CategoryImage\Business\Transfer\CategoryImageTransferMapperInterface;
+use Spryker\Zed\CategoryImage\Business\Provider\LocaleProvider;
+use Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface;
 use Spryker\Zed\CategoryImage\CategoryImageDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -31,26 +31,7 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     {
         return new Reader(
             $this->getRepository(),
-            $this->createTransferGenerator(),
-            $this->getLocaleFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface
-     */
-    protected function getLocaleFacade()
-    {
-        return $this->getProvidedDependency(CategoryImageDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryImage\Business\Transfer\CategoryImageTransferMapperInterface
-     */
-    public function createTransferGenerator(): CategoryImageTransferMapperInterface
-    {
-        return new CategoryImageTransferMapper(
-            $this->getLocaleFacade()
+            $this->createLocaleProvider()
         );
     }
 
@@ -62,6 +43,16 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
         return new Writer(
             $this->getRepository(),
             $this->getEntityManager(),
+            $this->createLocaleProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface
+     */
+    public function createLocaleProvider(): LocaleProviderInterface
+    {
+        return new LocaleProvider(
             $this->getLocaleFacade()
         );
     }
@@ -72,8 +63,15 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     public function createCategoryImageSetCombiner(): CategoryImageSetCombinerInterface
     {
         return new CategoryImageSetCombiner(
-            $this->getRepository(),
-            $this->createTransferGenerator()
+            $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface
+     */
+    protected function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(CategoryImageDependencyProvider::FACADE_LOCALE);
     }
 }

@@ -7,25 +7,24 @@
 
 namespace Spryker\Zed\CategoryImageGui\Communication\Form;
 
+use Generated\Shared\Transfer\CategoryImageTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ImageCollectionForm extends AbstractType
 {
-    public const FIELD_ID_PRODUCT_IMAGE = 'id_category_image';
-    public const FIELD_IMAGE_SMALL = 'external_url_small';
-    public const FIELD_IMAGE_LARGE = 'external_url_large';
-    public const FIELD_SORT_ORDER = 'sort_order';
-    public const FIELD_IMAGE_PREVIEW = 'image_preview';
+    public const FIELD_ID_CATEGORY_IMAGE = 'idCategoryImage';
+    public const FIELD_IMAGE_SMALL = 'externalUrlSmall';
+    public const FIELD_IMAGE_LARGE = 'externalUrlLarge';
+    public const FIELD_SORT_ORDER = 'sortOrder';
+    public const FIELD_IMAGE_PREVIEW = 'imagePreview';
     public const FIELD_IMAGE_PREVIEW_LARGE_URL = 'imagePreviewLargeUrl';
-    public const FIELD_FK_IMAGE_SET_ID = 'fk_image_set_id';
-
-    public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -39,12 +38,22 @@ class ImageCollectionForm extends AbstractType
 
         $this
             ->addCategoryImageIdHiddenField($builder)
-            ->addCategoryImageLargeUrlHiddenField($builder)
-            ->addImageSetIdHiddenField($builder)
             ->addImagePreviewField($builder)
             ->addImageSmallField($builder)
             ->addImageBigField($builder)
             ->addOrderHiddenField($builder);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            'data_class' => CategoryImageTransfer::class,
+        ]);
     }
 
     /**
@@ -54,51 +63,7 @@ class ImageCollectionForm extends AbstractType
      */
     protected function addCategoryImageIdHiddenField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(self::FIELD_ID_PRODUCT_IMAGE, HiddenType::class, []);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addCategoryImageLargeUrlHiddenField(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(self::FIELD_IMAGE_PREVIEW_LARGE_URL, HiddenType::class, []);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addImageSetIdHiddenField(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(self::FIELD_FK_IMAGE_SET_ID, HiddenType::class, []);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addImagePreviewField(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(self::FIELD_IMAGE_PREVIEW, ImageType::class, [
-                'required' => false,
-                'label' => false,
-                ImageType::OPTION_IMAGE_WIDTH => 150,
-            ]);
+        $builder->add(self::FIELD_ID_CATEGORY_IMAGE, HiddenType::class, []);
 
         return $this;
     }
@@ -110,18 +75,34 @@ class ImageCollectionForm extends AbstractType
      */
     protected function addImageSmallField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(self::FIELD_IMAGE_SMALL, TextType::class, [
-                'required' => true,
-                'label' => 'Small',
-                'constraints' => [
-                    new NotBlank(),
-                    new Length([
-                        'min' => 0,
-                        'max' => 2048,
-                    ]),
-                ],
-            ]);
+        $builder->add(self::FIELD_IMAGE_SMALL, TextType::class, [
+            'required' => true,
+            'label' => 'Small',
+            'constraints' => [
+                new NotBlank(),
+                new Length([
+                    'min' => 0,
+                    'max' => 2048,
+                ]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addImagePreviewField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_IMAGE_PREVIEW, ImageType::class, [
+            'required' => false,
+            'label' => false,
+            'property_path' => self::FIELD_IMAGE_SMALL,
+            ImageType::OPTION_IMAGE_WIDTH => 150,
+        ]);
 
         return $this;
     }
@@ -133,18 +114,17 @@ class ImageCollectionForm extends AbstractType
      */
     protected function addImageBigField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(self::FIELD_IMAGE_LARGE, TextType::class, [
-                'required' => true,
-                'label' => 'Large',
-                'constraints' => [
-                    new NotBlank(),
-                    new Length([
-                        'min' => 0,
-                        'max' => 2048,
-                    ]),
-                ],
-            ]);
+        $builder->add(self::FIELD_IMAGE_LARGE, TextType::class, [
+            'required' => true,
+            'label' => 'Large',
+            'constraints' => [
+                new NotBlank(),
+                new Length([
+                    'min' => 0,
+                    'max' => 2048,
+                ]),
+            ],
+        ]);
 
         return $this;
     }
@@ -156,8 +136,19 @@ class ImageCollectionForm extends AbstractType
      */
     protected function addOrderHiddenField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(self::FIELD_SORT_ORDER, HiddenType::class, []);
+        $builder->add(self::FIELD_SORT_ORDER, HiddenType::class, []);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addProductImageLargeUrlHiddenField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_IMAGE_PREVIEW_LARGE_URL, HiddenType::class, []);
 
         return $this;
     }

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CategoryImage\Business\Model;
 
-use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\CategoryImage\Business\Transfer\CategoryImageTransferMapperInterface;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface;
 
 class CategoryImageSetCombiner implements CategoryImageSetCombinerInterface
@@ -19,20 +17,11 @@ class CategoryImageSetCombiner implements CategoryImageSetCombinerInterface
     protected $categoryImageRepository;
 
     /**
-     * @var \Spryker\Zed\CategoryImage\Business\Transfer\CategoryImageTransferMapperInterface
-     */
-    protected $transferMapper;
-
-    /**
      * @param \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface $categoryImageRepository
-     * @param \Spryker\Zed\CategoryImage\Business\Transfer\CategoryImageTransferMapperInterface $transferMapper
      */
-    public function __construct(
-        CategoryImageRepositoryInterface $categoryImageRepository,
-        CategoryImageTransferMapperInterface $transferMapper
-    ) {
+    public function __construct(CategoryImageRepositoryInterface $categoryImageRepository)
+    {
         $this->categoryImageRepository = $categoryImageRepository;
-        $this->transferMapper = $transferMapper;
     }
 
     /**
@@ -54,17 +43,16 @@ class CategoryImageSetCombiner implements CategoryImageSetCombinerInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet[] $imageSets
+     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $imageSetTransferCollection
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    protected function getImageSetsIndexedByName(ObjectCollection $imageSets)
+    protected function getImageSetsIndexedByName(array $imageSetTransferCollection)
     {
         $result = [];
 
-        foreach ($imageSets as $imageSetEntity) {
-            $imageSetTransfer = $this->transferMapper->mapCategoryImageSet($imageSetEntity);
-            $result[$imageSetEntity->getName()] = $imageSetTransfer;
+        foreach ($imageSetTransferCollection as $imageSetTransfer) {
+            $result[$imageSetTransfer->getName()] = $imageSetTransfer;
         }
 
         return $result;
