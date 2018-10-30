@@ -15,21 +15,21 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     /**
      * @var \Spryker\Shared\ZedRequest\Client\HttpClientInterface
      */
-    private $httpClient;
+    protected $httpClient;
 
     /**
      * @var \Spryker\Shared\ZedRequest\Client\ResponseInterface|null
      */
-    private static $lastResponse = null;
+    protected static $lastResponse;
 
-    private const INFO_MESSAGES = 'infoMessages';
-    private const ERROR_MESSAGES = 'errorMessages';
-    private const SUCCESS_MESSAGES = 'successMessages';
+    protected const INFO_MESSAGES = 'infoMessages';
+    protected const ERROR_MESSAGES = 'errorMessages';
+    protected const SUCCESS_MESSAGES = 'successMessages';
 
     /**
-     * @var \Generated\Shared\Transfer\StatusMessagesTransfer;
+     * @var array
      */
-    private static $statusMessages = [
+    protected static $statusMessages = [
         self::INFO_MESSAGES => [],
         self::ERROR_MESSAGES => [],
         self::SUCCESS_MESSAGES => [],
@@ -38,7 +38,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     /**
      * @var \Spryker\Shared\Kernel\Transfer\TransferInterface[]|\Closure[]
      */
-    private $metaTransfers = [];
+    protected $metaTransfers = [];
 
     /**
      * @param \Spryker\Shared\ZedRequest\Client\HttpClientInterface $httpClient
@@ -59,20 +59,6 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
         $this->metaTransfers[$name] = $metaTransfer;
 
         return $this;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface[]
-     */
-    private function prepareAndGetMetaTransfers()
-    {
-        foreach ($this->metaTransfers as $name => $transfer) {
-            if (is_object($transfer) && method_exists($transfer, '__invoke')) {
-                $this->metaTransfers[$name] = $transfer();
-            }
-        }
-
-        return $this->metaTransfers;
     }
 
     /**
@@ -100,24 +86,6 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     }
 
     /**
-     * @param \Spryker\Shared\ZedRequest\Client\ResponseInterface $response
-     *
-     * @return void
-     */
-    private function collectStatusMessages(ResponseInterface $response): void
-    {
-        foreach ($response->getErrorMessages() as $errorMessage) {
-            self::$statusMessages[self::ERROR_MESSAGES][] = $errorMessage;
-        }
-        foreach ($response->getSuccessMessages() as $successMessage) {
-            self::$statusMessages[self::SUCCESS_MESSAGES][] = $successMessage;
-        }
-        foreach ($response->getInfoMessages() as $infoMessage) {
-            self::$statusMessages[self::INFO_MESSAGES][] = $infoMessage;
-        }
-    }
-
-    /**
      * @return bool
      */
     public function hasLastResponse()
@@ -140,7 +108,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StatusMessagesTransfer;
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getInfoStatusMessages(): array
     {
@@ -148,7 +116,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StatusMessagesTransfer;
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getErrorStatusMessages(): array
     {
@@ -156,10 +124,42 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StatusMessagesTransfer;
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getSuccessStatusMessages(): array
     {
         return self::$statusMessages[self::SUCCESS_MESSAGES];
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface[]
+     */
+    protected function prepareAndGetMetaTransfers()
+    {
+        foreach ($this->metaTransfers as $name => $transfer) {
+            if (is_object($transfer) && method_exists($transfer, '__invoke')) {
+                $this->metaTransfers[$name] = $transfer();
+            }
+        }
+
+        return $this->metaTransfers;
+    }
+
+    /**
+     * @param \Spryker\Shared\ZedRequest\Client\ResponseInterface $response
+     *
+     * @return void
+     */
+    protected function collectStatusMessages(ResponseInterface $response): void
+    {
+        foreach ($response->getErrorMessages() as $errorMessage) {
+            self::$statusMessages[self::ERROR_MESSAGES][] = $errorMessage;
+        }
+        foreach ($response->getSuccessMessages() as $successMessage) {
+            self::$statusMessages[self::SUCCESS_MESSAGES][] = $successMessage;
+        }
+        foreach ($response->getInfoMessages() as $infoMessage) {
+            self::$statusMessages[self::INFO_MESSAGES][] = $infoMessage;
+        }
     }
 }
