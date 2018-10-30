@@ -71,8 +71,9 @@ class IndexController extends AbstractController
     {
         $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
 
-        $discountConfiguratorTransfer = $this->getFacade()
-            ->findHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+        $discountConfiguratorTransfer = $this->getFactory()
+            ->createDiscountFormDataProvider()
+            ->getData($idDiscount);
 
         if ($discountConfiguratorTransfer === null) {
             $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
@@ -80,8 +81,7 @@ class IndexController extends AbstractController
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
 
-        $discountForm = $this->getFactory()->getDiscountForm($idDiscount);
-        $discountForm->setData($discountConfiguratorTransfer);
+        $discountForm = $this->getFactory()->getDiscountForm($idDiscount, $discountConfiguratorTransfer);
         $this->handleDiscountForm($request, $discountForm);
 
         $voucherFormDataProvider = $this->getFactory()->createVoucherFormDataProvider();
@@ -142,8 +142,9 @@ class IndexController extends AbstractController
     {
         $idDiscount = $this->castId($request->query->get(static::URL_PARAM_ID_DISCOUNT));
 
-        $discountConfiguratorTransfer = $this->getFacade()
-            ->findHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+        $discountConfiguratorTransfer = $this->getFactory()
+            ->createDiscountFormDataProvider()
+            ->getData($idDiscount);
 
         if ($discountConfiguratorTransfer === null) {
             $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
@@ -319,8 +320,8 @@ class IndexController extends AbstractController
         $redirectUrl = Url::generate(
             '/discount/index/edit',
             [
-                self::URL_PARAM_ID_DISCOUNT => $idDiscount,
-            ]
+                    self::URL_PARAM_ID_DISCOUNT => $idDiscount,
+                ]
         )->build() . $hash;
 
         return $redirectUrl;
