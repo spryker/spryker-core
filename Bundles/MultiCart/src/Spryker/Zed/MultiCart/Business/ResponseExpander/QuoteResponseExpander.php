@@ -13,7 +13,9 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface;
+use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToStoreFacadeInterface;
 
 class QuoteResponseExpander implements QuoteResponseExpanderInterface
 {
@@ -23,11 +25,20 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
     protected $quoteFacade;
 
     /**
-     * @param \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface $quoteFacade
+     * @var \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToStoreFacadeInterface
      */
-    public function __construct(MultiCartToQuoteFacadeInterface $quoteFacade)
-    {
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(
+        MultiCartToQuoteFacadeInterface $quoteFacade,
+        MultiCartToStoreFacadeInterface $storeFacade
+    ) {
         $this->quoteFacade = $quoteFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -38,19 +49,35 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
         $customerTransfer = $quoteResponseTransfer->getCustomer();
+        $storeTransfer = $this->getStoreTransfer($quoteResponseTransfer->getQuoteTransfer());
 
-        $customerQuoteCollectionTransfer = $this->findCustomerQuotes($customerTransfer);
+        $customerQuoteCollectionTransfer = $this->findCustomerQuotesByStore($customerTransfer, $storeTransfer);
         $quoteResponseTransfer->setCustomerQuotes($customerQuoteCollectionTransfer);
 
         return $quoteResponseTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getStoreTransfer(?QuoteTransfer $quoteTransfer): StoreTransfer
+    {
+        if ($quoteTransfer !== null) {
+            return $quoteTransfer->getStore();
+        }
+
+        return $this->storeFacade->getCurrentStore();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    protected function findCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer
+    protected function findCustomerQuotesByStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteCollectionTransfer
     {
         $filterTransfer = new FilterTransfer();
         $filterTransfer
@@ -60,6 +87,7 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
         $quoteCriteriaFilterTransfer
             ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdStore($storeTransfer->getIdStore())
             ->setFilter($filterTransfer);
 
         $customerQuoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);

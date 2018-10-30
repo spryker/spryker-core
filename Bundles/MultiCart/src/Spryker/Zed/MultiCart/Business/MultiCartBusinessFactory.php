@@ -20,6 +20,7 @@ use Spryker\Zed\MultiCart\Business\ResponseExpander\QuoteResponseExpander;
 use Spryker\Zed\MultiCart\Business\ResponseExpander\QuoteResponseExpanderInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface;
+use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToStoreFacadeInterface;
 use Spryker\Zed\MultiCart\MultiCartDependencyProvider;
 
 /**
@@ -55,7 +56,10 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteResponseExpander(): QuoteResponseExpanderInterface
     {
-        return new QuoteResponseExpander($this->getQuoteFacade());
+        return new QuoteResponseExpander(
+            $this->getQuoteFacade(),
+            $this->getStoreFacade()
+        );
     }
 
     /**
@@ -92,5 +96,13 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     protected function getMessengerFacade(): MultiCartToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToStoreFacadeInterface
+     */
+    public function getStoreFacade(): MultiCartToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(MultiCartDependencyProvider::FACADE_STORE);
     }
 }
