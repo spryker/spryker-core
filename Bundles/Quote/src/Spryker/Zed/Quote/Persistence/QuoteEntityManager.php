@@ -9,8 +9,6 @@ namespace Spryker\Zed\Quote\Persistence;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
-use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Quote\Persistence\QuotePersistenceFactory getFactory()
@@ -46,28 +44,6 @@ class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityMan
         $this->getFactory()
             ->createQuoteQuery()
             ->filterByIdQuote($idQuote)
-            ->delete();
-    }
-
-    /**
-     * @param \DateTime $lifetimeLimitDate
-     *
-     * @return void
-     */
-    public function deleteExpiredGuestQuotes(DateTime $lifetimeLimitDate): void
-    {
-        $quoteQuery = $this->getFactory()
-            ->createQuoteQuery()
-            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
-            ->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
-            ->where(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE . Criteria::ISNULL);
-
-        $quoteIds = $quoteQuery->select([SpyQuoteTableMap::COL_ID_QUOTE])
-            ->setFormatter(PropelArraySetFormatter::class)
-            ->find();
-
-        $this->getFactory()->createQuoteQuery()
-            ->filterByIdQuote_In($quoteIds)
             ->delete();
     }
 }
