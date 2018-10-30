@@ -34,7 +34,7 @@ class GlueAnnotationAnalyzerTest extends Unit
      */
     protected $tester;
 
-    protected const CONTROLLER_SOURCE_DIRECTORY = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/RestApiDocumentationGenerator/tests/SprykerTest/Zed/RestApiDocumentationGenerator/Business/Stub/Controller/';
+    protected const CONTROLLER_SOURCE_DIRECTORY = __DIR__ . '/../Stub/Controller/';
     protected const CONTROLLER_FILE_NAME = 'TestResourceController.php';
 
     protected const SUMMARY = 'Summary example';
