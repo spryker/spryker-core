@@ -14,9 +14,11 @@ use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumen
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyFilesystemAdapter;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyFinderAdapter;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyYamlAdapter;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\Service\RestApiDocumentationGeneratorToUtilEncodingServiceBridge;
 
 class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS = 'PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS';
     public const PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER = 'PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER';
     public const COLLECTION_RESOURCE_ROUTE = 'COLLECTION_RESOURCE_ROUTE';
@@ -32,6 +34,7 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = $this->addUtilEncodingService($container);
         $container = $this->addYamlDumper($container);
         $container = $this->addFilesystem($container);
         $container = $this->addFinder($container);
@@ -39,6 +42,22 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
         $container = $this->addResourceRouteCollection($container);
         $container = $this->addResourceRoutePluginsProviderPlugins($container);
         $container = $this->addResourceRelationshipsCollectionProviderPlugin($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new RestApiDocumentationGeneratorToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        };
 
         return $container;
     }

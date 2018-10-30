@@ -8,12 +8,13 @@
 namespace Spryker\Client\CustomerAccessPermission\Plugin;
 
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\InfrastructuralPermissionPluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
 /**
  * For Client PermissionDependencyProvider::getPermissionPlugins() registration
  */
-class SeeAddToCartPermissionPlugin extends AbstractPlugin implements PermissionPluginInterface
+class SeeAddToCartPermissionPlugin extends AbstractPlugin implements PermissionPluginInterface, InfrastructuralPermissionPluginInterface
 {
     public const KEY = 'SeeAddToCartPermissionPlugin';
 

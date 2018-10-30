@@ -163,6 +163,6 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
      */
     protected function addPath(RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer): void
     {
-        $this->paths += $this->pathMethodRenderer->render($pathMethodDataTransfer);
+        $this->paths = array_replace_recursive($this->paths, $this->pathMethodRenderer->render($pathMethodDataTransfer));
     }
 }

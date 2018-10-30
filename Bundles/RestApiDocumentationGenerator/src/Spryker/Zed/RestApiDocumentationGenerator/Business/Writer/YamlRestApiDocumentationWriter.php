@@ -83,6 +83,7 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
             static::YAML_NESTING_LEVEL,
             static::YAML_INDENT,
             RestApiDocumentationGeneratorToSymfonyYamlAdapter::DUMP_EMPTY_ARRAY_AS_SEQUENCE
+            | RestApiDocumentationGeneratorToSymfonyYamlAdapter::DUMP_MULTI_LINE_LITERAL_BLOCK
         );
 
         $this->filesystem->dumpFile($fileName, $yaml);
