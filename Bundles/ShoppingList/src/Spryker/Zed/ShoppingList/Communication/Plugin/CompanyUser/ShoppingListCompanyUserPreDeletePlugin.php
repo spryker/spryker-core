@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingList\Communication\ShoppingListCommunicationFactory getFactory()
  */
-class CompanyUserPreDeletePlugin extends AbstractPlugin implements CompanyUserPreDeletePluginInterface
+class ShoppingListCompanyUserPreDeletePlugin extends AbstractPlugin implements CompanyUserPreDeletePluginInterface
 {
     /**
      * {@inheritdoc}
