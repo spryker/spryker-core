@@ -547,5 +547,5 @@ interface DiscountFacadeInterface
      *
      * @return bool
      */
-    public function validateVoucherDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+    public function validateVoucherDiscountsMaxUsage(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

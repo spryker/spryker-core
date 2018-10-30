@@ -80,6 +80,15 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param array $codes
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
+     */
+    public function queryVoucherByVoucherCodes(array $codes);
+
+    /**
+     * @api
+     *
      * @param int $idVoucherCode
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
@@ -165,4 +174,13 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function queryDiscountWithStoresByFkDiscount($idDiscount);
+
+    /**
+     * @api
+     *
+     * @param string[] $codes
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
+     */
+    public function queryVouchersExceededMaxNumberOfUsage($codes);
 }

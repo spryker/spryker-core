@@ -689,10 +689,10 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function validateVoucherDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    public function validateVoucherDiscountsMaxUsage(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteVoucherDiscountValidator($checkoutResponseTransfer)
-            ->validateVoucherDiscounts($quoteTransfer);
+            ->createQuoteVoucherDiscountMaxUsageValidator()
+            ->validate($quoteTransfer, $checkoutResponseTransfer);
     }
 }

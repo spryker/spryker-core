@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\Discount\Business;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolver;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\FilteredCalculator;
 use Spryker\Zed\Discount\Business\Calculator\Type\FixedType;
 use Spryker\Zed\Discount\Business\Calculator\Type\PercentageType;
-use Spryker\Zed\Discount\Business\Checkout\CheckoutResponseTransferTray;
 use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
 use Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector;
@@ -55,11 +53,10 @@ use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Business\QueryString\Validator;
 use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserver;
 use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserverInterface;
-use Spryker\Zed\Discount\Business\QuoteVoucherDiscountValidator\QuoteVoucherDiscountValidator;
+use Spryker\Zed\Discount\Business\QuoteDiscountValidator\QuoteDiscountMaxUsageValidator;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -645,39 +642,12 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return \Spryker\Zed\Discount\Business\QuoteVoucherDiscountValidator\QuoteVoucherDiscountValidator
+     * @return \Spryker\Zed\Discount\Business\QuoteDiscountValidator\QuoteDiscountMaxUsageValidator
      */
-    public function createQuoteVoucherDiscountValidator(CheckoutResponseTransfer $checkoutResponseTransfer): QuoteVoucherDiscountValidator
+    public function createQuoteVoucherDiscountMaxUsageValidator(): QuoteDiscountMaxUsageValidator
     {
-        return new QuoteVoucherDiscountValidator(
-            $this->createVoucherValidatorForCheckout(
-                $checkoutResponseTransfer
-            )
+        return new QuoteDiscountMaxUsageValidator(
+            $this->getQueryContainer()
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return \Spryker\Zed\Discount\Business\Voucher\VoucherValidator
-     */
-    public function createVoucherValidatorForCheckout($checkoutResponseTransfer): VoucherValidator
-    {
-        return new VoucherValidator(
-            $this->getQueryContainer(),
-            $this->createCheckoutResponseTransferTray($checkoutResponseTransfer)
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
-     */
-    public function createCheckoutResponseTransferTray($checkoutResponseTransfer): DiscountToMessengerInterface
-    {
-        return new CheckoutResponseTransferTray($checkoutResponseTransfer);
     }
 }

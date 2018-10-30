@@ -16,12 +16,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class VoucherDiscountCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
+class VoucherDiscountMaxUsageCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
     /**
      * {@inheritdoc}
-     * - Validates voucher discounts in Quote
-     * - Returns true if all Vouchers are valid
+     * - Validates voucher discounts on Max Usage in Quote
+     * - Returns true if all of Vouchers doesn't exceed Max Amount of Usage
      * - Returns false otherwise along with messages added to $checkoutResponseTransfer
      *
      * @api
@@ -33,6 +33,6 @@ class VoucherDiscountCheckoutPreConditionPlugin extends AbstractPlugin implement
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        return $this->getFacade()->validateVoucherDiscounts($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->validateVoucherDiscountsMaxUsage($quoteTransfer, $checkoutResponseTransfer);
     }
 }
