@@ -176,7 +176,7 @@ class ProductListReader implements ProductListReaderInterface
 
             $idProductAbstract = $item[ProductListRepository::COL_ID_PRODUCT_ABSTRACT];
 
-            return $this->isAllConcreteProductsInList(
+            return $this->isEveryConcreteProductInList(
                 $item,
                 $productConcreteCountByProductAbstractIds[$idProductAbstract][ProductListRepository::COL_CONCRETE_PRODUCT_COUNT]
             );
@@ -199,7 +199,7 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return bool
      */
-    protected function isAllConcreteProductsInList(array $item, int $totalProductConcreteCount): bool
+    protected function isEveryConcreteProductInList(array $item, int $totalProductConcreteCount): bool
     {
         return $item[ProductListRepository::COL_CONCRETE_PRODUCT_COUNT] === $totalProductConcreteCount;
     }
