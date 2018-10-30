@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceCartConnector\Communication\PriceCartConnectorCommunicationFactory getFactory()
  */
-class RemoveWithoutPriceItemsPreReloadPlugin extends AbstractPlugin implements PreReloadItemsPluginInterface
+class FilterItemsWithoutPricePlugin extends AbstractPlugin implements PreReloadItemsPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -29,6 +29,6 @@ class RemoveWithoutPriceItemsPreReloadPlugin extends AbstractPlugin implements P
      */
     public function preReloadItems(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFacade()->filterWithoutPriceItems($quoteTransfer);
+        return $this->getFacade()->filterItemsWithoutPrice($quoteTransfer);
     }
 }

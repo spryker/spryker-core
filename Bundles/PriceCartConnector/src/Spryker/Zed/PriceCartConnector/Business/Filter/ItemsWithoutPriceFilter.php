@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceCartConnector\Business\WithoutPriceItemsFilter;
+namespace Spryker\Zed\PriceCartConnector\Business\Filter;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -15,7 +15,7 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterfa
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
 
-class WithoutPriceItemsFilter implements WithoutPriceItemsFilterInterface
+class ItemsWithoutPriceFilter implements ItemFilterInterface
 {
     protected const MESSAGE_PARAM_SKU = '%sku%';
     protected const MESSAGE_INFO_CONCRETE_PRODUCT_WITHOUT_PRICE_REMOVED = 'price-cart-connector.info.concrete-product-without-price.removed';
@@ -55,7 +55,7 @@ class WithoutPriceItemsFilter implements WithoutPriceItemsFilterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterWithoutPriceItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function filterItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
             if (!$this->isProductConcretePriceExists($itemTransfer, $quoteTransfer)) {
@@ -97,11 +97,12 @@ class WithoutPriceItemsFilter implements WithoutPriceItemsFilterInterface
         $priceProductFilterTransfer = $this->mapItemTransferToPriceProductFilterTransfer(
             (new PriceProductFilterTransfer()),
             $itemTransfer
-        )
-        ->setStoreName($storeName)
-        ->setPriceMode($priceMode)
-        ->setCurrencyIsoCode($currencyTransfer->getCode())
-        ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
+        );
+
+        $priceProductFilterTransfer->setStoreName($storeName)
+            ->setPriceMode($priceMode)
+            ->setCurrencyIsoCode($currencyTransfer->getCode())
+            ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
 
         if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
             $priceProductFilterTransfer->setQuote($quoteTransfer);

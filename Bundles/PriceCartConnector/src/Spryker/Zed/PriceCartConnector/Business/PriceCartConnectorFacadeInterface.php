@@ -49,5 +49,5 @@ interface PriceCartConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterWithoutPriceItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function filterItemsWithoutPrice(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

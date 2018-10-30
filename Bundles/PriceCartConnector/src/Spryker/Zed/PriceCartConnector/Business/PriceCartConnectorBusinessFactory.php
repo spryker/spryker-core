@@ -8,10 +8,10 @@
 namespace Spryker\Zed\PriceCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PriceCartConnector\Business\Filter\ItemFilterInterface;
+use Spryker\Zed\PriceCartConnector\Business\Filter\ItemsWithoutPriceFilter;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Spryker\Zed\PriceCartConnector\Business\Validator\PriceProductValidator;
-use Spryker\Zed\PriceCartConnector\Business\WithoutPriceItemsFilter\WithoutPriceItemsFilter;
-use Spryker\Zed\PriceCartConnector\Business\WithoutPriceItemsFilter\WithoutPriceItemsFilterInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterface;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
 
@@ -44,11 +44,11 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceCartConnector\Business\WithoutPriceItemsFilter\WithoutPriceItemsFilterInterface
+     * @return \Spryker\Zed\PriceCartConnector\Business\Filter\ItemFilterInterface
      */
-    public function createWithoutPriceItemsFilter(): WithoutPriceItemsFilterInterface
+    public function createWithoutPriceItemsFilter(): ItemFilterInterface
     {
-        return new WithoutPriceItemsFilter(
+        return new ItemsWithoutPriceFilter(
             $this->getPriceFacade(),
             $this->getPriceProductFacade(),
             $this->getMessengerFacade()

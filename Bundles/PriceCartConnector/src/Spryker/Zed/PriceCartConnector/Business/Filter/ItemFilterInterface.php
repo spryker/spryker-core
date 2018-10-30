@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceCartConnector\Business\WithoutPriceItemsFilter;
+namespace Spryker\Zed\PriceCartConnector\Business\Filter;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface WithoutPriceItemsFilterInterface
+interface ItemFilterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterWithoutPriceItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function filterItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

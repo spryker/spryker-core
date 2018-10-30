@@ -54,8 +54,8 @@ class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnec
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterWithoutPriceItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function filterItemsWithoutPrice(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFactory()->createWithoutPriceItemsFilter()->filterWithoutPriceItems($quoteTransfer);
+        return $this->getFactory()->createWithoutPriceItemsFilter()->filterItems($quoteTransfer);
     }
 }
