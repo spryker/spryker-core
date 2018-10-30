@@ -188,7 +188,9 @@ class PluginHandler implements PluginHandlerInterface
         );
 
         if (!$pathDataTransfer->getSummary()) {
-            $pathDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_POST_RESOURCE, $plugin->getResourceType()));
+            $pathDataTransfer->setSummary(
+                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_POST_RESOURCE, $plugin->getResourceType())
+            );
         }
 
         $this->pathGenerator->addPostPath($pathDataTransfer, $requestSchema, $errorSchema, $responseSchema);
@@ -221,7 +223,9 @@ class PluginHandler implements PluginHandlerInterface
         );
 
         if (!$pathDataTransfer->getSummary()) {
-            $pathDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_PATCH_RESOURCE, $plugin->getResourceType()));
+            $pathDataTransfer->setSummary(
+                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_PATCH_RESOURCE, $plugin->getResourceType())
+            );
         }
 
         $this->pathGenerator->addPatchPath($pathDataTransfer, $requestSchema, $errorSchema, $responseSchema);
@@ -252,7 +256,9 @@ class PluginHandler implements PluginHandlerInterface
         );
 
         if (!$pathDataTransfer->getSummary()) {
-            $pathDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_DELETE_RESOURCE, $plugin->getResourceType()));
+            $pathDataTransfer->setSummary(
+                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_DELETE_RESOURCE, $plugin->getResourceType())
+            );
         }
 
         $this->pathGenerator->addDeletePath($pathDataTransfer, $errorSchema);
@@ -265,13 +271,18 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return void
      */
-    protected function addGetCollectionPath(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    protected function addGetCollectionPath(
+        ResourceRoutePluginInterface $plugin,
+        RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->getResponseCollectionSchema($plugin, $annotationTransfer);
 
         if (!$pathMethodDataTransfer->getSummary()) {
-            $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_COLLECTION, $pathMethodDataTransfer->getResource()));
+            $pathMethodDataTransfer->setSummary(
+                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_COLLECTION, $pathMethodDataTransfer->getResource())
+            );
         }
 
         $this->pathGenerator->addGetPath($pathMethodDataTransfer, $errorSchema, $responseSchema);
@@ -284,13 +295,18 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return void
      */
-    protected function addGetResource(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    protected function addGetResource(
+        ResourceRoutePluginInterface $plugin,
+        RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->getResponseResourceSchema($plugin, $annotationTransfer);
 
         if (!$pathMethodDataTransfer->getSummary()) {
-            $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource()));
+            $pathMethodDataTransfer->setSummary(
+                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource())
+            );
         }
 
         $this->pathGenerator->addGetPath($pathMethodDataTransfer, $errorSchema, $responseSchema);
@@ -304,13 +320,19 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return void
      */
-    protected function addGetResourceById(ResourceRoutePluginInterface $plugin, RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer, string $idResource, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
+    protected function addGetResourceById(
+        ResourceRoutePluginInterface $plugin,
+        RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer,
+        string $idResource,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->getResponseResourceSchema($plugin, $annotationTransfer);
 
         if (!$pathMethodDataTransfer->getSummary()) {
-            $pathMethodDataTransfer->setSummary($this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource()));
+            $pathMethodDataTransfer->setSummary(
+                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource())
+            );
         }
         $pathMethodDataTransfer->setPath($pathMethodDataTransfer->getPath() . '/' . $idResource);
 
@@ -376,8 +398,10 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer|null
      */
-    protected function getResponseResourceSchema(ResourceRoutePluginInterface $plugin, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): ?RestApiDocumentationPathSchemaDataTransfer
-    {
+    protected function getResponseResourceSchema(
+        ResourceRoutePluginInterface $plugin,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): ?RestApiDocumentationPathSchemaDataTransfer {
         if ($annotationTransfer === null) {
             return $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
         }
@@ -397,8 +421,10 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer|null
      */
-    protected function getResponseCollectionSchema(ResourceRoutePluginInterface $plugin, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): ?RestApiDocumentationPathSchemaDataTransfer
-    {
+    protected function getResponseCollectionSchema(
+        ResourceRoutePluginInterface $plugin,
+        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+    ): ?RestApiDocumentationPathSchemaDataTransfer {
         if ($annotationTransfer === null) {
             return $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin));
         }

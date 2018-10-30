@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Analyzer;
 use Codeception\Test\Unit;
 use PHPUnit\Framework\MockObject\MockObject;
 use SplFileInfo;
-use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzer;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzerInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinder;
@@ -30,6 +29,11 @@ use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResou
  */
 class GlueAnnotationAnalyzerTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorFacadeTester
+     */
+    protected $tester;
+
     protected const CONTROLLER_SOURCE_DIRECTORY = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/RestApiDocumentationGenerator/tests/SprykerTest/Zed/RestApiDocumentationGenerator/Business/Stub/Controller/';
     protected const CONTROLLER_FILE_NAME = 'TestResourceController.php';
 
@@ -112,6 +116,8 @@ class GlueAnnotationAnalyzerTest extends Unit
      */
     protected function getUtilEncodingService(): RestApiDocumentationGeneratorToUtilEncodingServiceInterface
     {
-        return new RestApiDocumentationGeneratorToUtilEncodingServiceBridge(new UtilEncodingService());
+        return new RestApiDocumentationGeneratorToUtilEncodingServiceBridge(
+            $this->tester->getLocator()->utilEncoding()->service()
+        );
     }
 }

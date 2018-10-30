@@ -31,6 +31,7 @@ use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResou
 class ResourceRelationshipsPluginAnalyzerTest extends Unit
 {
     protected const RELATIONSHIP_VALUE = 'test-resource-with-relationship';
+    protected const RESOURCE_NAME = 'test-resource';
 
     /**
      * @return void
@@ -99,7 +100,7 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
     {
         $resourceRelationshipCollection = new ResourceRelationshipCollection();
         $resourceRelationshipCollection->addRelationship(
-            'test-resource',
+            static::RESOURCE_NAME,
             new TestResourceRelationshipPlugin()
         );
 
