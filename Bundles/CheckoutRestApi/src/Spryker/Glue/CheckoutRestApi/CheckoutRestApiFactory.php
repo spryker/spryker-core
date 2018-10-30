@@ -42,7 +42,8 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->getResourceBuilder(),
             $this->createCheckoutDataMapper(),
-            $this->getQuoteCollectionReaderPlugin()
+            $this->getQuoteCollectionReaderPlugin(),
+            $this->createQuoteProcessor()
         );
     }
 

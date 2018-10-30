@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -74,6 +75,26 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         $quoteTransfer = $this->mapRestVoucherCodeToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
+     */
+    public function mapRestCheckoutRequestAttributesTransferToRestCheckoutDataResponseAttributesTransfer(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
+    ): RestCheckoutDataResponseAttributesTransfer {
+        if ($restCheckoutRequestAttributesTransfer->getQuote()->getBillingAddress() !== null && !$this->addressExists($restCheckoutDataResponseAttributesTransfer->getRestAddressesResponseData(), $restCheckoutRequestAttributesTransfer->getQuote()->getBillingAddress()->getUuid())) {
+            $restCheckoutDataResponseAttributesTransfer->addRestAddressesResponseData($restCheckoutRequestAttributesTransfer->getQuote()->getBillingAddress());
+        }
+        if ($restCheckoutRequestAttributesTransfer->getQuote()->getShippingAddress() !== null && !$this->addressExists($restCheckoutDataResponseAttributesTransfer->getRestAddressesResponseData(), $restCheckoutRequestAttributesTransfer->getQuote()->getShippingAddress()->getUuid())) {
+            $restCheckoutDataResponseAttributesTransfer->addRestAddressesResponseData($restCheckoutRequestAttributesTransfer->getQuote()->getShippingAddress());
+        }
+
+        return $restCheckoutDataResponseAttributesTransfer;
     }
 
     /**
@@ -223,5 +244,26 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         $quoteTransfer->setVoucherCode($restCheckoutRequestAttributesTransfer->getQuote()->getVoucherCode());
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\RestAddressTransfer[] $restAddressesResponseData
+     * @param string|null $addressUuid
+     *
+     * @return bool
+     */
+    protected function addressExists(ArrayObject $restAddressesResponseData, ?string $addressUuid): bool
+    {
+        if ($addressUuid === null) {
+            return false;
+        }
+
+        foreach ($restAddressesResponseData as $restAddressTransfer) {
+            if ($restAddressTransfer->getUuid() == $addressUuid) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

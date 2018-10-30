@@ -71,7 +71,7 @@ class QuoteMerger implements QuoteMergerInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         RestRequestInterface $restRequest
     ): void {
-        if (!$restRequest->getUser()) {
+        if (!$restRequest->getUser()->getSurrogateIdentifier()) {
             $quoteTransfer->setCustomer((new CustomerTransfer())->fromArray($restCheckoutRequestAttributesTransfer->getQuote()->getCustomer()->toArray(), true));
 
             return;

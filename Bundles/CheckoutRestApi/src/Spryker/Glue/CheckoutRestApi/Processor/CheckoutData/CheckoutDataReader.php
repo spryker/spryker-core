@@ -11,12 +11,15 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
+use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface;
 use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutDataReader implements CheckoutDataReaderInterface
 {
@@ -41,21 +44,29 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $quoteCollectionReader;
 
     /**
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface
+     */
+    protected $quoteProcessor;
+
+    /**
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface $checkoutDataMapper
      * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReader
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface $quoteProcessor
      */
     public function __construct(
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CheckoutDataMapperInterface $checkoutDataMapper,
-        QuoteCollectionReaderPluginInterface $quoteCollectionReader
+        QuoteCollectionReaderPluginInterface $quoteCollectionReader,
+        QuoteProcessorInterface $quoteProcessor
     ) {
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutDataMapper = $checkoutDataMapper;
         $this->quoteCollectionReader = $quoteCollectionReader;
+        $this->quoteProcessor = $quoteProcessor;
     }
 
     /**
@@ -66,14 +77,22 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     public function readCheckoutData(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
     {
+        $currentCustomerQuote = $this->getQuoteTransfer($restCheckoutRequestAttributesTransfer);
+        if ($currentCustomerQuote === null) {
+            return $this->createQuoteNotFoundErrorResponse();
+        }
+
         $quoteTransfer = $this->checkoutDataMapper->mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
-            $this->getCurrentCustomerQuote(),
+            $currentCustomerQuote,
             $restCheckoutRequestAttributesTransfer
         );
 
         $checkoutDataTransfer = $this->checkoutRestApiClient->getCheckoutData($quoteTransfer);
 
-        $restCheckoutResponseAttributesTransfer = $this->checkoutDataMapper->mapCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer($checkoutDataTransfer);
+        $restCheckoutResponseAttributesTransfer = $this->checkoutDataMapper
+            ->mapCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer($checkoutDataTransfer);
+        $restCheckoutResponseAttributesTransfer = $this->checkoutDataMapper
+            ->mapRestCheckoutRequestAttributesTransferToRestCheckoutDataResponseAttributesTransfer($restCheckoutRequestAttributesTransfer, $restCheckoutResponseAttributesTransfer);
 
         return $this->createRestResponse($restCheckoutResponseAttributesTransfer);
     }
@@ -81,9 +100,13 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getCurrentCustomerQuote(): QuoteTransfer
+    protected function getCurrentCustomerQuote(): ?QuoteTransfer
     {
         $quoteCollectionTransfer = $this->quoteCollectionReader->getQuoteCollectionByCriteria(new QuoteCriteriaFilterTransfer());
+
+        if (!$quoteCollectionTransfer->getQuotes()->offsetExists(0)) {
+            return null;
+        }
 
         return $quoteCollectionTransfer->getQuotes()->offsetGet(0);
     }
@@ -105,5 +128,36 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $restResponse->addResource($checkoutDataResource);
 
         return $restResponse;
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createQuoteNotFoundErrorResponse(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_CART_NOT_FOUND);
+
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResponse->addError($restErrorMessageTransfer);
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    protected function getQuoteTransfer(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
+    {
+        $idCart = $restCheckoutRequestAttributesTransfer->getQuote()->getIdCart();
+        if ($idCart === null) {
+            return $this->getCurrentCustomerQuote();
+        }
+
+        return $this->quoteProcessor->findCustomerQuote($restCheckoutRequestAttributesTransfer);
     }
 }

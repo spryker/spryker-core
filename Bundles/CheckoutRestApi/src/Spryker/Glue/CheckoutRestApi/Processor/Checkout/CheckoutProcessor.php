@@ -8,7 +8,9 @@
 namespace Spryker\Glue\CheckoutRestApi\Processor\Checkout;
 
 use ArrayObject;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -102,6 +104,11 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             $restCheckoutRequestAttributesTransfer,
             $restRequest
         );
+
+        $errors = $this->validateRequiredData($quoteTransfer);
+        if ($errors !== null) {
+            return $this->createErrorMessagesResponseFromRestErrors($errors);
+        }
 
         $checkoutResponseTransfer = $this->checkoutClient->placeOrder($quoteTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
@@ -222,5 +229,138 @@ class CheckoutProcessor implements CheckoutProcessorInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         return $restResponse->addResource($restResource);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array|null
+     */
+    protected function validateRequiredData(QuoteTransfer $quoteTransfer): ?array
+    {
+        $errors = null;
+        if ($quoteTransfer->getUuid() === null) {
+            $errors[] = (new RestErrorMessageTransfer())
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
+                ->setStatus(Response::HTTP_NOT_FOUND)
+                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_CART_NOT_FOUND);
+        }
+        if ($quoteTransfer->getCustomer() !== null && $quoteTransfer->getCustomer()->getEmail() === null) {
+            $errors[] = (new RestErrorMessageTransfer())
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CUSTOMER_EMAIL_MISSING)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_EMAIL_MISSING);
+        }
+
+        if ($quoteTransfer->getPayments()->count() === 0 || $quoteTransfer->getPayment() === null) {
+            $errors[] = (new RestErrorMessageTransfer())
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_PAYMENT_MISSING)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_PAYMENT_MISSING);
+        }
+        if ($quoteTransfer->getPayment() !== null && !$this->isPaymentsDataValid($quoteTransfer)) {
+            $errors[] = (new RestErrorMessageTransfer())
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_PAYMENT_INVALID)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_PAYMENT_INVALID);
+        }
+
+        if ($quoteTransfer->getShipment() === null) {
+            $errors[] = (new RestErrorMessageTransfer())
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_SHIPPING_MISSING)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_SHIPPING_MISSING);
+        }
+        if ($quoteTransfer->getShipment() !== null && $quoteTransfer->getShipment()->getShipmentSelection() === null) {
+            $errors[] = (new RestErrorMessageTransfer())
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_SHIPPING_INVALID)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_SHIPPING_INVALID);
+        }
+        if ($quoteTransfer->getBillingAddress() === null) {
+            $errors[] = (new RestErrorMessageTransfer())
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_BILLING_ADDRESS_MISSING)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_BILLING_ADDRESS_MISSING);
+        }
+        if ($quoteTransfer->getBillingAddress() !== null && $this->isAddressValid($quoteTransfer->getBillingAddress())) {
+            $errors[] = (new RestErrorMessageTransfer())
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_BILLING_ADDRESS_INVALID)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_BILLING_ADDRESS_INVALID);
+        }
+        if ($quoteTransfer->getShippingAddress() === null || ($quoteTransfer->getShippingAddress() !== null && $this->isAddressValid($quoteTransfer->getShippingAddress()))) {
+            $errors[] = (new RestErrorMessageTransfer())
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_SHIPPING_ADDRESS_MISSING)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_SHIPPING_ADDRESS_MISSING);
+        }
+        if ($quoteTransfer->getShippingAddress() !== null && $this->isAddressValid($quoteTransfer->getShippingAddress())) {
+            $errors[] = (new RestErrorMessageTransfer())
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_SHIPPING_ADDRESS_INVALID)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_SHIPPING_ADDRESS_INVALID);
+        }
+
+        return $errors;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isPaymentsDataValid(QuoteTransfer $quoteTransfer): bool
+    {
+        $isPaymentValid = !$quoteTransfer->getPayment()->getPaymentSelection()
+            || !$quoteTransfer->getPayment()->getPaymentMethod()
+            || !$quoteTransfer->getPayment()->getAmount()
+            || !$quoteTransfer->getPayment()->getPaymentProvider();
+
+        foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
+            if (!$paymentTransfer->getPaymentSelection()
+                || !$paymentTransfer->getPaymentMethod()
+                || !$paymentTransfer->getAmount()
+                || !$paymentTransfer->getPaymentProvider()) {
+                $isPaymentValid = false;
+            }
+        }
+
+        return $isPaymentValid;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $billingAddressTransfer
+     *
+     * @return bool
+     */
+    protected function isAddressValid(AddressTransfer $billingAddressTransfer): bool
+    {
+        return (
+            !$billingAddressTransfer->getAddress1()
+            || !$billingAddressTransfer->getAddress2()
+            || !$billingAddressTransfer->getCity()
+            || !$billingAddressTransfer->getZipCode()
+            || !$billingAddressTransfer->getLastName()
+            || !$billingAddressTransfer->getFirstName()
+            || !$billingAddressTransfer->getIso2Code()
+            || !$billingAddressTransfer->getSalutation()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer[] $errors
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createErrorMessagesResponseFromRestErrors(array $errors): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        foreach ($errors as $error) {
+            $restResponse->addError($error);
+        }
+
+        return $restResponse;
     }
 }

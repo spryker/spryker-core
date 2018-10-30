@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccessTokenValidator implements AccessTokenValidatorInterface
 {
+    protected const MISSING_ACCESS_TOKEN = 'Missing access token.';
+    protected const INVALID_ACCESS_TOKEN = 'Invalid access token.';
+
     /**
      * @var \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface
      */
@@ -40,24 +43,24 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     {
         $isProtected = $request->attributes->get('is-protected', false);
 
-        if ($isProtected === false) {
-            return null;
-        }
-
         $authorizationToken = $request->headers->get('Authorization');
-        if (!$authorizationToken) {
+        if (!$authorizationToken && $isProtected === true) {
             return $this->createErrorMessageTransfer(
-                'Missing access token.',
+                static::MISSING_ACCESS_TOKEN,
                 Response::HTTP_FORBIDDEN,
                 AuthRestApiConfig::RESPONSE_CODE_FORBIDDEN
             );
+        }
+
+        if (!$authorizationToken) {
+            return null;
         }
 
         $authAccessTokenValidationResponseTransfer = $this->validateAccessToken((string)$authorizationToken);
 
         if (!$authAccessTokenValidationResponseTransfer->getIsValid()) {
             return $this->createErrorMessageTransfer(
-                'Invalid access token.',
+                static::INVALID_ACCESS_TOKEN,
                 Response::HTTP_UNAUTHORIZED,
                 AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
             );
