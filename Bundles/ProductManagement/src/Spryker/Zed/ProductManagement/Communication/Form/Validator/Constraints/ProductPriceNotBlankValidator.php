@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints
 
 use ArrayObject;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -37,6 +38,12 @@ class ProductPriceNotBlankValidator extends ConstraintValidator
      */
     protected function validateProductPriceNotBlank($value, ProductPriceNotBlank $constraint)
     {
+        $formData = $this->context->getRoot()->getData();
+
+        if ($formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
+            return;
+        }
+
         foreach ($this->getGrouppedPricesArray($value) as $priceGroup) {
             if ($this->validatePriceGroup($priceGroup)) {
                 return;
