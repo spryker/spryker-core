@@ -360,11 +360,11 @@ class PluginHandler implements PluginHandlerInterface
      * @param string $pattern
      * @param string $resourceType
      *
-     * @return string
+     * @return string[]
      */
-    protected function getDefaultMethodSummary(string $pattern, string $resourceType): string
+    protected function getDefaultMethodSummary(string $pattern, string $resourceType): array
     {
-        return sprintf($pattern, str_replace('-', ' ', $resourceType));
+        return [sprintf($pattern, str_replace('-', ' ', $resourceType))];
     }
 
     /**

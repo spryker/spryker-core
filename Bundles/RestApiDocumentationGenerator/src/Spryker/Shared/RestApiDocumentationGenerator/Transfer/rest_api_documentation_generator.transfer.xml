@@ -6,7 +6,7 @@
     <transfer name="RestApiDocumentationPathMethodData">
         <property name="path" type="string" />
         <property name="method" type="string" />
-        <property name="summary" type="string" />
+        <property name="summary" type="string[]" />
         <property name="resource" type="string" />
         <property name="isProtected" type="bool" />
         <property name="headers" singular="header" type="string[]" />

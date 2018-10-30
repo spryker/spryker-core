@@ -12,6 +12,7 @@ use Symfony\Component\Yaml\Yaml;
 class RestApiDocumentationGeneratorToSymfonyYamlAdapter implements RestApiDocumentationGeneratorToYamlDumperInterface
 {
     public const DUMP_EMPTY_ARRAY_AS_SEQUENCE = Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE;
+    public const DUMP_MULTI_LINE_LITERAL_BLOCK = Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK;
 
     /**
      * @param mixed $input
