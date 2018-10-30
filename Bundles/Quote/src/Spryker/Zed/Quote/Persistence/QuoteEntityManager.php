@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\Quote\Persistence;
 
-use DateTime;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;

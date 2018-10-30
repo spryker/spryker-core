@@ -84,6 +84,8 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     {
         return new GuestQuoteDeleter(
             $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getQuoteDeleteBeforePlugins(),
             $this->getConfig()
         );
     }

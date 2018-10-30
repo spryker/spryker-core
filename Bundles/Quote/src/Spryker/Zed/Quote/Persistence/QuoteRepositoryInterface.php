@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Quote\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -56,4 +57,17 @@ interface QuoteRepositoryInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Get guest quotes collection with expired lifetime
+     *
+     * @api
+     *
+     * @param \DateTime $lifetimeLimitDate
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function findExpiredGuestQuotes(DateTime $lifetimeLimitDate, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 }

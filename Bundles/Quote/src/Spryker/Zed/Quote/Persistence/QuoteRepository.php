@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\Quote\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Quote\Persistence\QuotePersistenceFactory getFactory()
@@ -102,5 +106,34 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer
     {
         return $this->getFactory()->createQuoteMapper()->mapQuoteTransfer($quoteEntityTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \DateTime $lifetimeLimitDate
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function findExpiredGuestQuotes(DateTime $lifetimeLimitDate, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
+        $quoteQuery = $this->getFactory()
+            ->createQuoteQuery()
+            ->joinWithSpyStore()
+            ->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
+            ->where(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE . Criteria::ISNULL)
+            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN);
+
+        $quoteEntityCollectionTransfer = $this->buildQueryFromCriteria($quoteQuery, $quoteCriteriaFilterTransfer->getFilter())->find();
+
+        $quoteCollectionTransfer = new QuoteCollectionTransfer();
+        foreach ($quoteEntityCollectionTransfer as $quoteEntityTransfer) {
+            $quoteCollectionTransfer->addQuote($this->mapQuoteTransfer($quoteEntityTransfer));
+        }
+
+        return $quoteCollectionTransfer;
     }
 }
