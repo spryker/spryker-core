@@ -9,7 +9,7 @@ namespace Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
  * @method \Spryker\Zed\CategoryImageStorage\Communication\CategoryImageStorageCommunicationFactory getFactory()
@@ -18,7 +18,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CategoryImageSetCategoryImageStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
      * @param array $transfers
@@ -28,10 +28,11 @@ class CategoryImageSetCategoryImageStorageListener extends AbstractPlugin implem
      */
     public function handleBulk(array $transfers, $eventName)
     {
-        $this->preventTransaction();
-        $categoryImageSetToCategoryImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($transfers);
-        $categoryIds = $this->getRepository()->findCategoryIdsByCategoryImageSetToCategoryImageIds($categoryImageSetToCategoryImageIds)->getData();
+        $this->getTransactionHandler()->handleTransaction(function () use ($transfers) {
+            $categoryImageSetToCategoryImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($transfers);
+            $categoryIds = $this->getRepository()->findCategoryIdsByCategoryImageSetToCategoryImageIds($categoryImageSetToCategoryImageIds)->getData();
 
-        $this->getFacade()->publishCategoryImages($categoryIds);
+            $this->getFacade()->publishCategoryImages($categoryIds);
+        });
     }
 }
