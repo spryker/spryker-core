@@ -39,7 +39,7 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
      *
      * @param float $value
      *
-     * @return int|string
+     * @return int
      */
     public function transformForPersistence($value)
     {
