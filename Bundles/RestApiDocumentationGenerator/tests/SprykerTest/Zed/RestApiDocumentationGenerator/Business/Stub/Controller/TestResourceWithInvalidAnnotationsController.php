@@ -12,7 +12,9 @@ class TestResourceWithInvalidAnnotationsController
     /**
      * @Glue(
      *     "getResource": {
-     *          "summary": "Summary example",
+     *          "summary": [
+     *              "Summary example"
+     *          ],
      *          "headers": [
      *              "Accept-Language"
      *          ],

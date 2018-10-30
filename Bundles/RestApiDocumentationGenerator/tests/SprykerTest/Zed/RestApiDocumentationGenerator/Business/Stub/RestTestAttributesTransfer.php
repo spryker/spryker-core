@@ -44,12 +44,14 @@ class RestTestAttributesTransfer extends AbstractTransfer
             'name_underscore' => 'attribute1',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'no',
         ],
         self::ATTRIBUTE2 => [
             'type' => 'string',
             'name_underscore' => 'attribute2',
             'is_collection' => false,
             'is_transfer' => false,
+            'rest_request_parameter' => 'required',
         ],
     ];
 

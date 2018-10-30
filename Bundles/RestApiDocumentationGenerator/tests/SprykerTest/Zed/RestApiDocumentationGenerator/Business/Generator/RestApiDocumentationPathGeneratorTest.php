@@ -154,7 +154,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     protected function getPathMethodDataTransferForGetMethod(): RestApiDocumentationPathMethodDataTransfer
     {
         return (new RestApiDocumentationPathMethodDataTransfer())
-            ->setSummary(static::SUMMARY)
+            ->setSummary([static::SUMMARY])
             ->setResource(static::RESOURCE)
             ->setPath(static::PATH)
             ->setMethod(static::METHOD_GET)
@@ -170,7 +170,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     protected function getPathMethodDataTransferForPostMethod(): RestApiDocumentationPathMethodDataTransfer
     {
         return (new RestApiDocumentationPathMethodDataTransfer())
-            ->setSummary(static::SUMMARY)
+            ->setSummary([static::SUMMARY])
             ->setResource(static::RESOURCE)
             ->setPath(static::PATH)
             ->setMethod(static::METHOD_POST)
@@ -184,7 +184,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     protected function getPathMethodDataTransferForPatchMethod(): RestApiDocumentationPathMethodDataTransfer
     {
         return (new RestApiDocumentationPathMethodDataTransfer())
-            ->setSummary(static::SUMMARY)
+            ->setSummary([static::SUMMARY])
             ->setResource(static::RESOURCE)
             ->setPath(static::PATH_WITH_ID)
             ->setMethod(static::METHOD_PATCH)
@@ -198,7 +198,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     protected function getPathMethodDataTransferForDeleteMethod(): RestApiDocumentationPathMethodDataTransfer
     {
         return (new RestApiDocumentationPathMethodDataTransfer())
-            ->setSummary(static::SUMMARY)
+            ->setSummary([static::SUMMARY])
             ->setResource(static::RESOURCE)
             ->setPath(static::PATH_WITH_ID)
             ->setMethod(static::METHOD_PATCH)

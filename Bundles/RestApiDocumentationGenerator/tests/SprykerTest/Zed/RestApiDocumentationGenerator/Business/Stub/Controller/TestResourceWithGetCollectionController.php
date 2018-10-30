@@ -12,7 +12,9 @@ class TestResourceWithGetCollectionController
     /**
      * @Glue({
      *     "getCollection": {
-     *          "summary": "Summary example",
+     *          "summary": [
+     *              "Summary example"
+     *          ],
      *          "headers": [
      *              "Accept-Language"
      *          ],

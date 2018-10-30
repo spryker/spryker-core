@@ -52,7 +52,7 @@
     <transfer name="RestApiDocumentationAnnotation">
         <property name="getResource" type="bool" />
         <property name="getCollection" type="bool" />
-        <property name="summary" type="string" />
+        <property name="summary" type="string[]" />
         <property name="headers" singular="header" type="string[]" />
         <property name="responses" singular="response" type="array" />
     </transfer>

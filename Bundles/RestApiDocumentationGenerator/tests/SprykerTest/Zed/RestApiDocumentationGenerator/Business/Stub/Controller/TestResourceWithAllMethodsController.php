@@ -12,7 +12,9 @@ class TestResourceWithAllMethodsController
     /**
      * @Glue({
      *     "getResource": {
-     *          "summary": "getResource summary",
+     *          "summary": [
+     *              "getResource summary"
+     *          ],
      *          "headers": [
      *              "Accept-Language"
      *          ],
@@ -31,7 +33,9 @@ class TestResourceWithAllMethodsController
     /**
      * @Glue({
      *     "post": {
-     *          "summary": "post summary",
+     *          "summary": [
+     *              "post summary"
+     *          ],
      *          "responses": {
      *              "400": "Bad Request",
      *              "500": "Server Error"
@@ -48,7 +52,9 @@ class TestResourceWithAllMethodsController
     /**
      * @Glue({
      *     "patch": {
-     *          "summary": "patch summary",
+     *          "summary": [
+     *              "patch summary"
+     *          ],
      *          "responses": {
      *              "404": "Item not found",
      *              "500": "Server Error"
@@ -65,7 +71,9 @@ class TestResourceWithAllMethodsController
     /**
      * @Glue({
      *     "delete": {
-     *          "summary": "patch summary",
+     *          "summary": [
+     *              "patch summary"
+     *          ],
      *          "responses": {
      *              "404": "Item not found",
      *              "500": "Server Error"

@@ -116,7 +116,7 @@ class PluginHandlerTest extends Unit
     public function testAddGetResourcePathWithAnnotationsShouldAddGetResourceToPaths(): void
     {
         $annotationTransfer = (new RestApiDocumentationAnnotationTransfer())
-            ->setSummary(static::SUMMARY)
+            ->setSummary([static::SUMMARY])
             ->addHeader(static::HEADER_ACCEPT_LANGUAGE)
             ->setResponses([
                 '400' => static::BAD_REQUEST_RESPONSE_DESCRIPTION,
@@ -304,7 +304,7 @@ class PluginHandlerTest extends Unit
             static::RESOURCE_PATH,
             false,
             static::RESOURCE_ID,
-            (new RestApiDocumentationAnnotationTransfer())->setSummary(static::SUMMARY)
+            (new RestApiDocumentationAnnotationTransfer())->setSummary([static::SUMMARY])
         );
 
         $generatedPaths = $this->pluginHandler->getGeneratedPaths();
