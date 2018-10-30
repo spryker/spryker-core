@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -19,8 +20,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityManagerInterface
 {
-    protected const BATCH_SIZE_LIMIT = 200;
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -60,20 +59,18 @@ class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityMan
      */
     public function deleteExpiredGuestQuotes(DateTime $lifetimeLimitDate): void
     {
-        $query = $this->getFactory()
-            ->createQuoteQuery();
-        $query->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN);
+        $quoteQuery = $this->getFactory()
+            ->createQuoteQuery()
+            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
+            ->where(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE . Criteria::ISNULL);
 
-        $query->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
-            ->where(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE . Criteria::ISNULL)
-            ->limit(static::BATCH_SIZE_LIMIT);
+        $quoteIds = $quoteQuery->select([SpyQuoteTableMap::COL_ID_QUOTE])
+            ->setFormatter(PropelArraySetFormatter::class)
+            ->find();
 
-        do {
-            $quoteEntities = $query->find();
-
-            foreach ($quoteEntities as $quoteEntity) {
-                $quoteEntity->delete();
-            }
-        } while ($quoteEntities->count());
+        $this->getFactory()->createQuoteQuery()
+            ->filterByIdQuote_In($quoteIds)
+            ->delete();
     }
 }

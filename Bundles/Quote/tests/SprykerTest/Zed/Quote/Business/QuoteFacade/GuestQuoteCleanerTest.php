@@ -47,7 +47,7 @@ class GuestQuoteCleanerTest extends Unit
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
         $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_SECOND);
-        sleep(1);
+        sleep(2);
 
         $this->tester->getFacade()->deleteExpiredGuestQuote();
         $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
