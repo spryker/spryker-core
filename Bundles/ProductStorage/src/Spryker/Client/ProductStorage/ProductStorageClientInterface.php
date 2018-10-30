@@ -12,6 +12,7 @@ interface ProductStorageClientInterface
     /**
      * Specification:
      * - Retrieves a current Store specific ProductAbstract resource from Storage.
+     * - Filter the restricted product variants (product concrete) in `attribute_map`.
      *
      * @api
      *
