@@ -46,9 +46,7 @@ class EditPageController extends AbstractController
         $cmsPageFormTypeDataProvider = $this->getFactory()
             ->createCmsPageFormTypeDataProvider();
 
-        $cmsPageTransfer = $this->getFactory()
-            ->getCmsFacade()
-            ->findCmsPageById($idCmsPage);
+        $cmsPageTransfer = $cmsPageFormTypeDataProvider->getData();
 
         if ($cmsPageTransfer === null) {
             $this->addErrorMessage(sprintf('Cms page with id %s doesn\'t exist', $idCmsPage));

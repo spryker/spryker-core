@@ -38,7 +38,7 @@ class TranslationFormDataProvider
     {
         $data = [];
 
-        $glossaryKeyEntity = $this->getGlossaryKey($fkGlossaryKey);
+        $glossaryKeyEntity = $this->findGlossaryKey($fkGlossaryKey);
 
         if ($glossaryKeyEntity === null) {
             return $data;
@@ -76,13 +76,10 @@ class TranslationFormDataProvider
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey|null
      */
-    protected function getGlossaryKey($fkGlossaryKey): ?SpyGlossaryKey
+    protected function findGlossaryKey($fkGlossaryKey): ?SpyGlossaryKey
     {
-        $glossaryEntity = $this->glossaryQueryContainer->queryKeys()->findOneByIdGlossaryKey($fkGlossaryKey);
-        if ($glossaryEntity === null) {
-            return $glossaryEntity;
-        }
-
-        return $glossaryEntity;
+        return $this->glossaryQueryContainer
+            ->queryKeys()
+            ->findOneByIdGlossaryKey($fkGlossaryKey);
     }
 }
