@@ -131,7 +131,9 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $imageSetCollection = $this->buildProductImageSetCollection($form);
         $productAbstractTransfer->setImageSets(new ArrayObject($imageSetCollection));
         $productAbstractTransfer->setStoreRelation($formData[ProductFormAdd::FORM_STORE_RELATION]);
-        $productAbstractTransfer->setPrices($formData[ProductFormAdd::FIELD_PRICES]);
+
+        $priceProducts = $this->updatePricesDimension($formData);
+        $productAbstractTransfer->setPrices($priceProducts);
 
         return $productAbstractTransfer;
     }
@@ -193,7 +195,8 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         }
 
         $formData = $form->getData();
-        $productConcreteTransfer->setPrices($formData[ProductFormAdd::FIELD_PRICES]);
+        $priceProducts = $this->updatePricesDimension($formData);
+        $productConcreteTransfer->setPrices($priceProducts);
 
         $stockCollection = $this->buildProductStockCollectionTransfer($form);
         $productConcreteTransfer->setStocks(new ArrayObject($stockCollection));
@@ -213,6 +216,43 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         }
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function updatePricesDimension(array $formData): ArrayObject
+    {
+        $priceProducts = $formData[ProductFormAdd::FIELD_PRICES];
+
+        if (!$formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
+            return $priceProducts;
+        }
+
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
+
+        if (!$priceProductDimensionTransfer->getType()) {
+            return $priceProducts;
+        }
+
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
+        foreach ($priceProducts as $priceProductTransfer) {
+            $priceDimension = $priceProductTransfer->getPriceDimension();
+
+            if (!$priceDimension) {
+                $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
+                continue;
+            }
+
+            $priceProductTransfer->setPriceDimension(
+                $priceDimension->fromArray($priceProductDimensionTransfer->modifiedToArray())
+            );
+        }
+
+        return $priceProducts;
     }
 
     /**
