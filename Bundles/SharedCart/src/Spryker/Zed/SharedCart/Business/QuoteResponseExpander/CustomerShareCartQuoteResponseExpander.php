@@ -62,7 +62,7 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
                 ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
                 ->setIdStore($storeTransfer->getIdStore());
 
-            return $this->quoteReader->findCustomerSharedQuoteCollection($sharedQuoteCriteriaFilter);
+            return $this->quoteReader->findCustomerSharedQuoteCollectionBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilter);
         }
 
         return new QuoteCollectionTransfer();
