@@ -39,8 +39,9 @@ class CatalogSearchTranslationExpander implements CatalogSearchTranslationExpand
         string $localName
     ): RestCatalogSearchAttributesTransfer {
         $restCatalogSearchAttributesTransfer = $this->addSortParamTranslation($restCatalogSearchAttributesTransfer, $localName);
+        $restCatalogSearchAttributesTransfer = $this->addFacetNameTranslation($restCatalogSearchAttributesTransfer, $localName);
 
-        return $this->addFacetNameTranslation($restCatalogSearchAttributesTransfer, $localName);
+        return $restCatalogSearchAttributesTransfer;
     }
 
     /**
@@ -54,12 +55,13 @@ class CatalogSearchTranslationExpander implements CatalogSearchTranslationExpand
         string $localName
     ): RestCatalogSearchAttributesTransfer {
         $sortParamLocalizedNames = [];
-        foreach ($restCatalogSearchAttributesTransfer->getSort()->getSortParamNames() as $sortParamName) {
+        $sortTransfer = $restCatalogSearchAttributesTransfer->getSort();
+
+        foreach ($sortTransfer->getSortParamNames() as $sortParamName) {
             $sortParamLocalizedNames[$sortParamName] = $this->glossaryStorageClient
                 ->translate(static::GLOSSARY_SORT_PARAM_NAME_KEY_PREFIX . $sortParamName, $localName);
         }
 
-        $sortTransfer = $restCatalogSearchAttributesTransfer->getSort();
         $restCatalogSearchAttributesTransfer->setSort($sortTransfer->setSortParamLocalizedNames($sortParamLocalizedNames));
 
         return $restCatalogSearchAttributesTransfer;
