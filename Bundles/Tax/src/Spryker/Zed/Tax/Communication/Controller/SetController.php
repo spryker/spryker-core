@@ -63,7 +63,8 @@ class SetController extends AbstractController
     {
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
-        $taxSetTransfer = $this->getFacade()->findTaxSet($idTaxSet);
+        $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider($taxSetTransfer);
+        $taxSetTransfer = $taxSetFormDataProvider->getData($idTaxSet);
 
         if ($taxSetTransfer === null) {
             $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
@@ -73,7 +74,6 @@ class SetController extends AbstractController
             );
         }
 
-        $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider($taxSetTransfer);
         $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider);
 
         if ($request->request->count() > 0) {

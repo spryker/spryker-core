@@ -118,7 +118,7 @@ class RateController extends AbstractController
     {
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
 
-        $taxRateTransfer = $this->getFactory()->createTaxRateFormDataProvider()->getData($idTaxRate);
+        $taxRateTransfer = $this->getFacade()->findTaxRate($idTaxRate);
 
         if ($taxRateTransfer === null) {
             $this->addErrorMessage(sprintf('Tax rate with id %s doesn\'t exist', $idTaxRate));
