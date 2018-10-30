@@ -12,6 +12,9 @@ use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToGl
 
 class CatalogSearchTranslationExpander implements CatalogSearchTranslationExpanderInterface
 {
+    protected const GLOSSARY_SORT_PARAM_NAME_KEY_PREFIX = 'catalog.sort.';
+    protected const GLOSSARY_FACET_NAME_KEY_PREFIX = 'product.filter.';
+
     /**
      * @var \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToGlossaryStorageClientInterface
      */
@@ -35,6 +38,52 @@ class CatalogSearchTranslationExpander implements CatalogSearchTranslationExpand
         RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer,
         string $localName
     ): RestCatalogSearchAttributesTransfer {
+        $restCatalogSearchAttributesTransfer = $this->addSortParamTranslation($restCatalogSearchAttributesTransfer, $localName);
+
+        return $this->addFacetNameTranslation($restCatalogSearchAttributesTransfer, $localName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer
+     * @param string $localName
+     *
+     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
+     */
+    protected function addSortParamTranslation(
+        RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer,
+        string $localName
+    ): RestCatalogSearchAttributesTransfer {
+        $sortParamLocalizedNames = [];
+        foreach ($restCatalogSearchAttributesTransfer->getSort()->getSortParamNames() as $sortParamName) {
+            $sortParamLocalizedNames[$sortParamName] = $this->glossaryStorageClient
+                ->translate(static::GLOSSARY_SORT_PARAM_NAME_KEY_PREFIX . $sortParamName, $localName);
+        }
+
+        $sortTransfer = $restCatalogSearchAttributesTransfer->getSort();
+        $restCatalogSearchAttributesTransfer->setSort($sortTransfer->setSortParamLocalizedNames($sortParamLocalizedNames));
+
+        return $restCatalogSearchAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer
+     * @param string $localName
+     *
+     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
+     */
+    protected function addFacetNameTranslation(
+        RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer,
+        string $localName
+    ): RestCatalogSearchAttributesTransfer {
+        foreach ($restCatalogSearchAttributesTransfer->getValueFacets() as $facet) {
+            $glossaryKey = static::GLOSSARY_FACET_NAME_KEY_PREFIX . $facet->getName();
+            $facet->setLocalizedName($this->glossaryStorageClient->translate($glossaryKey, $localName));
+        }
+        foreach ($restCatalogSearchAttributesTransfer->getRangeFacets() as $facet) {
+            $glossaryKey = static::GLOSSARY_FACET_NAME_KEY_PREFIX . $facet->getName();
+            $facet->setLocalizedName($this->glossaryStorageClient->translate($glossaryKey, $localName));
+        }
+
         return $restCatalogSearchAttributesTransfer;
     }
 }

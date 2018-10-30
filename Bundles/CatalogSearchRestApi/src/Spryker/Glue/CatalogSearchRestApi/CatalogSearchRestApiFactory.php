@@ -15,6 +15,8 @@ use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapp
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapperInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface;
+use Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpander;
+use Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpanderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Shared\Kernel\Store;
 
@@ -47,8 +49,17 @@ class CatalogSearchRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCatalogSearchResourceMapper(),
             $this->createCatalogSearchSuggestionsResourceMapper(),
-            $this->getStore()
+            $this->getStore(),
+            $this->createCatalogSearchTranslationExpander()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpanderInterface
+     */
+    public function createCatalogSearchTranslationExpander(): CatalogSearchTranslationExpanderInterface
+    {
+        return new CatalogSearchTranslationExpander($this->getGlossaryStorageClient());
     }
 
     /**
