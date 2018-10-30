@@ -325,9 +325,9 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      *
      * @param string[] $codes
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery|\Propel\Runtime\ActiveQuery\Criteria
      */
-    public function queryVouchersExceededMaxNumberOfUsage($codes)
+    public function queryVouchersExceedsMaxNumberOfUsageByCodes($codes)
     {
         return $this->queryVoucherByVoucherCodes($codes)
             ->filterByMaxNumberOfUses(0, Criteria::GREATER_THAN)

@@ -8,13 +8,14 @@
 namespace Spryker\Zed\Discount\Business\QuoteDiscountValidator;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
-class QuoteDiscountMaxUsageValidator extends AbstractQuoteDiscountValidator
+class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
 {
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -60,13 +61,11 @@ class QuoteDiscountMaxUsageValidator extends AbstractQuoteDiscountValidator
      */
     protected function hasVouchersThatExceedNumberOfUses(ArrayObject $voucherDiscounts): bool
     {
-        $count = $this->discountQueryContainer
-            ->queryVouchersExceededMaxNumberOfUsage(
+        return $this->discountQueryContainer
+            ->queryVouchersExceedsMaxNumberOfUsageByCodes(
                 $this->getVoucherCodes($voucherDiscounts)
             )
-            ->count();
-
-        return (bool)$count;
+            ->exists();
     }
 
     /**
@@ -76,11 +75,30 @@ class QuoteDiscountMaxUsageValidator extends AbstractQuoteDiscountValidator
      */
     protected function getVoucherCodes(ArrayObject $voucherDiscounts)
     {
-        $result = [];
+        $codes = [];
         foreach ($voucherDiscounts as $voucherDiscount) {
-            $result[] = $voucherDiscount->getVoucherCode();
+            $codes[] = $voucherDiscount->getVoucherCode();
         }
 
-        return $result;
+        return $codes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     * @param string $errorCode
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    protected function addError(MessageTransfer $message, string $errorCode, CheckoutResponseTransfer $checkoutResponseTransfer): void
+    {
+        $checkoutErrorTransfer = (new CheckoutErrorTransfer())
+            ->setMessage($message->getValue())
+            ->setErrorCode($errorCode);
+
+        $checkoutResponseTransfer
+            ->addError($checkoutErrorTransfer)
+            ->setIsSuccess(false)
+            ->setIsExternalRedirect(false);
     }
 }

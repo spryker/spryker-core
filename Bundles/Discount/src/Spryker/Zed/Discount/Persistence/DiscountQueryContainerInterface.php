@@ -182,5 +182,5 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
-    public function queryVouchersExceededMaxNumberOfUsage($codes);
+    public function queryVouchersExceedsMaxNumberOfUsageByCodes($codes);
 }

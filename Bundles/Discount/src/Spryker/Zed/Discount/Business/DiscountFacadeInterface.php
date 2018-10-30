@@ -538,7 +538,9 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     * - Validates voucher discount codes when placing order
+     * - Validates voucher discounts on Max Usage in Quote;
+     * - Returns true if all of Vouchers doesn't exceed Max Amount of Usage;
+     * - Returns false otherwise along with messages added to $checkoutResponseTransfer.
      *
      * @api
      *
