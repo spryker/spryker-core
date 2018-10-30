@@ -117,7 +117,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
             $filteredSuperAttributes[$attributeKey][$attributeValue] = $attributeValue;
         }
 
-        return $filteredSuperAttributes;
+        return array_replace(array_fill_keys(array_keys($superAttributes), []), $filteredSuperAttributes);
     }
 
     /**
