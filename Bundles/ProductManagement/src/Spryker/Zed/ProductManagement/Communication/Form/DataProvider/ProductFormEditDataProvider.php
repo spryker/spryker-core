@@ -18,12 +18,13 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 {
     /**
      * @param int $idProductAbstract
+     * @param array|null $priceDimension
      *
      * @return array
      */
-    public function getData($idProductAbstract)
+    public function getData($idProductAbstract, ?array $priceDimension = null)
     {
-        $formData = $this->getDefaultFormFields();
+        $formData = $this->getDefaultFormFields($priceDimension);
         $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
 
         if ($productAbstractTransfer) {
@@ -83,7 +84,10 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     protected function appendPriceAndTax(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
         $formData[ProductFormAdd::FIELD_TAX_RATE] = $productAbstractTransfer->getIdTaxSet();
-        $formData[ProductFormAdd::FIELD_PRICES] = $productAbstractTransfer->getPrices();
+        $formData[ProductFormAdd::FIELD_PRICES] = $this->getProductAbstractPricesByPriceDimension(
+            $productAbstractTransfer,
+            $formData
+        );
 
         return $formData;
     }

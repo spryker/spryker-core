@@ -33,6 +33,11 @@ interface MerchantRelationshipReaderInterface
     public function getIdAssignedBusinessUnitsByMerchantRelationshipId(int $idMerchantRelationship): array;
 
     /**
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function getMerchantRelationshipCollection(): array;
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
