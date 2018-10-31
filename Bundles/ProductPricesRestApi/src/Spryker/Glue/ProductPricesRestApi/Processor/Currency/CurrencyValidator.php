@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductPricesRestApi\Processor\Currency;
 
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface;
@@ -31,9 +32,9 @@ class CurrencyValidator implements CurrencyValidatorInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    public function validate(RestRequestInterface $restRequest): ?RestErrorMessageTransfer
+    public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $currencyIsoCode = $this->getRequestParameter($restRequest, ProductPricesRestApiConfig::REQUEST_PARAMETER_CURRENCY);
         if ($currencyIsoCode === '') {
@@ -46,10 +47,12 @@ class CurrencyValidator implements CurrencyValidatorInterface
             return null;
         }
 
-        return (new RestErrorMessageTransfer())
-            ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_CURRENCY_NOT_FOUND)
-            ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_CURRENCY_NOT_FOUND)
-            ->setStatus(Response::HTTP_BAD_REQUEST);
+        return (new RestErrorCollectionTransfer())->addRestError(
+            (new RestErrorMessageTransfer())
+                ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_CURRENCY_NOT_FOUND)
+                ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_CURRENCY_NOT_FOUND)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+        );
     }
 
     /**

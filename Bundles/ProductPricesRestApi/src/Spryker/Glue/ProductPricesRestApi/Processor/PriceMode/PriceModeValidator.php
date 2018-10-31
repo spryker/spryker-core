@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductPricesRestApi\Processor\PriceMode;
 
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface;
@@ -31,9 +32,9 @@ class PriceModeValidator implements PriceModeValidatorInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    public function validate(RestRequestInterface $restRequest): ?RestErrorMessageTransfer
+    public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $priceMode = $this->getRequestParameter($restRequest, ProductPricesRestApiConfig::REQUEST_PARAMETER_PRICE_MODE);
         if ($priceMode === '') {
@@ -44,10 +45,12 @@ class PriceModeValidator implements PriceModeValidatorInterface
             return null;
         }
 
-        return (new RestErrorMessageTransfer())
-            ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_PRICE_MODE_NOT_FOUND)
-            ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_PRICE_MODE_NOT_FOUND)
-            ->setStatus(Response::HTTP_BAD_REQUEST);
+        return (new RestErrorCollectionTransfer())->addRestError(
+            (new RestErrorMessageTransfer())
+                ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_PRICE_MODE_NOT_FOUND)
+                ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_PRICE_MODE_NOT_FOUND)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+        );
     }
 
     /**

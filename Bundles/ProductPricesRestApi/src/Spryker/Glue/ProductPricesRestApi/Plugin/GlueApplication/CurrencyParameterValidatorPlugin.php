@@ -7,16 +7,16 @@
 
 namespace Spryker\Glue\ProductPricesRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiFactory getFactory()
  */
-class CurrencyParameterValidatorPlugin extends AbstractPlugin implements ValidateRestRequestPluginInterface
+class CurrencyParameterValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -28,9 +28,9 @@ class CurrencyParameterValidatorPlugin extends AbstractPlugin implements Validat
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
+    public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         return $this->getFactory()->createCurrencyValidator()->validate($restRequest);
     }

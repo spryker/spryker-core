@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ProductPricesRestApi\Processor\PriceMode;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface PriceModeValidatorInterface
@@ -15,7 +15,7 @@ interface PriceModeValidatorInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    public function validate(RestRequestInterface $restRequest): ?RestErrorMessageTransfer;
+    public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer;
 }
