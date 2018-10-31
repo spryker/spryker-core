@@ -177,10 +177,12 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     {
         $productConcreteStorageData = $this->productStorageClient
             ->findProductConcreteStorageData($idProduct, $localeName);
+
         if (empty($productConcreteStorageData)) {
             return null;
         }
-        $productConcreteStorageData[ProductAlternativeStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = new AttributeMapStorageTransfer();
+
+        $productConcreteStorageData[ProductAlternativeStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = (new AttributeMapStorageTransfer())->toArray();
 
         $productViewTransfer = $this->productStorageClient
             ->mapProductStorageData($productConcreteStorageData, $localeName);
