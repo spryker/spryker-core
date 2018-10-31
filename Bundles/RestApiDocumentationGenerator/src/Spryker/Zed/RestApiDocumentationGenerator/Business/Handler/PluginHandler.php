@@ -176,7 +176,7 @@ class PluginHandler implements PluginHandlerInterface
         ?RestApiDocumentationAnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $responseSchema = $this->getResponseResourceSchema($plugin, $annotationTransfer);
+        $responseSchema = $this->findResponseResourceSchema($plugin, $annotationTransfer);
         $requestSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addRequestSchemaForPlugin($plugin));
 
         $pathDataTransfer = $this->createPathDataTransfer(
@@ -211,7 +211,7 @@ class PluginHandler implements PluginHandlerInterface
         ?RestApiDocumentationAnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $responseSchema = $this->getResponseResourceSchema($plugin, $annotationTransfer);
+        $responseSchema = $this->findResponseResourceSchema($plugin, $annotationTransfer);
         $requestSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->addRequestSchemaForPlugin($plugin));
 
         $pathDataTransfer = $this->createPathDataTransfer(
@@ -277,7 +277,7 @@ class PluginHandler implements PluginHandlerInterface
         ?RestApiDocumentationAnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $responseSchema = $this->getResponseCollectionSchema($plugin, $annotationTransfer);
+        $responseSchema = $this->findResponseCollectionSchema($plugin, $annotationTransfer);
 
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary(
@@ -301,7 +301,7 @@ class PluginHandler implements PluginHandlerInterface
         ?RestApiDocumentationAnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $responseSchema = $this->getResponseResourceSchema($plugin, $annotationTransfer);
+        $responseSchema = $this->findResponseResourceSchema($plugin, $annotationTransfer);
 
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary(
@@ -327,7 +327,7 @@ class PluginHandler implements PluginHandlerInterface
         ?RestApiDocumentationAnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $responseSchema = $this->getResponseResourceSchema($plugin, $annotationTransfer);
+        $responseSchema = $this->findResponseResourceSchema($plugin, $annotationTransfer);
 
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary(
@@ -398,7 +398,7 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer|null
      */
-    protected function getResponseResourceSchema(
+    protected function findResponseResourceSchema(
         ResourceRoutePluginInterface $plugin,
         ?RestApiDocumentationAnnotationTransfer $annotationTransfer
     ): ?RestApiDocumentationPathSchemaDataTransfer {
@@ -421,7 +421,7 @@ class PluginHandler implements PluginHandlerInterface
      *
      * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer|null
      */
-    protected function getResponseCollectionSchema(
+    protected function findResponseCollectionSchema(
         ResourceRoutePluginInterface $plugin,
         ?RestApiDocumentationAnnotationTransfer $annotationTransfer
     ): ?RestApiDocumentationPathSchemaDataTransfer {
