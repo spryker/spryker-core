@@ -11,7 +11,7 @@ use Symfony\Component\Yaml\Parser;
 
 class ConfigurationReader implements ConfigurationReaderInterface
 {
-    protected const AVAILABLE_CONFIG_FILE_NAME = 'tooling.yml';
+    protected const CONFIG_FILE_NAME = 'tooling.yml';
 
     /**
      * @var \Symfony\Component\Yaml\Parser
@@ -33,7 +33,7 @@ class ConfigurationReader implements ConfigurationReaderInterface
      */
     public function getModuleConfigurationByAbsolutePath(string $absoluteModulePath): array
     {
-        $absoluteModuleSnifferConfigPath = $absoluteModulePath . static::AVAILABLE_CONFIG_FILE_NAME;
+        $absoluteModuleSnifferConfigPath = $absoluteModulePath . static::CONFIG_FILE_NAME;
 
         if (file_exists($absoluteModuleSnifferConfigPath)) {
             return $this->yamlParser->parseFile($absoluteModuleSnifferConfigPath);
