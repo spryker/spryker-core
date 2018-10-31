@@ -55,6 +55,7 @@ class CompanyBusinessUnitUserDataImportPluginTest extends AbstractCompanyBusines
             CompanyUserTransfer::CUSTOMER => $customerTransfer,
         ]);
 
+        $this->tester->ensureCompanyBusinessUnitWithKeyDoesNotExist(static::COMPANY_BUSINESS_UNIT_KEY);
         $this->tester->haveCompanyBusinessUnit([
             CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
             CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
