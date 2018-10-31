@@ -80,7 +80,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         );
 
         if (!count($labelTransfers)) {
-            return $this->addProductLabelNotFoundErrorToRestResponse($restResponse);
+            return $this->addProductLabelNotFoundErrorToResponse($restResponse);
         }
 
         $restProductLabelAttributesTransfer = $this
@@ -156,7 +156,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addProductLabelNotFoundErrorToRestResponse(RestResponseInterface $restResponse): RestResponseInterface
+    protected function addProductLabelNotFoundErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(ProductLabelsRestApiConfig::RESPONSE_CODE_CANT_FIND_PRODUCT_LABEL)
