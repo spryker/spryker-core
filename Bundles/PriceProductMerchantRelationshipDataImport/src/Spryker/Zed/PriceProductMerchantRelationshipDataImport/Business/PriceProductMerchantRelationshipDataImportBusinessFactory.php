@@ -12,6 +12,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\PriceProductMerchantRelationshipWriterStep;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\CurrencyToIdCurrencyStep;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\IdPriceProductStep;
+use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\IdPriceProductStoreStep;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\MerchantRelationshipKeyToIdMerchantRelationshipStep;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\ProductSkuToIdProductStep;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\StoreToIdStoreStep;
@@ -37,6 +38,7 @@ class PriceProductMerchantRelationshipDataImportBusinessFactory extends DataImpo
             ->addStep($this->createStoreToIdStoreStep())
             ->addStep($this->createCurrencyToIdCurrencyStep())
             ->addStep($this->createIdPriceProductStep())
+            ->addStep($this->createIdPriceProductStoreStep())
             ->addStep(new PriceProductMerchantRelationshipWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -82,5 +84,13 @@ class PriceProductMerchantRelationshipDataImportBusinessFactory extends DataImpo
     public function createIdPriceProductStep(): DataImportStepInterface
     {
         return new IdPriceProductStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createIdPriceProductStoreStep(): DataImportStepInterface
+    {
+        return new IdPriceProductStoreStep();
     }
 }
