@@ -50,7 +50,7 @@ interface ProductPackagingUnitTypeReaderInterface
     public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 
     /**
-     * @param \Generated\Shared\Transfer\string[] $productInfrastructuralPackagingUnitTypeNames
+     * @param string[] $productInfrastructuralPackagingUnitTypeNames
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer[] $productInfrastructuralPackagingUnitTypes
      */
