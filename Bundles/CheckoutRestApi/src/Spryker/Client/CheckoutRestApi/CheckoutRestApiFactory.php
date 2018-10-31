@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\CheckoutRestApi;
 
-use Spryker\Client\CheckoutRestApi\Dependency\Client\CheckoutRestApiToQuoteClientInterface;
 use Spryker\Client\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface;
 use Spryker\Client\CheckoutRestApi\Zed\CheckoutRestApiZedStub;
 use Spryker\Client\CheckoutRestApi\Zed\CheckoutRestApiZedStubInterface;
@@ -29,13 +28,5 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function getZedRequestClient(): CheckoutRestApiToZedRequestClientInterface
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_ZED_REQUEST);
-    }
-
-    /**
-     * @return \Spryker\Client\CheckoutRestApi\Dependency\Client\CheckoutRestApiToQuoteClientInterface
-     */
-    public function getQuoteClient(): CheckoutRestApiToQuoteClientInterface
-    {
-        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_QUOTE);
     }
 }
