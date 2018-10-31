@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Controller;
 
+use Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Throwable;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitGui\Communication\ProductPackagingUnitGuiCommunicationFactory getFactory()
@@ -34,7 +36,7 @@ class CreateController extends AbstractProductPackagingUnitGuiController
             ->handleRequest($request);
 
         if ($productPackagingUnitTypeForm->isSubmitted() && $productPackagingUnitTypeForm->isValid()) {
-            return $this->createProductPackagingUnitType($request, $productPackagingUnitTypeForm);
+            return $this->createProductPackagingUnitType($request, $productPackagingUnitTypeForm, $availableLocales);
         }
 
         return $this->viewResponse([
@@ -46,25 +48,41 @@ class CreateController extends AbstractProductPackagingUnitGuiController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $productPackagingUnitTypeForm
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createProductPackagingUnitType(Request $request, FormInterface $productPackagingUnitTypeForm)
+    protected function createProductPackagingUnitType(Request $request, FormInterface $productPackagingUnitTypeForm, array $availableLocales)
     {
         $redirectUrl = $this->getRequestRedirectUrl($request);
         $productPackagingUnitTypeTransfer = $productPackagingUnitTypeForm->getData();
-        $productPackagingUnitTypeTransfer = $this->getFactory()
-            ->getProductPackagingUnitFacade()
-            ->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
 
-        if (!$productPackagingUnitTypeTransfer->getIdProductPackagingUnitType()) {
+        try {
+            $productPackagingUnitTypeTransfer = $this->getFactory()
+                ->getProductPackagingUnitFacade()
+                ->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
+
+            if (!$productPackagingUnitTypeTransfer->getIdProductPackagingUnitType()) {
+                $this->addErrorMessage(sprintf(
+                    static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_CREATE,
+                    $productPackagingUnitTypeTransfer->getName()
+                ));
+
+                return $this->redirectResponse($redirectUrl);
+            }
+        } catch (ProductPackagingUnitTypeUniqueViolationException $exception) {
+            $this->addErrorMessage($exception->getMessage());
+
+            return $this->redirectResponse($redirectUrl);
+        } catch (Throwable $exception) {
             $this->addErrorMessage(sprintf(
                 static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_CREATE,
                 $productPackagingUnitTypeTransfer->getName()
             ));
 
             return $this->viewResponse([
-                'form' => $productPackagingUnitTypeForm->createView(),
+                'availableLocales' => $availableLocales,
+                'productPackagingUnitTypeForm' => $productPackagingUnitTypeForm->createView(),
             ]);
         }
 
