@@ -293,7 +293,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
      *
      * @return bool
      */
-    public function deleteAllShoppingListCompanyUserByCompanyUserId(int $idCompanyUser): bool
+    public function deleteShoppingListsCompanyUserByCompanyUserId(int $idCompanyUser): bool
     {
         $shoppingListCompanyBusinessUnitQuery = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
