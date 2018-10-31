@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -293,5 +292,43 @@ class RestRequest implements RestRequestInterface
             return null;
         }
         return $this->httpRequest->attributes->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_ATTRIBUTES];
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
+     *
+     * @return void
+     */
+    public function setPage(PageInterface $page): void
+    {
+        $this->page = $page;
+    }
+
+    /**
+     * @param string[] $excludeParams
+     *
+     * @return string
+     */
+    public function getQueryString(array $excludeParams = []): string
+    {
+        $queryParams = $this->getHttpRequest()->query->all();
+        $queryParams = $this->filterQueryParams($queryParams, $excludeParams);
+
+        return urldecode(http_build_query($queryParams));
+    }
+
+    /**
+     * @param array $queryParams
+     * @param string[] $excludeParams
+     *
+     * @return array
+     */
+    protected function filterQueryParams(array $queryParams, array $excludeParams): array
+    {
+        foreach ($excludeParams as $param) {
+            unset($queryParams[$param]);
+        }
+
+        return $queryParams;
     }
 }

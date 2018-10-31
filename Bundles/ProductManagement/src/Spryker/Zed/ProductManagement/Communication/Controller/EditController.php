@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -49,7 +50,7 @@ class EditController extends AddController
         $form = $this
             ->getFactory()
             ->createProductFormEdit(
-                $dataProvider->getData($idProductAbstract),
+                $dataProvider->getData($idProductAbstract, $request->query->get(static::PARAM_PRICE_DIMENSION)),
                 $dataProvider->getOptions($idProductAbstract)
             )
             ->handleRequest($request);
@@ -81,11 +82,9 @@ class EditController extends AddController
                     $productAbstractTransfer->getSku()
                 ));
 
-                return $this->redirectResponse(sprintf(
-                    '/product-management/edit?%s=%d',
-                    self::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idProductAbstract
-                ));
+                return $this->redirectResponse(
+                    urldecode(Url::generate('/product-management/edit', $request->query->all())->build())
+                );
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
@@ -149,7 +148,7 @@ class EditController extends AddController
         $form = $this
             ->getFactory()
             ->createProductVariantFormEdit(
-                $dataProvider->getData($idProductAbstract, $idProduct),
+                $dataProvider->getData($idProductAbstract, $idProduct, $request->query->get(static::PARAM_PRICE_DIMENSION)),
                 $dataProvider->getOptions($idProductAbstract, $type)
             )
             ->handleRequest($request);
@@ -184,14 +183,9 @@ class EditController extends AddController
                     $productConcreteTransfer->getSku()
                 ));
 
-                return $this->redirectResponse(sprintf(
-                    '/product-management/edit/variant?%s=%d&%s=%d&type=%s',
-                    self::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idProductAbstract,
-                    self::PARAM_ID_PRODUCT,
-                    $idProduct,
-                    $type
-                ));
+                return $this->redirectResponse(
+                    urldecode(Url::generate('/product-management/edit/variant', $request->query->all())->build())
+                );
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }

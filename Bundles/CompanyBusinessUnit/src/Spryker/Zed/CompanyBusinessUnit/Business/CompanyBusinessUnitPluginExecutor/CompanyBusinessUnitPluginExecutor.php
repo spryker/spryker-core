@@ -9,8 +9,13 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExec
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
-class CompanyBusinessUnitWriterPluginExecutor implements CompanyBusinessUnitWriterPluginExecutorInterface
+class CompanyBusinessUnitPluginExecutor implements CompanyBusinessUnitPluginExecutorInterface
 {
+    /**
+     * @var \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[]
+     */
+    protected $companyBusinessUnitTransferExpanderPlugins;
+
     /**
      * @var \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface[]
      */
@@ -22,13 +27,30 @@ class CompanyBusinessUnitWriterPluginExecutor implements CompanyBusinessUnitWrit
     protected $companyBusinessUnitPreDeletePlugins;
 
     /**
+     * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[] $companyBusinessUnitTransferExpanderPlugins
      * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface[] $companyBusinessUnitPostSavePlugins
      * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface[] $companyBusinessUnitPreDeletePlugins
      */
-    public function __construct(array $companyBusinessUnitPostSavePlugins, array $companyBusinessUnitPreDeletePlugins)
+    public function __construct(array $companyBusinessUnitTransferExpanderPlugins, array $companyBusinessUnitPostSavePlugins, array $companyBusinessUnitPreDeletePlugins)
     {
+        $this->companyBusinessUnitTransferExpanderPlugins = $companyBusinessUnitTransferExpanderPlugins;
         $this->companyBusinessUnitPostSavePlugins = $companyBusinessUnitPostSavePlugins;
         $this->companyBusinessUnitPreDeletePlugins = $companyBusinessUnitPreDeletePlugins;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function executeTransferExpanderPlugins(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitTransfer {
+        foreach ($this->companyBusinessUnitTransferExpanderPlugins as $plugin) {
+            $companyBusinessUnitTransfer = $plugin->expand($companyBusinessUnitTransfer);
+        }
+
+        return $companyBusinessUnitTransfer;
     }
 
     /**

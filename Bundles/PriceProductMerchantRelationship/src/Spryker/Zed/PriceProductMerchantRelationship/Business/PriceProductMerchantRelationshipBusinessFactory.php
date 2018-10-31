@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProductMerchantRelationship\Business\Model\MerchantRelationshipPriceWriter;
 use Spryker\Zed\PriceProductMerchantRelationship\Business\Model\MerchantRelationshipPriceWriterInterface;
 use Spryker\Zed\PriceProductMerchantRelationship\Business\Model\PriceProductDimensionExpander;
+use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface;
+use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshipDependencyProvider;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipEntityManagerInterface getEntityManager()
@@ -26,7 +29,8 @@ class PriceProductMerchantRelationshipBusinessFactory extends AbstractBusinessFa
     {
         return new MerchantRelationshipPriceWriter(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getPriceProductFacade()
         );
     }
 
@@ -35,6 +39,24 @@ class PriceProductMerchantRelationshipBusinessFactory extends AbstractBusinessFa
      */
     public function createPriceProductDimensionExpander()
     {
-        return new PriceProductDimensionExpander();
+        return new PriceProductDimensionExpander(
+            $this->getMerchantRelationshipFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToPriceProductFacadeInterface
+     */
+    public function getPriceProductFacade(): PriceProductMerchantRelationshipToPriceProductFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductMerchantRelationshipDependencyProvider::FACADE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface
+     */
+    public function getMerchantRelationshipFacade(): PriceProductMerchantRelationshipToMerchantRelationshipFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductMerchantRelationshipDependencyProvider::FACADE_MERCHANT_RELATIONSHIP);
     }
 }
