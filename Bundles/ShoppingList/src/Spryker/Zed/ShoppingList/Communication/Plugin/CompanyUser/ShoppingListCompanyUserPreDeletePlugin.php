@@ -20,7 +20,7 @@ class ShoppingListCompanyUserPreDeletePlugin extends AbstractPlugin implements C
 {
     /**
      * {@inheritdoc}
-     * - Un-shares shopping list of company user.
+     * - Un-shares shopping lists of company user.
      *
      * @api
      *

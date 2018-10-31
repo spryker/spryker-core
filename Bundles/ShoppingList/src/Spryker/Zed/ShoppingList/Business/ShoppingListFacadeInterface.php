@@ -272,7 +272,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Remove company user from shared shopping list.
+     *  - Remove company user relation from shared shopping lists.
      *
      * @api
      *
