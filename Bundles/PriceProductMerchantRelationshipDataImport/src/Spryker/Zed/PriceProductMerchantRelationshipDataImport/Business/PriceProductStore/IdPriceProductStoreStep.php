@@ -61,7 +61,7 @@ class IdPriceProductStoreStep implements DataImportStepInterface
      *
      * @return string
      */
-    protected function buildCacheIndex(DataSetInterface $dataSet)
+    protected function buildCacheIndex(DataSetInterface $dataSet): string
     {
         return implode('-', [
             $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_STORE],
