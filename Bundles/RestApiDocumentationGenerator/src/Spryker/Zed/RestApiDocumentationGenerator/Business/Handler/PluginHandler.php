@@ -402,7 +402,7 @@ class PluginHandler implements PluginHandlerInterface
         ResourceRoutePluginInterface $plugin,
         ?RestApiDocumentationAnnotationTransfer $annotationTransfer
     ): ?RestApiDocumentationPathSchemaDataTransfer {
-        if ($annotationTransfer === null) {
+        if (!$annotationTransfer) {
             return $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
         }
 
@@ -425,7 +425,7 @@ class PluginHandler implements PluginHandlerInterface
         ResourceRoutePluginInterface $plugin,
         ?RestApiDocumentationAnnotationTransfer $annotationTransfer
     ): ?RestApiDocumentationPathSchemaDataTransfer {
-        if ($annotationTransfer === null) {
+        if (!$annotationTransfer) {
             return $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin));
         }
 

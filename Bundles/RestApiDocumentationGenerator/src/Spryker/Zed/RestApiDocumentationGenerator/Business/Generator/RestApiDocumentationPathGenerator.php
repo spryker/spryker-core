@@ -59,7 +59,7 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
         RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer,
         ?RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer
     ): void {
-        if ($responseSchemaDataTransfer === null) {
+        if (!$responseSchemaDataTransfer) {
             $responseSchemaDataTransfer = new RestApiDocumentationPathSchemaDataTransfer();
         }
         $responseSchemaDataTransfer->setCode((string)Response::HTTP_OK);
@@ -89,7 +89,7 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
         RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer,
         ?RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer
     ): void {
-        if ($responseSchemaDataTransfer === null) {
+        if (!$responseSchemaDataTransfer) {
             $responseSchemaDataTransfer = new RestApiDocumentationPathSchemaDataTransfer();
         }
         $responseSchemaDataTransfer->setCode((string)Response::HTTP_CREATED);
@@ -122,7 +122,7 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
         RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer,
         ?RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer
     ): void {
-        if ($responseSchemaDataTransfer === null) {
+        if (!$responseSchemaDataTransfer) {
             $responseSchemaDataTransfer = new RestApiDocumentationPathSchemaDataTransfer();
         }
         $responseSchemaDataTransfer->setCode((string)Response::HTTP_ACCEPTED);

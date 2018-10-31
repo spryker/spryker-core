@@ -144,7 +144,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      */
     public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
     {
-        if ($transferClassName === null) {
+        if (!$transferClassName) {
             $transferClassName = $plugin->getResourceAttributesClassName();
         }
 
@@ -176,7 +176,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      */
     public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
     {
-        if ($transferClassName === null) {
+        if (!$transferClassName) {
             $transferClassName = $plugin->getResourceAttributesClassName();
         }
 

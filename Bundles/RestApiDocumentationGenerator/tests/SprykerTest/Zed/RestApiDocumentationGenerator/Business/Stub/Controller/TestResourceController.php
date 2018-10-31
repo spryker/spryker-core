@@ -25,14 +25,14 @@ class TestResourceController
      *
      * @return void
      */
-    public function getAction()
+    public function getAction(): void
     {
     }
 
     /**
      * @Glue({
      *     "post": {
-     *          "responseClass": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
+     *          "responseClass": "SprykerTest\\Zed\\RestApiDocumentationGenerator\\Business\\Stub\\RestTestAlternativeAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "500": "Server Error"
@@ -42,7 +42,7 @@ class TestResourceController
      *
      * @return void
      */
-    public function postAction()
+    public function postAction(): void
     {
     }
 }

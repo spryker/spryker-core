@@ -38,7 +38,7 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
      */
     public function testGetResourceRelationshipsWillReturnRelationshipNameForPluginWithRelationships(): void
     {
-        $resourceRelationshipsPluginAnalyzer = $this->getResourceRelationshipsPluginAnalyzer();
+        $resourceRelationshipsPluginAnalyzer = $this->createResourceRelationshipsPluginAnalyzer();
         $plugin = new TestResourceRoutePlugin();
 
         $relationships = $resourceRelationshipsPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
@@ -53,7 +53,7 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
      */
     public function testGetResourceRelationshipsWillReturnEMptyArrayForPluginWithoutRelationships(): void
     {
-        $resourceRelationshipsPluginAnalyzer = $this->getResourceRelationshipsPluginAnalyzer();
+        $resourceRelationshipsPluginAnalyzer = $this->createResourceRelationshipsPluginAnalyzer();
         $plugin = new TestResourceRouteRelatedPlugin();
 
         $relationships = $resourceRelationshipsPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
@@ -64,7 +64,7 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
     /**
      * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface
      */
-    protected function getResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
+    protected function createResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
     {
         return new ResourceRelationshipsPluginAnalyzer($this->getResourceRelationshipCollectionPlugins());
     }
@@ -75,20 +75,20 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
     protected function getResourceRelationshipCollectionPlugins(): array
     {
         return [
-            $this->getResourceRelationshipCollectionPlugin(),
+            $this->getResourceRelationshipCollectionPluginMock(),
         ];
     }
 
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface
      */
-    protected function getResourceRelationshipCollectionPlugin(): ResourceRelationshipCollectionProviderPluginInterface
+    protected function getResourceRelationshipCollectionPluginMock(): ResourceRelationshipCollectionProviderPluginInterface
     {
         $pluginMock = $this->getMockBuilder(ResourceRelationshipCollectionProviderPlugin::class)
             ->setMethods(['getResourceRelationshipCollection'])
             ->getMock();
         $pluginMock->method('getResourceRelationshipCollection')
-            ->willReturn($this->getResourceRelationshipCollection());
+            ->willReturn($this->createResourceRelationshipCollection());
 
         return $pluginMock;
     }
@@ -96,7 +96,7 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
     /**
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
      */
-    protected function getResourceRelationshipCollection(): ResourceRelationshipCollectionInterface
+    protected function createResourceRelationshipCollection(): ResourceRelationshipCollectionInterface
     {
         $resourceRelationshipCollection = new ResourceRelationshipCollection();
         $resourceRelationshipCollection->addRelationship(

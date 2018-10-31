@@ -16,6 +16,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFind
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\Service\RestApiDocumentationGeneratorToUtilEncodingServiceBridge;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\Service\RestApiDocumentationGeneratorToUtilEncodingServiceInterface;
 use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRoutePlugin;
+use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\RestTestAlternativeAttributesTransfer;
 
 /**
  * Auto-generated group annotations
@@ -38,7 +39,6 @@ class GlueAnnotationAnalyzerTest extends Unit
     protected const CONTROLLER_FILE_NAME = 'TestResourceController.php';
 
     protected const SUMMARY = 'Summary example';
-    protected const RESPONSE_CLASS = 'Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer';
     protected const HEADER_ACCEPT_LANGUAGE = 'Accept-Language';
     protected const KEY_RESPONSE_BAD_REQUEST = 400;
     protected const KEY_RESPONSE_NOT_FOUND = 404;
@@ -70,7 +70,7 @@ class GlueAnnotationAnalyzerTest extends Unit
             static::KEY_RESPONSE_NOT_FOUND => static::VALUE_RESPONSE_NOT_FOUND,
         ], $parameters->getGetResource()->getResponses());
         $this->assertNotEmpty($parameters->getPost()->getResponseClass());
-        $this->assertEquals(static::RESPONSE_CLASS, $parameters->getPost()->getResponseClass());
+        $this->assertEquals(RestTestAlternativeAttributesTransfer::class, $parameters->getPost()->getResponseClass());
         $this->assertArraySubset([
             static::KEY_RESPONSE_BAD_REQUEST => static::VALUE_RESPONSE_BAD_REQUEST,
             static::KEY_RESPONSE_SERVER_ERROR => static::VALUE_RESPONSE_SERVER_ERROR,

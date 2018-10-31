@@ -21,7 +21,7 @@ class TestResourceRoutePlugin implements ResourceRoutePluginInterface
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection->addGet('get', false)
-            ->addPost('post', true);
+            ->addPost('post');
 
         return $resourceRouteCollection;
     }

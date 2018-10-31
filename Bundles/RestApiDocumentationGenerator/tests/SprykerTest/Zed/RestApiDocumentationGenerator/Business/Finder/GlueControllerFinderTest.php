@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Finder;
 use Codeception\Test\Unit;
 use SplFileInfo;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinder;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToDoctrineInflectorAdapter;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyFinderAdapter;
@@ -36,7 +37,7 @@ class GlueControllerFinderTest extends Unit
      */
     public function testGetGlueControllerFilesFromPluginShouldReturnArrayOfSplFileInfoObjects(): void
     {
-        $controllerFinder = $this->getGlueControllerFinder();
+        $controllerFinder = $this->createGlueControllerFinder();
 
         $files = $controllerFinder->getGlueControllerFilesFromPlugin(new TestResourceRoutePlugin());
 
@@ -52,7 +53,7 @@ class GlueControllerFinderTest extends Unit
      */
     public function testGetGlueControllerFilesFromPluginShouldReturnCorrectControllerFile(): void
     {
-        $controllerFinder = $this->getGlueControllerFinder();
+        $controllerFinder = $this->createGlueControllerFinder();
 
         $files = $controllerFinder->getGlueControllerFilesFromPlugin(new TestResourceRoutePlugin());
 
@@ -64,11 +65,11 @@ class GlueControllerFinderTest extends Unit
     /**
      * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinder
      */
-    protected function getGlueControllerFinder(): GlueControllerFinder
+    protected function createGlueControllerFinder(): GlueControllerFinderInterface
     {
         return new GlueControllerFinder(
-            $this->getFinder(),
-            $this->getInflector(),
+            $this->createRestApiDocumentationGeneratorToFinder(),
+            $this->createRestApiDocumentationGeneratorToTextInflector(),
             [
                 static::CONTROLLER_SOURCE_DIRECTORY,
             ]
@@ -78,7 +79,7 @@ class GlueControllerFinderTest extends Unit
     /**
      * @return \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface
      */
-    protected function getFinder(): RestApiDocumentationGeneratorToFinderInterface
+    protected function createRestApiDocumentationGeneratorToFinder(): RestApiDocumentationGeneratorToFinderInterface
     {
         return new RestApiDocumentationGeneratorToSymfonyFinderAdapter();
     }
@@ -86,7 +87,7 @@ class GlueControllerFinderTest extends Unit
     /**
      * @return \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface
      */
-    protected function getInflector(): RestApiDocumentationGeneratorToTextInflectorInterface
+    protected function createRestApiDocumentationGeneratorToTextInflector(): RestApiDocumentationGeneratorToTextInflectorInterface
     {
         return new RestApiDocumentationGeneratorToDoctrineInflectorAdapter();
     }
