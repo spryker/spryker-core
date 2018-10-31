@@ -29,7 +29,7 @@ class ProductLabelResourceRelationshipExpander implements ProductLabelResourceRe
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function addRelationshipsByAbstractSku(array $resources, RestRequestInterface $restRequest): array
     {
