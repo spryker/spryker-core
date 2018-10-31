@@ -49,26 +49,12 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
         $customerTransfer = $quoteResponseTransfer->getCustomer();
-        $storeTransfer = $this->getStoreTransfer($quoteResponseTransfer->getQuoteTransfer());
+        $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $customerQuoteCollectionTransfer = $this->findCustomerQuotesByStore($customerTransfer, $storeTransfer);
         $quoteResponseTransfer->setCustomerQuotes($customerQuoteCollectionTransfer);
 
         return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    protected function getStoreTransfer(?QuoteTransfer $quoteTransfer): StoreTransfer
-    {
-        if ($quoteTransfer !== null) {
-            return $quoteTransfer->getStore();
-        }
-
-        return $this->storeFacade->getCurrentStore();
     }
 
     /**
