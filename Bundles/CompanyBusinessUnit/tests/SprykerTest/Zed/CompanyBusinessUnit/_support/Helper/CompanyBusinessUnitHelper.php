@@ -99,7 +99,9 @@ class CompanyBusinessUnitHelper extends Module
         $customerFacade = $this->getLocator()->customer()->facade();
         $customerTransfer = $customerFacade->findByReference($reference);
 
-        $customerFacade->deleteCustomer($customerTransfer);
+        if ($customerTransfer) {
+            $customerFacade->deleteCustomer($customerTransfer);
+        }
     }
 
     /**
