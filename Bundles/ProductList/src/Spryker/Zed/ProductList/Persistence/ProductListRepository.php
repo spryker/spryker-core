@@ -199,7 +199,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             return [];
         }
 
-        return $this->getFactory()
+        $productConcreteSkusInList = $this->getFactory()
             ->createProductListProductConcreteQuery()
             ->filterByFkProductList_In($productListIds)
             ->useSpyProductQuery()
@@ -211,6 +211,26 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->select(SpyProductTableMap::COL_SKU)
             ->find()
             ->toArray();
+
+        $productConcreteSkusInListAndCategory = $this->getFactory()
+            ->createProductListCategoryQuery()
+            ->useSpyProductListQuery()
+                ->filterByType($listType)
+            ->endUse()
+            ->useSpyCategoryQuery()
+                ->useSpyProductCategoryQuery()
+                    ->useSpyProductAbstractQuery()
+                        ->useSpyProductQuery()
+                            ->filterBySku_In($productConcreteSkus)
+                        ->endUse()
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->select(SpyProductTableMap::COL_SKU)
+            ->find()
+            ->toArray();
+
+        return array_merge($productConcreteSkusInList, $productConcreteSkusInListAndCategory);
     }
 
     /**
