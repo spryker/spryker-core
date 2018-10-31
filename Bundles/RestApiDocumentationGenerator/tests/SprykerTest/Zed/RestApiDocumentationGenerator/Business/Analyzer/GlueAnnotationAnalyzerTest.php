@@ -52,7 +52,7 @@ class GlueAnnotationAnalyzerTest extends Unit
      */
     public function testGetResourceParametersFromPluginWillReturnCorrectParameters(): void
     {
-        $glueAnnotationAnalyzer = $this->getGlueAnnotationAnalyzer();
+        $glueAnnotationAnalyzer = $this->createGlueAnnotationAnalyzer();
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
 
         $this->assertNotEmpty($parameters->getGetResource());
@@ -80,25 +80,25 @@ class GlueAnnotationAnalyzerTest extends Unit
     /**
      * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzerInterface
      */
-    protected function getGlueAnnotationAnalyzer(): GlueAnnotationAnalyzerInterface
+    protected function createGlueAnnotationAnalyzer(): GlueAnnotationAnalyzerInterface
     {
         return new GlueAnnotationAnalyzer(
-            $this->getGlueControllerFinder(),
-            $this->getUtilEncodingService()
+            $this->getGlueControllerFinderMock(),
+            $this->createRestApiDocumentationGeneratorToUtilEncodingService()
         );
     }
 
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface
      */
-    protected function getGlueControllerFinder(): MockObject
+    protected function getGlueControllerFinderMock(): MockObject
     {
         $mock = $this->getMockBuilder(GlueControllerFinder::class)
             ->setMethods(['getGlueControllerFilesFromPlugin'])
             ->disableOriginalConstructor()
             ->getMock();
         $mock->method('getGlueControllerFilesFromPlugin')
-            ->willReturn([$this->getControllerFileInfo()]);
+            ->willReturn([$this->createControllerSplFileInfo()]);
 
         return $mock;
     }
@@ -106,7 +106,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     /**
      * @return \SplFileInfo
      */
-    protected function getControllerFileInfo(): SplFileInfo
+    protected function createControllerSplFileInfo(): SplFileInfo
     {
         return new SplFileInfo(static::CONTROLLER_SOURCE_DIRECTORY . DIRECTORY_SEPARATOR . static::CONTROLLER_FILE_NAME);
     }
@@ -114,7 +114,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     /**
      * @return \Spryker\Zed\RestApiDocumentationGenerator\Dependency\Service\RestApiDocumentationGeneratorToUtilEncodingServiceInterface
      */
-    protected function getUtilEncodingService(): RestApiDocumentationGeneratorToUtilEncodingServiceInterface
+    protected function createRestApiDocumentationGeneratorToUtilEncodingService(): RestApiDocumentationGeneratorToUtilEncodingServiceInterface
     {
         return new RestApiDocumentationGeneratorToUtilEncodingServiceBridge(
             $this->tester->getLocator()->utilEncoding()->service()

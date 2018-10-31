@@ -101,9 +101,17 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
         $resourceRelationshipCollection = new ResourceRelationshipCollection();
         $resourceRelationshipCollection->addRelationship(
             static::RESOURCE_NAME,
-            new TestResourceRelationshipPlugin()
+            $this->createTestResourceRelationshipPlugin()
         );
 
         return $resourceRelationshipCollection;
+    }
+
+    /**
+     * @return \SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRelationshipPlugin
+     */
+    protected function createTestResourceRelationshipPlugin(): TestResourceRelationshipPlugin
+    {
+        return new TestResourceRelationshipPlugin();
     }
 }
