@@ -35,6 +35,7 @@ use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormAddTabs;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormEditTabs;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCategoryInterface;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -102,6 +103,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getStockQueryContainer(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
+            $this->getPriceProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
@@ -125,6 +127,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getStockQueryContainer(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
+            $this->getPriceProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
@@ -167,6 +170,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getStockQueryContainer(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
+            $this->getPriceProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
@@ -594,6 +598,22 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
+     */
+    public function getProductAbstractFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface[]
+     */
+    public function getProductConcreteFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface
      */
     public function createProductConcreteSuperAttributeFilterHelper(): ProductConcreteSuperAttributeFilterHelperInterface
@@ -610,5 +630,13 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductFacade(),
             $this->getProductQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCategoryInterface
+     */
+    public function getProductCategoryFacade(): ProductManagementToProductCategoryInterface
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_CATEGORY);
     }
 }
