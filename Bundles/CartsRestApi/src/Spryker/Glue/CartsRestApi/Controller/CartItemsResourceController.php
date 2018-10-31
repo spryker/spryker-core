@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -41,7 +41,7 @@ class CartItemsResourceController extends AbstractController
     public function postAction(RestRequestInterface $restRequest, RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCartItemsWriter()
+            ->createCartItemAdder()
             ->addItem(
                 $restRequest,
                 $restCartItemsAttributesTransfer
@@ -71,7 +71,7 @@ class CartItemsResourceController extends AbstractController
     public function patchAction(RestRequestInterface $restRequest, RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCartItemsWriter()
+            ->createCartItemUpdater()
             ->updateItemQuantity(
                 $restRequest,
                 $restCartItemsAttributesTransfer
@@ -102,7 +102,7 @@ class CartItemsResourceController extends AbstractController
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCartItemsWriter()
+            ->createCartItemDeleter()
             ->deleteItem(
                 $restRequest
             );

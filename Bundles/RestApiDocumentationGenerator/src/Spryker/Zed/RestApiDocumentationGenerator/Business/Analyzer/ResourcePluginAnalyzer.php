@@ -86,7 +86,11 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
                     $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins())
                 );
 
-                $this->processGetResourcePath($plugin, $resourcePath, $annotationParameters->getGet());
+                $this->processGetResourceByIdPath($plugin, $resourcePath, $annotationParameters->getGetResourceById());
+                $this->processGetResourceCollectionPath($plugin, $resourcePath, $annotationParameters->getGetCollection());
+                if ($annotationParameters->getGetResourceById() === null && $annotationParameters->getGetCollection() === null) {
+                    $this->processGetResourcePath($plugin, $resourcePath, $annotationParameters->getGetResource());
+                }
                 $this->processPostResourcePath($plugin, $resourcePath, $annotationParameters->getPost());
                 $this->processPatchResourcePath($plugin, $resourcePath, $annotationParameters->getPatch());
                 $this->processDeleteResourcePath($plugin, $resourcePath, $annotationParameters->getDelete());
@@ -114,6 +118,50 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
         }
 
         $this->pluginHandler->addGetResourcePath(
+            $plugin,
+            $resourcePath,
+            $this->resourceRouteCollection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED],
+            $this->getResourceIdFromResourceType($plugin->getResourceType()),
+            $annotationTransfer
+        );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $resourcePath
+     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     *
+     * @return void
+     */
+    protected function processGetResourceByIdPath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
+    {
+        if (!$annotationTransfer || !$this->resourceRouteCollection->has(Request::METHOD_GET)) {
+            return;
+        }
+
+        $this->pluginHandler->addGetResourceByIdPath(
+            $plugin,
+            $resourcePath,
+            $this->resourceRouteCollection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED],
+            $this->getResourceIdFromResourceType($plugin->getResourceType()),
+            $annotationTransfer
+        );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $resourcePath
+     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     *
+     * @return void
+     */
+    protected function processGetResourceCollectionPath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
+    {
+        if (!$annotationTransfer || !$this->resourceRouteCollection->has(Request::METHOD_GET)) {
+            return;
+        }
+
+        $this->pluginHandler->addGetResourceCollectionPath(
             $plugin,
             $resourcePath,
             $this->resourceRouteCollection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED],

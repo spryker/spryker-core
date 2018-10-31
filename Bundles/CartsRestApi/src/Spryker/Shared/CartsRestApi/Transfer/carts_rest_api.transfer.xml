@@ -72,4 +72,16 @@
         <property name="uuid" type="string" />
     </transfer>
 
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
+
 </transfers>

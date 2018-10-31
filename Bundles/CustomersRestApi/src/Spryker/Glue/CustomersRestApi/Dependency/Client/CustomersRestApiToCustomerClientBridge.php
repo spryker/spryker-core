@@ -42,6 +42,26 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
+    public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->customerClient->sendPasswordRestoreMail($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function restorePassword(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->customerClient->restorePassword($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
     public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer
     {
         return $this->customerClient->findCustomerByReference($customerTransfer);
@@ -135,5 +155,15 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
     public function updateAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
         return $this->customerClient->updateAddress($addressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->customerClient->setCustomer($customerTransfer);
     }
 }
