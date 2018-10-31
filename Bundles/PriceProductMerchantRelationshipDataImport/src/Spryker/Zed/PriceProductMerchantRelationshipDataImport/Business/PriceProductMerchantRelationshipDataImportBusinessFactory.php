@@ -12,10 +12,10 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\PriceProductMerchantRelationshipWriterStep;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\CurrencyToIdCurrencyStep;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\IdPriceProductStep;
-use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\IdPriceProductStoreStep;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\MerchantRelationshipKeyToIdMerchantRelationshipStep;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\ProductSkuToIdProductStep;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\StoreToIdStoreStep;
+use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductStore\IdPriceProductStoreStep;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipDataImport\PriceProductMerchantRelationshipDataImportConfig getConfig()
