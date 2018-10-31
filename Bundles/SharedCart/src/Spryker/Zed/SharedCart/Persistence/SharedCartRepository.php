@@ -100,6 +100,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      */
     public function findQuotesBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array
     {
+        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $quoteQuery */
         $quoteQuery = $this->getFactory()->createQuoteQuery()
             ->joinWithSpyStore()
             ->useSpyQuoteCompanyUserQuery()
