@@ -50,7 +50,7 @@ class ProductPricesMapper implements ProductPricesMapperInterface
         $productPricesRestAttributesTransfer = (new RestProductPricesAttributesTransfer())
             ->setPrice($currentProductPriceTransfer->getPrice());
         foreach ($currentProductPriceTransfer->getPrices() as $priceType => $amount) {
-            $restProductPriceAttributesTransfer = $this->getProductPriceAttributesTransfer($priceType, $amount);
+            $restProductPriceAttributesTransfer = $this->getRestProductPriceAttributesTransfer($priceType, $amount);
             $productPricesRestAttributesTransfer->addPrice($restProductPriceAttributesTransfer);
         }
 
@@ -63,18 +63,22 @@ class ProductPricesMapper implements ProductPricesMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestProductPriceAttributesTransfer
      */
-    protected function getProductPriceAttributesTransfer(string $priceType, int $amount): RestProductPriceAttributesTransfer
+    protected function getRestProductPriceAttributesTransfer(string $priceType, int $amount): RestProductPriceAttributesTransfer
     {
         $restProductPriceAttributesTransfer = new RestProductPriceAttributesTransfer();
 
         $restProductPriceAttributesTransfer->setPriceTypeName($priceType);
+        $restProductPriceAttributesTransfer->setCurrency($this->getRestCurrencyTransfer());
         if ($this->priceClient->getCurrentPriceMode() === $this->priceClient->getGrossPriceModeIdentifier()) {
             $restProductPriceAttributesTransfer->setGrossAmount($amount);
+
+            return $restProductPriceAttributesTransfer;
         }
         if ($this->priceClient->getCurrentPriceMode() === $this->priceClient->getNetPriceModeIdentifier()) {
             $restProductPriceAttributesTransfer->setNetAmount($amount);
+
+            return $restProductPriceAttributesTransfer;
         }
-        $restProductPriceAttributesTransfer->setCurrency($this->getRestCurrencyTransfer());
 
         return $restProductPriceAttributesTransfer;
     }

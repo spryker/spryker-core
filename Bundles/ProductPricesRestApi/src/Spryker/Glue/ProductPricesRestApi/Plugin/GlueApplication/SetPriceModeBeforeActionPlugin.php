@@ -18,7 +18,8 @@ class SetPriceModeBeforeActionPlugin extends AbstractPlugin implements Controlle
 {
     /**
      * {@inheritdoc}
-     * - Sets the current priceMode via the price client.
+     * - Sets the current priceMode from request.
+     * - Uses PriceClient to set priceMode.
      *
      * @param string $action
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

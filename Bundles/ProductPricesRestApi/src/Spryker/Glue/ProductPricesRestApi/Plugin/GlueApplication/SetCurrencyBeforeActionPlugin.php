@@ -18,7 +18,7 @@ class SetCurrencyBeforeActionPlugin extends AbstractPlugin implements Controller
 {
     /**
      * {@inheritdoc}
-     * - Sets the current currency.
+     * - Sets the current currency from request.
      * - Uses CurrencyClient to set currency.
      * - Quote will be reloaded on switching currency.
      *
