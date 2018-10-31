@@ -9,6 +9,7 @@
     {{ form_row(form.price_source, { 'id': 'price-source-checkbox' }) }}
 {% endif %}
 
+{{ include('@ProductManagement/_partials/price_dimension_filter.twig', {priceDimensionForm: form.price_dimension}) }}
 {{ include('@ProductManagement/_partials/product_price_collection.twig', {moneyValueFormViewCollection: form.prices}) }}
 
 
