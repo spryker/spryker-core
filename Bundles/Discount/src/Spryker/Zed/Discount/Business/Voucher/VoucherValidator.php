@@ -95,6 +95,18 @@ class VoucherValidator implements VoucherValidatorInterface
     }
 
     /**
+     * @deprecated Use addErrorMessage()
+     *
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function addMessage($message)
+    {
+        $this->addErrorMessage($message);
+    }
+
+    /**
      * @param string $message
      *
      * @return void
