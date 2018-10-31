@@ -39,7 +39,7 @@ interface ShoppingListSharerInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function unShareShoppingListCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+    public function unShareCompanyUserShoppingLists(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer

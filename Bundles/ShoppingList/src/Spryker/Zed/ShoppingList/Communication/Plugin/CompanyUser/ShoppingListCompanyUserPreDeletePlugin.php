@@ -33,6 +33,6 @@ class ShoppingListCompanyUserPreDeletePlugin extends AbstractPlugin implements C
         $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
             ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
 
-        $this->getFacade()->unShareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
+        $this->getFacade()->unShareShoppingListsOfCompanyUser($shoppingListShareRequestTransfer);
     }
 }

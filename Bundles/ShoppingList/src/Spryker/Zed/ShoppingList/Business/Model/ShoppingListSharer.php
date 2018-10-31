@@ -305,7 +305,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function unShareShoppingListCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    public function unShareCompanyUserShoppingLists(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
     {
         $idCompanyUser = $shoppingListShareRequestTransfer->getIdCompanyUser();
 

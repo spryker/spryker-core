@@ -280,7 +280,7 @@ interface ShoppingListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function unShareShoppingListWithCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+    public function unShareShoppingListsOfCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
 
     /**
      * Specification:
