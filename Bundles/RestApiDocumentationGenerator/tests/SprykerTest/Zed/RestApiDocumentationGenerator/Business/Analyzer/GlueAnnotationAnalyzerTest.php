@@ -53,7 +53,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     public function testGetResourceParametersFromPluginWillReturnCorrectParameters(): void
     {
         $glueAnnotationAnalyzer = $this->createGlueAnnotationAnalyzer();
-        $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
+        $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin($this->createTestResourceRoutePlugin());
 
         $this->assertNotEmpty($parameters->getGetResource());
         $this->assertNotEmpty($parameters->getPost());
@@ -119,5 +119,13 @@ class GlueAnnotationAnalyzerTest extends Unit
         return new RestApiDocumentationGeneratorToUtilEncodingServiceBridge(
             $this->tester->getLocator()->utilEncoding()->service()
         );
+    }
+
+    /**
+     * @return \SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRoutePlugin
+     */
+    protected function createTestResourceRoutePlugin(): TestResourceRoutePlugin
+    {
+        return new TestResourceRoutePlugin();
     }
 }

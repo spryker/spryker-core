@@ -39,7 +39,7 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
     public function testGetResourceRelationshipsWillReturnRelationshipNameForPluginWithRelationships(): void
     {
         $resourceRelationshipsPluginAnalyzer = $this->createResourceRelationshipsPluginAnalyzer();
-        $plugin = new TestResourceRoutePlugin();
+        $plugin = $this->createTestResourceRoutePlugin();
 
         $relationships = $resourceRelationshipsPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
@@ -51,10 +51,10 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
     /**
      * @return void
      */
-    public function testGetResourceRelationshipsWillReturnEMptyArrayForPluginWithoutRelationships(): void
+    public function testGetResourceRelationshipsWillReturnEmptyArrayForPluginWithoutRelationships(): void
     {
         $resourceRelationshipsPluginAnalyzer = $this->createResourceRelationshipsPluginAnalyzer();
-        $plugin = new TestResourceRouteRelatedPlugin();
+        $plugin = $this->createTestResourceRouteRelatedPlugin();
 
         $relationships = $resourceRelationshipsPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
@@ -113,5 +113,21 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
     protected function createTestResourceRelationshipPlugin(): TestResourceRelationshipPlugin
     {
         return new TestResourceRelationshipPlugin();
+    }
+
+    /**
+     * @return \SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRouteRelatedPlugin
+     */
+    protected function createTestResourceRouteRelatedPlugin(): TestResourceRouteRelatedPlugin
+    {
+        return new TestResourceRouteRelatedPlugin();
+    }
+
+    /**
+     * @return \SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRoutePlugin
+     */
+    protected function createTestResourceRoutePlugin(): TestResourceRoutePlugin
+    {
+        return new TestResourceRoutePlugin();
     }
 }

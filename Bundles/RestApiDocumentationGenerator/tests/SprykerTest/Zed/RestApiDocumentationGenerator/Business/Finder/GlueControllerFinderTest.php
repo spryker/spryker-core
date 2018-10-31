@@ -39,7 +39,7 @@ class GlueControllerFinderTest extends Unit
     {
         $controllerFinder = $this->createGlueControllerFinder();
 
-        $files = $controllerFinder->getGlueControllerFilesFromPlugin(new TestResourceRoutePlugin());
+        $files = $controllerFinder->getGlueControllerFilesFromPlugin($this->createTestResourceRoutePlugin());
 
         $this->assertInternalType('array', $files);
         $this->assertNotEmpty($files);
@@ -55,7 +55,7 @@ class GlueControllerFinderTest extends Unit
     {
         $controllerFinder = $this->createGlueControllerFinder();
 
-        $files = $controllerFinder->getGlueControllerFilesFromPlugin(new TestResourceRoutePlugin());
+        $files = $controllerFinder->getGlueControllerFilesFromPlugin($this->createTestResourceRoutePlugin());
 
         foreach ($files as $file) {
             $this->assertEquals(static::CONTROLLER_FILE_NAME, $file->getFilename());
@@ -90,5 +90,13 @@ class GlueControllerFinderTest extends Unit
     protected function createRestApiDocumentationGeneratorToTextInflector(): RestApiDocumentationGeneratorToTextInflectorInterface
     {
         return new RestApiDocumentationGeneratorToDoctrineInflectorAdapter();
+    }
+
+    /**
+     * @return \SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRoutePlugin
+     */
+    protected function createTestResourceRoutePlugin(): TestResourceRoutePlugin
+    {
+        return new TestResourceRoutePlugin();
     }
 }
