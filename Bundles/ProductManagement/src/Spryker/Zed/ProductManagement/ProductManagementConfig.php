@@ -52,14 +52,6 @@ class ProductManagementConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return bool
-     */
-    public function hasVolumePriceSupport(): bool
-    {
-        return $this->get(ProductManagementConstants::HAS_VOLUME_PRICE_SUPPORT, false);
-    }
-
-    /**
      * @return string
      */
     public function getPriceTypeDefault(): string

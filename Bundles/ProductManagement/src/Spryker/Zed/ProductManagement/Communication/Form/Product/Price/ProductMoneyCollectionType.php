@@ -124,11 +124,11 @@ class ProductMoneyCollectionType extends AbstractCollectionType
 
         $priceTable = [];
         $currencies = [];
-        $optionalParameters = [];
+        $additionalParameters = [];
 
         foreach ($formViewCollection as $productMoneyTypeFormView) {
             $moneyValueFormView = $productMoneyTypeFormView['moneyValue'];
-            $optionalParameters = $this->buildOptionalParameters($productMoneyTypeFormView, $moneyValueFormView, $optionalParameters);
+            $additionalParameters = $this->buildAdditionalParameters($productMoneyTypeFormView, $moneyValueFormView, $additionalParameters);
 
             $priceTypes = $this->buildPriceTypeList($productMoneyTypeFormView, $priceTypes);
             $priceTable = $this->buildPriceFormViewTable($productMoneyTypeFormView, $moneyValueFormView, $priceTable);
@@ -143,24 +143,22 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $formViewCollection->vars['priceTypes'] = $priceTypes;
         $formViewCollection->vars['currencies'] = $currencies;
 
-        $formViewCollection->vars = array_merge($optionalParameters, $formViewCollection->vars);
+        $formViewCollection->vars = array_merge($additionalParameters, $formViewCollection->vars);
     }
 
     /**
      * @param \Symfony\Component\Form\FormView $productMoneyTypeFormView
      * @param \Symfony\Component\Form\FormView $moneyValueFormView
-     * @param array $optionalParameters
+     * @param array $additionalParameters
      *
      * @return array
      */
-    protected function buildOptionalParameters(FormView $productMoneyTypeFormView, FormView $moneyValueFormView, array $optionalParameters): array
+    protected function buildAdditionalParameters(FormView $productMoneyTypeFormView, FormView $moneyValueFormView, array $additionalParameters): array
     {
-        if ($this->getFactory()->getConfig()->hasVolumePriceSupport()) {
-            $optionalParameters[static::PRICE_PRODUCT_VOLUME_KEY] = $optionalParameters[static::PRICE_PRODUCT_VOLUME_KEY] ?? [];
-            $optionalParameters[static::PRICE_PRODUCT_VOLUME_KEY] = $this->buildVolumePriceList($productMoneyTypeFormView, $moneyValueFormView, $optionalParameters[static::PRICE_PRODUCT_VOLUME_KEY]);
-        }
+        $additionalParameters[static::PRICE_PRODUCT_VOLUME_KEY] = $additionalParameters[static::PRICE_PRODUCT_VOLUME_KEY] ?? [];
+        $additionalParameters[static::PRICE_PRODUCT_VOLUME_KEY] = $this->buildVolumePriceList($productMoneyTypeFormView, $moneyValueFormView, $additionalParameters[static::PRICE_PRODUCT_VOLUME_KEY]);
 
-        return $optionalParameters;
+        return $additionalParameters;
     }
 
     /**

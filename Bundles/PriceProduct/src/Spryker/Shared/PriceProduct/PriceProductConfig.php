@@ -50,7 +50,7 @@ class PriceProductConfig extends AbstractSharedConfig
     ];
 
     /**
-     * Price name default
+     * Price dimension name default
      */
     protected const PRICE_DIMENSION_DEFAULT_NAME = 'Default';
 
