@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOptionCartConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionCartQuantity;
+use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionExistPreCheck;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValueExpander;
 use Spryker\Zed\ProductOptionCartConnector\Business\Validator\ProductOptionValuePriceValidator;
 use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyProvider;
@@ -61,6 +62,14 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function createGroupKeyExpander()
     {
         return new GroupKeyExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionExistPreCheckInterface
+     */
+    public function createProductOptionExistsPreCheck()
+    {
+        return new ProductOptionExistPreCheck($this->getProductOptionFacade());
     }
 
     /**

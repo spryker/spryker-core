@@ -6,6 +6,7 @@
 >
 
     <transfer name="ProductOptionGroup">
+        <property name="fkTaxSet" dataBuilderRule="=1" />
         <property name="active" dataBuilderRule="=true" />
         <property name="name" dataBuilderRule="word" />
     </transfer>
@@ -19,6 +20,7 @@
     <transfer name="ProductOptionValue">
         <property name="value" dataBuilderRule="word" />
         <property name="sku" dataBuilderRule="isbn10" />
+        <property name="value" dataBuilderRule="word()" />
     </transfer>
 
 </transfers>

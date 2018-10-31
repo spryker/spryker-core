@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductOption\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
-use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
@@ -238,17 +236,19 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
+     * @param int $idProductOptionValue
      *
-     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
      */
-    public function getAllProductOptionValuePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer)
+    public function findProductOptionByIdProductOptionValue($idProductOptionValue)
     {
         return $this->getFactory()
-            ->createProductOptionValuePriceReader()
-            ->getAllPrices($storePricesRequestTransfer);
+            ->createProductOptionValueReader()
+            ->findProductOptionByIdProductOptionValue($idProductOptionValue);
     }
 
     /**
@@ -256,14 +256,14 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     * @param int $idProductOptionValue
      *
-     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
+     * @return bool
      */
-    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer
+    public function existsProductOptionValueByIdProductOptionValue($idProductOptionValue)
     {
         return $this->getFactory()
             ->createProductOptionValueReader()
-            ->getProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
+            ->existsProductOptionValueByIdProductOptionValue($idProductOptionValue);
     }
 }

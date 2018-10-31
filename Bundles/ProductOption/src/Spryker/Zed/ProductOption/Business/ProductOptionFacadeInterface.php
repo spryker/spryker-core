@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -8,8 +7,6 @@ namespace Spryker\Zed\ProductOption\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
-use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
@@ -213,27 +210,25 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     * - Selects prices for all stores
-     * - The returned price map contains the net and gross amounts per currency.
-     * - Uses "default store" (fkStore=NULL) currency prices when a store does not specify the prices in a currency.
+     *  - Finds product option value in persistence by id.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
+     * @param int $idProductOptionValue
      *
-     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
      */
-    public function getAllProductOptionValuePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
+    public function findProductOptionByIdProductOptionValue($idProductOptionValue);
 
     /**
      * Specification:
-     * - Retrieves product options by provided product option IDs.
+     *  - Check if production value exists with given primary key
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     * @param int $idProductOptionValue
      *
-     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
+     * @return bool
      */
-    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
+    public function existsProductOptionValueByIdProductOptionValue($idProductOptionValue);
 }

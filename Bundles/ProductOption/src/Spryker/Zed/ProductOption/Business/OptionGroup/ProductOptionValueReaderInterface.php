@@ -1,13 +1,9 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
-
-use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
-use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 
 interface ProductOptionValueReaderInterface
 {
@@ -21,9 +17,16 @@ interface ProductOptionValueReaderInterface
     public function getProductOption($idProductOptionValue);
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     * @param int $idProductOptionValue
      *
-     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
      */
-    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
+    public function findProductOptionByIdProductOptionValue($idProductOptionValue);
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue);
 }

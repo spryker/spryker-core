@@ -374,6 +374,50 @@ class ProductOptionCartConnectorFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCheckProductOptionExistsShouldReturnSuccessWhenItemsPresent()
+    {
+        $productOptionCartConnectorFacade = $this->createProductOptionCartConnectorFacade();
+
+        $cartChangeTransfer = new CartChangeTransfer();
+
+        $itemTransfer = new ItemTransfer();
+
+        foreach ($this->productOptionCartConnectorFacade->getProductOptionValues() as $productOptionValueTransfer) {
+            $productOptionTransfer = new ProductOptionTransfer();
+            $productOptionTransfer->setIdProductOptionValue($productOptionValueTransfer->getIdProductOptionValue());
+            $itemTransfer->addProductOption($productOptionTransfer);
+            $cartChangeTransfer->addItem($itemTransfer);
+        }
+
+        $cartPreCheckResponseTransfer = $productOptionCartConnectorFacade->checkProductOptionExists($cartChangeTransfer);
+
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckProductOptionExistsShouldWriteErrorWhenOptionDoesNotExist()
+    {
+        $cartChangeTransfer = new CartChangeTransfer();
+
+        $itemTransfer = new ItemTransfer();
+
+        $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setIdProductOptionValue(0);
+        $itemTransfer->addProductOption($productOptionTransfer);
+
+        $cartChangeTransfer->addItem($itemTransfer);
+
+        $cartPreCheckResponseTransfer = $this->productOptionCartConnectorFacade->checkProductOptionExists($cartChangeTransfer);
+
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
      * @return string
      */
     protected function getGrossPriceModeIdentifier()
