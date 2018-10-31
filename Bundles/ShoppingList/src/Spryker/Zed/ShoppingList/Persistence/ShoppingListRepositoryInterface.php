@@ -152,13 +152,6 @@ interface ShoppingListRepositoryInterface
     public function isCompanyBusinessUnitSharedWithShoppingLists(int $idCompanyBusinessUnit): bool;
 
     /**
-     * @param int $idCompanyUser
-     *
-     * @return bool
-     */
-    public function isCompanyUserSharedWithShoppingLists(int $idCompanyUser): bool;
-
-    /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer

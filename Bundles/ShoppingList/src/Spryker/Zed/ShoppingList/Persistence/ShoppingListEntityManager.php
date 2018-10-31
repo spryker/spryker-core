@@ -291,14 +291,22 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
     /**
      * @param int $idCompanyUser
      *
-     * @return void
+     * @return bool
      */
-    public function deleteShoppingListCompanyUserByCompanyUserId(int $idCompanyUser): void
+    public function deleteShoppingListCompanyUserByCompanyUserId(int $idCompanyUser): bool
     {
-        $this->getFactory()
+        $shoppingListCompanyBusinessUnitEntity = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
             ->filterByFkCompanyUser($idCompanyUser)
-            ->delete();
+            ->findOne();
+
+        if (!$shoppingListCompanyBusinessUnitEntity) {
+            return false;
+        }
+
+        $shoppingListCompanyBusinessUnitEntity->delete();
+
+        return $shoppingListCompanyBusinessUnitEntity->isDeleted();
     }
 
     /**
