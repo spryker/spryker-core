@@ -30,5 +30,5 @@ interface PriceProductStoreWriterPluginExecutorInterface
      *
      * @return void
      */
-    public function runPriceProductStorePreDeletePlugins(int $idPriceProductStore): void;
+    public function executePriceProductStorePreDeletePlugins(int $idPriceProductStore): void;
 }

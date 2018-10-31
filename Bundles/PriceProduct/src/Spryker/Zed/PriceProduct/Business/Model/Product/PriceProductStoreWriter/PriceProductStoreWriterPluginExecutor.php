@@ -48,7 +48,17 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
      */
     public function executePriceDimensionAbstractSaverPlugins(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        return $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionAbstractSaverPlugins);
+        $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
+
+        foreach ($this->priceDimensionAbstractSaverPlugins as $priceDimensionAbstractSaverPlugin) {
+            if ($priceDimensionAbstractSaverPlugin->getDimensionName() !== $priceDimensionType) {
+                continue;
+            }
+
+            return $priceDimensionAbstractSaverPlugin->savePrice($priceProductTransfer);
+        }
+
+        return $priceProductTransfer;
     }
 
     /**
@@ -58,7 +68,17 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
      */
     public function executePriceDimensionConcreteSaverPlugins(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        return $this->executePriceDimensionSaverPlugins($priceProductTransfer, $this->priceDimensionConcreteSaverPlugins);
+        $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
+
+        foreach ($this->priceDimensionConcreteSaverPlugins as $priceDimensionConcreteSaverPlugin) {
+            if ($priceDimensionConcreteSaverPlugin->getDimensionName() !== $priceDimensionType) {
+                continue;
+            }
+
+            return $priceDimensionConcreteSaverPlugin->savePrice($priceProductTransfer);
+        }
+
+        return $priceProductTransfer;
     }
 
     /**
@@ -66,33 +86,10 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
      *
      * @return void
      */
-    public function runPriceProductStorePreDeletePlugins(int $idPriceProductStore): void
+    public function executePriceProductStorePreDeletePlugins(int $idPriceProductStore): void
     {
         foreach ($this->priceProductStorePreDeletePlugins as $priceProductStorePreDeletePlugin) {
             $priceProductStorePreDeletePlugin->preDelete($idPriceProductStore);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]|\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[] $priceDimensionSaverPlugins
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function executePriceDimensionSaverPlugins(
-        PriceProductTransfer $priceProductTransfer,
-        array $priceDimensionSaverPlugins
-    ): PriceProductTransfer {
-        $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
-
-        foreach ($priceDimensionSaverPlugins as $priceDimensionSaverPlugin) {
-            if ($priceDimensionSaverPlugin->getDimensionName() !== $priceDimensionType) {
-                continue;
-            }
-
-            return $priceDimensionSaverPlugin->savePrice($priceProductTransfer);
-        }
-
-        return $priceProductTransfer;
     }
 }

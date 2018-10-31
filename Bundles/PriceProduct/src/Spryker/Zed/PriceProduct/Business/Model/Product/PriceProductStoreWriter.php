@@ -244,7 +244,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         foreach ($priceProductStoreEntityTransfers as $priceProductStoreEntityTransfer) {
             $idPriceProductStore = $priceProductStoreEntityTransfer->getIdPriceProductStore();
 
-            $this->priceProductStoreWriterPluginExecutor->runPriceProductStorePreDeletePlugins($idPriceProductStore);
+            $this->priceProductStoreWriterPluginExecutor->executePriceProductStorePreDeletePlugins($idPriceProductStore);
             $this->priceProductEntityManager->deletePriceProductStore($idPriceProductStore);
         }
     }

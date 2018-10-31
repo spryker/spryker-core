@@ -23,8 +23,6 @@ use Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig;
 class PriceVolumeCollectionDataProvider
 {
     public const OPTION_CURRENCY_CODE = 'currency_code';
-    public const OPTION_CURRENCY_TRANSFER = 'currency_transfer';
-    public const OPTION_DEFAULT_SCALE = 'default_scale';
     public const OPTION_DIVISOR = 'divisor';
     public const OPTION_FRACTION_DIGITS = 'fraction_digits';
 
@@ -171,7 +169,7 @@ class PriceVolumeCollectionDataProvider
     protected function getVolumes(PriceProductTransfer $priceProductTransfer): array
     {
         $preSavedVolumes = $this->getPreSavedVolumes($priceProductTransfer);
-        $emptyVolumes = $this->generateEmptyPriceProductVolumeItemTransfers($this->config->getEmptyRowsQuantity());
+        $emptyVolumes = $this->generateEmptyPriceProductVolumeItemTransfers($this->config->getPriceVolumeFormEmptyRowsCount());
 
         return array_merge($preSavedVolumes, $emptyVolumes);
     }
@@ -296,10 +294,10 @@ class PriceVolumeCollectionDataProvider
         $fractionDigits = $currencyTransfer->getFractionDigits();
 
         if ($fractionDigits) {
-            return pow($this->config->getPowBaseValue(), $fractionDigits);
+            return pow($this->config->getPriceVolumeFormFractionPowBase(), $fractionDigits);
         }
 
-        return $this->config->getDefaultDivisor();
+        return $this->config->getPriceVolumeFormDefaultDivisor();
     }
 
     /**
@@ -315,6 +313,6 @@ class PriceVolumeCollectionDataProvider
             return $fractionDigits;
         }
 
-        return $this->config->getDefaultScale();
+        return $this->config->getPriceVolumeFormDefaultFractionDigits();
     }
 }

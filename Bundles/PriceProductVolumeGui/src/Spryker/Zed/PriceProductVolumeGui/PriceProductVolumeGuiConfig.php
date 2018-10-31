@@ -26,10 +26,10 @@ class PriceProductVolumeGuiConfig extends AbstractBundleConfig
      */
     protected const VOLUME_PRICE_TYPE = 'volume_prices';
 
-    protected const EMPTY_ROWS_QUANTITY = 3;
-    protected const POW_BASE_VALUE = 10;
-    protected const DEFAULT_SCALE = 2;
-    protected const DEFAULT_DIVISOR = 1;
+    protected const PRICE_VOLUME_FORM_EMPTY_ROW_COUNT = 3;
+    protected const PRICE_VOLUME_FORM_FRACTION_POW_BASE = 10;
+    protected const PRICE_VOLUME_FORM_DEFAULT_FRACTION_DIGITS = 2;
+    protected const PRICE_VOLUME_FORM_DEFAULT_DIVISOR = 1;
 
     /**
      * @return string
@@ -58,32 +58,32 @@ class PriceProductVolumeGuiConfig extends AbstractBundleConfig
     /**
      * @return int
      */
-    public function getEmptyRowsQuantity(): int
+    public function getPriceVolumeFormEmptyRowsCount(): int
     {
-        return static::EMPTY_ROWS_QUANTITY;
+        return static::PRICE_VOLUME_FORM_EMPTY_ROW_COUNT;
     }
 
     /**
      * @return int
      */
-    public function getPowBaseValue(): int
+    public function getPriceVolumeFormFractionPowBase(): int
     {
-        return static::POW_BASE_VALUE;
+        return static::PRICE_VOLUME_FORM_FRACTION_POW_BASE;
     }
 
     /**
      * @return int
      */
-    public function getDefaultScale(): int
+    public function getPriceVolumeFormDefaultFractionDigits(): int
     {
-        return static::DEFAULT_SCALE;
+        return static::PRICE_VOLUME_FORM_DEFAULT_FRACTION_DIGITS;
     }
 
     /**
      * @return int
      */
-    public function getDefaultDivisor(): int
+    public function getPriceVolumeFormDefaultDivisor(): int
     {
-        return static::DEFAULT_DIVISOR;
+        return static::PRICE_VOLUME_FORM_DEFAULT_DIVISOR;
     }
 }

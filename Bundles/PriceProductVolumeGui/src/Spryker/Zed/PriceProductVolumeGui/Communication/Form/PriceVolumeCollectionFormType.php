@@ -32,7 +32,6 @@ class PriceVolumeCollectionFormType extends AbstractType
     public const FIELD_NET_PRICE = 'net_price';
     public const FIELD_GROSS_PRICE = 'gross_price';
     protected const VALIDATION_VOLUMES_GROUP = 'volumes_group';
-    protected const DEFAULT_SCALE = 2;
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

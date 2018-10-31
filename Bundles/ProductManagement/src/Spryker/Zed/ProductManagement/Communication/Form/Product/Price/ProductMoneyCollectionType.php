@@ -175,15 +175,8 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $moneyValueTransfer = $this->extractMoneyValueTransfer($moneyValueFormView);
         $utilEncodingService = $this->getFactory()->getUtilEncoding();
         $priceData = $utilEncodingService->decodeJson($moneyValueTransfer->getPriceData());
-        $priceProductTransfer = $this->extractPriceProductTransfer($productMoneyTypeFormView);
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
-        if (!$priceProductTransfer->getIdPriceProduct()
-            || (!$moneyValueTransfer->getGrossAmount() && !$moneyValueTransfer->getNetAmount())) {
-            return $volumePrices;
-        }
-
-        if ($priceProductTransfer->getPriceTypeName() !== $this->getFactory()->getConfig()->getPriceTypeDefault()) {
+        if ($this->isVolumePriceNotApplicable($productMoneyTypeFormView)) {
             return $volumePrices;
         }
 
@@ -198,6 +191,28 @@ class ProductMoneyCollectionType extends AbstractCollectionType
             ->buildVolumePriceData(static::PRICE_PRODUCT_VOLUME_ADD_URL, 'Add Product Volume Price');
 
         return $volumePrices;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $productMoneyTypeFormView
+     *
+     * @return bool
+     */
+    protected function isVolumePriceNotApplicable(FormView $productMoneyTypeFormView): bool
+    {
+        $priceProductTransfer = $this->extractPriceProductTransfer($productMoneyTypeFormView);
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        if (!$priceProductTransfer->getIdPriceProduct()
+            || (!$moneyValueTransfer->getGrossAmount() && !$moneyValueTransfer->getNetAmount())) {
+            return false;
+        }
+
+        if ($priceProductTransfer->getPriceTypeName() !== $this->getFactory()->getConfig()->getPriceTypeDefault()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
