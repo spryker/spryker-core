@@ -119,7 +119,7 @@ interface ShoppingListEntityManagerInterface
      *
      * @return bool
      */
-    public function deleteShoppingListCompanyUserByCompanyUserId(int $idCompanyUser): bool;
+    public function deleteAllShoppingListCompanyUserByCompanyUserId(int $idCompanyUser): bool;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer

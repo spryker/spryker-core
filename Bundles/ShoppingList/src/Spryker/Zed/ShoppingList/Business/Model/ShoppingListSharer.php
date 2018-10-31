@@ -309,10 +309,10 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     {
         $idCompanyUser = $shoppingListShareRequestTransfer->getIdCompanyUser();
 
-        $shoppingListShareDeleted = $this->shoppingListEntityManager
-            ->deleteShoppingListCompanyUserByCompanyUserId($idCompanyUser);
+        $shoppingListSharesDeleted = $this->shoppingListEntityManager
+            ->deleteAllShoppingListCompanyUserByCompanyUserId($idCompanyUser);
 
-        return (new ShoppingListShareResponseTransfer())->setIsSuccess($shoppingListShareDeleted);
+        return (new ShoppingListShareResponseTransfer())->setIsSuccess($shoppingListSharesDeleted);
     }
 
     /**
