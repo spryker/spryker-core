@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductStore;
 
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -16,24 +15,32 @@ use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSe
 class IdPriceProductStoreStep implements DataImportStepInterface
 {
     /**
+     * @var string[]
+     */
+    protected $idPriceProductStoreCache = [];
+
+    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $priceProductStoreEntity = $this->getPriceProductStoreEntity($dataSet);
-
-        $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRICE_PRODUCT_STORE] = $priceProductStoreEntity->getIdPriceProductStore();
+        $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRICE_PRODUCT_STORE] = $this->getIdPriceProductStoreEntity($dataSet);
     }
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore
+     * @return string
      */
-    protected function getPriceProductStoreEntity(DataSetInterface $dataSet): SpyPriceProductStore
+    protected function getIdPriceProductStoreEntity(DataSetInterface $dataSet): string
     {
+        $cacheIndex = $this->buildCacheIndex($dataSet);
+        if (isset($this->idPriceProductStoreCache[$cacheIndex])) {
+            return $this->idPriceProductStoreCache[$cacheIndex];
+        }
+
         $priceProductStoreEntity = SpyPriceProductStoreQuery::create()
             ->filterByFkStore($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_STORE])
             ->filterByFkCurrency($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_CURRENCY])
@@ -44,6 +51,24 @@ class IdPriceProductStoreStep implements DataImportStepInterface
 
         $priceProductStoreEntity->save();
 
-        return $priceProductStoreEntity;
+        $this->idPriceProductStoreCache[$cacheIndex] = $priceProductStoreEntity->getIdPriceProductStore();
+
+        return $this->idPriceProductStoreCache[$cacheIndex];
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return string
+     */
+    protected function buildCacheIndex(DataSetInterface $dataSet)
+    {
+        return implode('-', [
+            $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_STORE],
+            $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_CURRENCY],
+            $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRICE_PRODUCT],
+            $dataSet[PriceProductMerchantRelationshipDataSetInterface::PRICE_NET],
+            $dataSet[PriceProductMerchantRelationshipDataSetInterface::PRICE_GROSS],
+        ]);
     }
 }
