@@ -289,7 +289,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
                 ->setStatus(Response::HTTP_BAD_REQUEST)
                 ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_BILLING_ADDRESS_INVALID);
         }
-        if ($quoteTransfer->getShippingAddress() === null || ($quoteTransfer->getShippingAddress() !== null && $this->isAddressValid($quoteTransfer->getShippingAddress()))) {
+        if ($quoteTransfer->getShippingAddress() === null) {
             $errors[] = (new RestErrorMessageTransfer())
                 ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_SHIPPING_ADDRESS_MISSING)
                 ->setStatus(Response::HTTP_BAD_REQUEST)
@@ -312,7 +312,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      */
     protected function isPaymentsDataValid(QuoteTransfer $quoteTransfer): bool
     {
-        $isPaymentValid = !$quoteTransfer->getPayment()->getPaymentSelection()
+        $isPaymentInvalid = !$quoteTransfer->getPayment()->getPaymentSelection()
             || !$quoteTransfer->getPayment()->getPaymentMethod()
             || !$quoteTransfer->getPayment()->getAmount()
             || !$quoteTransfer->getPayment()->getPaymentProvider();
@@ -322,30 +322,30 @@ class CheckoutProcessor implements CheckoutProcessorInterface
                 || !$paymentTransfer->getPaymentMethod()
                 || !$paymentTransfer->getAmount()
                 || !$paymentTransfer->getPaymentProvider()) {
-                $isPaymentValid = false;
+                $isPaymentInvalid = false;
             }
         }
 
-        return $isPaymentValid;
+        return !$isPaymentInvalid;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $billingAddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return bool
      */
-    protected function isAddressValid(AddressTransfer $billingAddressTransfer): bool
+    protected function isAddressValid(AddressTransfer $addressTransfer): bool
     {
-        return (
-            !$billingAddressTransfer->getAddress1()
-            || !$billingAddressTransfer->getAddress2()
-            || !$billingAddressTransfer->getCity()
-            || !$billingAddressTransfer->getZipCode()
-            || !$billingAddressTransfer->getLastName()
-            || !$billingAddressTransfer->getFirstName()
-            || !$billingAddressTransfer->getIso2Code()
-            || !$billingAddressTransfer->getSalutation()
-        );
+        return !(
+            !$addressTransfer->getAddress1()
+            || !$addressTransfer->getAddress2()
+            || !$addressTransfer->getCity()
+            || !$addressTransfer->getZipCode()
+            || !$addressTransfer->getLastName()
+            || !$addressTransfer->getFirstName()
+            || !$addressTransfer->getIso2Code()
+            || !$addressTransfer->getSalutation()
+        ) && !$addressTransfer->getUuid();
     }
 
     /**

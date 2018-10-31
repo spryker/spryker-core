@@ -18,4 +18,17 @@ interface CustomersRestApiFacadeInterface
      * @return void
      */
     public function updateCustomerAddressUuid(): void;
+
+    /**
+     * Specification:
+     * - Finds address by uuid, returns address idCustomerAddress.
+     *
+     * @api
+     *
+     * @param string $addressUuid
+     * @param int $idCustomer
+     *
+     * @return int|null
+     */
+    public function findCustomerIdCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?int;
 }

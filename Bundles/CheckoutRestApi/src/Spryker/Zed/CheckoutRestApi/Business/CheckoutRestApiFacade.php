@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CheckoutRestApi\Business;
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -28,5 +29,20 @@ class CheckoutRestApiFacade extends AbstractFacade implements CheckoutRestApiFac
     public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer
     {
         return $this->getFactory()->createCheckoutDataReader()->getCheckoutData($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteAddressTransfersWithIdCustomerAddress(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): QuoteTransfer
+    {
+        return $this->getFactory()->createQuoteAddressExpander()->expandQuoteAddressesWithIdCustomerAddress($quoteTransfer);
     }
 }

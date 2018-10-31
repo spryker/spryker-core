@@ -25,4 +25,19 @@ class CustomersRestApiFacade extends AbstractFacade implements CustomersRestApiF
     {
         $this->getFactory()->createCustomersAddressesUuidUpdater()->updateAddressesUuid();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $addressUuid
+     * @param int $idCustomer
+     *
+     * @return int|null
+     */
+    public function findCustomerIdCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?int
+    {
+        return $this->getFactory()->createCustomerAddressReader()->findCustomerIdCustomerAddressByUuid($addressUuid, $idCustomer);
+    }
 }

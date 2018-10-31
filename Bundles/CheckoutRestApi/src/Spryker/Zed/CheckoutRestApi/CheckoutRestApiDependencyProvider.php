@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CheckoutRestApi;
 
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeBridge;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomersRestApiFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -18,6 +19,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
     public const FACADE_PAYMENT = 'FACADE_PAYMENT';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const FACADE_CUSTOMERS_REST_API = 'FACADE_CUSTOMERS_REST_API';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,6 +32,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShipmentFacade($container);
         $container = $this->addPaymentFacade($container);
         $container = $this->addCustomerFacade($container);
+        $container = $this->addCustomersRestApiFacade($container);
 
         return $container;
     }
@@ -71,6 +74,20 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CUSTOMER] = function (Container $container) {
             return new CheckoutRestApiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomersRestApiFacade(Container $container): Container
+    {
+        $container[static::FACADE_CUSTOMERS_REST_API] = function (Container $container) {
+            return new CheckoutRestApiToCustomersRestApiFacadeBridge($container->getLocator()->customersRestApi()->facade());
         };
 
         return $container;

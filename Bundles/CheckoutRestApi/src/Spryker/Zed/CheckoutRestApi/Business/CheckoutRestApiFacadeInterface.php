@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CheckoutRestApi\Business;
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutRestApiFacadeInterface
@@ -25,4 +26,18 @@ interface CheckoutRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\CheckoutDataTransfer
      */
     public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer;
+
+    /**
+     * Specification:
+     * - Takes QuoteTransfer and checks ShippingAddress and BillingAddress for UUID.
+     * - If UUID is set, the idCustomerAddress is looked up and populated.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteAddressTransfersWithIdCustomerAddress(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): QuoteTransfer;
 }
