@@ -64,7 +64,7 @@ class CatalogSearchResourceMapperTest extends Unit
     {
         $this->restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
-            ->mapSearchResponseAttributesTransferToRestAttributesTransfer(
+            ->mapSearchResultToRestAttributesTransfer(
                 $this->mockRestSearchResponseTransfer(),
                 static::REQUESTED_CURRENCY
             );
@@ -118,7 +118,7 @@ class CatalogSearchResourceMapperTest extends Unit
     {
         $this->restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
-            ->mapSearchResponseAttributesTransferToRestAttributesTransfer(
+            ->mapSearchResultToRestAttributesTransfer(
                 $this->mockEmptyRestSearchResponseTransfer(),
                 static::REQUESTED_CURRENCY
             );
