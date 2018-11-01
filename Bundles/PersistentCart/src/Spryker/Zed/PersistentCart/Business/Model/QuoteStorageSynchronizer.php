@@ -67,8 +67,13 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
         $this->validateRequest($quoteSyncRequestTransfer);
 
         $customerTransfer = $quoteSyncRequestTransfer->getCustomerTransfer();
+
         $quoteTransfer = $quoteSyncRequestTransfer->getQuoteTransfer();
         $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomer($customerTransfer);
+
+        if ($customerTransfer->getIdCustomer() === null && $customerQuoteTransfer->getQuoteTransfer() === null) {
+            return new QuoteResponseTransfer();
+        }
 
         if ($customerQuoteTransfer->getIsSuccessful()) {
             $quoteTransfer = $this->mergeQuotes($quoteTransfer, $customerQuoteTransfer->getQuoteTransfer());

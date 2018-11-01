@@ -45,6 +45,8 @@ class ArchitectureController extends AbstractController
         foreach ($groupedRules as &$collection) {
             ksort($collection);
         }
+        unset($collection);
+
         ksort($groupedRules);
 
         return $this->viewResponse([
