@@ -17,9 +17,6 @@
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
-  "suggest": {
-    "spryker/product-prices-rest-api": "If you want to have currency info in the search result."
-  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
