@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<database name="zed"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Namespace"
+          package="Package">
+
+    <table name="table_a">
+        <column name="id_column" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="string_column" type="VARCHAR" size="255" required="false"/>
+        <column name="char_column" type="CHAR" size="255" required="false"/>
+        <unique>
+            <unique-column name="char_column"/>
+        </unique>
+    </table>
+
+</database>

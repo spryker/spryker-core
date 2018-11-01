@@ -7,8 +7,23 @@
 
 namespace Spryker\Zed\DataImportExtension\Dependency\Plugin;
 
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-interface DataSetWriterPluginInterface extends DataSetWriterInterface
+interface DataSetWriterPluginInterface
 {
+    /**
+     * @api
+     *
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return void
+     */
+    public function write(DataSetInterface $dataSet);
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function flush();
 }

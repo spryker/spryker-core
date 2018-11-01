@@ -143,4 +143,12 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     {
         return $this->store->getQueuePools();
     }
+
+    /**
+     * @return string
+     */
+    public function getTimezone()
+    {
+        return $this->store->getContexts()['*']['timezone'] ?? '';
+    }
 }

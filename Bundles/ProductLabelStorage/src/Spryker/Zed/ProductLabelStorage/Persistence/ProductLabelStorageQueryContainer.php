@@ -65,7 +65,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @param array $productAbstractIds
      *
-     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryProductLabelProductAbstractByProductAbstractIds(array $productAbstractIds)
     {
@@ -83,7 +83,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @param int[] $productLabelProductAbstractIds
      *
-     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryProductLabelProductAbstractByIds(array $productLabelProductAbstractIds)
     {
@@ -99,7 +99,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
-     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryProductLabelProductAbstract()
     {

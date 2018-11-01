@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-set-gui",
+  "type": "library",
   "description": "ProductSetGui module",
   "license": "proprietary",
   "require": {
@@ -20,7 +21,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "^3.0.0",
     "spryker/testify": "*"
   },
   "autoload": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/catalog",
+  "type": "library",
   "description": "Catalog module",
   "license": "proprietary",
   "require": {
@@ -9,15 +10,13 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/elastica": "*",
-    "spryker/product-page-search": "*",
-    "spryker/testify": "*"
+    "spryker/product-page-search": "*"
   },
   "suggest": {
-    "spryker/elastica": "If you want to use Elastica plugins.",
     "spryker/config": "If you want to use Elastica plugins.",
+    "spryker/elastica": "If you want to use Elastica plugins.",
     "spryker/product-page-search": "If you want to use ProductPageSearch plugins, minimum required version: 0.1.0."
   },
   "autoload": {

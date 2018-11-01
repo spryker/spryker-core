@@ -21,8 +21,8 @@ use Twig_SimpleFilter;
  */
 class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const FUNCTION_NAME_MONEY_COLLECTION = 'form_money_collection';
-    const TEMPLATE_PATH_MONEY_TABLE = '@Money/Form/Type/money_table.twig';
+    public const FUNCTION_NAME_MONEY_COLLECTION = 'form_money_collection';
+    public const TEMPLATE_PATH_MONEY_TABLE = '@Money/Form/Type/money_table.twig';
 
     /**
      * @param \Silex\Application $app

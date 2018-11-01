@@ -32,7 +32,7 @@ class BarcodeServiceHelper extends Module
     }
 
     /**
-     * @param null|string $generatorPlugin
+     * @param string|null $generatorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */

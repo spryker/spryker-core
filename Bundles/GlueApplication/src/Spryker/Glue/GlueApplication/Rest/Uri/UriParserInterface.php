@@ -13,7 +13,7 @@ interface UriParserInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return null|array
+     * @return array|null
      */
     public function parse(Request $request): ?array;
 }

@@ -14,7 +14,7 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 class ProductSetStorage implements ProductSetStorageInterface
 {
     /**
-     * @var \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface
+     * @var \Spryker\Client\ProductSet\Dependency\Client\ProductSetToStorageInterface
      */
     protected $storage;
 

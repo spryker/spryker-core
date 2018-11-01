@@ -11,5 +11,5 @@ use Propel\Runtime\ActiveQuery\Criteria as PropelCriteria;
 
 class Criteria extends PropelCriteria
 {
-    const BETWEEN = 'BETWEEN';
+    public const BETWEEN = 'BETWEEN';
 }

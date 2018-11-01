@@ -1,5 +1,6 @@
 {
   "name": "spryker/category-data-import",
+  "type": "library",
   "description": "CategoryDataImport module",
   "license": "MIT",
   "require": {

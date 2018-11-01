@@ -16,14 +16,19 @@ use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
+use Spryker\Client\Kernel\PermissionAwareTrait;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface;
 use Spryker\Client\SharedCart\Exception\CartNotFoundException;
+use Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin;
 use Spryker\Client\SharedCart\Zed\SharedCartStubInterface;
 
 class CartSharer implements CartSharerInterface
 {
+    use PermissionAwareTrait;
+
     public const GLOSSARY_KEY_SHARED_CART_SHARE_ERROR_ALREADY_EXIST = 'shared_cart.share.error.already_exist';
 
     /**
@@ -47,24 +52,34 @@ class CartSharer implements CartSharerInterface
     protected $messengerClient;
 
     /**
+     * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface
+     */
+    protected $customerClient;
+
+    /**
      * @param \Spryker\Client\SharedCart\Zed\SharedCartStubInterface $sharedCartStub
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface $multiCartClient
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface $persistentCartClient
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface $messengerClient
+     * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface $customerClient
      */
     public function __construct(
         SharedCartStubInterface $sharedCartStub,
         SharedCartToMultiCartClientInterface $multiCartClient,
         SharedCartToPersistentCartClientInterface $persistentCartClient,
-        SharedCartToMessengerClientInterface $messengerClient
+        SharedCartToMessengerClientInterface $messengerClient,
+        SharedCartToCustomerClientInterface $customerClient
     ) {
         $this->multiCartClient = $multiCartClient;
         $this->persistentCartClient = $persistentCartClient;
         $this->sharedCartStub = $sharedCartStub;
         $this->messengerClient = $messengerClient;
+        $this->customerClient = $customerClient;
     }
 
     /**
+     * @deprecated Please use CartSharerInterface::updateQuotePermissions() instead
+     *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -87,6 +102,8 @@ class CartSharer implements CartSharerInterface
     }
 
     /**
+     * @deprecated Please use CartSharerInterface::updateQuotePermissions() instead
+     *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -104,6 +121,82 @@ class CartSharer implements CartSharerInterface
             );
 
         return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function dismissSharedCart(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
+    {
+        if (!$this->can(ReadSharedCartPermissionPlugin::KEY, $shareCartRequestTransfer->getIdQuote())) {
+            return (new QuoteResponseTransfer())->setIsSuccessful(false);
+        }
+        $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
+        $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
+        $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()
+            ->setShareDetails(
+                $this->filterShareCartToRemove(
+                    $this->sharedCartStub->getShareDetailsByIdQuoteAction($quoteTransfer)->getShareDetails(),
+                    $shareCartRequestTransfer
+                )
+            );
+
+        return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuotePermissions(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
+    {
+        $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
+        $quoteTransfer = $this->updateQuoteShareDetailsAccordinglyToShareCartRequest($shareCartRequestTransfer, $quoteTransfer);
+        $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
+        $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()
+            ->setShareDetails($quoteTransfer->getShareDetails());
+
+        return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function updateQuoteShareDetailsAccordinglyToShareCartRequest(
+        ShareCartRequestTransfer $shareCartRequestTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        $cartShareDetails = $shareCartRequestTransfer->getShareDetails();
+
+        $filteredShareDetails = $this->filterShareDetailsWithoutQuotePermissionGroup($cartShareDetails);
+        $quoteTransfer->setShareDetails($filteredShareDetails);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[] $shareDetails
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]
+     */
+    protected function filterShareDetailsWithoutQuotePermissionGroup(ArrayObject $shareDetails): ArrayObject
+    {
+        $filteredShareDetails = new ArrayObject();
+        foreach ($shareDetails as $shareDetail) {
+            if ($shareDetail->getQuotePermissionGroup() === null) {
+                continue;
+            }
+
+            $filteredShareDetails[] = $shareDetail;
+        }
+
+        return $filteredShareDetails;
     }
 
     /**
@@ -135,6 +228,8 @@ class CartSharer implements CartSharerInterface
         $customerQuoteCollectionTransfer = $this->multiCartClient->getQuoteCollection();
         foreach ($customerQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             if ($quoteTransfer->getIdQuote() === $idQuote) {
+                $quoteTransfer->setCustomer($this->customerClient->getCustomer());
+
                 return $quoteTransfer;
             }
         }
@@ -186,9 +281,7 @@ class CartSharer implements CartSharerInterface
     {
         $filteredShareDetailTransferList = new ArrayObject();
         foreach ($shareDetailTransferList as $shareDetailTransfer) {
-            if ($shareDetailTransfer->getIdCompanyUser() === $shareCartRequestTransfer->getIdCompanyUser()
-                && $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup() === $shareCartRequestTransfer->getIdQuotePermissionGroup()
-            ) {
+            if ($shareDetailTransfer->getIdCompanyUser() === $shareCartRequestTransfer->getIdCompanyUser()) {
                 continue;
             }
             $filteredShareDetailTransferList->append($shareDetailTransfer);

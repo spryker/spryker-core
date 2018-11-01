@@ -37,7 +37,10 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     public function createCompanyUnitAddress(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
-        return $this->zedRequestClient->call('/company-unit-address/gateway/create', $companyUnitAddressTransfer);
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer */
+        $companyUnitAddressResponseTransfer = $this->zedRequestClient->call('/company-unit-address/gateway/create', $companyUnitAddressTransfer);
+
+        return $companyUnitAddressResponseTransfer;
     }
 
     /**
@@ -48,7 +51,10 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     public function updateCompanyUnitAddress(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
-        return $this->zedRequestClient->call('/company-unit-address/gateway/update', $companyUnitAddressTransfer);
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer */
+        $companyUnitAddressResponseTransfer = $this->zedRequestClient->call('/company-unit-address/gateway/update', $companyUnitAddressTransfer);
+
+        return $companyUnitAddressResponseTransfer;
     }
 
     /**
@@ -59,7 +65,10 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     public function deleteCompanyUnitAddress(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
-        return $this->zedRequestClient->call('/company-unit-address/gateway/delete', $companyUnitAddressTransfer);
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer */
+        $companyUnitAddressResponseTransfer = $this->zedRequestClient->call('/company-unit-address/gateway/delete', $companyUnitAddressTransfer);
+
+        return $companyUnitAddressResponseTransfer;
     }
 
     /**
@@ -70,10 +79,13 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer */
+        $companyUnitAddressCollectionTransfer = $this->zedRequestClient->call(
             '/company-unit-address/gateway/get-company-unit-address-collection',
             $criteriaFilterTransfer
         );
+
+        return $companyUnitAddressCollectionTransfer;
     }
 
     /**
@@ -84,7 +96,10 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     public function getCompanyUnitAddressById(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressTransfer {
-        return $this->zedRequestClient->call('/company-unit-address/gateway/get-company-unit-address-by-id', $companyUnitAddressTransfer);
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer */
+        $companyUnitAddressTransfer = $this->zedRequestClient->call('/company-unit-address/gateway/get-company-unit-address-by-id', $companyUnitAddressTransfer);
+
+        return $companyUnitAddressTransfer;
     }
 
     /**
@@ -95,10 +110,13 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer */
+        $companyUnitAddressResponseTransfer = $this->zedRequestClient->call(
             '/company-unit-address/gateway/create-company-unit-address-and-update-business-unit-default-addresses',
             $companyUnitAddressTransfer
         );
+
+        return $companyUnitAddressResponseTransfer;
     }
 
     /**
@@ -109,10 +127,13 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer */
+        $companyUnitAddressResponseTransfer = $this->zedRequestClient->call(
             '/company-unit-address/gateway/update-company-unit-address-and-business-unit-default-addresses',
             $companyUnitAddressTransfer
         );
+
+        return $companyUnitAddressResponseTransfer;
     }
 
     /**

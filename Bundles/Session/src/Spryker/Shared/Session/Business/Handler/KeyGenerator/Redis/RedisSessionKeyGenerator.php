@@ -11,7 +11,7 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInte
 
 class RedisSessionKeyGenerator implements SessionKeyGeneratorInterface
 {
-    const KEY_PREFIX = 'session:';
+    public const KEY_PREFIX = 'session:';
 
     /**
      * @param string $sessionId

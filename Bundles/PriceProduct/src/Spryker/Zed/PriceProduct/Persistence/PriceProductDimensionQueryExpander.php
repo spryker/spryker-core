@@ -139,7 +139,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface $priceProductDimensionQueryExpanderPlugin
-     * @param null|string $joinType
+     * @param string|null $joinType
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
@@ -164,7 +164,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
-     * @param null|string $joinType
+     * @param string|null $joinType
      *
      * @return void
      */

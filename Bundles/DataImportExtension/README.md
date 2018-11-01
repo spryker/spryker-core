@@ -1,13 +1,13 @@
 # DataImportExtension Module
-[![Build Status](https://travis-ci.org/spryker/data-import-Extension.svg)](https://travis-ci.org/spryker/data-import-Extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/data-import-Extension/badge.svg)](https://coveralls.io/github/spryker/data-import-Extension)
+[![Build Status](https://travis-ci.org/spryker/data-import-extension.svg)](https://travis-ci.org/spryker/data-import-Extension)
+[![Coverage Status](https://coveralls.io/repos/github/spryker/data-import-extension/badge.svg)](https://coveralls.io/github/spryker/data-import-Extension)
 
-{{ADD DESCRIPTION HERE}}
+DataImportExtension module provides interfaces for extension of the DataImport module.
 
 ## Installation
 
 ```
-composer require spryker/data-import-Extension
+composer require spryker/data-import-extension
 ```
 
 ## Documentation

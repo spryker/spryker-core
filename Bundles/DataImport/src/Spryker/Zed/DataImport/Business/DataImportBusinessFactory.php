@@ -86,7 +86,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      */
     public function createDataImporterPublisher()
     {
-        return new DataImporterPublisher($this->getPublicEventFacade());
+        return new DataImporterPublisher();
     }
 
     /**

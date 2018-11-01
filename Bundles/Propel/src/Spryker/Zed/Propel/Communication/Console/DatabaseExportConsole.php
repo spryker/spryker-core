@@ -17,10 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DatabaseExportConsole extends Console
 {
-    const COMMAND_NAME = 'propel:database:export';
-    const COMMAND_DESCRIPTION = 'Backup an existing database into a file.';
+    public const COMMAND_NAME = 'propel:database:export';
+    public const COMMAND_DESCRIPTION = 'Backup an existing database into a file.';
 
-    const ARGUMENT_BACKUP_PATH = 'backup-path';
+    public const ARGUMENT_BACKUP_PATH = 'backup-path';
 
     /**
      * @return void

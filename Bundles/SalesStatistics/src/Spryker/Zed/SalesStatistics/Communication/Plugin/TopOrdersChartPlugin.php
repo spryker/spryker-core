@@ -27,6 +27,8 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     ];
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -35,6 +37,8 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     }
 
     /**
+     * @api
+     *
      * @param string|null $dataIdentifier
      *
      * @return \Generated\Shared\Transfer\ChartDataTransfer
@@ -54,6 +58,8 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function render(): string

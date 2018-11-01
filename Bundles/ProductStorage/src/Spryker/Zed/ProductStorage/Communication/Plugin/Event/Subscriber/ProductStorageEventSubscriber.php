@@ -228,7 +228,6 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     protected function addProductAbstractLocalizedAttributesDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_DELETE, new ProductAbstractLocalizedAttributesStorageListener());
-        ;
     }
 
     /**

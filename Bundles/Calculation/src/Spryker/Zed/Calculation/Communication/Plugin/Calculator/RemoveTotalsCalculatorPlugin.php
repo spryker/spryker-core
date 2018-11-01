@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class RemoveTotalsCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void

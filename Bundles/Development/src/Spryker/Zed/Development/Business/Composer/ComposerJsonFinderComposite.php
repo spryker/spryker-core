@@ -36,6 +36,8 @@ class ComposerJsonFinderComposite implements ComposerJsonFinderCompositeInterfac
             $composerJsonFiles = array_merge($composerJsonFiles, $finder->findAll());
         }
 
+        ksort($composerJsonFiles);
+
         return $composerJsonFiles;
     }
 }

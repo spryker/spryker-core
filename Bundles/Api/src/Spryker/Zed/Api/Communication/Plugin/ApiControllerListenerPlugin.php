@@ -27,7 +27,11 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
 {
     use LoggerTrait;
 
+    protected const REQUEST_URI = 'REQUEST_URI';
+
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
      * @return callable|null
@@ -131,7 +135,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $requestData = $request->request->all();
         $requestTransfer->setRequestData($requestData);
 
-        $requestTransfer->setRequestUri($serverData['REQUEST_URI']);
+        $requestTransfer->setRequestUri($serverData[static::REQUEST_URI]);
 
         return $requestTransfer;
     }
@@ -143,11 +147,13 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      */
     protected function logRequest(ApiRequestTransfer $requestTransfer)
     {
+        $filteredApiRequestTransfer = $this->getFacade()->filterApiRequestTransfer($requestTransfer);
+
         $this->getLogger()->info(sprintf(
             'API request [%s %s]: %s',
             $requestTransfer->getRequestType(),
             $requestTransfer->getRequestUri(),
-            json_encode($requestTransfer->toArray())
+            json_encode($filteredApiRequestTransfer->toArray())
         ));
     }
 

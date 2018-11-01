@@ -1,5 +1,6 @@
 {
   "name": "spryker/flysystem-aws3v3-file-system",
+  "type": "library",
   "description": "FlysystemAws3v3FileSystem module",
   "license": "proprietary",
   "require": {
@@ -8,8 +9,8 @@
     "spryker/kernel": "^3.5.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/flysystem": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

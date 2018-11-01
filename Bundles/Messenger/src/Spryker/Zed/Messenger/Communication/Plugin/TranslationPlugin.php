@@ -12,6 +12,8 @@ use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
 class TranslationPlugin implements TranslationPluginInterface
 {
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return bool
@@ -22,6 +24,8 @@ class TranslationPlugin implements TranslationPluginInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param array $data
      *

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 class FixedType implements CalculatorTypeInterface
 {
-    const PRICE_NET_MODE = 'NET_MODE';
+    public const PRICE_NET_MODE = 'NET_MODE';
 
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems

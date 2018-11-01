@@ -20,7 +20,7 @@ class ProductStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getProductConcreteSynchronizationPoolName(): ?string
     {
@@ -28,7 +28,7 @@ class ProductStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getProductAbstractSynchronizationPoolName(): ?string
     {

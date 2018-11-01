@@ -12,6 +12,10 @@ use Spryker\Zed\MultiCart\Business\Activator\QuoteActivator;
 use Spryker\Zed\MultiCart\Business\Activator\QuoteActivatorInterface;
 use Spryker\Zed\MultiCart\Business\Model\QuoteNameResolver;
 use Spryker\Zed\MultiCart\Business\Model\QuoteNameResolverInterface;
+use Spryker\Zed\MultiCart\Business\Quote\QuoteWriter;
+use Spryker\Zed\MultiCart\Business\Quote\QuoteWriterInterface;
+use Spryker\Zed\MultiCart\Business\Reader\QuoteCollectionReader;
+use Spryker\Zed\MultiCart\Business\Reader\QuoteCollectionReaderInterface;
 use Spryker\Zed\MultiCart\Business\ResponseExpander\QuoteResponseExpander;
 use Spryker\Zed\MultiCart\Business\ResponseExpander\QuoteResponseExpanderInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface;
@@ -52,6 +56,26 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     public function createQuoteResponseExpander(): QuoteResponseExpanderInterface
     {
         return new QuoteResponseExpander($this->getQuoteFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\MultiCart\Business\Reader\QuoteCollectionReaderInterface
+     */
+    public function createQuoteCollectionReader(): QuoteCollectionReaderInterface
+    {
+        return new QuoteCollectionReader($this->getQuoteFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\MultiCart\Business\Quote\QuoteWriterInterface
+     */
+    public function createQuoteWriter(): QuoteWriterInterface
+    {
+        return new QuoteWriter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getMessengerFacade()
+        );
     }
 
     /**

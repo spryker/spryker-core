@@ -13,7 +13,7 @@ use Spryker\Yves\ZedRequest\Dependency\Service\ZedRequestToUtilNetworkBridge;
 
 class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_UTIL_NETWORK = 'util network service';
+    public const SERVICE_UTIL_NETWORK = 'util network service';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

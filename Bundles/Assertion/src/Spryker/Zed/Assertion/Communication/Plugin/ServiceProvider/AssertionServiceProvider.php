@@ -13,7 +13,7 @@ use Spryker\Zed\Assertion\Business\AssertionFacade;
 
 class AssertionServiceProvider implements ServiceProviderInterface
 {
-    const ASSERTION = 'assertion';
+    public const ASSERTION = 'assertion';
 
     /**
      * @param \Silex\Application $app

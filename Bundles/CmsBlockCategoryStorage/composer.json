@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block-category-storage",
+  "type": "library",
   "description": "CmsBlockCategoryStorage module",
   "license": "proprietary",
   "require": {
@@ -14,7 +15,12 @@
     "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {
-    "spryker/event": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
+    "spryker/event": "*",
+    "spryker/propel": "*",
+    "spryker/propel-query-builder": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"

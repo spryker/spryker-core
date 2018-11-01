@@ -352,7 +352,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryNodeChecker()
     {
         return new CategoryNodeChecker(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getRepository()
         );
     }
 

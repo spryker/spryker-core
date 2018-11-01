@@ -1,5 +1,6 @@
 {
   "name": "spryker/file-manager",
+  "type": "library",
   "description": "FileManager module",
   "license": "proprietary",
   "require": {
@@ -11,6 +12,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/flysystem": "*",
+    "spryker/flysystem-local-file-system": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

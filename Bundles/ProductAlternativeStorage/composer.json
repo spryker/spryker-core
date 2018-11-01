@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-alternative-storage",
+  "type": "library",
   "description": "ProductAlternativeStorage module",
   "license": "proprietary",
   "require": {
@@ -15,7 +16,9 @@
     "spryker/synchronization": "^1.0.0"
   },
   "require-dev": {
-    "spryker/event": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/event": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"

@@ -51,7 +51,7 @@ class EventBusinessFactory extends AbstractBusinessFactory
      */
     public function createEventQueueConsumer()
     {
-        return new EventQueueConsumer($this->createEventLogger(), $this->getUtilEncodingService(), $this->getConfig()->getMaxRetryAmount());
+        return new EventQueueConsumer($this->createEventLogger(), $this->getUtilEncodingService(), $this->getConfig());
     }
 
     /**
@@ -59,7 +59,7 @@ class EventBusinessFactory extends AbstractBusinessFactory
      */
     public function createMessageForwarder()
     {
-        return new MessageForwarder($this->getQueueClient(), $this->getQueueQueryContainer());
+        return new MessageForwarder($this->getQueueClient());
     }
 
     /**
@@ -108,14 +108,6 @@ class EventBusinessFactory extends AbstractBusinessFactory
     protected function getQueueClient()
     {
         return $this->getProvidedDependency(EventDependencyProvider::CLIENT_QUEUE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Event\Dependency\QueryContainer\EventToQueueQueryContainerInterface
-     */
-    protected function getQueueQueryContainer()
-    {
-        return $this->getProvidedDependency(EventDependencyProvider::QUERY_CONTAINER_QUEUE);
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -197,7 +198,7 @@ class DiscountPersist implements DiscountPersistInterface
             );
         }
 
-         return $this->persistVoucherCodes($discountVoucherTransfer, $discountEntity);
+        return $this->persistVoucherCodes($discountVoucherTransfer, $discountEntity);
     }
 
     /**
@@ -236,8 +237,10 @@ class DiscountPersist implements DiscountPersistInterface
      */
     protected function saveVoucherPool(SpyDiscount $discountEntity)
     {
-        if ($discountEntity->getVoucherPool()) {
-            return $discountEntity->getVoucherPool();
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool|null $discountVoucherPoolEntity */
+        $discountVoucherPoolEntity = $discountEntity->getVoucherPool();
+        if ($discountVoucherPoolEntity) {
+            return $discountVoucherPoolEntity;
         }
 
         $discountVoucherPoolEntity = $this->createVoucherPoolEntity();
@@ -385,6 +388,8 @@ class DiscountPersist implements DiscountPersistInterface
     {
         $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
         if ($discountCalculatorTransfer->getCalculatorPlugin() !== DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED) {
+            $this->deleteDiscountMoneyValues($discountEntity);
+
             return;
         }
 
@@ -396,6 +401,24 @@ class DiscountPersist implements DiscountPersistInterface
             $discountAmountEntity->fromArray($moneyValueTransfer->modifiedToArray());
             $discountAmountEntity->setFkDiscount($discountEntity->getIdDiscount());
             $discountAmountEntity->save();
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return void
+     */
+    protected function deleteDiscountMoneyValues(SpyDiscount $discountEntity): void
+    {
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountAmount[]|null $discountAmountEntities */
+        $discountAmountEntities = $discountEntity->getDiscountAmounts();
+        if (!$discountAmountEntities) {
+            return;
+        }
+
+        foreach ($discountAmountEntities as $discountAmountEntity) {
+            $discountAmountEntity->delete();
         }
     }
 

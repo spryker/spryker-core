@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block-product-storage",
+  "type": "library",
   "description": "CmsBlockProductStorage module",
   "license": "proprietary",
   "require": {
@@ -12,8 +13,13 @@
     "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/event": "*",
-    "spryker/propel-orm": "*"
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/propel-query-builder": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",

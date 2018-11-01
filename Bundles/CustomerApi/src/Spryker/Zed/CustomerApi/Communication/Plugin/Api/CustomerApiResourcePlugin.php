@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
@@ -30,6 +32,8 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     }
 
     /**
+     * @api
+     *
      * @internal param ApiFilterTransfer $apiFilterTransfer
      *
      * @param int $id
@@ -42,6 +46,8 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     }
 
     /**
+     * @api
+     *
      * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
@@ -53,6 +59,8 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     }
 
     /**
+     * @api
+     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
@@ -63,6 +71,8 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer

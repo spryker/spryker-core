@@ -41,6 +41,6 @@ class AccessibleTransferFinder implements AccessibleTransferFinderInterface
      */
     private function getTransferClassName(SplFileInfo $fileInfo): string
     {
-        return sprintf('Generated\\Shared\Transfer\\%s', str_replace('.php', '', $fileInfo->getFilename()));
+        return sprintf('\\Generated\\Shared\Transfer\\%s', str_replace('.php', '', $fileInfo->getFilename()));
     }
 }

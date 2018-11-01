@@ -51,12 +51,12 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
      */
-    private $attributeEncoder;
+    protected $attributeEncoder;
 
     /**
      * @var \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface
      */
-    private $productTransferMapper;
+    protected $productTransferMapper;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductRepositoryInterface
@@ -216,6 +216,27 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findProductConcretesBySkus(array $skus): array
+    {
+        $productConcreteEntities = $this->productQueryContainer
+            ->queryProduct()
+            ->filterBySku_In($skus)
+            ->find();
+
+        if (!$productConcreteEntities->getData()) {
+            return [];
+        }
+
+        $productConcreteTransfers = $this->productTransferMapper->convertProductCollection($productConcreteEntities);
+
+        return $productConcreteTransfers;
+    }
+
+    /**
      * @param string $concreteSku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -290,7 +311,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @param int $idConcrete
      *
-     * @return null|int
+     * @return int|null
      */
     public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
     {
@@ -308,13 +329,13 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param string $idProductConcrete
+     * @param int $idProductConcrete
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
-    public function getProductAbstractIdByConcreteId(string $idProductConcrete): int
+    public function getProductAbstractIdByConcreteId(int $idProductConcrete): int
     {
         $productConcrete = $this->productQueryContainer
             ->queryProduct()

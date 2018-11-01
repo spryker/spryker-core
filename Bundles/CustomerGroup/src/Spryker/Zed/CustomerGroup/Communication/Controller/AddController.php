@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
-    const MESSAGE_CUSTOMER_GROUP_CREATE_SUCCESS = 'Customer group was created successfully.';
+    public const MESSAGE_CUSTOMER_GROUP_CREATE_SUCCESS = 'Customer group was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

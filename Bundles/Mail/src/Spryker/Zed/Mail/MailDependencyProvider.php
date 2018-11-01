@@ -17,16 +17,19 @@ use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryBridge;
 use Spryker\Zed\Mail\Dependency\Mailer\MailToMailerBridge;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererBridge;
 use Swift_Mailer;
-use Swift_MailTransport;
 use Swift_Message;
+use Swift_SmtpTransport;
 
+/**
+ * @method \Spryker\Zed\Mail\MailConfig getConfig()
+ */
 class MailDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const MAIL_PROVIDER_COLLECTION = 'mail provider collection';
-    const MAIL_TYPE_COLLECTION = 'mail collection';
-    const FACADE_GLOSSARY = 'glossary facade';
-    const RENDERER = 'twig';
-    const MAILER = 'mailer';
+    public const MAIL_PROVIDER_COLLECTION = 'mail provider collection';
+    public const MAIL_TYPE_COLLECTION = 'mail collection';
+    public const FACADE_GLOSSARY = 'glossary facade';
+    public const RENDERER = 'twig';
+    public const MAILER = 'mailer';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -148,9 +151,13 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     protected function addMailer(Container $container)
     {
         $container[static::MAILER] = function () {
-            $message = Swift_Message::newInstance();
-            $transport = Swift_MailTransport::newInstance();
-            $mailer = Swift_Mailer::newInstance($transport);
+            $message = new Swift_Message();
+            $transport = new Swift_SmtpTransport(
+                $this->getConfig()->getSmtpHost(),
+                $this->getConfig()->getSmtpPort()
+            );
+
+            $mailer = new Swift_Mailer($transport);
 
             $mailerBridge = new MailToMailerBridge($message, $mailer);
 

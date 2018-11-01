@@ -1,5 +1,6 @@
 {
   "name": "spryker/setup",
+  "type": "library",
   "description": "Setup module",
   "license": "proprietary",
   "require": {
@@ -15,7 +16,7 @@
     "spryker/zed-navigation": "^1.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
     "spryker/testify": "*"
   },
   "autoload": {

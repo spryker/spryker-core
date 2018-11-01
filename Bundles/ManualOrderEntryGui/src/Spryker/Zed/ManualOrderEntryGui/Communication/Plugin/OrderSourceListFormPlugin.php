@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -30,6 +32,8 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -46,6 +50,8 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -54,6 +60,8 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -64,6 +72,8 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

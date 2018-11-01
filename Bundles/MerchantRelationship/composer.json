@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-relationship",
+  "type": "library",
   "description": "MerchantRelationship module",
   "license": "proprietary",
   "require": {
@@ -12,6 +13,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
