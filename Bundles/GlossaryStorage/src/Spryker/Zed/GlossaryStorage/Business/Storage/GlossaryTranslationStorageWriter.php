@@ -8,7 +8,6 @@
 namespace Spryker\Zed\GlossaryStorage\Business\Storage;
 
 use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorage;
-use Spryker\Zed\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface;
 
 class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWriterInterface
@@ -19,24 +18,17 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilSanitizeServiceInterface
-     */
-    protected $utilSanitizeService;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
 
     /**
      * @param \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilSanitizeServiceInterface $utilSanitizeService
      * @param bool $isSendingToQueue
      */
-    public function __construct(GlossaryStorageQueryContainerInterface $queryContainer, GlossaryStorageToUtilSanitizeServiceInterface $utilSanitizeService, $isSendingToQueue)
+    public function __construct(GlossaryStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->queryContainer = $queryContainer;
-        $this->utilSanitizeService = $utilSanitizeService;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -135,11 +127,10 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
             $spyGlossaryStorage = new SpyGlossaryStorage();
         }
 
-        $data = $this->utilSanitizeService->arrayFilterRecursive($spyGlossaryTranslationEntity);
         $spyGlossaryStorage->setFkGlossaryKey($spyGlossaryTranslationEntity['fk_glossary_key']);
         $spyGlossaryStorage->setGlossaryKey($spyGlossaryTranslationEntity['GlossaryKey']['key']);
         $spyGlossaryStorage->setLocale($spyGlossaryTranslationEntity['Locale']['locale_name']);
-        $spyGlossaryStorage->setData($data);
+        $spyGlossaryStorage->setData($spyGlossaryTranslationEntity);
         $spyGlossaryStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyGlossaryStorage->save();
     }
