@@ -279,11 +279,10 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Reads abstract product prices from database.
-     * - Extracts additional prices array from price data
-     * - PriceProductCriteriaTransfer provides additional price filtering:
      * - Filters results by price type name when provided in criteria.
      * - Filters results by store when provided in criteria.
      * - Filters results by currency when provided in criteria.
+     * - Extracts additional prices array from price data.
      *
      * @api
      *
@@ -300,12 +299,11 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Reads abstract and concrete product prices from database.
-     * - Concrete prices overwrites abstracts for matching price types.
-     * - Extracts additional prices array from price data.
-     * - PriceProductCriteriaTransfer provides additional price filtering:
      * - Filters results by price type name when provided in criteria.
      * - Filters results by store when provided in criteria.
      * - Filters results by currency when provided in criteria.
+     * - Concrete prices overwrites abstracts for matching price types.
+     * - Extracts additional prices array from price data.
      *
      * @api
      *
@@ -384,7 +382,6 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Reads abstract product prices from database.
-     * - PriceProductCriteriaTransfer provides additional price filtering:
      * - Filters results by price type name when provided in criteria.
      * - Filters results by store when provided in criteria.
      * - Filters results by currency when provided in criteria.
@@ -432,11 +429,10 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Reads abstract and concrete product prices from database.
-     * - Concrete prices overwrites abstracts for matching price types.
-     * - PriceProductCriteriaTransfer provides additional price filtering:
      * - Filters results by price type name when provided in criteria.
      * - Filters results by store when provided in criteria.
      * - Filters results by currency when provided in criteria.
+     * - Concrete prices overwrites abstracts for matching price types.
      *
      * @api
      *
