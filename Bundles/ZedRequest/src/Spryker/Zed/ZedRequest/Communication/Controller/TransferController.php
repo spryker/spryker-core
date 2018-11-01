@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ZedRequest\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\ZedRequest\Communication\Exception\NotAllowedActionException;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,11 +22,17 @@ class TransferController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Spryker\Zed\ZedRequest\Communication\Exception\NotAllowedActionException
+     *
      * @return \Symfony\Component\HttpFoundation\Response|array
      */
     public function repeatAction(Request $request)
     {
         $repeatData = $this->getFacade()->getRepeatData($request->query->get('mvc', null));
+
+        if (APPLICATION_ENV !== 'development') {
+            throw new NotAllowedActionException('This action is allowed only for development environment.');
+        }
 
         if (!is_array($repeatData) || !$repeatData) {
             return new Response('No request to repeat.');
