@@ -25,7 +25,7 @@ class StorageToStoreClientBridge implements StorageToStoreClientInterface
     /**
      * @return string
      */
-    public function getStoreName()
+    public function getStoreName(): string
     {
         return $this->storeInstance->getStoreName();
     }
@@ -33,7 +33,7 @@ class StorageToStoreClientBridge implements StorageToStoreClientInterface
     /**
      * @return string
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): string
     {
         return $this->storeInstance->getCurrentLocale();
     }

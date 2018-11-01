@@ -12,10 +12,10 @@ interface StorageToStoreClientInterface
     /**
      * @return string
      */
-    public function getStoreName();
+    public function getStoreName(): string;
 
     /**
      * @return string
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): string;
 }
