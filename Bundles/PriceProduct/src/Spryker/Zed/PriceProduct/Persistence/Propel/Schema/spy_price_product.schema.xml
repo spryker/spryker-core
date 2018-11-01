@@ -70,6 +70,11 @@
             <index-column name="gross_price" />
         </index>
 
+        <index name="spy_price_product_store-index-fk_pr_pro-id_pr_pro_st">
+            <index-column name="fk_price_product" />
+            <index-column name="id_price_product_store" />
+        </index>
+
         <foreign-key name="spy_price_product_store-fk_currency" foreignTable="spy_currency" phpName="Currency" refPhpName="PriceProductStore">
             <reference local="fk_currency" foreign="id_currency"/>
         </foreign-key>
