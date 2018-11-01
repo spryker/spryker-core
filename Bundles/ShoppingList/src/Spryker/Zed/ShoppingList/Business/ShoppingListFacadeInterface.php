@@ -80,8 +80,9 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Add item to shopping list.
-     *  - Add create shopping list success message if shopping list created.
+     *  - Adds item to shopping list.
+     *  - Adds create shopping list success message if shopping list created.
+     *  - Fails and adds error message when quantity is lesser equal than zero.
      *
      * @api
      *
