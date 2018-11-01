@@ -1,0 +1,167 @@
+checkout-data:
+  post:
+    quote:
+      - Collection:
+          fields:
+            billingAddress:
+              - Collection:
+                  fields:
+                    salutation:
+                      - NotBlank
+                      - Choice:
+                          choices: [Mr, Mrs, Ms, Dr]
+                    firstName:
+                      - NotBlank
+                    lastName:
+                      - NotBlank
+                    address1:
+                      - NotBlank
+                    address2:
+                      - NotBlank
+                    zipCode:
+                      - NotBlank
+                    city:
+                      - NotBlank
+                      - Length:
+                          min: 3
+                    iso2Code:
+                      - NotBlank
+            shippingAddress:
+              - Collection:
+                  fields:
+                    salutation:
+                      - NotBlank
+                      - Choice:
+                          choices: [Mr, Mrs, Ms, Dr]
+                    firstName:
+                      - NotBlank
+                    lastName:
+                      - NotBlank
+                    address1:
+                      - NotBlank
+                    address2:
+                      - NotBlank
+                    zipCode:
+                      - NotBlank
+                    city:
+                      - NotBlank
+                      - Length:
+                          min: 3
+                    iso2Code:
+                      - NotBlank
+            payments:
+              - All:
+                  constraints:
+                    - Collection:
+                        fields:
+                          paymentMethod:
+                            - NotBlank
+                          paymentProvider:
+                            - NotBlank
+                          paymentSelection:
+                            - NotBlank
+                          amount:
+                            - NotBlank
+                            - Type:
+                                type: numeric
+            shipment:
+              - Collection:
+                  fields:
+                    shipmentSelection:
+                      - NotBlank
+checkout:
+  post:
+    quote:
+      - Collection:
+          fields:
+            idCart:
+              - NotBlank
+            customer:
+              - Collection:
+                  fields:
+                    salutation:
+                      - Choice:
+                          choices: [Mr, Mrs, Ms, Dr]
+                    email:
+                      - EmailConstraint
+            billingAddress:
+              - Collection:
+                  fields:
+                    salutation:
+                      - NotBlank
+                      - Choice:
+                          choices: [Mr, Mrs, Ms, Dr]
+                    firstName:
+                      - NotBlank
+                    lastName:
+                      - NotBlank
+                    address1:
+                      - NotBlank
+                    address2:
+                      - NotBlank
+                    zipCode:
+                      - NotBlank
+                    city:
+                      - NotBlank
+                      - Length:
+                          min: 3
+                    iso2Code:
+                      - NotBlank
+            shippingAddress:
+              - Collection:
+                  fields:
+                    salutation:
+                      - NotBlank
+                      - Choice:
+                          choices: [Mr, Mrs, Ms, Dr]
+                    firstName:
+                      - NotBlank
+                    lastName:
+                      - NotBlank
+                    address1:
+                      - NotBlank
+                    address2:
+                      - NotBlank
+                    zipCode:
+                      - NotBlank
+                    city:
+                      - NotBlank
+                      - Length:
+                          min: 3
+                    iso2Code:
+                      - NotBlank
+            payments:
+              - All:
+                  constraints:
+                    - Collection:
+                        fields:
+                          paymentMethod:
+                            - NotBlank
+                          paymentProvider:
+                            - NotBlank
+                          paymentSelection:
+                            - NotBlank
+                          amount:
+                            - NotBlank
+                            - Type:
+                                type: numeric
+            shipment:
+              - Collection:
+                  fields:
+                    shipmentSelection:
+                      - NotBlank
+                    method:
+                    - Collection:
+                        fields:
+                          carrierName:
+                            - NotBlank
+                          idShipmentMethod:
+                            - NotBlank
+                            - Type:
+                                type: numeric
+                          name:
+                            - NotBlank
+                          price:
+                            - NotBlank
+                            - Type:
+                                type: numeric
