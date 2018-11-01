@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingList\Communication\Plugin\CompanyUser;
+namespace Spryker\Zed\ShoppingList\Communication\Plugin\CompanyUserExtension;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
