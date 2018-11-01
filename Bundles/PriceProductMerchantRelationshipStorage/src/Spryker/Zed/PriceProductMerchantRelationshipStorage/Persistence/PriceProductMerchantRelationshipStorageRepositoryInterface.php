@@ -7,81 +7,38 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
-use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
-
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStoragePersistenceFactory getFactory()
  */
 interface PriceProductMerchantRelationshipStorageRepositoryInterface
 {
     /**
-     * @deprecated Will be removed without replacement.
+     * @param int[] $companyBusinessUnitIds
      *
-     * @param array $priceProductStoreIds
-     *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findPriceProductStoreListByIdsForConcrete(array $priceProductStoreIds): array;
+    public function getProductAbstractPriceDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @param int[] $companyBusinessUnitIds
      *
-     * @param array $priceProductStoreIds
-     *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findPriceProductStoreListByIdsForAbstract(array $priceProductStoreIds): array;
+    public function getProductConcretePriceDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 
     /**
-     * Returns array in format:
-     * [
-     *    [sku, id_product_abstract, spy_store.name, id_merchant_relationship_id, id_company_business_unit],
-     *    ...,
-     * ]
-     *
-     * @param array $businessUnitIds
-     *
-     * @return array
-     */
-    public function getProductAbstractPriceDataByCompanyBusinessUnitIds(array $businessUnitIds): array;
-
-    /**
-     * Returns array in format:
-     * [
-     *    [sku, id_product, spy_store.name, id_merchant_relationship_id, id_company_business_unit],
-     *    ...,
-     * ]
-     *
-     * @param array $businessUnitIds
-     *
-     * @return array
-     */
-    public function getProductConcretePriceDataByCompanyBusinessUnitIds(array $businessUnitIds): array;
-
-    /**
-     * @param int $idCompanyBusinessUnit
-     * @param array $productConcreteIds
+     * @param int[] $companyBusinessUnitIds
      *
      * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
      */
-    public function findExistingPriceProductConcreteMerchantRelationshipStorageEntities(int $idCompanyBusinessUnit, array $productConcreteIds): array;
+    public function findExistingPriceProductConcreteMerchantRelationshipStorageEntities(array $companyBusinessUnitIds): array;
 
     /**
-     * @param int $idCompanyBusinessUnit
-     * @param array $productAbstractIds
+     * @param int[] $companyBusinessUnitIds
      *
-     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[]
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
      */
-    public function findExistingPriceProductAbstractMerchantRelationshipStorageEntities(int $idCompanyBusinessUnit, array $productAbstractIds): array;
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param int $idMerchantRelationship
-     *
-     * @return array
-     */
-    public function findCompanyBusinessUnitIdsByMerchantRelationship(int $idMerchantRelationship): array;
+    public function findExistingPriceProductAbstractMerchantRelationshipStorageEntities(array $companyBusinessUnitIds): array;
 
     /**
      * @param array $priceProductMerchantRelationshipIds
@@ -96,15 +53,6 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
      * @return array
      */
     public function findCompanyBusinessUnitIdsByPriceProductMerchantRelationshipIdsForAbstractProducts(array $priceProductMerchantRelationshipIds): array;
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param string $idPriceProductMerchantRelationship
-     *
-     * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship|null
-     */
-    public function findPriceProductMerchantRelationship(string $idPriceProductMerchantRelationship): ?SpyPriceProductMerchantRelationship;
 
     /**
      * @return array

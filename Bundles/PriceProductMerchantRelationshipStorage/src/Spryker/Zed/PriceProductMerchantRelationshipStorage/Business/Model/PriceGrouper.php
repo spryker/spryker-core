@@ -7,74 +7,32 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 
-use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
-use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
 
 class PriceGrouper implements PriceGrouperInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface
-     */
-    protected $priceProductFacade;
-
-    /**
-     * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig
-     */
-    protected $config;
-
-    /**
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface $priceProductFacade
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig $config
-     */
-    public function __construct(
-        PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface $priceProductFacade,
-        PriceProductMerchantRelationshipStorageConfig $config
-    ) {
-        $this->priceProductFacade = $priceProductFacade;
-        $this->config = $config;
-    }
-
-    /**
-     * @param array $products
-     * @param string $productPrimaryIdentifier
-     * @param string $productSkuIdentifier
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function getGroupedPrices(array $products, string $productPrimaryIdentifier, string $productSkuIdentifier): array
+    public function groupPrices(array $priceProductMerchantRelationshipStorageTransfers): array
     {
-        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType($this->config->getPriceDimensionMerchantRelationship());
+        foreach ($priceProductMerchantRelationshipStorageTransfers as $priceProductMerchantRelationshipStorageTransfer) {
+            $groupedPrices = [];
+            foreach ($priceProductMerchantRelationshipStorageTransfer->getUngroupedPrices() as $price) {
+                if ($price->getGrossPrice()) {
+                    $groupedPrices[$price->getIdMerchantRelationship()][$price->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_MODE_GROSS][$price->getPriceType()] = $price->getGrossPrice();
+                }
 
-        $groupedPrices = [];
-        foreach ($products as $product) {
-            $storeName = $product[PriceProductMerchantRelationshipStorageConstants::COL_STORE_NAME];
-            $idProduct = $product[$productPrimaryIdentifier];
-            $idMerchantRelationship = $product[PriceProductMerchantRelationshipStorageConstants::COL_FK_MERCHANT_RELATIONSHIP];
-            $idCompanyBusinessUnit = $product[MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT];
-
-            if (!$idMerchantRelationship || !$idProduct) {
-                continue;
+                if ($price->getNetPrice()) {
+                    $groupedPrices[$price->getIdMerchantRelationship()][$price->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_MODE_NET][$price->getPriceType()] = $price->getNetPrice();
+                }
             }
 
-            $priceProductDimensionTransfer->setIdMerchantRelationship($idMerchantRelationship);
-            $prices = $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore(
-                $product[$productSkuIdentifier],
-                $priceProductDimensionTransfer
-            );
-
-            $groupedPrices[] = (new PriceProductMerchantRelationshipStorageTransfer())
-                ->setStoreName($storeName)
-                ->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
-                ->setIdMerchantRelationship($idMerchantRelationship)
-                ->setIdProduct($idProduct)
-                ->setPrices($prices);
+            $priceProductMerchantRelationshipStorageTransfer->setPrices($groupedPrices);
         }
 
-        return $groupedPrices;
+        return $priceProductMerchantRelationshipStorageTransfers;
     }
 }

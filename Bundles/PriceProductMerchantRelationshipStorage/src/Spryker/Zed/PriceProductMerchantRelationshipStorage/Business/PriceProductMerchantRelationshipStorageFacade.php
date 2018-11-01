@@ -16,10 +16,11 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade implements PriceProductMerchantRelationshipStorageFacadeInterface
 {
     /**
-     * @deprecated Will be removed without replacement.
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param array $businessUnitProducts
      *
@@ -31,10 +32,11 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
     }
 
     /**
-     * @deprecated Will be removed without replacement.
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement
      *
      * @param array $businessUnitProducts
      *
@@ -50,13 +52,13 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param array $businessUnitIds
+     * @param int[] $companyBusinessUnitIds
      *
      * @return void
      */
-    public function publishAbstractPriceProductByBusinessUnits(array $businessUnitIds): void
+    public function publishAbstractPriceProductByBusinessUnits(array $companyBusinessUnitIds): void
     {
-        $this->getFactory()->createPriceProductAbstractStorageWriter()->publishByBusinessUnits($businessUnitIds);
+        $this->getFactory()->createPriceProductAbstractStorageWriter()->publishByBusinessUnits($companyBusinessUnitIds);
     }
 
     /**
@@ -64,12 +66,12 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param array $businessUnitIds
+     * @param int[] $companyBusinessUnitIds
      *
      * @return void
      */
-    public function publishConcretePriceProductByBusinessUnits(array $businessUnitIds): void
+    public function publishConcretePriceProductByBusinessUnits(array $companyBusinessUnitIds): void
     {
-        $this->getFactory()->createPriceProductConcreteStorageWriter()->publishByBusinessUnits($businessUnitIds);
+        $this->getFactory()->createPriceProductConcreteStorageWriter()->publishByBusinessUnits($companyBusinessUnitIds);
     }
 }

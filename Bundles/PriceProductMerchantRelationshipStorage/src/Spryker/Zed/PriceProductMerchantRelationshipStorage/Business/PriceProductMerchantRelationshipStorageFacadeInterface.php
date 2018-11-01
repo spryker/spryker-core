@@ -47,11 +47,11 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
-     * @param array $businessUnitIds
+     * @param int[] $companyBusinessUnitIds
      *
      * @return void
      */
-    public function publishAbstractPriceProductByBusinessUnits(array $businessUnitIds): void;
+    public function publishAbstractPriceProductByBusinessUnits(array $companyBusinessUnitIds): void;
 
     /**
      * Specification:
@@ -59,9 +59,9 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
-     * @param array $businessUnitIds
+     * @param int[] $companyBusinessUnitIds
      *
      * @return void
      */
-    public function publishConcretePriceProductByBusinessUnits(array $businessUnitIds): void;
+    public function publishConcretePriceProductByBusinessUnits(array $companyBusinessUnitIds): void;
 }

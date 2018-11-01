@@ -13,7 +13,6 @@ use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchant
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToEventBehaviorFacadeBridge;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeBridge;
 
 class PriceProductMerchantRelationshipStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -22,19 +21,6 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
     public const PROPEL_QUERY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT = 'PROPEL_QUERY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT';
 
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideBusinessLayerDependencies(Container $container): Container
-    {
-        $container = $this->addPriceProductFacade($container);
-
-        return $container;
-    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -115,22 +101,6 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
     {
         $container[static::PROPEL_QUERY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT] = function () {
             return SpyMerchantRelationshipToCompanyBusinessUnitQuery::create();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPriceProductFacade(Container $container): Container
-    {
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
-            return new PriceProductMerchantRelationshipStorageToPriceProductFacadeBridge(
-                $container->getLocator()->priceProduct()->facade()
-            );
         };
 
         return $container;

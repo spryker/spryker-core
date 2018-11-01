@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 
-use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepository;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface;
 
 class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWriterInterface
@@ -45,27 +44,16 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param array $businessUnitIds
+     * @param int[] $companyBusinessUnitIds
      *
      * @return void
      */
-    public function publishByBusinessUnits(array $businessUnitIds): void
+    public function publishByBusinessUnits(array $companyBusinessUnitIds): void
     {
-        $productAbstracts = $this->priceProductMerchantRelationshipStorageRepository
-            ->getProductAbstractPriceDataByCompanyBusinessUnitIds($businessUnitIds);
+        $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
+            ->getProductAbstractPriceDataByCompanyBusinessUnitIds($companyBusinessUnitIds);
 
-        $businessUnitsProductAbstractIds = [];
-        foreach ($productAbstracts as $productAbstract) {
-            $businessUnitId = $productAbstract[MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT];
-            $businessUnitsProductAbstractIds[$businessUnitId][] = $productAbstract[PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_ABSTRACT_ID_PRODUCT];
-        }
-
-        foreach ($businessUnitsProductAbstractIds as $businessUnitId => $productAbstractIds) {
-            $this->priceProductMerchantRelationshipStorageEntityManager
-                ->cleanupPriceProductAbstractByCompanyBusinessUnit($businessUnitId, $productAbstractIds);
-        }
-
-        $this->write($productAbstracts);
+        $this->write($priceProductMerchantRelationshipStorageTransfers, $companyBusinessUnitIds);
     }
 
     /**
@@ -81,52 +69,62 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param array $productAbstracts
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransfers
+     * @param int[] $companyBusinessUnitIds
      *
      * @return void
      */
-    protected function write(array $productAbstracts): void
+    protected function write(array $priceProductMerchantRelationshipStorageTransfers, array $companyBusinessUnitIds): void
     {
-        $productsGroupedByIdCompanyBusinessUnit = $this->groupProductsByIdCompanyBusinessUnit($productAbstracts);
+        $mappedPriceProductMerchantRelationshipStorageEntities = $this->createExistingPriceProductMerchantRelationshipStorageEntitiesMap($companyBusinessUnitIds);
+        $priceProductMerchantRelationshipStorageTransfers = $this->priceGrouper->groupPrices(
+            $priceProductMerchantRelationshipStorageTransfers
+        );
 
-        foreach ($productsGroupedByIdCompanyBusinessUnit as $idCompanyBusinessUnit => $productAbstracts) {
-            $priceProductMerchantRelationshipStorageTransfers = $this->priceGrouper->getGroupedPrices(
-                $productAbstracts,
-                PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_ABSTRACT_ID_PRODUCT,
-                PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_ABSTRACT_SKU
-            );
+        foreach ($priceProductMerchantRelationshipStorageTransfers as $merchantRelationshipStorageTransfer) {
+            if (isset($mappedPriceProductMerchantRelationshipStorageEntities[$merchantRelationshipStorageTransfer->getPriceKey()])) {
+                $this->priceProductMerchantRelationshipStorageEntityManager->updatePriceProductAbstract(
+                    $mappedPriceProductMerchantRelationshipStorageEntities[$merchantRelationshipStorageTransfer->getPriceKey()],
+                    $merchantRelationshipStorageTransfer
+                );
 
-            if (count($priceProductMerchantRelationshipStorageTransfers) === 0) {
+                unset($mappedPriceProductMerchantRelationshipStorageEntities[$merchantRelationshipStorageTransfer->getPriceKey()]);
                 continue;
             }
 
-            $productAbstractIds = array_column(
-                $productAbstracts,
-                PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_ABSTRACT_ID_PRODUCT
-            );
-            $priceProductMerchantRelationshipStorageEntityMap = $this->priceProductMerchantRelationshipStorageRepository
-                ->findExistingPriceProductAbstractMerchantRelationshipStorageEntities($idCompanyBusinessUnit, $productAbstractIds);
-
-            $this->priceProductMerchantRelationshipStorageEntityManager->writePriceProductAbstract(
-                $priceProductMerchantRelationshipStorageTransfers,
-                $priceProductMerchantRelationshipStorageEntityMap
+            $this->priceProductMerchantRelationshipStorageEntityManager->createPriceProductAbstract(
+                $merchantRelationshipStorageTransfer
             );
         }
+
+        // Delete the rest of the entites
+        $this->priceProductMerchantRelationshipStorageEntityManager->deletePriceProductAbstracts(
+            array_map(function (SpyPriceProductAbstractMerchantRelationshipStorage $priceProductMerchantRelationshipStorageEntity) {
+                $priceProductMerchantRelationshipStorageEntity->getIdPriceProductAbstractMerchantRelationshipStorage();
+            }, $mappedPriceProductMerchantRelationshipStorageEntities)
+        );
+
+        unset($mappedPriceProductMerchantRelationshipStorageEntities);
     }
 
     /**
-     * @param array $products
+     * @param int[] $companyBusinessUnitIds
      *
      * @return array
      */
-    protected function groupProductsByIdCompanyBusinessUnit(array $products): array
+    protected function createExistingPriceProductMerchantRelationshipStorageEntitiesMap(array $companyBusinessUnitIds)
     {
-        $productsGroupedByIdCompanyBusinessUnit = [];
-        foreach ($products as $product) {
-            $idCompanyBusinessUnit = $product[MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT];
-            $productsGroupedByIdCompanyBusinessUnit[$idCompanyBusinessUnit][] = $product;
+        $existingPriceProductMerchantRelationshipStorageEntities = $this->priceProductMerchantRelationshipStorageRepository
+            ->findExistingPriceProductAbstractMerchantRelationshipStorageEntities($companyBusinessUnitIds);
+
+        $mappedPriceProductMerchantRelationshipStorageEntities = [];
+        foreach ($existingPriceProductMerchantRelationshipStorageEntities as $priceProductMerchantRelationshipStorageEntity) {
+            $mappedPriceProductMerchantRelationshipStorageEntities[$priceProductMerchantRelationshipStorageEntity->getPriceKey()] =
+                $priceProductMerchantRelationshipStorageEntity;
         }
 
-        return $productsGroupedByIdCompanyBusinessUnit;
+        unset($existingPriceProductMerchantRelationshipStorageEntities);
+
+        return $mappedPriceProductMerchantRelationshipStorageEntities;
     }
 }
