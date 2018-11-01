@@ -21,6 +21,7 @@ interface CompanyBusinessUnitFacadeInterface
     /**
      * Specification:
      * - Finds a company business unit by CompanyBusinessUnitTransfer::idCompanyBusinessUnit in the transfer
+     * - Executes company business unit transfer expander plugins
      *
      * @api
      *
