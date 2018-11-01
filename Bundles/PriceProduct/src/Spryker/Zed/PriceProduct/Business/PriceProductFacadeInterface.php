@@ -93,7 +93,7 @@ interface PriceProductFacadeInterface
      * - If the price type is not defined, then the default price type will be used.
      * - The product to assign can be either concrete or abstract, depending on the provided IDs.
      * - If the product doesn't have price, it throws exception.
-     * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency.
+     * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency with regenerated PriceDataChecksum.
      * - Touches product.
      *
      * @api
@@ -149,7 +149,7 @@ interface PriceProductFacadeInterface
      * - If the price type is not defined, then the default price type will be used.
      * - The product to assign can be either concrete or abstract, depending on the provided IDs.
      * - If the product already has price, it throws exception.
-     * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency.
+     * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency with regenerated PriceDataChecksum.
      * - Touches product.
      *
      * @api
@@ -191,7 +191,7 @@ interface PriceProductFacadeInterface
      * Specification:
      * - Create new product price entities if they doesn't exists by abstract product id and price type.
      * - Updates the price of product price entities if they exists by abstract product id and price type.
-     * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency.
+     * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency with regenerated PriceDataChecksum.
      * - Executes PriceDimensionAbstractSaverPluginInterface plugin stack after saving.
      * - If price type wasn't explicitly specified, then the default price type will be used.
      *
@@ -207,7 +207,7 @@ interface PriceProductFacadeInterface
      * Specification:
      * - Create new product price entities if they doesn't exists by concrete product id and price type.
      * - Updates the price of product price entities if they exists by concrete product id and price type.
-     * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency.
+     * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency with regenerated PriceDataChecksum.
      * - Executes PriceDimensionConcreteSaverPluginInterface plugin stack after saving.
      * - If price type wasn't explicitly specified, then the default price type will be used.
      *
@@ -365,6 +365,7 @@ interface PriceProductFacadeInterface
      * Specification:
      *  - Creates new spy_price_product record if it not exists.
      *  - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency.
+     *  - Regenerates spy_price_product_store PriceDataChecksum before save.
      *
      * @api
      *
