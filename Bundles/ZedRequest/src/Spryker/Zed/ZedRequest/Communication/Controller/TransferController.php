@@ -28,11 +28,11 @@ class TransferController extends AbstractController
      */
     public function repeatAction(Request $request)
     {
-        $repeatData = $this->getFacade()->getRepeatData($request->query->get('mvc', null));
-
         if (APPLICATION_ENV !== 'development') {
             throw new NotAllowedActionException('This action is allowed only for development environment.');
         }
+
+        $repeatData = $this->getFacade()->getRepeatData($request->query->get('mvc', null));
 
         if (!is_array($repeatData) || !$repeatData) {
             return new Response('No request to repeat.');
