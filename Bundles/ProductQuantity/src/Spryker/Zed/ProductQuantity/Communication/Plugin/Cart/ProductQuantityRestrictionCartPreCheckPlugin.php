@@ -22,6 +22,10 @@ class ProductQuantityRestrictionCartPreCheckPlugin extends AbstractPlugin implem
     /**
      * {@inheritdoc}
      *
+     * Specification:
+     * - Checks if the quantity is positive.
+     * - Validates product quantities if they fulfill all quantity restriction rules during item addition.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
