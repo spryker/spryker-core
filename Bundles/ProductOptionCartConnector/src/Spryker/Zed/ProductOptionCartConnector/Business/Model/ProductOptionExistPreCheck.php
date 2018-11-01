@@ -16,8 +16,8 @@ use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartCo
 
 class ProductOptionExistPreCheck implements ProductOptionExistPreCheckInterface
 {
-    const MESSAGE_PARAM_ID = '%id%';
-    const MESSAGE_ERROR_PRODUCT_OPTION_EXISTS = 'cart.item.option.pre.check.validation.error.exists';
+    protected const MESSAGE_PARAM_ID = '%id%';
+    protected const MESSAGE_ERROR_PRODUCT_OPTION_EXISTS = 'cart.item.option.pre.check.validation.error.exists';
 
     /**
      * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface
