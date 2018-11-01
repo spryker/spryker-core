@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataMapper\PriceVolumeCollectionDataMapper;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataMapper\PriceVolumeCollectionDataMapperInterface;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider;
+use Spryker\Zed\PriceProductVolumeGui\Communication\Form\FormHandler\PriceVolumeCollectionFormHandler;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\PriceVolumeCollectionFormType;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeInterface;
@@ -57,6 +58,17 @@ class PriceProductVolumeGuiCommunicationFactory extends AbstractCommunicationFac
         return new PriceVolumeCollectionDataMapper(
             $this->getUtilEncodingService(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductVolumeGui\Communication\Form\FormHandler\PriceVolumeCollectionFormHandler
+     */
+    public function createPriceVolumeCollectionFormHandler(): PriceVolumeCollectionFormHandler
+    {
+        return new PriceVolumeCollectionFormHandler(
+            $this->getPriceProductFacade(),
+            $this->createPriceVolumeCollectionDataMapper()
         );
     }
 

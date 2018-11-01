@@ -23,7 +23,7 @@ class EditController extends AddController
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     public const PARAM_ID_PRODUCT = 'id-product';
     public const PARAM_PRODUCT_TYPE = 'type';
-    public const PARAM_PRICE_DIMENSION = 'price-dimension';
+    protected const PARAM_PRICE_DIMENSION = 'price-dimension';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider;
-use Spryker\Zed\PriceProductVolumeGui\Communication\Form\PriceVolumeCollectionFormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -101,10 +100,12 @@ class PriceVolumeController extends AbstractController
      */
     protected function executeAction(FormInterface $priceVolumeCollectionFormType, PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        $priceProductTransfer = $this->savePriceProduct(
-            $priceVolumeCollectionFormType->getData(),
-            $priceProductTransfer
-        );
+        $priceProductTransfer = $this->getFactory()
+            ->createPriceVolumeCollectionFormHandler()
+            ->savePriceProduct(
+                $priceVolumeCollectionFormType->getData(),
+                $priceProductTransfer
+            );
 
         $this->addSuccessMessage(static::MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS);
 
@@ -131,31 +132,6 @@ class PriceVolumeController extends AbstractController
             )->handleRequest($request);
 
         return $priceVolumeCollectionFormType;
-    }
-
-    /**
-     * @param array $data
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function savePriceProduct(array $data, PriceProductTransfer $priceProductTransfer): PriceProductTransfer
-    {
-        $priceProductTransfer = $this->getFactory()
-            ->createPriceVolumeCollectionDataMapper()
-            ->mapArrayToPriceProductTransfer(
-                $data,
-                $priceProductTransfer
-            );
-
-        if ($data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_CONCRETE] && !$priceProductTransfer->getIdProduct()) {
-            $priceProductTransfer->setIdPriceProduct(null);
-            $priceProductTransfer->setIdProduct($data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_CONCRETE]);
-        }
-
-        return $this->getFactory()
-            ->getPriceProductFacade()
-            ->persistPriceProductStore($priceProductTransfer);
     }
 
     /**
