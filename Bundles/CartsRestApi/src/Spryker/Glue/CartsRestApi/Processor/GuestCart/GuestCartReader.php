@@ -52,13 +52,7 @@ class GuestCartReader extends CartReader implements GuestCartReaderInterface
     public function readCurrentCustomerCarts(RestRequestInterface $restRequest): RestResponseInterface
     {
         if (!$restRequest->getUser()) {
-            $restResponse = $this->restResourceBuilder->createRestResponse();
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
-
-            return $restResponse->addError($restErrorTransfer);
+            return $this->addAnonymousCustomerUniqueIdEmptyErrorToResponse();
         }
 
         $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
@@ -95,5 +89,20 @@ class GuestCartReader extends CartReader implements GuestCartReaderInterface
     protected function getRestResponse(RestRequestInterface $restRequest, QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface
     {
         return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addAnonymousCustomerUniqueIdEmptyErrorToResponse(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
+
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorTransfer);
     }
 }
