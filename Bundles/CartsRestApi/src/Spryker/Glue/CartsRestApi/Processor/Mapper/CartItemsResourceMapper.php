@@ -30,4 +30,19 @@ class CartItemsResourceMapper implements CartItemsResourceMapperInterface
 
         return $restCartItemsAttributesResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function mapItemAttributesToItemTransfer(RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer): ItemTransfer
+    {
+        $itemTransfer = (new ItemTransfer())->fromArray(
+            $restCartItemsAttributesRequestTransfer->toArray(),
+            true
+        );
+
+        return $itemTransfer;
+    }
 }
