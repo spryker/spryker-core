@@ -24,4 +24,11 @@ interface PriceProductConcreteStorageWriterInterface
      * @return void
      */
     public function publishByBusinessUnits(array $companyBusinessUnitIds): void;
+
+    /**
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return void
+     */
+    public function publishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
 }

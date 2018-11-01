@@ -30,23 +30,10 @@ class PriceProductMerchantRelationshipConcreteListener extends AbstractPlugin im
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $companyBusinessUnitIds = $this->getCompanyBusinessUnitIds($eventTransfers);
-
-        $this->getFacade()->publishConcretePriceProductByBusinessUnits($companyBusinessUnitIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return array
-     */
-    protected function getCompanyBusinessUnitIds(array $eventTransfers): array
-    {
         $priceProductMerchantRelationshipIds = array_map(function (EventEntityTransfer $eventTransfer) {
             return $eventTransfer->getId();
         }, $eventTransfers);
 
-        return $this->getRepository()
-            ->findCompanyBusinessUnitIdsByPriceProductMerchantRelationshipIdsForConcreteProducts($priceProductMerchantRelationshipIds);
+        $this->getFacade()->publishConcretePriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
     }
 }

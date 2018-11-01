@@ -74,4 +74,32 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
     {
         $this->getFactory()->createPriceProductConcreteStorageWriter()->publishByBusinessUnits($companyBusinessUnitIds);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return void
+     */
+    public function publishAbstractPriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void
+    {
+        $this->getFactory()->createPriceProductAbstractStorageWriter()->publishAbstractPriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return void
+     */
+    public function publishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void
+    {
+        $this->getFactory()->createPriceProductConcreteStorageWriter()->publishConcretePriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
+    }
 }

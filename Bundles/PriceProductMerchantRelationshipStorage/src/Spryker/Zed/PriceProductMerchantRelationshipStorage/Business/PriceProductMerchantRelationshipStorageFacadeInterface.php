@@ -43,7 +43,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  -
+     *  - TODO
      *
      * @api
      *
@@ -55,7 +55,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  -
+     *  - TODO
      *
      * @api
      *
@@ -64,4 +64,28 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      * @return void
      */
     public function publishConcretePriceProductByBusinessUnits(array $companyBusinessUnitIds): void;
+
+    /**
+     * Specification:
+     *  - TODO
+     *
+     * @api
+     *
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return void
+     */
+    public function publishAbstractPriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
+
+    /**
+     * Specification:
+     *  - TODO
+     *
+     * @api
+     *
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return void
+     */
+    public function publishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
 }
