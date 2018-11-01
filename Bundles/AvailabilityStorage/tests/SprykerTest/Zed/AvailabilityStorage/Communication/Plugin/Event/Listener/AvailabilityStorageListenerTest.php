@@ -137,7 +137,7 @@ class AvailabilityStorageListenerTest extends Unit
     protected function assertAvailabilityStorage($previousCount)
     {
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
-        $this->assertEquals($previousCount + 1, $availabilityStorageCount);
+        $this->assertGreaterThan($previousCount, $availabilityStorageCount);
 
         $availabilityStorageEntityList = SpyAvailabilityStorageQuery::create()
             ->findByFkProductAbstract($this->productConcreteTransfer->getFkProductAbstract())

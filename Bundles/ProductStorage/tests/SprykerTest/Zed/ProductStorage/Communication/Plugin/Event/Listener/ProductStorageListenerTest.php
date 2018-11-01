@@ -338,7 +338,7 @@ class ProductStorageListenerTest extends Unit
         $data = $spyProductAbstractStorage->getData();
         $this->assertSame($this->productAbstractTransfer->getSku(), $data['sku']);
         $this->assertSame(1, count($data['attributes']));
-        $this->assertSame($urlCollectionEntity->getLast()->getUrl(), $data['url']);
+        $this->assertContains($data['url'], $urlCollectionEntity->getColumnValues('url'));
     }
 
     /**
@@ -366,7 +366,7 @@ class ProductStorageListenerTest extends Unit
 
         $this->assertSame($this->productConcreteTransfer->getSku(), $data['sku']);
         $this->assertSame(1, count($data['attributes']));
-        $this->assertSame($urlCollectionEntity->getLast()->getUrl(), $data['url']);
+        $this->assertContains($data['url'], $urlCollectionEntity->getColumnValues('url'));
     }
 
     /**

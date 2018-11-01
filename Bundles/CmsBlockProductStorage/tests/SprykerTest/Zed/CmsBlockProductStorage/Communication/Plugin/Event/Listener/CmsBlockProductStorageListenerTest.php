@@ -133,7 +133,7 @@ class CmsBlockProductStorageListenerTest extends Unit
     protected function assertCmsBlockProductStorage($beforeCount)
     {
         $count = SpyCmsBlockProductStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $count);
+        $this->assertGreaterThan($beforeCount, $count);
         $cmsBlockProductStorage = SpyCmsBlockProductStorageQuery::create()->orderByIdCmsBlockProductStorage()->findOneByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
         $this->assertNotNull($cmsBlockProductStorage);
         $data = $cmsBlockProductStorage->getData();

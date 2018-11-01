@@ -98,7 +98,7 @@ class ProductGroupStorageListenerTest extends Unit
             $eventTransfers[] = (new EventEntityTransfer())->setForeignKeys([
                 SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT => $fkProductAbstract,
             ]);
-        };
+        }
 
         $productAbstractGroupStorageListener->handleBulk($eventTransfers, ProductGroupEvents::ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_CREATE);
 
@@ -123,7 +123,7 @@ class ProductGroupStorageListenerTest extends Unit
 
         foreach ($fkProductAbstracts as $fkProductAbstract) {
             $eventTransfers[] = (new EventEntityTransfer())->setId($fkProductAbstract);
-        };
+        }
 
         $productAbstractGroupPublishStorageListener->handleBulk($eventTransfers, ProductGroupEvents::PRODUCT_GROUP_PUBLISH);
 
@@ -153,7 +153,7 @@ class ProductGroupStorageListenerTest extends Unit
     protected function assertProductAbstractGroupStorage($beforeCount)
     {
         $productGroupStorageCount = SpyProductAbstractGroupStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $productGroupStorageCount);
+        $this->assertGreaterThan($beforeCount, $productGroupStorageCount);
 
         $fkProductAbstracts = $this->productGroupTransfer->getIdProductAbstracts();
         $fkProductAbstract = current($fkProductAbstracts);

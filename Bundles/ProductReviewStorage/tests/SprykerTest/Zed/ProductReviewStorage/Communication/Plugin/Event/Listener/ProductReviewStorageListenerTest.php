@@ -138,7 +138,7 @@ class ProductReviewStorageListenerTest extends Unit
     protected function assertProductReviewStorage($beforeCount)
     {
         $productSetStorageCount = SpyProductAbstractReviewStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $productSetStorageCount);
+        $this->assertGreaterThan($beforeCount, $productSetStorageCount);
         $spyProductReviewStorage = SpyProductAbstractReviewStorageQuery::create()->orderByIdProductAbstractReviewStorage()->filterByFkProductAbstract($this->productReviewTransfer->getFkProductAbstract())->findOne();
         $this->assertNotNull($spyProductReviewStorage);
         $data = $spyProductReviewStorage->getData();

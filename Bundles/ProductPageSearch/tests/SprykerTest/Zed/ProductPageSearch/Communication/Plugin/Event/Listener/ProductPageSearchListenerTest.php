@@ -74,8 +74,8 @@ use SprykerTest\Zed\ProductPageSearch\ProductPageSearchConfigMock;
  */
 class ProductPageSearchListenerTest extends Unit
 {
-    const NUMBER_OF_LOCALES = 1;
-    const NUMBER_OF_STORES = 3;
+    protected const NUMBER_OF_LOCALES = 1;
+    protected const NUMBER_OF_STORES = 3;
 
     /**
      * @var \SprykerTest\Zed\ProductPageSearch\ProductPageSearchCommunicationTester
@@ -210,7 +210,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 1, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
     }
 
     /**
@@ -238,7 +238,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 1, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
     }
 
     /**
@@ -402,7 +402,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 1, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
     }
 
     /**
@@ -580,7 +580,7 @@ class ProductPageSearchListenerTest extends Unit
 
         $data = $productPageSearchEntity->getStructuredData();
         $encodedData = json_decode($data, true);
-        $this->assertSame($urlCollectionEntity->getLast()->getUrl(), $encodedData['url']);
+        $this->assertContains($encodedData['url'], $urlCollectionEntity->getColumnValues('url'));
     }
 
     /**

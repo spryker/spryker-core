@@ -301,7 +301,7 @@ class ProductImageStorageListenerTest extends Unit
     protected function assertProductAbstractImageStorage($beforeCount)
     {
         $productImageStorageCount = SpyProductAbstractImageStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $productImageStorageCount);
+        $this->assertGreaterThan($beforeCount, $productImageStorageCount);
         $spyProductAbstractImageStorage = SpyProductAbstractImageStorageQuery::create()->orderByIdProductAbstractImageStorage()->findOneByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
         $this->assertNotNull($spyProductAbstractImageStorage);
         $data = $spyProductAbstractImageStorage->getData();
@@ -316,7 +316,7 @@ class ProductImageStorageListenerTest extends Unit
     protected function assertProductConcreteImageStorage($beforeCount)
     {
         $productImageStorageCount = SpyProductConcreteImageStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $productImageStorageCount);
+        $this->assertGreaterThan($beforeCount, $productImageStorageCount);
         $productConcreteImageStorage = SpyProductConcreteImageStorageQuery::create()->orderByIdProductConcreteImageStorage()->findOneByFkProduct($this->productConcreteTransfer->getIdProductConcrete());
         $this->assertNotNull($productConcreteImageStorage);
         $data = $productConcreteImageStorage->getData();

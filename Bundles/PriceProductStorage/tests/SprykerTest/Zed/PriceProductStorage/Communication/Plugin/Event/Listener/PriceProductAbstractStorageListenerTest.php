@@ -199,7 +199,7 @@ class PriceProductAbstractStorageListenerTest extends Unit
     protected function assertPriceProductAbstractStorage($beforeCount)
     {
         $priceProductAbstractStorageCount = SpyPriceProductAbstractStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $priceProductAbstractStorageCount);
+        $this->assertGreaterThan($beforeCount, $priceProductAbstractStorageCount);
         $spyPriceProductAbstractStorage = SpyPriceProductAbstractStorageQuery::create()->orderByIdPriceProductAbstractStorage()->findOneByFkProductAbstract($this->priceProductTransfer->getIdProductAbstract());
         $this->assertNotNull($spyPriceProductAbstractStorage);
         $data = $spyPriceProductAbstractStorage->getData();

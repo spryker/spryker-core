@@ -150,7 +150,7 @@ class PriceProductConcreteStorageListenerTest extends Unit
 
         // Assert
         $priceProductConcreteStorageCount = SpyPriceProductConcreteStorageQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 1, $priceProductConcreteStorageCount);
+        $this->assertGreaterThan($beforeCount, $priceProductConcreteStorageCount);
     }
 
     /**
@@ -178,7 +178,7 @@ class PriceProductConcreteStorageListenerTest extends Unit
 
         // Assert
         $priceProductConcreteStorageCount = SpyPriceProductConcreteStorageQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 1, $priceProductConcreteStorageCount);
+        $this->assertGreaterThan($beforeCount, $priceProductConcreteStorageCount);
     }
 
     /**
@@ -203,7 +203,7 @@ class PriceProductConcreteStorageListenerTest extends Unit
     protected function assertPriceProductConcreteStorage($beforeCount)
     {
         $priceProductConcreteStorageCount = SpyPriceProductConcreteStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $priceProductConcreteStorageCount);
+        $this->assertGreaterThan($beforeCount, $priceProductConcreteStorageCount);
         $spyPriceProductConcreteStorage = SpyPriceProductConcreteStorageQuery::create()->orderByIdPriceProductConcreteStorage()->findOneByFkProduct($this->priceProductTransfer->getIdProduct());
         $this->assertNotNull($spyPriceProductConcreteStorage);
         $data = $spyPriceProductConcreteStorage->getData();
