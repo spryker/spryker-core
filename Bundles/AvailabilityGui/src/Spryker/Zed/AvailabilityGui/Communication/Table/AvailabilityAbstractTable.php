@@ -121,7 +121,7 @@ class AvailabilityAbstractTable extends AbstractTable
         foreach ($queryResult as $productAbstractEntity) {
             $haveBundledProducts = $this->haveBundledProducts($productAbstractEntity);
 
-            $isNeverOutOfStock = $this->isNeverOutOfStock($productAbstractEntity);
+            $isNeverOutOfStock = $this->isNeverOutOfStock($productAbstractEntity, $haveBundledProducts);
 
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
@@ -140,11 +140,15 @@ class AvailabilityAbstractTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param bool $isBundleProduct
      *
      * @return bool
      */
-    protected function isNeverOutOfStock(SpyProductAbstract $productAbstractEntity): bool
+    protected function isNeverOutOfStock(SpyProductAbstract $productAbstractEntity, bool $isBundleProduct): bool
     {
+        if ($isBundleProduct && strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'false') !== false) {
+            return false;
+        }
         return strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'true') !== false;
     }
 

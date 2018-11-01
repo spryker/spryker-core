@@ -138,7 +138,8 @@ class AvailabilityTable extends AbstractTable
             $isBundleProduct = $this->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
 
             $isNeverOutOfStock = $this->isNeverOutOfStock(
-                $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET]
+                $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET],
+                $isBundleProduct
             );
 
             $result[] = [
@@ -158,11 +159,16 @@ class AvailabilityTable extends AbstractTable
 
     /**
      * @param string $neverOutOfStockSet
+     * @param bool $isBundleProduct
      *
      * @return bool
      */
-    protected function isNeverOutOfStock(string $neverOutOfStockSet): bool
+    protected function isNeverOutOfStock(string $neverOutOfStockSet, bool $isBundleProduct): bool
     {
+        if ($isBundleProduct && strpos($neverOutOfStockSet, 'false') !== false) {
+            return false;
+        }
+
         return strpos($neverOutOfStockSet, 'true') !== false;
     }
 
