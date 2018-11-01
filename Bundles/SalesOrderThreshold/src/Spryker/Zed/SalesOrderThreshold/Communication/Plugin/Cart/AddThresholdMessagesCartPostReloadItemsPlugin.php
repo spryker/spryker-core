@@ -8,14 +8,13 @@
 namespace Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use \Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Cart\AddThresholdMessagesCartPostReloadItemsPlugin if you need to add threshold message.
  * @method \Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface getFacade()
  */
-class AddThresholdMessagesCartPreReloadItemsPlugin extends AbstractPlugin implements PreReloadItemsPluginInterface
+class AddThresholdMessagesCartPostReloadItemsPlugin extends AbstractPlugin implements PostReloadItemsPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -27,7 +26,7 @@ class AddThresholdMessagesCartPreReloadItemsPlugin extends AbstractPlugin implem
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function preReloadItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function postReloadItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFacade()->addSalesOrderThresholdMessages($quoteTransfer);
     }
