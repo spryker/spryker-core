@@ -127,7 +127,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restRequest->getResource()->getId()) {
-            return $this->addItemSkuMissingError($restResponse);
+            return $this->addItemSkuMissingErrorToResponse($restResponse);
         }
 
         $sku = $restRequest->getResource()->getId();
@@ -228,7 +228,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addItemSkuMissingError(RestResponseInterface $restResponse): RestResponseInterface
+    protected function addItemSkuMissingErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_ID)
