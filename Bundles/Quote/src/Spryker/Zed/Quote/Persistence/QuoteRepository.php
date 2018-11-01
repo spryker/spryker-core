@@ -109,29 +109,27 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \DateTime $lifetimeLimitDate
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function findExpiredGuestQuotes(DateTime $lifetimeLimitDate, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    public function findExpiredGuestQuotes(DateTime $lifetimeLimitDate, int $limit): QuoteCollectionTransfer
     {
         $quoteQuery = $this->getFactory()
             ->createQuoteQuery()
             ->joinWithSpyStore()
+            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
             ->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
             ->where(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE . Criteria::ISNULL)
-            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN);
+            ->limit($limit);
 
-        $quoteEntityCollectionTransfer = $this->buildQueryFromCriteria($quoteQuery, $quoteCriteriaFilterTransfer->getFilter())->find();
+        $quoteEntityCollection = $quoteQuery->find();
 
+        $quoteMapper = $this->getFactory()->createQuoteMapper();
         $quoteCollectionTransfer = new QuoteCollectionTransfer();
-        foreach ($quoteEntityCollectionTransfer as $quoteEntityTransfer) {
-            $quoteCollectionTransfer->addQuote($this->mapQuoteTransfer($quoteEntityTransfer));
+        foreach ($quoteEntityCollection as $quoteEntity) {
+            $quoteCollectionTransfer->addQuote($quoteMapper->mapQuoteEntityToQuoteTransfer($quoteEntity));
         }
 
         return $quoteCollectionTransfer;

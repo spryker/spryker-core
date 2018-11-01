@@ -9,10 +9,7 @@ namespace Spryker\Zed\Quote\Business\GuestQuote;
 
 use DateInterval;
 use DateTime;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface;
@@ -36,26 +33,26 @@ class GuestQuoteDeleter implements GuestQuoteDeleterInterface
     protected $quoteRepository;
 
     /**
-     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
-     */
-    protected $quoteDeleteBeforePlugins;
-
-    /**
      * @var \Spryker\Zed\Quote\QuoteConfig
      */
     protected $config;
 
     /**
+     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+     */
+    protected $quoteDeleteBeforePlugins;
+
+    /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface $quoteEntityManager
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[] $quoteDeleteBeforePlugins
      * @param \Spryker\Zed\Quote\QuoteConfig $config
+     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[] $quoteDeleteBeforePlugins
      */
     public function __construct(
         QuoteEntityManagerInterface $quoteEntityManager,
         QuoteRepositoryInterface $quoteRepository,
-        array $quoteDeleteBeforePlugins,
-        QuoteConfig $config
+        QuoteConfig $config,
+        array $quoteDeleteBeforePlugins
     ) {
         $this->quoteEntityManager = $quoteEntityManager;
         $this->quoteRepository = $quoteRepository;
@@ -71,9 +68,11 @@ class GuestQuoteDeleter implements GuestQuoteDeleterInterface
         $quoteCollectionTransfer = $this->findExpiredGuestQuotes();
 
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
-                return $this->executeDeleteTransaction($quoteTransfer);
-            });
+            if ($this->validateQuote($quoteTransfer)) {
+                $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
+                    $this->executeDeleteTransaction($quoteTransfer);
+                });
+            }
         }
     }
 
@@ -86,12 +85,7 @@ class GuestQuoteDeleter implements GuestQuoteDeleterInterface
         $lifetimeInterval = new DateInterval($lifetime);
         $lifetimeLimitDate = (new DateTime())->sub($lifetimeInterval);
 
-        $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
-        $quoteCriteriaFilterTransfer->setFilter(
-            (new FilterTransfer())->setLimit(static::BATCH_SIZE_LIMIT)
-        );
-
-        return $this->quoteRepository->findExpiredGuestQuotes($lifetimeLimitDate, $quoteCriteriaFilterTransfer);
+        return $this->quoteRepository->findExpiredGuestQuotes($lifetimeLimitDate, static::BATCH_SIZE_LIMIT);
     }
 
     /**
@@ -112,16 +106,12 @@ class GuestQuoteDeleter implements GuestQuoteDeleterInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return void
      */
-    protected function executeDeleteTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    protected function executeDeleteTransaction(QuoteTransfer $quoteTransfer): void
     {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteTransfer = $this->executeDeleteBeforePlugins($quoteTransfer);
         $this->quoteEntityManager->deleteQuoteById($quoteTransfer->getIdQuote());
-        $quoteResponseTransfer->setIsSuccessful(true);
-
-        return $quoteResponseTransfer;
     }
 
     /**
@@ -131,8 +121,8 @@ class GuestQuoteDeleter implements GuestQuoteDeleterInterface
      */
     protected function executeDeleteBeforePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($this->quoteDeleteBeforePlugins as $quoteWritePlugin) {
-            $quoteTransfer = $quoteWritePlugin->execute($quoteTransfer);
+        foreach ($this->quoteDeleteBeforePlugins as $quoteDeleteBeforePlugin) {
+            $quoteTransfer = $quoteDeleteBeforePlugin->execute($quoteTransfer);
         }
 
         return $quoteTransfer;

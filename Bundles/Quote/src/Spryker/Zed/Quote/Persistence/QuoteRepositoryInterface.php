@@ -59,15 +59,10 @@ interface QuoteRepositoryInterface
     public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer;
 
     /**
-     * Specification:
-     * - Get guest quotes collection with expired lifetime
-     *
-     * @api
-     *
      * @param \DateTime $lifetimeLimitDate
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function findExpiredGuestQuotes(DateTime $lifetimeLimitDate, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
+    public function findExpiredGuestQuotes(DateTime $lifetimeLimitDate, int $limit): QuoteCollectionTransfer;
 }
