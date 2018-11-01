@@ -39,6 +39,18 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param string $resourceType
+     * @param array $resourceIds
+     *
+     * @throws \Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlsByResourceTypeAndIds($resourceType, array $resourceIds);
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */
     public function queryRedirects();

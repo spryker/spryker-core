@@ -1,0 +1,10 @@
+sales_unit_key,concrete_sku,code,conversion,precision,is_displayed,is_default
+sales_unit_1,215_124,METR,1,100,0,1
+sales_unit_2,215_125,METR,,,0,0
+sales_unit_3,215_126,METR,1,100,0,0
+sales_unit_4,215_127,METR,0.01,1,0,0
+sales_unit_5,215_128,METR,0.328084,100,1,1
+sales_unit_6,215_129,METR,5,1,0,1
+sales_unit_7,215_130,METR,1,1,0,1
+sales_unit_8,215_131,METR,8,1,1,0
+sales_unit_9,215_132,METR,0.008,1,1,0

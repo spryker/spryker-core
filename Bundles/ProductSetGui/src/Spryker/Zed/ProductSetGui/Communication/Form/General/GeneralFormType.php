@@ -28,14 +28,14 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class GeneralFormType extends AbstractType
 {
-    const FIELD_LOCALIZED_GENERAL_FORM_COLLECTION = 'localized_general_form_collection';
-    const FIELD_IS_ACTIVE = 'is_active';
-    const FIELD_ID_PRODUCT_SET = 'id_product_set';
-    const FIELD_PRODUCT_SET_KEY = 'product_set_key';
-    const FIELD_PRODUCT_SET_KEY_ORIGINAL = 'product_set_key_original';
-    const FIELD_WEIGHT = 'weight';
+    public const FIELD_LOCALIZED_GENERAL_FORM_COLLECTION = 'localized_general_form_collection';
+    public const FIELD_IS_ACTIVE = 'is_active';
+    public const FIELD_ID_PRODUCT_SET = 'id_product_set';
+    public const FIELD_PRODUCT_SET_KEY = 'product_set_key';
+    public const FIELD_PRODUCT_SET_KEY_ORIGINAL = 'product_set_key_original';
+    public const FIELD_WEIGHT = 'weight';
 
-    const GROUP_UNIQUE_KEY_CHECK = 'unique_key_check';
+    public const GROUP_UNIQUE_KEY_CHECK = 'unique_key_check';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

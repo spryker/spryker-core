@@ -24,7 +24,7 @@ class PanelFunction extends TwigFunction
      */
     protected function getFunction()
     {
-        return function ($title, $content, array $options = null, $footer = null) {
+        return function ($title, $content, ?array $options = null, $footer = null) {
             $defaultOptions = [
                 'class' => 'default',
                 'id' => false,

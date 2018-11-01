@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -36,7 +37,8 @@ class AvailabilityEditStockCest
                 AvailabilityPage::AVAILABILITY_EDIT_STOCK_URL,
                 AvailabilityPage::AVAILABILITY_ID,
                 AvailabilityPage::AVAILABILITY_SKU,
-                AvailabilityPage::AVAILABILITY_ABSTRACT_PRODUCT_ID
+                AvailabilityPage::AVAILABILITY_ABSTRACT_PRODUCT_ID,
+                AvailabilityPage::AVAILABILITY_ID_STORE
             )
         );
 

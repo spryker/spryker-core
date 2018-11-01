@@ -9,7 +9,7 @@ namespace Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 
 /**
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
@@ -18,6 +18,8 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 class IsPayedPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return bool

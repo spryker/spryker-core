@@ -16,8 +16,8 @@ use Symfony\Component\Form\FormEvents;
 
 class FormEventSubscriber implements EventSubscriberInterface
 {
-    const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
-    const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
+    public const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
+    public const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
 
     /**
      * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface
@@ -40,7 +40,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     protected $fieldName = self::DEFAULT_TOKEN_FIELD_NAME;
 
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Component\Translation\TranslatorInterface|null
      */
     protected $translator;
 
@@ -173,7 +173,7 @@ class FormEventSubscriber implements EventSubscriberInterface
      * @param array $data
      * @param string $formName
      *
-     * @return boolean
+     * @return bool
      */
     protected function isTokenValid($data, $formName)
     {

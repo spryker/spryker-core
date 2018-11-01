@@ -14,22 +14,22 @@ class TransferDefinitionFinder implements FinderInterface
     /**
      * @deprecated Will be removed with next major release
      */
-    const KEY_BUNDLE = 'bundle';
+    public const KEY_BUNDLE = 'bundle';
 
     /**
      * @deprecated Will be removed with next major release
      */
-    const KEY_CONTAINING_BUNDLE = 'containing bundle';
+    public const KEY_CONTAINING_BUNDLE = 'containing bundle';
 
     /**
      * @deprecated Will be removed with next major release
      */
-    const KEY_TRANSFER = 'transfer';
+    public const KEY_TRANSFER = 'transfer';
 
     /**
      * @deprecated Will be removed with next major release
      */
-    const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
+    public const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 
     /**
      * @var array
@@ -52,7 +52,7 @@ class TransferDefinitionFinder implements FinderInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     public function getXmlTransferDefinitionFiles()
     {
@@ -65,7 +65,7 @@ class TransferDefinitionFinder implements FinderInterface
 
         $finder->in($existingSourceDirectories)->name($this->fileNamePattern)->depth('< 1');
 
-        return $finder;
+        return iterator_to_array($finder);
     }
 
     /**

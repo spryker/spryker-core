@@ -31,7 +31,7 @@ class LoggerFactory
      *
      * @return \Psr\Log\LoggerInterface|null
      */
-    public static function getInstance(LoggerConfigInterface $loggerConfig = null)
+    public static function getInstance(?LoggerConfigInterface $loggerConfig = null)
     {
         if ($loggerConfig === null) {
             if (!static::$loggerConfig) {

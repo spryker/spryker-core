@@ -61,8 +61,12 @@ class SellableTest extends Unit
     public function testIsProductSellable()
     {
         $this->setTestData();
+        $stockEntity = SpyStockQuery::create()->findOneByName('Warehouse1');
         $stockProductEntity = SpyStockProductQuery::create()->findOneOrCreate();
-        $stockProductEntity->setIsNeverOutOfStock(true)->save();
+        $stockProductEntity
+            ->setIsNeverOutOfStock(true)
+            ->setFkStock($stockEntity->getIdStock())
+            ->save();
 
         $productEntity = SpyProductQuery::create()->findOneByIdProduct($stockProductEntity->getFkProduct());
         $isSellable = $this->availabilityFacade->isProductSellable($productEntity->getSku(), 100);
@@ -76,8 +80,14 @@ class SellableTest extends Unit
     public function testCalculateRealStock()
     {
         $this->setTestData();
+        $stockEntity = SpyStockQuery::create()->findOneByName('Warehouse1');
+
         $stockProductEntity = SpyStockProductQuery::create()->findOneOrCreate();
-        $stockProductEntity->setIsNeverOutOfStock(false)->setQuantity(10)->save();
+        $stockProductEntity->setIsNeverOutOfStock(false)
+            ->setQuantity(10)
+            ->setFkStock($stockEntity->getIdStock())
+            ->save();
+
         $productEntity = SpyProductQuery::create()->findOneByIdProduct($stockProductEntity->getFkProduct());
         $isSellable = $this->availabilityFacade->isProductSellable($productEntity->getSku(), 1);
 
@@ -104,7 +114,7 @@ class SellableTest extends Unit
 
         $stock = new SpyStock();
         $stock
-            ->setName('TestStock1');
+            ->setName('test');
 
         $stockProduct = new SpyStockProduct();
         $stockProduct
@@ -150,15 +160,15 @@ class SellableTest extends Unit
             ->save();
 
         $stockType1 = SpyStockQuery::create()
-            ->filterByName('warehouse1')
+            ->filterByName('Warehouse1')
             ->findOneOrCreate();
 
-        $stockType1->setName('warehouse1')->save();
+        $stockType1->setName('Warehouse1')->save();
 
         $stockType2 = SpyStockQuery::create()
-            ->filterByName('warehouse2')
+            ->filterByName('Warehouse2')
             ->findOneOrCreate();
-        $stockType2->setName('warehouse2')->save();
+        $stockType2->setName('Warehouse2')->save();
 
         $stockProduct1 = SpyStockProductQuery::create()
             ->filterByFkStock($stockType1->getIdStock())

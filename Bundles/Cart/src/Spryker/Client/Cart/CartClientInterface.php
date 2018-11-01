@@ -8,7 +8,10 @@
 namespace Spryker\Client\Cart;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartClientInterface
@@ -25,7 +28,8 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Empty existing quote and store to session
+     * - Empty existing quote and store to session.
+     * - In case of persistent strategy the quote is also deleted from database.
      *
      * @api
      *
@@ -35,36 +39,55 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Adds single item
-     * - Makes zed request.
-     * - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Adds items to cart using quote storage strategy.
+     *  - Invalid items will be skipped.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $params
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addValidItems(CartChangeTransfer $cartChangeTransfer, array $params = []): QuoteTransfer;
+
+    /**
+     * Specification:
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Adds item to cart using quote storage strategy.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItem(ItemTransfer $itemTransfer);
+    public function addItem(ItemTransfer $itemTransfer, array $params = []);
 
     /**
      * Specification:
-     * - Adds multiple items (identified by SKU and quantity)
-     * - Makes zed request to stored cart into persistent store if used.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Adds items to cart using quote storage strategy.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(array $itemTransfers);
+    public function addItems(array $itemTransfers, array $params = []);
 
     /**
      * Specification:
-     *  - Removes single items from quote.
-     *  - Makes zed request.
-     *  - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Remove item from cart using quote storage strategy.
      *
      * @api
      *
@@ -87,9 +110,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Removes all given items from quote.
-     *  - Makes zed request.
-     *  - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Remove items from cart using quote storage strategy.
      *
      * @api
      *
@@ -101,9 +124,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Changes quantity for given item.
-     *  - Makes zed request.
-     *  - Returns updated quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Change item quantity using quote storage strategy.
      *
      * @api
      *
@@ -117,9 +140,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Decreases quantity for given item.
-     *  - Makes zed request.
-     *  - Returns updated quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Decrease item quantity using quote storage strategy.
      *
      * @api
      *
@@ -133,9 +156,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Increases quantity for given item.
-     *  - Makes zed request.
-     *  - Returns updated quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Increase item quantity using quote storage strategy.
      *
      * @api
      *
@@ -153,6 +176,8 @@ interface CartClientInterface
      *
      * @api
      *
+     * @deprecated Use QuoteClient::setQuote() instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -161,11 +186,65 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles using quote storage strategy.
      *
      * @api
      *
      * @return void
      */
     public function reloadItems();
+
+    /**
+     * Specification:
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles using quote storage strategy.
+     *  - Observe quote changes after reloading.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateQuote();
+
+    /**
+     * Specification:
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Update quote currency using quote storage strategy.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Takes array of MessageTransfers for the last response and push them to flash messages.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function addFlashMessagesFromLastZedRequest();
+
+    /**
+     * Specification:
+     * - Finds item in quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer;
 }

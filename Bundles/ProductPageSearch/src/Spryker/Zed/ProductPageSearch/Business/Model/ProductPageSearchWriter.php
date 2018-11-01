@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductPageSearch\Business\Model;
 
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
+use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
+use Propel\Runtime\Exception\PropelException;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
 
 /**
@@ -23,27 +26,60 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
     protected $utilEncoding;
 
     /**
-     * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
+     * @var bool
      */
-    public function __construct(ProductPageSearchToUtilEncodingInterface $utilEncoding)
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(ProductPageSearchToUtilEncodingInterface $utilEncoding, $isSendingToQueue)
     {
         $this->utilEncoding = $utilEncoding;
+        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
      * @param array $data
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch|null $productPageSearchEntity
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productPageSearchEntity
      *
      * @return void
      */
-    public function save(ProductPageSearchTransfer $productPageSearchTransfer, array $data, SpyProductAbstractPageSearch $productPageSearchEntity = null)
+    public function save(ProductPageSearchTransfer $productPageSearchTransfer, array $data, SpyProductAbstractPageSearch $productPageSearchEntity)
     {
-        if ($productPageSearchEntity === null) {
-            $productPageSearchEntity = new SpyProductAbstractPageSearch();
-        }
-
         $this->saveEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
+    }
+
+    /**
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productPageSearchEntity
+     * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
+     * @param array $data
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    protected function saveEntity(SpyProductAbstractPageSearch $productPageSearchEntity, ProductPageSearchTransfer $productPageSearchTransfer, array $data)
+    {
+        try {
+            $productPageSearchEntity->setFkProductAbstract($productPageSearchTransfer->getIdProductAbstract());
+            $this->applyChangesToEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
+            $productPageSearchEntity->save();
+        } catch (PropelException $exception) {
+            ErrorLogger::getInstance()->log($exception);
+            $productPageSearchEntity = SpyProductAbstractPageSearchQuery::create()
+                ->filterByFkProductAbstract($productPageSearchTransfer->getIdProductAbstract())
+                ->filterByLocale($productPageSearchTransfer->getLocale())
+                ->filterByStore($productPageSearchTransfer->getStore())
+                ->findOne();
+            if ($productPageSearchEntity === null) {
+                throw $exception;
+            }
+            $this->applyChangesToEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
+            $productPageSearchEntity->save();
+        }
     }
 
     /**
@@ -53,13 +89,12 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
      *
      * @return void
      */
-    protected function saveEntity(SpyProductAbstractPageSearch $productPageSearchEntity, ProductPageSearchTransfer $productPageSearchTransfer, array $data)
+    protected function applyChangesToEntity(SpyProductAbstractPageSearch $productPageSearchEntity, ProductPageSearchTransfer $productPageSearchTransfer, array $data): void
     {
-        $productPageSearchEntity->setFkProductAbstract($productPageSearchTransfer->getIdProductAbstract());
         $productPageSearchEntity->setStructuredData($this->utilEncoding->encodeJson($productPageSearchTransfer->toArray()));
         $productPageSearchEntity->setData($data);
         $productPageSearchEntity->setStore($productPageSearchTransfer->getStore());
         $productPageSearchEntity->setLocale($productPageSearchTransfer->getLocale());
-        $productPageSearchEntity->save();
+        $productPageSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
     }
 }

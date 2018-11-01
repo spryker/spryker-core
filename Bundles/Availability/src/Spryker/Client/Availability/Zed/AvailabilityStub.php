@@ -28,10 +28,13 @@ class AvailabilityStub implements AvailabilityStubInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */
     public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer)
     {
-        return $this->zedRequestClient->call('/availability/gateway/find-product-concrete-availability', $productConcreteAvailabilityRequestTransfer);
+        /** @var \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityRequestTransfer */
+        $productConcreteAvailabilityRequestTransfer = $this->zedRequestClient->call('/availability/gateway/find-product-concrete-availability', $productConcreteAvailabilityRequestTransfer);
+
+        return $productConcreteAvailabilityRequestTransfer;
     }
 }

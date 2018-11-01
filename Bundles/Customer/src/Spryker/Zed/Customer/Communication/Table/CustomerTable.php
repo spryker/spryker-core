@@ -11,23 +11,24 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CustomerTable extends AbstractTable
 {
-    const ACTIONS = 'Actions';
+    public const ACTIONS = 'Actions';
 
-    const COL_ZIP_CODE = 'zip_code';
-    const COL_CITY = 'city';
-    const COL_FK_COUNTRY = 'country';
-    const COL_CREATED_AT = 'created_at';
-    const COL_ID_CUSTOMER = 'id_customer';
-    const COL_EMAIL = 'email';
-    const COL_FIRST_NAME = 'first_name';
-    const COL_LAST_NAME = 'last_name';
+    public const COL_ZIP_CODE = 'zip_code';
+    public const COL_CITY = 'city';
+    public const COL_FK_COUNTRY = 'country';
+    public const COL_CREATED_AT = 'created_at';
+    public const COL_ID_CUSTOMER = 'id_customer';
+    public const COL_EMAIL = 'email';
+    public const COL_FIRST_NAME = 'first_name';
+    public const COL_LAST_NAME = 'last_name';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -35,18 +36,28 @@ class CustomerTable extends AbstractTable
     protected $customerQueryContainer;
 
     /**
-     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
+     * @var \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface
      */
     protected $utilDateTimeService;
 
     /**
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
+     * @var \Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface
      */
-    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, UtilDateTimeServiceInterface $utilDateTimeService)
-    {
+    protected $customerTableExpanderPluginExecutor;
+
+    /**
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
+     * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface $utilDateTimeService
+     * @param \Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface $customerTableExpanderPluginExecutor
+     */
+    public function __construct(
+        CustomerQueryContainerInterface $customerQueryContainer,
+        CustomerToUtilDateTimeServiceInterface $utilDateTimeService,
+        CustomerTableExpanderPluginExecutorInterface $customerTableExpanderPluginExecutor
+    ) {
         $this->customerQueryContainer = $customerQueryContainer;
         $this->utilDateTimeService = $utilDateTimeService;
+        $this->customerTableExpanderPluginExecutor = $customerTableExpanderPluginExecutor;
     }
 
     /**
@@ -118,7 +129,7 @@ class CustomerTable extends AbstractTable
      *
      * @return string
      */
-    protected function buildLinks(SpyCustomer $customer = null)
+    protected function buildLinks(?SpyCustomer $customer = null)
     {
         if ($customer === null) {
             return '';
@@ -127,6 +138,8 @@ class CustomerTable extends AbstractTable
         $buttons = [];
         $buttons[] = $this->generateViewButton('/customer/view?id-customer=' . $customer->getIdCustomer(), 'View');
         $buttons[] = $this->generateEditButton('/customer/edit?id-customer=' . $customer->getIdCustomer(), 'Edit');
+
+        $buttons = $this->expandLinks($buttons, $customer);
 
         return implode(' ', $buttons);
     }
@@ -190,12 +203,37 @@ class CustomerTable extends AbstractTable
      */
     protected function prepareQuery()
     {
-        $query = $this->customerQueryContainer->queryCustomers()
-            ->leftJoinBillingAddress()
-            ->withColumn(SpyCustomerAddressTableMap::COL_ZIP_CODE, self::COL_ZIP_CODE)
+        $query = $this->customerQueryContainer
+            ->queryCustomers()
+            ->leftJoinBillingAddress();
+
+        $query->withColumn(SpyCustomerAddressTableMap::COL_ZIP_CODE, self::COL_ZIP_CODE)
             ->withColumn(SpyCustomerAddressTableMap::COL_CITY, self::COL_CITY)
             ->withColumn(SpyCustomerAddressTableMap::COL_FK_COUNTRY, self::COL_FK_COUNTRY);
 
         return $query;
+    }
+
+    /**
+     * @param string[] $buttons
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
+     *
+     * @return string[]
+     */
+    protected function expandLinks(array $buttons, SpyCustomer $customer): array
+    {
+        $expandedButtons = $this->customerTableExpanderPluginExecutor
+            ->executeActionExpanderPlugins($customer->getIdCustomer());
+
+        foreach ($expandedButtons as $button) {
+            $buttons[] = $this->generateButton(
+                $button->getUrl(),
+                $button->getTitle(),
+                $button->getDefaultOptions(),
+                $button->getCustomOptions()
+            );
+        }
+
+        return $buttons;
     }
 }

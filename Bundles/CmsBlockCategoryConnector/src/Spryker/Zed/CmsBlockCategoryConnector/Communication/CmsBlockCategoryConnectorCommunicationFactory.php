@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @var string
+     * @var \Generated\Shared\Transfer\LocaleTransfer|null
      */
     protected $currentLocale;
 
@@ -63,7 +63,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
      */
     public function createCategoryType()
     {
-        return new CategoryType;
+        return new CategoryType();
     }
 
     /**

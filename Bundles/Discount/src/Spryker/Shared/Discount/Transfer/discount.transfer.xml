@@ -43,9 +43,9 @@
         <property name="shippingAddress" type="Address"/>
         <property name="customer" type="Customer"/>
         <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
         <property name="priceMode" type="string" />
-        <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
         <property name="currency" type="Currency" />
     </transfer>
 
@@ -61,6 +61,15 @@
         <property name="unitPrice" type="int"/>
         <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
         <property name="originalItem" type="Item" />
+    </transfer>
+
+    <transfer name="DiscountableItemTransformer">
+        <property name="discountableItem" type="DiscountableItem"/>
+        <property name="discount" type="Discount"/>
+        <property name="totalDiscountAmount" type="int"/>
+        <property name="totalAmount" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="roundingError" type="float"/>
     </transfer>
 
     <transfer name="CollectedDiscount">

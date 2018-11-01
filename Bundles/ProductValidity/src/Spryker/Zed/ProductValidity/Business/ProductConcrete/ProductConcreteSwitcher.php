@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -86,7 +87,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     /**
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable
      */
-    protected function findProductsBecomingActive(): \Traversable
+    protected function findProductsBecomingActive(): Traversable
     {
         return $this
             ->queryContainer
@@ -97,7 +98,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     /**
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable
      */
-    protected function findProductsBecomingInactive(): \Traversable
+    protected function findProductsBecomingInactive(): Traversable
     {
         return $this
             ->queryContainer

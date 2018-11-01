@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductSetStorageQueryContainer extends AbstractQueryContainer implements ProductSetStorageQueryContainerInterface
 {
-    const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
+    public const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
 
     /**
      * @api
@@ -38,9 +38,10 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
             ->joinWithSpyLocale()
             ->joinWithSpyProductSet()
             ->joinWith('SpyProductSet.SpyProductAbstractSet')
-            ->joinWith('SpyProductSet.SpyProductImageSet')
-            ->joinWith('SpyProductImageSet.SpyProductImageSetToProductImage')
-            ->joinWith('SpyProductImageSetToProductImage.SpyProductImage')
+            ->joinWith('SpyProductSet.SpyProductImageSet', Criteria::LEFT_JOIN)
+            ->addJoinCondition('SpyProductImageSet', sprintf('(spy_product_image_set.fk_locale = %s or spy_product_image_set.fk_locale is null)', SpyProductSetDataTableMap::COL_FK_LOCALE))
+            ->joinWith('SpyProductImageSet.SpyProductImageSetToProductImage', Criteria::LEFT_JOIN)
+            ->joinWith('SpyProductImageSetToProductImage.SpyProductImage', Criteria::LEFT_JOIN)
             ->filterByFkProductSet_In($productSetIds)
             ->addJoin(
                 SpyProductSetTableMap::COL_ID_PRODUCT_SET,
@@ -101,6 +102,23 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
             ->withColumn('DISTINCT ' . SpyProductImageSetTableMap::COL_FK_RESOURCE_PRODUCT_SET, static::FK_PRODUCT_RESOURCE_SET)
             ->select([static::FK_PRODUCT_RESOURCE_SET])
             ->addAnd(SpyProductImageSetTableMap::COL_FK_RESOURCE_PRODUCT_SET, null, ModelCriteria::NOT_EQUAL);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $productSetIds
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSetByIds($productSetIds)
+    {
+        $query = $this->getFactory()
+            ->getProductSetQueryContainer()
+            ->queryProductSet()
+            ->filterByIdProductSet_In($productSetIds);
 
         return $query;
     }

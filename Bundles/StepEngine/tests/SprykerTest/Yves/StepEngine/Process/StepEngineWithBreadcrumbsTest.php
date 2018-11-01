@@ -24,7 +24,7 @@ use SprykerTest\Yves\StepEngine\Process\Fixtures\StepMockWithBreadcrumbs;
  */
 class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
 {
-    const FORM_NAME = 'formName';
+    public const FORM_NAME = 'formName';
 
     /**
      * @return void
@@ -50,11 +50,11 @@ class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */
-    protected function getDataContainerMock(AbstractTransfer $dataTransfer = null)
+    protected function getDataContainerMock(?AbstractTransfer $dataTransfer = null)
     {
         $dataContainerMock = $this->getMockBuilder(DataContainerInterface::class)->getMock();
 

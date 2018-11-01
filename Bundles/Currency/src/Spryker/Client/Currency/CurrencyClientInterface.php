@@ -14,7 +14,7 @@ interface CurrencyClientInterface
 {
     /**
      * Specification:
-     *  - Reads currency data for given iso code, it does not make zed call so it wont have foreign keys to currency table.
+     *  - Reads currency data for given ISO code, it does not make Zed call so it wont have foreign keys to currency table.
      *
      * @api
      *
@@ -33,4 +33,17 @@ interface CurrencyClientInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent();
+
+    /**
+     * Specification:
+     * - Sets selected currency to customer session.
+     * - Calls currency post change plugins.
+     *
+     * @api
+     *
+     * @param string $currencyIsoCode
+     *
+     * @return void
+     */
+    public function setCurrentCurrencyIsoCode(string $currencyIsoCode): void;
 }

@@ -18,7 +18,7 @@ use Spryker\Service\FileSystem\Dependency\Plugin\FileSystemWriterPluginInterface
 use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Service\Flysystem\FlysystemServiceInterface getService
+ * @method \Spryker\Service\Flysystem\FlysystemServiceInterface getService()
  */
 class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterPluginInterface
 {

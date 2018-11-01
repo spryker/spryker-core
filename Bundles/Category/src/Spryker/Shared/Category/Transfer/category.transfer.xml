@@ -20,11 +20,20 @@
         <property name="metaKeywords" type="string" />
 
         <property name="categoryNode" type="Node" />
+        <property name="nodeCollection" type="NodeCollection" />
         <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" />
 
         <property name="parentCategoryNode" type="Node" />
         <property name="extraParents" singular="extraParent" type="Node[]" />
         <property name="fkCategoryTemplate" type="int" />
+    </transfer>
+
+    <transfer name="CategoryCollection">
+        <property name="categories" type="Category[]" singular="category" />
+    </transfer>
+
+    <transfer name="NodeCollection">
+        <property name="nodes" type="Node[]" singular="node" />
     </transfer>
 
     <transfer name="CategoryTemplate">

@@ -24,7 +24,7 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer|null $propelQueryBuilderPaginationTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */

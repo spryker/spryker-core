@@ -28,7 +28,10 @@ use Spryker\Zed\Discount\Business\DecisionRule\PriceModeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule;
+use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformer;
+use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
+use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Filter\DiscountableItemFilter;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapper;
@@ -48,6 +51,8 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProvide
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Business\QueryString\Validator;
+use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserver;
+use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserverInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
@@ -109,9 +114,12 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Discount\Business\Distributor\DistributorInterface
      */
-    public function createDistributor()
+    public function createDistributor(): DistributorInterface
     {
-        return new Distributor();
+        return new Distributor(
+            $this->createDiscountableItemTransformer(),
+            $this->getDiscountableItemTransformerStrategyPlugins()
+        );
     }
 
     /**
@@ -139,6 +147,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function getDecisionRulePlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
+     */
+    public function getDiscountableItemTransformerStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY);
     }
 
     /**
@@ -606,5 +622,21 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createDiscountStoreRelationMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserverInterface
+     */
+    public function createQuoteChangeObserver(): QuoteChangeObserverInterface
+    {
+        return new QuoteChangeObserver($this->getMessengerFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface
+     */
+    public function createDiscountableItemTransformer(): DiscountableItemTransformerInterface
+    {
+        return new DiscountableItemTransformer();
     }
 }

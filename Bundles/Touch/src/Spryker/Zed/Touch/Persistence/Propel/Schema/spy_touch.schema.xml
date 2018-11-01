@@ -12,18 +12,17 @@
             <unique-column name="item_event"/>
             <unique-column name="item_type"/>
         </unique>
-        <index name="spy_touch-index-touched">
-            <index-column name="touched"/>
-        </index>
+
         <index name="spy_touch-index-item_id">
             <index-column name="item_id"/>
         </index>
-        <index name="spy_touch-index-item_type">
-            <index-column name="item_type"/>
-        </index>
-        <index name="spy_touch-index-item_event">
+
+        <index name="index_spy_touch-item_event_item_type_touched">
             <index-column name="item_event"/>
+            <index-column name="item_type"/>
+            <index-column name="touched"/>
         </index>
+
         <id-method-parameter value="spy_touch_pk_seq"/>
         <behavior name="query_cache">
             <parameter name="backend" value="custom" />

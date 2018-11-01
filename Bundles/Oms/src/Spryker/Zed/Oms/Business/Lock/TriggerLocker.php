@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -42,18 +43,21 @@ class TriggerLocker implements LockerInterface
      * Attempts to save a lock entity, and if it fails due to unique identifier constraint (entity already locked) -
      * throws a LockException
      *
-     * @param int $identifier
+     * @param string $identifier
+     * @param string|null $details
      *
      * @throws \Spryker\Zed\Oms\Business\Exception\LockException
      *
      * @return bool
      */
-    public function acquire($identifier)
+    public function acquire($identifier, $details = null)
     {
         $stateMachineLockEntity = $this->createStateMachineLockEntity();
 
         $stateMachineLockEntity->setIdentifier($identifier);
         $stateMachineLockEntity->setExpires($this->createExpirationDate());
+        $stateMachineLockEntity->setDetails($details);
+
         try {
             $affectedRows = $stateMachineLockEntity->save();
         } catch (PropelException $exception) {
@@ -71,7 +75,7 @@ class TriggerLocker implements LockerInterface
     }
 
     /**
-     * @param int $identifier
+     * @param string $identifier
      *
      * @return void
      */

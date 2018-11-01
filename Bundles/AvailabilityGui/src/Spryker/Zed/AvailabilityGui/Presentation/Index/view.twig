@@ -5,13 +5,18 @@
 
 {% block action %}
     {{ backActionButton('/availability-gui', 'List of product availability' | trans) }}
+
 {% endblock %}
 
 {% block content %}
 
+    {% include '@AvailabilityGui/_partials/store_switcher.twig' %}
+
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Abstract product availability' } %}
         {% block widget_content %}
             <div class="row">
+
+              {% if productAbstractAvailability %}
                 <div class="col-lg-2">
                     <p><b>{{ 'SKU' | trans }}</b></p><p> {{ productAbstractAvailability.sku }}</p>
                 </div>
@@ -38,9 +43,14 @@
                         <b>{{ 'Is never out of stock' | trans }}:</b>
                     </p>
                     <p>
-                        {{  productAbstractAvailability.isNeverOutOfStock ? 'Yes' | trans : 'No' | trans }}
+                        {{ productAbstractAvailability.isNeverOutOfStock ? 'Yes' | trans : 'No' | trans }}
                     </p>
                 </div>
+                {% else %}
+                    <div class="alert alert-danger">
+                        {{ 'Availability information for selected product - store pair does not exist.' | trans }}
+                    </div>
+                {% endif %}
             </div>
 
         {% endblock %}

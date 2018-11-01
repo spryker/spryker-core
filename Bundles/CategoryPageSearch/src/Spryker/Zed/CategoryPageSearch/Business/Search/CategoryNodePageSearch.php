@@ -123,9 +123,11 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
             foreach ($categoryTreeWithLocales as $localeName => $categoryTreeWithLocale) {
                 if (isset($spyCategoryNodePageSearchEntities[$categoryNodeId][$localeName])) {
                     $this->storeDataSet($categoryTreeWithLocale, $localeName, $spyCategoryNodePageSearchEntities[$categoryNodeId][$localeName]);
-                } else {
-                    $this->storeDataSet($categoryTreeWithLocale, $localeName);
+
+                    continue;
                 }
+
+                $this->storeDataSet($categoryTreeWithLocale, $localeName);
             }
         }
     }
@@ -137,7 +139,7 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
      *
      * @return void
      */
-    protected function storeDataSet(SpyCategoryNode $spyCategoryNodeEntity, $localeName, SpyCategoryNodePageSearch $spyCategoryNodePageSearchEntity = null)
+    protected function storeDataSet(SpyCategoryNode $spyCategoryNodeEntity, $localeName, ?SpyCategoryNodePageSearch $spyCategoryNodePageSearchEntity = null)
     {
         if ($spyCategoryNodePageSearchEntity === null) {
             $spyCategoryNodePageSearchEntity = new SpyCategoryNodePageSearch();
@@ -156,7 +158,6 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
         $spyCategoryNodePageSearchEntity->setFkCategoryNode($spyCategoryNodeEntity->getIdCategoryNode());
         $spyCategoryNodePageSearchEntity->setStructuredData($this->utilEncoding->encodeJson($categoryTreeNodeData));
         $spyCategoryNodePageSearchEntity->setData($data);
-        $spyCategoryNodePageSearchEntity->setStore($this->store->getStoreName());
         $spyCategoryNodePageSearchEntity->setLocale($localeName);
         $spyCategoryNodePageSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyCategoryNodePageSearchEntity->save();

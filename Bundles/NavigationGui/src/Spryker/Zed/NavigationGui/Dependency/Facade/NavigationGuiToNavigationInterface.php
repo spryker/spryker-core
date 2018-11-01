@@ -76,7 +76,7 @@ interface NavigationGuiToNavigationInterface
      *
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer
      */
-    public function findNavigationTree(NavigationTransfer $navigationTransfer, LocaleTransfer $localeTransfer = null);
+    public function findNavigationTree(NavigationTransfer $navigationTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTreeTransfer $navigationTreeTransfer

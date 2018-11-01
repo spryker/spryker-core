@@ -42,7 +42,7 @@ class Environment
     protected static function defineEnvironment()
     {
         if (!defined('APPLICATION_ENV')) {
-            $env = getenv('APPLICATION_ENV');
+            $env = getenv('APPLICATION_ENV', true) ?: getenv('APPLICATION_ENV');
             if (!$env) {
                 if (file_exists(APPLICATION_ROOT_DIR . '/config/Shared/console_env_local.php')) {
                     $env = require APPLICATION_ROOT_DIR . '/config/Shared/console_env_local.php';
@@ -62,7 +62,7 @@ class Environment
     protected static function defineStore()
     {
         if (!defined('APPLICATION_STORE')) {
-            $store = getenv('APPLICATION_STORE');
+            $store = getenv('APPLICATION_STORE', true) ?: getenv('APPLICATION_STORE');
             if (!$store) {
                 if (file_exists(APPLICATION_ROOT_DIR . '/config/Shared/default_store.php')) {
                     $store = require APPLICATION_ROOT_DIR . '/config/Shared/default_store.php';
@@ -84,10 +84,11 @@ class Environment
     protected static function defineApplication()
     {
         if (!defined('APPLICATION')) {
-            if (!getenv('APPLICATION')) {
+            $application = getenv('APPLICATION', true) ?: getenv('APPLICATION');
+            if (!$application) {
                 throw new Exception('Can not get APPLICATION environment variable');
             }
-            define('APPLICATION', getenv('APPLICATION'));
+            define('APPLICATION', $application);
         }
     }
 
@@ -99,10 +100,11 @@ class Environment
     protected static function defineApplicationRootDir()
     {
         if (!defined('APPLICATION_ROOT_DIR')) {
-            if (!getenv('APPLICATION_ROOT_DIR')) {
+            $applicationRootDir = getenv('APPLICATION_ROOT_DIR', true) ?: getenv('APPLICATION_ROOT_DIR');
+            if (!$applicationRootDir) {
                 throw new Exception('Can not get APPLICATION_ROOT_DIR environment variable');
             }
-            define('APPLICATION_ROOT_DIR', getenv('APPLICATION_ROOT_DIR'));
+            define('APPLICATION_ROOT_DIR', $applicationRootDir);
         }
     }
 
@@ -112,10 +114,11 @@ class Environment
     protected static function defineApplicationSourceDir()
     {
         if (!defined('APPLICATION_SOURCE_DIR')) {
-            if (!getenv('APPLICATION_SOURCE_DIR')) {
+            $applicationSourceDir = getenv('APPLICATION_SOURCE_DIR', true) ?: getenv('APPLICATION_SOURCE_DIR');
+            if (!$applicationSourceDir) {
                 define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . '/src');
             } else {
-                define('APPLICATION_SOURCE_DIR', getenv('APPLICATION_SOURCE_DIR'));
+                define('APPLICATION_SOURCE_DIR', $applicationSourceDir);
             }
         }
     }
@@ -126,10 +129,11 @@ class Environment
     protected static function defineApplicationStaticDir()
     {
         if (!defined('APPLICATION_STATIC_DIR')) {
-            if (!getenv('APPLICATION_STATIC_DIR')) {
+            $applicationStaticDir = getenv('APPLICATION_STATIC_DIR', true) ?: getenv('APPLICATION_STATIC_DIR');
+            if (!$applicationStaticDir) {
                 define('APPLICATION_STATIC_DIR', APPLICATION_ROOT_DIR . '/static');
             } else {
-                define('APPLICATION_STATIC_DIR', getenv('APPLICATION_STATIC_DIR'));
+                define('APPLICATION_STATIC_DIR', $applicationStaticDir);
             }
         }
     }
@@ -140,10 +144,11 @@ class Environment
     protected static function defineApplicationVendorDir()
     {
         if (!defined('APPLICATION_VENDOR_DIR')) {
-            if (!getenv('APPLICATION_VENDOR_DIR')) {
+            $applicationVendorDir = getenv('APPLICATION_VENDOR_DIR', true) ?: getenv('APPLICATION_VENDOR_DIR');
+            if (!$applicationVendorDir) {
                 define('APPLICATION_VENDOR_DIR', APPLICATION_ROOT_DIR . '/vendor');
             } else {
-                define('APPLICATION_VENDOR_DIR', getenv('APPLICATION_VENDOR_DIR'));
+                define('APPLICATION_VENDOR_DIR', $applicationVendorDir);
             }
         }
     }
@@ -154,10 +159,11 @@ class Environment
     protected static function defineApplicationDataDir()
     {
         if (!defined('APPLICATION_DATA')) {
-            if (!getenv('APPLICATION_DATA')) {
+            $applicationData = getenv('APPLICATION_DATA', true) ?: getenv('APPLICATION_DATA');
+            if (!$applicationData) {
                 define('APPLICATION_DATA', APPLICATION_ROOT_DIR . '/data');
             } else {
-                define('APPLICATION_DATA', getenv('APPLICATION_DATA'));
+                define('APPLICATION_DATA', $applicationData);
             }
         }
     }

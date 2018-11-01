@@ -7,19 +7,19 @@
 
 namespace Spryker\Client\CheckoutPermissionConnector\Plugin;
 
-use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
 /**
  * @example
  */
 class CheckoutPlaceOrderPermissionPlugin implements PermissionPluginInterface
 {
-    const KEY = 'permission.checkout.placeOrder';
+    public const KEY = 'permission.checkout.placeOrder';
 
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return self::KEY;
     }

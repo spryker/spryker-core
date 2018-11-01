@@ -10,6 +10,9 @@ namespace Spryker\Client\ProductCategoryFilterStorage;
 interface ProductCategoryFilterStorageClientInterface
 {
     /**
+     * Specification:
+     *  - Return product category filter storage data by category id.
+     *
      * @api
      *
      * @param int $idCategory

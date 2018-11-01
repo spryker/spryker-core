@@ -9,12 +9,12 @@ namespace Spryker\Zed\Company\Persistence;
 
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\Company\Persistence\SpyCompanyStoreQuery;
-use Spryker\Zed\Company\Persistence\Propel\Mapper\CompanyMapper;
-use Spryker\Zed\Company\Persistence\Propel\Mapper\CompanyMapperInterface;
+use Spryker\Zed\Company\Persistence\Mapper\CompanyMapper;
+use Spryker\Zed\Company\Persistence\Mapper\CompanyMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
- * @method \Spryker\Zed\Company\Persistence\CompanyQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Company\CompanyConfig getConfig()
  */
 class CompanyPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -35,7 +35,7 @@ class CompanyPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Company\Persistence\Propel\Mapper\CompanyMapperInterface
+     * @return \Spryker\Zed\Company\Persistence\Mapper\CompanyMapperInterface
      */
     public function createCompanyMapper(): CompanyMapperInterface
     {

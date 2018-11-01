@@ -20,11 +20,11 @@
             <unique-column name="fk_store"/>
         </unique>
 
-        <foreign-key name="spy_company_store-fk_company" foreignTable="spy_company" phpName="Company" refPhpName="Company">
+        <foreign-key name="spy_company_store-fk_company" foreignTable="spy_company" phpName="Company">
             <reference local="fk_company" foreign="id_company"/>
         </foreign-key>
 
-        <foreign-key name="spy_company_store-fk_store" foreignTable="spy_store" phpName="CompanyStore" refPhpName="CompanyStore">
+        <foreign-key name="spy_company_store-fk_store" foreignTable="spy_store" phpName="Store">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
 

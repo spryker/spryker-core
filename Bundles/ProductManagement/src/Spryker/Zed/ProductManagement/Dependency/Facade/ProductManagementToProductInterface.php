@@ -127,7 +127,7 @@ interface ProductManagementToProductInterface
      *
      * @return array
      */
-    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer = null);
+    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -135,7 +135,7 @@ interface ProductManagementToProductInterface
      *
      * @return array
      */
-    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer = null);
+    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param int $idProductAbstract
@@ -150,4 +150,19 @@ interface ProductManagementToProductInterface
      * @return void
      */
     public function touchProductConcrete($idProductConcrete);
+
+    /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    public function findProductConcreteIdBySku($sku);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string
+     */
+    public function generateProductConcreteSku(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer);
 }

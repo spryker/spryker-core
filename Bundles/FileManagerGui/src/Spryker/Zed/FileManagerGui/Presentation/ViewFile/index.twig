@@ -1,0 +1,20 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'View file' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton('/file-manager-gui/directories-tree', 'Back to File Tree' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    <h2>{{ file.fileName }}</h2>
+
+    {% if fileInfoTable %}
+        {{ fileInfoTable | raw }}
+    {% endif %}
+
+{% endblock %}

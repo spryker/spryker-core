@@ -8,8 +8,11 @@
 namespace Spryker\Client\CompanyBusinessUnit;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyBusinessUnitClientInterface
 {
@@ -21,11 +24,11 @@ interface CompanyBusinessUnitClientInterface
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
     public function getCompanyBusinessUnitById(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitResponseTransfer;
+    ): CompanyBusinessUnitTransfer;
 
     /**
      * Specification:
@@ -65,9 +68,11 @@ interface CompanyBusinessUnitClientInterface
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function deleteCompanyBusinessUnit(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool;
+    public function deleteCompanyBusinessUnit(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer;
 
     /**
      * Specification:
@@ -75,11 +80,23 @@ interface CompanyBusinessUnitClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
     public function getCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns hierarchy tree of company business units relation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
+     */
+    public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer;
 }

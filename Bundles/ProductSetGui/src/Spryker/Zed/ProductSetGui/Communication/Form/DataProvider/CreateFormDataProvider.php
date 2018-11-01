@@ -114,7 +114,7 @@ class CreateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    protected function getImagesDefaultFields(LocaleTransfer $localeTransfer = null)
+    protected function getImagesDefaultFields(?LocaleTransfer $localeTransfer = null)
     {
         return [
             LocalizedProductImageSetFormType::FIELD_FK_LOCALE => ($localeTransfer ? $localeTransfer->getIdLocale() : null),

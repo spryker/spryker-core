@@ -92,4 +92,8 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="WishlistPreAddItemCheckResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
 </transfers>

@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQueryContainerInterface
 {
-    const COL_MAX_TAX_RATE = 'MaxTaxRate';
+    public const COL_MAX_TAX_RATE = 'MaxTaxRate';
 
     /**
      * @api
@@ -231,5 +231,17 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
         }
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod)
+    {
+        return $this->queryActiveMethods()->filterByIdShipmentMethod($idShipmentMethod);
     }
 }

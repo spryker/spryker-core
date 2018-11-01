@@ -1,5 +1,6 @@
 {
   "name": "spryker/oms",
+  "type": "library",
   "description": "Oms module",
   "license": "proprietary",
   "require": {
@@ -10,17 +11,16 @@
     "spryker/mail": "^4.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/store": "^1.5.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-network": "^1.1.0",
     "spryker/util-sanitize": "^2.0.0",
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/checkout": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

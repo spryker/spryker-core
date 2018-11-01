@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\CompanyUnitAddress;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -73,16 +75,16 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
     public function getCompanyUnitAddressCollection(
-        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
         return $this->getFactory()
             ->createZedCompanyUnitAddressStub()
-            ->getCompanyUnitAddressCollection($companyUnitAddressCollectionTransfer);
+            ->getCompanyUnitAddressCollection($criteriaFilterTransfer);
     }
 
     /**
@@ -92,11 +94,11 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
     public function getCompanyUnitAddressById(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
+    ): CompanyUnitAddressTransfer {
         return $this->getFactory()
             ->createZedCompanyUnitAddressStub()
             ->getCompanyUnitAddressById($companyUnitAddressTransfer);
@@ -105,38 +107,17 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
     /**
      * {@inheritdoc}
      *
-     * @deprecated
-     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     * @return void
      */
-    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
-        return $this->getFactory()
+    public function saveCompanyBusinessUnitAddresses(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): void {
+        $this->getFactory()
             ->createZedCompanyUnitAddressStub()
-            ->updateCompanyUnitAddressAndBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
-        return $this->getFactory()
-            ->createZedCompanyUnitAddressStub()
-            ->createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
+            ->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
     }
 }

@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class UrlStorageClient extends AbstractClient implements UrlStorageClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $url
@@ -28,5 +30,22 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
             ->getFactory()
             ->createUrlStorageReader()
             ->matchUrl($url, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $url
+     *
+     * @return \Generated\Shared\Transfer\UrlStorageTransfer|null
+     */
+    public function findUrlStorageTransferByUrl($url)
+    {
+        return $this
+            ->getFactory()
+            ->createUrlStorageReader()
+            ->findUrlStorageTransferByUrl($url);
     }
 }

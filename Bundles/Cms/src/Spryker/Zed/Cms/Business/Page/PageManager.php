@@ -240,7 +240,7 @@ class PageManager implements PageManagerInterface
      *
      * @return void
      */
-    public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $localeTransfer = null)
+    public function touchPageActive(PageTransfer $pageTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $pageMappings = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($pageTransfer->getIdCmsPage())
             ->find();
@@ -347,16 +347,16 @@ class PageManager implements PageManagerInterface
      */
     protected function getLocaleTransfer($idLocale)
     {
-        $localEntity = $this->cmsQueryContainer->queryLocaleById($idLocale)->findOne();
+        $localeEntity = $this->cmsQueryContainer->queryLocaleById($idLocale)->findOne();
 
-        if ($localEntity === null) {
+        if ($localeEntity === null) {
             throw new LocaleNotFoundException(
                 sprintf('Locale with id %s not found', $idLocale)
             );
         }
 
         $localTransfer = new LocaleTransfer();
-        $localTransfer->fromArray($localEntity->toArray());
+        $localTransfer->fromArray($localeEntity->toArray());
 
         return $localTransfer;
     }

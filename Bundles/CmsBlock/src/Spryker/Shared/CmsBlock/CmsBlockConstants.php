@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\CmsBlock;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CmsBlockConstants
 {
     /**
@@ -15,7 +18,7 @@ interface CmsBlockConstants
      *
      * @api
      */
-    const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';
+    public const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';
 
     /**
      * Specification
@@ -23,5 +26,5 @@ interface CmsBlockConstants
      *
      * @api
      */
-    const YVES_THEME = 'YVES_THEME';
+    public const YVES_THEME = 'YVES_THEME';
 }

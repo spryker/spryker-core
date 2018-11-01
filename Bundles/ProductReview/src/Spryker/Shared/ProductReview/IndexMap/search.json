@@ -5,7 +5,7 @@
         {
           "search-result-data": {
             "mapping": {
-              "index": "no"
+              "index": "false"
             },
             "path_match": "search-result-data.*"
           }
@@ -20,14 +20,12 @@
           }
         },
         "store": {
-          "type": "string",
-          "include_in_all": false,
-          "index": "not_analyzed"
+          "type": "keyword",
+          "include_in_all": false
         },
         "locale": {
-          "type": "string",
-          "include_in_all": false,
-          "index": "not_analyzed"
+          "type": "keyword",
+          "include_in_all": false
         },
         "id-product-abstract": {
           "type": "integer",
@@ -38,9 +36,8 @@
           "include_in_all": false
         },
         "created-at": {
-          "type": "string",
-          "include_in_all": false,
-          "index": "not_analyzed"
+          "type": "keyword",
+          "include_in_all": false
         }
       }
     }

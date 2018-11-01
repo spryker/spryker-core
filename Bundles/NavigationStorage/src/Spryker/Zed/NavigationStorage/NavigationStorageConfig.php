@@ -11,4 +11,19 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class NavigationStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @return bool
+     */
+    public function isSendingToQueue(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNavigationSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }

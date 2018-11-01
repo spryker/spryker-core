@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsBlockCollector\Dependency\Service;
 interface CmsBlockCollectorToUtilEncodingInterface
 {
     /**
-     * @param string $value
+     * @param array $value
      * @param int|null $options
      * @param int|null $depth
      *

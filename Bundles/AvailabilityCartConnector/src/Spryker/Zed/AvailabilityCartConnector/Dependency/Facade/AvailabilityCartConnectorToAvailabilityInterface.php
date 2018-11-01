@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface AvailabilityCartConnectorToAvailabilityInterface
 {
     /**
@@ -23,4 +25,21 @@ interface AvailabilityCartConnectorToAvailabilityInterface
      * @return int
      */
     public function calculateStockForProduct($sku);
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer);
 }

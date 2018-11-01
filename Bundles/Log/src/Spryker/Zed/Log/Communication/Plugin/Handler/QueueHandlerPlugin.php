@@ -36,6 +36,8 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
     }
 
     /**
+     * @api
+     *
      * @param array $record
      *
      * @return bool
@@ -50,6 +52,8 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
     }
 
     /**
+     * @api
+     *
      * @param array $record
      *
      * @return bool
@@ -60,6 +64,8 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
     }
 
     /**
+     * @api
+     *
      * @param array $records
      *
      * @return mixed
@@ -70,6 +76,8 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
     }
 
     /**
+     * @api
+     *
      * @param callable $callback
      *
      * @return \Monolog\Handler\HandlerInterface
@@ -80,6 +88,8 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
     }
 
     /**
+     * @api
+     *
      * @return callable
      */
     public function popProcessor()
@@ -88,6 +98,8 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
     }
 
     /**
+     * @api
+     *
      * @param \Monolog\Formatter\FormatterInterface $formatter
      *
      * @return \Monolog\Handler\HandlerInterface
@@ -98,6 +110,8 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
     }
 
     /**
+     * @api
+     *
      * @return \Monolog\Formatter\FormatterInterface
      */
     public function getFormatter()

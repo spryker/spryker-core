@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Quote">
+        <property name="cartNote" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="cartNote" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="cartNote" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="QuoteCartNoteRequest">
+        <property name="idQuote" type="int"/>
+        <property name="customer" type="Customer"/>
+        <property name="cartNote" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteItemCartNoteRequest">
+        <property name="idQuote" type="int"/>
+        <property name="customer" type="Customer"/>
+        <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
+        <property name="cartNote" type="string"/>
+    </transfer>
+
+</transfers>
+

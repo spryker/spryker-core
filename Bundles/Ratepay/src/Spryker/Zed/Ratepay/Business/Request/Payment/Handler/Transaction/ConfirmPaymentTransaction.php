@@ -12,7 +12,7 @@ use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 
 class ConfirmPaymentTransaction extends BaseTransaction implements OrderTransactionInterface
 {
-    const TRANSACTION_TYPE = ApiConstants::REQUEST_MODEL_PAYMENT_CONFIRM;
+    public const TRANSACTION_TYPE = ApiConstants::REQUEST_MODEL_PAYMENT_CONFIRM;
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -23,7 +23,7 @@ class ConfirmPaymentTransaction extends BaseTransaction implements OrderTransact
      */
     public function request(
         OrderTransfer $orderTransfer,
-        OrderTransfer $partialOrderTransfer = null,
+        ?OrderTransfer $partialOrderTransfer = null,
         array $orderItems = []
     ) {
         $paymentMethod = $this->getPaymentMethod($orderTransfer);

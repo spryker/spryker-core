@@ -24,9 +24,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class NavigationFormType extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_KEY = 'key';
-    const FIELD_IS_ACTIVE = 'is_active';
+    public const FIELD_NAME = 'name';
+    public const FIELD_KEY = 'key';
+    public const FIELD_IS_ACTIVE = 'is_active';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -131,7 +131,7 @@ class NavigationFormType extends AbstractType
      *
      * @return int|null
      */
-    protected function getIdNavigation(NavigationTransfer $navigationTransfer = null)
+    protected function getIdNavigation(?NavigationTransfer $navigationTransfer = null)
     {
         if (!$navigationTransfer) {
             return null;

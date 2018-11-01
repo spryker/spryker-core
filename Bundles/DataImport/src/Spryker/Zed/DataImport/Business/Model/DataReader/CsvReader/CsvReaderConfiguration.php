@@ -9,14 +9,15 @@ namespace Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader;
 
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use SplFileObject;
+use Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolverInterface;
 
 class CsvReaderConfiguration implements CsvReaderConfigurationInterface
 {
-    const DEFAULT_HAS_HEADER = true;
-    const DEFAULT_DELIMITER = ',';
-    const DEFAULT_ENCLOSURE = '"';
-    const DEFAULT_ESCAPE = '\\';
-    const DEFAULT_FLAGS = SplFileObject::READ_CSV | SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD | SplFileObject::DROP_NEW_LINE;
+    public const DEFAULT_HAS_HEADER = true;
+    public const DEFAULT_DELIMITER = ',';
+    public const DEFAULT_ENCLOSURE = '"';
+    public const DEFAULT_ESCAPE = '\\';
+    public const DEFAULT_FLAGS = SplFileObject::READ_CSV | SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD | SplFileObject::DROP_NEW_LINE;
 
     /**
      * @var \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer
@@ -24,11 +25,18 @@ class CsvReaderConfiguration implements CsvReaderConfigurationInterface
     protected $dataImporterReaderConfigurationTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer
+     * @var \Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolverInterface
      */
-    public function __construct(DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer)
+    protected $fileResolver;
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer
+     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolverInterface $fileResolver
+     */
+    public function __construct(DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer, FileResolverInterface $fileResolver)
     {
         $this->dataImporterReaderConfigurationTransfer = $dataImporterReaderConfigurationTransfer;
+        $this->fileResolver = $fileResolver;
     }
 
     /**
@@ -52,7 +60,7 @@ class CsvReaderConfiguration implements CsvReaderConfigurationInterface
      */
     public function getFileName()
     {
-        return $this->dataImporterReaderConfigurationTransfer->requireFileName()->getFileName();
+        return $this->fileResolver->resolveFile($this->dataImporterReaderConfigurationTransfer);
     }
 
     /**

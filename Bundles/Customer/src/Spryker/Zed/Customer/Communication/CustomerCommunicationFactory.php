@@ -15,6 +15,8 @@ use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerFormDataProvide
 use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerUpdateFormDataProvider;
 use Spryker\Zed\Customer\Communication\Table\AddressTable;
 use Spryker\Zed\Customer\Communication\Table\CustomerTable;
+use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutor;
+use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -31,7 +33,8 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CustomerTable(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_DATE_FORMATTER)
+            $this->getUtilDateTimeService(),
+            $this->createCustomerTableActionPluginExecutor()
         );
     }
 
@@ -140,5 +143,47 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     protected function getUtilSanitizeService()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_SANITIZE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Application\Business\Model\Request\SubRequestHandlerInterface
+     */
+    public function getSubRequestHandler()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SUB_REQUEST_HANDLER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface
+     */
+    protected function getUtilDateTimeService()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomerDetailExternalBlocksUrls()
+    {
+        return $this->getConfig()->getCustomerDetailExternalBlocksUrls();
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface[]
+     */
+    public function getCustomerTableActionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface
+     */
+    public function createCustomerTableActionPluginExecutor(): CustomerTableExpanderPluginExecutorInterface
+    {
+        return new CustomerTableExpanderPluginExecutor(
+            $this->getCustomerTableActionExpanderPlugins()
+        );
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -17,7 +17,7 @@ use Symfony\Component\Finder\Finder;
 
 class TransferGenerateHelper extends Module
 {
-    const TARGET_DIRECTORY = 'target_directory';
+    protected const TARGET_DIRECTORY = 'target_directory';
 
     /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
@@ -35,7 +35,7 @@ class TransferGenerateHelper extends Module
     /**
      * @return void
      */
-    private function generateTransferObjects()
+    protected function generateTransferObjects()
     {
         $transferFacade = $this->getFacade();
 
@@ -51,7 +51,7 @@ class TransferGenerateHelper extends Module
     /**
      * @return \Spryker\Zed\Transfer\Business\TransferFacade
      */
-    private function getFacade()
+    protected function getFacade()
     {
         return new TransferFacade();
     }
@@ -59,7 +59,7 @@ class TransferGenerateHelper extends Module
     /**
      * @return void
      */
-    private function copyFromTestBundle()
+    protected function copyFromTestBundle()
     {
         $finder = $this->getBundleTransferSchemas();
 
@@ -76,7 +76,7 @@ class TransferGenerateHelper extends Module
     /**
      * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
-    private function getBundleTransferSchemas()
+    protected function getBundleTransferSchemas()
     {
         $testBundleSchemaDirectory = Configuration::projectDir() . DIRECTORY_SEPARATOR . 'src';
         $finder = new Finder();
@@ -88,7 +88,7 @@ class TransferGenerateHelper extends Module
     /**
      * @return string
      */
-    private function getTargetSchemaDirectory()
+    protected function getTargetSchemaDirectory()
     {
         $pathForTransferSchemas = APPLICATION_ROOT_DIR . '/src/Spryker/Shared/Testify/';
 

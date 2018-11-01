@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,6 +7,9 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionNotFoundException;
@@ -51,6 +55,52 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
         }
 
         return $this->hydrateProductOptionTransfer($productOptionValueEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
+     */
+    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer
+    {
+        $productOptionValueEntities = $this->productOptionQueryContainer
+            ->queryProductOptionByProductOptionCriteria($productOptionCriteriaTransfer)
+            ->find();
+
+        $productOptionCollectionTransfer = $this->hydrateProductOptionCollectionTransfer($productOptionValueEntities->getArrayCopy());
+
+        return $productOptionCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
+     */
+    protected function hydrateProductOptionCollectionTransfer(array $productOptionValueEntities): ProductOptionCollectionTransfer
+    {
+        $productOptionCollectionTransfer = new ProductOptionCollectionTransfer();
+        $productOptionTransfers = $this->hydrateProductOptionArray($productOptionValueEntities);
+        $productOptionCollectionTransfer->setProductOptions(new ArrayObject($productOptionTransfers));
+
+        return $productOptionCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     */
+    protected function hydrateProductOptionArray(array $productOptionValueEntities): array
+    {
+        $productOptionTransfers = [];
+
+        foreach ($productOptionValueEntities as $productOptionValueEntity) {
+            $productOptionTransfers[] = $this->hydrateProductOptionTransfer($productOptionValueEntity);
+        }
+
+        return $productOptionTransfers;
     }
 
     /**

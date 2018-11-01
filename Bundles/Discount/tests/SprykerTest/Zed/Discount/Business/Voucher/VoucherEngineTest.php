@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -206,9 +207,9 @@ class VoucherEngineTest extends Unit
      * @return \Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface
      */
     protected function createVoucherEngine(
-        DiscountConfig $discountConfigMock = null,
-        DiscountQueryContainerInterface $discountQueryContainerMock = null,
-        SpyDiscountVoucher $discountVoucherEntity = null
+        ?DiscountConfig $discountConfigMock = null,
+        ?DiscountQueryContainerInterface $discountQueryContainerMock = null,
+        ?SpyDiscountVoucher $discountVoucherEntity = null
     ) {
 
         if (!$discountConfigMock) {

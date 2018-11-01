@@ -8,9 +8,17 @@
 namespace Spryker\Client\ProductBundle\Grouper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductBundleGrouperInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getItemsWithBundlesItems(QuoteTransfer $quoteTransfer): array;
+
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems

@@ -24,7 +24,7 @@ interface VersionRollbackInterface
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return bool
+     * @return void
      */
     public function revert($idCmsPage);
 }

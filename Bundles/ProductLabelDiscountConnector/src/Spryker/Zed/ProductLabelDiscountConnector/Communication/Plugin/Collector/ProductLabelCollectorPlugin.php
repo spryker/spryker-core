@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductLabelCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
@@ -31,6 +33,8 @@ class ProductLabelCollectorPlugin extends AbstractPlugin implements CollectorPlu
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getFieldName()
@@ -39,6 +43,8 @@ class ProductLabelCollectorPlugin extends AbstractPlugin implements CollectorPlu
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function acceptedDataTypes()
@@ -49,6 +55,8 @@ class ProductLabelCollectorPlugin extends AbstractPlugin implements CollectorPlu
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getQueryStringValueOptions()

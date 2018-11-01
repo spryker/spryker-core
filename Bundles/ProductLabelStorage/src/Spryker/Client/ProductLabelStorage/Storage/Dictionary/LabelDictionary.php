@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface;
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
 
 class LabelDictionary implements LabelDictionaryInterface
@@ -32,26 +31,18 @@ class LabelDictionary implements LabelDictionaryInterface
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductLabelStorage\Storage\Dictionary\KeyStrategyInterface $dictionaryKeyStrategy
-     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ProductLabelStorageToStorageClientInterface $storageClient,
         ProductLabelStorageToSynchronizationServiceInterface $synchronizationService,
-        KeyStrategyInterface $dictionaryKeyStrategy,
-        Store $store
+        KeyStrategyInterface $dictionaryKeyStrategy
     ) {
         $this->storageClient = $storageClient;
         $this->dictionaryKeyStrategy = $dictionaryKeyStrategy;
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
     }
 
     /**
@@ -136,7 +127,6 @@ class LabelDictionary implements LabelDictionaryInterface
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setStore($this->store->getStoreName())
             ->setLocale($localeName);
 
         return $this->synchronizationService

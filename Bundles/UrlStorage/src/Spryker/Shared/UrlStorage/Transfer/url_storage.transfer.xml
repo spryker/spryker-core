@@ -8,4 +8,24 @@
         <property name="type" type="string" />
     </transfer>
 
+    <transfer name="UrlStorage">
+        <property name="idUrl" type="int" />
+        <property name="url" type="string" />
+        <property name="fkLocale" type="int" />
+        <property name="fkResourceCategorynode" type="int" />
+        <property name="fkResourcePage" type="int" />
+        <property name="fkResourceProductAbstract" type="int" />
+        <property name="fkResourceProductSet" type="int" />
+        <property name="fkResourceRedirect" type="int" />
+        <property name="localeUrls" type="UrlStorage[]" singular="UrlStorage" />
+        <property name="localeName" type="string" />
+    </transfer>
+
+    <transfer name="UrlRedirectStorage">
+        <property name="idUrlRedirect" type="int" />
+        <property name="source" type="Url" />
+        <property name="toUrl" type="string" />
+        <property name="status" type="int" />
+    </transfer>
+
 </transfers>

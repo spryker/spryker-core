@@ -26,9 +26,9 @@ use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 class TranslationManager implements TranslationManagerInterface
 {
-    const TOUCH_TRANSLATION = 'translation';
-    const GLOSSARY_KEY = 'glossary_key';
-    const LOCALE_PREFIX = 'locale_';
+    public const TOUCH_TRANSLATION = 'translation';
+    public const GLOSSARY_KEY = 'glossary_key';
+    public const LOCALE_PREFIX = 'locale_';
 
     /**
      * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
@@ -191,7 +191,7 @@ class TranslationManager implements TranslationManagerInterface
     {
         if ($this->hasTranslationByIds($idKey, $idLocale)) {
             throw new TranslationExistsException(sprintf('Tried to create a translation for keyId %s, localeId %s, but it already exists', $idKey, $idLocale));
-        };
+        }
     }
 
     /**
@@ -200,7 +200,7 @@ class TranslationManager implements TranslationManagerInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null)
     {
         if ($localeTransfer === null) {
             $localeTransfer = $this->localeFacade->getCurrentLocale();
@@ -342,7 +342,7 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param array $idKeys
      *
-     * @return bool
+     * @return void
      */
     public function deleteTranslationsByFkKeys(array $idKeys)
     {
@@ -364,7 +364,7 @@ class TranslationManager implements TranslationManagerInterface
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null)
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
     {
         if ($localeTransfer === null) {
             $localeTransfer = $this->localeFacade->getCurrentLocale();
@@ -436,9 +436,11 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
+     * @deprecated Not in use anymore. Will be removed with the next major.
+     *
      * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     protected function createAndTouchTranslationFromTransfer(TranslationTransfer $transferTranslation)
     {
@@ -510,7 +512,7 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createTranslationForCurrentLocale($keyName, $value, $isActive = true)
     {
@@ -528,7 +530,7 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
@@ -635,7 +637,7 @@ class TranslationManager implements TranslationManagerInterface
      *
      * @return void
      */
-    public function touchTranslationForKeyId($idKey, LocaleTransfer $localeTransfer = null)
+    public function touchTranslationForKeyId($idKey, ?LocaleTransfer $localeTransfer = null)
     {
         if ($localeTransfer === null) {
             $localeTransfer = $this->localeFacade->getCurrentLocale();

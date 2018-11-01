@@ -18,7 +18,7 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
     protected $calculatorPlugins = [];
 
     /**
-     * @param array|\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculatorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
     public function __construct(array $calculatorPlugins)
     {
@@ -54,7 +54,7 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
     /**
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculatorPlugin
      * @param int $amount
-     * @param null|string $isoCode
+     * @param string|null $isoCode
      *
      * @return string
      */

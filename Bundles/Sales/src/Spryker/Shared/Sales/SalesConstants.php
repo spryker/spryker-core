@@ -7,9 +7,20 @@
 
 namespace Spryker\Shared\Sales;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface SalesConstants
 {
-    const NAME_ORDER_REFERENCE = 'OrderReference';
-    const ENVIRONMENT_PREFIX = 'ENVIRONMENT_PREFIX';
-    const PAYMENT_METHOD_STATEMACHINE_MAPPING = 'PAYMENT_METHOD_STATEMACHINE_MAPPING';
+    public const NAME_ORDER_REFERENCE = 'OrderReference';
+    public const ENVIRONMENT_PREFIX = 'ENVIRONMENT_PREFIX';
+
+    /**
+     * Specification:
+     * - Mapping payment methods to statemachine
+     * - Shared config: don't change its name: PAYMENT_METHOD_STATEMACHINE_MAPPING
+     *
+     * @api
+     */
+    public const PAYMENT_METHOD_STATEMACHINE_MAPPING = 'PAYMENT_METHOD_STATEMACHINE_MAPPING';
 }

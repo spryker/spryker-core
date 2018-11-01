@@ -32,5 +32,5 @@ interface RelationMapperInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[]
      */
-    public function populateCollectionWithRelation(array &$collection, $relation, Criteria $criteria = null);
+    public function populateCollectionWithRelation(array &$collection, $relation, ?Criteria $criteria = null);
 }

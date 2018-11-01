@@ -17,12 +17,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CodePhpstanConsole extends Console
 {
-    const COMMAND_NAME = 'code:phpstan';
-    const OPTION_MODULE = 'module';
-    const OPTION_CORE = 'core';
-    const OPTION_DRY_RUN = 'dry-run';
-    const OPTION_LEVEL = 'level';
-    const OPTION_FORMAT = 'format';
+    protected const COMMAND_NAME = 'code:phpstan';
+    protected const OPTION_MODULE = 'module';
+    protected const OPTION_DRY_RUN = 'dry-run';
+    protected const OPTION_LEVEL = 'level';
+    protected const OPTION_FORMAT = 'format';
 
     /**
      * @return void

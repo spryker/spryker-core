@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -67,7 +68,7 @@ class LockedTriggerTest extends StateMachineMocks
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\LockedTrigger
      */
-    public function createLockedTrigger(TriggerInterface $triggerMock = null, ItemLockInterface $itemLockMock = null)
+    public function createLockedTrigger(?TriggerInterface $triggerMock = null, ?ItemLockInterface $itemLockMock = null)
     {
         if ($triggerMock === null) {
             $triggerMock = $this->createTriggerMock();

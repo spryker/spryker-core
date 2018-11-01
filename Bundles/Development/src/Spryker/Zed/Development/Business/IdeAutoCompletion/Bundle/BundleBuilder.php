@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -45,7 +46,8 @@ class BundleBuilder implements BundleBuilderInterface
         $bundleTransfer->setName($bundleDirectory->getBasename());
         $bundleTransfer->setNamespaceName($this->getNamespace());
         $bundleTransfer->setMethodName(lcfirst($bundleDirectory->getBasename()));
-        $bundleTransfer->setDirectory($bundleDirectory->getPath());
+        $path = rtrim($bundleDirectory->getPath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $bundleTransfer->setDirectory($path);
         $bundleTransfer->setBaseDirectory($baseDirectory);
 
         $this->hydrateMethods($bundleTransfer);

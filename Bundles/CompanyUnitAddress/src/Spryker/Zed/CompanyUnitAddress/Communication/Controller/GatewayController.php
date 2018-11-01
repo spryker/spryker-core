@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CompanyUnitAddress\Communication\Controller;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -20,11 +22,11 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
     public function getCompanyUnitAddressByIdAction(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
+    ): CompanyUnitAddressTransfer {
         return $this->getFacade()->getCompanyUnitAddressById($companyUnitAddressTransfer);
     }
 
@@ -64,34 +66,29 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
-    public function getCompanyUnitAddressCollectionAction(CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer): CompanyUnitAddressCollectionTransfer
-    {
-        return $this->getFacade()->getCompanyUnitAddressCollection($companyUnitAddressCollectionTransfer);
+    public function getCompanyUnitAddressCollectionAction(
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUnitAddressCollectionTransfer {
+        return $this->getFacade()->getCompanyUnitAddressCollection($criteriaFilterTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddressesAction(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    public function saveCompanyBusinessUnitAddressesAction(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyUnitAddressResponseTransfer {
-        return $this->getFacade()->createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
-    }
+        $this->getFacade()
+            ->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddressesAction(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
-        return $this->getFacade()->updateCompanyUnitAddressAndBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
+        return (new CompanyUnitAddressResponseTransfer())->setIsSuccessful(true);
     }
 }

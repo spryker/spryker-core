@@ -32,7 +32,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     protected $config;
 
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleInterface
      */
     protected $localeFacade;
 
@@ -271,7 +271,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKey $spyGlossaryKey
      * @param int $idLocale
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findTranslation(SpyGlossaryKey $spyGlossaryKey, $idLocale)
     {

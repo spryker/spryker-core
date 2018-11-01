@@ -1,8 +1,6 @@
 # CompanyGui Module
-[![Build Status](https://travis-ci.org/spryker/CompanyGui.svg)](https://travis-ci.org/spryker/CompanyGui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CompanyGui/badge.svg)](https://coveralls.io/github/spryker/CompanyGui)
 
-{{ADD DESCRIPTION HERE}}
+CompanyGui is a user interface module to manage Company functionality in the Zed Administration Interface.
 
 ## Installation
 

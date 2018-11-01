@@ -42,7 +42,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
      *
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer|null
      */
-    public function findNavigationTree(NavigationTransfer $navigationTransfer, LocaleTransfer $localeTransfer = null)
+    public function findNavigationTree(NavigationTransfer $navigationTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $this->assertNavigationForRead($navigationTransfer);
         $this->assertLocaleForRead($localeTransfer);
@@ -71,7 +71,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
      *
      * @return void
      */
-    protected function assertLocaleForRead(LocaleTransfer $localeTransfer = null)
+    protected function assertLocaleForRead(?LocaleTransfer $localeTransfer = null)
     {
         if (!$localeTransfer) {
             return;
@@ -83,7 +83,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
-     * @return \Orm\Zed\Navigation\Persistence\SpyNavigation
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigation|null
      */
     protected function findNavigationEntity(NavigationTransfer $navigationTransfer)
     {
@@ -98,7 +98,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
      *
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer
      */
-    protected function mapNavigationEntityToNavigationTreeTransfer(SpyNavigation $navigationEntity, LocaleTransfer $localeTransfer = null)
+    protected function mapNavigationEntityToNavigationTreeTransfer(SpyNavigation $navigationEntity, ?LocaleTransfer $localeTransfer = null)
     {
         $navigationTreeTransfer = new NavigationTreeTransfer();
 
@@ -156,7 +156,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
      *
      * @return \Generated\Shared\Transfer\NavigationTreeNodeTransfer
      */
-    protected function getNavigationTreeNodeRecursively(SpyNavigationNode $navigationNodeEntity, LocaleTransfer $localeTransfer = null)
+    protected function getNavigationTreeNodeRecursively(SpyNavigationNode $navigationNodeEntity, ?LocaleTransfer $localeTransfer = null)
     {
         $navigationTreeNodeTransfer = new NavigationTreeNodeTransfer();
 
@@ -178,7 +178,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer
      */
-    protected function mapNavigationNodeEntityToTransfer(SpyNavigationNode $navigationNodeEntity, LocaleTransfer $localeTransfer = null)
+    protected function mapNavigationNodeEntityToTransfer(SpyNavigationNode $navigationNodeEntity, ?LocaleTransfer $localeTransfer = null)
     {
         $navigationNodeTransfer = new NavigationNodeTransfer();
         $navigationNodeTransfer->fromArray($navigationNodeEntity->toArray(), true);
@@ -198,7 +198,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function findLocalizedAttributes(SpyNavigationNode $navigationNodeEntity, LocaleTransfer $localeTransfer = null)
+    protected function findLocalizedAttributes(SpyNavigationNode $navigationNodeEntity, ?LocaleTransfer $localeTransfer = null)
     {
         $criteria = $this->createLocalizedAttributeFilterCriteria($localeTransfer);
 
@@ -210,7 +210,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
      *
      * @return \Propel\Runtime\ActiveQuery\Criteria
      */
-    protected function createLocalizedAttributeFilterCriteria(LocaleTransfer $localeTransfer = null)
+    protected function createLocalizedAttributeFilterCriteria(?LocaleTransfer $localeTransfer = null)
     {
         $criteria = new Criteria();
 
@@ -222,7 +222,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\Navigation\Persistence\Base\SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity
      *
      * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer
      */

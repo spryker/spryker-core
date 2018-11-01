@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductOption\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
@@ -233,5 +235,35 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
         return $this->getFactory()
             ->createProductOptionValuePriceReader()
             ->getStorePrices($storePricesRequestTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
+     */
+    public function getAllProductOptionValuePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer)
+    {
+        return $this->getFactory()
+            ->createProductOptionValuePriceReader()
+            ->getAllPrices($storePricesRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
+     */
+    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createProductOptionValueReader()
+            ->getProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
     }
 }

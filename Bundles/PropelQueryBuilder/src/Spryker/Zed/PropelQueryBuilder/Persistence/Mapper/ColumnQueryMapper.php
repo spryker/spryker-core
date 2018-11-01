@@ -14,7 +14,7 @@ class ColumnQueryMapper implements ColumnQueryMapperInterface
 {
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer|null $columnSelectionTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */

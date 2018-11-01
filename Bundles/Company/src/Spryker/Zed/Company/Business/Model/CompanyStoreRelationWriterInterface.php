@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 interface CompanyStoreRelationWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $storeRelationTransfer
      *
      * @return void
      */
-    public function save(StoreRelationTransfer $storeRelationTransfer): void;
+    public function save(?StoreRelationTransfer $storeRelationTransfer = null): void;
 }

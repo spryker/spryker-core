@@ -59,13 +59,14 @@ maintainability and understandability
         </description>
         <priority>2</priority>
         <properties>
-            <property name="minimum" value="20" description="Maximum number of acceptable dependencies." />
+            <property name="minimum" value="25" description="Maximum number of acceptable dependencies." />
         </properties>
     </rule>
 
     <rule ref="rulesets/codesize.xml">
         <exclude name="TooManyMethods" />
         <exclude name="TooManyPublicMethods" />
+        <exclude name="ExcessivePublicCount" />
     </rule>
 
     <rule name="TooManyMethods"

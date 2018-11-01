@@ -14,10 +14,10 @@ use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
 
 class Store
 {
-    const APPLICATION_ZED = 'ZED';
+    public const APPLICATION_ZED = 'ZED';
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Shared\Kernel\Store|null
      */
     protected static $instance;
 
@@ -93,7 +93,17 @@ class Store
     protected $currencyIsoCodes = [];
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @var array Keys are queue pool names, values are lists of queue connection names.
+     */
+    protected $queuePools = [];
+
+    /**
+     * @var string[]
+     */
+    protected $storesWithSharedPersistence = [];
+
+    /**
+     * @return static
      */
     public static function getInstance()
     {
@@ -399,5 +409,21 @@ class Store
         }
 
         return $defaultCurrencyCode;
+    }
+
+    /**
+     * @return array
+     */
+    public function getQueuePools()
+    {
+        return $this->queuePools;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getStoresWithSharedPersistence()
+    {
+        return $this->storesWithSharedPersistence;
     }
 }

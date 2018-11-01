@@ -14,7 +14,7 @@ interface ProductReviewStubInterface
     /**
      * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductReviewResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ProductReviewResponseTransfer
      */
     public function submitCustomerReview(ProductReviewRequestTransfer $productReviewRequestTransfer);
 }

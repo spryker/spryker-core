@@ -52,7 +52,10 @@ abstract class AbstractFacade
      */
     private function resolveFactory()
     {
-        return $this->getFactoryResolver()->resolve($this);
+        /** @var \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $factory */
+        $factory = $this->getFactoryResolver()->resolve($this);
+
+        return $factory;
     }
 
     /**

@@ -18,7 +18,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQueryFromCriteria(ModelCriteria $modelCriteria, FilterTransfer $filterTransfer = null)
+    public function buildQueryFromCriteria(ModelCriteria $modelCriteria, ?FilterTransfer $filterTransfer = null)
     {
         $criteria = $modelCriteria->setFormatter(TransferObjectFormatter::class);
 

@@ -1,0 +1,36 @@
+
+$chat-box-radius: 6px;
+$chat-box-background-color: #f0f0f0;
+
+.chat {
+  font-size: 11px;
+  margin-bottom: 20px;
+
+  .chat-author {
+    font-size: 12px;
+    margin: 0;
+
+    span {
+      background: $chat-box-background-color;
+      padding: 5px;
+      border-top-left-radius: $chat-box-radius;
+      border-top-right-radius: $chat-box-radius;
+    }
+  }
+
+  .chat-body {
+    background: $chat-box-background-color;
+    padding: 5px 5px 10px;
+    border-top-right-radius: $chat-box-radius;
+    border-bottom-left-radius: $chat-box-radius;
+    border-bottom-right-radius: $chat-box-radius;
+  }
+}
+
+.chat-form {
+  padding-top: 10px;
+
+  .col-xs-12 {
+    margin-bottom: 5px;
+  }
+}

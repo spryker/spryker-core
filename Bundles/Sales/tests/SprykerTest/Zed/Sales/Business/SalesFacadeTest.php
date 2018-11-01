@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -7,6 +8,7 @@
 namespace SprykerTest\Zed\Sales\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\OrderBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -27,8 +29,17 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class SalesFacadeTest extends Unit
 {
-    const DEFAULT_OMS_PROCESS_NAME = 'test';
-    const DEFAULT_ITEM_STATE = 'test';
+    protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    protected const DEFAULT_ITEM_STATE = 'test';
+
+    protected const ORDER_SEARCH_PARAMS = [
+        'orderReference' => '123',
+        'customerReference' => 'testing-customer',
+    ];
+    protected const ORDER_WRONG_SEARCH_PARAMS = [
+        'orderReference' => '123_wrong',
+        'customerReference' => 'testing-customer-wrong',
+    ];
 
     /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester
@@ -40,8 +51,6 @@ class SalesFacadeTest extends Unit
      */
     public function testGetOrderByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals()
     {
-        $this->markTestSkipped();
-
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
 
@@ -66,6 +75,28 @@ class SalesFacadeTest extends Unit
         $this->assertInstanceOf(AddressTransfer::class, $orderTransfer->getBillingAddress());
         $this->assertInstanceOf(AddressTransfer::class, $orderTransfer->getShippingAddress());
         $this->assertCount(1, $orderTransfer->getExpenses());
+
+        $this->assertSame(1, $orderTransfer->getTotalOrderCount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOrderByIdSalesOrderWhenGuestCustomerShouldNotCountOrders()
+    {
+        $productTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
+
+        $salesOrderEntity = $this->tester->create();
+
+        $salesOrderEntity->setCustomerReference(null);
+        $salesOrderEntity->save();
+
+        $salesFacade = $this->createSalesFacade();
+
+        $orderTransfer = $salesFacade->getOrderByIdSalesOrder($salesOrderEntity->getIdSalesOrder());
+
+        $this->assertSame(0, $orderTransfer->getTotalOrderCount());
     }
 
     /**
@@ -117,10 +148,51 @@ class SalesFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetCustomerOrderByOrderReference(): void
+    {
+        $orderEntity = $this->tester->create();
+
+        $salesFacade = $this->createSalesFacade();
+
+        $order = $salesFacade->getCustomerOrderByOrderReference(
+            $this->createOrderTransferWithParams(static::ORDER_SEARCH_PARAMS)
+        );
+
+        $this->assertNotNull($order);
+        $this->assertSame($orderEntity->getIdSalesOrder(), $order->getIdSalesOrder());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerOrderByNonExistingOrderReference(): void
+    {
+        $salesFacade = $this->createSalesFacade();
+
+        $order = $salesFacade->getCustomerOrderByOrderReference(
+            $this->createOrderTransferWithParams(static::ORDER_WRONG_SEARCH_PARAMS)
+        );
+
+        $this->assertNull($order->getIdSalesOrder());
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
     protected function createSalesFacade()
     {
         return $this->tester->getLocator()->sales()->facade();
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function createOrderTransferWithParams(array $data): OrderTransfer
+    {
+        return (new OrderBuilder())->build()->fromArray($data);
     }
 }

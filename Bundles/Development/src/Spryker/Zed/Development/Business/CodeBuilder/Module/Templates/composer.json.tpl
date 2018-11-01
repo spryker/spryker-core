@@ -1,5 +1,6 @@
 {
-  "name": "spryker/{moduleDashed}",
+  "name": "{namespaceDashed}/{moduleDashed}",
+  "type": "library",
   "description": "{module} module",
   "license": "proprietary",
   "require": {
@@ -10,12 +11,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "{namespace}\\": "src/{namespace}/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
+      "{namespace}Test\\": "tests/{namespace}Test/"
     }
   },
   "minimum-stability": "dev",

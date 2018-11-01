@@ -155,7 +155,7 @@ class LabelUpdater implements LabelUpdaterInterface
             ->queryProductLabelById($idProductLabel)
             ->findOne();
 
-        if (!$productLabelEntity) {
+        if (!($productLabelEntity instanceof SpyProductLabel)) {
             throw new MissingProductLabelException(sprintf(
                 'Could not find product label for id "%s"',
                 $idProductLabel

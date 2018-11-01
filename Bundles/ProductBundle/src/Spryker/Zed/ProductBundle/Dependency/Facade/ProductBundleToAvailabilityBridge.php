@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityInterface
 {
     /**
@@ -23,6 +25,8 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
+     * @deprecated use isProductSellableForStore() instead
+     *
      * @param string $sku
      * @param int $quantity
      *
@@ -34,6 +38,8 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
+     * @deprecated use calculateStockForProductWithStore() instead
+     *
      * @param string $sku
      *
      * @return int
@@ -41,6 +47,41 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     public function calculateStockForProduct($sku)
     {
         return $this->availabilityFacade->calculateStockForProduct($sku);
+    }
+
+    /**
+     * The method check for "method_exists" is for BC for modules without multi store availability support.
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
+    {
+        if (method_exists($this->availabilityFacade, 'calculateStockForProductWithStore')) {
+            return $this->availabilityFacade->calculateStockForProductWithStore($sku, $storeTransfer);
+        }
+
+        return $this->availabilityFacade->calculateStockForProduct($sku);
+    }
+
+    /**
+     * The method check for "method_exists" is for BC for modules without multi store availability support.
+     *
+     * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer)
+    {
+        if (method_exists($this->availabilityFacade, 'isProductSellableForStore')) {
+            return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);
+        }
+
+        return $this->availabilityFacade->isProductSellable($sku, $quantity);
     }
 
     /**
@@ -54,6 +95,8 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
+     * @deprecated use saveProductAvailabilityForStore() instead
+     *
      * @param string $sku
      * @param int $quantity
      *
@@ -61,6 +104,24 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
      */
     public function saveProductAvailability($sku, $quantity)
     {
+        return $this->availabilityFacade->saveProductAvailability($sku, $quantity);
+    }
+
+    /**
+     * The method check for "method_exists" is for BC for modules without multi store availability support.
+     *
+     * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function saveProductAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer)
+    {
+        if (method_exists($this->availabilityFacade, 'saveProductAvailabilityForStore')) {
+            return $this->availabilityFacade->saveProductAvailabilityForStore($sku, $quantity, $storeTransfer);
+        }
+
         return $this->availabilityFacade->saveProductAvailability($sku, $quantity);
     }
 }

@@ -22,14 +22,14 @@ use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvide
 
 class SystemUnderTestBootstrap
 {
-    const APPLICATION_ZED = 'Zed';
-    const APPLICATION_YVES = 'Yves';
-    const APPLICATION_SHARED = 'Shared';
-    const APPLICATION_CLIENT = 'Client';
-    const TEST_ENVIRONMENT = 'devtest';
+    public const APPLICATION_ZED = 'Zed';
+    public const APPLICATION_YVES = 'Yves';
+    public const APPLICATION_SHARED = 'Shared';
+    public const APPLICATION_CLIENT = 'Client';
+    public const TEST_ENVIRONMENT = 'devtest';
 
     /**
-     * @var \Spryker\Shared\Testify\SystemUnderTestBootstrap
+     * @var \Spryker\Shared\Testify\SystemUnderTestBootstrap|null
      */
     protected static $instance;
 
@@ -44,7 +44,7 @@ class SystemUnderTestBootstrap
     ];
 
     /**
-     * @return $this
+     * @return self
      */
     public static function getInstance()
     {
@@ -58,7 +58,7 @@ class SystemUnderTestBootstrap
     /**
      * @param string $application
      *
-     * @return \Symfony\Component\HttpKernel\Kernel
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function bootstrap($application = self::APPLICATION_ZED)
     {
@@ -82,10 +82,10 @@ class SystemUnderTestBootstrap
         $errorHandlerEnvironment = new ErrorHandlerEnvironment();
         $errorHandlerEnvironment->initialize();
 
-        if (self::APPLICATION_ZED === $application) {
+        if ($application === self::APPLICATION_ZED) {
             return $this->bootstrapZed();
         }
-        if (self::APPLICATION_YVES === $application) {
+        if ($application === self::APPLICATION_YVES) {
             return $this->bootstrapYves();
         }
     }
@@ -105,10 +105,11 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @return \Symfony\Component\HttpKernel\Kernel
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     protected function bootstrapZed()
     {
+        /** @var \Spryker\Zed\Application\Communication\ZedBootstrap $application */
         $application = $this->getBootstrapClass(TestifyConstants::BOOTSTRAP_CLASS_ZED);
         $locator = KernelLocator::getInstance();
         $this->resetLocator($locator);
@@ -121,10 +122,11 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @return \Symfony\Component\HttpKernel\Kernel
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     protected function bootstrapYves()
     {
+        /** @var \Pyz\Yves\ShopApplication\YvesBootstrap $application */
         $application = $this->getBootstrapClass(TestifyConstants::BOOTSTRAP_CLASS_YVES);
 
         $locator = Locator::getInstance();

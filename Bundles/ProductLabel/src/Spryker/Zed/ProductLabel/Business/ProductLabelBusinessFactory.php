@@ -162,7 +162,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
      *
      * @return ProductAbstractRelation\ProductAbstractRelationUpdaterInterface
      */
-    public function createProductAbstractRelationUpdater(LoggerInterface $logger = null)
+    public function createProductAbstractRelationUpdater(?LoggerInterface $logger = null)
     {
         return new ProductAbstractRelationUpdater(
             $this->createProductAbstractRelationDeleter(),

@@ -82,14 +82,17 @@ interface EventInterface
     public function getTransitions();
 
     /**
-     * @param int $timeout
+     * Specification:
+     * - Any valid for \DateInterval::createFromDateString() input ("1 hour", "1 week" etc)
+     *
+     * @param string $timeout
      *
      * @return void
      */
     public function setTimeout($timeout);
 
     /**
-     * @return int
+     * @return string
      */
     public function getTimeout();
 

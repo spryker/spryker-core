@@ -29,7 +29,7 @@ class Locator implements LocatorLocatorInterface
     private static $instance;
 
     /**
-     * @return $this
+     * @return static
      */
     public static function getInstance()
     {
@@ -57,7 +57,7 @@ class Locator implements LocatorLocatorInterface
      *
      * @return \Spryker\Shared\Kernel\BundleProxy
      */
-    public function __call($bundle, array $arguments = null)
+    public function __call($bundle, ?array $arguments = null)
     {
         if ($this->bundleProxy === null) {
             $this->bundleProxy = $this->getBundleProxy();

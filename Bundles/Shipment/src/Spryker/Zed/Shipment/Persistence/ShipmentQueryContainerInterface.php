@@ -135,4 +135,13 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
      */
     public function queryMethodPriceByShipmentMethodAndStoreCurrency($idShipmentMethod, $idStore, $idCurrency);
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod);
 }

@@ -1,11 +1,12 @@
 {
   "name": "spryker/collector",
+  "type": "library",
   "description": "Collector module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/config": "^3.0.0",
-    "spryker/elastica": "^2.0.0 || ^3.0.0",
+    "spryker/elastica": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",
@@ -13,7 +14,7 @@
     "spryker/propel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/redis": "^2.0.0",
-    "spryker/search": "^6.6.0 || ^7.0.0",
+    "spryker/search": "^6.6.0 || ^7.0.0 || ^8.0.0",
     "spryker/sql-criteria-builder": "^1.0.0",
     "spryker/storage": "^3.2.0",
     "spryker/store": "^1.1.0",
@@ -22,7 +23,6 @@
     "spryker/util-data-reader": "^1.2.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "autoload": {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -7,12 +8,14 @@
 namespace Spryker\Zed\Tax\Communication\Form;
 
 use ArrayObject;
+use Closure;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -21,12 +24,13 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()
  */
 class TaxSetForm extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_TAX_RATES = 'taxRates';
-    const FIELD_ID_TAX_SET = 'idTaxSet';
+    public const FIELD_NAME = 'name';
+    public const FIELD_TAX_RATES = 'taxRates';
+    public const FIELD_ID_TAX_SET = 'idTaxSet';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -55,6 +59,7 @@ class TaxSetForm extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
+                    $this->createUniqueTaxSetNameConstraint(),
                 ],
             ]
         );
@@ -109,7 +114,7 @@ class TaxSetForm extends AbstractType
     /**
      * @return \Closure
      */
-    protected function createTransformCallback(): \Closure
+    protected function createTransformCallback(): Closure
     {
         return function ($taxRates) {
             if ($taxRates) {
@@ -121,7 +126,7 @@ class TaxSetForm extends AbstractType
     /**
      * @return \Closure
      */
-    protected function createReverseTransformCallback(): \Closure
+    protected function createReverseTransformCallback(): Closure
     {
         return function ($taxRates) {
             return new ArrayObject($taxRates);
@@ -146,5 +151,26 @@ class TaxSetForm extends AbstractType
     public function getName()
     {
         return $this->getBlockPrefix();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createUniqueTaxSetNameConstraint(): Constraint
+    {
+        return new Callback([
+            'callback' => function ($name, ExecutionContextInterface $context) {
+                /** @var \Symfony\Component\Form\Form $form */
+                $form = $context->getObject();
+                $idTaxSet = $form->getParent()->getData()->getIdTaxSet();
+                if (empty($idTaxSet) && $this->getFacade()->taxSetWithSameNameExists($name) ||
+                    !empty($idTaxSet) && $this->getFacade()->taxSetWithSameNameAndIdExists($name, $idTaxSet)
+                ) {
+                    $context->addViolation('Tax Set with name "%name%" already exists.', [
+                        '%name%' => $name,
+                    ]);
+                }
+            },
+        ]);
     }
 }

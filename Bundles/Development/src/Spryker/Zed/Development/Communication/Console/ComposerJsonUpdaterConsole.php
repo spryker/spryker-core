@@ -17,10 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ComposerJsonUpdaterConsole extends Console
 {
-    const COMMAND_NAME = 'dev:dependency:update-composer-files';
-    const OPTION_MODULE = 'module';
-    const OPTION_DRY_RUN = 'dry-run';
-    const VERBOSE = 'verbose';
+    public const COMMAND_NAME = 'dev:composer:update-json-files';
+    public const OPTION_MODULE = 'module';
+    public const OPTION_DRY_RUN = 'dry-run';
+    public const VERBOSE = 'verbose';
 
     /**
      * @return void
@@ -36,6 +36,8 @@ class ComposerJsonUpdaterConsole extends Console
 
         $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module (comma separated for multiple ones)');
         $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only, or use in CI');
+
+        $this->setAliases(['dev:dependency:update-composer-files']);
     }
 
     /**
@@ -62,7 +64,7 @@ class ComposerJsonUpdaterConsole extends Console
             $modifiedModules[] = $processedModule;
         }
 
-        $text = $isDryRun ? ' need(s) updating.': 'updated.';
+        $text = $isDryRun ? ' need(s) updating.' : 'updated.';
         $this->output->writeln(sprintf('%s of %s module(s) ' . $text, count($modifiedModules), count($processedModules)));
 
         if ($this->input->getOption(static::VERBOSE)) {
@@ -80,6 +82,6 @@ class ComposerJsonUpdaterConsole extends Console
             $this->output->writeln(sprintf('Please run `%s` locally without dry-run.', $command));
         }
 
-        return count($modifiedModules) < 1 ? static::CODE_SUCCESS  : static::CODE_ERROR;
+        return count($modifiedModules) < 1 ? static::CODE_SUCCESS : static::CODE_ERROR;
     }
 }

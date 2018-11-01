@@ -7,12 +7,15 @@
 
 namespace Spryker\Shared\Shipment;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ShipmentConstants
 {
-    const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+    public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 
-    const PRICE_MODE_NET = 'NET_MODE';
-    const PRICE_MODE_GROSS = 'GROSS_MODE';
+    public const PRICE_MODE_NET = 'NET_MODE';
+    public const PRICE_MODE_GROSS = 'GROSS_MODE';
 
-    const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
+    public const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 }

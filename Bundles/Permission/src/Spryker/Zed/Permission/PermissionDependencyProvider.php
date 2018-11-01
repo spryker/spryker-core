@@ -13,8 +13,9 @@ use Spryker\Zed\Kernel\Container;
 
 class PermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
     public const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
-    public const PLUGIN_PERMISSION_STORAGE = 'PLUGIN_PERMISSION_STORAGE';
+    public const PLUGINS_PERMISSION_STORAGE = 'PLUGINS_PERMISSION_STORAGE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,8 +25,9 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->addPermissionStoragePlugin($container);
+        $container = $this->addPermissionStoragePlugins($container);
         $container = $this->addPermissionPlugins($container);
+        $container = $this->addPermissionClient($container);
 
         return $container;
     }
@@ -45,7 +47,7 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface[]
+     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[]
      */
     protected function getPermissionPlugins()
     {
@@ -57,10 +59,10 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPermissionStoragePlugin(Container $container)
+    protected function addPermissionStoragePlugins(Container $container)
     {
-        $container[static::PLUGIN_PERMISSION_STORAGE] = function (Container $container) {
-            return $this->getPermissionStoragePlugin();
+        $container[static::PLUGINS_PERMISSION_STORAGE] = function (Container $container) {
+            return $this->getPermissionStoragePlugins();
         };
 
         return $container;
@@ -69,11 +71,25 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @throws \Exception
      *
-     * @return \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface
+     * @return \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
      */
-    protected function getPermissionStoragePlugin()
+    protected function getPermissionStoragePlugins(): array
     {
-        throw new Exception('Please set a permission storage plugin, 
-        implementation of \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface');
+        throw new Exception('Please set an array of permission storage plugins, 
+        all implementing the interface \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface');
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPermissionClient(Container $container)
+    {
+        $container[static::CLIENT_PERMISSION] = function (Container $container) {
+            return $container->getLocator()->permission()->client();
+        };
+
+        return $container;
     }
 }

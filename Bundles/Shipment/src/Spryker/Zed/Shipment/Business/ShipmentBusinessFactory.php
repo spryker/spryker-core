@@ -54,7 +54,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createShipmentMethodTransformer(),
             $this->getCurrencyFacade(),
             $this->getStoreFacade(),
-            $this->getPlugins()
+            $this->getPlugins(),
+            $this->getMethodFilterPlugins()
         );
     }
 
@@ -85,6 +86,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     protected function getPlugins()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
+     */
+    protected function getMethodFilterPlugins()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::SHIPMENT_METHOD_FILTER_PLUGINS);
     }
 
     /**

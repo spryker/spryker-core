@@ -52,7 +52,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     {
         $idsProductLabel = $this->findIdsProductLabelByIdAbstractProduct($idProductAbstract, $localeName);
 
-        if (!count($idsProductLabel)) {
+        if (!$idsProductLabel) {
             return [];
         }
 
@@ -70,7 +70,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         $storageKey = $this->keyBuilder->generateKey($idProductAbstract, $localeName);
         $storageData = $this->storageClient->get($storageKey);
 
-        return $storageData;
+        return $storageData ?: [];
     }
 
     /**

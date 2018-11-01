@@ -14,13 +14,13 @@ use Symfony\Component\Finder\Finder;
 
 class SetupDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SYMFONY_FILE_SYSTEM = 'symfony_file_system';
-    const SYMFONY_FINDER = 'symfony_finder';
+    public const SYMFONY_FILE_SYSTEM = 'symfony_file_system';
+    public const SYMFONY_FINDER = 'symfony_finder';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container $container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {

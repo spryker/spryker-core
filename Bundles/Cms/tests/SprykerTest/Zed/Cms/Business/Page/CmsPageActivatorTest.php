@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -75,8 +76,8 @@ class CmsPageActivatorTest extends CmsMocks
      */
     protected function createCmsPageActivateMock(
         SpyCmsPage $cmsPageEntity,
-        CmsQueryContainerInterface $cmsQueryContainerMock = null,
-        CmsToTouchInterface $touchFacadeMock = null
+        ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
+        ?CmsToTouchInterface $touchFacadeMock = null
     ) {
 
         if ($cmsQueryContainerMock === null) {
@@ -89,7 +90,7 @@ class CmsPageActivatorTest extends CmsMocks
 
         $cmsPageActivatorMock = $this->getMockBuilder(CmsPageActivator::class)
             ->setMethods(['getCmsPageEntity', 'countNumberOfGlossaryKeysForIdCmsPage'])
-            ->setConstructorArgs([$cmsQueryContainerMock, $touchFacadeMock])
+            ->setConstructorArgs([$cmsQueryContainerMock, $touchFacadeMock, []])
             ->getMock();
 
         $cmsPageActivatorMock->method('getCmsPageEntity')

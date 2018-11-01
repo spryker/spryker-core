@@ -15,7 +15,7 @@ interface CmsBlockEvents
      *
      * @api
      */
-    const CMS_BLOCK_PUBLISH = 'CmsBlock.block.publish';
+    public const CMS_BLOCK_PUBLISH = 'CmsBlock.block.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface CmsBlockEvents
      *
      * @api
      */
-    const CMS_BLOCK_UNPUBLISH = 'CmsBlock.block.unpublish';
+    public const CMS_BLOCK_UNPUBLISH = 'CmsBlock.block.unpublish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface CmsBlockEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE = 'Entity.spy_cms_block_glossary_key_mapping.create';
+    public const ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE = 'Entity.spy_cms_block_glossary_key_mapping.create';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface CmsBlockEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_UPDATE = 'Entity.spy_cms_block_glossary_key_mapping.update';
+    public const ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_UPDATE = 'Entity.spy_cms_block_glossary_key_mapping.update';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface CmsBlockEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE = 'Entity.spy_cms_block_glossary_key_mapping.delete';
+    public const ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE = 'Entity.spy_cms_block_glossary_key_mapping.delete';
 
     /**
      * Specification
@@ -55,7 +55,7 @@ interface CmsBlockEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_UPDATE = 'Entity.spy_cms_block.update';
+    public const ENTITY_SPY_CMS_BLOCK_UPDATE = 'Entity.spy_cms_block.update';
 
     /**
      * Specification
@@ -63,5 +63,29 @@ interface CmsBlockEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_DELETE = 'Entity.spy_cms_block.delete';
+    public const ENTITY_SPY_CMS_BLOCK_DELETE = 'Entity.spy_cms_block.delete';
+
+    /**
+     * Specification:
+     * - Represents spy_cms_block_store entity creation.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CMS_BLOCK_STORE_CREATE = 'Entity.spy_cms_block_store.create';
+
+    /**
+     * Specification:
+     * - Represents spy_cms_block_store entity changes.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CMS_BLOCK_STORE_UPDATE = 'Entity.spy_cms_block_store.update';
+
+    /**
+     * Specification:
+     * - Represents spy_cms_block_store entity deletion.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CMS_BLOCK_STORE_DELETE = 'Entity.spy_cms_block_store.delete';
 }

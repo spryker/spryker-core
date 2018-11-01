@@ -88,7 +88,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria = null);
+    public function querySalesOrdersByCustomerId($idCustomer, ?Criteria $criteria = null);
 
     /**
      * @api
@@ -116,12 +116,12 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function queryCustomerOrders($idCustomer, FilterTransfer $filterTransfer = null);
+    public function queryCustomerOrders($idCustomer, ?FilterTransfer $filterTransfer = null);
 
     /**
      * @api
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
      * @return void
      */

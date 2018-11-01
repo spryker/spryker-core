@@ -53,6 +53,22 @@ class SalesClient extends AbstractClient implements SalesClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getPaginatedCustomerOrdersOverview(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        return $this->getFactory()
+            ->createZedSalesStub()
+            ->getPaginatedCustomerOrdersOverview($orderListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -62,5 +78,21 @@ class SalesClient extends AbstractClient implements SalesClientInterface
         return $this->getFactory()
             ->createZedSalesStub()
             ->getOrderDetails($orderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createZedSalesStub()
+            ->getCustomerOrderByOrderReference($orderTransfer);
     }
 }

@@ -92,6 +92,8 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getInputType()

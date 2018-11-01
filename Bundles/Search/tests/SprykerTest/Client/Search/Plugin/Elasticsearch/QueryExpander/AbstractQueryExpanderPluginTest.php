@@ -21,6 +21,7 @@ use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
+use Spryker\Client\Search\SearchConfig as ClientSearchConfig;
 use Spryker\Client\Search\SearchDependencyProvider;
 use Spryker\Client\Search\SearchFactory;
 use Spryker\Shared\Search\SearchConfig as SharedSearchConfig;
@@ -92,12 +93,16 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     {
         /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit_Framework_MockObject_MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
-            ->setMethods(['getSearchConfig'])
+            ->setMethods(['getSearchConfig', 'getConfig'])
             ->getMock();
 
         $searchFactoryMock
             ->method('getSearchConfig')
             ->willReturn($searchConfig);
+
+        $searchFactoryMock
+            ->method('getConfig')
+            ->willReturn(new ClientSearchConfig());
 
         $container = new Container();
         $searchDependencyProvider = new SearchDependencyProvider();
@@ -114,6 +119,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     {
         return (new Nested(PageIndexMap::STRING_FACET, PageIndexMap::STRING_FACET))
             ->addAggregation((new Terms(PageIndexMap::STRING_FACET . '-name'))
+                ->setSize(ClientSearchConfig::FACET_NAME_AGGREGATION_SIZE)
                 ->setField(PageIndexMap::STRING_FACET_FACET_NAME)
                 ->addAggregation((new Terms(PageIndexMap::STRING_FACET . '-value'))
                     ->setField(PageIndexMap::STRING_FACET_FACET_VALUE)));
@@ -126,6 +132,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     {
         return (new Nested(PageIndexMap::INTEGER_FACET, PageIndexMap::INTEGER_FACET))
             ->addAggregation((new Terms(PageIndexMap::INTEGER_FACET . '-name'))
+                ->setSize(ClientSearchConfig::FACET_NAME_AGGREGATION_SIZE)
                 ->setField(PageIndexMap::INTEGER_FACET_FACET_NAME)
                 ->addAggregation((new Stats(PageIndexMap::INTEGER_FACET . '-stats'))
                     ->setField(PageIndexMap::INTEGER_FACET_FACET_VALUE)));

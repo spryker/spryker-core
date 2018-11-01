@@ -15,8 +15,6 @@ class AvailabilityStorageToStorageClientBridge implements AvailabilityStorageToS
     protected $storageClient;
 
     /**
-     * SynchronizationToStorageBridge constructor.
-     *
      * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
      */
     public function __construct($storageClient)

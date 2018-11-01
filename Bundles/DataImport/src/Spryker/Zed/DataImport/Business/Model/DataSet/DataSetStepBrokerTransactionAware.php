@@ -18,7 +18,7 @@ class DataSetStepBrokerTransactionAware extends DataSetStepBroker
     protected $propelConnection;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     protected $bulkSize;
 

@@ -45,7 +45,7 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
         ProductAbstractRelationDeleterInterface $productAbstractRelationDeleter,
         ProductAbstractRelationWriterInterface $productAbstractRelationWriter,
         array $productLabelRelationUpdaterPlugins,
-        LoggerInterface $logger = null
+        ?LoggerInterface $logger = null
     ) {
         $this->productAbstractRelationDeleter = $productAbstractRelationDeleter;
         $this->productAbstractRelationWriter = $productAbstractRelationWriter;

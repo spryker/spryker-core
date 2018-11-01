@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Permission;
 
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -14,6 +15,34 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class PermissionClient extends AbstractClient implements PermissionClientInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findAll(): PermissionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createZedPermissionStub()
+            ->findAll();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredPermissions(): PermissionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createPermissionFinder()
+            ->getRegisteredPermissionCollection();
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -29,5 +58,19 @@ class PermissionClient extends AbstractClient implements PermissionClientInterfa
         return $this->getFactory()
             ->createPermissionExecutor()
             ->can($permissionKey, $context);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createZedPermissionStub()
+            ->findMergedRegisteredNonInfrastructuralPermissions();
     }
 }

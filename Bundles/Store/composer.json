@@ -1,20 +1,18 @@
 {
   "name": "spryker/store",
+  "type": "library",
   "description": "Store module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.11.0",
+    "spryker/kernel": "^3.18.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
     "spryker/quote": "*",
-    "spryker/testify": "*",
-    "spryker/transfer": "*",
-    "spryker/twig": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/quote": "If you want to use StoreQuoteTransferExpander plugin, minimum required version: 1.2.0"

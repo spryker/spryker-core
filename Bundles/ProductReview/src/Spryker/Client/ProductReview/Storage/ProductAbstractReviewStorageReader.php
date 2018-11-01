@@ -14,7 +14,7 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 class ProductAbstractReviewStorageReader implements ProductAbstractReviewStorageReaderInterface
 {
     /**
-     * @var \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface
+     * @var \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToStorageInterface
      */
     protected $storageClient;
 

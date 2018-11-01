@@ -12,7 +12,7 @@ interface StorageInterface
     /**
      * @param string $formName
      *
-     * @return boolean
+     * @return bool
      */
     public function getToken($formName);
 

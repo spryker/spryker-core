@@ -43,16 +43,16 @@ interface ProcessInterface
     public function addSubProcess(ProcessInterface $subProcess);
 
     /**
-     * @param bool $main
+     * @param bool $isMain
      *
      * @return void
      */
-    public function setMain($main);
+    public function setIsMain($isMain);
 
     /**
      * @return bool
      */
-    public function getMain();
+    public function getIsMain();
 
     /**
      * @param mixed $name
@@ -163,7 +163,7 @@ interface ProcessInterface
     public function getManualEvents();
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[][]
      */
     public function getManualEventsBySource();
 

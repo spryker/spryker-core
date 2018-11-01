@@ -18,7 +18,7 @@ class SkuRegex extends Regex
     {
         $defaults = [
             'pattern' => '/^[a-zA-Z0-9\pL\.\-\_\s*]+$/u',
-            'message' => 'Invalid value provided. Please use only alphanumeric characters and  ", . - _"',
+            'message' => 'Invalid value provided. Please use only alphanumeric characters and  ". - _"',
         ];
 
         $options = array_merge($defaults, (array)$options);

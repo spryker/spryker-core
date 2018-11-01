@@ -37,15 +37,16 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     /**
      * @param string[] $blockNames
      * @param string $localeName
+     * @param string $storeName
      *
      * @return array
      */
-    public function getBlocksByNames(array $blockNames, $localeName)
+    public function getBlocksByNames(array $blockNames, $localeName, $storeName)
     {
         $searchKeys = [];
 
         foreach ($blockNames as $blockName) {
-            $searchKeys[] = $this->generateKey($blockName, CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME, $localeName);
+            $searchKeys[] = $this->generateKey($blockName, CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME, $localeName, $storeName);
         }
 
         $resultArray = $this->storageClient->getMulti($searchKeys) ?: [];
@@ -188,13 +189,15 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      * @param string $blockKey
      * @param string $resourceName
      * @param string|null $localeName
+     * @param string|null $storeName
      *
      * @return string
      */
-    protected function generateKey($blockKey, $resourceName = CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME, $localeName = null)
+    protected function generateKey($blockKey, $resourceName = CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME, $localeName = null, $storeName = null)
     {
         $blockName = $this->generateBlockNameKey($blockKey);
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
+        $synchronizationDataTransfer->setStore($storeName);
         $synchronizationDataTransfer->setLocale($localeName);
         $synchronizationDataTransfer->setReference($blockName);
 

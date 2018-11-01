@@ -17,11 +17,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageClient extends AbstractClient implements StorageClientInterface
 {
-    const KEY_USED = 'used';
-    const KEY_NEW = 'new';
-    const KEY_INIT = 'init';
     const KEY_NAME_PREFIX = 'storage';
     const KEY_NAME_SEPARATOR = '.';
+    public const KEY_USED = 'used';
+    public const KEY_NEW = 'new';
+    public const KEY_INIT = 'init';
 
     /**
      * All keys which have been used for the last request with same URL
@@ -45,7 +45,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static $bufferedDecodedValues;
 
     /**
-     * @var \Spryker\Client\Storage\Redis\ServiceInterface
+     * @var \Spryker\Client\Storage\Redis\ServiceInterface|null
      */
     public static $service;
 
@@ -404,7 +404,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @return void
      */
-    public static function persistCache(Request $request = null)
+    public static function persistCache(?Request $request = null)
     {
         $cacheKey = static::generateCacheKey($request);
 
@@ -435,7 +435,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @return string
      */
-    protected static function generateCacheKey(Request $request = null)
+    protected static function generateCacheKey(?Request $request = null)
     {
         if ($request) {
             $requestUri = $request->getRequestUri();

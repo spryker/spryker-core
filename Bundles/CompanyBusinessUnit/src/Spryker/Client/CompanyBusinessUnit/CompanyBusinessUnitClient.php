@@ -8,8 +8,11 @@
 namespace Spryker\Client\CompanyBusinessUnit;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -24,12 +27,14 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
     public function createCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-        return $this->getFactory()->createZedCompanyBusinessUnitStub()->createCompanyBusinessUnit($companyBusinessUnitTransfer);
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->createCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 
     /**
@@ -37,14 +42,16 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
     public function getCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        return $this->getFactory()->createZedCompanyBusinessUnitStub()->getCompanyBusinessUnitCollection($businessUnitCollectionTransfer);
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
 
     /**
@@ -59,7 +66,9 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     public function updateCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-        return $this->getFactory()->createZedCompanyBusinessUnitStub()->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 
     /**
@@ -69,26 +78,46 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function deleteCompanyBusinessUnit(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
-    {
-        return $this->getFactory()->createZedCompanyBusinessUnitStub()->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
+    public function deleteCompanyBusinessUnit(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer {
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 
     /**
-     * Specification:
-     * - Finds a company business unit by CompanyBusinessUnitTransfer::idCompanyBusinessUnit in the transfer
+     * {@inheritdoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
     public function getCompanyBusinessUnitById(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitResponseTransfer {
-        return $this->getFactory()->createZedCompanyBusinessUnitStub()->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+    ): CompanyBusinessUnitTransfer {
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
+     */
+    public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->getCustomerCompanyBusinessUnitTree($customerTransfer);
     }
 }

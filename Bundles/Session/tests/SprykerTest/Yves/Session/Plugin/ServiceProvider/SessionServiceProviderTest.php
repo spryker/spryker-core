@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,6 +12,7 @@ use Silex\Application;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedis;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking;
+use Spryker\Shared\Session\SessionConfig;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Yves\Session\Plugin\ServiceProvider\SessionServiceProvider;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
@@ -98,7 +99,7 @@ class SessionServiceProviderTest extends Unit
      */
     public function testCanBeUsedWithSessionHandlerRedis()
     {
-        $this->setConfig(SessionConstants::YVES_SESSION_SAVE_HANDLER, SessionConstants::SESSION_HANDLER_REDIS);
+        $this->setConfig(SessionConstants::YVES_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_REDIS);
 
         $application = new Application();
         $sessionServiceProvider = new SessionServiceProvider();
@@ -113,7 +114,7 @@ class SessionServiceProviderTest extends Unit
      */
     public function testCanBeUsedWithSessionHandlerRedisLock()
     {
-        $this->setConfig(SessionConstants::YVES_SESSION_SAVE_HANDLER, SessionConstants::SESSION_HANDLER_REDIS_LOCKING);
+        $this->setConfig(SessionConstants::YVES_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_REDIS_LOCKING);
 
         $application = new Application();
         $sessionServiceProvider = new SessionServiceProvider();
@@ -128,7 +129,7 @@ class SessionServiceProviderTest extends Unit
      */
     public function testCanBeUsedWithSessionHandlerFile()
     {
-        $this->setConfig(SessionConstants::YVES_SESSION_SAVE_HANDLER, SessionConstants::SESSION_HANDLER_FILE);
+        $this->setConfig(SessionConstants::YVES_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_FILE);
 
         $application = new Application();
         $sessionServiceProvider = new SessionServiceProvider();

@@ -15,6 +15,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_STORE = 'FACADE_STORE';
     public const COMPANY_PRE_SAVE_PLUGINS = 'COMPANY_PRE_SAVE_PLUGINS';
+    public const COMPANY_POST_SAVE_PLUGINS = 'COMPANY_POST_SAVE_PLUGINS';
     public const COMPANY_POST_CREATE_PLUGINS = 'COMPANY_POST_CREATE_PLUGINS';
 
     /**
@@ -28,6 +29,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addStoreFacade($container);
         $container = $this->addCompanyPreSavePlugins($container);
+        $container = $this->addCompanyPostSavePlugins($container);
         $container = $this->addCompanyPostCreatePlugins($container);
 
         return $container;
@@ -54,8 +56,22 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyPreSavePlugins(Container $container): Container
     {
-        $container[static::COMPANY_PRE_SAVE_PLUGINS] = function (Container $container) {
+        $container[static::COMPANY_PRE_SAVE_PLUGINS] = function () {
             return $this->getCompanyPreSavePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyPostSavePlugins(Container $container): Container
+    {
+        $container[static::COMPANY_POST_SAVE_PLUGINS] = function () {
+            return $this->getCompanyPostSavePlugins();
         };
 
         return $container;
@@ -68,7 +84,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyPostCreatePlugins(Container $container): Container
     {
-        $container[static::COMPANY_POST_CREATE_PLUGINS] = function (Container $container) {
+        $container[static::COMPANY_POST_CREATE_PLUGINS] = function () {
             return $this->getCompanyPostCreatePlugins();
         };
 
@@ -76,7 +92,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Company\Dependency\Plugin\CompanyPreSavePluginInterface[]
+     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface[]
      */
     protected function getCompanyPreSavePlugins(): array
     {
@@ -84,7 +100,15 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface[]
+     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface[]
+     */
+    protected function getCompanyPostSavePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface[]
      */
     protected function getCompanyPostCreatePlugins(): array
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -26,7 +27,7 @@ class TaxSetFormDataProvider
      * @param \Spryker\Zed\Tax\Business\TaxFacadeInterface $taxFacade
      * @param \Generated\Shared\Transfer\TaxSetTransfer|null $taxSetTransfer
      */
-    public function __construct(TaxFacadeInterface $taxFacade, TaxSetTransfer $taxSetTransfer = null)
+    public function __construct(TaxFacadeInterface $taxFacade, ?TaxSetTransfer $taxSetTransfer = null)
     {
         $this->taxFacade = $taxFacade;
         $this->taxSetTransfer = $taxSetTransfer;
@@ -51,7 +52,7 @@ class TaxSetFormDataProvider
     }
 
     /**
-     * @return array
+     * @return \ArrayObject|\Generated\Shared\Transfer\TaxRateTransfer[]
      */
     protected function createTaxRatesList()
     {

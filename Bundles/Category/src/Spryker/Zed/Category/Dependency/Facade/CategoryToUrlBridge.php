@@ -33,7 +33,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($urlTransfer, LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null)
+    public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null)
     {
         return $this->urlFacade->createUrl($urlTransfer, $localeTransfer, $resourceType, $idResource);
     }

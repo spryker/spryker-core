@@ -28,11 +28,11 @@ use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToPro
  */
 class ProductManagerTest extends Unit
 {
-    const CONCRETE_SKU = 'concrete sku';
-    const ABSTRACT_SKU = 'abstract sku';
-    const ID_PRODUCT_CONCRETE = 'id product concrete';
-    const ID_PRODUCT_ABSTRACT = 'id product abstract';
-    const PRODUCT_NAME = 'product name';
+    public const CONCRETE_SKU = 'concrete sku';
+    public const ABSTRACT_SKU = 'abstract sku';
+    public const ID_PRODUCT_CONCRETE = 'id product concrete';
+    public const ID_PRODUCT_ABSTRACT = 'id product abstract';
+    public const PRODUCT_NAME = 'product name';
 
     /**
      * @return void
@@ -138,7 +138,7 @@ class ProductManagerTest extends Unit
     private function getMockProductFacade()
     {
         return $this->getMockBuilder(ProductCartConnectorToProductInterface::class)
-            ->setMethods(['getProductConcrete', 'getLocalizedProductConcreteName', 'hasProductAbstract', 'hasProductConcrete'])
+            ->setMethods(['getProductConcrete', 'getLocalizedProductConcreteName', 'hasProductAbstract', 'hasProductConcrete', 'isProductConcreteActive'])
             ->disableOriginalConstructor()
             ->getMock();
     }

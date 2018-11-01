@@ -27,6 +27,8 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
     /**
      * @api
      *
+     * @deprecated This is not used anymore.
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery

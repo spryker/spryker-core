@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 
 interface ReaderInterface
 {
@@ -22,24 +25,37 @@ interface ReaderInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return int
+     * @return int|null
      */
     public function findPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function findPriceProductFor(PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer;
+
+    /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPricesBySkuForCurrentStore($sku);
+    public function findPricesBySkuForCurrentStore(string $sku, ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null): array;
 
     /**
      * @param int $idProductConcrete
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
+    public function findProductConcretePrices(
+        int $idProductConcrete,
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array;
 
     /**
      * @param string $sku
@@ -64,4 +80,17 @@ interface ReaderInterface
      * @return int
      */
     public function getProductPriceIdBySku($sku, $priceTypeName, $currencyIsoCode);
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePricesWithoutPriceExtraction(
+        int $idProductConcrete,
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array;
 }

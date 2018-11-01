@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\ProductSetPageSearch;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 class ProductSetPageSearchConstants
 {
     /**
@@ -15,5 +18,21 @@ class ProductSetPageSearchConstants
      *
      * @api
      */
-    const PRODUCT_SET_RESOURCE_NAME = 'product_set';
+    public const PRODUCT_SET_RESOURCE_NAME = 'product_set';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing Product messages
+     *
+     * @api
+     */
+    public const PRODUCT_SET_SYNC_SEARCH_QUEUE = 'sync.search.product';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing Product messages
+     *
+     * @api
+     */
+    public const PRODUCT_SET_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.product.error';
 }

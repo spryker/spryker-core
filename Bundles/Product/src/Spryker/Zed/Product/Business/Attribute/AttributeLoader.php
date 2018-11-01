@@ -51,7 +51,7 @@ class AttributeLoader implements AttributeLoaderInterface
      *
      * @return array
      */
-    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer = null)
+    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $productAbstractEntity = $this->getProductAbstractEntity($productAbstractTransfer);
 
@@ -60,11 +60,11 @@ class AttributeLoader implements AttributeLoaderInterface
 
     /**
      * @param int[] $productIds
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return array
      */
-    public function getCombinedAbstractAttributeKeysForProductIds($productIds, LocaleTransfer $localeTransfer = null)
+    public function getCombinedAbstractAttributeKeysForProductIds($productIds, ?LocaleTransfer $localeTransfer = null)
     {
         $productAbstractEntities = $this->getProductAbstractEntitiesFromIds($productIds);
         $productIdsWithAttributes = [];
@@ -81,7 +81,7 @@ class AttributeLoader implements AttributeLoaderInterface
      *
      * @return array
      */
-    protected function getCombinedAbstractAttributeKeysForEntity(SpyProductAbstract $productAbstractEntity, LocaleTransfer $localeTransfer = null)
+    protected function getCombinedAbstractAttributeKeysForEntity(SpyProductAbstract $productAbstractEntity, ?LocaleTransfer $localeTransfer = null)
     {
         $rawProductAttributesTransfer = new RawProductAttributesTransfer();
         $rawProductAttributesTransfer->setAbstractAttributes($this->getAbstractAttributes($productAbstractEntity));
@@ -115,7 +115,7 @@ class AttributeLoader implements AttributeLoaderInterface
      *
      * @return array
      */
-    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer = null)
+    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $rawProductAttributesTransfer = new RawProductAttributesTransfer();
 
@@ -225,7 +225,7 @@ class AttributeLoader implements AttributeLoaderInterface
     /**
      * @param int[] $productIds
      *
-     * @return array|mixed|\Propel\Runtime\Collection\ObjectCollection
+     * @return array|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getProductAbstractEntitiesFromIds($productIds)
     {

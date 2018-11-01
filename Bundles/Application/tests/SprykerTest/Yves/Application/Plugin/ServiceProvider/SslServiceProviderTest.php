@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SslServiceProviderTest extends Unit
 {
-    const EXPECTED_CONTENT = 'not redirected';
+    public const EXPECTED_CONTENT = 'not redirected';
 
     /**
      * @var \SprykerTest\Yves\Application\ApplicationYvesTester

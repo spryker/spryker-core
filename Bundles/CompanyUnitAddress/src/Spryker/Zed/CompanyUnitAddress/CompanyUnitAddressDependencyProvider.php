@@ -18,6 +18,8 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
+    public const PLUGIN_ADDRESS_POST_SAVE = 'PLUGIN_ADDRESS_POST_SAVE';
+    public const PLUGIN_ADDRESS_TRANSFER_HYDRATING = 'PLUGIN_ADDRESS_TRANSFER_HYDRATING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +33,8 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addCountryFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
+        $container = $this->addAddressPostUpdatePlugins($container);
+        $container = $this->addCompanyUnitAddressHydratePlugins($container);
 
         return $container;
     }
@@ -75,5 +79,49 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAddressPostUpdatePlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_ADDRESS_POST_SAVE] = function (Container $container) {
+            return $this->getCompanyUnitAddressPostSavePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUnitAddressHydratePlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_ADDRESS_TRANSFER_HYDRATING] = function (Container $container) {
+            return $this->getCompanyUnitAddressHydratePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressPostSavePluginInterface[]
+     */
+    protected function getCompanyUnitAddressPostSavePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[]
+     */
+    protected function getCompanyUnitAddressHydratePlugins(): array
+    {
+        return [];
     }
 }

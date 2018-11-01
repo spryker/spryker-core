@@ -6,6 +6,7 @@
  * file that was distributed with the source code of the extended class.
  *
  * @license MIT License
+ * @see https://github.com/propelorm/Propel2
  */
 
 namespace Spryker\Zed\PropelOrm\Business\Builder;
@@ -38,13 +39,13 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
     }
 
     /**
-     * Change default propel behaviour
+     * Changes default Propel behavior.
      *
      * Adds setter method for boolean columns.
      *
      * @see \Propel\Generator\Builder\Om\ObjectBuilder::addColumnMutators()
      *
-     * @param string &$script The script will be modified in this method.
+     * @param string $script The script will be modified in this method.
      * @param \Propel\Generator\Model\Column $col The current column.
      *
      * @return void
@@ -96,6 +97,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
             '\PDO'
         );
         $table = $this->getTable();
+        /** @var \Propel\Generator\Platform\DefaultPlatform $platform */
         $platform = $this->getPlatform();
         $primaryKeyMethodInfo = '';
         if ($table->getIdMethodParameters()) {
@@ -319,7 +321,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @see addDelete()
      *
-     * @param string &$script The script will be modified in this method.
+     * @param string $script The script will be modified in this method.
      *
      * @return void
      **/

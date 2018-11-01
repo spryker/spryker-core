@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\ZedNavigation;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ZedNavigationConstants
 {
     /**
@@ -16,7 +19,7 @@ interface ZedNavigationConstants
      *
      * @api
      */
-    const ZED_NAVIGATION_CACHE_ENABLED = 'ZED_NAVIGATION_CACHE_ENABLED';
+    public const ZED_NAVIGATION_CACHE_ENABLED = 'ZED_NAVIGATION_CACHE_ENABLED';
 
-    const ZED_NAVIGATION_ENABLED = 'ZED_NAVIGATION_ENABLED';
+    public const ZED_NAVIGATION_ENABLED = 'ZED_NAVIGATION_ENABLED';
 }

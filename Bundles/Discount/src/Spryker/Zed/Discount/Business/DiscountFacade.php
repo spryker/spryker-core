@@ -291,7 +291,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return boolean
+     * @return bool
      */
     public function isTimeSatisfiedBy(
         QuoteTransfer $quoteTransfer,
@@ -544,7 +544,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param string[] $voucherCodes
      *
-     * @return bool
+     * @return int
      */
     public function releaseUsedVoucherCodes(array $voucherCodes)
     {
@@ -560,7 +560,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param string[] $voucherCodes
      *
-     * @return bool
+     * @return int
      */
     public function useVoucherCodes(array $voucherCodes)
     {
@@ -661,5 +661,20 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
          return $this->getFactory()
              ->createPriceModeDecisionRule()
              ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $resultQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuoteTransfer
+     *
+     * @return void
+     */
+    public function checkDiscountChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void
+    {
+        $this->getFactory()->createQuoteChangeObserver()->checkDiscountChanges($resultQuoteTransfer, $sourceQuoteTransfer);
     }
 }

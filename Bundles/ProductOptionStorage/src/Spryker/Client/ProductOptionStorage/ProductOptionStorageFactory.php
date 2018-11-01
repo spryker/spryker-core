@@ -18,7 +18,12 @@ class ProductOptionStorageFactory extends AbstractFactory
      */
     public function createProductOptionStorageReader()
     {
-        return new ProductOptionStorageReader($this->getStorage(), $this->getSynchronizationService(), $this->createValuePriceReader(), $this->getStore());
+        return new ProductOptionStorageReader(
+            $this->getStorage(),
+            $this->getStore(),
+            $this->getSynchronizationService(),
+            $this->createValuePriceReader()
+        );
     }
 
     /**
@@ -35,14 +40,6 @@ class ProductOptionStorageFactory extends AbstractFactory
     protected function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::STORE);
     }
 
     /**
@@ -70,5 +67,13 @@ class ProductOptionStorageFactory extends AbstractFactory
     protected function getCurrencyClient()
     {
         return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::CLIENT_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::STORE);
     }
 }

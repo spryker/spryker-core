@@ -32,6 +32,16 @@ interface UrlStorageQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param string $resourceType
+     * @param array $resourceIds
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlsByResourceTypeAndIds($resourceType, array $resourceIds);
+
+    /**
+     * @api
+     *
      * @param array $redirectIds
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery

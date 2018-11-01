@@ -102,10 +102,12 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
      */
     protected function findShipmentCarrierName(SpyShipmentMethod $shipmentMethodEntity)
     {
-        if (!$shipmentMethodEntity->getShipmentCarrier()) {
+        /** @var \Orm\Zed\Shipment\Persistence\SpyShipmentCarrier|null $shipmentCarrierEntity */
+        $shipmentCarrierEntity = $shipmentMethodEntity->getShipmentCarrier();
+        if (!$shipmentCarrierEntity) {
             return null;
         }
 
-        return $shipmentMethodEntity->getShipmentCarrier()->getName();
+        return $shipmentCarrierEntity->getName();
     }
 }

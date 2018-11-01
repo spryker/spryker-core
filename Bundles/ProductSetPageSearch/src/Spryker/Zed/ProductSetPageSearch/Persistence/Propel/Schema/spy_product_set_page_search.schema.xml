@@ -6,14 +6,16 @@
           package="src.Orm.Zed.ProductSetPageSearch.Persistence">
 
     <table name="spy_product_set_page_search">
-        <column name="id_product_set_page_search" type="integer" autoIncrement="true" primaryKey="true"/>
+        <column name="id_product_set_page_search" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_set" type="INTEGER" required="true"/>
         <!-- 'structured_data' column contains the result from database query while 'data' column contains mapped data for the search engine -->
         <column name="structured_data" type="LONGVARCHAR" required="true"/>
+        <index name="spy_product_set_page_search-fk_product_set">
+            <index-column name="fk_product_set"/>
+        </index>
         <id-method-parameter value="spy_product_set_page_search_pk_seq"/>
         <behavior name="synchronization">
             <parameter name="resource" value="product_set"/>
-            <parameter name="store" required="true"/>
             <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="fk_product_set"/>
             <parameter name="queue_group" value="sync.search.product"/>

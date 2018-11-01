@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <maintenance>
+        <pages>
+            <permission>
+                <label>Sync permissions</label>
+                <title>Sync permissions</title>
+                <bundle>permission</bundle>
+                <controller>index</controller>
+                <action>sync</action>
+            </permission>
+        </pages>
+    </maintenance>
+</config>

@@ -25,7 +25,7 @@ class RelationMapper implements RelationMapperInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[]
      */
-    public function populateCollectionWithRelation(array &$collection, $relation, Criteria $criteria = null)
+    public function populateCollectionWithRelation(array &$collection, $relation, ?Criteria $criteria = null)
     {
         if (count($collection) === 0) {
             return $collection;
@@ -35,7 +35,7 @@ class RelationMapper implements RelationMapperInterface
 
         $relationMap = $this->getRelation($entityTransfer, $relation);
 
-        if (RelationMap::ONE_TO_MANY !== $relationMap->getType()) {
+        if ($relationMap->getType() !== RelationMap::ONE_TO_MANY) {
             throw new UnsupportedRelationException('Only one to many relations supported');
         }
 
@@ -103,7 +103,7 @@ class RelationMapper implements RelationMapperInterface
         ModelCriteria $query,
         RelationMap $symRelationMap,
         array $primaryIds,
-        Criteria $criteria = null
+        ?Criteria $criteria = null
     ) {
         if ($criteria !== null) {
             $query->mergeWith($criteria);

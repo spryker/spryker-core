@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -11,8 +12,10 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 /**
  * Auto-generated group annotations
@@ -27,6 +30,8 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
 {
+    public const ID_STORE = 1;
+
     /**
      * return void
      *
@@ -35,8 +40,12 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     public function testCheckCartAvailabilityWhenBundledItemsAvailableShouldReturnEmptyMessageContainer()
     {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
-        $availabilityFacadeMock->expects($this->once())
-            ->method('isProductSellable')
+        $availabilityFacadeMock
+            ->expects($this->once())
+            ->method('isProductSellableForStore')
+            ->withConsecutive(
+                [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo(15)]
+            )
             ->willReturn(true);
 
         $productBundleAvailabilityCheckMock = $this->createProductBundleCartAvailabilityCheckMock($availabilityFacadeMock);
@@ -68,7 +77,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock->expects($this->once())
-            ->method('isProductSellable')
+            ->method('isProductSellableForStore')
             ->willReturn(false);
 
         $productBundleAvailabilityCheckMock = $this->createProductBundleCartAvailabilityCheckMock($availabilityFacadeMock);
@@ -100,12 +109,14 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface|null $availabilityFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface|null $availabilityQueryContainerMock
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityCheck
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheckInterface
      */
     protected function createProductBundleCartAvailabilityCheckMock(
-        ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
-        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainerMock = null
+        ?ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
+        ?ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainerMock = null,
+        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
 
         if ($availabilityFacadeMock === null) {
@@ -118,11 +129,33 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
             $availabilityQueryContainerMock = $this->createAvailabilityQueryContainerMock();
         }
 
+        if ($storeFacadeMock === null) {
+            $storeFacadeMock = $this->buildStoreFacadeMock();
+        }
+
+        $productBundleConfig = $this->createProductBundleConfigMock();
+
         $productBundleCartAvailabilityCheckMock = $this->getMockBuilder(ProductBundleCartAvailabilityCheck::class)
-            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $availabilityQueryContainerMock])
+            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $availabilityQueryContainerMock, $storeFacadeMock, $productBundleConfig])
             ->setMethods(['findBundledProducts', 'findAvailabilityEntityBySku'])
             ->getMock();
 
         return $productBundleCartAvailabilityCheckMock;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     */
+    protected function createStoreFacadeMock()
+    {
+        return $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\ProductBundleConfig
+     */
+    protected function createProductBundleConfigMock(): ProductBundleConfig
+    {
+        return $this->getMockBuilder(ProductBundleConfig::class)->getMock();
     }
 }

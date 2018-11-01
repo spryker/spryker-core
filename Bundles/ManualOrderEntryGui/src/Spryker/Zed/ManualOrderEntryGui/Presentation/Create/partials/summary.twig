@@ -1,0 +1,65 @@
+<div class="form-group">
+    <h3>{{ 'Submit order' | trans }}</h3>
+
+    {% include '@ManualOrderEntryGui/create/partials/summary-items.twig' %}
+
+    <br/>
+    <table class="manual-order-entry-summary">
+        <tr>
+            <td>
+                <strong>{{ 'Sub Total' | trans }}:</strong>
+            </td>
+            <td>
+                {% if quoteTransfer.totals %}
+                    {{ quoteTransfer.totals.subtotal | money(true, quoteTransfer.currency.code) }}
+                {% endif %}
+            </td>
+        </tr>
+
+    {% include '@ManualOrderEntryGui/create/partials/summary-discounts.twig' %}
+
+    {% if quoteTransfer.shipment %}
+        <tr>
+            <td>
+                <strong>{{ 'Shipping' | trans }}:</strong>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>{{ quoteTransfer.shipment.method.name }}:</td>
+            <td>{{ quoteTransfer.shipment.method.storeCurrencyPrice | money(true, quoteTransfer.currency.code) }}</td>
+        </tr>
+    {% endif %}
+
+    <tr>
+        <td><strong>{{ 'Grand Total' | trans }}:</strong></td>
+        <td>
+            {% if quoteTransfer.totals %}
+                {{ quoteTransfer.totals.grandtotal | money(true, quoteTransfer.currency.code) }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td><strong>{{ 'Tax' | trans }}:</strong></td>
+        <td>
+            {% if quoteTransfer.totals %}
+                {{ quoteTransfer.totals.taxtotal.amount | money(true, quoteTransfer.currency.code) }}
+            {% endif %}
+        </td>
+    </tr>
+
+    {% include '@ManualOrderEntryGui/create/partials/summary-payment.twig' %}
+
+    <tr>
+        <td><strong>{{ 'Price to pay' | trans }}:</strong></td>
+        <td>
+            {% if quoteTransfer.totals %}
+                {{ quoteTransfer.totals.priceToPay | money(true, quoteTransfer.currency.code) }}
+            {% endif %}
+        </td>
+    </tr>
+    </table>
+</div>
+
+{{ form_widget(form) }}
+

@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\PriceCartConnector\Business\Fixture;
 
+use RuntimeException;
 use Spryker\Shared\Calculation\Dependency\Transfer\PriceItemInterface;
 
 class PriceItemFixture extends CartItemFixture implements PriceItemInterface
@@ -37,20 +38,24 @@ class PriceItemFixture extends CartItemFixture implements PriceItemInterface
     }
 
     /**
+     * @throws \RuntimeException
+     *
      * @return int
      */
     public function getPriceToPay()
     {
-        // TODO: Implement getPriceToPay() method.
+        throw new RuntimeException('Implement getPriceToPay() method');
     }
 
     /**
      * @param int $priceToPay
      *
+     * @throws \RuntimeException
+     *
      * @return $this
      */
     public function setPriceToPay($priceToPay)
     {
-        // TODO: Implement setPriceToPay() method.
+        throw new RuntimeException('Implement setPriceToPay() method');
     }
 }

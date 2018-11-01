@@ -130,7 +130,7 @@ interface GlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $locale = null);
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
 
     /**
      * @api
@@ -225,7 +225,7 @@ interface GlossaryFacadeInterface
      *
      * @param array $idKeys
      *
-     * @return bool
+     * @return void
      */
     public function deleteTranslationsByFkKeys(array $idKeys);
 
@@ -240,7 +240,7 @@ interface GlossaryFacadeInterface
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null);
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @api
@@ -271,7 +271,7 @@ interface GlossaryFacadeInterface
      *
      * @return void
      */
-    public function touchTranslationForKeyId($idKey, LocaleTransfer $localeTransfer = null);
+    public function touchTranslationForKeyId($idKey, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @api

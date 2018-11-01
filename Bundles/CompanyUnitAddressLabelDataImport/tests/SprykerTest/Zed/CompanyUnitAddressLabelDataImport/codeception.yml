@@ -1,0 +1,30 @@
+namespace: SprykerTest\Zed\CompanyUnitAddressLabelDataImport
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Communication:
+        path: Communication
+        class_name: CompanyUnitAddressLabelDataImportCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\CompanyUnitAddressLabelDataImport\Helper\CompanyUnitAddressLabelDataImportHelper
+                - \SprykerTest\Zed\CompanyUnitAddressLabelDataImport\Helper\CompanyUnitAddressLabelRelationDataImportHelper
+                - \SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper
+                - \SprykerTest\Zed\CompanyUnitAddressLabel\Helper\CompanyUnitAddressLabelDataHelper
+                - \SprykerTest\Zed\Country\Helper\CountryDataHelper

@@ -43,6 +43,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
     public function getNavigation()
     {
         try {
+            /** @var \Zend\Config\Config $navigationDefinition */
             $navigationDefinition = Factory::fromFile($this->rootNavigationFile, true);
             $rootDefinition = clone $navigationDefinition;
         } catch (Exception $e) {
@@ -54,6 +55,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
             if (!file_exists($moduleNavigationFile->getPathname())) {
                 throw new ErrorException('Navigation-File does not exist: ' . $moduleNavigationFile);
             }
+            /** @var \Zend\Config\Config $configFromFile */
             $configFromFile = Factory::fromFile($moduleNavigationFile->getPathname(), true);
             $navigationDefinition->merge($configFromFile);
         }

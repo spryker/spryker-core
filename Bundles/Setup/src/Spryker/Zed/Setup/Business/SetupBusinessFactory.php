@@ -12,10 +12,6 @@ use Spryker\Zed\Setup\Business\Model\Cronjobs;
 use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
 use Spryker\Zed\Setup\Business\Model\GeneratedDirectory;
 use Spryker\Zed\Setup\Communication\Console\DeployPreparePropelConsole;
-use Spryker\Zed\Setup\Communication\Console\GenerateClientIdeAutoCompletionConsole;
-use Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
-use Spryker\Zed\Setup\Communication\Console\GenerateServiceIdeAutoCompletionConsole;
-use Spryker\Zed\Setup\Communication\Console\GenerateZedIdeAutoCompletionConsole;
 use Spryker\Zed\Setup\Communication\Console\InstallConsole;
 use Spryker\Zed\Setup\Communication\Console\JenkinsDisableConsole;
 use Spryker\Zed\Setup\Communication\Console\JenkinsEnableConsole;
@@ -71,10 +67,6 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     public function getConsoleCommands()
     {
         return [
-            $this->createGenerateIdeAutoCompletionConsole(),
-            $this->createGenerateZedIdeAutoCompletionConsole(),
-            $this->createGenerateClientIdeAutoCompletionConsole(),
-            $this->createGenerateServiceIdeAutoCompletionConsole(),
             $this->createRunnerConsole(),
             $this->createRemoveGeneratedDirectoryConsole(),
             $this->createInstallConsole(),
@@ -83,46 +75,6 @@ class SetupBusinessFactory extends AbstractBusinessFactory
             $this->createJenkinsGenerateConsole(),
             $this->createDeployPreparePropelConsole(),
         ];
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole
-     */
-    protected function createGenerateIdeAutoCompletionConsole()
-    {
-        return new GenerateIdeAutoCompletionConsole();
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Spryker\Zed\Setup\Communication\Console\GenerateZedIdeAutoCompletionConsole
-     */
-    protected function createGenerateZedIdeAutoCompletionConsole()
-    {
-        return new GenerateZedIdeAutoCompletionConsole();
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Spryker\Zed\Setup\Communication\Console\GenerateClientIdeAutoCompletionConsole
-     */
-    protected function createGenerateClientIdeAutoCompletionConsole()
-    {
-        return new GenerateClientIdeAutoCompletionConsole();
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Spryker\Zed\Setup\Communication\Console\GenerateServiceIdeAutoCompletionConsole
-     */
-    protected function createGenerateServiceIdeAutoCompletionConsole()
-    {
-        return new GenerateServiceIdeAutoCompletionConsole();
     }
 
     /**

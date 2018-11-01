@@ -9,14 +9,19 @@ namespace Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
  * @method \Spryker\Zed\CmsPageSearch\Communication\CmsPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsPageSearch\Business\CmsPageSearchFacadeInterface getFacade()
  */
-class CmsPageUrlSearchListener extends AbstractCmsPageSearchListener implements EventBulkHandlerInterface
+class CmsPageUrlSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
+    use DatabaseTransactionHandlerTrait;
+
     /**
      * @param array $eventTransfers
      * @param string $eventName
@@ -33,9 +38,9 @@ class CmsPageUrlSearchListener extends AbstractCmsPageSearchListener implements 
         }
 
         if ($eventName === UrlEvents::ENTITY_SPY_URL_DELETE) {
-            $this->unpublish($cmsPageIds);
+            $this->getFacade()->unpublish($cmsPageIds);
         } else {
-            $this->publish($cmsPageIds);
+            $this->getFacade()->publish($cmsPageIds);
         }
     }
 }

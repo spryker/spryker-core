@@ -30,7 +30,7 @@ class Process implements ProcessInterface
     /**
      * @var bool
      */
-    protected $main = false;
+    protected $isMain = false;
 
     /**
      * @var string
@@ -104,21 +104,21 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param bool $main
+     * @param bool $isMain
      *
      * @return void
      */
-    public function setMain($main)
+    public function setIsMain($isMain)
     {
-        $this->main = $main;
+        $this->isMain = $isMain;
     }
 
     /**
      * @return bool
      */
-    public function getMain()
+    public function getIsMain()
     {
-        return $this->main;
+        return $this->isMain;
     }
 
     /**
@@ -341,7 +341,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[][]
      */
     public function getManualEventsBySource()
     {

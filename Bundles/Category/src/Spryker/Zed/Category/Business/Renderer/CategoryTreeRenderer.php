@@ -18,8 +18,8 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
  */
 class CategoryTreeRenderer
 {
-    const NODE_HASH_ALGORITHM = 'sha256';
-    const UNKNOWN_CATEGORY = 'Unknown Category';
+    public const NODE_HASH_ALGORITHM = 'sha256';
+    public const UNKNOWN_CATEGORY = 'Unknown Category';
 
     /**
      * @var int
@@ -54,7 +54,7 @@ class CategoryTreeRenderer
     }
 
     /**
-     * @return bool
+     * @return string|false
      */
     public function render()
     {

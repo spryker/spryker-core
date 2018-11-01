@@ -4,7 +4,7 @@
     <table name="spy_company_user" phpName="SpyCompanyUser">
         <column name="fk_company_business_unit" type="INTEGER"/>
 
-        <foreign-key name="spy_company_user-fk_company_business_unit" foreignTable="spy_company_business_unit" phpName="CompanyBusinessUnit" refPhpName="CompanyUser" onDelete="SETNULL">
+        <foreign-key name="spy_co_u-fk_company_business_unit" foreignTable="spy_company_business_unit" phpName="CompanyBusinessUnit" refPhpName="CompanyUser" onDelete="SETNULL">
             <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
         </foreign-key>
     </table>

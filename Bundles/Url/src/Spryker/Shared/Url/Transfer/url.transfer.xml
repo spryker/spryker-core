@@ -36,4 +36,10 @@
         <property name="error" type="string" />
     </transfer>
 
+    <transfer name="UrlCollectorStorage">
+        <property name="referenceKey" type="string" />
+        <property name="type" type="string" />
+        <property name="localeUrls" type="Url[]" />
+    </transfer>
+
 </transfers>

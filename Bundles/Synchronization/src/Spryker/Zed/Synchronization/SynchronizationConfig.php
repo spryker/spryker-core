@@ -9,13 +9,11 @@ namespace Spryker\Zed\Synchronization;
 
 use Spryker\Shared\Queue\QueueConfig;
 use Spryker\Shared\Queue\QueueConstants;
+use Spryker\Shared\Synchronization\SynchronizationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SynchronizationConfig extends AbstractBundleConfig
 {
-    const DEFAULT_SYNC_STORAGE_QUEUE_MESSAGE_CHUNK_SIZE = 10000;
-    const DEFAULT_SYNC_SEARCH_QUEUE_MESSAGE_CHUNK_SIZE = 10000;
-
     /**
      * @param string $queueName
      *
@@ -43,7 +41,7 @@ class SynchronizationConfig extends AbstractBundleConfig
      */
     public function getSyncStorageQueueMessageChunkSize()
     {
-        return static::DEFAULT_SYNC_STORAGE_QUEUE_MESSAGE_CHUNK_SIZE;
+        return $this->get(SynchronizationConstants::DEFAULT_SYNC_STORAGE_QUEUE_MESSAGE_CHUNK_SIZE, 10000);
     }
 
     /**
@@ -51,6 +49,14 @@ class SynchronizationConfig extends AbstractBundleConfig
      */
     public function getSyncSearchQueueMessageChunkSize()
     {
-        return static::DEFAULT_SYNC_SEARCH_QUEUE_MESSAGE_CHUNK_SIZE;
+        return $this->get(SynchronizationConstants::DEFAULT_SYNC_SEARCH_QUEUE_MESSAGE_CHUNK_SIZE, 10000);
+    }
+
+    /**
+     * @return int
+     */
+    public function getSyncExportChunkSize()
+    {
+        return $this->get(SynchronizationConstants::EXPORT_MESSAGE_CHUNK_SIZE, 100);
     }
 }

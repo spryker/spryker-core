@@ -65,4 +65,24 @@ interface StoreToStoreInterface
      * @return string
      */
     public function getCurrentStoreSelectedCurrencyIsoCode();
+
+    /**
+     * @return array
+     */
+    public function getQueuePools();
+
+    /**
+     * @return string[]
+     */
+    public function getStoresWithSharedPersistence();
+
+    /**
+     * @return array
+     */
+    public function getCountries();
+
+    /**
+     * @return string
+     */
+    public function getTimezone();
 }

@@ -1,8 +1,10 @@
 parameters:
-    ignoreErrors:
-            - '#Class PHP_CodeSniffer\\Config not found#'
-
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
+
+    ignoreErrors:
+    - '#Constant T_SEMICOLON not found.#'
+    - '#Constant T_OPEN_PARENTHESIS not found.#'
+    - '#Constant T_OPEN_SQUARE_BRACKET not found.#'
 
 services:
     -

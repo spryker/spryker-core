@@ -10,7 +10,7 @@ namespace Spryker\Zed\Development\Business\Composer;
 interface ComposerJsonFinderInterface
 {
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     public function findAll();
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderReader implements OrderReaderInterface
@@ -17,11 +18,20 @@ class OrderReader implements OrderReaderInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface
      */
-    public function __construct(SalesQueryContainerInterface $queryContainer)
-    {
+    protected $orderHydrator;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
+     */
+    public function __construct(
+        SalesQueryContainerInterface $queryContainer,
+        OrderHydratorInterface $orderHydrator
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->orderHydrator = $orderHydrator;
     }
 
     /**
@@ -41,5 +51,42 @@ class OrderReader implements OrderReaderInterface
         }
 
         return $states;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
+    {
+        $orderEntity = $this->queryContainer
+            ->querySalesOrderDetails($idSalesOrder)
+            ->findOne();
+
+        if (!$orderEntity) {
+            return null;
+        }
+
+        return $this->orderHydrator->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrderItem($idSalesOrderItem)
+    {
+        $orderItem = $this->queryContainer
+            ->querySalesOrderItem()
+            ->filterByIdSalesOrderItem($idSalesOrderItem)
+            ->findOne();
+
+        if (!$orderItem) {
+            return null;
+        }
+
+        return $this->orderHydrator->hydrateBaseOrderTransfer($orderItem->getOrder());
     }
 }

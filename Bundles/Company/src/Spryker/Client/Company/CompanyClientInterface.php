@@ -15,13 +15,24 @@ interface CompanyClientInterface
     /**
      * Specification:
      * - Creates new company.
-     * - Assigns current store to company.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function createCompany(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Retrieve a company by CompanyTransfer::idCompany in the transfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer;
 }

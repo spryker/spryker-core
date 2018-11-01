@@ -7,10 +7,11 @@
 
 namespace Spryker\Yves\StepEngine\Dependency\Plugin\Form;
 
+use ArrayAccess;
 use Countable;
 use Iterator;
 
-class SubFormPluginCollection implements Iterator, Countable
+class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
 {
     /**
      * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface[]
@@ -80,5 +81,46 @@ class SubFormPluginCollection implements Iterator, Countable
     public function count()
     {
         return count($this->subForms);
+    }
+
+    /**
+     * @param int $offset
+     *
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->subForms[$offset]);
+    }
+
+    /**
+     * @param int $offset
+     *
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface
+     */
+    public function offsetGet($offset)
+    {
+        return $this->subForms[$offset];
+    }
+
+    /**
+     * @param int $offset
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface $value
+     *
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->subForms[$offset] = $value;
+    }
+
+    /**
+     * @param mixed $offset
+     *
+     * @return void
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->subForms[$offset]);
     }
 }

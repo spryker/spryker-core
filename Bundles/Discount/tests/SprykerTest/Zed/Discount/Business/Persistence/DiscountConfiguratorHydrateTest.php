@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -134,8 +135,8 @@ class DiscountConfiguratorHydrateTest extends Unit
      * @return \Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate
      */
     protected function createDiscountConfiguratorHydrate(
-        DiscountQueryContainerInterface $discountQueryContainerMock = null,
-        DiscountEntityMapperInterface $discountEntityMapperMock = null
+        ?DiscountQueryContainerInterface $discountQueryContainerMock = null,
+        ?DiscountEntityMapperInterface $discountEntityMapperMock = null
     ) {
         if (!$discountQueryContainerMock) {
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();

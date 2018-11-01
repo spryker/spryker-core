@@ -7,12 +7,24 @@
 
 namespace Spryker\Shared\Oms;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface OmsConstants
 {
-    const INITIAL_STATUS = 'new';
+    /**
+     * Specification:
+     * - Defines paths to OMS schemas
+     *
+     * @api
+     */
+    public const PROCESS_LOCATION = 'PROCESS_LOCATION';
 
-    const PROCESS_LOCATION = 'PROCESS_LOCATION';
-    const ACTIVE_PROCESSES = 'ACTIVE_PROCESSES';
-
-    const NAME_CREDIT_MEMO_REFERENCE = 'CreditMemoReference';
+    /**
+     * Specification:
+     * - Defines which of defined processes will be active
+     *
+     * @api
+     */
+    public const ACTIVE_PROCESSES = 'ACTIVE_PROCESSES';
 }

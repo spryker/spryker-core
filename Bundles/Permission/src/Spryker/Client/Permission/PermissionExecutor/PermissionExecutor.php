@@ -9,16 +9,15 @@ namespace Spryker\Client\Permission\PermissionExecutor;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
-use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 class PermissionExecutor implements PermissionExecutorInterface
 {
     /**
-     * @var \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface
+     * @var \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
      */
-    protected $permissionStoragePlugin;
+    protected $permissionStoragePlugins;
 
     /**
      * @var \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface
@@ -26,15 +25,15 @@ class PermissionExecutor implements PermissionExecutorInterface
     protected $permissionFinder;
 
     /**
-     * @param \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface $permissionStoragePlugin
+     * @param \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[] $permissionStoragePlugins
      * @param \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface $permissionConfigurator
      */
     public function __construct(
-        PermissionStoragePluginInterface $permissionStoragePlugin,
+        array $permissionStoragePlugins,
         PermissionFinderInterface $permissionConfigurator
     ) {
         $this->permissionFinder = $permissionConfigurator;
-        $this->permissionStoragePlugin = $permissionStoragePlugin;
+        $this->permissionStoragePlugins = $permissionStoragePlugins;
     }
 
     /**
@@ -45,13 +44,23 @@ class PermissionExecutor implements PermissionExecutorInterface
      */
     public function can($permissionKey, $context = null): bool
     {
+        $permissionPlugin = $this->permissionFinder->findPermissionPlugin($permissionKey);
+
+        if (!$permissionPlugin) {
+             return true;
+        }
+
         $permissionCollectionTransfer = $this->findPermissions($permissionKey);
 
-        if ($permissionCollectionTransfer->getPermissions()->count() === 0) {
+        if ($permissionCollectionTransfer->getPermissions()->count() <= 0) {
             return false;
         }
 
-        return $this->executePermissionCollection($permissionCollectionTransfer, $context);
+        if (!($permissionPlugin instanceof ExecutablePermissionPluginInterface)) {
+            return true;
+        }
+
+        return $this->executePermissionCollection($permissionPlugin, $permissionCollectionTransfer, $context);
     }
 
     /**
@@ -61,15 +70,19 @@ class PermissionExecutor implements PermissionExecutorInterface
      *  a senior sales manager up to 2000. A user has both roles assigned, then he/she has
      *  the permission to place an order up to 2000.
      *
+     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
      * @param string|int|array|null $context
      *
      * @return bool
      */
-    protected function executePermissionCollection(PermissionCollectionTransfer $permissionCollectionTransfer, $context = null): bool
-    {
+    protected function executePermissionCollection(
+        ExecutablePermissionPluginInterface $permissionPlugin,
+        PermissionCollectionTransfer $permissionCollectionTransfer,
+        $context = null
+    ): bool {
         foreach ($permissionCollectionTransfer->getPermissions() as $permissionTransfer) {
-            if ($this->executePermission($permissionTransfer, $context)) {
+            if ($this->executePermission($permissionPlugin, $permissionTransfer, $context)) {
                 return true;
             }
         }
@@ -78,23 +91,14 @@ class PermissionExecutor implements PermissionExecutorInterface
     }
 
     /**
+     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      * @param string|int|array|null $context
      *
      * @return bool
      */
-    protected function executePermission(PermissionTransfer $permissionTransfer, $context = null): bool
+    protected function executePermission(ExecutablePermissionPluginInterface $permissionPlugin, PermissionTransfer $permissionTransfer, $context = null): bool
     {
-        $permissionPlugin = $this->permissionFinder->findPermissionPlugin($permissionTransfer);
-
-        if (!$permissionPlugin) {
-            return true;
-        }
-
-        if (!($permissionPlugin instanceof ExecutablePermissionPluginInterface)) {
-            return true;
-        }
-
         return $permissionPlugin->can($permissionTransfer->getConfiguration(), $context);
     }
 
@@ -107,9 +111,11 @@ class PermissionExecutor implements PermissionExecutorInterface
     {
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        foreach ($this->permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permission) {
-            if ($permission->getKey() === $permissionKey) {
-                $permissionCollectionTransfer->addPermission($permission);
+        foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
+            foreach ($permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permission) {
+                if ($permission->getKey() === $permissionKey) {
+                    $permissionCollectionTransfer->addPermission($permission);
+                }
             }
         }
 

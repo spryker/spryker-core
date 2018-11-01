@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\ProductReview;
 
 use Codeception\Actor;
@@ -26,7 +32,7 @@ class ProductReviewBusinessTester extends Actor
      * @see SpyProductReviewTableMap::COL_UPDATED_AT
      * @see SpyProductReviewTableMap::COL_CREATED_AT
      */
-    const DATE_FIELDS = [
+    public const DATE_FIELDS = [
         'created_at',
         'updated_at',
     ];

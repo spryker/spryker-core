@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -10,10 +11,13 @@ use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Availability\AvailabilityConfig;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
 {
+    protected const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
+
     /**
      * @var \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
@@ -42,14 +46,18 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
+        $quoteTransfer->requireStore();
+
         $isPassed = true;
+
+        $storeTransfer = $quoteTransfer->getStore();
         $groupedItemQuantities = $this->groupItemsBySku($quoteTransfer->getItems());
 
         foreach ($groupedItemQuantities as $sku => $quantity) {
-            if ($this->isProductSellable($sku, $quantity) === true) {
+            if ($this->isProductSellable($sku, $quantity, $storeTransfer) === true) {
                 continue;
             }
-            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse);
+            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $sku);
             $isPassed = false;
         }
 
@@ -59,12 +67,13 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     /**
      * @param string $sku
      * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isProductSellable($sku, $quantity)
+    protected function isProductSellable($sku, $quantity, StoreTransfer $storeTransfer)
     {
-        return $this->sellable->isProductSellable($sku, $quantity);
+        return $this->sellable->isProductSellableForStore($sku, $quantity, $storeTransfer);
     }
 
     /**
@@ -98,15 +107,22 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param string $sku
      *
      * @return void
      */
-    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse)
+    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $sku)
     {
         $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
         $checkoutErrorTransfer
             ->setErrorCode($this->availabilityConfig->getProductUnavailableErrorCode())
-            ->setMessage('product.unavailable');
+            ->setMessage(static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY)
+            ->setErrorType(
+                $this->availabilityConfig->getAvailabilityErrorType()
+            )
+            ->setParameters([
+                $this->availabilityConfig->getAvailabilityProductSkuParameter() => $sku,
+            ]);
 
         $checkoutResponse
             ->addError($checkoutErrorTransfer)

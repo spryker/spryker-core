@@ -16,19 +16,18 @@ use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToSea
 use Spryker\Zed\ProductSetPageSearch\Dependency\QueryContainer\ProductSetPageSearchToProductImageQueryContainerBridge;
 use Spryker\Zed\ProductSetPageSearch\Dependency\QueryContainer\ProductSetPageSearchToProductSetQueryContainerBridge;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingBridge;
-use Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilSanitizeServiceBridge;
 
 class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
-    const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
-    const SERVICE_UTIL_SYNCHRONIZATION = 'SERVICE_UTIL_SYNCHRONIZATION';
-    const SERVICE_UTIL_ENCODING = 'util encoding service';
-    const FACADE_SEARCH = 'FACADE_SEARCH';
-    const FACADE_PRODUCT_SET = 'FACADE_PRODUCT_SET';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const STORE = 'STORE';
+    public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+    public const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
+    public const SERVICE_UTIL_SYNCHRONIZATION = 'SERVICE_UTIL_SYNCHRONIZATION';
+    public const SERVICE_UTIL_ENCODING = 'util encoding service';
+    public const FACADE_SEARCH = 'FACADE_SEARCH';
+    public const FACADE_PRODUCT_SET = 'FACADE_PRODUCT_SET';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,14 +36,24 @@ class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new ProductSetPageSearchToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
-
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ProductSetPageSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
 
+        $container[self::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+            return new ProductSetPageSearchToProductImageQueryContainerBridge($container->getLocator()->productImage()->queryContainer());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new ProductSetPageSearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
@@ -55,10 +64,6 @@ class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyPro
 
         $container[self::FACADE_PRODUCT_SET] = function (Container $container) {
             return new ProductSetPageSearchToProductSetBridge($container->getLocator()->productSet()->facade());
-        };
-
-        $container[self::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
-            return new ProductSetPageSearchToProductImageQueryContainerBridge($container->getLocator()->productImage()->queryContainer());
         };
 
         $container[static::STORE] = function (Container $container) {

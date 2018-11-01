@@ -1,12 +1,13 @@
 {
   "name": "spryker/collector-search-connector",
+  "type": "library",
   "description": "CollectorSearchConnector module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/collector": "^5.0.0 || ^6.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/search": "^6.0.0 || ^7.0.0"
+    "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

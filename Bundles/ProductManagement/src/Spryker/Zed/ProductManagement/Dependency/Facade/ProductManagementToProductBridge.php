@@ -176,7 +176,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return array
      */
-    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer = null)
+    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->productFacade->getCombinedAbstractAttributeKeys($productAbstractTransfer, $localeTransfer);
     }
@@ -187,7 +187,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return array
      */
-    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer = null)
+    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->productFacade->getCombinedConcreteAttributes($productConcreteTransfer, $localeTransfer);
     }
@@ -210,5 +210,26 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     public function touchProductConcrete($idProductConcrete)
     {
         $this->productFacade->touchProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    public function findProductConcreteIdBySku($sku)
+    {
+        return $this->productFacade->findProductConcreteIdBySku($sku);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string
+     */
+    public function generateProductConcreteSku(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->productFacade->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
     }
 }

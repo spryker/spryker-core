@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader;
 
 use Countable;
-use Exception;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use SplFileObject;
 use Spryker\Zed\DataImport\Business\Exception\DataReaderException;
@@ -40,12 +39,12 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     protected $dataSet;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $offset;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $limit;
 
@@ -75,7 +74,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     /**
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataReaderException
      *
-     * @return \SplFileObject
+     * @return void
      */
     protected function createFileObject()
     {
@@ -165,9 +164,9 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
         $dataSet = $this->fileObject->current();
         if ($this->dataSetKeys) {
             $dataSetBeforeCombine = $dataSet;
-            try {
-                $dataSet = array_combine($this->dataSetKeys, $dataSet);
-            } catch (Exception $e) {
+            $dataSet = array_combine($this->dataSetKeys, $dataSet);
+
+            if ($dataSet === false) {
                 throw new DataSetWithHeaderCombineFailedException(sprintf(
                     'Can not combine data set header with current data set. Keys: "%s", Values "%s"',
                     implode(', ', $this->dataSetKeys),
@@ -203,7 +202,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     public function valid()
     {
         if ($this->limit !== null && $this->limit !== 0) {
-            if ($this->offset) {
+            if ($this->offset !== null) {
                 return ($this->key() < $this->offset + $this->limit);
             }
         }

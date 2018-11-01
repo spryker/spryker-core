@@ -14,7 +14,7 @@ interface OrderStateMachineInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEvent($eventId, array $orderItems, $data);
 
@@ -22,7 +22,7 @@ interface OrderStateMachineInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewItem(array $orderItems, $data);
 
@@ -37,7 +37,7 @@ interface OrderStateMachineInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewOrderItems(array $orderItemIds, $data);
 
@@ -46,7 +46,7 @@ interface OrderStateMachineInterface
      * @param int $orderItemId
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneOrderItem($eventId, $orderItemId, $data);
 
@@ -55,7 +55,7 @@ interface OrderStateMachineInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOrderItems($eventId, array $orderItemIds, $data);
 }

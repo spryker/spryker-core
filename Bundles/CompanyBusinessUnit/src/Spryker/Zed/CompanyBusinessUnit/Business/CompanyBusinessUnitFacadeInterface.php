@@ -8,24 +8,30 @@
 namespace Spryker\Zed\CompanyBusinessUnit\Business;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
+use Generated\Shared\Transfer\CompanyResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyBusinessUnitFacadeInterface
 {
     /**
      * Specification:
      * - Finds a company business unit by CompanyBusinessUnitTransfer::idCompanyBusinessUnit in the transfer
+     * - Executes company business unit transfer expander plugins
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
     public function getCompanyBusinessUnitById(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitResponseTransfer;
+    ): CompanyBusinessUnitTransfer;
 
     /**
      * Specification:
@@ -41,6 +47,18 @@ interface CompanyBusinessUnitFacadeInterface
 
     /**
      * Specification:
+     * - Creates a company business unit by a company transfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer;
+
+    /**
+     * Specification:
      * - Finds a company business unit by CompanyBusinessUnitTransfer::idCompanyBusinessUnit in the transfer
      * - Updates fields in a company business unit entity
      *
@@ -50,7 +68,9 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function update(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
+    public function update(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer;
 
     /**
      * Specification:
@@ -61,9 +81,11 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function delete(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool;
+    public function delete(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer;
 
     /**
      * Specification:
@@ -71,11 +93,61 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
     public function getCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieve default business unit by company id.
+     *
+     * @api
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findDefaultBusinessUnitByCompanyId(int $idCompany): ?CompanyBusinessUnitTransfer;
+
+    /**
+     * Specification:
+     * - Assigns a default business unit to the company user in case there is none defined.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function assignDefaultBusinessUnitToCompanyUser(
+        CompanyUserResponseTransfer $companyUserResponseTransfer
+    ): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns customer references of company users related to business units.
+     *
+     * @api
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
+
+    /**
+     * Specification:
+     * - Returns hierarchy tree of company business units relation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
+     */
+    public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer;
 }

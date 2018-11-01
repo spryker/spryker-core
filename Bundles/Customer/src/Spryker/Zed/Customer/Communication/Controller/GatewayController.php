@@ -153,7 +153,7 @@ class GatewayController extends AbstractGatewayController
                 ->getAddress($addressTransfer);
         } catch (AddressNotFoundException $e) {
             $this->setSuccess(false);
-            $addressTransfer = null;
+            $addressTransfer = new AddressTransfer();
         }
 
         return $addressTransfer;
@@ -296,5 +296,15 @@ class GatewayController extends AbstractGatewayController
             ->anonymizeCustomer($customerTransfer);
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function findCustomerByReferenceAction(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->getFacade()->findCustomerByReference($customerTransfer->getCustomerReference());
     }
 }

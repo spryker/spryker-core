@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config>
+<sales>
+    <pages>
+        <manual-order-entry-gui>
+            <label>Manual Order Entry</label>
+            <title>Manual Order Entry</title>
+            <uri>/manual-order-entry-gui/create</uri>
+            <icon>fa-shopping-cart</icon>
+            <pages>
+                <order-create>
+                    <label>Create Order</label>
+                    <title>Create Order</title>
+                    <bundle>manual-order-entry-gui</bundle>
+                    <controller>create</controller>
+                    <action>create</action>
+                    <visible>0</visible>
+                </order-create>
+
+            </pages>
+        </manual-order-entry-gui>
+
+    </pages>
+</sales>
+</config>
+

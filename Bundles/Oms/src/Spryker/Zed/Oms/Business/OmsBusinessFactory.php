@@ -14,12 +14,18 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
+use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
 use Spryker\Zed\Oms\Business\Process\Event;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\State;
 use Spryker\Zed\Oms\Business\Process\Transition;
+use Spryker\Zed\Oms\Business\Reservation\ExportReservation;
+use Spryker\Zed\Oms\Business\Reservation\ReservationVersionHandler;
+use Spryker\Zed\Oms\Business\Reservation\ReservationWriter;
+use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
+use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -44,8 +50,6 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Please use createLockedOrderStateMachine() instead
-     *
      * @param array $logContext
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
@@ -78,33 +82,16 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Please use createLockedOrderStateMachine() instead
-     *
-     * @param array $logContext
-     *
-     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
-     */
-    public function createOrderStateMachineOrderStateMachine(array $logContext = [])
-    {
-        return $this->createOrderStateMachine($logContext);
-    }
-
-    /**
-     * Note: The optional argument `$xmlFolder` will be removed in next major version.
-     * Define paths to your process definition in `OmsConfig::getProcessDefinitionLocation()`
-     *
-     * @param string|null $xmlFolder @deprecated Will be removed in next major version.
-     *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
      */
-    public function createOrderStateMachineBuilder($xmlFolder = null)
+    public function createOrderStateMachineBuilder()
     {
         return new Builder(
             $this->createProcessEvent(),
             $this->createProcessState(),
             $this->createProcessTransition(),
             $this->createProcessProcess(),
-            $xmlFolder ?: $this->getConfig()->getProcessDefinitionLocation(),
+            $this->getConfig()->getProcessDefinitionLocation(),
             $this->getConfig()->getSubProcessPrefixDelimiter()
         );
     }
@@ -235,11 +222,35 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createUtilReservation()
     {
         return new Reservation(
-            $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
-            $this->createOrderStateMachineBuilder(),
+            $this->createActiveProcessFetcher(),
             $this->getQueryContainer(),
-            $this->getReservationHandlerPlugins()
+            $this->getReservationHandlerPlugins(),
+            $this->getStoreFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Reservation\ReservationVersionHandlerInterface
+     */
+    public function createReservationVersionHandler()
+    {
+        return new ReservationVersionHandler($this->getQueryContainer(), $this->getStoreFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Reservation\ReservationWriterInterface
+     */
+    public function createReservationWriter()
+    {
+        return new ReservationWriter($this->getStoreFacade(), $this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Reservation\ExportReservationInterface
+     */
+    public function createExportReservation()
+    {
+        return new ExportReservation($this->getStoreFacade(), $this->getQueryContainer(), $this->getReservationExportPlugins());
     }
 
     /**
@@ -296,10 +307,47 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface
+     */
+    public function createActiveProcessFetcher(): ActiveProcessFetcherInterface
+    {
+        return new ActiveProcessFetcher(
+            $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
+            $this->createOrderStateMachineBuilder()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface
      */
     protected function getMailFacade()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_MAIL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface[]
+     */
+    protected function getReservationExportPlugins()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_EXPORT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReaderInterface
+     */
+    public function createOrderStateMachineFlagReader()
+    {
+        return new OrderStateMachineFlagReader(
+            $this->createOrderStateMachineBuilder()
+        );
     }
 }

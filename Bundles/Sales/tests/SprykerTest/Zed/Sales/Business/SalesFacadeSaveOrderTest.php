@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -28,10 +29,10 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
+use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
@@ -89,8 +90,10 @@ class SalesFacadeSaveOrderTest extends Unit
         $omsFacadeMock->method('selectProcess')
             ->will($this->returnValue('CheckoutTest01'));
 
+        $omcConfig = new OmsConfig();
+
         $initialStateEntity = SpyOmsOrderItemStateQuery::create()
-            ->filterByName(OmsConstants::INITIAL_STATUS)
+            ->filterByName($omcConfig->getInitialStatus())
             ->findOneOrCreate();
         $initialStateEntity->save();
 
@@ -108,6 +111,10 @@ class SalesFacadeSaveOrderTest extends Unit
         $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = new SalesToSequenceNumberBridge($sequenceNumberFacade);
         $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
         $container[SalesDependencyProvider::STORE] = Store::getInstance();
+        $container[SalesDependencyProvider::ORDER_EXPANDER_PRE_SAVE_PLUGINS] = [];
+        $container[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
+            return [];
+        };
 
         $this->salesFacade = new SalesFacade();
         $businessFactory = new SalesBusinessFactory();
@@ -215,6 +222,7 @@ class SalesFacadeSaveOrderTest extends Unit
         $itemTransfer
             ->setUnitPrice(1)
             ->setUnitGrossPrice(1)
+            ->setSumGrossPrice(1)
             ->setQuantity(1)
             ->setName('test-name')
             ->setSku('sku-test');
@@ -330,9 +338,10 @@ class SalesFacadeSaveOrderTest extends Unit
     public function testSaveOrderCreatesAndFillsOrderItems()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $omsConfig = new OmsConfig();
 
         $initialState = SpyOmsOrderItemStateQuery::create()
-            ->filterByName(OmsConstants::INITIAL_STATUS)
+            ->filterByName($omsConfig->getInitialStatus())
             ->findOneOrCreate();
         $initialState->save();
 
@@ -343,6 +352,7 @@ class SalesFacadeSaveOrderTest extends Unit
             ->setSku('sku1')
             ->setUnitPrice(130)
             ->setUnitGrossPrice(120)
+            ->setSumGrossPrice(120)
             ->setQuantity(1)
             ->setTaxRate(19);
 
@@ -351,6 +361,7 @@ class SalesFacadeSaveOrderTest extends Unit
             ->setSku('sku2')
             ->setUnitPrice(130)
             ->setUnitGrossPrice(130)
+            ->setSumGrossPrice(130)
             ->setQuantity(1)
             ->setTaxRate(19);
 
@@ -400,6 +411,51 @@ class SalesFacadeSaveOrderTest extends Unit
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
         $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
         $this->assertNotNull($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateSalesExpenseSavesExpense(): void
+    {
+        // Assign
+        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $saveOrderTransfer = $this->createSaveOrderTransfer();
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+        $expenseTransfer = $this->createExpenseTransfer();
+        $expenseTransfer->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
+
+        // Act
+        $savedExpenseTransfer = $this->salesFacade->createSalesExpense($expenseTransfer);
+        $expenseTransfer->setIdSalesExpense($savedExpenseTransfer->getIdSalesExpense());
+
+        // Assert
+        $this->assertNotNull($savedExpenseTransfer->getIdSalesExpense());
+        $this->assertEquals($savedExpenseTransfer->toArray(), $expenseTransfer->toArray());
+    }
+
+    /**
+     * @param int $expensePrice
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    protected function createExpenseTransfer(int $expensePrice = 100): ExpenseTransfer
+    {
+        $expenseTransfer = (new ExpenseTransfer())
+            ->setName('test expense')
+            ->setType('EXPENSE_TYPE')
+            ->setUnitPrice($expensePrice)
+            ->setSumPrice($expensePrice)
+            ->setUnitPriceToPayAggregation($expensePrice)
+            ->setSumPriceToPayAggregation($expensePrice)
+            ->setTaxRate(19.1)
+            ->setQuantity(1)
+            ->setUnitGrossPrice(0)
+            ->setSumGrossPrice(0)
+            ->setUnitNetPrice($expensePrice)
+            ->setSumNetPrice($expensePrice);
+
+        return $expenseTransfer;
     }
 
     /**

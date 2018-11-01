@@ -6,6 +6,7 @@
  */
 namespace Spryker\Zed\Payment\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -17,6 +18,9 @@ use Generated\Shared\Transfer\SalesPaymentTransfer;
 interface PaymentFacadeInterface
 {
     /**
+     * Specification:
+     * - Creates sales payments
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -27,6 +31,9 @@ interface PaymentFacadeInterface
     public function savePaymentForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
+     * Specification:
+     * - Runs pre-check plugins
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -37,6 +44,9 @@ interface PaymentFacadeInterface
     public function checkoutPreCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
+     * Specification:
+     * - Runs post-check plugins
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -48,7 +58,7 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
-     *   - Returns payment method price to pay
+     *  - Returns payment method price to pay
      *
      * @api
      *
@@ -60,7 +70,7 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
-     *   - Populates order transfer with payment data
+     *  - Populates order transfer with payment data
      *
      * @api
      *
@@ -69,4 +79,30 @@ interface PaymentFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateOrderPayments(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     * - Finds available payment methods
+     * - Runs filter plugins
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Distributes total price to payment methods
+     * - Calculates price to pay
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer);
 }

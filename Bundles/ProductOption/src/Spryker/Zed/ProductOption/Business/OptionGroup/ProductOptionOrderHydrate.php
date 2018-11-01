@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
@@ -48,15 +51,31 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
                 continue;
             }
 
-            $itemTransfer->setUnitProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation());
+            $itemTransfer->setSumProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation());
+            $this->deriveItemUnitPrices($itemTransfer, $salesOrderItemEntity);
 
             foreach ($salesOrderItemEntity->getOptions() as $orderItemOptionEntity) {
-                $productOptionsTransfer = $this->hydrateProductOptionTransfer($orderItemOptionEntity);
+                $productOptionsTransfer = $this->hydrateProductOptionTransfer($orderItemOptionEntity, $salesOrderItemEntity->getQuantity());
                 $itemTransfer->addProductOption($productOptionsTransfer);
             }
         }
 
         return $orderTransfer;
+    }
+
+    /**
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     *
+     * @return void
+     */
+    protected function deriveItemUnitPrices(ItemTransfer $itemTransfer, SpySalesOrderItem $salesOrderItemEntity)
+    {
+        $itemTransfer->setUnitProductOptionPriceAggregation(
+            (int)round($salesOrderItemEntity->getProductOptionPriceAggregation() / $salesOrderItemEntity->getQuantity())
+        );
     }
 
     /**
@@ -78,22 +97,48 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption $orderItemOptionEntity
+     * @param int $orderItemQuantity
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    protected function hydrateProductOptionTransfer(SpySalesOrderItemOption $orderItemOptionEntity)
+    protected function hydrateProductOptionTransfer(SpySalesOrderItemOption $orderItemOptionEntity, $orderItemQuantity)
     {
         $productOptionsTransfer = new ProductOptionTransfer();
-        $productOptionsTransfer->setQuantity(1);
-        $productOptionsTransfer->setUnitPrice($orderItemOptionEntity->getPrice());
-        $productOptionsTransfer->setUnitGrossPrice($orderItemOptionEntity->getGrossPrice());
-        $productOptionsTransfer->setUnitNetPrice($orderItemOptionEntity->getNetPrice());
-        $productOptionsTransfer->setUnitDiscountAmountAggregation($orderItemOptionEntity->getDiscountAmountAggregation());
-        $productOptionsTransfer->setUnitTaxAmount($orderItemOptionEntity->getTaxAmount());
+        $productOptionsTransfer->setQuantity($orderItemQuantity);
 
+        $productOptionsTransfer->setSumPrice($orderItemOptionEntity->getPrice());
+        $productOptionsTransfer->setSumGrossPrice($orderItemOptionEntity->getGrossPrice());
+        $productOptionsTransfer->setSumNetPrice($orderItemOptionEntity->getNetPrice());
+        $productOptionsTransfer->setSumDiscountAmountAggregation($orderItemOptionEntity->getDiscountAmountAggregation());
+        $productOptionsTransfer->setSumTaxAmount($orderItemOptionEntity->getTaxAmount());
         $productOptionsTransfer->fromArray($orderItemOptionEntity->toArray(), true);
 
+        $productOptionsTransfer->setIsOrdered(true);
+
+        $this->deriveProductOptionUnitPrices($productOptionsTransfer);
+
+        $idProductOptionsValue = $this->getIdProductOptionValue($orderItemOptionEntity);
+        if ($idProductOptionsValue) {
+            $productOptionsTransfer->setIdProductOptionValue($idProductOptionsValue);
+        }
+
         return $productOptionsTransfer;
+    }
+
+    /**
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     *
+     * @return void
+     */
+    protected function deriveProductOptionUnitPrices(ProductOptionTransfer $productOptionTransfer)
+    {
+        $productOptionTransfer->setUnitPrice((int)round($productOptionTransfer->getSumPrice() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitGrossPrice((int)round($productOptionTransfer->getSumGrossPrice() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitNetPrice((int)round($productOptionTransfer->getSumNetPrice() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitDiscountAmountAggregation((int)round($productOptionTransfer->getSumDiscountAmountAggregation() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitTaxAmount((int)round($productOptionTransfer->getSumTaxAmount() / $productOptionTransfer->getQuantity()));
     }
 
     /**
@@ -107,5 +152,18 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
             ->querySalesOrder()
             ->filterByFkSalesOrder($idSalesOrder)
             ->find();
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption $orderItemOptionEntity
+     *
+     * @return int|null
+     */
+    protected function getIdProductOptionValue(SpySalesOrderItemOption $orderItemOptionEntity): ?int
+    {
+        return $this->productOptionQueryContainer
+            ->queryProductOptionValueBySku($orderItemOptionEntity->getSku())
+            ->select(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
+            ->findOne();
     }
 }

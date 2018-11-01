@@ -27,7 +27,7 @@ class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscou
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function calculateDiscounts(QuoteTransfer $quoteTransfer)
     {

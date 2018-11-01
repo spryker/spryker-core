@@ -18,4 +18,12 @@ interface UrlStorageToUrlQueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */
     public function queryRedirects();
+
+    /**
+     * @param string $resourceType
+     * @param array $resourceIds
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlsByResourceTypeAndIds($resourceType, array $resourceIds);
 }

@@ -8,13 +8,14 @@
 namespace Spryker\Zed\User\Communication\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserUpdateForm extends UserForm
 {
-    const OPTION_STATUS_CHOICES = 'status_choices';
+    public const OPTION_STATUS_CHOICES = 'status_choices';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -30,11 +31,11 @@ class UserUpdateForm extends UserForm
     /**
      * @deprecated Use `configureOptions()` instead.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         $this->configureOptions($resolver);
     }
@@ -49,11 +50,28 @@ class UserUpdateForm extends UserForm
     {
         parent::buildForm($builder, $options);
 
-        $builder->remove(self::FIELD_PASSWORD);
-
         $builder->add(self::FIELD_STATUS, ChoiceType::class, [
             'choices' => array_flip($options[self::OPTION_STATUS_CHOICES]),
             'choices_as_values' => true,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPasswordField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_PASSWORD, RepeatedType::class, [
+                'invalid_message' => 'The password fields must match.',
+                'first_options' => ['label' => 'Password', 'attr' => ['autocomplete' => 'off']],
+                'second_options' => ['label' => 'Repeat Password', 'attr' => ['autocomplete' => 'off']],
+                'required' => false,
+                'type' => PasswordType::class,
+            ]);
+
+        return $this;
     }
 }

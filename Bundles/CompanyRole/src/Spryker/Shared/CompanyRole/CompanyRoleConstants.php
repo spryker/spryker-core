@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\CompanyRole;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CompanyRoleConstants
 {
-    public const DEFAULT_COMPANY_ROLE_NAME = 'Admin';
 }

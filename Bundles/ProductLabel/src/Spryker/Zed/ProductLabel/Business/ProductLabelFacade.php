@@ -40,6 +40,23 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @api
      *
+     * @param string $labelName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
+     */
+    public function findLabelByLabelName(string $labelName): ?ProductLabelTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createLabelReader()
+            ->findProductLabelByName($labelName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
     public function findAllLabels()
@@ -214,7 +231,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @return void
      */
-    public function updateDynamicProductLabelRelations(LoggerInterface $logger = null)
+    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null)
     {
         $this->getFactory()
             ->createProductAbstractRelationUpdater($logger)

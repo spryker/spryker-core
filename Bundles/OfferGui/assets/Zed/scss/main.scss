@@ -1,0 +1,26 @@
+#sales-offer-container {
+  padding: 20px;
+  color: #666;
+
+  h2, h3 {
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 18pt;
+  }
+
+  h3 {
+    font-size: 14pt;
+    margin-bottom: 5px;
+  }
+
+  img {
+    max-width: 75px;
+  }
+
+  #main-header, .container {
+    margin-bottom: 30px;
+  }
+
+  .page-break { page-break-after: always; }
+}

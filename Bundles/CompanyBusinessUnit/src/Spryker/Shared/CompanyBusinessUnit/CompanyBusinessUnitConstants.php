@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\CompanyBusinessUnit;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CompanyBusinessUnitConstants
 {
-    public const COMPANY_BUSINESS_UNIT_DEFAULT_NAME = 'Default';
 }

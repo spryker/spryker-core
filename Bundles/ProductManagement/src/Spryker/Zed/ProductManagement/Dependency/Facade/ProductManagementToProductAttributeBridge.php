@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 class ProductManagementToProductAttributeBridge implements ProductManagementToProductAttributeInterface
 {
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
+     * @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface
      */
     protected $productAttributeFacade;
 
@@ -60,5 +60,15 @@ class ProductManagementToProductAttributeBridge implements ProductManagementToPr
     public function getProductAttributeCollection()
     {
         return $this->productAttributeFacade->getProductAttributeCollection();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array
+    {
+        return $this->productAttributeFacade->getUniqueSuperAttributesFromConcreteProducts($productConcreteTransfers);
     }
 }

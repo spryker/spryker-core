@@ -32,120 +32,156 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function createWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/create-wishlist', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $this->zedStub->call('/wishlist/gateway/create-wishlist', $wishlistTransfer);
+
+        return $wishlistTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/validate-and-create-wishlist', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
+        $wishlistResponseTransfer = $this->zedStub->call('/wishlist/gateway/validate-and-create-wishlist', $wishlistTransfer);
+
+        return $wishlistResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function updateWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/update-wishlist', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $this->zedStub->call('/wishlist/gateway/update-wishlist', $wishlistTransfer);
+
+        return $wishlistTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function validateAndUpdateWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/validate-and-update-wishlist', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
+        $wishlistResponseTransfer = $this->zedStub->call('/wishlist/gateway/validate-and-update-wishlist', $wishlistTransfer);
+
+        return $wishlistResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/remove-wishlist', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $this->zedStub->call('/wishlist/gateway/remove-wishlist', $wishlistTransfer);
+
+        return $wishlistTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeWishlistByName(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/remove-wishlist-by-name', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $this->zedStub->call('/wishlist/gateway/remove-wishlist-by-name', $wishlistTransfer);
+
+        return $wishlistTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     public function addItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/add-item', $wishlistItemTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer */
+        $wishlistItemTransfer = $this->zedStub->call('/wishlist/gateway/add-item', $wishlistItemTransfer);
+
+        return $wishlistItemTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/remove-item', $wishlistItemTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer */
+        $wishlistItemTransfer = $this->zedStub->call('/wishlist/gateway/remove-item', $wishlistItemTransfer);
+
+        return $wishlistItemTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
      */
     public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
     {
-        return $this->zedStub->call('/wishlist/gateway/remove-item-collection', $wishlistItemTransferCollection);
+        /** @var \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemCollectionTransfer */
+        $wishlistItemCollectionTransfer = $this->zedStub->call('/wishlist/gateway/remove-item-collection', $wishlistItemTransferCollection);
+
+        return $wishlistItemCollectionTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/get-wishlist', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $this->zedStub->call('/wishlist/gateway/get-wishlist', $wishlistTransfer);
+
+        return $wishlistTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
      */
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/get-wishlist-overview', $wishlistOverviewRequestTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer */
+        $wishlistOverviewResponseTransfer = $this->zedStub->call('/wishlist/gateway/get-wishlist-overview', $wishlistOverviewRequestTransfer);
+
+        return $wishlistOverviewResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
     public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/get-customer-wishlist-collection', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistCollectionTransfer $wishlistCollectionTransfer */
+        $wishlistCollectionTransfer = $this->zedStub->call('/wishlist/gateway/get-customer-wishlist-collection', $customerTransfer);
+
+        return $wishlistCollectionTransfer;
     }
 }

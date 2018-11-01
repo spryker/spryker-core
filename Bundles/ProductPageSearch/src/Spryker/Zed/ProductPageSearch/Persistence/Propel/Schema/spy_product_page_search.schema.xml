@@ -6,10 +6,13 @@
           package="src.Orm.Zed.ProductPageSearch.Persistence">
 
     <table name="spy_product_abstract_page_search">
-        <column name="id_product_abstract_page_search" type="integer" autoIncrement="true" primaryKey="true"/>
+        <column name="id_product_abstract_page_search" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_abstract" type="INTEGER" required="true"/>
         <!-- 'structured_data' column contains the result from database query while 'data' column contains mapped data for the search engine -->
         <column name="structured_data" type="LONGVARCHAR" required="true"/>
+        <index name="spy_product_abstract_page_search-fk_product_abstract">
+            <index-column name="fk_product_abstract"/>
+        </index>
         <id-method-parameter value="spy_product_abstract_page_search_pk_seq"/>
         <behavior name="synchronization">
             <parameter name="resource" value="product_abstract"/>

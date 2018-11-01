@@ -1,0 +1,14 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'View Product Suppliers' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton(url('/company-gui/list-company'), 'Back to Companies' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {{ productSuppliersTable | raw }}
+{% endblock %}

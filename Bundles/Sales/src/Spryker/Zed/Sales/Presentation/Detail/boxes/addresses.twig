@@ -21,6 +21,7 @@
                 {% if addr.address2 is not empty %}<p>{{ addr.address2 }}</p>{% endif %}
                 {% if addr.address3 is not empty %}<p>{{ addr.address3 }}</p>{% endif %}
                 {% if addr.zipCode is not empty %}<p>{{ addr.zipCode }} {{ addr.city }}</p>{% endif %}
+                {% if addr.country %} {{ addr.country.name }} {% endif %}
             </div>
         </div>
     {% endif %}

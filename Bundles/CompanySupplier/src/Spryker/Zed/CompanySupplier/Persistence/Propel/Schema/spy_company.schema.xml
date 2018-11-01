@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Company\Persistence" package="src.Orm.Zed.Company.Persistence">
+
+    <table name="spy_company" phpName="SpyCompany">
+        <column name="fk_company_type" required="false" type="INTEGER"/>
+        <foreign-key name="spy_company-fk_company_type" foreignTable="spy_company_type" phpName="CompanyType" refPhpName="CompanyType">
+            <reference local="fk_company_type" foreign="id_company_type"/>
+        </foreign-key>
+    </table>
+
+</database>

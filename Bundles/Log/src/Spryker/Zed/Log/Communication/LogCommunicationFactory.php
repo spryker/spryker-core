@@ -178,7 +178,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     {
         $streamHandler = new StreamHandler(
             $this->getConfig()->getLogFilePath(),
-            $this->getConfig()->getLogLevel()
+            (int)$this->getConfig()->getLogLevel()
         );
 
         $streamHandler->setFormatter($this->createLogstashFormatter());

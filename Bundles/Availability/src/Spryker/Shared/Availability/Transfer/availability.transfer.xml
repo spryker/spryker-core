@@ -32,5 +32,9 @@
         <property name="sku" type="string" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="store" type="Store" />
+    </transfer>
+
 </transfers>
 

@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Client;
 
 class ZedBootstrap extends Framework implements DependsOnModule
 {
-    const CONFIG_KEY_SERVICE_PROVIDER = 'serviceProvider';
+    public const CONFIG_KEY_SERVICE_PROVIDER = 'serviceProvider';
 
     /**
      * @var \Spryker\Zed\Testify\Bootstrap\ZedBootstrap
@@ -103,11 +103,12 @@ class ZedBootstrap extends Framework implements DependsOnModule
     }
 
     /**
-     * @return object|\Spryker\Shared\Kernel\AbstractBundleConfig|\PHPUnit_Framework_MockObject_Builder_InvocationMocker
+     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|\PHPUnit_Framework_MockObject_Builder_InvocationMocker
      */
     private function getTwigBundleConfigMock()
     {
         $twigConfig = new TwigConfig();
+        /** @var \Spryker\Shared\Kernel\AbstractBundleConfig $twigBundleConfigMock */
         $twigBundleConfigMock = Stub::make(TwigConfig::class, [
             'getTemplatePaths' => function () use ($twigConfig) {
                 $paths = $twigConfig->getTemplatePaths();

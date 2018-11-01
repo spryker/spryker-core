@@ -20,7 +20,7 @@ interface CommandCollectionInterface
      *
      * @return $this
      */
-    public function add(CommandInterface $command, $name);
+    public function add($command, $name);
 
     /**
      *

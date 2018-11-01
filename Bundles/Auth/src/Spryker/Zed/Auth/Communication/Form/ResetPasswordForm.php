@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Auth\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -20,7 +21,7 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class ResetPasswordForm extends AbstractType
 {
-    const FIELD_PASSWORD = 'password';
+    public const FIELD_PASSWORD = 'password';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -60,7 +61,7 @@ class ResetPasswordForm extends AbstractType
                 ],
             ],
             'required' => true,
-            'type' => 'password',
+            'type' => PasswordType::class,
             'attr' => [
                 'class' => 'btn btn-default btn-block btn-outline',
             ],

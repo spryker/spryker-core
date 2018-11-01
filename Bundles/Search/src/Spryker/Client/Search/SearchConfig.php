@@ -12,6 +12,8 @@ use Spryker\Shared\Search\SearchConstants;
 
 class SearchConfig extends AbstractBundleConfig
 {
+    public const FACET_NAME_AGGREGATION_SIZE = 10;
+
     /**
      * @return string
      */
@@ -43,7 +45,7 @@ class SearchConfig extends AbstractBundleConfig
             $config = [];
         }
 
-        $config['protocol'] = ucfirst($this->get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT));
+        $config['transport'] = ucfirst($this->get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT));
         $config['port'] = $this->get(SearchConstants::ELASTICA_PARAMETER__PORT);
         $config['host'] = $this->get(SearchConstants::ELASTICA_PARAMETER__HOST);
 
@@ -55,5 +57,13 @@ class SearchConfig extends AbstractBundleConfig
         }
 
         return $config;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFacetNameAggregationSize()
+    {
+        return static::FACET_NAME_AGGREGATION_SIZE;
     }
 }

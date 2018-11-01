@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityGui\Communication;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityGui\AvailabilityGuiDependencyProvider;
 use Spryker\Zed\AvailabilityGui\Communication\Form\AvailabilityStockForm;
 use Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider\AvailabilityStockFormDataProvider;
@@ -22,37 +23,57 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
      * @param int $idLocale
+     * @param int $idStore
      *
      * @return \Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable
      */
-    public function createAvailabilityAbstractTable($idLocale)
+    public function createAvailabilityAbstractTable($idLocale, $idStore)
     {
-        $queryProductAbstractAvailabilityGui = $this->getAvailabilityQueryContainer()
-            ->queryAvailabilityAbstractWithStockByIdLocale($idLocale);
+        $storeTransfer = $this->getStoreFacade()->getStoreById($idStore);
+        $stockTypes = $this->getStockFacade()->getStoreToWarehouseMapping()[$storeTransfer->getName()];
 
-        return new AvailabilityAbstractTable($queryProductAbstractAvailabilityGui);
+        $queryProductAbstractAvailabilityGui = $this->getAvailabilityQueryContainer()
+            ->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockTypes);
+
+        return new AvailabilityAbstractTable(
+            $queryProductAbstractAvailabilityGui,
+            $storeTransfer,
+            $this->getOmsFacade()
+        );
     }
 
     /**
      * @param int $idProductAbstract
      * @param int $idLocale
+     * @param int $idStore
      *
      * @return \Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable
      */
-    public function createAvailabilityTable($idProductAbstract, $idLocale)
+    public function createAvailabilityTable($idProductAbstract, $idLocale, $idStore)
     {
+        $storeTransfer = $this->getStoreFacade()->getStoreById($idStore);
+        $stockTypes = $this->getStockFacade()->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+
         $queryProductAbstractAvailability = $this->getAvailabilityQueryContainer()
-            ->queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
+            ->queryAvailabilityWithStockByIdProductAbstractAndIdLocale(
+                $idProductAbstract,
+                $idLocale,
+                $idStore,
+                $stockTypes
+            );
 
         return new AvailabilityTable(
             $queryProductAbstractAvailability,
             $idProductAbstract,
-            $this->getProductBundleQueryContainer()
+            $this->getProductBundleQueryContainer(),
+            $storeTransfer,
+            $this->getOmsFacade()
         );
     }
 
     /**
      * @param int $idLocale
+     * @param int $idStore
      * @param int|null $idAbstractProductBundle
      * @param int|null $idBundleProductAbstract
      *
@@ -60,13 +81,27 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createBundledProductAvailabilityTable(
         $idLocale,
+        $idStore,
         $idAbstractProductBundle = null,
         $idBundleProductAbstract = null
     ) {
+
+        $storeTransfer = $this->getStoreFacade()->getStoreById($idStore);
+        $stockTypes = $this->getStockFacade()->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+
+        $availabilityAbstractQuery = $this->getAvailabilityQueryContainer()
+            ->queryAvailabilityWithStockByIdProductAbstractAndIdLocale(
+                $idAbstractProductBundle,
+                $idLocale,
+                $idStore,
+                $stockTypes
+            );
+
         return new BundledProductAvailabilityTable(
-            $this->getAvailabilityQueryContainer(),
+            $availabilityAbstractQuery,
             $this->getProductBundleQueryContainer(),
-            $idLocale,
+            $storeTransfer,
+            $this->getOmsFacade(),
             $idAbstractProductBundle,
             $idBundleProductAbstract
         );
@@ -75,12 +110,15 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idProduct
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createAvailabilityStockForm($idProduct, $sku)
+    public function createAvailabilityStockForm($idProduct, $sku, StoreTransfer $storeTransfer)
     {
-        $availabilityGuiStockFormDataProvider = $this->createAvailabilityGuiStockFormDataProvider();
+        $availabilityForm = new AvailabilityStockForm();
+
+        $availabilityGuiStockFormDataProvider = $this->createAvailabilityGuiStockFormDataProvider($storeTransfer);
 
         return $this->getFormFactory()->create(
             AvailabilityStockForm::class,
@@ -90,11 +128,13 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return \Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider\AvailabilityStockFormDataProvider
      */
-    public function createAvailabilityGuiStockFormDataProvider()
+    public function createAvailabilityGuiStockFormDataProvider(StoreTransfer $storeTransfer)
     {
-        return new AvailabilityStockFormDataProvider($this->getStockFacade());
+        return new AvailabilityStockFormDataProvider($this->getStockFacade(), $storeTransfer);
     }
 
     /**
@@ -135,5 +175,21 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getProductBundleQueryContainer()
     {
         return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_BUNDLE);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface
+     */
+    public function getStoreFacade()
+    {
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface
+     */
+    protected function getOmsFacade()
+    {
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::FACADE_OMS);
     }
 }

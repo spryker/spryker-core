@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -115,8 +116,8 @@ class ClauseValidatorTest extends Unit
      * @return \Spryker\Zed\Discount\Business\QueryString\ClauseValidator
      */
     protected function createClauseValidator(
-        ComparatorOperatorsInterface $comparatorOperatorsMock = null,
-        MetaDataProviderInterface $metaDataProviderMock = null
+        ?ComparatorOperatorsInterface $comparatorOperatorsMock = null,
+        ?MetaDataProviderInterface $metaDataProviderMock = null
     ) {
 
         if (!$comparatorOperatorsMock) {

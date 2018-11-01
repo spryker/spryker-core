@@ -8,28 +8,28 @@
 namespace Spryker\Zed\CompanyUser\Persistence;
 
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
-use Spryker\Zed\CompanyUser\Persistence\Propel\Mapper\CompanyUserMapperInterface;
-use Spryker\Zed\CompanyUser\Persistence\Propel\Mapper\CompanyUserUserMapper;
+use Spryker\Zed\CompanyUser\Persistence\Mapper\CompanyUserMapper;
+use Spryker\Zed\CompanyUser\Persistence\Mapper\CompanyUserMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
- * @method \Spryker\Zed\CompanyUser\Persistence\CompanyUserQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CompanyUser\CompanyUserConfig getConfig()
  */
 class CompanyUserPersistenceFactory extends AbstractPersistenceFactory
 {
-    /**
-     * @return \Spryker\Zed\CompanyUser\Persistence\Propel\Mapper\CompanyUserMapperInterface
-     */
-    public function createCompanyUserMapper(): CompanyUserMapperInterface
-    {
-        return new CompanyUserUserMapper();
-    }
-
     /**
      * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      */
     public function createCompanyUserQuery(): SpyCompanyUserQuery
     {
         return SpyCompanyUserQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUser\Persistence\Mapper\CompanyUserMapperInterface
+     */
+    public function createCompanyUserMapper(): CompanyUserMapperInterface
+    {
+        return new CompanyUserMapper();
     }
 }

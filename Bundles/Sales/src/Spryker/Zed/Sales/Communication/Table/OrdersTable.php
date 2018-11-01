@@ -15,18 +15,19 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface;
 
 class OrdersTable extends AbstractTable
 {
-    const URL = 'URL';
-    const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
-    const ID_ORDER_ITEM_STATE = 'id-order-item-state';
-    const FILTER = 'filter';
-    const URL_SALES_DETAIL = '/sales/detail';
-    const PARAM_ID_SALES_ORDER = 'id-sales-order';
-    const GRAND_TOTAL = 'GrandTotal';
-    const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
-    const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    public const URL = SalesTablePluginInterface::ROW_ACTIONS;
+    public const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
+    public const ID_ORDER_ITEM_STATE = 'id-order-item-state';
+    public const FILTER = 'filter';
+    public const URL_SALES_DETAIL = '/sales/detail';
+    public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    public const GRAND_TOTAL = 'GrandTotal';
+    public const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
+    public const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
 
     /**
      * @var \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface
@@ -54,24 +55,32 @@ class OrdersTable extends AbstractTable
     protected $customerFacade;
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[]
+     */
+    protected $salesTablePlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface $queryBuilder
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[] $salesTablePlugins
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,
         SalesToMoneyInterface $moneyFacade,
         SalesToUtilSanitizeInterface $sanitizeService,
         UtilDateTimeServiceInterface $utilDateTimeService,
-        SalesToCustomerInterface $customerFacade
+        SalesToCustomerInterface $customerFacade,
+        array $salesTablePlugins = []
     ) {
         $this->queryBuilder = $queryBuilder;
         $this->moneyFacade = $moneyFacade;
         $this->sanitizeService = $sanitizeService;
         $this->utilDateTimeService = $utilDateTimeService;
         $this->customerFacade = $customerFacade;
+        $this->salesTablePlugins = $salesTablePlugins;
     }
 
     /**
@@ -107,29 +116,13 @@ class OrdersTable extends AbstractTable
         $query = $this->buildQuery();
         $queryResults = $this->runQuery($query, $config);
 
-        $results = [];
-        foreach ($queryResults as $item) {
-            $results[] = [
-                SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
-                SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
-                SpySalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
-                SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => $this->formatCustomer($item),
-                SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
-                static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),
-                static::GRAND_TOTAL => $this->getGrandTotal($item),
-                static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
-                static::URL => implode(' ', $this->createActionUrls($item)),
-            ];
-        }
-        unset($queryResults);
-
-        return $results;
+        return $this->formatQueryData($queryResults);
     }
 
     /**
      * @param array $item
      *
-     * @return int
+     * @return string
      */
     protected function getGrandTotal(array $item)
     {
@@ -207,7 +200,7 @@ class OrdersTable extends AbstractTable
     /**
      * @param int $value
      * @param bool $includeSymbol
-     * @param null|string $currencyIsoCode
+     * @param string|null $currencyIsoCode
      *
      * @return string
      */
@@ -319,5 +312,58 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_EMAIL,
             static::NUMBER_OF_ORDER_ITEMS,
         ];
+    }
+
+    /**
+     * @param array $queryResults
+     *
+     * @return array
+     */
+    protected function formatQueryData(array $queryResults)
+    {
+        $results = [];
+        foreach ($queryResults as $item) {
+            $itemLine = [
+                SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
+                SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
+                SpySalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
+                SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => $this->formatCustomer($item),
+                SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
+                static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),
+                static::GRAND_TOTAL => $this->getGrandTotal($item),
+                static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
+                static::URL => implode(' ', $this->createActionUrls($item)),
+            ];
+            $itemLine = $this->applyUIPlugins($itemLine);
+            $results[] = $itemLine;
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param array $itemLine
+     *
+     * @return array
+     */
+    protected function applyUIPlugins(array $itemLine): array
+    {
+        foreach ($this->salesTablePlugins as $uiPlugin) {
+            $itemLine = $uiPlugin->formatTableRow([$this, 'buttonGeneratorCallable'], $itemLine);
+        }
+
+        return $itemLine;
+    }
+
+    /**
+     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
+     * @param string $title
+     * @param array $options
+     *
+     * @return string
+     */
+    public function buttonGeneratorCallable($url, $title, array $options)
+    {
+        return $this->generateButton($url, $title, $options);
     }
 }

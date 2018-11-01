@@ -69,28 +69,34 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
         ProductOptionTransfer $productOptionTransfer,
         ItemTransfer $itemTransfer
     ) {
+        $sanitizedProductOptionTransfer = $this->sanitizeProductOptionSumPrices(clone $productOptionTransfer);
+
         $salesOrderItemOptionEntity->fromArray($productOptionTransfer->toArray());
-        $salesOrderItemOptionEntity->setGrossPrice($productOptionTransfer->getUnitGrossPrice());
-        $salesOrderItemOptionEntity->setNetPrice($productOptionTransfer->getUnitNetPrice());
-        $salesOrderItemOptionEntity->setTaxAmount($productOptionTransfer->getUnitTaxAmount());
-        $salesOrderItemOptionEntity->setDiscountAmountAggregation($productOptionTransfer->getUnitDiscountAmountAggregation());
-        $salesOrderItemOptionEntity->setPrice($productOptionTransfer->getUnitPrice());
+        $salesOrderItemOptionEntity->setGrossPrice($sanitizedProductOptionTransfer->getSumGrossPrice());
+        $salesOrderItemOptionEntity->setNetPrice($sanitizedProductOptionTransfer->getSumNetPrice());
+        $salesOrderItemOptionEntity->setTaxAmount($sanitizedProductOptionTransfer->getSumTaxAmount());
+        $salesOrderItemOptionEntity->setDiscountAmountAggregation($sanitizedProductOptionTransfer->getSumDiscountAmountAggregation());
+        $salesOrderItemOptionEntity->setPrice($sanitizedProductOptionTransfer->getSumPrice());
 
         $salesOrderItemOptionEntity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
     }
 
     /**
+     * @deprecated For BC reasons the missing sum prices are mirrored from unit prices
+     *
      * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    protected function cloneOption(ProductOptionTransfer $productOptionTransfer)
+    protected function sanitizeProductOptionSumPrices(ProductOptionTransfer $productOptionTransfer)
     {
-        $expandedProductOptionTransfer = clone $productOptionTransfer;
-        $expandedProductOptionTransfer->setQuantity(1);
-        $expandedProductOptionTransfer->setIdProductOptionValue(null);
+        $productOptionTransfer->setSumGrossPrice($productOptionTransfer->getSumGrossPrice() ?? $productOptionTransfer->getUnitGrossPrice());
+        $productOptionTransfer->setSumNetPrice($productOptionTransfer->getSumNetPrice() ?? $productOptionTransfer->getUnitNetPrice());
+        $productOptionTransfer->setSumTaxAmount($productOptionTransfer->getSumTaxAmount() ?? $productOptionTransfer->getUnitTaxAmount());
+        $productOptionTransfer->setSumDiscountAmountAggregation($productOptionTransfer->getSumDiscountAmountAggregation() ?? $productOptionTransfer->getUnitDiscountAmountAggregation());
+        $productOptionTransfer->setSumPrice($productOptionTransfer->getSumPrice() ?? $productOptionTransfer->getUnitPrice());
 
-        return $expandedProductOptionTransfer;
+        return $productOptionTransfer;
     }
 
     /**

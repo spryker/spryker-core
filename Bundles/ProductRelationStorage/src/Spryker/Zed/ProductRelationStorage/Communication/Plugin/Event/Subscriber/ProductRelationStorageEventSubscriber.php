@@ -17,6 +17,7 @@ use Spryker\Zed\ProductRelationStorage\Communication\Plugin\Event\Listener\Produ
 
 /**
  * @method \Spryker\Zed\ProductRelationStorage\Communication\ProductRelationStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface getFacade()
  */
 class ProductRelationStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -29,16 +30,95 @@ class ProductRelationStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH, new ProductRelationPublishStorageListener())
-            ->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_UNPUBLISH, new ProductRelationPublishStorageListener())
-            ->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_CREATE, new ProductRelationStorageListener())
-            ->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_UPDATE, new ProductRelationStorageListener())
-            ->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_DELETE, new ProductRelationStorageListener())
-            ->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE, new ProductRelationProductAbstractStorageListener())
-            ->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE, new ProductRelationProductAbstractStorageListener())
-            ->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE, new ProductRelationProductAbstractStorageListener());
+        $this->addProductRelationPublishStorageListener($eventCollection);
+        $this->addProductRelationUnpublishStorageListener($eventCollection);
+        $this->addProductRelationCreateStorageListener($eventCollection);
+        $this->addProductRelationUpdateStorageListener($eventCollection);
+        $this->addProductRelationDeleteStorageListener($eventCollection);
+        $this->addProductRelationProductAbstractCreateStorageListener($eventCollection);
+        $this->addProductRelationProductAbstractUpdateStorageListener($eventCollection);
+        $this->addProductRelationProductAbstractDeleteStorageListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductRelationPublishStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH, new ProductRelationPublishStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductRelationUnpublishStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_UNPUBLISH, new ProductRelationPublishStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductRelationCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_CREATE, new ProductRelationStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductRelationUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_UPDATE, new ProductRelationStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductRelationDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_DELETE, new ProductRelationStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductRelationProductAbstractCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE, new ProductRelationProductAbstractStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductRelationProductAbstractUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE, new ProductRelationProductAbstractStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductRelationProductAbstractDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE, new ProductRelationProductAbstractStorageListener());
     }
 }

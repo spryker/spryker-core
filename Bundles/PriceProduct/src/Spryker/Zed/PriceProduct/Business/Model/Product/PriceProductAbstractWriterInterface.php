@@ -16,5 +16,7 @@ interface PriceProductAbstractWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function persistProductAbstractPriceCollection(ProductAbstractTransfer $productAbstractTransfer);
+    public function persistProductAbstractPriceCollection(
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer;
 }

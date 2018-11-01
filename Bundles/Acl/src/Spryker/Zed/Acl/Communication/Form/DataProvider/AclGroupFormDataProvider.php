@@ -75,6 +75,6 @@ class AclGroupFormDataProvider
     {
         $roleCollection = $this->queryContainer->queryRole()->find()->toArray();
 
-        return array_column($roleCollection, 'Name', 'IdAclRole');
+        return array_column($roleCollection, 'IdAclRole', 'Name');
     }
 }

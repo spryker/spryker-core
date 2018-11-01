@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\UrlStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToEventBehaviorFacadeBridge;
@@ -16,11 +15,9 @@ use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceBri
 
 class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-
-    const STORE = 'STORE';
+    public const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,16 +26,19 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new UrlStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
+        $this->addEventBehaviorFacade($container);
 
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
-            return new UrlStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
-        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -50,10 +50,44 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
+        $this->addUrlQueryContainer($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addUtilSanitizeService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return new UrlStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addEventBehaviorFacade(Container $container)
+    {
+        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+            return new UrlStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addUrlQueryContainer(Container $container)
+    {
         $container[static::QUERY_CONTAINER_URL] = function (Container $container) {
             return new UrlStorageToUrlQueryContainerBridge($container->getLocator()->url()->queryContainer());
         };
-
-        return $container;
     }
 }

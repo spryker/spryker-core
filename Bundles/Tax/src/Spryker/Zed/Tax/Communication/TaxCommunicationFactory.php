@@ -31,15 +31,26 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getTaxRateForm(TaxRateFormDataProvider $taxRateFormDataProvider = null)
+    public function getTaxRateForm(?TaxRateFormDataProvider $taxRateFormDataProvider = null)
     {
         return $this->getFormFactory()->create(
             TaxRateForm::class,
-            $this->createTaxRateFormDataProvider()->getData(),
+            $this->getTaxRateFormData($taxRateFormDataProvider),
             [
                  'data_class' => TaxRateTransfer::class,
               ]
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider|null $taxRateFormDataProvider
+     *
+     * @return \Generated\Shared\Transfer\TaxRateTransfer
+     */
+    protected function getTaxRateFormData(?TaxRateFormDataProvider $taxRateFormDataProvider = null)
+    {
+        return $taxRateFormDataProvider ? $taxRateFormDataProvider->getData()
+            : $this->createTaxRateFormDataProvider()->getData();
     }
 
     /**
@@ -49,7 +60,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createTaxRateForm(TaxRateFormDataProvider $taxRateFormDataProvider = null)
+    public function createTaxRateForm(?TaxRateFormDataProvider $taxRateFormDataProvider = null)
     {
         return $this->getTaxRateForm($taxRateFormDataProvider);
     }
@@ -59,15 +70,26 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getTaxSetForm(TaxSetFormDataProvider $taxSetFormDataProvider = null)
+    public function getTaxSetForm(?TaxSetFormDataProvider $taxSetFormDataProvider = null)
     {
         return $this->getFormFactory()->create(
             TaxSetForm::class,
-            ($taxSetFormDataProvider) ? $taxSetFormDataProvider->getData() : $this->createTaxSetFormDataProvider()->getData(),
+            $this->getTaxSetFormData($taxSetFormDataProvider),
             [
                 'data_class' => TaxSetTransfer::class,
             ]
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider|null $taxSetFormDataProvider
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    protected function getTaxSetFormData(?TaxSetFormDataProvider $taxSetFormDataProvider = null)
+    {
+        return $taxSetFormDataProvider ? $taxSetFormDataProvider->getData()
+            : $this->createTaxSetFormDataProvider()->getData();
     }
 
     /**
@@ -77,7 +99,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createTaxSetForm(TaxSetFormDataProvider $taxSetFormDataProvider = null)
+    public function createTaxSetForm(?TaxSetFormDataProvider $taxSetFormDataProvider = null)
     {
         return $this->getTaxSetForm($taxSetFormDataProvider);
     }
@@ -87,7 +109,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider
      */
-    public function createTaxSetFormDataProvider(TaxSetTransfer $taxSetTransfer = null)
+    public function createTaxSetFormDataProvider(?TaxSetTransfer $taxSetTransfer = null)
     {
         return new TaxSetFormDataProvider($this->getFacade(), $taxSetTransfer);
     }
@@ -97,7 +119,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider
      */
-    public function createTaxRateFormDataProvider(TaxRateTransfer $taxRateTransfer = null)
+    public function createTaxRateFormDataProvider(?TaxRateTransfer $taxRateTransfer = null)
     {
         return new TaxRateFormDataProvider($this->getCountryFacade(), $taxRateTransfer);
     }

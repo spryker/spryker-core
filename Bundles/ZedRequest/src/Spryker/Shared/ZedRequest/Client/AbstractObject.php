@@ -17,7 +17,7 @@ abstract class AbstractObject implements ObjectInterface
     /**
      * @param array|null $values
      */
-    public function __construct(array $values = null)
+    public function __construct(?array $values = null)
     {
         if ($values) {
             $this->fromArray($values);

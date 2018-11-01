@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ProductsFormType extends AbstractType
 {
-    const FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS = 'assign_id_product_abstracts';
+    public const FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS = 'assign_id_product_abstracts';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -57,7 +57,7 @@ class ProductsFormType extends AbstractType
 
         $builder->get(static::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS)
             ->addModelTransformer(new CallbackTransformer(
-                function (array $productAbstractIds = null) {
+                function (?array $productAbstractIds = null) {
                     return implode(',', (array)$productAbstractIds);
                 },
                 function ($productAbstractIds = '') {

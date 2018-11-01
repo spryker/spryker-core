@@ -13,10 +13,10 @@ use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
 
 class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInterface
 {
-    const DIRECTION_ASC = 'asc';
-    const DIRECTION_DESC = 'desc';
+    public const DIRECTION_ASC = 'asc';
+    public const DIRECTION_DESC = 'desc';
 
-    const DEFAULT_SORT_PARAM_KEY = 'sort';
+    public const DEFAULT_SORT_PARAM_KEY = 'sort';
 
     /**
      * @var \Generated\Shared\Transfer\SortConfigTransfer[]
@@ -45,20 +45,20 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     {
         $this->assertSortConfigTransfer($sortConfigTransfer);
 
-        $this->sortConfigTransfers[$sortConfigTransfer->getName()] = $sortConfigTransfer;
+        $this->sortConfigTransfers[$sortConfigTransfer->getParameterName()] = $sortConfigTransfer;
 
         return $this;
     }
 
     /**
-     * @param string $name
+     * @param string $parameterName
      *
      * @return \Generated\Shared\Transfer\SortConfigTransfer|null
      */
-    public function get($name)
+    public function get($parameterName)
     {
-        if (isset($this->sortConfigTransfers[$name])) {
-            return $this->sortConfigTransfers[$name];
+        if (isset($this->sortConfigTransfers[$parameterName])) {
+            return $this->sortConfigTransfers[$parameterName];
         }
 
         return null;

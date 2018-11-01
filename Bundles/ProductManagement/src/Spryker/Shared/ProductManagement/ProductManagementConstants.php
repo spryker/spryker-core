@@ -7,14 +7,17 @@
 
 namespace Spryker\Shared\ProductManagement;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ProductManagementConstants
 {
-    const PRODUCT_MANAGEMENT_DEFAULT_LOCALE = 'default';
+    public const PRODUCT_MANAGEMENT_DEFAULT_LOCALE = 'default';
 
     /**
      * Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
      *
      * @api
      */
-    const BASE_URL_YVES = 'PRODUCT_MANAGEMENT:BASE_URL_YVES';
+    public const BASE_URL_YVES = 'PRODUCT_MANAGEMENT:BASE_URL_YVES';
 }

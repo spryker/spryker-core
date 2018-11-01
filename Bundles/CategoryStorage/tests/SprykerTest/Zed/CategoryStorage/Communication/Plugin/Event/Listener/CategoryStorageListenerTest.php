@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,8 +13,6 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorageQuery;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
-use Propel\Runtime\Propel;
-use Silex\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
@@ -24,7 +23,6 @@ use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNode
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateStorageListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStorageListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStorageListener;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerTest\Zed\CategoryStorage\CategoryStorageConfigMock;
 
 /**
@@ -48,14 +46,10 @@ class CategoryStorageListenerTest extends Unit
      */
     protected function setUp()
     {
-        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbType !== 'pgsql') {
+        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+        if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
-
-        Propel::disableInstancePooling();
-        $propelServiceProvider = new PropelServiceProvider();
-        $propelServiceProvider->boot(new Application());
     }
 
     /**
@@ -179,12 +173,12 @@ class CategoryStorageListenerTest extends Unit
     {
         $CategoryStorageCount = SpyCategoryNodeStorageQuery::create()->count();
         $this->assertEquals($beforeCount + 2, $CategoryStorageCount);
-        $spyCategoryNodeStorage = SpyCategoryNodeStorageQuery::create()->findOneByFkCategoryNode(1);
+        $spyCategoryNodeStorage = SpyCategoryNodeStorageQuery::create()->orderByIdCategoryNodeStorage()->findOneByFkCategoryNode(1);
         $this->assertNotNull($spyCategoryNodeStorage);
         $data = $spyCategoryNodeStorage->getData();
         $this->assertEquals('Demoshop', $data['name']);
         $this->assertEquals('Demoshop', $data['meta_title']);
-        $this->assertEquals(6, count($data['children']));
+        $this->assertGreaterThanOrEqual(6, count($data['children']));
     }
 
     /**
@@ -196,6 +190,6 @@ class CategoryStorageListenerTest extends Unit
         $this->assertEquals(2, $CategoryStorageCount);
         $spyCategoryNodeStorage = SpyCategoryTreeStorageQuery::create()->findOne();
         $data = $spyCategoryNodeStorage->getData();
-        $this->assertEquals(4, count($data['category_nodes_storage']));
+        $this->assertGreaterThanOrEqual(4, count($data['category_nodes_storage']));
     }
 }

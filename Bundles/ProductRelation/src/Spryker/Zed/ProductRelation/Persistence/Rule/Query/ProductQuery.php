@@ -22,8 +22,8 @@ use Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToProdu
 
 class ProductQuery implements QueryInterface
 {
-    const COL_CATEGORY_NAME = 'category_name';
-    const ALIAS_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES = 'spy_product_abstract_localized_attributes';
+    public const COL_CATEGORY_NAME = 'category_name';
+    public const ALIAS_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES = 'spy_product_abstract_localized_attributes';
 
     /**
      * @var \Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToProductInterface
@@ -124,7 +124,7 @@ class ProductQuery implements QueryInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function prepareQuery(RuleQueryDataProviderTransfer $dataProviderTransfer = null)
+    public function prepareQuery(?RuleQueryDataProviderTransfer $dataProviderTransfer = null)
     {
         $idLocale = $this->localeFacade
             ->getCurrentLocale()
@@ -188,14 +188,14 @@ class ProductQuery implements QueryInterface
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      * @param \Generated\Shared\Transfer\RuleQueryDataProviderTransfer|null $ruleQueryDataProviderTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected function filterProductAbstractId(
         ModelCriteria $query,
-        RuleQueryDataProviderTransfer $ruleQueryDataProviderTransfer = null
+        ?RuleQueryDataProviderTransfer $ruleQueryDataProviderTransfer = null
     ) {
         if (!$ruleQueryDataProviderTransfer || !$ruleQueryDataProviderTransfer->getIdProductAbstract()) {
             return $query;
@@ -203,7 +203,6 @@ class ProductQuery implements QueryInterface
 
         $ruleQueryDataProviderTransfer->requireIdProductAbstract();
 
-        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query */
         $query->filterByIdProductAbstract($ruleQueryDataProviderTransfer->getIdProductAbstract());
 
         return $query;

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 
 interface CompanyGuiToCompanyFacadeInterface
@@ -14,7 +15,21 @@ interface CompanyGuiToCompanyFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function update(CompanyTransfer $companyTransfer): void;
+    public function update(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function create(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
 }

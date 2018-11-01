@@ -32,7 +32,7 @@ class CalculationClient extends AbstractClient implements CalculationClientInter
     /**
      * @api
      *
-     * @return \Spryker\Client\Calculation\Zed\CalculationStub
+     * @return \Spryker\Client\Calculation\Zed\CalculationStubInterface
      */
     public function getZedStub()
     {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -32,5 +32,19 @@ class TaxSetEditCest
         $i->listDataTable(TaxSetListPage::DATA_TABLE_URL);
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Sets / Edit Tax Set');
+    }
+
+    /**
+     * @param \SprykerTest\Zed\Tax\TaxCommunicationTester $i
+     *
+     * @return void
+     */
+    public function dataIsProvided(TaxCommunicationTester $i)
+    {
+        $i->listDataTable(TaxSetListPage::DATA_TABLE_URL);
+        $i->clickDataTableEditButton();
+
+        $name = $i->grabValueFrom('[name="tax_set[name]"]');
+        $i->assertNotEmpty($name);
     }
 }

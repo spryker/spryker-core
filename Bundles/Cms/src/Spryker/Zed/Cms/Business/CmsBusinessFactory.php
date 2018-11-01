@@ -319,7 +319,15 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsPageActivator()
     {
-        return new CmsPageActivator($this->getQueryContainer(), $this->getTouchFacade());
+        return new CmsPageActivator($this->getQueryContainer(), $this->getTouchFacade(), $this->getCmsPagePostActivatorPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[]
+     */
+    public function getCmsPagePostActivatorPlugins()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_PAGE_POST_ACTIVATOR);
     }
 
     /**

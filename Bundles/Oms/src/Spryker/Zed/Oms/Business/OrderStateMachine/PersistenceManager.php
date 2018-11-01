@@ -11,16 +11,11 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
-use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\Business\Exception\ProcessNotActiveException;
 use Spryker\Zed\Oms\OmsConfig;
 
 class PersistenceManager implements PersistenceManagerInterface
 {
-    protected static $stateEntityBuffer = [];
-
-    protected static $processEntityBuffer = [];
-
     /**
      * @var \Spryker\Zed\Oms\OmsConfig
      */
@@ -41,10 +36,6 @@ class PersistenceManager implements PersistenceManagerInterface
      */
     public function getStateEntity($stateName)
     {
-        if (array_key_exists($stateName, self::$stateEntityBuffer)) {
-            return self::$stateEntityBuffer[$stateName];
-        }
-
         $stateEntity = SpyOmsOrderItemStateQuery::create()->findOneByName($stateName);
 
         if ($stateEntity === null) {
@@ -52,8 +43,6 @@ class PersistenceManager implements PersistenceManagerInterface
             $stateEntity->setName($stateName);
             $stateEntity->save();
         }
-
-        $stateBuffer[$stateName] = $stateEntity;
 
         return $stateEntity;
     }
@@ -74,10 +63,6 @@ class PersistenceManager implements PersistenceManagerInterface
             ));
         }
 
-        if (array_key_exists($processName, self::$processEntityBuffer)) {
-            return self::$processEntityBuffer[$processName];
-        }
-
         $processEntity = SpyOmsOrderProcessQuery::create()->findOneByName($processName);
 
         if ($processEntity === null) {
@@ -85,8 +70,6 @@ class PersistenceManager implements PersistenceManagerInterface
             $processEntity->setName($processName);
             $processEntity->save();
         }
-
-        $processBuffer[$processName] = $processEntity;
 
         return $processEntity;
     }
@@ -106,6 +89,6 @@ class PersistenceManager implements PersistenceManagerInterface
      */
     public function getInitialStateEntity()
     {
-        return $this->getStateEntity(OmsConstants::INITIAL_STATUS);
+        return $this->getStateEntity($this->omsConfig->getInitialStatus());
     }
 }

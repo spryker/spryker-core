@@ -40,7 +40,7 @@ interface HttpClientInterface
      */
     public function request(
         $pathInfo,
-        TransferInterface $transferObject = null,
+        ?TransferInterface $transferObject = null,
         array $metaTransfers = [],
         $requestOptions = null
     );

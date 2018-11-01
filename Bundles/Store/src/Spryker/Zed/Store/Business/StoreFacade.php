@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Store\Business;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -69,5 +70,35 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
         return $this->getFactory()
             ->createStoreReader()
             ->getStoreByName($storeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()
+            ->createStoreReader()
+            ->getStoresWithSharedPersistence($storeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getCountries()
+    {
+        return $this->getFactory()
+            ->createStoreReader()
+            ->getCountries();
     }
 }

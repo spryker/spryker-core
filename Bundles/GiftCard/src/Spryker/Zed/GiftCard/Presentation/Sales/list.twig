@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-sm-12">
+
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Gift cards' } %}
+
+            {% block widget_content %}
+
+                <table class="footable table table-striped toggle-arrow-tiny">
+                    <thead>
+                    <tr class="text-left">
+                        <th>{{ "Gift card" | trans }}</th>
+                        <th>{{ "Code" | trans }}</th>
+                        <th>{{ "Amount" | trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for giftCard in giftCards %}
+                        <tr>
+                            <td><a href="/gift-card-balance/index?id-gift-card={{ giftCard.idGiftCard }}">{{ giftCard.name }}</a></td>
+                            <td>{{ giftCard.code }}</td>
+                            <td>{{ giftCard.value | money(true, order.currencyIsoCode) }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+            {% endblock %}
+
+        {% endembed %}
+
+    </div>
+</div>

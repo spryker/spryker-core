@@ -119,12 +119,12 @@ class CmsPageSaverTest extends CmsMocks
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageSaver
      */
     protected function createCmsPageSaverMock(
-        UrlFacadeInterface $urlFacadeMock = null,
-        CmsToTouchInterface $touchFacadeMock = null,
-        CmsQueryContainerInterface $cmsQueryContainerMock = null,
-        CmsPageUrlBuilderInterface $cmsPageUrlBuilderMock = null,
-        CmsGlossarySaverInterface $cmsGlossarySaverMock = null,
-        TemplateManagerInterface $templateManagerMock = null
+        ?UrlFacadeInterface $urlFacadeMock = null,
+        ?CmsToTouchInterface $touchFacadeMock = null,
+        ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
+        ?CmsPageUrlBuilderInterface $cmsPageUrlBuilderMock = null,
+        ?CmsGlossarySaverInterface $cmsGlossarySaverMock = null,
+        ?TemplateManagerInterface $templateManagerMock = null
     ) {
 
         if ($urlFacadeMock === null) {

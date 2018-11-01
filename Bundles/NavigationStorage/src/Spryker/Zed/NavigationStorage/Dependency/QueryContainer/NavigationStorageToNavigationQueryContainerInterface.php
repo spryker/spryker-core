@@ -7,10 +7,17 @@
 
 namespace Spryker\Zed\NavigationStorage\Dependency\QueryContainer;
 
+use Orm\Zed\Navigation\Persistence\SpyNavigationQuery;
+
 interface NavigationStorageToNavigationQueryContainerInterface
 {
     /**
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery
      */
     public function queryNavigationNode();
+
+    /**
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
+     */
+    public function queryNavigation(): SpyNavigationQuery;
 }

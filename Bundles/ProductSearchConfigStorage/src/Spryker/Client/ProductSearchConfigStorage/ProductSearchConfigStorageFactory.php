@@ -26,12 +26,4 @@ class ProductSearchConfigStorageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductSearchConfigStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(ProductSearchConfigStorageDependencyProvider::STORE);
-    }
 }

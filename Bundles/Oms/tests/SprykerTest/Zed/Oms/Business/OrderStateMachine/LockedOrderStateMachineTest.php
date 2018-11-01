@@ -293,7 +293,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Lock\TriggerLocker
+     * @return \Spryker\Zed\Oms\Business\Lock\TriggerLocker|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createTriggerLockerMock()
     {

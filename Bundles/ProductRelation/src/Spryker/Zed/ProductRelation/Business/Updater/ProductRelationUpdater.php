@@ -71,7 +71,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
     }
 
     /**
-     * @return mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelation[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelation[]
      */
     protected function findActiveProductRelations()
     {

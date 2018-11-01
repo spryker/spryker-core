@@ -24,7 +24,7 @@ use Spryker\Yves\Kernel\Container;
  */
 class FormFactoryTest extends Unit
 {
-    const SUB_FORMS = 'forms';
+    public const SUB_FORMS = 'forms';
 
     /**
      * @return void
@@ -37,6 +37,7 @@ class FormFactoryTest extends Unit
         $formFactory = new FormFactory();
         $formFactory->setContainer($container);
 
-        $this->assertSame(self::SUB_FORMS, $formFactory->createPaymentMethodSubForms());
+        $this->assertSame(static::SUB_FORMS, $formFactory->getPaymentMethodSubFormPluginCollection());
+        $this->assertSame(static::SUB_FORMS, $formFactory->getPaymentMethodSubForms());
     }
 }

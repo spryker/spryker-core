@@ -18,18 +18,19 @@ use Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePluginException
 
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGINS = 'PLUGINS';
-    const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
-    const PRICE_PLUGINS = 'PRICE_PLUGINS';
-    const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
-    const MONEY_COLLECTION_FORM_TYPE_PLUGIN = 'MONEY_COLLECTION_FORM_TYPE_PLUGIN';
+    public const PLUGINS = 'PLUGINS';
+    public const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
+    public const PRICE_PLUGINS = 'PRICE_PLUGINS';
+    public const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
+    public const MONEY_COLLECTION_FORM_TYPE_PLUGIN = 'MONEY_COLLECTION_FORM_TYPE_PLUGIN';
 
-    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+    public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
-    const FACADE_MONEY = 'FACADE_MONEY';
-    const FACADE_CURRENCY = 'FACADE_CURRENCY';
-    const FACADE_STORE = 'FACADE_STORE';
-    const FACADE_TAX = 'FACADE_TAX';
+    public const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_TAX = 'FACADE_TAX';
+    public const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -139,6 +140,21 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addMethodFilterPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMethodFilterPlugins(Container $container)
+    {
+        $container[static::SHIPMENT_METHOD_FILTER_PLUGINS] = function (Container $container) {
+            return $this->getMethodFilterPlugins($container);
+        };
 
         return $container;
     }
@@ -190,5 +206,15 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
                 FormTypeInterface::class
             )
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
+     */
+    protected function getMethodFilterPlugins(Container $container)
+    {
+        return [];
     }
 }

@@ -7,25 +7,25 @@
 
 namespace Spryker\Client\CheckoutPermissionConnector\Plugin;
 
-use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 /**
  * @example
  */
 class CheckoutPlaceOrderGrantTotalXPermissionPlugin implements ExecutablePermissionPluginInterface
 {
-    const KEY = 'permission.checkout.placeOrder.grantTotal.x';
-    const OPTION_CART_MAX_GRAND_TOTAL = 1000;
+    public const KEY = 'permission.checkout.placeOrder.grantTotal.x';
+    public const OPTION_CART_MAX_GRAND_TOTAL = 1000;
 
     /**
      * @param array $configuration
-     * @param array|int|null|string $amount
+     * @param array|int|string|null $centAmount
      *
      * @return bool
      */
-    public function can(array $configuration, $amount = null)
+    public function can(array $configuration, $centAmount = null)
     {
-        return $amount < static::OPTION_CART_MAX_GRAND_TOTAL;
+        return $centAmount < static::OPTION_CART_MAX_GRAND_TOTAL;
     }
 
     /**
@@ -39,7 +39,7 @@ class CheckoutPlaceOrderGrantTotalXPermissionPlugin implements ExecutablePermiss
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return static::KEY;
     }

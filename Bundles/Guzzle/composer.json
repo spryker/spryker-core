@@ -1,9 +1,10 @@
 {
   "name": "spryker/guzzle",
+  "type": "library",
   "description": "Guzzle module",
   "license": "proprietary",
   "require": {
-    "guzzlehttp/guzzle": "~6.2.1",
+    "guzzlehttp/guzzle": "~6.3.0",
     "php": ">=7.1"
   },
   "minimum-stability": "dev",

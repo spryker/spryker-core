@@ -1,0 +1,27 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Edit file' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton('/file-manager-gui/directories-tree', 'Back to File Tree' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(fileForm) }}
+
+    {{ tabs(
+        fileFormTabs,
+        {
+            'fileForm': fileForm,
+            'currentLocale': currentLocale,
+            'fileInfoTable': fileInfoTable
+        }
+    ) }}
+
+    {{ form_end(fileForm) }}
+
+{% endblock %}

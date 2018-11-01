@@ -21,6 +21,8 @@ use Symfony\Component\Form\FormView;
  */
 class ProductMoneyCollectionType extends AbstractCollectionType
 {
+    public const PRICE_DELIMITER = '-';
+
     /**
      * @var string
      */
@@ -206,6 +208,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
                 $this->sortTable($current);
             }
         }
+        unset($current);
         ksort($priceTable);
     }
 

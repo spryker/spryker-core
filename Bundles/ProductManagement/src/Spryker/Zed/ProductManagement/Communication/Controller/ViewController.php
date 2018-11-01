@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
@@ -24,8 +25,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AddController
 {
-    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    const PARAM_ID_PRODUCT = 'id-product';
+    public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const PARAM_ID_PRODUCT = 'id-product';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -61,6 +62,7 @@ class ViewController extends AddController
         $productGroupTable = $this->getFactory()
             ->createProductGroupTable($idProductAbstract);
 
+        $attributes = [];
         $attributes[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $productAbstractTransfer->getAttributes();
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();
@@ -72,6 +74,18 @@ class ViewController extends AddController
         $imageSets = $this->getProductImageSetCollection($imageSetCollection);
 
         $relatedStoreNames = $this->getStoreNames($productAbstractTransfer->getStoreRelation()->getStores());
+
+        $isProductBundle = $this->getFactory()
+            ->createProductTypeHelper()
+            ->isProductBundleByProductAbstract($productAbstractTransfer);
+
+        $isGiftCard = $this->getFactory()
+            ->createProductTypeHelper()
+            ->isGiftCardByProductAbstractTransfer($productAbstractTransfer);
+
+        $categoryCollectionTransfer = $this->getFactory()
+            ->getProductCategoryFacade()
+            ->getCategoryTransferCollectionByIdProductAbstract($idProductAbstract, $localeProvider->getCurrentLocale());
 
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
@@ -89,6 +103,9 @@ class ViewController extends AddController
             'taxSet' => $this->getFactory()->getTaxFacade()->getTaxSet($productAbstractTransfer->getIdTaxSet()),
             'renderedPlugins' => $this->getRenderedProductAbstractViewPlugins($idProductAbstract),
             'relatedStoreNames' => $relatedStoreNames,
+            'isProductBundle' => $isProductBundle,
+            'isGiftCard' => $isGiftCard,
+            'categories' => $categoryCollectionTransfer->getCategories(),
         ]);
     }
 
@@ -122,6 +139,7 @@ class ViewController extends AddController
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
+        $attributes = [];
         $attributes[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $productTransfer->getAttributes();
         foreach ($productTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();
@@ -132,6 +150,17 @@ class ViewController extends AddController
 
         $imageSets = $this->getProductImageSetCollection($imageSetCollection);
 
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setSku($productTransfer->getAbstractSku());
+
+        $isProductBundle = $this->getFactory()
+            ->createProductTypeHelper()
+            ->isProductBundleByProductAbstract($productAbstractTransfer);
+
+        $isGiftCard = $this->getFactory()
+            ->createProductTypeHelper()
+            ->isGiftCardByProductAbstractTransfer($productAbstractTransfer);
+
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productTransfer->toArray(),
@@ -141,6 +170,8 @@ class ViewController extends AddController
             'idProductAbstract' => $idProductAbstract,
             'productAttributes' => $attributes,
             'imageSetCollection' => $imageSets,
+            'isProductBundle' => $isProductBundle,
+            'isGiftCard' => $isGiftCard,
         ]);
     }
 

@@ -412,7 +412,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @return bool
      */
-    public function isProductAbstractSearchable($idProductAbstract, LocaleTransfer $localeTransfer = null)
+    public function isProductAbstractSearchable($idProductAbstract, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->getFactory()
             ->createProductAbstractSearchReader()
@@ -431,7 +431,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @return bool
      */
-    public function isProductConcreteSearchable($idProductConcrete, LocaleTransfer $localeTransfer = null)
+    public function isProductConcreteSearchable($idProductConcrete, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->getFactory()
             ->createProductConcreteSearchReader()

@@ -28,7 +28,7 @@ abstract class AbstractSpyCustomerAddressQuery extends BaseSpyCustomerAddressQue
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
-    public static function create($modelAlias = null, Criteria $criteria = null, $withAnonymized = false)
+    public static function create($modelAlias = null, ?Criteria $criteria = null, $withAnonymized = false)
     {
         $query = parent::create($modelAlias, $criteria);
 

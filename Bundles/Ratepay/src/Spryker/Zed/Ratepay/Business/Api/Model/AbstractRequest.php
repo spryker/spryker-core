@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -23,7 +24,7 @@ abstract class AbstractRequest implements RequestInterface
 
     /**
      * @param array $array
-     * @param \Spryker\Zed\Ratepay\Business\Api\SimpleXMLElement &$xml
+     * @param \Spryker\Zed\Ratepay\Business\Api\SimpleXMLElement $xml
      *
      * @return void
      */
@@ -37,7 +38,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * @param string $key
      * @param mixed $value
-     * @param \Spryker\Zed\Ratepay\Business\Api\SimpleXMLElement &$xml
+     * @param \Spryker\Zed\Ratepay\Business\Api\SimpleXMLElement $xml
      *
      * @return void
      */

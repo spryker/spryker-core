@@ -87,7 +87,7 @@ class ProductRelationReader implements ProductRelationReaderInterface
     }
 
     /**
-     * @return mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationType[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationType[]
      */
     protected function findProductRelationTemplates()
     {

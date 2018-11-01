@@ -32,7 +32,7 @@ class ProjectInstaller implements DependencyInstallerInterface
      */
     public function install(LoggerInterface $logger)
     {
-        $process = new Process($this->installCommand, APPLICATION_ROOT_DIR, null, null, 600);
+        $process = new Process($this->installCommand, APPLICATION_ROOT_DIR, null, null, null);
         $process->run(function ($type, $buffer) use ($logger) {
             $logger->info($buffer);
         });

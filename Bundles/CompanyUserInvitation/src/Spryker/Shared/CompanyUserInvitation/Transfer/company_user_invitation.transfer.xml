@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CompanyUserInvitation">
+        <property name="idCompanyUserInvitation" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="email" type="string"/>
+        <property name="hash" type="string"/>
+        <property name="fkCompanyUser" type="int"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="fkCompanyUserInvitationStatus" type="int"/>
+        <property name="companyId" type="int"/>
+        <property name="companyBusinessUnitName" type="string"/>
+        <property name="companyUserInvitationStatusKey" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationStatus">
+        <property name="idCompanyUserInvitationStatus" type="int"/>
+        <property name="statusKey" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="name" type="string"/>
+        <property name="fkCompany" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationCollection">
+        <property name="companyUserInvitations" type="CompanyUserInvitation[]" singular="companyUserInvitation"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="companyUserInvitationHash" type="string" />
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+        <property name="fkCompany" type="int"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationCriteriaFilter">
+        <property name="fkCompany" type="int"/>
+        <property name="fkCompanyUser" type="int"/>
+        <property name="companyUserInvitationStatusKeyIn" type="array"/>
+        <property name="companyUserInvitationStatusKeyNotIn" type="array"/>
+        <property name="filter" type="Filter"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationImportRequest">
+        <property name="idCompanyUser" type="int"/>
+        <property name="companyUserInvitationCollection" type="CompanyUserInvitationCollection"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationImportResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="array" singular="error"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationSendRequest">
+        <property name="idCompanyUser" type="int"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationSendResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationSendBatchResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="invitationsTotal" type="int"/>
+        <property name="invitationsFailed" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationUpdateStatusRequest">
+        <property name="idCompanyUser" type="int"/>
+        <property name="statusKey" type="string"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationUpdateStatusResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationGetCollectionRequest">
+        <property name="idCompanyUser" type="int"/>
+        <property name="criteriaFilter" type="CompanyUserInvitationCriteriaFilter"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationCreateRequest">
+        <property name="idCompanyUser" type="int"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationCreateResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="error" type="string"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationDeleteRequest">
+        <property name="idCompanyUser" type="int"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationDeleteResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="type" type="string" />
+        <property name="invitationLink" type="string" />
+        <property name="companyUserInvitation" type="CompanyUserInvitation" />
+    </transfer>
+
+</transfers>

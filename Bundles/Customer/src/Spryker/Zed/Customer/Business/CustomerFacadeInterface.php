@@ -9,6 +9,8 @@ namespace Spryker\Zed\Customer\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -16,6 +18,18 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 
 interface CustomerFacadeInterface
 {
+    /**
+     * Specification:
+     *  - Retrieves customers from database using filtration and pagination.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerListTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollection(CustomerCollectionTransfer $customerListTransfer): CustomerCollectionTransfer;
+
     /**
      * Specification:
      * - Checks if provided email address exists in persistent storage.
@@ -146,7 +160,7 @@ interface CustomerFacadeInterface
      *      - Encrypts provided plain text password before update.
      * - Identifies customer by either customer ID, customer email, or password restoration key.
      * - Validates customer email information.
-     * - Updates customer data which is set in provided transfer object.
+     * - Updates customer data which is set in provided transfer object (including password property - dismantles newPassword property).
      * - Sends password restoration email if SendPasswordToken property is set in the provided transfer object.
      *
      * @api
@@ -443,4 +457,17 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateSalesOrderCustomerInformation(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     *  - Finds customer by reference.
+     *  - Returns customer response transfer.
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function findCustomerByReference(string $customerReference): CustomerResponseTransfer;
 }

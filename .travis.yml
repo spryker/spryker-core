@@ -13,11 +13,10 @@ env:
     - APPLICATION_STORE=DE
 
 install:
-  - composer self-update && composer --version
   - composer update --no-interaction --prefer-dist --no-autoloader
 
 script:
-  - composer cs-check
+  - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p
 
 notifications:
   email: false

@@ -39,7 +39,7 @@ interface ProductSearchToGlossaryInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null);
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param string $keyName

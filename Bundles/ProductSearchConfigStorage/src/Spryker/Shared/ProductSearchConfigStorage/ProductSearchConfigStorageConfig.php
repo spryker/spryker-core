@@ -13,9 +13,25 @@ class ProductSearchConfigStorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
+     * - Queue name as used for processing price messages
+     *
+     * @api
+     */
+    public const PRODUCT_SEARCH_CONFIG_EXTENSION_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing price messages
+     *
+     * @api
+     */
+    public const PRODUCT_SEARCH_CONFIG_EXTENSION_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+
+    /**
+     * Specification:
      * - Resource name, this will use for key generating
      *
      * @api
      */
-    const PRODUCT_SEARCH_CONFIG_EXTENSION_RESOURCE_NAME = 'product_search_config_extension';
+    public const PRODUCT_SEARCH_CONFIG_EXTENSION_RESOURCE_NAME = 'product_search_config_extension';
 }

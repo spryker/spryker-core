@@ -1,10 +1,15 @@
 <div class="well">
     {% filter trans|raw %}
-        <h3>Price & Tax</h3>
-        <p>Enter price and tax set.</p>
+        <h3>Price</h3>
+        <p>Enter price.</p>
     {% endfilter %}
 </div>
 
+{% if form.price_source is defined %}
+    {{ form_row(form.price_source, { 'id': 'price-source-checkbox' }) }}
+{% endif %}
+
+{{ include('@ProductManagement/_partials/price_dimension_filter.twig', {priceDimensionForm: form.price_dimension}) }}
 {{ include('@ProductManagement/_partials/product_price_collection.twig', {moneyValueFormViewCollection: form.prices}) }}
 
 
@@ -30,6 +35,17 @@
         {{ form_row(inputCollection.type) }}
         {{ form_row(inputCollection.quantity) }}
         {{ form_row(inputCollection.is_never_out_of_stock) }}
+
+        <div class="form-group">
+            {{ 'Available in stores' | trans }}:
+            {% if inputCollection.vars.available_in_stores is defined %}
+                {% for store in inputCollection.vars.available_in_stores %}
+                    <span class="badge"><strong>{{ store }}</strong></span>
+                {% endfor %}
+            {% else %}
+                {{ 'n/a' | trans }}
+            {% endif %}
+        </div>
 
     {% endfor %}
 

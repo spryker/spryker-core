@@ -24,12 +24,12 @@ class AvailabilityProductStorageListener extends AbstractPlugin implements Event
 {
     use DatabaseTransactionHandlerTrait;
 
-    const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+    public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
     /**
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void

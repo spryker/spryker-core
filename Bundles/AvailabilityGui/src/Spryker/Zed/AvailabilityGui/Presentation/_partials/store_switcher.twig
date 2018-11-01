@@ -1,0 +1,13 @@
+<div class="ibox-content">
+    <form method="GET" action="" data-component="store-switch">
+        <label>Store</label>
+        <select name="id-store" onchange="this.form.submit()" onblur="this.form.submit()">
+            {% for store in stores %}
+                <option value="{{ store.idStore }}" {{ (store.idStore == idStore) ? 'selected' : ''}}>{{ store.name }}</option>
+            {% endfor %}
+        </select>
+        {% if idProduct is defined %}
+          <input type="hidden" name="id-product" value="{{ idProduct }}" />
+        {% endif %}
+    </form>
+</div>
