@@ -157,6 +157,9 @@ class MerchantRelationshipFacadeTest extends Unit
     {
         // Prepare
         $expectedMerchantRelationship = $this->haveMerchantRelationship('mr-test');
+        $expectedMerchantRelationship->setName(
+            sprintf('%s - %s', $expectedMerchantRelationship->getIdMerchantRelationship(), $expectedMerchantRelationship->getOwnerCompanyBusinessUnit()->getName())
+        );
 
         $merchantRelationship = (new MerchantRelationshipTransfer())
             ->setIdMerchantRelationship(
