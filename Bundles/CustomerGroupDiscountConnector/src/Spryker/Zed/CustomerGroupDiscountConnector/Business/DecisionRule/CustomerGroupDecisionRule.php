@@ -64,7 +64,7 @@ class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
         }
 
         foreach ($customerGroups as $customerGroup) {
-            $lowerCustomerGroupName = strtolower($customerGroup->getName());
+            $lowerCustomerGroupName = mb_strtolower($customerGroup->getName());
 
             if ($clauseTransfer->getValue() !== $lowerCustomerGroupName) {
                 continue;
