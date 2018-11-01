@@ -7,12 +7,14 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToStoreClientInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresResourceMapperInterface;
 use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoresReader implements StoresReaderInterface
 {
@@ -70,6 +72,13 @@ class StoresReader implements StoresReaderInterface
     public function getStoresAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
         $currentStore = $this->storeClient->getCurrentStore();
+        $response = $this->restResourceBuilder->createRestResponse();
+
+        $storeRequestId = $restRequest->getResource()->getId();
+        if ($storeRequestId && ($storeRequestId !== $currentStore->getName())) {
+            return $this->addInvalidStoreIdErrorToResponse($response);
+        }
+
         $storesRestAttributes = $this->storesResourceMapper->mapStoreToStoresRestAttribute(
             $this->countryReader->getStoresCountryAttributes($currentStore->getCountries()),
             $this->currencyReader->getStoresCurrencyAttributes($currentStore->getAvailableCurrencyIsoCodes())
@@ -81,8 +90,21 @@ class StoresReader implements StoresReaderInterface
             $storesRestAttributes
         );
 
-        $response = $this->restResourceBuilder->createRestResponse();
-
         return $response->addResource($restResource);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addInvalidStoreIdErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(StoresRestApiConfig::RESPONSE_CODE_CANT_FIND_STORE)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(StoresRestApiConfig::RESPONSE_DETAIL_CANT_FIND_STORE);
+
+        return $restResponse->addError($restErrorTransfer);
     }
 }
