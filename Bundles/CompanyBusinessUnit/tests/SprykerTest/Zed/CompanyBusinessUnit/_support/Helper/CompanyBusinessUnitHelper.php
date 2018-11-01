@@ -60,6 +60,8 @@ class CompanyBusinessUnitHelper extends Module
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 
+        $this->ensureCompanyBusinessUnitWithKeyDoesNotExist($companyBusinessUnitTransfer->getKey());
+
         return $this->getCompanyBusinessUnitFacade()
             ->create($companyBusinessUnitTransfer)
             ->getCompanyBusinessUnitTransfer();
