@@ -17,6 +17,10 @@
             <index-column name="fk_company_business_unit" />
         </index>
 
+        <unique name="spy_price_product_abstract_merchant_relationship_storage-price_key">
+            <unique-column name="price_key"/>
+        </unique>
+
         <id-method-parameter value="spy_price_product_merchant_relationship_abstract_pk_seq"/>
         <behavior name="synchronization">
             <parameter name="resource" value="price_product_abstract_merchant_relationship"/>
@@ -37,6 +41,10 @@
             <index-column name="fk_product" />
             <index-column name="fk_company_business_unit" />
         </index>
+
+        <unique name="spy_price_product_concrete_merchant_relationship_storage-price_key">
+            <unique-column name="price_key"/>
+        </unique>
 
         <id-method-parameter value="spy_price_product_concrete_merchant_relationship_pk_seq"/>
         <behavior name="synchronization">
