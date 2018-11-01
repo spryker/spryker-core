@@ -14,11 +14,29 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
 {
+    public const PRICE_PRODUCT_MERCHANT_RELATIONSHIP_SYNC_STORAGE_QUEUE = 'sync.storage.price';
+
     /**
      * @return string
      */
     public function getPriceDimensionMerchantRelationship()
     {
         return $this->getSharedConfig()->getPriceDimensionMerchantRelationship();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPriceProductConcreteMerchantRelationSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPriceProductAbstractMerchantRelationSynchronizationPoolName(): ?string
+    {
+        return null;
     }
 }
