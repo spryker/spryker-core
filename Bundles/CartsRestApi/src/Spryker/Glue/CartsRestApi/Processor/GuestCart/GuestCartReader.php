@@ -9,6 +9,8 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReader;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
@@ -16,6 +18,7 @@ use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPl
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class GuestCartReader extends CartReader implements GuestCartReaderInterface
 {
@@ -48,7 +51,18 @@ class GuestCartReader extends CartReader implements GuestCartReaderInterface
      */
     public function readCurrentCustomerCarts(RestRequestInterface $restRequest): RestResponseInterface
     {
+        if (!$restRequest->getUser()) {
+            $restResponse = $this->restResourceBuilder->createRestResponse();
+            $restErrorTransfer = (new RestErrorMessageTransfer())
+                ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
+                ->setStatus(Response::HTTP_NOT_FOUND)
+                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
+
+            return $restResponse->addError($restErrorTransfer);
+        }
+
         $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
+
         if (count($quoteCollectionTransfer->getQuotes()) === 0) {
             return $this->guestCartRestResponseBuilder->createEmptyGuestCartRestResponse();
         }
