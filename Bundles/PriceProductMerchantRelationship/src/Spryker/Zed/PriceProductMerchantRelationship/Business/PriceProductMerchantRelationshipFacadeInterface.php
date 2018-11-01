@@ -17,7 +17,9 @@ interface PriceProductMerchantRelationshipFacadeInterface
 {
     /**
      * Specification:
+     *  - For BC reasons: Creates spy_price_product_store entry if does not exist.
      *  - Saves connection between spy_price_product_store and spy_price_product_merchant_relationship.
+     *  - Creates connection between spy_price_product_store and spy_price_product_business_unit.
      *
      * @api
      *

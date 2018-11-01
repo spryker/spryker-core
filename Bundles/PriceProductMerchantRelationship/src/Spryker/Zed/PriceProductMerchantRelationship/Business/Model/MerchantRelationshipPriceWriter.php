@@ -128,6 +128,8 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
             ->setFkMerchantRelationship($priceProductTransfer->getPriceDimension()->getIdMerchantRelationship())
             ->setFkPriceProductStore((string)$priceProductTransfer->getMoneyValue()->getIdEntity());
 
+        $this->persistPriceProductStore($priceProductTransfer);
+
         if ($priceProductTransfer->getIdProductAbstract()) {
             $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
         } else {

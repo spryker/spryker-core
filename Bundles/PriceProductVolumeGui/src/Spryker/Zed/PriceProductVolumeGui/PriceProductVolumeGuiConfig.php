@@ -26,11 +26,6 @@ class PriceProductVolumeGuiConfig extends AbstractBundleConfig
      */
     protected const VOLUME_PRICE_TYPE = 'volume_prices';
 
-    protected const PRICE_VOLUME_FORM_EMPTY_ROW_COUNT = 3;
-    protected const PRICE_VOLUME_FORM_FRACTION_POW_BASE = 10;
-    protected const PRICE_VOLUME_FORM_DEFAULT_FRACTION_DIGITS = 2;
-    protected const PRICE_VOLUME_FORM_DEFAULT_DIVISOR = 1;
-
     /**
      * @return string
      */
@@ -53,37 +48,5 @@ class PriceProductVolumeGuiConfig extends AbstractBundleConfig
     public function getVolumePriceTypeName(): string
     {
         return static::VOLUME_PRICE_TYPE;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPriceVolumeFormEmptyRowsCount(): int
-    {
-        return static::PRICE_VOLUME_FORM_EMPTY_ROW_COUNT;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPriceVolumeFormFractionPowBase(): int
-    {
-        return static::PRICE_VOLUME_FORM_FRACTION_POW_BASE;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPriceVolumeFormDefaultFractionDigits(): int
-    {
-        return static::PRICE_VOLUME_FORM_DEFAULT_FRACTION_DIGITS;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPriceVolumeFormDefaultDivisor(): int
-    {
-        return static::PRICE_VOLUME_FORM_DEFAULT_DIVISOR;
     }
 }

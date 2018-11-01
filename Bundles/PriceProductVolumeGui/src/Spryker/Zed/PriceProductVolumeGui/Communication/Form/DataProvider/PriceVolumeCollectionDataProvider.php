@@ -28,6 +28,11 @@ class PriceVolumeCollectionDataProvider
 
     protected const VOLUME_PRICES = 'volume_prices';
 
+    protected const EMPTY_ROW_COUNT = 3;
+    protected const FRACTION_POW_BASE = 10;
+    protected const DEFAULT_FRACTION_DIGITS = 2;
+    protected const DEFAULT_DIVISOR = 1;
+
     protected const MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Abstract Id "%d".';
     protected const MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Concrete Id "%d".';
 
@@ -169,7 +174,7 @@ class PriceVolumeCollectionDataProvider
     protected function getVolumes(PriceProductTransfer $priceProductTransfer): array
     {
         $preSavedVolumes = $this->getPreSavedVolumes($priceProductTransfer);
-        $emptyVolumes = $this->generateEmptyPriceProductVolumeItemTransfers($this->config->getPriceVolumeFormEmptyRowsCount());
+        $emptyVolumes = $this->generateEmptyPriceProductVolumeItemTransfers(static::EMPTY_ROW_COUNT);
 
         return array_merge($preSavedVolumes, $emptyVolumes);
     }
@@ -294,10 +299,10 @@ class PriceVolumeCollectionDataProvider
         $fractionDigits = $currencyTransfer->getFractionDigits();
 
         if ($fractionDigits) {
-            return pow($this->config->getPriceVolumeFormFractionPowBase(), $fractionDigits);
+            return pow(static::FRACTION_POW_BASE, $fractionDigits);
         }
 
-        return $this->config->getPriceVolumeFormDefaultDivisor();
+        return static::DEFAULT_DIVISOR;
     }
 
     /**
@@ -313,6 +318,6 @@ class PriceVolumeCollectionDataProvider
             return $fractionDigits;
         }
 
-        return $this->config->getPriceVolumeFormDefaultFractionDigits();
+        return static::DEFAULT_FRACTION_DIGITS;
     }
 }
