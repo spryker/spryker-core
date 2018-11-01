@@ -53,7 +53,6 @@ class GuestCartReader extends CartReader implements GuestCartReaderInterface
         }
 
         $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
-
         if (count($quoteCollectionTransfer->getQuotes()) === 0) {
             return $this->guestCartRestResponseBuilder->createEmptyGuestCartRestResponse();
         }
