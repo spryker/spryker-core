@@ -31,4 +31,11 @@ interface PriceProductAbstractStorageWriterInterface
      * @return void
      */
     public function publishAbstractPriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
+
+    /**
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return void
+     */
+    public function unpublishAbstractPriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
 }

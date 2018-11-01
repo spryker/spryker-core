@@ -31,4 +31,11 @@ interface PriceProductConcreteStorageWriterInterface
      * @return void
      */
     public function publishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
+
+    /**
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return void
+     */
+    public function unpublishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
 }

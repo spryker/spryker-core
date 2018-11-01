@@ -98,6 +98,28 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return void
+     */
+    public function unpublishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void
+    {
+        $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
+            ->findMerchantRelationshipProductConcretePricesStorageByIds($priceProductMerchantRelationshipIds);
+
+        $priceKeys = array_map(function (PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer) {
+            return $priceProductMerchantRelationshipStorageTransfer->getPriceKey();
+        }, $priceProductMerchantRelationshipStorageTransfers);
+
+        $existingPriceProductMerchantRelationshipStorageEntities = $this->priceProductMerchantRelationshipStorageRepository
+            ->findExistingPriceProductConcreteMerchantRelationshipStorageEntitiesByPriceKeys($priceKeys);
+
+        foreach ($existingPriceProductMerchantRelationshipStorageEntities as $priceProductMerchantRelationshipStorageEntity) {
+            $priceProductMerchantRelationshipStorageEntity->delete();
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransfers
      * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[] $mappedPriceProductMerchantRelationshipStorageEntities
      *
