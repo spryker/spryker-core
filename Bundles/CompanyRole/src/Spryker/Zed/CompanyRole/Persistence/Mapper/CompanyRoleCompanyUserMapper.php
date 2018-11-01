@@ -28,10 +28,10 @@ class CompanyRoleCompanyUserMapper implements CompanyRoleCompanyUserMapperInterf
         $companyUserCollectionTransfer = new CompanyUserCollectionTransfer();
 
         foreach ($spyCompanyRole->getSpyCompanyRoleToCompanyUsersJoinCompanyUser() as $spyCompanyRoleToCompanyUser) {
-            /** @var \Orm\Zed\Customer\Persistence\SpyCustomer|null $spyCustomer */
-            $spyCustomer = $spyCompanyRoleToCompanyUser->getCompanyUser()->getCustomer();
+            /** @var \Orm\Zed\Customer\Persistence\SpyCustomer|null $customerEntity */
+            $customerEntity = $spyCompanyRoleToCompanyUser->getCompanyUser()->getCustomer();
 
-            if ($spyCustomer === null) {
+            if ($customerEntity === null) {
                 continue;
             }
 
@@ -39,7 +39,7 @@ class CompanyRoleCompanyUserMapper implements CompanyRoleCompanyUserMapperInterf
                 ->fromArray($spyCompanyRoleToCompanyUser->getCompanyUser()->toArray(), true);
 
             $customerTransfer = new CustomerTransfer();
-            $customerTransfer->fromArray($spyCustomer->toArray(), true);
+            $customerTransfer->fromArray($customerEntity->toArray(), true);
 
             $companyUserTransfer->setCustomer($customerTransfer);
 
