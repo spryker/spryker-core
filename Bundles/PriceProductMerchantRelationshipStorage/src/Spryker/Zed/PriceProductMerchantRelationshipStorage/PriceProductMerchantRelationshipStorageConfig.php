@@ -22,6 +22,11 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
     public const COL_FK_COMPANY_BUSINESS_UNIT = 'spy_merchant_relationship_to_company_business_unit.fk_company_business_unit';
 
     /**
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA
+     */
+    public const PRICE_DATA = 'priceData';
+
+    /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
      */
     public const PRICE_MODE_GROSS = 'GROSS_MODE';
