@@ -84,7 +84,6 @@ class BusinessOnBehalfCompanyUserDataImportPluginTest extends Unit
     protected function prepareTestData(): void
     {
         $this->tester->prepareTestData();
-        $this->tester->ensureCompanyBusinessUnitWithKeyDoesNotExist(static::BUSINESS_UNIT_KEY);
         $companyTransfer = $this->tester->haveCompany(['key' => static::COMPANY_KEY]);
         $this->tester->haveCompanyBusinessUnit([
             'key' => static::BUSINESS_UNIT_KEY,

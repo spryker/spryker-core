@@ -38,20 +38,11 @@ class CompanyBusinessUnitHelper extends Module
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 
+        $this->ensureCompanyBusinessUnitWithKeyDoesNotExist($companyBusinessUnitTransfer->getKey());
+
         return $this->getCompanyBusinessUnitFacade()
             ->create($companyBusinessUnitTransfer)
             ->getCompanyBusinessUnitTransfer();
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return void
-     */
-    public function ensureCompanyBusinessUnitWithKeyDoesNotExist(string $key): void
-    {
-        $companyBusinessUnitQuery = $this->getCompanyBusinessUnitQuery();
-        $companyBusinessUnitQuery->filterByKey($key)->delete();
     }
 
     /**
@@ -141,6 +132,17 @@ class CompanyBusinessUnitHelper extends Module
             ->facade()
             ->create($companyTransfer)
             ->getCompanyTransfer();
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return void
+     */
+    protected function ensureCompanyBusinessUnitWithKeyDoesNotExist(string $key): void
+    {
+        $companyBusinessUnitQuery = $this->getCompanyBusinessUnitQuery();
+        $companyBusinessUnitQuery->filterByKey($key)->delete();
     }
 
     /**
