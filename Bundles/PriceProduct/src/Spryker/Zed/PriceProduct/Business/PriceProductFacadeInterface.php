@@ -281,9 +281,9 @@ interface PriceProductFacadeInterface
      * - Reads abstract product prices from database.
      * - Extracts additional prices array from price data
      * - PriceProductCriteriaTransfer provides additional price filtering:
-     *      - Filters results by price type name when provided in criteria.
-     *      - Filters results by store when provided in criteria.
-     *      - Filters results by currency when provided in criteria.
+     * - Filters results by price type name when provided in criteria.
+     * - Filters results by store when provided in criteria.
+     * - Filters results by currency when provided in criteria.
      *
      * @api
      *
@@ -303,9 +303,9 @@ interface PriceProductFacadeInterface
      * - Concrete prices overwrites abstracts for matching price types.
      * - Extracts additional prices array from price data.
      * - PriceProductCriteriaTransfer provides additional price filtering:
-     *      - Filters results by price type name when provided in criteria.
-     *      - Filters results by store when provided in criteria.
-     *      - Filters results by currency when provided in criteria.
+     * - Filters results by price type name when provided in criteria.
+     * - Filters results by store when provided in criteria.
+     * - Filters results by currency when provided in criteria.
      *
      * @api
      *
@@ -385,9 +385,9 @@ interface PriceProductFacadeInterface
      * Specification:
      * - Reads abstract product prices from database.
      * - PriceProductCriteriaTransfer provides additional price filtering:
-     *      - Filters results by price type name when provided in criteria.
-     *      - Filters results by store when provided in criteria.
-     *      - Filters results by currency when provided in criteria.
+     * - Filters results by price type name when provided in criteria.
+     * - Filters results by store when provided in criteria.
+     * - Filters results by currency when provided in criteria.
      *
      * @api
      *
@@ -417,9 +417,9 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Builds price criteria object from filter:
-     *      - Filters results by price type name when provided in criteria.
-     *      - Filters results by store when provided in criteria.
-     *      - Filters results by currency when provided in criteria.
+     * - Filters results by price type name when provided in criteria.
+     * - Filters results by store when provided in criteria.
+     * - Filters results by currency when provided in criteria.
      *
      * @api
      *
@@ -434,9 +434,9 @@ interface PriceProductFacadeInterface
      * - Reads abstract and concrete product prices from database.
      * - Concrete prices overwrites abstracts for matching price types.
      * - PriceProductCriteriaTransfer provides additional price filtering:
-     *      - Filters results by price type name when provided in criteria.
-     *      - Filters results by store when provided in criteria.
-     *      - Filters results by currency when provided in criteria.
+     * - Filters results by price type name when provided in criteria.
+     * - Filters results by store when provided in criteria.
+     * - Filters results by currency when provided in criteria.
      *
      * @api
      *
