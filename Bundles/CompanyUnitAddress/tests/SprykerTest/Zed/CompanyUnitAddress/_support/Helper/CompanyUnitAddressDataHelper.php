@@ -32,6 +32,7 @@ class CompanyUnitAddressDataHelper extends Module
         $companyUnitAddressTransferBuilder = new CompanyUnitAddressBuilder($seed);
         $companyUnitAddressTransfer = $companyUnitAddressTransferBuilder->build();
 
+        $this->ensureCompanyUnitAddressWithKeyDoesNotExist($companyUnitAddressTransfer->getKey());
         $this->getCompanyUnitAddressFacade()->create($companyUnitAddressTransfer);
 
         return $companyUnitAddressTransfer;

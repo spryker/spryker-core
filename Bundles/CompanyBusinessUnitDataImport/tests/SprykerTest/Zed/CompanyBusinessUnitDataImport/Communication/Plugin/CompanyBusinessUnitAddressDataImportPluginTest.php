@@ -42,7 +42,6 @@ class CompanyBusinessUnitAddressDataImportPluginTest extends AbstractCompanyBusi
      */
     public function testImportCompanyBusinessUnitAddress(): void
     {
-        $this->tester->ensureCompanyUnitAddressWithKeyDoesNotExist(static::COMPANY_ADDRESS_KEY);
         $this->tester->haveCompanyUnitAddress([
             CompanyUnitAddressTransfer::KEY => static::COMPANY_ADDRESS_KEY,
         ]);
