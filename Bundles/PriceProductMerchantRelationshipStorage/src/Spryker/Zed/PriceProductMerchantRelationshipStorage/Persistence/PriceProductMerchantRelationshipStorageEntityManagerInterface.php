@@ -34,15 +34,6 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
     ): void;
 
     /**
-     * @param array $priceProductAbstractMerchantRelationshipStorageEntityIds
-     *
-     * @return void
-     */
-    public function deletePriceProductAbstracts(
-        array $priceProductAbstractMerchantRelationshipStorageEntityIds
-    ): void;
-
-    /**
      * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage $priceProductConcreteMerchantRelationshipStorageEntity
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      *
@@ -60,14 +51,5 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
      */
     public function createPriceProductConcrete(
         PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
-    ): void;
-
-    /**
-     * @param array $priceProductConcreteMerchantRelationshipStorageEntityIds
-     *
-     * @return void
-     */
-    public function deletePriceProductConcretes(
-        array $priceProductConcreteMerchantRelationshipStorageEntityIds
     ): void;
 }

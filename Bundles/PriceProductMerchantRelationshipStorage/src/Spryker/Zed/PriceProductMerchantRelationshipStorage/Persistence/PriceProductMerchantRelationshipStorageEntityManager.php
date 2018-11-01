@@ -51,20 +51,6 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @param array $priceProductAbstractMerchantRelationshipStorageEntityIds
-     *
-     * @return void
-     */
-    public function deletePriceProductAbstracts(
-        array $priceProductAbstractMerchantRelationshipStorageEntityIds
-    ): void {
-        $this->getFactory()
-            ->createPriceProductAbstractMerchantRelationshipStorageQuery()
-            ->filterByIdPriceProductAbstractMerchantRelationshipStorage_In($priceProductAbstractMerchantRelationshipStorageEntityIds)
-            ->deleteAll();
-    }
-
-    /**
      * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage $priceProductConcreteMerchantRelationshipStorageEntity
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      *
@@ -95,20 +81,6 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
             ->setData($this->formatData($priceProductMerchantRelationshipStorageTransfer))
             ->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue())
             ->save();
-    }
-
-    /**
-     * @param array $priceProductConcreteMerchantRelationshipStorageEntityIds
-     *
-     * @return void
-     */
-    public function deletePriceProductConcretes(
-        array $priceProductConcreteMerchantRelationshipStorageEntityIds
-    ): void {
-        $this->getFactory()
-            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
-            ->filterByIdPriceProductConcreteMerchantRelationshipStorage_In($priceProductConcreteMerchantRelationshipStorageEntityIds)
-            ->deleteAll();
     }
 
     /**

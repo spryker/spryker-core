@@ -116,7 +116,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     /**
      * @param int[] $companyBusinessUnitIds
      *
-     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[]
      */
     public function findExistingPriceProductAbstractMerchantRelationshipStorageEntities(array $companyBusinessUnitIds): array
     {

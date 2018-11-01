@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 
-use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface;
 
@@ -76,6 +75,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
      */
     protected function write(array $priceProductMerchantRelationshipStorageTransfers, array $companyBusinessUnitIds): void
     {
+        /** @var \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[] $mappedPriceProductMerchantRelationshipStorageEntities */
         $mappedPriceProductMerchantRelationshipStorageEntities = $this->createExistingPriceProductMerchantRelationshipStorageEntitiesMap($companyBusinessUnitIds);
         $priceProductMerchantRelationshipStorageTransfers = $this->priceGrouper->groupPrices(
             $priceProductMerchantRelationshipStorageTransfers
@@ -98,11 +98,9 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         }
 
         // Delete the rest of the entites
-        $this->priceProductMerchantRelationshipStorageEntityManager->deletePriceProductAbstracts(
-            array_map(function (SpyPriceProductAbstractMerchantRelationshipStorage $priceProductMerchantRelationshipStorageEntity) {
-                $priceProductMerchantRelationshipStorageEntity->getIdPriceProductAbstractMerchantRelationshipStorage();
-            }, $mappedPriceProductMerchantRelationshipStorageEntities)
-        );
+        foreach ($mappedPriceProductMerchantRelationshipStorageEntities as $priceProductMerchantRelationshipStorageEntity) {
+            $priceProductMerchantRelationshipStorageEntity->delete();
+        }
 
         unset($mappedPriceProductMerchantRelationshipStorageEntities);
     }
