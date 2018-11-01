@@ -126,6 +126,10 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
+        if (!$restRequest->getResource()->getId()) {
+            return $this->addItemSkuMissingError($restResponse);
+        }
+
         $sku = $restRequest->getResource()->getId();
         $wishlistResource = $restRequest->findParentResourceByType(WishlistsRestApiConfig::RESOURCE_WISHLISTS);
         if (!$wishlistResource) {
@@ -217,5 +221,20 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
             $wishlistItemResourceId
         );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addItemSkuMissingError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_ID)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_SKU);
+
+        return $restResponse->addError($restErrorTransfer);
     }
 }
