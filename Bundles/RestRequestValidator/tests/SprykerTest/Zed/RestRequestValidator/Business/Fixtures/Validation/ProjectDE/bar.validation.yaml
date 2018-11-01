@@ -6,7 +6,7 @@ endpoint_three:
     integerField:
     - Regex:
         pattern: '/\d{6}/'
-    nestedFiled:
+    nestedField:
       - Collection:
           fields:
             test:

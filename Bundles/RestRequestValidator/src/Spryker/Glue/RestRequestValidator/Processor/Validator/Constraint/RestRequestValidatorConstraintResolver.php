@@ -201,12 +201,10 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
         if (!isset($constraintParameters[static::CONSTRAINTS])) {
             return $constraintParameters;
         }
+        $validators = $constraintParameters[static::CONSTRAINTS];
 
-        foreach ($constraintParameters[static::CONSTRAINTS] as $validators) {
-            if ($validators !== null) {
-                $validators = [$validators];
-                $constraintParameters[static::CONSTRAINTS] = $this->mapFieldConstrains($validators);
-            }
+        if ($validators !== null) {
+            $constraintParameters[static::CONSTRAINTS] = $this->mapFieldConstrains($validators);
         }
 
         return $constraintParameters;

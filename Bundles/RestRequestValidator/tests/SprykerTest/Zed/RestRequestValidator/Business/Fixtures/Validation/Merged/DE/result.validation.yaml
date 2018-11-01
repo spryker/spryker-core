@@ -41,7 +41,7 @@ endpoint_three:
     floatField:
     - Regex:
         pattern: '/\d*/'
-    nestedFiled:
+    nestedField:
       - Collection:
           fields:
             test:

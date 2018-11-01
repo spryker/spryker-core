@@ -131,32 +131,20 @@ checkout:
                     iso2Code:
                       - NotBlank
             payments:
-              - Collection:
-                  fields:
-                    paymentMethod:
-                      - NotBlank
-                    paymentProvider:
-                      - NotBlank
-                    paymentSelection:
-                      - NotBlank
-                    amount:
-                      - NotBlank
-                      - Type:
-                          type: numeric
-            payment:
-              - Collection:
-                fields:
-                  paymentMethod:
-                    - NotBlank
-                  paymentProvider:
-                    - NotBlank
-                  paymentSelection:
-                    - NotBlank
-                  amount:
-                    - NotBlank
-                    - Type:
-                        type: numeric
-
+              - All:
+                  constraints:
+                    - Collection:
+                        fields:
+                          paymentMethod:
+                            - NotBlank
+                          paymentProvider:
+                            - NotBlank
+                          paymentSelection:
+                            - NotBlank
+                          amount:
+                            - NotBlank
+                            - Type:
+                                type: numeric
             shipment:
               - Collection:
                   fields:
