@@ -29,7 +29,7 @@ interface ProductListTablePluginExecutorInterface
     /**
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    public function executeTableQueryExpanderPlugins(): ?QueryCriteriaTransfer;
+    public function executeTableQueryExpanderPlugins(): QueryCriteriaTransfer;
 
     /**
      * @return array

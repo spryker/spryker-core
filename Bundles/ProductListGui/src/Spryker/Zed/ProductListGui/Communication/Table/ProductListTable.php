@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductListGui\Communication\Table;
 
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
-use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -58,11 +57,7 @@ class ProductListTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        $queryTransfer = $this->productListTablePluginExecutor->executeTableQueryExpanderPlugins();
-
-        if ($queryTransfer) {
-            $this->productListQuery = $this->extendQuery($this->productListQuery, $queryTransfer);
-        }
+        $this->expandQuery();
 
         $queryResults = $this->runQuery($this->productListQuery, $config);
 
@@ -79,6 +74,7 @@ class ProductListTable extends AbstractTable
             $rowData += $this->productListTablePluginExecutor->executeTableDataExpanderPlugins($item);
             $results[] = $rowData;
         }
+
         unset($queryResults);
 
         return $results;
@@ -183,65 +179,35 @@ class ProductListTable extends AbstractTable
     }
 
     /**
-     * @param Generated\Shared\Transfer\QueryCriteriaTransfer $queryTransfer
-     */
-    protected function extendQuery(SpyProductListQuery $productListQuery, QueryCriteriaTransfer $queryTransfer): SpyProductListQuery
-    {
-        $productListQuery = $this->addJoin($productListQuery, $queryTransfer);
-        return $productListQuery;
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $productListQuery
-     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
-     * @param string|null $joinType
+     * Expand query with params from expander plugins
      *
      * @return void
      */
-    protected function addJoin(
-        SpyProductListQuery $productListQuery,
-        QueryCriteriaTransfer $queryCriteriaTransfer,
-        $joinType = null
-    ) {
+    protected function expandQuery(): void
+    {
+        $queryCriteriaTransfer = $this->productListTablePluginExecutor->executeTableQueryExpanderPlugins();
 
         foreach ($queryCriteriaTransfer->getJoins() as $queryJoinTransfer) {
-
             if ($queryJoinTransfer->getRelation()) {
-                $joinDirection = $joinType ?? $queryJoinTransfer->getJoinType();
-                $productListQuery->join($queryJoinTransfer->getRelation(), $joinDirection);
+                $this->productListQuery->join($queryJoinTransfer->getRelation(), $queryJoinTransfer->getJoinType());
 
                 if ($queryJoinTransfer->getCondition()) {
-                    $productListQuery->addJoinCondition($queryJoinTransfer->getRelation(), $queryJoinTransfer->getCondition());
+                    $this->productListQuery->addJoinCondition(
+                        $queryJoinTransfer->getRelation(),
+                        $queryJoinTransfer->getCondition()
+                    );
                 }
-                continue;
+            } else {
+                $this->productListQuery->addJoin(
+                    $queryJoinTransfer->getLeft(),
+                    $queryJoinTransfer->getRight(),
+                    $queryJoinTransfer->getJoinType()
+                );
             }
-            $productListQuery->addJoin(
-                $queryJoinTransfer->getLeft(),
-                $queryJoinTransfer->getRight(),
-                $joinType ?: $queryJoinTransfer->getJoinType()
-            );
         }
 
-        return $productListQuery;
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $productListQuery
-     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
-     *
-     * @return void
-     */
-    protected function addWithColumns(
-        SpyProductListQuery $productListQuery,
-        QueryCriteriaTransfer $queryCriteriaTransfer
-    )
-    {
         foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
-            $productListQuery->withColumn($field, $value);
+            $this->productListQuery->withColumn($field, $value);
         }
-
-        return $productListQuery;
     }
-
-
 }

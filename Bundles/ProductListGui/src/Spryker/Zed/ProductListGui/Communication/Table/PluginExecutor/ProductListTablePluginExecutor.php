@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductListGui\Communication\Table\PluginExecutor;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
-use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ProductListTablePluginExecutor implements ProductListTablePluginExecutorInterface
@@ -89,19 +88,17 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    public function executeTableQueryExpanderPlugins(): ?QueryCriteriaTransfer
+    public function executeTableQueryExpanderPlugins(): QueryCriteriaTransfer
     {
-        if (!$this->productListTableQueryExpanderPlugins) {
-            return null;
-        }
+        $queryCriteriaTransfer = new QueryCriteriaTransfer();
 
         foreach ($this->productListTableQueryExpanderPlugins as $productListTableQueryExpanderPlugin) {
-            $queryTransfer = $productListTableQueryExpanderPlugin->expandQuery();
+            $productListTableQueryExpanderPlugin->expandQuery($queryCriteriaTransfer);
         }
 
-        return $queryTransfer;
+        return $queryCriteriaTransfer;
     }
 
     /**

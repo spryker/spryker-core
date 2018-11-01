@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductListGui\Persistance\Propel\ProductListQueryExpander;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 
 interface ProductListQueryExpanderInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
+     *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    public function buildProductListMerchantQueryCriteria(): QueryCriteriaTransfer;
+    public function buildProductListMerchantQueryCriteria(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer;
 }

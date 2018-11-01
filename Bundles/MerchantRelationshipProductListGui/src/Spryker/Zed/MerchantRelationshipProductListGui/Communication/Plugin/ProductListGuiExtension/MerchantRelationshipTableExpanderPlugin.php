@@ -7,30 +7,32 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\Plugin\ProductListGuiExtension;
 
-use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
-use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
-use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface;
-use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryExpanderPluginInterface;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableHeaderExpanderPluginInterface;
+use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\Communication\MerchantRelationshipProductListGuiCommunicationFactory getFactory()
  */
 class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements ProductListTableConfigExpanderPluginInterface, ProductListTableQueryExpanderPluginInterface, ProductListTableDataExpanderPluginInterface, ProductListTableHeaderExpanderPluginInterface
 {
-    protected const COLUMN_MERCHANT_RELATION_ID = SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP;
-    protected const COLUMN_MERCHANT_NAME = SpyMerchantTableMap::COL_NAME;
-    protected const COLUMN_BUSINESS_UNIT_OWNER_NAME = SpyCompanyBusinessUnitTableMap::COL_NAME;
+    protected const HEADER_MERCHANT_RELATION_ID = 'ID Merchant Relation';
+    protected const HEADER_MERCHANT_NAME = 'Merchant Name';
+    protected const HEADER_BUSINESS_UNIT_OWNER_NAME = 'Business Unit Owner Name';
 
-    protected const FK_MERCHANT_RELATIONSHIP = SpyProductListTableMap::COL_FK_MERCHANT_RELATIONSHIP;
+    protected const COL_FK_MERCHANT_RELATIONSHIP = SpyProductListTableMap::COL_FK_MERCHANT_RELATIONSHIP;
+    protected const COL_MERCHANT_NAME = SpyMerchantTableMap::COL_NAME;
+    protected const COL_COMPANY_BUSINESS_UNIT_NAME = SpyCompanyBusinessUnitTableMap::COL_NAME;
+
+    public const COL_MERCHANT_NAME_ALIAS = 'spy_merchant_name';
+    public const COL_BUSINESS_UNIT_OWNER_NAME_ALIAS = 'spy_company_business_unit_name';
 
     /**
      * {@inheritdoc}
@@ -42,9 +44,9 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
     public function expandHeader(): array
     {
         return [
-            static::COLUMN_MERCHANT_RELATION_ID => 'ID Merchant Relation',
-            static::COLUMN_MERCHANT_NAME => 'Merchant Name',
-            static::COLUMN_BUSINESS_UNIT_OWNER_NAME => 'Business Unit Owner Name',
+            static::COL_FK_MERCHANT_RELATIONSHIP => static::HEADER_MERCHANT_RELATION_ID,
+            static::COL_MERCHANT_NAME_ALIAS => static::HEADER_MERCHANT_NAME,
+            static::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS => static::HEADER_BUSINESS_UNIT_OWNER_NAME,
         ];
     }
 
@@ -55,12 +57,12 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    public function expandQuery(): QueryCriteriaTransfer
+    public function expandQuery(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
     {
         return $this
             ->getFactory()
             ->getProductListQueryExpander()
-            ->buildProductListMerchantQueryCriteria();
+            ->buildProductListMerchantQueryCriteria($queryCriteriaTransfer);
     }
 
     /**
@@ -74,21 +76,21 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
      */
     public function expandConfig(TableConfiguration $config): TableConfiguration
     {
-        $searchableAndSortableFields = [
-            static::COLUMN_MERCHANT_RELATION_ID,
-            //static::COLUMN_MERCHANT_NAME,
-            //static::COLUMN_BUSINESS_UNIT_OWNER_NAME,
-        ];
+        $sortable = array_merge($config->getSortable(), [
+            static::COL_FK_MERCHANT_RELATIONSHIP,
+            static::COL_MERCHANT_NAME_ALIAS,
+            static::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS,
+        ]);
 
-        $config->setSortable( array_merge(
-            $config->getSortable(),
-            $searchableAndSortableFields
-        ));
+        $config->setSortable($sortable);
 
-        $config->setSearchable( array_merge(
-            $config->getSortable(),
-            $searchableAndSortableFields
-        ));
+        $searchable = array_merge($config->getSearchable(), [
+            static::COL_FK_MERCHANT_RELATIONSHIP,
+            static::COL_MERCHANT_NAME,
+            static::COL_COMPANY_BUSINESS_UNIT_NAME,
+        ]);
+
+        $config->setSearchable($searchable);
 
         return $config;
     }
@@ -104,34 +106,10 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
      */
     public function expandData(array $item): array
     {
-        if (!$item[static::FK_MERCHANT_RELATIONSHIP]) {
-            return [
-                static::COLUMN_MERCHANT_RELATION_ID => '',
-                static::COLUMN_MERCHANT_NAME => '',
-                static::COLUMN_BUSINESS_UNIT_OWNER_NAME => '',
-            ];
-        }
-
-        $merchantRelationshipTransfer = $this->getMerchantRelationshipById($item[static::FK_MERCHANT_RELATIONSHIP]);
-
         return [
-            static::COLUMN_MERCHANT_RELATION_ID => $item[static::FK_MERCHANT_RELATIONSHIP],
-            static::COLUMN_MERCHANT_NAME => $merchantRelationshipTransfer->getMerchant()->getName(),
-            static::COLUMN_BUSINESS_UNIT_OWNER_NAME => $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName(),
+            static::COL_FK_MERCHANT_RELATIONSHIP => $item[static::COL_FK_MERCHANT_RELATIONSHIP],
+            static::COL_MERCHANT_NAME_ALIAS => $item[static::COL_MERCHANT_NAME_ALIAS],
+            static::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS => $item[static::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS],
         ];
-    }
-
-    /**
-     * @param int $idMerchantRelationship
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
-     */
-    protected function getMerchantRelationshipById(int $idMerchantRelationship): MerchantRelationshipTransfer
-    {
-        $merchantRelationshipTransfer = (new MerchantRelationshipTransfer())->setIdMerchantRelationship($idMerchantRelationship);
-
-        return $this->getFactory()
-            ->getMerchantRelationshipFacade()
-            ->getMerchantRelationshipById($merchantRelationshipTransfer);
     }
 }

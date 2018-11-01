@@ -201,7 +201,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListTableQueryExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_TABLE_CONFIG_EXPANDER] = function () {
+        $container[static::PLUGINS_PRODUCT_LIST_TABLE_QUERY_EXPANDER] = function () {
             return $this->getProductListTableQueryExpanderPlugins();
         };
 
