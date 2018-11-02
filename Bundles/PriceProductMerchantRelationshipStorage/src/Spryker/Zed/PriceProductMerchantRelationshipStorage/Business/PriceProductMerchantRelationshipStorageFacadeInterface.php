@@ -63,7 +63,31 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @return void
      */
+    public function unpublishAbstractPriceProductByBusinessUnits(array $companyBusinessUnitIds): void;
+
+    /**
+     * Specification:
+     *  - TODO
+     *
+     * @api
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return void
+     */
     public function publishConcretePriceProductByBusinessUnits(array $companyBusinessUnitIds): void;
+
+    /**
+     * Specification:
+     *  - TODO
+     *
+     * @api
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return void
+     */
+    public function unpublishConcretePriceProductByBusinessUnits(array $companyBusinessUnitIds): void;
 
     /**
      * Specification:

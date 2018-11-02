@@ -16,7 +16,7 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRela
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\PriceProductMerchantRelationshipStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface getRepository()
  */
-class MerchantRelationshipListener extends AbstractPlugin implements EventBulkHandlerInterface
+class MerchantRelationshipDeleteListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * {@inheritdoc}
@@ -32,7 +32,7 @@ class MerchantRelationshipListener extends AbstractPlugin implements EventBulkHa
     {
         $companyBusinessUnitIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, PriceProductMerchantRelationshipStorageConfig::COL_FK_COMPANY_BUSINESS_UNIT);
 
-        $this->getFacade()->publishAbstractPriceProductByBusinessUnits($companyBusinessUnitIds);
-        $this->getFacade()->publishConcretePriceProductByBusinessUnits($companyBusinessUnitIds);
+        $this->getFacade()->unpublishAbstractPriceProductByBusinessUnits($companyBusinessUnitIds);
+        $this->getFacade()->unpublishConcretePriceProductByBusinessUnits($companyBusinessUnitIds);
     }
 }

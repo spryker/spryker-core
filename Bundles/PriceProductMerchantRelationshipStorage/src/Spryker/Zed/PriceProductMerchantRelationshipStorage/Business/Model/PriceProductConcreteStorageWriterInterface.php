@@ -26,6 +26,13 @@ interface PriceProductConcreteStorageWriterInterface
     public function publishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void;
 
     /**
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return void
+     */
+    public function unpublishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void;
+
+    /**
      * @param int[] $priceProductMerchantRelationshipIds
      *
      * @return void

@@ -75,6 +75,21 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return void
+     */
+    public function unpublishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void
+    {
+        $priceProductMerchantRelationshipStorageEntities = $this->priceProductMerchantRelationshipStorageRepository
+            ->findExistingPriceProductConcreteMerchantRelationshipStorageEntitiesByCompanyBusinessUnitIds($companyBusinessUnitIds);
+
+        foreach ($priceProductMerchantRelationshipStorageEntities as $priceProductMerchantRelationshipStorageEntity) {
+            $priceProductMerchantRelationshipStorageEntity->delete();
+        }
+    }
+
+    /**
      * @param int[] $priceProductMerchantRelationshipIds
      *
      * @return void
