@@ -458,6 +458,6 @@ class ProductPageSearchListenerTest extends Unit
         $this->assertNotNull($productPageSearchEntity);
         $data = $productPageSearchEntity->getStructuredData();
         $encodedData = json_decode($data, true);
-        $this->assertSame('/de/canon-ixus-160-001', $encodedData['url']);
+        $this->assertSame('/de/canon-ixus-160-1', $encodedData['url']);
     }
 }
