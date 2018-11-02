@@ -9,16 +9,15 @@
 
     <transfer name="PriceProductMerchantRelationshipStorage">
         <property name="storeName" type="string" />
-        <property name="idMerchantRelationship" type="int" deprecated="Use same attribute in PriceProductMerchantRelationshipStorageSinglePriceTransfer instead." />
+        <property name="idMerchantRelationship" type="int" deprecated="Use same attribute in MerchantRelationshipProductPriceTransfer instead." />
         <property name="idCompanyBusinessUnit" type="int" />
         <property name="idProduct" type="int" />
-        <property name="sku" type="string" />
         <property name="priceKey" type="string" />
         <property name="prices" type="array" />
-        <property name="UngroupedPrices" type="PriceProductMerchantRelationshipStorageSinglePrice[]" singular="UngroupedPrice" description="Un-grouped raw prices" />
+        <property name="UngroupedPrices" type="MerchantRelationshipProductPrice[]" singular="UngroupedPrice" description="Un-grouped raw prices" />
     </transfer>
 
-    <transfer name="PriceProductMerchantRelationshipStorageSinglePrice">
+    <transfer name="MerchantRelationshipProductPrice">
         <property name="idMerchantRelationship" type="int" />
         <property name="priceType" type="string" />
         <property name="grossPrice" type="int" />

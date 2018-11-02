@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Mapper;
 
-use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageSinglePriceTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Generator\PriceKeyGeneratorInterface;
 
 class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceProductMapperInterface
@@ -28,152 +27,69 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
     }
 
     /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $productStorePrices
+     * @param array $priceProductMerchantRelationships
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function mapProductAbstractPrices(array $productStorePrices): array
+    public function mapPriceProductMerchantRelationshipArrayToTransfers(array $priceProductMerchantRelationships): array
     {
-        $pricesByCompanyBusinessUnit = [];
-        foreach ($productStorePrices as $productStorePrice) {
-            $productId = $productStorePrice->getPriceProduct()->getSpyProductAbstract()->getIdProductAbstract();
-            $uniquePriceIndex = $this->createUniquePriceIndex($productStorePrice, $productId);
-            if (!isset($pricesByCompanyBusinessUnit[$uniquePriceIndex])) {
-                $pricesByCompanyBusinessUnit[$uniquePriceIndex] = $this->createPriceProductAbstractMerchantRelationshipStorageTransfer($productStorePrice, $uniquePriceIndex);
+        $pricesByKey = [];
+        foreach ($priceProductMerchantRelationships as $priceProductMerchantRelationship) {
+            $uniquePriceIndex = $this->createUniquePriceIndex($priceProductMerchantRelationship);
+            if (!isset($pricesByKey[$uniquePriceIndex])) {
+                $pricesByKey[$uniquePriceIndex] = $this->createPriceProductMerchantRelationshipStorageTransfer($priceProductMerchantRelationship, $uniquePriceIndex);
             }
 
-            $this->addUngroupedPrice($pricesByCompanyBusinessUnit[$uniquePriceIndex], $productStorePrice);
+            $this->addUngroupedPrice($pricesByKey[$uniquePriceIndex], $priceProductMerchantRelationship);
         }
 
-        return $pricesByCompanyBusinessUnit;
+        return $pricesByKey;
     }
 
     /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $productStorePrices
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
-     */
-    public function mapProductConcretePrices(array $productStorePrices): array
-    {
-        $pricesByCompanyBusinessUnit = [];
-        foreach ($productStorePrices as $productStorePrice) {
-            $productId = $productStorePrice->getPriceProduct()->getProduct()->getIdProduct();
-            $uniquePriceIndex = $this->createUniquePriceIndex($productStorePrice, $productId);
-            if (!isset($pricesByCompanyBusinessUnit[$uniquePriceIndex])) {
-                $pricesByCompanyBusinessUnit[$uniquePriceIndex] = $this->createPriceProductConcreteMerchantRelationshipStorageTransfer($productStorePrice, $uniquePriceIndex);
-            }
-
-            $this->addUngroupedPrice($pricesByCompanyBusinessUnit[$uniquePriceIndex], $productStorePrice);
-        }
-
-        return $pricesByCompanyBusinessUnit;
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $productStorePrice
+     * @param array $priceProductMerchantRelationship
      * @param string $uniquePriceIndex
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
-     */
-    protected function createPriceProductConcreteMerchantRelationshipStorageTransfer(
-        SpyPriceProductStore $productStorePrice,
-        string $uniquePriceIndex
-    ): PriceProductMerchantRelationshipStorageTransfer {
-        $productSku = $productStorePrice->getPriceProduct()->getProduct()->getSku();
-        $productId = $productStorePrice->getPriceProduct()->getProduct()->getIdProduct();
-
-        return $this->createPriceProductMerchantRelationshipStorageTransfer(
-            $productStorePrice,
-            $uniquePriceIndex,
-            $productSku,
-            $productId
-        );
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $productStorePrice
-     * @param string $uniquePriceIndex
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
-     */
-    protected function createPriceProductAbstractMerchantRelationshipStorageTransfer(
-        SpyPriceProductStore $productStorePrice,
-        string $uniquePriceIndex
-    ): PriceProductMerchantRelationshipStorageTransfer {
-        $productSku = $productStorePrice->getPriceProduct()->getSpyProductAbstract()->getSku();
-        $productId = $productStorePrice->getPriceProduct()->getSpyProductAbstract()->getIdProductAbstract();
-
-        return $this->createPriceProductMerchantRelationshipStorageTransfer(
-            $productStorePrice,
-            $uniquePriceIndex,
-            $productSku,
-            $productId
-        );
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $productStorePrice
-     * @param string $uniquePriceIndex
-     * @param string $productSku
-     * @param int $productId
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
      */
     protected function createPriceProductMerchantRelationshipStorageTransfer(
-        SpyPriceProductStore $productStorePrice,
-        string $uniquePriceIndex,
-        string $productSku,
-        int $productId
+        array $priceProductMerchantRelationship,
+        string $uniquePriceIndex
     ): PriceProductMerchantRelationshipStorageTransfer {
-        $storeName = $productStorePrice->getStore()->getName();
-
-        $idCompanyBusinessUnit = $productStorePrice->getVirtualColumn(PriceProductMerchantRelationshipStorageTransfer::ID_COMPANY_BUSINESS_UNIT);
-
         return (new PriceProductMerchantRelationshipStorageTransfer())
+            ->fromArray($priceProductMerchantRelationship, true)
             ->setPriceKey($uniquePriceIndex)
-            ->setIdProduct($productId)
-            ->setSku($productSku)
-            ->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
-            ->setStoreName($storeName);
+            ->setIdMerchantRelationship(null);
     }
 
     /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $productStorePrice
-     * @param int $productId
+     * @param array $priceProductMerchantRelationship
      *
      * @return string
      */
-    protected function createUniquePriceIndex(SpyPriceProductStore $productStorePrice, int $productId): string
+    protected function createUniquePriceIndex(array $priceProductMerchantRelationship): string
     {
         return $this->priceKeyGenerator
             ->buildPriceKey(
-                $productStorePrice->getStore()->getName(),
-                $productId,
-                $productStorePrice->getVirtualColumn(PriceProductMerchantRelationshipStorageTransfer::ID_COMPANY_BUSINESS_UNIT)
+                $priceProductMerchantRelationship[PriceProductMerchantRelationshipStorageTransfer::STORE_NAME],
+                $priceProductMerchantRelationship[PriceProductMerchantRelationshipStorageTransfer::ID_PRODUCT],
+                $priceProductMerchantRelationship[PriceProductMerchantRelationshipStorageTransfer::ID_COMPANY_BUSINESS_UNIT]
             );
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $merchantRelationshipStorageTransfer
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
+     * @param array $priceProductMerchantRelationship
      *
      * @return void
      */
     protected function addUngroupedPrice(
         PriceProductMerchantRelationshipStorageTransfer $merchantRelationshipStorageTransfer,
-        SpyPriceProductStore $priceProductStoreEntity
+        array $priceProductMerchantRelationship
     ): void {
-        $priceType = $priceProductStoreEntity->getPriceProduct()->getPriceType()->getName();
-        $currencyCode = $priceProductStoreEntity->getCurrency()->getCode();
-        $idMerchantRelationship = $priceProductStoreEntity->getVirtualColumn(PriceProductMerchantRelationshipStorageTransfer::ID_MERCHANT_RELATIONSHIP);
-
         $merchantRelationshipStorageTransfer->addUngroupedPrice(
-            (new PriceProductMerchantRelationshipStorageSinglePriceTransfer())
-                ->setPriceType($priceType)
-                ->setGrossPrice($priceProductStoreEntity->getGrossPrice())
-                ->setNetPrice($priceProductStoreEntity->getNetPrice())
-                ->setCurrencyCode($currencyCode)
-                ->setIdMerchantRelationship($idMerchantRelationship)
+            (new MerchantRelationshipProductPriceTransfer())
+                ->fromArray($priceProductMerchantRelationship, true)
         );
     }
 }
