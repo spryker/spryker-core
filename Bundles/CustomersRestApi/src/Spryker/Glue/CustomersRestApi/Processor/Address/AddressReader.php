@@ -9,6 +9,7 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Address;
 
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
@@ -103,6 +104,18 @@ class AddressReader implements AddressReaderInterface
             return $restResponse;
         }
 
+        return $this->getAddressesByCustomerTransfer($restRequest, $restResponse, $customerResponseTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface|null
+     */
+    protected function getAddressesByCustomerTransfer(RestRequestInterface $restRequest, RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer)
+    {
         $addressTransfer = $this->findAddressByUuid($restRequest, $restRequest->getResource()->getId());
 
         if (!$addressTransfer) {
@@ -122,7 +135,7 @@ class AddressReader implements AddressReaderInterface
 
         $restResource->addLink(
             RestResourceInterface::RESOURCE_LINKS_SELF,
-            $this->createSelfLink($customerTransfer, $addressTransfer)
+            $this->createSelfLink($customerResponseTransfer->getCustomerTransfer(), $addressTransfer)
         );
 
         return $restResponse->addResource($restResource);
