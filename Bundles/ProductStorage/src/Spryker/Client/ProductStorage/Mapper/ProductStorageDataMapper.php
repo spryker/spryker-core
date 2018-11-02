@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductStorage\Mapper;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 
 class ProductStorageDataMapper implements ProductStorageDataMapperInterface
 {
@@ -17,11 +18,20 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
     protected $productAbstractStorageExpanderPlugins;
 
     /**
-     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[] $storageProductExpanderPlugins
+     * @var \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface
      */
-    public function __construct(array $storageProductExpanderPlugins)
-    {
+    protected $productAbstractVariantsRestrictionFilter;
+
+    /**
+     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[] $storageProductExpanderPlugins
+     * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
+     */
+    public function __construct(
+        array $storageProductExpanderPlugins,
+        ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
+    ) {
         $this->productAbstractStorageExpanderPlugins = $storageProductExpanderPlugins;
+        $this->productAbstractVariantsRestrictionFilter = $productAbstractVariantsRestrictionFilter;
     }
 
     /**
@@ -33,6 +43,7 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
      */
     public function mapProductStorageData($locale, array $productStorageData, array $selectedAttributes = [])
     {
+        $productStorageData = $this->productAbstractVariantsRestrictionFilter->filterAbstractProductVariantsData($productStorageData);
         $productViewTransfer = $this->createProductViewTransfer($productStorageData);
         $productViewTransfer->setSelectedAttributes($selectedAttributes);
 
