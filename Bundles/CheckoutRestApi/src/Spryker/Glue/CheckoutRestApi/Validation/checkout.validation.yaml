@@ -4,51 +4,9 @@ checkout-data:
       - Collection:
           fields:
             billingAddress:
-              - Collection:
-                  fields:
-                    salutation:
-                      - NotBlank
-                      - Choice:
-                          choices: [Mr, Mrs, Ms, Dr]
-                    firstName:
-                      - NotBlank
-                    lastName:
-                      - NotBlank
-                    address1:
-                      - NotBlank
-                    address2:
-                      - NotBlank
-                    zipCode:
-                      - NotBlank
-                    city:
-                      - NotBlank
-                      - Length:
-                          min: 3
-                    iso2Code:
-                      - NotBlank
+              - Callback: [Spryker\Glue\CheckoutRestApi\Constraints\AddressValidator, validate]
             shippingAddress:
-              - Collection:
-                  fields:
-                    salutation:
-                      - NotBlank
-                      - Choice:
-                          choices: [Mr, Mrs, Ms, Dr]
-                    firstName:
-                      - NotBlank
-                    lastName:
-                      - NotBlank
-                    address1:
-                      - NotBlank
-                    address2:
-                      - NotBlank
-                    zipCode:
-                      - NotBlank
-                    city:
-                      - NotBlank
-                      - Length:
-                          min: 3
-                    iso2Code:
-                      - NotBlank
+              - Callback: [Spryker\Glue\CheckoutRestApi\Constraints\AddressValidator, validate]
             payments:
               - All:
                   constraints:
@@ -85,51 +43,9 @@ checkout:
                     email:
                       - EmailConstraint
             billingAddress:
-              - Collection:
-                  fields:
-                    salutation:
-                      - NotBlank
-                      - Choice:
-                          choices: [Mr, Mrs, Ms, Dr]
-                    firstName:
-                      - NotBlank
-                    lastName:
-                      - NotBlank
-                    address1:
-                      - NotBlank
-                    address2:
-                      - NotBlank
-                    zipCode:
-                      - NotBlank
-                    city:
-                      - NotBlank
-                      - Length:
-                          min: 3
-                    iso2Code:
-                      - NotBlank
+              - Callback: [Spryker\Glue\CheckoutRestApi\Constraints\AddressValidator, validate]
             shippingAddress:
-              - Collection:
-                  fields:
-                    salutation:
-                      - NotBlank
-                      - Choice:
-                          choices: [Mr, Mrs, Ms, Dr]
-                    firstName:
-                      - NotBlank
-                    lastName:
-                      - NotBlank
-                    address1:
-                      - NotBlank
-                    address2:
-                      - NotBlank
-                    zipCode:
-                      - NotBlank
-                    city:
-                      - NotBlank
-                      - Length:
-                          min: 3
-                    iso2Code:
-                      - NotBlank
+              - Callback: [Spryker\Glue\CheckoutRestApi\Constraints\AddressValidator, validate]
             payments:
               - All:
                   constraints:
