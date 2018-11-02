@@ -48,7 +48,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
      *
      * @return void
      */
-    public function publishByBusinessUnits(array $companyBusinessUnitIds): void
+    public function publishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void
     {
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
             ->getProductAbstractPriceDataByCompanyBusinessUnitIds($companyBusinessUnitIds);
@@ -116,7 +116,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
      */
     public function publishByBusinessUnitProducts(array $businessUnitProducts): void
     {
-        $this->publishByBusinessUnits(array_keys($businessUnitProducts));
+        $this->publishByCompanyBusinessUnitIds(array_keys($businessUnitProducts));
     }
 
     /**
