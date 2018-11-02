@@ -35,7 +35,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function getProductAbstractPriceDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    public function findProductAbstractPriceDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
         $priceProductMerchantRelationships = $this->getFactory()
             ->getPropelPriceProductStoreQuery()
@@ -81,7 +81,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function getProductConcretePriceDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    public function findProductConcretePriceDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
         $priceProductMerchantRelationships = $this->getFactory()
             ->getPropelPriceProductStoreQuery()

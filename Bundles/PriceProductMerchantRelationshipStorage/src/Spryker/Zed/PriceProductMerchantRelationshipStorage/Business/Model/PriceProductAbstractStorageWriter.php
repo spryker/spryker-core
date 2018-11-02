@@ -51,7 +51,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     public function publishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void
     {
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
-            ->getProductAbstractPriceDataByCompanyBusinessUnitIds($companyBusinessUnitIds);
+            ->findProductAbstractPriceDataByCompanyBusinessUnitIds($companyBusinessUnitIds);
 
         $existingPriceProductMerchantRelationshipStorageEntities = $this->priceProductMerchantRelationshipStorageRepository
             ->findExistingPriceProductAbstractMerchantRelationshipStorageEntitiesByCompanyBusinessUnitIds($companyBusinessUnitIds);
@@ -175,7 +175,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
      *
      * @return array
      */
-    protected function mapPriceProductMerchantRelationshipStorageEntitiesByKey(array $priceProductMerchantRelationshipStorageEntities)
+    protected function mapPriceProductMerchantRelationshipStorageEntitiesByKey(array $priceProductMerchantRelationshipStorageEntities): array
     {
         $mappedPriceProductMerchantRelationshipStorageEntities = [];
         foreach ($priceProductMerchantRelationshipStorageEntities as $priceProductMerchantRelationshipStorageEntity) {

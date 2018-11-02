@@ -14,7 +14,7 @@
         <property name="idProduct" type="int" />
         <property name="priceKey" type="string" />
         <property name="prices" type="array" />
-        <property name="UngroupedPrices" type="MerchantRelationshipProductPrice[]" singular="UngroupedPrice" description="Un-grouped raw prices" />
+        <property name="ungroupedPrices" type="MerchantRelationshipProductPrice[]" singular="UngroupedPrice" description="Un-grouped raw prices" />
     </transfer>
 
     <transfer name="MerchantRelationshipProductPrice">
