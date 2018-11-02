@@ -24,6 +24,9 @@ class Writer implements WriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
+    protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'A wishlist with the same name already exists.';
+    protected const ERROR_MESSAGE_NAME_SHOULD_HAVE_ALPHANUMERIC_CHARS_ONLY = 'A wishlist name should consist of letters or digits.';
+
     public const DEFAULT_NAME = 'default';
 
     /**
@@ -103,17 +106,21 @@ class Writer implements WriterInterface
     {
         $wishlistResponseTransfer = new WishlistResponseTransfer();
 
-        if ($this->checkWishlistUniqueName($wishlistTransfer)) {
-            $wishlistResponseTransfer
-                ->setWishlist($this->createWishlist($wishlistTransfer))
-                ->setIsSuccess(true);
-        } else {
-            $wishlistResponseTransfer
+        if (!$this->checkWishlistUniqueName($wishlistTransfer)) {
+            return $wishlistResponseTransfer
                 ->setIsSuccess(false)
-                ->addError('A wishlist with the same name already exists.');
+                ->addError(static::ERROR_MESSAGE_NAME_ALREADY_EXISTS);
         }
 
-        return $wishlistResponseTransfer;
+        if (!$this->checkWishlistNameHasAlphanumericCharactersOnly($wishlistTransfer)) {
+            return $wishlistResponseTransfer
+                ->setIsSuccess(false)
+                ->addError(static::ERROR_MESSAGE_NAME_SHOULD_HAVE_ALPHANUMERIC_CHARS_ONLY);
+        }
+
+        return $wishlistResponseTransfer
+            ->setWishlist($this->createWishlist($wishlistTransfer))
+            ->setIsSuccess(true);
     }
 
     /**
@@ -155,17 +162,21 @@ class Writer implements WriterInterface
     {
         $wishlistResponseTransfer = new WishlistResponseTransfer();
 
-        if ($this->checkWishlistUniqueNameWhenUpdating($wishlistTransfer)) {
-            $wishlistResponseTransfer
-                ->setWishlist($this->updateWishlist($wishlistTransfer))
-                ->setIsSuccess(true);
-        } else {
-            $wishlistResponseTransfer
+        if (!$this->checkWishlistUniqueName($wishlistTransfer)) {
+            return $wishlistResponseTransfer
                 ->setIsSuccess(false)
-                ->addError('A wishlist with the same name already exists.');
+                ->addError(static::ERROR_MESSAGE_NAME_ALREADY_EXISTS);
         }
 
-        return $wishlistResponseTransfer;
+        if (!$this->checkWishlistNameHasAlphanumericCharactersOnly($wishlistTransfer)) {
+            return $wishlistResponseTransfer
+                ->setIsSuccess(false)
+                ->addError(static::ERROR_MESSAGE_NAME_SHOULD_HAVE_ALPHANUMERIC_CHARS_ONLY);
+        }
+
+        return $wishlistResponseTransfer
+            ->setWishlist($this->updateWishlist($wishlistTransfer))
+            ->setIsSuccess(true);
     }
 
     /**
@@ -486,6 +497,18 @@ class Writer implements WriterInterface
             ->filterByIdWishlist($wishlistTransfer->getIdWishlist(), Criteria::NOT_EQUAL);
 
         return $query->count() === 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return bool
+     */
+    protected function checkWishlistNameHasAlphanumericCharactersOnly(WishlistTransfer $wishlistTransfer): bool
+    {
+        $wishlistTransfer->requireName();
+
+        return ctype_alnum($wishlistTransfer->getName());
     }
 
     /**
