@@ -24,10 +24,10 @@ class Writer implements WriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
+    public const DEFAULT_NAME = 'default';
+
     protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'A wishlist with the same name already exists.';
     protected const ERROR_MESSAGE_NAME_SHOULD_HAVE_ALPHANUMERIC_CHARS_ONLY = 'A wishlist name should consist of letters or digits.';
-
-    public const DEFAULT_NAME = 'default';
 
     /**
      * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
