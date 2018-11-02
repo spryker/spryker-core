@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
+
 interface ProductOptionValueReaderInterface
 {
     /**
@@ -19,16 +22,9 @@ interface ProductOptionValueReaderInterface
     public function getProductOption($idProductOptionValue);
 
     /**
-     * @param int $idProductOptionValue
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function findProductOptionByIdProductOptionValue($idProductOptionValue);
-
-    /**
-     * @param int $idProductOptionValue
-     *
-     * @return bool
-     */
-    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue);
+    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
 }

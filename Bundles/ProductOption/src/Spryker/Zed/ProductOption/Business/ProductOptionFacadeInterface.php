@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductOption\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
@@ -212,25 +214,29 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     *  - Finds product option value in persistence by id.
+     * - Selects prices for all stores
+     * - The returned price map contains the net and gross amounts per currency.
+     * - Uses "default store" (fkStore=NULL) currency prices when a store does not specify the prices in a currency.
      *
      * @api
      *
-     * @param int $idProductOptionValue
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
      */
-    public function findProductOptionByIdProductOptionValue($idProductOptionValue);
+    public function getAllProductOptionValuePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
 
     /**
      * Specification:
-     *  - Check if production value exists with given primary key
+     * - Retrieves product options by provided product option IDs.
      *
      * @api
      *
-     * @param int $idProductOptionValue
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function existsProductOptionValueByIdProductOptionValue($idProductOptionValue);
+    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
+
+
 }
