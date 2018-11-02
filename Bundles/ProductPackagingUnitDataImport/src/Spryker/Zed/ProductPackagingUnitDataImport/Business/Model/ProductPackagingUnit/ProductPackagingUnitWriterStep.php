@@ -28,6 +28,11 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     protected const PRODUCT_ABSTRACT_ID = 'PRODUCT_ABSTRACT_ID';
 
     /**
+     * @uses \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES
+     */
+    protected const DEFAULT_AMOUNT_DEFAULT_VALUE = 1;
+
+    /**
      * @var int[] Keys are product packaging unit type names.
      */
     protected static $idProductPackagingUnitTypeHeap = [];
@@ -73,7 +78,9 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
 
         $productPackagingUnitEntity->save();
 
-        $this->persistAmount($dataSet, $productPackagingUnitEntity);
+        if ($this->hasAmount($dataSet)) {
+            $this->persistAmount($dataSet, $productPackagingUnitEntity);
+        }
 
         $this->addPublishEvents(ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_PUBLISH, $this->getIdProductAbstractByProductSku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]));
     }
@@ -108,6 +115,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     {
         $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT] = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT];
         $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT] = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT];
+        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE] = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE];
 
         if ($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT]) {
             $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT] = false;
@@ -125,7 +133,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function normalizeAmount(DataSetInterface $dataSet): DataSetInterface
     {
-        $isVariable = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE];
+        $isVariable = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE];
         $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE] = $isVariable;
 
         $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] = (int)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT];
@@ -158,15 +166,6 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function persistAmount(DataSetInterface $dataSet, SpyProductPackagingUnit $productPackagingUnitEntity): void
     {
-        $haveAmount = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] > 1 ||
-            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] > 0 ||
-            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX] > 0 ||
-            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] > 0;
-
-        if (!$haveAmount || $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT]) {
-            return;
-        }
-
         $productPackagingUnitAmountEntity = $productPackagingUnitEntity->getSpyProductPackagingUnitAmounts()->getFirst();
 
         if ($productPackagingUnitAmountEntity === null) {
@@ -182,6 +181,30 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
             ->setAmountMax($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX])
             ->setAmountInterval($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL])
             ->save();
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return bool
+     */
+    protected function hasAmount(DataSetInterface $dataSet): bool
+    {
+        if ($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT]) {
+            return false;
+        }
+
+        if ($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE]) {
+            return true;
+        }
+
+        if (empty($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT]) ||
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] === static::DEFAULT_AMOUNT_DEFAULT_VALUE
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

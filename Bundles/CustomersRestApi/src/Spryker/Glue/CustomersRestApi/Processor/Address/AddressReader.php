@@ -16,8 +16,8 @@ use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerCl
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -134,7 +134,7 @@ class AddressReader implements AddressReaderInterface
         );
 
         $restResource->addLink(
-            RestResourceInterface::RESOURCE_LINKS_SELF,
+            RestLinkInterface::LINK_SELF,
             $this->createSelfLink($customerResponseTransfer->getCustomerTransfer(), $addressTransfer)
         );
 
@@ -167,7 +167,7 @@ class AddressReader implements AddressReaderInterface
             );
 
             $restResource->addLink(
-                RestResourceInterface::RESOURCE_LINKS_SELF,
+                RestLinkInterface::LINK_SELF,
                 $this->createSelfLink($customerTransfer, $addressTransfer)
             );
 

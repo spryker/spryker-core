@@ -111,9 +111,6 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         foreach (array_keys($selectedNode) as $attributePath) {
             [$key, $value] = explode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $attributePath);
             $filteredAttributes[$key][] = $value;
-            if (is_array($value)) {
-                return $this->findAvailableAttributes($value, $filteredAttributes);
-            }
         }
 
         return $filteredAttributes;
@@ -203,13 +200,14 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    protected function getSelectedProductVariant(ProductViewTransfer $productViewTransfer, $locale, array $selectedVariantNode)
+    protected function getSelectedProductVariant(ProductViewTransfer $productViewTransfer, $locale, array $selectedVariantNode): ProductViewTransfer
     {
         if (!$this->isProductConcreteNodeReached($selectedVariantNode)) {
             return $productViewTransfer;
         }
 
         $idProductConcrete = $this->extractIdOfProductConcrete($selectedVariantNode);
+        $productViewTransfer->setIdProductConcrete($idProductConcrete);
         $productConcreteStorageData = $this->productConcreteStorageReader->findProductConcreteStorageData($idProductConcrete, $locale);
 
         if (!$productConcreteStorageData) {
