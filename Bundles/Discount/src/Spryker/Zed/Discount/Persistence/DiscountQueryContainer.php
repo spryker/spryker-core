@@ -11,7 +11,6 @@ use DateTime;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Formatter\OnDemandFormatter;
@@ -141,7 +140,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @api
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery|\Propel\Runtime\ActiveQuery\Criteria
      */
     public function queryDiscountVoucher()
     {
