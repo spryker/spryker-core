@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomersRestApi\Business;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -34,10 +35,10 @@ class CustomersRestApiFacade extends AbstractFacade implements CustomersRestApiF
      * @param string $addressUuid
      * @param int $idCustomer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findCustomerIdCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?int
+    public function findCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?AddressTransfer
     {
-        return $this->getFactory()->createCustomerAddressReader()->findCustomerIdCustomerAddressByUuid($addressUuid, $idCustomer);
+        return $this->getFactory()->createCustomerAddressReader()->findCustomerAddressByUuid($addressUuid, $idCustomer);
     }
 }

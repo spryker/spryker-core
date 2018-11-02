@@ -23,28 +23,10 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CHECKOUT_DATA_INVALID = '1104';
     public const RESPONSE_CODE_ORDER_NOT_PLACED = '1105';
     public const RESPONSE_CODE_CART_NOT_FOUND = '1106';
-    public const RESPONSE_CODE_CUSTOMER_EMAIL_MISSING = '1107';
-    public const RESPONSE_CODE_PAYMENT_MISSING = '1108';
-    public const RESPONSE_CODE_PAYMENT_INVALID = '1109';
-    public const RESPONSE_CODE_SHIPPING_MISSING = '1110';
-    public const RESPONSE_CODE_SHIPPING_INVALID = '1111';
-    public const RESPONSE_CODE_BILLING_ADDRESS_MISSING = '1112';
-    public const RESPONSE_CODE_BILLING_ADDRESS_INVALID = '1113';
-    public const RESPONSE_CODE_SHIPPING_ADDRESS_MISSING = '1114';
-    public const RESPONSE_CODE_SHIPPING_ADDRESS_INVALID = '1115';
 
     public const EXCEPTION_MESSAGE_CHECKOUT_DATA_INVALID = 'Checkout data is invalid.';
     public const EXCEPTION_MESSAGE_ORDER_NOT_PLACED = 'Order could not be placed.';
     public const EXCEPTION_MESSAGE_CART_NOT_FOUND = 'Cart could not be found.';
-    public const EXCEPTION_MESSAGE_CUSTOMER_EMAIL_MISSING = 'Customer email is missing.';
-    public const EXCEPTION_MESSAGE_PAYMENT_MISSING = 'Payment method data is missing.';
-    public const EXCEPTION_MESSAGE_PAYMENT_INVALID = 'Payment data is invalid.';
-    public const EXCEPTION_MESSAGE_SHIPPING_MISSING = 'Shipping method data is missing.';
-    public const EXCEPTION_MESSAGE_SHIPPING_INVALID = 'Shipping method data is invalid.';
-    public const EXCEPTION_MESSAGE_BILLING_ADDRESS_MISSING = 'Billing address data is missing.';
-    public const EXCEPTION_MESSAGE_BILLING_ADDRESS_INVALID = 'Billing address data is invalid.';
-    public const EXCEPTION_MESSAGE_SHIPPING_ADDRESS_MISSING = 'Shipping address data is missing.';
-    public const EXCEPTION_MESSAGE_SHIPPING_ADDRESS_INVALID = 'Shipping address data is invalid.';
 
     protected const PAYMENT_REQUIRED_DATA_COMMON = [];
     protected const PAYMENT_REQUIRED_DATA = [];

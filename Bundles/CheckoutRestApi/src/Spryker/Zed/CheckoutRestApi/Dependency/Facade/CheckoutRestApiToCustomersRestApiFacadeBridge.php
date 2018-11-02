@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\AddressTransfer;
+
 class CheckoutRestApiToCustomersRestApiFacadeBridge implements CheckoutRestApiToCustomersRestApiFacadeInterface
 {
     /**
@@ -26,10 +28,10 @@ class CheckoutRestApiToCustomersRestApiFacadeBridge implements CheckoutRestApiTo
      * @param string $addressUuid
      * @param int $idCustomer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findCustomerIdCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?int
+    public function findCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?AddressTransfer
     {
-        return $this->customersRestApiFacade->findCustomerIdCustomerAddressByUuid($addressUuid, $idCustomer);
+        return $this->customersRestApiFacade->findCustomerAddressByUuid($addressUuid, $idCustomer);
     }
 }

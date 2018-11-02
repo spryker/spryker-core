@@ -31,20 +31,20 @@ class QuoteAddressExpander implements QuoteAddressExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expandQuoteAddressesWithIdCustomerAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function expandQuoteAddressesWithCustomerAddressByUuid(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if (!$quoteTransfer->getCustomer()->getIdCustomer()) {
             return $quoteTransfer;
         }
 
         $quoteTransfer->setBillingAddress(
-            $this->getAddressTransferExpandedWithIdCustomerAddress(
+            $this->getAddressTransferExpandedWithCustomerAddress(
                 $quoteTransfer->getBillingAddress(),
                 $quoteTransfer->getCustomer()->getIdCustomer()
             )
         );
         $quoteTransfer->setShippingAddress(
-            $this->getAddressTransferExpandedWithIdCustomerAddress(
+            $this->getAddressTransferExpandedWithCustomerAddress(
                 $quoteTransfer->getShippingAddress(),
                 $quoteTransfer->getCustomer()->getIdCustomer()
             )
@@ -59,17 +59,17 @@ class QuoteAddressExpander implements QuoteAddressExpanderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getAddressTransferExpandedWithIdCustomerAddress(AddressTransfer $addressTransfer, int $idCustomer): AddressTransfer
+    protected function getAddressTransferExpandedWithCustomerAddress(AddressTransfer $addressTransfer, int $idCustomer): AddressTransfer
     {
         if ($addressTransfer->getUuid() === null) {
             return $addressTransfer;
         }
 
-        return $addressTransfer->setIdCustomerAddress(
-            $this->customersRestApiFacade->findCustomerIdCustomerAddressByUuid(
-                $addressTransfer->getUuid(),
-                $idCustomer
-            )
+        $foundAddressTransfer = $this->customersRestApiFacade->findCustomerAddressByUuid(
+            $addressTransfer->getUuid(),
+            $idCustomer
         );
+
+        return ($foundAddressTransfer !== null) ? $foundAddressTransfer : $addressTransfer->setUuid(null);
     }
 }

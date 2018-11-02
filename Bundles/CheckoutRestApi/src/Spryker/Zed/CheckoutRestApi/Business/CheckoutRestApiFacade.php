@@ -41,8 +41,8 @@ class CheckoutRestApiFacade extends AbstractFacade implements CheckoutRestApiFac
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expandQuoteAddressTransfersWithIdCustomerAddress(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): QuoteTransfer
+    public function expandQuoteAddressesWithCustomerAddressByUuid(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): QuoteTransfer
     {
-        return $this->getFactory()->createQuoteAddressExpander()->expandQuoteAddressesWithIdCustomerAddress($quoteTransfer);
+        return $this->getFactory()->createQuoteAddressExpander()->expandQuoteAddressesWithCustomerAddressByUuid($quoteTransfer);
     }
 }

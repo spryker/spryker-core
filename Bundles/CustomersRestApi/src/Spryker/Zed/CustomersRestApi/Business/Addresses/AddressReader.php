@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomersRestApi\Business\Addresses;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\CustomersRestApi\Persistence\CustomersRestApiRepositoryInterface;
 
 class AddressReader implements AddressReaderInterface
@@ -28,10 +29,10 @@ class AddressReader implements AddressReaderInterface
      * @param string $addressUuid
      * @param int $idCustomer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findCustomerIdCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?int
+    public function findCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?AddressTransfer
     {
-        return $this->customersRestApiRepository->findCustomerIdCustomerAddressByUuid($addressUuid, $idCustomer);
+        return $this->customersRestApiRepository->findCustomerAddressByUuid($addressUuid, $idCustomer);
     }
 }
