@@ -149,7 +149,7 @@ class Discount implements DiscountInterface
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes, $idStore): Collection
+    protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes, $idStore)
     {
         $discounts = $this->queryContainer
             ->queryActiveCartRulesForStore($idStore)
