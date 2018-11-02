@@ -21,6 +21,7 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
     /**
      * Specification:
      * - Extract Customer Default Quote Collection and saves it to customer session.
+     * - Sets provided CustomerTransfer in newly created Quote when no other default Quote was found.
      *
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
