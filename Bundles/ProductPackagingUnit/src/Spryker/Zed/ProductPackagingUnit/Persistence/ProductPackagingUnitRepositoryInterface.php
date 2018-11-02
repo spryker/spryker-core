@@ -110,11 +110,4 @@ interface ProductPackagingUnitRepositoryInterface
      * @return int
      */
     public function sumLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int;
-
-    /**
-     * @param string[] $productPackagingUnitTypeNames
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer[]
-     */
-    public function getProductPackagingUnitTypeByNames(array $productPackagingUnitTypeNames): array;
 }
