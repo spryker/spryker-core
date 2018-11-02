@@ -22,7 +22,7 @@ class AvailabilityDataHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
-    const QUANTITY = 10;
+    protected const QUANTITY = 10;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

@@ -29,10 +29,10 @@ class PriceProductDataHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
-    const EUR_ISO_CODE = 'EUR';
-    const USD_ISO_CODE = 'USD';
-    const NET_PRICE = 10;
-    const GROSS_PRICE = 9;
+    protected const EUR_ISO_CODE = 'EUR';
+    protected const USD_ISO_CODE = 'USD';
+    protected const NET_PRICE = 10;
+    protected const GROSS_PRICE = 9;
 
     /**
      * @param array $priceProductOverride

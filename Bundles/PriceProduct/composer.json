@@ -19,6 +19,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
+    "spryker/price-product-storage": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
