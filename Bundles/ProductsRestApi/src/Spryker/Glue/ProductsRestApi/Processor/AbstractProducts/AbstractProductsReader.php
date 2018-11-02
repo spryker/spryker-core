@@ -15,6 +15,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface;
 use Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapperInterface;
+use Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\AbstractProductAttributeTranslationExpanderInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -44,21 +45,29 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     protected $concreteProductsReader;
 
     /**
+     * @var \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\AbstractProductAttributeTranslationExpanderInterface
+     */
+    protected $abstractProductAttributeTranslationExpander;
+
+    /**
      * @param \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapperInterface $abstractProductsResourceMapper
      * @param \Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface $concreteProductsReader
+     * @param \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\AbstractProductAttributeTranslationExpanderInterface $abstractProductAttributeTranslationExpander
      */
     public function __construct(
         ProductsRestApiToProductStorageClientInterface $productStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
         AbstractProductsResourceMapperInterface $abstractProductsResourceMapper,
-        ConcreteProductsReaderInterface $concreteProductsReader
+        ConcreteProductsReaderInterface $concreteProductsReader,
+        AbstractProductAttributeTranslationExpanderInterface $abstractProductAttributeTranslationExpander
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->abstractProductsResourceMapper = $abstractProductsResourceMapper;
         $this->concreteProductsReader = $concreteProductsReader;
+        $this->abstractProductAttributeTranslationExpander = $abstractProductAttributeTranslationExpander;
     }
 
     /**
@@ -96,6 +105,9 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
 
         $restAbstractProductsAttributesTransfer = $this->abstractProductsResourceMapper
             ->mapAbstractProductsDataToAbstractProductsRestAttributes($abstractProductData);
+
+        $restAbstractProductsAttributesTransfer = $this->abstractProductAttributeTranslationExpander
+            ->addProductAttributeTranslation($restAbstractProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
