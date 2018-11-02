@@ -151,12 +151,10 @@ class CalculatorForm extends AbstractType
             ],
         ];
 
-        $options = array_merge($defaultOptions, $options);
-
         $builder->add(
             static::FIELD_AMOUNT,
             TextType::class,
-            $options
+            array_merge($defaultOptions, $options)
         );
 
         return $this;
