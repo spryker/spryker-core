@@ -19,19 +19,21 @@ use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
 use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
     public const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
+    /**
+     * @deprecated not valid constant name. Use ZED_REQUEST_ERROR instead
+     */
     public const HOST_NAME_ERROR =
         'Incorrect HOST_ZED config, expected `%s`, got `%s`. Set the URLs in your Shared/config_default_%s.php or env specific config files.';
 
@@ -40,6 +42,19 @@ abstract class AbstractHttpClient implements HttpClientInterface
     public const HEADER_INTERNAL_REQUEST = 'X-Internal-Request';
     public const HEADER_HOST_ZED = 'X-Zed-Host';
     protected const SERVER_HTTP_HOST = 'HTTP_HOST';
+    protected const SERVER_PORT = 'SERVER_PORT';
+    protected const DEFAULT_PORT = 80;
+    protected const DEFAULT_SSL_PORT = 443;
+
+    protected const CONFIG_FILE_PREFIX = '/config/Shared/config_';
+    protected const CONFIG_FILE_SUFFIX = '.php';
+
+    protected const DEFAULT_CONFIG = 'default';
+
+    protected const ZED_API_SSL_ENABLED = 'ZED_API_SSL_ENABLED';
+
+    protected const ZED_REQUEST_ERROR = 'Failed to complete request with server authority %s.
+Configured with %s %s:%s in %s. Error: Stacktrace:';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
@@ -134,6 +149,38 @@ abstract class AbstractHttpClient implements HttpClientInterface
     abstract public function getHeaders();
 
     /**
+     * @return string
+     */
+    protected function getConfigFilePathName(): string
+    {
+        return APPLICATION_ROOT_DIR .
+            static::CONFIG_FILE_PREFIX . static::DEFAULT_CONFIG .
+            static::CONFIG_FILE_SUFFIX;
+    }
+
+    /**
+     * @return string
+     */
+    protected function setSslStatusMessage(): string
+    {
+        if (Config::get(static::ZED_API_SSL_ENABLED)) {
+            return '(SSL Enabled)';
+        }
+        return '(SSL Disabled)';
+    }
+
+    /**
+     * @return int
+     */
+    protected function getConfigServerPort()
+    {
+        if (Config::get(static::ZED_API_SSL_ENABLED)) {
+            return Config::get(ApplicationConstants::PORT_SSL_ZED) ?: static::DEFAULT_SSL_PORT;
+        }
+        return Config::get(ApplicationConstants::PORT_ZED) ?: static::DEFAULT_PORT;
+    }
+
+    /**
      * @param string $pathInfo
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
@@ -157,10 +204,19 @@ abstract class AbstractHttpClient implements HttpClientInterface
         try {
             $response = $this->sendRequest($request, $requestTransfer, $requestOptions);
         } catch (GuzzleRequestException $e) {
-            $symfonyRequest = SymfonyRequest::createFromGlobals();
-            $hostName = $symfonyRequest->server->get(static::SERVER_HTTP_HOST);
-            $configuredHostName = $request->getUri()->getHost();
-            $message = sprintf(static::HOST_NAME_ERROR, $hostName, $configuredHostName, Store::getInstance()->getStoreName());
+            $configHostName = Config::get(ApplicationConstants::HOST_ZED);
+            $configServerPort = $this->getConfigServerPort();
+            $hostSchema = $request->getUri()->getScheme();
+            $hostAuthority = $hostSchema . '://' . $request->getUri()->getAuthority();
+            $configFileName = $this->getConfigFilePathName();
+            $message = sprintf(
+                static::ZED_REQUEST_ERROR,
+                $hostAuthority,
+                $this->setSslStatusMessage(),
+                $configHostName,
+                $configServerPort,
+                $configFileName
+            );
             $response = $e->getResponse();
             if ($response) {
                 $message .= PHP_EOL . PHP_EOL . $response->getBody();

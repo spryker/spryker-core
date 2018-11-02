@@ -72,6 +72,7 @@ interface ProductAlternativeStorageClientInterface
     /**
      * Specification:
      *  - Gets alternative products for product.
+     *  - Filters restricted products when restrictions are available.
      *  - If productViewTransfer has idProductConcrete returns alternative for given concrete sku only.
      *  - If productViewTransfer has not idProductConcrete returns alternative for all concretes of given abstract product sku.
      *
