@@ -77,7 +77,7 @@ class AvailabilityDataHelper extends Module
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return null|\Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract|null
      */
     protected function getSpyAvailabilityAbstract(ProductConcreteTransfer $productConcreteTransfer): ?SpyAvailabilityAbstract
     {
