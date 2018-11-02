@@ -79,7 +79,7 @@ class StorageClientTest extends Unit
         );
 
         $uri = '/en/cameras-&-camcorders';
-        $expectedCacheKey = $this->getStoreAndLocale() . 'storage./en/cameras-&-camcorders';
+        $expectedCacheKey = $this->getStoreAndLocale() . 'storage:/en/cameras-&-camcorders';
 
         $this->testStorageCacheAllowedGetParameters($uri, $expectedCacheKey);
     }
@@ -94,7 +94,7 @@ class StorageClientTest extends Unit
         );
 
         $uri = '/en/cameras-&-camcorders?allowedParameter1=1';
-        $expectedCacheKey = $this->getStoreAndLocale() . 'storage./en/cameras-&-camcorders?allowedParameter1=1';
+        $expectedCacheKey = $this->getStoreAndLocale() . 'storage:/en/cameras-&-camcorders?allowedParameter1=1';
         $getParameters = ['allowedParameter1' => '1'];
 
         $this->testStorageCacheAllowedGetParameters(
@@ -114,7 +114,7 @@ class StorageClientTest extends Unit
         );
 
         $uri = '/en/cameras-&-camcorders?allowedParameter1=1';
-        $expectedCacheKey = $this->getStoreAndLocale() . 'storage./en/cameras-&-camcorders?allowedParameter1=1';
+        $expectedCacheKey = $this->getStoreAndLocale() . 'storage:/en/cameras-&-camcorders?allowedParameter1=1';
         $getParameters = ['allowedParameter1' => '1'];
 
         $this->testStorageCacheAllowedGetParameters(
@@ -134,7 +134,7 @@ class StorageClientTest extends Unit
         );
 
         $uri = '/en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
-        $expectedCacheKey = $this->getStoreAndLocale() . 'storage./en/cameras-&-camcorders?allowedParameter1=1';
+        $expectedCacheKey = $this->getStoreAndLocale() . 'storage:/en/cameras-&-camcorders?allowedParameter1=1';
         $getParameters = ['allowedParameter1' => '1', 'allowedParameter2' => '2'];
 
         $this->testStorageCacheAllowedGetParameters(
@@ -154,7 +154,7 @@ class StorageClientTest extends Unit
         );
 
         $uri = '/en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
-        $expectedCacheKey = $this->getStoreAndLocale() . 'storage./en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
+        $expectedCacheKey = $this->getStoreAndLocale() . 'storage:/en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
         $getParameters = ['allowedParameter1' => '1', 'allowedParameter2' => '2'];
 
         $this->testStorageCacheAllowedGetParameters(
@@ -174,7 +174,7 @@ class StorageClientTest extends Unit
         );
 
         $uri = '/en/cameras-&-camcorders?allowedParameter2=2&allowedParameter1=1';
-        $expectedCacheKey = $this->getStoreAndLocale() . 'storage./en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
+        $expectedCacheKey = $this->getStoreAndLocale() . 'storage:/en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
         $getParameters = ['allowedParameter1' => '1', 'allowedParameter2' => '2'];
 
         $this->testStorageCacheAllowedGetParameters(
