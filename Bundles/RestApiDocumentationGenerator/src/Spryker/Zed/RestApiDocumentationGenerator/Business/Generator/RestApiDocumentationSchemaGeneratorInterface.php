@@ -20,17 +20,19 @@ interface RestApiDocumentationSchemaGeneratorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string|null $transferClassName
      *
      * @return string
      */
-    public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin): string;
+    public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string|null $transferClassName
      *
      * @return string
      */
-    public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin): string;
+    public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string;
 
     /**
      * @return string
