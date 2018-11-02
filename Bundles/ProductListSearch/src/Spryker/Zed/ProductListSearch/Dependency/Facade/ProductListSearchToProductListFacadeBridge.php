@@ -27,9 +27,9 @@ class ProductListSearchToProductListFacadeBridge implements ProductListSearchToP
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsIdProductAbstract(int $idProductAbstract): array
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
     {
-        return $this->productListFacade->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
+        return $this->productListFacade->getProductBlacklistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -37,9 +37,9 @@ class ProductListSearchToProductListFacadeBridge implements ProductListSearchToP
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
+    public function getProductWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
-        return $this->productListFacade->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
+        return $this->productListFacade->getProductWhitelistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**

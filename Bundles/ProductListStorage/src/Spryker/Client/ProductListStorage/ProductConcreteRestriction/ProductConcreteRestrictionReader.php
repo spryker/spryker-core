@@ -35,11 +35,11 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function isProductConcreteRestricted(int $idProductConcrete): bool
+    public function isProductConcreteRestricted(int $idProduct): bool
     {
         $customer = $this->customerClient->getCustomer();
         if (!$customer) {
@@ -54,34 +54,42 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
         $customerWhitelistIds = $customer->getCustomerProductListCollection()->getWhitelistIds() ?: [];
         $customerBlacklistIds = $customer->getCustomerProductListCollection()->getBlacklistIds() ?: [];
 
-        return $this->checkIfProductConcreteIsRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds);
+        return $this->checkIfProductConcreteIsRestricted($idProduct, $customerWhitelistIds, $customerBlacklistIds);
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      * @param int[] $customerWhitelistIds
      * @param int[] $customerBlacklistIds
      *
      * @return bool
      */
     protected function checkIfProductConcreteIsRestricted(
-        int $idProductConcrete,
+        int $idProduct,
         array $customerWhitelistIds,
         array $customerBlacklistIds
     ): bool {
-        if (!$customerBlacklistIds && !$customerWhitelistIds) {
+        if (empty($customerBlacklistIds) && empty($customerWhitelistIds)) {
             return false;
         }
 
-        $productListProductConcreteStorageTransfer = $this->productListProductConcreteStorageReader->findProductConcreteProductListStorage($idProductConcrete);
+        $productListProductConcreteStorageTransfer = $this->productListProductConcreteStorageReader->findProductConcreteProductListStorage($idProduct);
 
         if ($productListProductConcreteStorageTransfer) {
-            $isProductInBlacklist = count(array_intersect($productListProductConcreteStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
-            $isProductInWhitelist = count(array_intersect($productListProductConcreteStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
+            $isProductInBlacklist = !empty(array_intersect($productListProductConcreteStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
+            $isProductInWhitelist = !empty(array_intersect($productListProductConcreteStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
+
+            if (empty($customerWhitelistIds)) {
+                return $isProductInBlacklist;
+            }
+
+            if (empty($customerBlacklistIds)) {
+                return !$isProductInWhitelist;
+            }
 
             return $isProductInBlacklist || !$isProductInWhitelist;
         }
 
-        return (bool)count($customerWhitelistIds);
+        return false;
     }
 }
