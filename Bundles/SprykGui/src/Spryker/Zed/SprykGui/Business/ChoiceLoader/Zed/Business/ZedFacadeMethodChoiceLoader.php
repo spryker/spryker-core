@@ -31,7 +31,7 @@ class ZedFacadeMethodChoiceLoader extends AbstractMethodChoiceLoader
     {
         $dependentModule = $moduleTransfer->getDependentModule();
 
-        return sprintf('\\Spryker\\Zed\\%1$s\\Business\\%1$sFacade', $dependentModule->getName());
+        return sprintf('Spryker\\Zed\\%1$s\\Business\\%1$sFacade', $dependentModule->getName());
     }
 
     /**

@@ -22,7 +22,7 @@ class ClientMethodChoiceLoader extends AbstractMethodChoiceLoader
     {
         $dependentModule = $moduleTransfer->getDependentModule();
 
-        return sprintf('\\Spryker\\Client\\%1$s\\%1$sClient', $dependentModule->getName());
+        return sprintf('Spryker\\Client\\%1$s\\%1$sClient', $dependentModule->getName());
     }
 
     /**
