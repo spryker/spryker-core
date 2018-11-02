@@ -48,6 +48,7 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
             $message = (new MessageTransfer())
                 ->setValue(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED);
             $this->addError($message, 'general fail', $checkoutResponseTransfer);
+
             return false;
         }
 

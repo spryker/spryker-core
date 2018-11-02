@@ -49,7 +49,7 @@ use Spryker\Zed\Kernel\Container;
 class DiscountFacadeTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\Discount\BusinessTester
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
      */
     protected $tester;
 
@@ -367,44 +367,18 @@ class DiscountFacadeTest extends Unit
      */
     public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenUsageLimitIsNotReached()
     {
-        // Assign
-        $discountFacade = $this->createDiscountFacade();
-        $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
-        $idDiscount = $discountFacade->saveDiscount($discountConfiguratorTransfer);
-
-        $discountVoucherTransfer = new DiscountVoucherTransfer();
-        $discountVoucherTransfer->setIdDiscount($idDiscount);
-        $discountVoucherTransfer->setCustomCode('functional spryker test voucher');
-        $discountVoucherTransfer->setMaxNumberOfUses(5);
-        $discountVoucherTransfer->setQuantity(1);
-        $discountVoucherTransfer->setRandomGeneratedCodeLength(3);
-
-        $discountFacade->saveVoucherCodes($discountVoucherTransfer);
-
-        $discountEntity = SpyDiscountQuery::create()->findOneByIdDiscount($idDiscount);
-
-        $voucherPoolEntity = $discountEntity->getVoucherPool();
-        $voucherCodes = $voucherPoolEntity->getDiscountVouchers();
-
-        $voucherCodeList = [];
-        foreach ($voucherCodes as $voucherCodeEntity) {
-            $voucherCodeEntity->setNumberOfUses(1);
-            $voucherCodeEntity->save();
-            $voucherCodeList[] = $voucherCodeEntity->getCode();
-        }
-
-        $quoteTransfer = new QuoteTransfer();
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku('123');
-        $quoteTransfer->addItem($itemTransfer);
-
-        $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setVoucherCode(reset($voucherCodeList));
-        $quoteTransfer->addVoucherDiscount($discountTransfer);
+        // Arrange
+        $discountVoucherTransfer = $this->getDiscountVoucher([
+            'maxNumberOfUses' => 5,
+            'customCode' => 'functional spryker test voucher',
+            'quantity' => 1,
+            'randomGeneratedCodeLength' => 3,
+        ]);
+        $quoteTransfer = $this->getQuotaWithVoucherDiscount($discountVoucherTransfer);
 
         // Act
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
-        $result = $discountFacade->validateVoucherDiscountsMaxUsage($quoteTransfer, $checkoutResponseTransfer);
+        $result = $this->createDiscountFacade()->validateVoucherDiscountsMaxUsage($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertCount(0, $checkoutResponseTransfer->getErrors());
@@ -416,54 +390,71 @@ class DiscountFacadeTest extends Unit
      */
     public function testValidateVoucherDiscountsMaxUsageShouldReturnFalseWhenUsageLimitIsReached()
     {
-        // Assign
-        $discountFacade = $this->createDiscountFacade();
-        $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
-        $idDiscount = $discountFacade->saveDiscount($discountConfiguratorTransfer);
+        // Arrange
+        $maxNumberOfUses = 5;
+        $discountVoucherTransfer = $this->getDiscountVoucher([
+            'maxNumberOfUses' => $maxNumberOfUses,
+            'customCode' => 'functional spryker test voucher',
+            'quantity' => 1,
+            'randomGeneratedCodeLength' => 3,
+        ]);
+        $quoteTransfer = $this->getQuotaWithVoucherDiscount($discountVoucherTransfer);
 
-        $discountVoucherTransfer = new DiscountVoucherTransfer();
-        $discountVoucherTransfer->setIdDiscount($idDiscount);
-        $discountVoucherTransfer->setCustomCode('functional spryker test voucher');
-        $discountVoucherTransfer->setMaxNumberOfUses(5);
-        $discountVoucherTransfer->setQuantity(1);
-        $discountVoucherTransfer->setRandomGeneratedCodeLength(3);
+        // Act
+        SpyDiscountQuery::create()->findOneByIdDiscount($discountVoucherTransfer->getIdDiscount())
+            ->getVoucherPool()
+            ->getDiscountVouchers()[0]
+            ->setNumberOfUses($maxNumberOfUses)
+            ->save();
 
-        $discountFacade->saveVoucherCodes($discountVoucherTransfer);
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $result = $this->createDiscountFacade()->validateVoucherDiscountsMaxUsage($quoteTransfer, $checkoutResponseTransfer);
 
-        $discountEntity = SpyDiscountQuery::create()->findOneByIdDiscount($idDiscount);
+        // Assert
+        /** @var \Generated\Shared\Transfer\CheckoutErrorTransfer[] $checkoutErrorTransferCollection */
+        $checkoutErrorTransferCollection = $checkoutResponseTransfer->getErrors();
+        $checkoutErrorTransfer = reset($checkoutErrorTransferCollection);
 
-        $voucherPoolEntity = $discountEntity->getVoucherPool();
-        $voucherCodes = $voucherPoolEntity->getDiscountVouchers();
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+        $this->assertEquals('general fail', $checkoutErrorTransfer->getErrorCode());
+        $this->assertEquals(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED, $checkoutErrorTransfer->getMessage());
+        $this->assertFalse($result);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+    }
 
-        $voucherCodeList = [];
-        foreach ($voucherCodes as $voucherCodeEntity) {
-            $voucherCodeEntity->setNumberOfUses(5);
-            $voucherCodeEntity->save();
-            $voucherCodeList[] = $voucherCodeEntity->getCode();
-        }
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function getDiscountVoucher(array $override = []): DiscountVoucherTransfer
+    {
+        $discountGeneralTransfer = $this->tester->haveDiscount([
+            'discountType' => DiscountConstants::TYPE_VOUCHER,
+        ]);
+        $override['idDiscount'] = $discountGeneralTransfer->getIdDiscount();
+        $discountVoucherTransfer = $this->tester->haveGeneratedVoucherCodes($override);
 
+        return $discountVoucherTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getQuotaWithVoucherDiscount(DiscountVoucherTransfer $discountVoucherTransfer): QuoteTransfer
+    {
         $quoteTransfer = new QuoteTransfer();
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku('123');
         $quoteTransfer->addItem($itemTransfer);
 
         $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setVoucherCode(reset($voucherCodeList));
+        $discountTransfer->setVoucherCode($discountVoucherTransfer->getCode());
         $quoteTransfer->addVoucherDiscount($discountTransfer);
 
-        // Act
-        $checkoutResponseTransfer = new CheckoutResponseTransfer();
-        $result = $discountFacade->validateVoucherDiscountsMaxUsage($quoteTransfer, $checkoutResponseTransfer);
-        /** @var \Generated\Shared\Transfer\CheckoutErrorTransfer[] $checkoutErrorTransferCollection */
-        $checkoutErrorTransferCollection = $checkoutResponseTransfer->getErrors();
-        $checkoutErrorTransfer = reset($checkoutErrorTransferCollection);
-
-        // Assert
-        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
-        $this->assertEquals('general fail', $checkoutErrorTransfer->getErrorCode());
-        $this->assertEquals(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED, $checkoutErrorTransfer->getMessage());
-        $this->assertFalse($result);
-        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        return $quoteTransfer;
     }
 
     /**
