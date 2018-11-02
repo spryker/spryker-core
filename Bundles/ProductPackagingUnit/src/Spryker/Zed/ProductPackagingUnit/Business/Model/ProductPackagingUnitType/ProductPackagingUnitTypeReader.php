@@ -112,8 +112,8 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer[] $productInfrastructuralPackagingUnitTypes
      */
-    public function findProductPackagingUnitTypeByNames(array $productInfrastructuralPackagingUnitTypeNames): array
+    public function getProductPackagingUnitTypeByNames(array $productInfrastructuralPackagingUnitTypeNames): array
     {
-        return $this->repository->findProductPackagingUnitTypeByNames($productInfrastructuralPackagingUnitTypeNames);
+        return $this->repository->getProductPackagingUnitTypeByNames($productInfrastructuralPackagingUnitTypeNames);
     }
 }

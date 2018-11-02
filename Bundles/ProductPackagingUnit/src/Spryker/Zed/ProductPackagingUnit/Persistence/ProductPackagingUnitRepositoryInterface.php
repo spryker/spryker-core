@@ -116,5 +116,5 @@ interface ProductPackagingUnitRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer[]
      */
-    public function findProductPackagingUnitTypeByNames(array $productPackagingUnitTypeNames): array;
+    public function getProductPackagingUnitTypeByNames(array $productPackagingUnitTypeNames): array;
 }

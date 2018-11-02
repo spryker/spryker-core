@@ -322,7 +322,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer[]
      */
-    public function findProductPackagingUnitTypeByNames(array $productPackagingUnitTypeNames): array
+    public function getProductPackagingUnitTypeByNames(array $productPackagingUnitTypeNames): array
     {
         $spyProductPackagingUnitTypeEntities = $this->getFactory()
             ->createProductPackagingUnitTypeQuery()
@@ -335,9 +335,10 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             return $productPackagingUnitTypeTransfers;
         }
 
+        $productPackagingUnitMapper = $this->getFactory()->createProductPackagingUnitMapper();
+
         foreach ($spyProductPackagingUnitTypeEntities as $spyProductPackagingUnitTypeEntity) {
-            $productPackagingUnitTypeTransfers[] = $this->getFactory()
-                ->createProductPackagingUnitMapper()
+            $productPackagingUnitTypeTransfers[] = $productPackagingUnitMapper
                 ->mapProductPackagingUnitTypeTransfer(
                     $spyProductPackagingUnitTypeEntity,
                     new ProductPackagingUnitTypeTransfer()
