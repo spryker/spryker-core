@@ -173,10 +173,10 @@ class CompanyUserTable extends AbstractTable
      */
     protected function prepareQuery(SpyCompanyUserQuery $companyUserQuery): SpyCompanyUserQuery
     {
-        return $companyUserQuery->useCustomerQuery()
+        return $companyUserQuery->joinCustomer()
+            ->useCustomerQuery()
                 ->filterByAnonymizedAt(null, Criteria::EQUAL)
             ->endUse()
-            ->joinCustomer()
             ->withColumn(
                 'CONCAT(' . SpyCustomerTableMap::COL_FIRST_NAME . ', \' \', ' . SpyCustomerTableMap::COL_LAST_NAME . ')',
                 static::COL_COMPANY_USER_NAME
