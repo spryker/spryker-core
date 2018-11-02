@@ -85,8 +85,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitTypeInstaller(
             $this->getEntityManager(),
-            $this->getConfig(),
-            $this->createProductPackagingUnitTypeReader()
+            $this->getConfig()
         );
     }
 
