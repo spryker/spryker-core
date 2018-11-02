@@ -55,7 +55,7 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
      */
     public function transformFromPersistence($value)
     {
-        return (int)round($value / 100);
+        return (int)round((float)$value / 100);
     }
 
     /**
@@ -82,7 +82,6 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
             new Regex([
                 'pattern' => '/[0-9\.\,]+/',
                 'groups' => DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE,
-
             ]),
             new Range([
                 'min' => 1,

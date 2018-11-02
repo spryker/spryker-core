@@ -17,8 +17,8 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginWithAmountInp
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -151,10 +151,12 @@ class CalculatorForm extends AbstractType
             ],
         ];
 
+        $options = array_merge($defaultOptions, $options);
+
         $builder->add(
             static::FIELD_AMOUNT,
-            NumberType::class,
-            array_merge($defaultOptions, $options)
+            TextType::class,
+            $options
         );
 
         return $this;
