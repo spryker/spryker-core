@@ -112,7 +112,7 @@ class Writer implements WriterInterface
                 ->addError(static::ERROR_MESSAGE_NAME_ALREADY_EXISTS);
         }
 
-        if (!$this->checkWishlistNameHasAlphanumericCharactersOnly($wishlistTransfer)) {
+        if (!$this->hasOnlyAlphanumericCharacters($wishlistTransfer)) {
             return $wishlistResponseTransfer
                 ->setIsSuccess(false)
                 ->addError(static::ERROR_MESSAGE_NAME_SHOULD_HAVE_ALPHANUMERIC_CHARS_ONLY);
@@ -168,7 +168,7 @@ class Writer implements WriterInterface
                 ->addError(static::ERROR_MESSAGE_NAME_ALREADY_EXISTS);
         }
 
-        if (!$this->checkWishlistNameHasAlphanumericCharactersOnly($wishlistTransfer)) {
+        if (!$this->hasOnlyAlphanumericCharacters($wishlistTransfer)) {
             return $wishlistResponseTransfer
                 ->setIsSuccess(false)
                 ->addError(static::ERROR_MESSAGE_NAME_SHOULD_HAVE_ALPHANUMERIC_CHARS_ONLY);
@@ -504,7 +504,7 @@ class Writer implements WriterInterface
      *
      * @return bool
      */
-    protected function checkWishlistNameHasAlphanumericCharactersOnly(WishlistTransfer $wishlistTransfer): bool
+    protected function hasOnlyAlphanumericCharacters(WishlistTransfer $wishlistTransfer): bool
     {
         $wishlistTransfer->requireName();
 
