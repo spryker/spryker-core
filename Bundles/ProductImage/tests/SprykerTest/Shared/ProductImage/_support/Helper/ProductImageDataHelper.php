@@ -22,10 +22,10 @@ class ProductImageDataHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
-    protected const URL_SMALL = 'small';
-    protected const URL_LARGE = 'large';
-    protected const NAME = 'set';
-    protected const SORT_ORDER = 1;
+    public const URL_SMALL = 'small';
+    public const URL_LARGE = 'large';
+    public const NAME = 'set';
+    public const SORT_ORDER = 1;
 
     /**
      * @param array $productImageSetOverride
