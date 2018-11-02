@@ -43,7 +43,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  - TODO
+     *  - Publish merchant relationship prices for product abstracts.
+     *  - Uses the given company business unit IDs.
      *
      * @api
      *
@@ -55,7 +56,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  - TODO
+     *  - Un-publish merchant relationship prices for product abstracts.
+     *  - Uses the given company business unit IDs.
      *
      * @api
      *
@@ -67,7 +69,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  - TODO
+     *  - Publish merchant relationship prices for product concretes.
+     *  - Uses the given company business unit IDs.
      *
      * @api
      *
@@ -79,7 +82,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  - TODO
+     *  - Un-publish merchant relationship prices for product concretes.
+     *  - Uses the given company business unit IDs.
      *
      * @api
      *
@@ -91,7 +95,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  - TODO
+     *  - Publish merchant relationship prices for product abstracts.
+     *  - Uses the given IDs of the parent table.
      *
      * @api
      *
@@ -103,7 +108,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  - TODO
+     *  - Un-publish merchant relationship prices for product abstracts.
+     *  - Uses the given IDs of the parent table.
      *
      * @api
      *
@@ -115,7 +121,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  - TODO
+     *  - Publish merchant relationship prices for product concretes.
+     *  - Uses the given IDs of the parent table.
      *
      * @api
      *
@@ -127,7 +134,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  - TODO
+     *  - Un-publish merchant relationship prices for product concretes.
+     *  - Uses the given IDs of the parent table.
      *
      * @api
      *
