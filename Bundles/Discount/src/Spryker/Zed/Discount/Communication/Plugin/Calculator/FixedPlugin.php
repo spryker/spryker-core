@@ -20,6 +20,8 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface, DiscountCalculatorPluginWithAmountInputTypeInterface
 {
+    protected const REGEX_NUMBER_PATTERN = '/[0-9\.\,]+/';
+
     /**
      * @api
      *
@@ -91,7 +93,7 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     {
         return [
             new Regex([
-                'pattern' => '/[0-9\.\,]+/',
+                'pattern' => static::REGEX_NUMBER_PATTERN,
                 'groups' => DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE,
             ]),
         ];
