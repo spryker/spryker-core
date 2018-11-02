@@ -14,7 +14,7 @@ use Spryker\Shared\Kernel\Store;
 
 class StorageDependencyProvider extends AbstractDependencyProvider
 {
-    const STORE = 'store';
+    public const STORE = 'store';
     public const STORAGE_CLIENT = 'storage client';
 
     /**

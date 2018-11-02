@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageClientTest extends Unit
 {
-    const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE;
+    public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE;
 
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
@@ -56,14 +56,14 @@ class StorageClientTest extends Unit
 
         $this->storageClientMock->persistCacheForRequest(
             $request,
-            self::STORAGE_CACHE_STRATEGY
+            static::STORAGE_CACHE_STRATEGY
         );
     }
 
     /**
      * @return string
      */
-    protected function getStoreAndLocale()
+    protected function getStoreAndLocale(): string
     {
         return strtolower(Store::getInstance()->getStoreName()) . '.' .
             strtolower(Store::getInstance()->getCurrentLocale()) . '.';
@@ -72,7 +72,7 @@ class StorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateCacheKeyWithNoGetParameter()
+    public function testGenerateCacheKeyWithNoGetParameter(): void
     {
         $this->markTestSkipped(
             'This test will be updated in the next major.'
@@ -87,7 +87,7 @@ class StorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateCacheKeyWithOneAllowedGetParameterAndOneIsGiven()
+    public function testGenerateCacheKeyWithOneAllowedGetParameterAndOneIsGiven(): void
     {
         $this->markTestSkipped(
             'This test will be updated in the next major.'
@@ -107,7 +107,7 @@ class StorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateCacheKeyWithTwoAllowedGetParameterAndOneIsGiven()
+    public function testGenerateCacheKeyWithTwoAllowedGetParameterAndOneIsGiven(): void
     {
         $this->markTestSkipped(
             'This test will be updated in the next major.'
@@ -127,7 +127,7 @@ class StorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateCacheKeyWithOneAllowedGetParameterAndTwoAreGiven()
+    public function testGenerateCacheKeyWithOneAllowedGetParameterAndTwoAreGiven(): void
     {
         $this->markTestSkipped(
             'This test will be updated in the next major.'
@@ -167,7 +167,7 @@ class StorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateCacheKeyWithTwoAllowedGetParameterAndTwoNotOrderedAreGiven()
+    public function testGenerateCacheKeyWithTwoAllowedGetParameterAndTwoNotOrderedAreGiven(): void
     {
         $this->markTestSkipped(
             'This test will be updated in the next major.'

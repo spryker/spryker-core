@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageClient extends AbstractClient implements StorageClientInterface
 {
-    const KEY_NAME_PREFIX = 'storage';
-    const KEY_NAME_SEPARATOR = '.';
+    public const KEY_NAME_PREFIX = 'storage';
+    public const KEY_NAME_SEPARATOR = '.';
     public const KEY_USED = 'used';
     public const KEY_NEW = 'new';
     public const KEY_INIT = 'init';
@@ -421,7 +421,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             }
 
             if ($updateCache) {
-                $ttl = (new static)->getFactory()
+                $ttl = (new static())->getFactory()
                     ->getStorageClientConfig()
                     ->getStorageCacheTtl();
 
@@ -464,7 +464,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @return string
      */
-    protected static function generateGetParametersKey(array $getParameters)
+    protected static function generateGetParametersKey(array $getParameters): string
     {
         $allowedGetParametersConfig = static::getAllowedGetParametersConfig();
         if (count($allowedGetParametersConfig) === 0) {
@@ -486,7 +486,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @return string
      */
-    protected static function assembleCacheKey($urlSegments, $getParametersKey)
+    protected static function assembleCacheKey($urlSegments, $getParametersKey): string
     {
         $cacheKey = strtolower(
             static::getStoreName() . self::KEY_NAME_SEPARATOR .
@@ -501,7 +501,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @return string[]
      */
-    protected static function getAllowedGetParametersConfig()
+    protected static function getAllowedGetParametersConfig(): array
     {
         return (new static())->getFactory()
             ->getStorageClientConfig()
@@ -511,7 +511,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @return string
      */
-    protected static function getStoreName()
+    protected static function getStoreName(): string
     {
         return (new static())->getFactory()
             ->getStore()
@@ -521,7 +521,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @return string
      */
-    protected static function getCurrentLocale()
+    protected static function getCurrentLocale(): string
     {
         return (new static())->getFactory()
             ->getStore()
@@ -534,7 +534,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @return void
      */
-    protected function updateCache($storageCacheStrategyName, $cacheKey)
+    protected function updateCache($storageCacheStrategyName, $cacheKey): void
     {
         $this->getFactory()
             ->createStorageCacheStrategy($storageCacheStrategyName)

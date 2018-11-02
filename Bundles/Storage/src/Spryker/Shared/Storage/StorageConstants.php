@@ -25,8 +25,6 @@ interface StorageConstants
     public const STORAGE_CACHE_STRATEGY_INCREMENTAL = 'STORAGE_CACHE_STRATEGY_INCREMENTAL';
     public const STORAGE_CACHE_STRATEGY_INACTIVE = 'STORAGE_CACHE_STRATEGY_INACTIVE';
 
-    const STORAGE_CACHE_ALLOWED_GET_PARAMETERS = 'STORAGE_CACHE_ALLOWED_GET_PARAMETERS';
-
     /**
      * Specification:
      * - Defines a custom configuration for \Predis\Client.
