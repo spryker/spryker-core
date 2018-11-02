@@ -421,7 +421,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             }
 
             if ($updateCache) {
-                $ttl = (new static())->getFactory()
+                $ttl = self::getFactory()
                     ->getStorageClientConfig()
                     ->getStorageCacheTtl();
 
