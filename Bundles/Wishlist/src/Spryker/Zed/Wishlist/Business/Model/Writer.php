@@ -26,8 +26,10 @@ class Writer implements WriterInterface
 
     public const DEFAULT_NAME = 'default';
 
-    protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'A wishlist with the same name already exists.';
-    protected const ERROR_MESSAGE_NAME_SHOULD_HAVE_ALPHANUMERIC_CHARS_ONLY = 'A wishlist name should consist of letters or digits.';
+    protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'wishlist.validation.error.name.already_exists';
+    protected const ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT = 'wishlist.validation.error.name.wrong_format';
+
+    protected const WISH_LIST_NAME_VALIDATION_REGEX = '/^[ A-Za-z0-9_-]+$/';
 
     /**
      * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
@@ -112,10 +114,10 @@ class Writer implements WriterInterface
                 ->addError(static::ERROR_MESSAGE_NAME_ALREADY_EXISTS);
         }
 
-        if (!$this->hasOnlyAlphanumericCharacters($wishlistTransfer)) {
+        if (!$this->isWishListNameValid($wishlistTransfer)) {
             return $wishlistResponseTransfer
                 ->setIsSuccess(false)
-                ->addError(static::ERROR_MESSAGE_NAME_SHOULD_HAVE_ALPHANUMERIC_CHARS_ONLY);
+                ->addError(static::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT);
         }
 
         return $wishlistResponseTransfer
@@ -168,10 +170,10 @@ class Writer implements WriterInterface
                 ->addError(static::ERROR_MESSAGE_NAME_ALREADY_EXISTS);
         }
 
-        if (!$this->hasOnlyAlphanumericCharacters($wishlistTransfer)) {
+        if (!$this->isWishListNameValid($wishlistTransfer)) {
             return $wishlistResponseTransfer
                 ->setIsSuccess(false)
-                ->addError(static::ERROR_MESSAGE_NAME_SHOULD_HAVE_ALPHANUMERIC_CHARS_ONLY);
+                ->addError(static::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT);
         }
 
         return $wishlistResponseTransfer
@@ -504,11 +506,11 @@ class Writer implements WriterInterface
      *
      * @return bool
      */
-    protected function hasOnlyAlphanumericCharacters(WishlistTransfer $wishlistTransfer): bool
+    protected function isWishListNameValid(WishlistTransfer $wishlistTransfer): bool
     {
         $wishlistTransfer->requireName();
 
-        return ctype_alnum($wishlistTransfer->getName());
+        return preg_match(static::WISH_LIST_NAME_VALIDATION_REGEX, $wishlistTransfer->getName());
     }
 
     /**

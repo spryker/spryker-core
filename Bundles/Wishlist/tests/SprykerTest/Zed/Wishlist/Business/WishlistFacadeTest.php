@@ -409,14 +409,14 @@ class WishlistFacadeTest extends Unit
             true
         );
 
-        $wishlistTransfer->setName('NewWishlist');
+        $wishlistTransfer->setName('new name');
 
         $wishlistTransferResponseTransfer = $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
 
         $this->assertTrue($wishlistTransferResponseTransfer->getIsSuccess());
 
         $wishlistTransfer = $wishlistTransferResponseTransfer->getWishlist();
-        $this->assertEquals('NewWishlist', $wishlistTransfer->getName());
+        $this->assertEquals('new name', $wishlistTransfer->getName());
         $this->assertEquals($this->wishlist->getIdWishlist(), $wishlistTransfer->getIdWishlist());
         $this->assertWishlistItemCount(2, $wishlistTransfer->getIdWishlist());
     }
