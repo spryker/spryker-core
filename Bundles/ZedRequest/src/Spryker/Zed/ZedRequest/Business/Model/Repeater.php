@@ -116,7 +116,7 @@ class Repeater implements RepeaterInterface
             return [];
         }
 
-        return unserialize($content);
+        return unserialize($content, ['allowed_classes' => false]);
     }
 
     /**
