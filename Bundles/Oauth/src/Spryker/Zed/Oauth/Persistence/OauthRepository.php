@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
+use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -42,5 +43,34 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
             ->filterByIdentifier($identifier);
 
         return $this->buildQueryFromCriteria($query)->findOne();
+    }
+
+    /**
+     * @param string[] $customerScopes
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     */
+    public function getScopesByIdentifiers(array $customerScopes): array
+    {
+        $spyOauthScopeEntities = $this->getFactory()
+            ->createScopeQuery()
+            ->filterByIdentifier_In($customerScopes)
+            ->find();
+
+        $oauthScopeTransfers = [];
+
+        if ($spyOauthScopeEntities->count() === 0) {
+            return $oauthScopeTransfers;
+        }
+
+        foreach ($spyOauthScopeEntities as $spyOauthScopeEntity) {
+            $oauthScopeTransfer = new OauthScopeTransfer();
+            $oauthScopeTransfers[] = $oauthScopeTransfer->fromArray(
+                $spyOauthScopeEntity->toArray(),
+                true
+            );
+        }
+
+        return $oauthScopeTransfers;
     }
 }
