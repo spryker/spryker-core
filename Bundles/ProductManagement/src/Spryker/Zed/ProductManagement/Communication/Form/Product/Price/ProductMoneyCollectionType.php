@@ -205,14 +205,14 @@ class ProductMoneyCollectionType extends AbstractCollectionType
 
         if (!$priceProductTransfer->getIdPriceProduct()
             || (!$moneyValueTransfer->getGrossAmount() && !$moneyValueTransfer->getNetAmount())) {
-            return false;
+            return true;
         }
 
         if ($priceProductTransfer->getPriceTypeName() !== $this->getFactory()->getConfig()->getPriceTypeDefault()) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
