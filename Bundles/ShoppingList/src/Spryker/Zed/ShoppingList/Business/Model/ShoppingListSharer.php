@@ -286,9 +286,8 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     {
         $idCompanyBusinessUnit = $shoppingListShareRequestTransfer->getIdCompanyBusinessUnit();
 
-        $isCompanyBusinessUnitSharedWithShoppingLists = $this->shoppingListRepository->isCompanyBusinessUnitSharedWithShoppingLists(
-            $idCompanyBusinessUnit
-        );
+        $isCompanyBusinessUnitSharedWithShoppingLists = $this->shoppingListRepository
+            ->isCompanyBusinessUnitSharedWithShoppingLists($idCompanyBusinessUnit);
 
         if (!$isCompanyBusinessUnitSharedWithShoppingLists) {
             return (new ShoppingListShareResponseTransfer())->setIsSuccess(false);
@@ -299,6 +298,20 @@ class ShoppingListSharer implements ShoppingListSharerInterface
                 return $this->executeRemoveShoppingListCompanyBusinessUnitTransaction($idCompanyBusinessUnit);
             }
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function unShareCompanyUserShoppingLists(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    {
+        $idCompanyUser = $shoppingListShareRequestTransfer->getIdCompanyUser();
+
+        $this->shoppingListEntityManager->deleteShoppingListsCompanyUserByCompanyUserId($idCompanyUser);
+
+        return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
     }
 
     /**
