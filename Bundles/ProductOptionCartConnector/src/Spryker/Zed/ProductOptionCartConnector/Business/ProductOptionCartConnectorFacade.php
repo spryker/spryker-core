@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -25,7 +26,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandProductOptions(CartChangeTransfer $changeTransfer)
+    public function expandProductOptions(CartChangeTransfer $changeTransfer): CartChangeTransfer
     {
         return $this->getFactory()
             ->createProductOptionValueExpander()
@@ -41,7 +42,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandGroupKey(CartChangeTransfer $changeTransfer)
+    public function expandGroupKey(CartChangeTransfer $changeTransfer): CartChangeTransfer
     {
         return $this->getFactory()
             ->createGroupKeyExpander()
@@ -57,7 +58,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeProductOptionInCartQuantity(QuoteTransfer $quoteTransfer)
+    public function changeProductOptionInCartQuantity(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
             ->createProductOptionCartQuantity()
@@ -73,7 +74,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateProductOptionValuePrices(CartChangeTransfer $cartChangeTransfer)
+    public function validateProductOptionValuePrices(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFactory()
             ->createProductOptionValuePriceValidator()
@@ -90,7 +91,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkProductOptionExists(CartChangeTransfer $cartChangeTransfer)
+    public function checkProductOptionExists(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFactory()
             ->createProductOptionExistsPreCheck()

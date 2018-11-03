@@ -63,7 +63,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
      */
-    public function findProductOptionByIdProductOptionValue($idProductOptionValue)
+    public function findProductOptionByIdProductOptionValue(int $idProductOptionValue): ?ProductOptionTransfer
     {
         $productOptionValueEntity = $this->getOptionValueById($idProductOptionValue);
 
@@ -95,7 +95,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      *
      * @return bool
      */
-    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue)
+    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue): bool
     {
         $persistedIdProductOptionValue = $this->productOptionQueryContainer
             ->queryProductOptionByValueId($idProductOptionValue)

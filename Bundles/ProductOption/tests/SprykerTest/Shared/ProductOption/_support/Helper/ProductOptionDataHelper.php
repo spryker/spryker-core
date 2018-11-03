@@ -9,6 +9,8 @@ namespace SprykerTest\Shared\ProductOption\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductOptionGroupBuilder;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -22,7 +24,7 @@ class ProductOptionDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
-    public function haveProductOption(array $productOptionGroupOverride = [])
+    public function haveProductOption(array $productOptionGroupOverride = []): ProductOptionGroupTransfer
     {
         $productOptionGroupTransfer = (new ProductOptionGroupBuilder($productOptionGroupOverride))
             ->withProductOptionValue()
@@ -41,7 +43,7 @@ class ProductOptionDataHelper extends Module
     /**
      * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface
      */
-    private function getProductOptionFacade()
+    protected function getProductOptionFacade(): ProductOptionFacadeInterface
     {
         return $this->getLocator()->productOption()->facade();
     }

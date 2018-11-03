@@ -28,5 +28,5 @@ interface ProductOptionCartConnectorToProductOptionFacadeInterface
      *
      * @return bool
      */
-    public function existsProductOptionValueByIdProductOptionValue($idProductOptionValue);
+    public function existsProductOptionValueByIdProductOptionValue($idProductOptionValue): bool;
 }

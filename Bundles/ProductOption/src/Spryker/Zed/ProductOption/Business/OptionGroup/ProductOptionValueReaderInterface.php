@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 
 interface ProductOptionValueReaderInterface
 {
@@ -17,14 +18,14 @@ interface ProductOptionValueReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
      */
-    public function findProductOptionByIdProductOptionValue($idProductOptionValue);
+    public function findProductOptionByIdProductOptionValue(int $idProductOptionValue): ?ProductOptionTransfer;
 
     /**
      * @param int $idProductOptionValue
      *
      * @return bool
      */
-    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue);
+    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue): bool;
 
     /**
      * @param int $idProductOptionValue

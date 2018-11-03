@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -240,7 +241,6 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     *
      * - Finds product option value in persistence by id.
      *
      * @api
@@ -249,7 +249,7 @@ interface ProductOptionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
      */
-    public function findProductOptionByIdProductOptionValue($idProductOptionValue);
+    public function findProductOptionByIdProductOptionValue(int $idProductOptionValue): ?ProductOptionTransfer;
 
     /**
      * Specification:
@@ -261,5 +261,5 @@ interface ProductOptionFacadeInterface
      *
      * @return bool
      */
-    public function existsProductOptionValueByIdProductOptionValue($idProductOptionValue);
+    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue): bool;
 }

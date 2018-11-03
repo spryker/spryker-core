@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -276,7 +277,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
      */
-    public function findProductOptionByIdProductOptionValue($idProductOptionValue)
+    public function findProductOptionByIdProductOptionValue(int $idProductOptionValue): ?ProductOptionTransfer
     {
         return $this->getFactory()
             ->createProductOptionValueReader()
@@ -292,7 +293,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @return bool
      */
-    public function existsProductOptionValueByIdProductOptionValue($idProductOptionValue)
+    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue): bool
     {
         return $this->getFactory()
             ->createProductOptionValueReader()
