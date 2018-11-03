@@ -27,8 +27,12 @@ class AddDiscountPromotionPersistentCartRequestExpanderPlugin implements Persist
      */
     public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
-        $idDiscountPromotion = $params[static::URL_PARAM_ID_DISCOUNT_PROMOTION] ?? null;
-        if ($idDiscountPromotion) {
+        $idDiscountPromotion = null;
+        if (isset($params[static::URL_PARAM_ID_DISCOUNT_PROMOTION])) {
+            $idDiscountPromotion = (int)$params[static::URL_PARAM_ID_DISCOUNT_PROMOTION];
+        }
+
+        if ($idDiscountPromotion !== null) {
             foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
                 $itemTransfer->setIdDiscountPromotion($idDiscountPromotion);
             }
