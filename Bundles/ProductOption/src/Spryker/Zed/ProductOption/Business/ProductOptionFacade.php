@@ -266,4 +266,36 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
             ->createProductOptionValueReader()
             ->getProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
+     */
+    public function findProductOptionByIdProductOptionValue($idProductOptionValue)
+    {
+        return $this->getFactory()
+            ->createProductOptionValueReader()
+            ->findProductOptionByIdProductOptionValue($idProductOptionValue);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function existsProductOptionValueByIdProductOptionValue($idProductOptionValue)
+    {
+        return $this->getFactory()
+            ->createProductOptionValueReader()
+            ->existsProductOptionValueByIdProductOptionValue($idProductOptionValue);
+    }
 }

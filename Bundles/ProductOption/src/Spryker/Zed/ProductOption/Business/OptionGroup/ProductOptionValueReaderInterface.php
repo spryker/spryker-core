@@ -15,6 +15,20 @@ interface ProductOptionValueReaderInterface
     /**
      * @param int $idProductOptionValue
      *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
+     */
+    public function findProductOptionByIdProductOptionValue($idProductOptionValue);
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue);
+
+    /**
+     * @param int $idProductOptionValue
+     *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionNotFoundException
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
