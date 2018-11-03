@@ -176,7 +176,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $utilEncodingService = $this->getFactory()->getUtilEncoding();
         $priceData = $utilEncodingService->decodeJson($moneyValueTransfer->getPriceData());
 
-        if ($this->isVolumePriceNotApplicable($productMoneyTypeFormView)) {
+        if (!$this->isVolumePriceNotApplicable($productMoneyTypeFormView)) {
             return $volumePrices;
         }
 
