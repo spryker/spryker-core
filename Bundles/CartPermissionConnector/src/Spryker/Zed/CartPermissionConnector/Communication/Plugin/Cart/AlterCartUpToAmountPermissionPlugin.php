@@ -32,6 +32,7 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
 
     /**
      * {@inheritdoc}
+     * - Terminates add/reload product to the cart process if customer logged in and has no permissions to add items to the cart
      *
      * @api
      *
@@ -56,6 +57,7 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
 
     /**
      * {@inheritdoc}
+     * - Checks cent amount field according to the plugin configuration and the passed context
      *
      * @api
      *
@@ -83,6 +85,7 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
 
     /**
      * {@inheritdoc}
+     * - Provides plugin configuration for cent amount field
      *
      * @api
      *
@@ -97,6 +100,7 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
 
     /**
      * {@inheritdoc}
+     * - Defines a permission plugin key
      *
      * @api
      *
