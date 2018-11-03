@@ -20,6 +20,8 @@ class DeleteSetController extends AbstractController
     protected const PARAM_REQUEST_ID_TAX_SET = 'id-tax-set';
     protected const PARAM_TEMPLATE_ID_TAX_SET = 'idTaxSet';
 
+    protected const MESSAGE_SUCCESS_DELETE_TAX_SET = 'The tax set has been deleted';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -45,7 +47,7 @@ class DeleteSetController extends AbstractController
 
         try {
             $this->getFacade()->deleteTaxSet($idTaxSet);
-            $this->addSuccessMessage(sprintf('Tax set %d was deleted successfully.', $idTaxSet));
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS_DELETE_TAX_SET);
         } catch (PropelException $e) {
             $this->addErrorMessage('Could not delete tax set. Is it assigned to product or shipping method?');
         }
