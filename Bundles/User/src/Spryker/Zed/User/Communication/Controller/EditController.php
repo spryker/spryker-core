@@ -40,6 +40,8 @@ class EditController extends AbstractController
     public const MESSAGE_USER_DELETE_ERROR = 'User was not deleted.';
     public const MESSAGE_ID_USER_EXTRACT_ERROR = 'Missing user id!';
 
+    protected const MESSAGE_USER_NOT_FOUND = "User couldn't be found";
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -99,10 +101,17 @@ class EditController extends AbstractController
         }
 
         $dataProvider = $this->getFactory()->createUserUpdateFormDataProvider();
+        $providerData = $dataProvider->getData($idUser);
+
+        if ($providerData === null) {
+            $this->addErrorMessage(static::MESSAGE_USER_NOT_FOUND);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
 
         $userForm = $this->getFactory()
             ->createUpdateUserForm(
-                $dataProvider->getData($idUser),
+                $providerData,
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
