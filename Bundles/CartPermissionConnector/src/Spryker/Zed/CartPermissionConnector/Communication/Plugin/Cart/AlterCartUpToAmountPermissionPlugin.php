@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartPermissionConnector\Communication\Plugin;
+namespace Spryker\Zed\CartPermissionConnector\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -15,8 +15,6 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Due to conflict with customer access module. Use \Spryker\Zed\CartPermissionConnector\Communication\Plugin\Cart\AlterCartUpToAmountPermissionPlugin instead.
- *
  * For Zed PermissionDependencyProvider::getPermissionPlugins() and
  * CartDependencyProvider::getTerminationPlugins() registration
  *
@@ -33,6 +31,9 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     ];
 
     /**
+     * {@inheritdoc}
+     * - Terminates add/reload product to the cart process if customer logged in and has no permissions to add items to the cart.
+     *
      * @api
      *
      * @param string $terminationEventName
@@ -55,6 +56,9 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     }
 
     /**
+     * {@inheritdoc}
+     * - Checks cent amount field according to the plugin configuration and the passed context.
+     *
      * @api
      *
      * @param array $configuration
@@ -80,6 +84,9 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     }
 
     /**
+     * {@inheritdoc}
+     * - Provides plugin configuration for cent amount field.
+     *
      * @api
      *
      * @return array
@@ -92,6 +99,9 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     }
 
     /**
+     * {@inheritdoc}
+     * - Defines a permission plugin key.
+     *
      * @api
      *
      * @return string
@@ -106,7 +116,7 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
      *
      * @return bool
      */
-    protected function isSubscribedToTerminationEventName(string $terminationEventName)
+    protected function isSubscribedToTerminationEventName(string $terminationEventName): bool
     {
         return in_array($terminationEventName, static::SUBSCRIBED_TERMINATION_NAMES);
     }
@@ -116,12 +126,12 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
      *
      * @return bool
      */
-    protected function hasRequiredFields(CartChangeTransfer $cartChangeTransfer)
+    protected function hasRequiredFields(CartChangeTransfer $cartChangeTransfer): bool
     {
         $customerTransfer = $cartChangeTransfer->getQuote()->getCustomer();
 
         if (!$customerTransfer) {
-            return false;
+            return true;
         }
 
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
@@ -139,11 +149,14 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
      *
      * @return bool
      */
-    protected function isTerminatedByPermission(CartChangeTransfer $companyUserTransfer, QuoteTransfer $quoteTransfer)
+    protected function isTerminatedByPermission(CartChangeTransfer $companyUserTransfer, QuoteTransfer $quoteTransfer): bool
     {
-        $identifier = $companyUserTransfer
-            ->getQuote()
-            ->getCustomer()
+        $customerTransfer = $companyUserTransfer->getQuote()->getCustomer();
+        if (!$customerTransfer) {
+            return false;
+        }
+
+        $identifier = $customerTransfer
             ->getCompanyUserTransfer()
             ->getIdCompanyUser();
 
