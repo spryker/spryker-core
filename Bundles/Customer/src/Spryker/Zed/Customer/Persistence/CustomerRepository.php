@@ -134,25 +134,23 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param int $idCustomerAddress
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findCustomerAddressById(AddressTransfer $addressTransfer): ?AddressTransfer
+    public function findCustomerAddressById(int $idCustomerAddress): ?AddressTransfer
     {
-        $addressTransfer->requireIdCustomerAddress();
-
         $customerAddressEntity = $this->getFactory()
             ->createSpyCustomerAddressQuery()
-            ->filterByIdCustomerAddress($addressTransfer->getIdCustomerAddress())
+            ->filterByIdCustomerAddress($idCustomerAddress)
             ->findOne();
 
-        if ($customerAddressEntity !== null) {
-            return $this->getFactory()
-                ->createCustomerMapper()
-                ->mapCustomerAddressEntityToTransfer($customerAddressEntity);
+        if ($customerAddressEntity === null) {
+            return null;
         }
 
-        return null;
+        return $this->getFactory()
+            ->createCustomerMapper()
+            ->mapCustomerAddressEntityToTransfer($customerAddressEntity);
     }
 }

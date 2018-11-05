@@ -190,17 +190,13 @@ class Address implements AddressInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param int $idCustomerAddress
      *
      * @return bool
      */
-    public function checkAddressExistsByIdCustomerAddress(AddressTransfer $addressTransfer): bool
+    public function checkAddressExistsByIdCustomerAddress(int $idCustomerAddress): bool
     {
-        if ($addressTransfer->getIdCustomerAddress() === null) {
-            return false;
-        }
-
-        return $this->customerRepository->findCustomerAddressById($addressTransfer) !== null;
+        return $this->customerRepository->findCustomerAddressById($idCustomerAddress) !== null;
     }
 
     /**

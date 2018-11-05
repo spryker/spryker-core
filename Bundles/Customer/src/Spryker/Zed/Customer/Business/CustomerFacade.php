@@ -315,15 +315,15 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param int $idCustomerAddress
      *
      * @return bool
      */
-    public function checkAddressExistsByIdCustomerAddress(AddressTransfer $addressTransfer): bool
+    public function checkAddressExistsByIdCustomerAddress(int $idCustomerAddress): bool
     {
         return $this->getFactory()
             ->createAddress()
-            ->checkAddressExistsByIdCustomerAddress($addressTransfer);
+            ->checkAddressExistsByIdCustomerAddress($idCustomerAddress);
     }
 
     /**

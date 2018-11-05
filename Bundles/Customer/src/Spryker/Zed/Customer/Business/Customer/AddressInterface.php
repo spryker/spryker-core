@@ -41,11 +41,11 @@ interface AddressInterface
     public function updateAddress(AddressTransfer $addressTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param int $idCustomerAddress
      *
      * @return bool
      */
-    public function checkAddressExistsByIdCustomerAddress(AddressTransfer $addressTransfer): bool;
+    public function checkAddressExistsByIdCustomerAddress(int $idCustomerAddress): bool;
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
