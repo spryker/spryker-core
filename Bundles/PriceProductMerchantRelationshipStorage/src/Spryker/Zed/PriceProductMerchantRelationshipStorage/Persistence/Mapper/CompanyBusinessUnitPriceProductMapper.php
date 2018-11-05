@@ -9,22 +9,10 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Mapper
 
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipValueTransfer;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Generator\PriceKeyGeneratorInterface;
 
 class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceProductMapperInterface
 {
-    /**
-     * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Generator\PriceKeyGeneratorInterface
-     */
-    protected $priceKeyGenerator;
-
-    /**
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Generator\PriceKeyGeneratorInterface $priceKeyGenerator
-     */
-    public function __construct(PriceKeyGeneratorInterface $priceKeyGenerator)
-    {
-        $this->priceKeyGenerator = $priceKeyGenerator;
-    }
+    protected const PRICE_KEY_SEPARATOR = ':';
 
     /**
      * @param array $priceProductMerchantRelationships
@@ -37,7 +25,10 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
         foreach ($priceProductMerchantRelationships as $priceProductMerchantRelationship) {
             $uniquePriceIndex = $this->createUniquePriceIndex($priceProductMerchantRelationship);
             if (!isset($pricesByKey[$uniquePriceIndex])) {
-                $pricesByKey[$uniquePriceIndex] = $this->createPriceProductMerchantRelationshipStorageTransfer($priceProductMerchantRelationship, $uniquePriceIndex);
+                $pricesByKey[$uniquePriceIndex] = $this->createPriceProductMerchantRelationshipStorageTransfer(
+                    $priceProductMerchantRelationship,
+                    $uniquePriceIndex
+                );
             }
 
             $this->addUngroupedPrice($pricesByKey[$uniquePriceIndex], $priceProductMerchantRelationship);
@@ -69,12 +60,11 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
      */
     protected function createUniquePriceIndex(array $priceProductMerchantRelationship): string
     {
-        return $this->priceKeyGenerator
-            ->buildPriceKey(
-                $priceProductMerchantRelationship[PriceProductMerchantRelationshipStorageTransfer::STORE_NAME],
-                $priceProductMerchantRelationship[PriceProductMerchantRelationshipStorageTransfer::ID_PRODUCT],
-                $priceProductMerchantRelationship[PriceProductMerchantRelationshipStorageTransfer::ID_COMPANY_BUSINESS_UNIT]
-            );
+        return implode(static::PRICE_KEY_SEPARATOR, [
+            $priceProductMerchantRelationship[PriceProductMerchantRelationshipStorageTransfer::STORE_NAME],
+            $priceProductMerchantRelationship[PriceProductMerchantRelationshipStorageTransfer::ID_PRODUCT],
+            $priceProductMerchantRelationship[PriceProductMerchantRelationshipStorageTransfer::ID_COMPANY_BUSINESS_UNIT],
+        ]);
     }
 
     /**

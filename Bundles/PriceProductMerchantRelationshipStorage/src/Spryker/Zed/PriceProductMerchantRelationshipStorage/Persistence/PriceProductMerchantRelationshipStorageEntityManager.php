@@ -138,20 +138,4 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
             'prices' => $priceProductMerchantRelationshipStorageTransfer->getPrices(),
         ];
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
-     *
-     * @return string
-     */
-    protected function buildPriceKey(PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer): string
-    {
-        return $this->getFactory()
-            ->createPriceKeyGenerator()
-            ->buildPriceKey(
-                $priceProductMerchantRelationshipStorageTransfer->getStoreName(),
-                $priceProductMerchantRelationshipStorageTransfer->getIdProduct(),
-                $priceProductMerchantRelationshipStorageTransfer->getIdCompanyBusinessUnit()
-            );
-    }
 }

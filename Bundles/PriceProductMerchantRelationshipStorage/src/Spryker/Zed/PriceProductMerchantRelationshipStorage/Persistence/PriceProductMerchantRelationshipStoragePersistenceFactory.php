@@ -13,8 +13,6 @@ use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchant
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorageQuery;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Generator\PriceKeyGenerator;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Generator\PriceKeyGeneratorInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Mapper\CompanyBusinessUnitPriceProductMapper;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Mapper\CompanyBusinessUnitPriceProductMapperInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageDependencyProvider;
@@ -29,17 +27,7 @@ class PriceProductMerchantRelationshipStoragePersistenceFactory extends Abstract
      */
     public function createCompanyBusinessUnitPriceProductMapper(): CompanyBusinessUnitPriceProductMapperInterface
     {
-        return new CompanyBusinessUnitPriceProductMapper(
-            $this->createPriceKeyGenerator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Generator\PriceKeyGeneratorInterface
-     */
-    public function createPriceKeyGenerator(): PriceKeyGeneratorInterface
-    {
-        return new PriceKeyGenerator();
+        return new CompanyBusinessUnitPriceProductMapper();
     }
 
     /**
