@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,6 +72,8 @@ class AddController extends AbstractController
 
                 return $this->createRedirectResponseAfterAdd($idProductAbstract, $request);
             } catch (CategoryUrlExistsException $exception) {
+                $this->addErrorMessage($exception->getMessage());
+            } catch (ProductAbstractExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
         }
