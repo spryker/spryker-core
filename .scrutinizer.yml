@@ -8,12 +8,6 @@ build:
                 override:
                     - php-scrutinizer-run
 
-  nodes:
-    analysis:
-      tests:
-        override:
-          - php-scrutinizer-run
-
 filter:
     excluded_paths:
         - Bundles/Propel/src/Spryker/Zed/Propel/Business/Builder/*
