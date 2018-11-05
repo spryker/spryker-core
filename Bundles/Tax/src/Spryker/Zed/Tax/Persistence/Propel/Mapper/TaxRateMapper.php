@@ -25,6 +25,9 @@ class TaxRateMapper implements TaxRateMapperInterface
     ): TaxRateTransfer {
         $taxRateTransfer = $taxRateTransfer->fromArray($taxRateEntity->toArray(), true);
 
+        /**
+         * @var \Orm\Zed\Country\Persistence\SpyCountry|null
+         */
         $countryEntity = $taxRateEntity->getCountry();
 
         if ($countryEntity === null) {
