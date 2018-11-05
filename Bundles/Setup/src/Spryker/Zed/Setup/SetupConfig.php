@@ -87,7 +87,7 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
-     * Returns environment configuration path for cronjobs
+     * Returns the path to the environment configuration of cronjob functionality.
      *
      * @return string
      */
@@ -97,6 +97,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * Returns the path to the cronjobs definition, their config and schedule.
+     *
      * @return string
      */
     public function getCronjobsDefinitionFilePath(): string
