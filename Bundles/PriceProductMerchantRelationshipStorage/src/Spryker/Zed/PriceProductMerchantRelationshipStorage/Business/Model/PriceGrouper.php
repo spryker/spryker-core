@@ -21,7 +21,7 @@ class PriceGrouper implements PriceGrouperInterface
         foreach ($priceProductMerchantRelationshipStorageTransfers as $priceProductMerchantRelationshipStorageTransfer) {
             $groupedPrices = [];
             foreach ($priceProductMerchantRelationshipStorageTransfer->getUngroupedPrices() as $price) {
-                $groupedPrices[$price->getIdMerchantRelationship()][$price->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_DATA] = null;
+                $groupedPrices[$price->getIdMerchantRelationship()][$price->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_DATA] = $price->getPriceData();
 
                 if ($price->getGrossPrice()) {
                     $groupedPrices[$price->getIdMerchantRelationship()][$price->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_MODE_GROSS][$price->getPriceType()] = $price->getGrossPrice();

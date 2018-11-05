@@ -20,6 +20,7 @@
     <transfer name="PriceProductMerchantRelationshipValue">
         <property name="idMerchantRelationship" type="int" />
         <property name="priceType" type="string" />
+        <property name="priceData" type="string" />
         <property name="grossPrice" type="int" />
         <property name="netPrice" type="int" />
         <property name="currencyCode" type="string" />
