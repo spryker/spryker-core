@@ -204,7 +204,7 @@ class NonPersistentProvider implements StorageProviderInterface
         if ($itemTransfer->getQuantity() < 1) {
             throw new InvalidQuantityExeption(
                 sprintf(
-                    'Could not change the quantity cart item "%s" to "%d".',
+                    'Could not change the quantity of cart item "%s" to "%d".',
                     $itemTransfer->getSku(),
                     $itemTransfer->getQuantity()
                 )
