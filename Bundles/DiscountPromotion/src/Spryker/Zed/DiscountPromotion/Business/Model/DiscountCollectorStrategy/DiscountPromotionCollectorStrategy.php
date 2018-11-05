@@ -219,7 +219,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      */
     protected function isPromotionItem($promotionProductAbstractSku, ItemTransfer $itemTransfer, $idDiscountPromotion)
     {
-        return ($itemTransfer->getAbstractSku() === $promotionProductAbstractSku && $itemTransfer->getIdDiscountPromotion() === $idDiscountPromotion);
+        return ($itemTransfer->getAbstractSku() === $promotionProductAbstractSku && (int)$itemTransfer->getIdDiscountPromotion() === $idDiscountPromotion);
     }
 
     /**
@@ -294,7 +294,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             return;
         }
 
-        $storedUnusedCodes = (array)$quoteTransfer->getUsedNotAppliedVoucherCodes();
+        $storedUnusedCodes = $quoteTransfer->getUsedNotAppliedVoucherCodes();
         if (!in_array($discountTransfer->getVoucherCode(), $storedUnusedCodes)) {
             $quoteTransfer->addUsedNotAppliedVoucherCode($discountTransfer->getVoucherCode());
         }

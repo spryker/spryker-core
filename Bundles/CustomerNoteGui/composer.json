@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-note-gui",
+  "type": "library",
   "description": "CustomerNoteGui module",
   "license": "proprietary",
   "require": {

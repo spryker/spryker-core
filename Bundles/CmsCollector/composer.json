@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-collector",
+  "type": "library",
   "description": "CmsCollector module",
   "license": "proprietary",
   "require": {

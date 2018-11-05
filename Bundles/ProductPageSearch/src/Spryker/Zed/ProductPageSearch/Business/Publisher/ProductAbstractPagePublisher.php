@@ -63,7 +63,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         ProductPageSearchMapperInterface $productPageSearchMapper,
         ProductPageSearchWriterInterface $productPageSearchWriter
     ) {
-
         $this->queryContainer = $queryContainer;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
         $this->productPageDataLoaderPlugins = $productPageDataLoaderPlugins;

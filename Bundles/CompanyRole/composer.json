@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-role",
+  "type": "library",
   "description": "CompanyRole module",
   "license": "proprietary",
   "require": {
@@ -17,6 +18,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

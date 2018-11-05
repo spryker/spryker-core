@@ -34,4 +34,11 @@ interface WishlistsReaderInterface
      * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer|null
      */
     public function findWishlistOverviewByUuid(string $wishlistUuid): ?WishlistOverviewResponseTransfer;
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getWishlistsByCustomerReference(string $customerReference): array;
 }
