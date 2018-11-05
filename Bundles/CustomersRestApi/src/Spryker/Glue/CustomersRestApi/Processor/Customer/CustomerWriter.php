@@ -202,9 +202,12 @@ class CustomerWriter implements CustomerWriterInterface
 
         $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
         $customerTransfer->fromArray($passwordAttributesTransfer->toArray(), true);
-        $restResponse = $this->setResponseError($this->customerClient->updateCustomerPassword($customerTransfer), $restResponse);
+        $customerResponseTransfer = $this->customerClient->updateCustomerPassword($customerTransfer);
+        if (!$customerResponseTransfer->getErrors()->count()) {
+            return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
+        }
 
-        return $restResponse->getErrors() ? $restResponse : $restResponse->setStatus(Response::HTTP_NO_CONTENT);
+        return $this->addUpdatePasswordErrorsToResponse($customerResponseTransfer, $restResponse);
     }
 
     /**
@@ -213,7 +216,7 @@ class CustomerWriter implements CustomerWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function setResponseError(CustomerResponseTransfer $customerResponseTransfer, RestResponseInterface $restResponse)
+    protected function addUpdatePasswordErrorsToResponse(CustomerResponseTransfer $customerResponseTransfer, RestResponseInterface $restResponse)
     {
         foreach ($customerResponseTransfer->getErrors() as $error) {
             if ($error->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {

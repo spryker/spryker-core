@@ -97,11 +97,11 @@ class AddressWriter implements AddressWriterInterface
         $customerTransfer = $this->customerClient->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer);
         $addressesTransfer = $customerTransfer->getAddresses();
 
-        $lastAddedAddress = ($addressesTransfer->getAddresses())[$addressesTransfer->getAddresses()->count() - 1];
-
         if (!$addressesTransfer->getAddresses()->count()) {
             return $this->restApiError->addAddressNotSavedError($restResponse);
         }
+
+        $lastAddedAddress = ($addressesTransfer->getAddresses())[$addressesTransfer->getAddresses()->count() - 1];
 
         $restAddressAttributesTransfer = $this
             ->addressesResourceMapper
