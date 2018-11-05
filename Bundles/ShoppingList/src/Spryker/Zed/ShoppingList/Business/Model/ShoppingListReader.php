@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShoppingList\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
@@ -23,12 +24,17 @@ use Spryker\Shared\ShoppingList\ShoppingListConfig;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
 class ShoppingListReader implements ShoppingListReaderInterface
 {
     use PermissionAwareTrait;
+
+    protected const MESSAGE_SHOPPING_LIST_REMOVED = 'shopping_list.already_removed';
+
+    protected const MESSAGE_SHOPPING_LIST_NO_ACCESS = 'shopping_list.no_access';
 
     /**
      * @var \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface
@@ -51,21 +57,48 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected $pluginExecutor;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface
+     */
+    protected $messengerFacade;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface $customerFacade
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
+     * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
      */
     public function __construct(
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListToProductFacadeInterface $productFacade,
         ShoppingListToCompanyUserFacadeInterface $customerFacade,
-        ShoppingListItemPluginExecutorInterface $pluginExecutor
+        ShoppingListItemPluginExecutorInterface $pluginExecutor,
+        ShoppingListToMessengerFacadeInterface $messengerFacade
     ) {
         $this->shoppingListRepository = $shoppingListRepository;
         $this->productFacade = $productFacade;
         $this->companyUserFacade = $customerFacade;
         $this->pluginExecutor = $pluginExecutor;
+        $this->messengerFacade = $messengerFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer|null $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function getShoppingListOverviewErrorMessageTransfer(?ShoppingListTransfer $shoppingListTransfer): MessageTransfer
+    {
+        $messageTransfer = new MessageTransfer();
+        if ($shoppingListTransfer === null) {
+            $messageTransfer->setValue(static::MESSAGE_SHOPPING_LIST_REMOVED);
+
+            return $messageTransfer;
+        }
+
+        $messageTransfer->setValue(static::MESSAGE_SHOPPING_LIST_NO_ACCESS);
+
+        return $messageTransfer;
     }
 
     /**
@@ -77,7 +110,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
     {
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
 
-        if (!$shoppingListTransfer || !$this->checkReadPermission($shoppingListTransfer)) {
+        if ($shoppingListTransfer === null || !$this->checkReadPermission($shoppingListTransfer)) {
+            $messageTransfer = $this->getShoppingListOverviewErrorMessageTransfer($shoppingListTransfer);
+            $this->messengerFacade->addErrorMessage($messageTransfer);
+
             return new ShoppingListTransfer();
         }
 
@@ -118,6 +154,8 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListTransfer = $this->getShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
         if (!$shoppingListTransfer->getIdShoppingList()) {
+            $shoppingListOverviewResponseTransfer->setIsSuccess(false);
+
             return $shoppingListOverviewResponseTransfer;
         }
 
@@ -133,6 +171,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         $shoppingListOverviewResponseTransfer->setShoppingList($shoppingListTransfer);
         $shoppingListOverviewResponseTransfer->setShoppingLists($this->getCustomerShoppingListCollection($customerTransfer));
+        $shoppingListOverviewResponseTransfer->setIsSuccess(true);
 
         return $shoppingListOverviewResponseTransfer;
     }
