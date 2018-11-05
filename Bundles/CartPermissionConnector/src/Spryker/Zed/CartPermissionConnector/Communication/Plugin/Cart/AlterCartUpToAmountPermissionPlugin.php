@@ -73,7 +73,7 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
         }
 
         if (!isset($configuration[static::FIELD_CENT_AMOUNT])) {
-            return false;
+            return true;
         }
 
         if ($configuration[static::FIELD_CENT_AMOUNT] <= $centAmount) {
