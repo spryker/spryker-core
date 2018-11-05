@@ -4,29 +4,13 @@ checkout-data:
       - Collection:
           fields:
             billingAddress:
-              - Callback: [Spryker\Glue\CheckoutRestApi\Constraints\AddressValidator, validate]
+              - Optional
             shippingAddress:
-              - Callback: [Spryker\Glue\CheckoutRestApi\Constraints\AddressValidator, validate]
+              - Optional
             payments:
-              - All:
-                  constraints:
-                    - Collection:
-                        fields:
-                          paymentMethod:
-                            - NotBlank
-                          paymentProvider:
-                            - NotBlank
-                          paymentSelection:
-                            - NotBlank
-                          amount:
-                            - NotBlank
-                            - Type:
-                                type: numeric
+              - Optional
             shipment:
-              - Collection:
-                  fields:
-                    shipmentSelection:
-                      - NotBlank
+              - Optional
 checkout:
   post:
     quote:
