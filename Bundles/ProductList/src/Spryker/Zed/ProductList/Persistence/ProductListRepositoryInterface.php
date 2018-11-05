@@ -44,7 +44,7 @@ interface ProductListRepositoryInterface
      *
      * @return int[]
      */
-    public function getAbstractProductBlacklistIds(int $idProductAbstract): array;
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract
@@ -61,18 +61,34 @@ interface ProductListRepositoryInterface
     public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getConcreteProductBlacklistIds(int $idProductConcrete): array;
+    public function getConcreteProductBlacklistIds(int $idProduct): array;
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getConcreteProductWhitelistIds(int $idProductConcrete): array;
+    public function getConcreteProductWhitelistIds(int $idProduct): array;
+
+    /**
+     * @param string[] $productConcreteSkus
+     * @param int[] $blackListIds
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array;
+
+    /**
+     * @param string[] $productConcreteSkus
+     * @param int[] $whiteListIds
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array;
 
     /**
      * @param int[] $productIds

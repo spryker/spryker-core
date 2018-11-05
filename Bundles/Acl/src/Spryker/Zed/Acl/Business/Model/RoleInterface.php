@@ -68,6 +68,13 @@ interface RoleInterface
     public function getRoleById($id);
 
     /**
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer|null
+     */
+    public function findRoleById(int $id): ?RoleTransfer;
+
+    /**
      * @param int $idRole
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\RoleNotFoundException
