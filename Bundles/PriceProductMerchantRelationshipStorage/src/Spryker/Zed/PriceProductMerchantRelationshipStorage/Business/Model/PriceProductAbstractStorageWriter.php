@@ -137,12 +137,12 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         );
 
         foreach ($priceProductMerchantRelationshipStorageTransfers as $merchantRelationshipStorageTransfer) {
+            unset($existingPriceKeys[$merchantRelationshipStorageTransfer->getPriceKey()]);
             if (isset($existingPriceKeys[$merchantRelationshipStorageTransfer->getPriceKey()])) {
                 $this->priceProductMerchantRelationshipStorageEntityManager->updatePriceProductAbstract(
                     $merchantRelationshipStorageTransfer
                 );
 
-                unset($existingPriceKeys[$merchantRelationshipStorageTransfer->getPriceKey()]);
                 continue;
             }
 

@@ -137,12 +137,12 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
         );
 
         foreach ($priceProductMerchantRelationshipStorageTransfers as $merchantRelationshipStorageTransfer) {
+            unset($existingPriceKeys[$merchantRelationshipStorageTransfer->getPriceKey()]);
             if (isset($existingPriceKeys[$merchantRelationshipStorageTransfer->getPriceKey()])) {
                 $this->priceProductMerchantRelationshipStorageEntityManager->updatePriceProductConcrete(
                     $merchantRelationshipStorageTransfer
                 );
 
-                unset($existingPriceKeys[$merchantRelationshipStorageTransfer->getPriceKey()]);
                 continue;
             }
 
