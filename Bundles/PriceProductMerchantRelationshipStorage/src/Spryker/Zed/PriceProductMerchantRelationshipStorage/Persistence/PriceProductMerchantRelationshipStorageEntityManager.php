@@ -18,16 +18,16 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntityManager implements PriceProductMerchantRelationshipStorageEntityManagerInterface
 {
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage $priceProductAbstractMerchantRelationshipStorageEntity
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      *
      * @return void
      */
     public function updatePriceProductAbstract(
-        SpyPriceProductAbstractMerchantRelationshipStorage $priceProductAbstractMerchantRelationshipStorageEntity,
         PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
     ): void {
-        $priceProductAbstractMerchantRelationshipStorageEntity
+        $this->getFactory()
+            ->createPriceProductAbstractMerchantRelationshipStorageQuery()
+            ->findOneByPriceKey($priceProductMerchantRelationshipStorageTransfer->getPriceKey())
             ->setData($this->formatData($priceProductMerchantRelationshipStorageTransfer))
             ->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue())
             ->save();
@@ -51,16 +51,38 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage $priceProductConcreteMerchantRelationshipStorageEntity
+     * @param string[] $priceKeys
+     *
+     * @return void
+     */
+    public function deletePriceProductAbstractsByPriceKeys(
+        array $priceKeys
+    ): void {
+        if (empty($priceKeys)) {
+            return;
+        }
+
+        $priceProductAbstractMerchantRelationshipStorageEntities = $this->getFactory()
+            ->createPriceProductAbstractMerchantRelationshipStorageQuery()
+            ->filterByPriceKey_In($priceKeys)
+            ->find();
+
+        foreach ($priceProductAbstractMerchantRelationshipStorageEntities as $priceProductAbstractMerchantRelationshipStorageEntity) {
+            $priceProductAbstractMerchantRelationshipStorageEntity->delete();
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      *
      * @return void
      */
     public function updatePriceProductConcrete(
-        SpyPriceProductConcreteMerchantRelationshipStorage $priceProductConcreteMerchantRelationshipStorageEntity,
         PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
     ): void {
-        $priceProductConcreteMerchantRelationshipStorageEntity
+        $this->getFactory()
+            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
+            ->findOneByPriceKey($priceProductMerchantRelationshipStorageTransfer->getPriceKey())
             ->setData($this->formatData($priceProductMerchantRelationshipStorageTransfer))
             ->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue())
             ->save();
@@ -81,6 +103,28 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
             ->setData($this->formatData($priceProductMerchantRelationshipStorageTransfer))
             ->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue())
             ->save();
+    }
+
+    /**
+     * @param string[] $priceKeys
+     *
+     * @return void
+     */
+    public function deletePriceProductConcretesByPriceKeys(
+        array $priceKeys
+    ): void {
+        if (empty($priceKeys)) {
+            return;
+        }
+
+        $priceProductAbstractMerchantRelationshipStorageEntities = $this->getFactory()
+            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
+            ->filterByPriceKey_In($priceKeys)
+            ->find();
+
+        foreach ($priceProductAbstractMerchantRelationshipStorageEntities as $priceProductAbstractMerchantRelationshipStorageEntity) {
+            $priceProductAbstractMerchantRelationshipStorageEntity->delete();
+        }
     }
 
     /**

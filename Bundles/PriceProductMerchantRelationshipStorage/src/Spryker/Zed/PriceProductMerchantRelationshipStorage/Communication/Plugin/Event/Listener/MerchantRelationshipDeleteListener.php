@@ -30,7 +30,12 @@ class MerchantRelationshipDeleteListener extends AbstractPlugin implements Event
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $companyBusinessUnitIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, PriceProductMerchantRelationshipStorageConfig::COL_FK_COMPANY_BUSINESS_UNIT);
+        $companyBusinessUnitIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferForeignKeys(
+                $eventTransfers,
+                PriceProductMerchantRelationshipStorageConfig::COL_FK_COMPANY_BUSINESS_UNIT
+            );
 
         $this->getFacade()->unpublishAbstractPriceProductByBusinessUnits($companyBusinessUnitIds);
         $this->getFacade()->unpublishConcretePriceProductByBusinessUnits($companyBusinessUnitIds);

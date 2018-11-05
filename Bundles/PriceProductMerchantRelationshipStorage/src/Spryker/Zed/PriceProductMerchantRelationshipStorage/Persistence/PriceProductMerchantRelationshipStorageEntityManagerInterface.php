@@ -8,19 +8,15 @@
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
-use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage;
-use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage;
 
 interface PriceProductMerchantRelationshipStorageEntityManagerInterface
 {
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage $priceProductAbstractMerchantRelationshipStorageEntity
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      *
      * @return void
      */
     public function updatePriceProductAbstract(
-        SpyPriceProductAbstractMerchantRelationshipStorage $priceProductAbstractMerchantRelationshipStorageEntity,
         PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
     ): void;
 
@@ -34,13 +30,20 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
     ): void;
 
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage $priceProductConcreteMerchantRelationshipStorageEntity
+     * @param string[] $priceKeys
+     *
+     * @return void
+     */
+    public function deletePriceProductAbstractsByPriceKeys(
+        array $priceKeys
+    ): void;
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      *
      * @return void
      */
     public function updatePriceProductConcrete(
-        SpyPriceProductConcreteMerchantRelationshipStorage $priceProductConcreteMerchantRelationshipStorageEntity,
         PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
     ): void;
 
@@ -51,5 +54,14 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
      */
     public function createPriceProductConcrete(
         PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+    ): void;
+
+    /**
+     * @param string[] $priceKeys
+     *
+     * @return void
+     */
+    public function deletePriceProductConcretesByPriceKeys(
+        array $priceKeys
     ): void;
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener;
 
-use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -30,10 +29,11 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $priceProductMerchantRelationshipIds = array_map(function (EventEntityTransfer $eventTransfer) {
-            return $eventTransfer->getId();
-        }, $eventTransfers);
+        $priceProductMerchantRelationshipIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->publishAbstractPriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
+        $this->getFacade()
+            ->publishAbstractPriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
     }
 }

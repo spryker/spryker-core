@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Mapper;
 
-use Generated\Shared\Transfer\MerchantRelationshipProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipValueTransfer;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Generator\PriceKeyGeneratorInterface;
 
 class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceProductMapperInterface
@@ -88,7 +88,7 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
         array $priceProductMerchantRelationship
     ): void {
         $merchantRelationshipStorageTransfer->addUngroupedPrice(
-            (new MerchantRelationshipProductPriceTransfer())
+            (new PriceProductMerchantRelationshipValueTransfer())
                 ->fromArray($priceProductMerchantRelationship, true)
         );
     }
