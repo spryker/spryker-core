@@ -77,14 +77,9 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             return $response->addError($restErrorTransfer);
         }
 
-        $concreteProductData = $this->productStorageClient
-            ->findProductConcreteStorageDataByMapping(
-                static::PRODUCT_CONCRETE_MAPPING_TYPE,
-                $resourceIdentifier,
-                $restRequest->getMetadata()->getLocale()
-            );
+        $restResource = $this->findOneByProductConcrete($resourceIdentifier, $restRequest);
 
-        if (!$concreteProductData) {
+        if (!$restResource) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT)
                 ->setStatus(Response::HTTP_NOT_FOUND)
@@ -92,18 +87,6 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 
             return $response->addError($restErrorTransfer);
         }
-
-        $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
-            ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
-
-        $restConcreteProductsAttributesTransfer = $this->concreteProductAttributeTranslationExpander
-            ->addProductAttributeTranslation($restConcreteProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
-
-        $restResource = $this->restResourceBuilder->createRestResource(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            $concreteProductData[static::PRODUCT_CONCRETE_MAPPING_TYPE],
-            $restConcreteProductsAttributesTransfer
-        );
 
         return $response->addResource($restResource);
     }
@@ -146,10 +129,16 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             return null;
         }
 
+        $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
+            ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
+
+        $restConcreteProductsAttributesTransfer = $this->concreteProductAttributeTranslationExpander
+            ->addProductAttributeTranslation($restConcreteProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
+
         return $this->restResourceBuilder->createRestResource(
             ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
             $sku,
-            $this->concreteProductsResourceMapper->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData)
+            $restConcreteProductsAttributesTransfer
         );
     }
 }
