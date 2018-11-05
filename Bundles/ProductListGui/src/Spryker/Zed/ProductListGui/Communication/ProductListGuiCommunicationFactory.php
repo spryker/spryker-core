@@ -257,7 +257,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getProductListTableQueryExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_TABLE_CONFIG_EXPANDER);
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_TABLE_QUERY_EXPANDER);
     }
 
     /**
