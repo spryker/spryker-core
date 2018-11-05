@@ -60,4 +60,17 @@
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string" />
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
 </transfers>

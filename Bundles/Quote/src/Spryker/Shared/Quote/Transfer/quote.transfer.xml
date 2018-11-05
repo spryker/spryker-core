@@ -17,7 +17,6 @@
     <transfer name="QuoteCriteriaFilter">
         <property name="customerReference" type="string"/>
         <property name="filter" type="Filter"/>
-        <property name="idStore" type="int" />
     </transfer>
 
     <transfer name="QuoteResponse">

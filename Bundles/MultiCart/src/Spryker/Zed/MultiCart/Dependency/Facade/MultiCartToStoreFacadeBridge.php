@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\MultiCart\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class MultiCartToStoreFacadeBridge implements MultiCartToStoreFacadeInterface
 {
     /**
@@ -27,7 +25,7 @@ class MultiCartToStoreFacadeBridge implements MultiCartToStoreFacadeInterface
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer
+    public function getCurrentStore()
     {
         return $this->storeFacade->getCurrentStore();
     }

@@ -40,10 +40,24 @@
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string" />
     </transfer>
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="store" type="Store" />
+        <property name="customer" type="Customer" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+    </transfer>
+
+    <transfer name="QuoteCriteriaFilter">
+        <property name="idStore" type="int" />
     </transfer>
 
 </transfers>
