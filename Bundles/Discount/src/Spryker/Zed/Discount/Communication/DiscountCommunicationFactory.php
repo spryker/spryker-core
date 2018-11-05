@@ -132,7 +132,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createJavascriptQueryBuilderTransformer()
     {
-        return new JavascriptQueryBuilderTransformer($this->getFacade());
+        /** @var \Spryker\Zed\Discount\Business\DiscountFacade $facade */
+        $facade = $this->getFacade();
+
+        return new JavascriptQueryBuilderTransformer($facade);
     }
 
     /**

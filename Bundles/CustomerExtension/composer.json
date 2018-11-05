@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-extension",
+  "type": "library",
   "description": "CustomerExtension module",
   "license": "proprietary",
   "require": {

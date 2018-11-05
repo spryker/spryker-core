@@ -164,10 +164,12 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
+     * @deprecated Not in use anymore.
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute|null
      */
     protected function getAttributeEntity($idCategory, LocaleTransfer $localeTransfer)
     {

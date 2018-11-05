@@ -16,14 +16,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implements CmsBlockProductStorageQueryContainerInterface
 {
-    const NAME = 'name';
+    public const NAME = 'name';
 
     /**
      * @api
      *
      * @param array $productIds
      *
-     * @return $this|\Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery
+     * @return \Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery
      */
     public function queryCmsBlockProductStorageByIds(array $productIds)
     {
@@ -37,7 +37,7 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @param array $productIds
      *
-     * @return $this|\Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
     public function queryCmsBlockProducts(array $productIds)
     {

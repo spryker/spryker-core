@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductCategoryFilterController extends AbstractController
 {
-    const PARAM_ID_CATEGORY_NODE = 'id-category-node';
-    const REDIRECT_ADDRESS = '/product-category-filter-gui/product-category-filter';
+    public const PARAM_ID_CATEGORY_NODE = 'id-category-node';
+    public const REDIRECT_ADDRESS = '/product-category-filter-gui/product-category-filter';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

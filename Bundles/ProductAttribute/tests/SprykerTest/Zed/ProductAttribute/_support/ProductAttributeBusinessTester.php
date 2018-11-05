@@ -39,19 +39,21 @@ class ProductAttributeBusinessTester extends Actor
 {
     use _generated\ProductAttributeBusinessTesterActions;
 
-    const ABSTRACT_SKU = 'testFooBarAbstract';
-    const CONCRETE_SKU = 'testFooBarConcrete';
-    const SUPER_ATTRIBUTE_KEY = 'super_attribute';
-    const SUPER_ATTRIBUTE_VALUE = 'very super attribute';
-    const FOO_ATTRIBUTE_KEY = 'foo';
+    public const ABSTRACT_SKU = 'testFooBarAbstract';
+    public const CONCRETE_SKU = 'testFooBarConcrete';
+    public const SUPER_ATTRIBUTE_KEY = 'super_attribute';
+    public const SUPER_ATTRIBUTE_VALUE = 'very super attribute';
+    public const FOO_ATTRIBUTE_KEY = 'foo';
+    public const ANOTHER_SUPER_ATTRIBUTE_KEY = 'another_super_attribute';
+    public const ANOTHER_SUPER_ATTRIBUTE_VALUE = 'another super attribute value';
 
-    const DATA_PRODUCT_ATTRIBUTES_VALUES = [
+    public const DATA_PRODUCT_ATTRIBUTES_VALUES = [
         'foo' => 'Foo Value',
         'bar' => '20 units',
     ];
 
-    const LOCALE_ONE_NAME = 'de_DE';
-    const LOCALE_TWO_NAME = 'en_US';
+    public const LOCALE_ONE_NAME = 'de_DE';
+    public const LOCALE_TWO_NAME = 'en_US';
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer

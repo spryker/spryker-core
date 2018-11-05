@@ -9,13 +9,14 @@ namespace Spryker\Zed\ShoppingList\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
@@ -55,6 +56,16 @@ class GatewayController extends AbstractGatewayController
     public function removeShoppingListAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         return $this->getFacade()->removeShoppingList($shoppingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingListAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getFacade()->clearShoppingList($shoppingListTransfer);
     }
 
     /**
@@ -148,11 +159,11 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
-    public function getShoppingListPermissionGroupAction(): ShoppingListPermissionGroupTransfer
+    public function getShoppingListPermissionGroupCollectionAction(): ShoppingListPermissionGroupCollectionTransfer
     {
-        return $this->getFacade()->getShoppingListPermissionGroup();
+        return $this->getFacade()->getShoppingListPermissionGroups();
     }
 
     /**
@@ -173,5 +184,25 @@ class GatewayController extends AbstractGatewayController
     public function shareShoppingListWithCompanyUserAction(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
     {
         return $this->getFacade()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function updateShoppingListSharedEntitiesAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
+    {
+        return $this->getFacade()->updateShoppingListSharedEntities($shoppingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function dismissShoppingListSharingAction(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer
+    {
+        return $this->getFacade()->dismissShoppingListSharing($shoppingListDismissRequest);
     }
 }

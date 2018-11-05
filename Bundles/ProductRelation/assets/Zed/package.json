@@ -3,11 +3,10 @@
   "name": "spryker-zed-productrelations",
   "version": "1.0.0",
   "dependencies": {
-    "dot": "^1.0.3",
-    "fs": "^0.0.2",
+    "dot": "~1.0.3",
+    "fs": "~0.0.2",
+    "jquery-extendext": "git+https://git@github.com/mistic100/jQuery.extendext.git#0.1.1",
     "jquery-query-builder": "git+https://git@github.com/spryker/jquery-query-builder.git",
-    "jquery-extendext": "git+https://git@github.com/mistic100/jQuery.extendext#0.1.1",
-    "sql-parser": "git+https://git@github.com/spryker/spryker-sql-parser.git",
-    "moment": "^2.18.1"
+    "sql-parser": "git+https://git@github.com/spryker/spryker-sql-parser.git"
   }
 }

@@ -26,10 +26,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UrlCollector extends AbstractStoragePropelCollector
 {
-    const FK_RESOURCE_ = 'fk_resource_';
-    const RESOURCE_VALUE = 'value';
-    const RESOURCE_TYPE = 'type';
-    const KEYS_RESOURCE_TYPE_SUFFIX = ' keys';
+    public const FK_RESOURCE_ = 'fk_resource_';
+    public const RESOURCE_VALUE = 'value';
+    public const RESOURCE_TYPE = 'type';
+    public const KEYS_RESOURCE_TYPE_SUFFIX = ' keys';
 
     /**
      * @var \Spryker\Zed\UrlCollector\Dependency\QueryContainer\UrlCollectorToUrlQueryContainerInterface

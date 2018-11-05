@@ -21,6 +21,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class MonthDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -35,6 +37,8 @@ class MonthDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlug
     /**
      * Name of field as used in query string
      *
+     * @api
+     *
      * @return string
      */
     public function getFieldName()
@@ -43,6 +47,8 @@ class MonthDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlug
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function acceptedDataTypes()

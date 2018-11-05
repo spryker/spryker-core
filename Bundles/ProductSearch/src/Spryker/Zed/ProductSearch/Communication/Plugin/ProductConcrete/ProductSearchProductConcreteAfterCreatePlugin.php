@@ -18,6 +18,8 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface;
 class ProductSearchProductConcreteAfterCreatePlugin extends AbstractPlugin implements ProductConcretePluginCreateInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

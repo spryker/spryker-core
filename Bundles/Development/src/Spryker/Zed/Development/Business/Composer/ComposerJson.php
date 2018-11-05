@@ -74,7 +74,7 @@ class ComposerJson implements ComposerJsonInterface
      */
     protected function getComposerJsonFilePath(ModuleTransfer $moduleTransfer): string
     {
-        $composerJsonFilePath = sprintf('%s/composer.json', $moduleTransfer->getRootDirectory());
+        $composerJsonFilePath = sprintf('%s/composer.json', $moduleTransfer->getPath());
 
         return $composerJsonFilePath;
     }

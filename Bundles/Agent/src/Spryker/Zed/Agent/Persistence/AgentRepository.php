@@ -24,7 +24,6 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
      */
     public function findAgentByUsername(string $username): ?UserTransfer
     {
-        /** @var \Orm\Zed\User\Persistence\SpyUser|null $userEntity */
         $userEntity = $this->getFactory()
             ->getUserQuery()
             ->filterByIsAgent(true)

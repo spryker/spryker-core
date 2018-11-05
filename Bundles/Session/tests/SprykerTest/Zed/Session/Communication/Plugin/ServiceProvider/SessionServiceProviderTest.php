@@ -13,10 +13,10 @@ use Spryker\Client\Session\SessionClient;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedis;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking;
+use Spryker\Shared\Session\SessionConfig;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Auto-generated group annotations
@@ -71,21 +71,6 @@ class SessionServiceProviderTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testBootShouldAddSessionToSessionClientWhenNotInCliOrPhpDbg()
-    {
-        $sessionClientMock = $this->getSessionClientMock();
-
-        $application = new Application(['session' => $this->getMockBuilder(SessionInterface::class)->getMock()]);
-
-        $sessionServiceProviderMock = $this->getSessionServiceProviderMock();
-        $sessionServiceProviderMock->setClient($sessionClientMock);
-
-        $sessionServiceProviderMock->boot($application);
-    }
-
-    /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider
      */
     protected function getSessionServiceProviderMock()
@@ -118,7 +103,7 @@ class SessionServiceProviderTest extends Unit
      */
     public function testCanBeUsedWithSessionHandlerRedis()
     {
-        $this->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, SessionConstants::SESSION_HANDLER_REDIS);
+        $this->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_REDIS);
 
         $application = new Application();
         $sessionServiceProvider = new SessionServiceProvider();
@@ -133,7 +118,7 @@ class SessionServiceProviderTest extends Unit
      */
     public function testCanBeUsedWithSessionHandlerRedisLock()
     {
-        $this->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, SessionConstants::SESSION_HANDLER_REDIS_LOCKING);
+        $this->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_REDIS_LOCKING);
 
         $application = new Application();
         $sessionServiceProvider = new SessionServiceProvider();
@@ -148,7 +133,7 @@ class SessionServiceProviderTest extends Unit
      */
     public function testCanBeUsedWithSessionHandlerFile()
     {
-        $this->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, SessionConstants::SESSION_HANDLER_FILE);
+        $this->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_FILE);
 
         $application = new Application();
         $sessionServiceProvider = new SessionServiceProvider();

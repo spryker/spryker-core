@@ -7,7 +7,7 @@
 {% set priceModeNet = 'NET_MODE' %}
 {% set priceModeBoth = 'BOTH' %}
 
-<table class="table table-bordered">
+<table id="price-table-collection" class="table table-bordered">
     <thead>
         <tr>
             <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-bottom: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></th>
@@ -47,6 +47,9 @@
 
                 <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold">
                     {{ currencies[currencyIsoCode].symbol }}
+
+                    {{ include('@ProductManagement/_partials/product_volume_price_action_button.twig', {moneyValueFormViewCollection: moneyValueFormViewCollection}) }}
+
                 </td>
 
                {% for priceMode, priceTypes in priceModes %}

@@ -8,8 +8,10 @@
 namespace Spryker\Zed\CompanyUnitAddress\Business\Model;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface;
@@ -41,6 +43,11 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
     protected $companyBusinessUnitFacade;
 
     /**
+     * @var \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface
+     */
+    protected $companyBusinessUnitAddressReader;
+
+    /**
      * @var \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface
      */
     protected $companyUnitAddressPluginExecutor;
@@ -50,6 +57,7 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface $countryFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @param \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface $companyBusinessUnitAddressReader
      * @param \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface $companyUnitAddressPluginExecutor
      */
     public function __construct(
@@ -57,12 +65,14 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         CompanyUnitAddressToCountryFacadeInterface $countryFacade,
         CompanyUnitAddressToLocaleFacadeInterface $localeFacade,
         CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
+        CompanyBusinessUnitAddressReaderInterface $companyBusinessUnitAddressReader,
         CompanyUnitAddressPluginExecutorInterface $companyUnitAddressPluginExecutor
     ) {
         $this->entityManager = $entityManager;
         $this->countryFacade = $countryFacade;
         $this->localeFacade = $localeFacade;
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
+        $this->companyBusinessUnitAddressReader = $companyBusinessUnitAddressReader;
         $this->companyUnitAddressPluginExecutor = $companyUnitAddressPluginExecutor;
     }
 
@@ -145,6 +155,16 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    protected function getCompanyUnitAddressCollectionByIdCompanyBusinessUnit(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyUnitAddressCollectionTransfer
+    {
+        return $this->companyBusinessUnitAddressReader->getCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return void
@@ -158,8 +178,12 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
             && $companyUnitAddressTransfer->getIsDefaultBilling()
         ) {
             $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-            $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($companyUnitAddressTransfer->getFkCompanyBusinessUnit())
+            $companyBusinessUnitTransfer
+                ->setIdCompanyBusinessUnit($companyUnitAddressTransfer->getFkCompanyBusinessUnit())
                 ->setDefaultBillingAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+
+            $companyUnitAddressCollectionTransfer = $this->getCompanyUnitAddressCollectionByIdCompanyBusinessUnit($companyBusinessUnitTransfer);
+            $companyBusinessUnitTransfer->setAddressCollection($companyUnitAddressCollectionTransfer);
 
             $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
         }
@@ -177,7 +201,13 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         $idCountry = $this->retrieveIdCountry($companyUnitAddressTransfer);
         $companyUnitAddressTransfer->setFkCountry($idCountry);
         $isDefaultBilling = $companyUnitAddressTransfer->getIsDefaultBilling();
+        $companyUnitAddressExist = $companyUnitAddressTransfer->getIdCompanyUnitAddress() !== null;
         $companyUnitAddressTransfer = $this->entityManager->saveCompanyUnitAddress($companyUnitAddressTransfer);
+
+        if (!$companyUnitAddressExist) {
+            $this->createAddressToBusinessUnitRelations($companyUnitAddressTransfer, $companyUnitAddressTransfer->getIdCompanyUnitAddress());
+        }
+
         $companyUnitAddressTransfer->setIsDefaultBilling($isDefaultBilling);
         $this->updateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
 
@@ -201,5 +231,30 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         $this->entityManager->deleteCompanyUnitAddressById(
             $companyUnitAddressTransfer->getIdCompanyUnitAddress()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param int $idCompanyUnitAddress
+     *
+     * @return void
+     */
+    protected function createAddressToBusinessUnitRelations(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer,
+        int $idCompanyUnitAddress
+    ): void {
+        $businessUnits = $companyUnitAddressTransfer->getCompanyBusinessUnits();
+
+        if (!$businessUnits) {
+            return;
+        }
+
+        foreach ($businessUnits->getCompanyBusinessUnits() as $companyBusinessUnit) {
+            $entityTransfer = new SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer();
+            $entityTransfer
+                ->setFkCompanyBusinessUnit($companyBusinessUnit->getIdCompanyBusinessUnit())
+                ->setFkCompanyUnitAddress($idCompanyUnitAddress);
+            $this->entityManager->saveAddressToBusinessUnitRelation($entityTransfer);
+        }
     }
 }

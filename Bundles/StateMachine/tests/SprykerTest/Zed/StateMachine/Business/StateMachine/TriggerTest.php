@@ -34,11 +34,11 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class TriggerTest extends StateMachineMocks
 {
-    const ITEM_IDENTIFIER = 1985;
-    const TESTING_STATE_MACHINE = 'Testing state machine';
-    const PROCESS_NAME = 'Process';
-    const INITIAL_STATE = 'new';
-    const TEST_COMMAND = 'TestCommand';
+    public const ITEM_IDENTIFIER = 1985;
+    public const TESTING_STATE_MACHINE = 'Testing state machine';
+    public const PROCESS_NAME = 'Process';
+    public const INITIAL_STATE = 'new';
+    public const TEST_COMMAND = 'TestCommand';
 
     /**
      * @return void
@@ -242,6 +242,8 @@ class TriggerTest extends StateMachineMocks
      */
     protected function createStateMachineItems()
     {
+        $items = [];
+
         $items['event'] = [];
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setProcessName(static::PROCESS_NAME);

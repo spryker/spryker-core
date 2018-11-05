@@ -12,7 +12,7 @@ interface CategoryTreeStorageReaderInterface
     /**
      * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
     public function getCategories($locale);
 }

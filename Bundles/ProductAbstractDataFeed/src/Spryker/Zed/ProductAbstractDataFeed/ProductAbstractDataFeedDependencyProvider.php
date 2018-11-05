@@ -13,7 +13,7 @@ use Spryker\Zed\ProductAbstractDataFeed\Dependency\QueryContainer\ProductAbstrac
 
 class ProductAbstractDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PRODUCT_QUERY_CONTAINER = 'PRODUCT_QUERY_CONTAINER';
+    public const PRODUCT_QUERY_CONTAINER = 'PRODUCT_QUERY_CONTAINER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

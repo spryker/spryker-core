@@ -12,12 +12,12 @@ use Spryker\Client\Kernel\Container;
 
 class CustomerDependencyProvider extends AbstractDependencyProvider
 {
-    const SERVICE_SESSION = 'session service';
-    const SERVICE_ZED = 'zed service';
+    public const SERVICE_SESSION = 'session service';
+    public const SERVICE_ZED = 'zed service';
 
-    const PLUGINS_CUSTOMER_SESSION_GET = 'PLUGINS_CUSTOMER_SESSION_GET';
-    const PLUGINS_CUSTOMER_SESSION_SET = 'PLUGINS_CUSTOMER_SESSION_SET';
-    const PLUGINS_DEFAULT_ADDRESS_CHANGE = 'PLUGINS_DEFAULT_ADDRESS_CHANGE';
+    public const PLUGINS_CUSTOMER_SESSION_GET = 'PLUGINS_CUSTOMER_SESSION_GET';
+    public const PLUGINS_CUSTOMER_SESSION_SET = 'PLUGINS_CUSTOMER_SESSION_SET';
+    public const PLUGINS_DEFAULT_ADDRESS_CHANGE = 'PLUGINS_DEFAULT_ADDRESS_CHANGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

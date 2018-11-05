@@ -16,4 +16,9 @@
         <property name="productListMap" type="ProductListMap"/>
     </transfer>
 
+
+    <transfer name="ProductPayload">
+        <property name="productLists" type="array" />
+    </transfer>
+
 </transfers>

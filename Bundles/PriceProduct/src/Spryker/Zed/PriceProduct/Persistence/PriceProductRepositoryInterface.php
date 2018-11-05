@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProduct\Persistence;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -59,6 +60,13 @@ interface PriceProductRepositoryInterface
     ): ObjectCollection;
 
     /**
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findProductAbstractPricesByIdIn(array $productAbstractIds): ObjectCollection;
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
@@ -68,9 +76,21 @@ interface PriceProductRepositoryInterface
     ): ?QueryCriteriaTransfer;
 
     /**
+     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     */
+    public function findOrphanPriceProductStoreEntities(): array;
+
+    /**
      * @param int $idPriceProductStore
      *
      * @return \Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer|null
      */
     public function findPriceProductDefaultByIdPriceProductStore(int $idPriceProductStore): ?SpyPriceProductDefaultEntityTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int|null
+     */
+    public function findIdPriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): ?int;
 }

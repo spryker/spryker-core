@@ -1,5 +1,6 @@
 {
   "name": "spryker/util-date-time",
+  "type": "library",
   "description": "UtilDateTime module",
   "license": "proprietary",
   "require": {

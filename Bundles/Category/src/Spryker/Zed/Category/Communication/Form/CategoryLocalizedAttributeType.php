@@ -26,13 +26,13 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CategoryLocalizedAttributeType extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_FK_LOCALE = 'fk_locale';
-    const FIELD_LOCALE_NAME = 'locale_name';
-    const FIELD_META_TITLE = 'meta_title';
-    const FIELD_META_DESCRIPTION = 'meta_description';
-    const FIELD_META_KEYWORDS = 'meta_keywords';
-    const FIELD_CATEGORY_IMAGE_NAME = 'category_image_name';
+    public const FIELD_NAME = 'name';
+    public const FIELD_FK_LOCALE = 'fk_locale';
+    public const FIELD_LOCALE_NAME = 'locale_name';
+    public const FIELD_META_TITLE = 'meta_title';
+    public const FIELD_META_DESCRIPTION = 'meta_description';
+    public const FIELD_META_KEYWORDS = 'meta_keywords';
+    public const FIELD_CATEGORY_IMAGE_NAME = 'category_image_name';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -117,7 +117,7 @@ class CategoryLocalizedAttributeType extends AbstractType
                             $categoryTransfer = $context->getRoot()->getData();
 
                             if ($categoryTransfer instanceof CategoryTransfer && $nameKey) {
-                                if ($this->getFacade()->hasFirstLevelChildrenByName($nameKey, $categoryTransfer)) {
+                                if ($this->getFacade()->checkSameLevelCategoryByNameExists($nameKey, $categoryTransfer)) {
                                     $context->addViolation(sprintf('Category with name "%s" already in use in this category level, please choose another one.', $nameKey));
                                 }
                             }

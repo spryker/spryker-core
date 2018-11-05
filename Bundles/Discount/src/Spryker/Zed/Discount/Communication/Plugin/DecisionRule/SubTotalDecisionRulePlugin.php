@@ -21,6 +21,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SubTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -40,6 +42,8 @@ class SubTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
     /**
      * Name of field as used in query string
      *
+     * @api
+     *
      * @return string
      */
     public function getFieldName()
@@ -49,6 +53,8 @@ class SubTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
 
     /**
      * Data types used by this field. (string, integer, list)
+     *
+     * @api
      *
      * @return array
      */

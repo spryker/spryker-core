@@ -253,6 +253,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findProductConcretesBySkus(array $skus): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->findProductConcretesBySkus($skus);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idConcrete
      *
      * @return int|null
@@ -647,9 +663,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function activateProductConcrete($idProductConcrete)
     {
-         $this->getFactory()
-             ->createProductConcreteActivator()
-             ->activateProductConcrete($idProductConcrete);
+        $this->getFactory()
+            ->createProductConcreteActivator()
+            ->activateProductConcrete($idProductConcrete);
     }
 
     /**
@@ -936,5 +952,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createProductConcreteManager()
             ->getProductConcreteSkusByConcreteIds($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string
+     */
+    public function generateProductConcreteSku(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer): string
+    {
+        return $this->getFactory()
+            ->createSkuGenerator()
+            ->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
     }
 }

@@ -12,6 +12,7 @@ interface ProductStorageClientInterface
     /**
      * Specification:
      * - Retrieves a current Store specific ProductAbstract resource from Storage.
+     * - Filter the restricted product variants (product concrete) in `attribute_map`.
      *
      * @api
      *
@@ -27,6 +28,8 @@ interface ProductStorageClientInterface
     /**
      * Specification:
      * - Retrieves a current Store specific ProductAbstract resource from Storage.
+     * - Responds with null if product abstract is restricted.
+     * - Filter the restricted product variants (product concrete) in `attribute_map`.
      *
      * @api
      *
@@ -40,6 +43,8 @@ interface ProductStorageClientInterface
     /**
      * Specification:
      * - Retrieves a current Store specific ProductAbstract resource from Storage using specified mapping.
+     * - Responds with null if product abstract is restricted.
+     * - Filter the restricted product variants (product concrete) in `attribute_map`.
      *
      * @api
      *
@@ -54,6 +59,7 @@ interface ProductStorageClientInterface
     /**
      * Specification:
      * - Retrieves a current Store specific ProductConcrete resource from Storage.
+     * - Responds with null if product concrete is restricted.
      *
      * @api
      *
@@ -97,8 +103,9 @@ interface ProductStorageClientInterface
      * Specification:
      * - Maps raw product data to StorageProductTransfer for the current locale.
      * - Based on the super attributes and the selected attributes of the product the result might be abstract or concrete product.
-     * - Executes a stack of \Spryker\Client\ProductStorage\Dependency\Plugin\StorageProductExpanderPluginInterface plugins that
+     * - Executes a stack of Spryker\Client\ProductStorage\Dependency\Plugin\StorageProductExpanderPluginInterface plugins that
      * can expand the result with extra data.
+     * - Filter the restricted product variants (product concrete) in `attribute_map`.
      *
      * @api
      *
