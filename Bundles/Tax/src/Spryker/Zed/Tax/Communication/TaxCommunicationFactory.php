@@ -68,7 +68,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider|null $taxSetFormDataProvider Deprecated: TaxSetFormDataProvider must not be passed in.
-     * @param TaxSetTransfer $taxSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetTransfer|null $taxSetTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
