@@ -78,7 +78,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
         SpyProductConcreteProductListStorage $productConcreteProductListStorageEntity,
         array $productListBuffer
     ): bool {
-        $productConcreteProductListsStorageTransfer = $this->getProductConcreteProductListsStorageTransfer($idProductConcrete, $productListBuffer);
+        $productConcreteProductListsStorageTransfer = $this->getProductConcreteProductListsStorageTransfer($idProduct, $productListBuffer);
         if ($productConcreteProductListsStorageTransfer->getIdBlacklists() || $productConcreteProductListsStorageTransfer->getIdWhitelists()) {
             $productConcreteProductListStorageEntity->setFkProduct($idProduct)
                 ->setData($productConcreteProductListsStorageTransfer->toArray())
