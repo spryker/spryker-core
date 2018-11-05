@@ -62,7 +62,7 @@ class ProductOptionExistPreCheck implements ProductOptionExistPreCheckInterface
      *
      * @return bool
      */
-    public function existsProductOption(ProductOptionTransfer $productOptionTransfer): bool
+    public function productOptionExists(ProductOptionTransfer $productOptionTransfer): bool
     {
         $idProductOptionValue = $productOptionTransfer->getIdProductOptionValue();
         if (isset(static::$productOptionByIdActiveCache[$idProductOptionValue])) {
@@ -111,7 +111,7 @@ class ProductOptionExistPreCheck implements ProductOptionExistPreCheckInterface
         CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
     ): void {
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            if ($this->existsProductOption($productOptionTransfer)) {
+            if ($this->productOptionExists($productOptionTransfer)) {
                 continue;
             }
 
