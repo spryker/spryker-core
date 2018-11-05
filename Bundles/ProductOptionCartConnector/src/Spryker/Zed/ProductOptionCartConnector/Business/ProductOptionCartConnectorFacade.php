@@ -26,7 +26,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandProductOptions(CartChangeTransfer $changeTransfer): CartChangeTransfer
+    public function expandProductOptions(CartChangeTransfer $changeTransfer)
     {
         return $this->getFactory()
             ->createProductOptionValueExpander()
@@ -42,7 +42,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandGroupKey(CartChangeTransfer $changeTransfer): CartChangeTransfer
+    public function expandGroupKey(CartChangeTransfer $changeTransfer)
     {
         return $this->getFactory()
             ->createGroupKeyExpander()
@@ -58,7 +58,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeProductOptionInCartQuantity(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function changeProductOptionInCartQuantity(QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()
             ->createProductOptionCartQuantity()
@@ -74,7 +74,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateProductOptionValuePrices(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function validateProductOptionValuePrices(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFactory()
             ->createProductOptionValuePriceValidator()

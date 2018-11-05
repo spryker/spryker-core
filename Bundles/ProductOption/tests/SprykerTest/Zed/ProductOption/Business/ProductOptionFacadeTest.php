@@ -145,16 +145,24 @@ class ProductOptionFacadeTest extends Unit
     public function testSaveProductGroupOptionAndAssignProductAbstract()
     {
         $this->markTestSkipped('ProductAbstract not assigned');
+
         $productOptionFacade = $this->createProductOptionFacade();
+
         $productOptionValueTransfer = $this->createProductOptionValueTransfer();
         $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
         $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
+
         $productAbstractEntity = $this->tester->createProductAbstract('testingSku');
+
         $productOptionGroupTransfer->setProductsToBeAssigned([$productAbstractEntity->getIdProductAbstract()]);
+
         $idOfProductOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
         $productOptionGroupEntity = SpyProductOptionGroupQuery::create()
             ->findOneByIdProductOptionGroup($idOfProductOptionGroup);
+
         $assignedProductAbstractEntity = $productOptionGroupEntity->getSpyProductAbstracts()[0];
+
         $this->assertEquals($assignedProductAbstractEntity->getSku(), $productAbstractEntity->getSku());
     }
 
