@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductBundle\Business\Active\PreCheck;
+namespace SprykerTest\Zed\ProductBundle\Business\PreCheck;
 
 use Codeception\Test\Unit;
 use Codeception\Util\Stub;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Active\PreCheck\ProductBundleCartActiveCheck;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheck;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository;
 
 /**
@@ -22,7 +22,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository;
  * @group Zed
  * @group ProductBundle
  * @group Business
- * @group Active
  * @group PreCheck
  * @group ProductBundleCartActiveCheckTest
  * Add your own group annotations below this line
@@ -77,7 +76,7 @@ class ProductBundleCartActiveCheckTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Active\PreCheck\ProductBundleCartActiveCheckInterface
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheckInterface
      */
     protected function createProductBundleCartActiveCheck()
     {

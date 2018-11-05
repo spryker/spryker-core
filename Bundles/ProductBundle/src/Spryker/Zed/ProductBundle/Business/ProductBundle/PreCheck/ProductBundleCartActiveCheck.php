@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Active\PreCheck;
+namespace Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
@@ -71,7 +71,8 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
      */
     protected function isBundledProductsActive(ItemTransfer $itemTransfer): bool
     {
-        $productEntityTransfers = $this->findBundledProducts($itemTransfer->getSku());
+        $productEntityTransfers = $this->productBundleRepository
+            ->findBundledProductsBySku($itemTransfer->getSku());
 
         foreach ($productEntityTransfers as $productEntityTransfer) {
             if (!$productEntityTransfer->getIsActive()) {
@@ -80,16 +81,6 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
         }
 
         return true;
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
-     */
-    protected function findBundledProducts(string $sku): array
-    {
-        return $this->productBundleRepository->findBundledProductsBySku($sku);
     }
 
     /**
