@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionCartQuantity;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionExistPreCheck;
+use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionExistPreCheckInterface;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValueExpander;
 use Spryker\Zed\ProductOptionCartConnector\Business\Validator\ProductOptionValuePriceValidator;
 use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyProvider;
@@ -67,7 +68,7 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionExistPreCheckInterface
      */
-    public function createProductOptionExistsPreCheck()
+    public function createProductOptionExistsPreCheck(): ProductOptionExistPreCheckInterface
     {
         return new ProductOptionExistPreCheck($this->getProductOptionFacade());
     }
