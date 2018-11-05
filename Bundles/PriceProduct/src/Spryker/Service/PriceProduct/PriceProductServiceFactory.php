@@ -12,6 +12,8 @@ use Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterMinStrat
 use Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface;
 use Spryker\Service\PriceProduct\Model\PriceProductMatcher;
 use Spryker\Service\PriceProduct\Model\PriceProductMatcherInterface;
+use Spryker\Service\PriceProduct\Model\PriceProductMerger;
+use Spryker\Service\PriceProduct\Model\PriceProductMergerInterface;
 
 class PriceProductServiceFactory extends AbstractServiceFactory
 {
@@ -32,6 +34,14 @@ class PriceProductServiceFactory extends AbstractServiceFactory
     public function createSinglePriceProductFilterStrategy(): SinglePriceProductFilterStrategyInterface
     {
         return new SinglePriceProductFilterMinStrategy();
+    }
+
+    /**
+     * @return \Spryker\Service\PriceProduct\Model\PriceProductMergerInterface
+     */
+    public function createPriceProductMerger(): PriceProductMergerInterface
+    {
+        return new PriceProductMerger();
     }
 
     /**
