@@ -28,7 +28,7 @@ class TaxRateMapper implements TaxRateMapperInterface
         $countryEntity = $taxRateEntity->getCountry();
 
         if ($countryEntity === null) {
-            $taxRateTransfer;
+            return $taxRateTransfer;
         }
 
         $countryTransfer = new CountryTransfer();

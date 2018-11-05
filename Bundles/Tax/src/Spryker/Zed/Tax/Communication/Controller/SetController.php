@@ -63,7 +63,7 @@ class SetController extends AbstractController
     {
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
-        $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider($taxSetTransfer);
+        $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider();
         $taxSetTransfer = $taxSetFormDataProvider->getData($idTaxSet);
 
         if ($taxSetTransfer === null) {
@@ -74,7 +74,7 @@ class SetController extends AbstractController
             );
         }
 
-        $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider);
+        $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider, $taxSetTransfer);
 
         if ($request->request->count() > 0) {
             $taxSetForm->handleRequest($request);
