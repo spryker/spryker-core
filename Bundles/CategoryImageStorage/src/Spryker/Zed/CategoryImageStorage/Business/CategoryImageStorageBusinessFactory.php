@@ -16,17 +16,10 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\CategoryImageStorage\CategoryImageStorageConfig getConfig()
  * @method \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageEntityManagerInterface getEntityManager()()
  */
 class CategoryImageStorageBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToCategoryImageInterface
-     */
-    public function getCategoryImageFacade(): CategoryImageStorageToCategoryImageInterface
-    {
-        return $this->getProvidedDependency(CategoryImageStorageDependencyProvider::FACADE_CATEGORY_IMAGE);
-    }
-
     /**
      * @return \Spryker\Zed\CategoryImageStorage\Business\Storage\CategoryImageStorageWriterInterface
      */
@@ -35,7 +28,15 @@ class CategoryImageStorageBusinessFactory extends AbstractBusinessFactory
         return new CategoryImageStorageWriter(
             $this->getCategoryImageFacade(),
             $this->getRepository(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToCategoryImageInterface
+     */
+    public function getCategoryImageFacade(): CategoryImageStorageToCategoryImageInterface
+    {
+        return $this->getProvidedDependency(CategoryImageStorageDependencyProvider::FACADE_CATEGORY_IMAGE);
     }
 }

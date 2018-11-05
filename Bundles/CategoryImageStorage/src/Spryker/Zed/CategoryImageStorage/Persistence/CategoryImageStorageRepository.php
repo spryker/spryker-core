@@ -19,13 +19,9 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     public const FK_CATEGORY = 'fkCategory';
 
     /**
-     * @api
-     *
-     * @param array $categoryImageSetToCategoryImageIds
-     *
-     * @return mixed|\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * {@inheritdoc}
      */
-    public function findCategoryIdsByCategoryImageSetToCategoryImageIds(array $categoryImageSetToCategoryImageIds)
+    public function findCategoryIdsByCategoryImageSetToCategoryImageIds(array $categoryImageSetToCategoryImageIds): array
     {
         return $this->getFactory()
             ->createQueryCategoryImageSetToCategoryImage()
@@ -38,29 +34,9 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     }
 
     /**
-     * @api
-     *
-     * @param array $categoryIds
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute[]|\Propel\Runtime\Collection\ObjectCollection
+     * {@inheritdoc}
      */
-    public function findCategoryAttributesByIds(array $categoryIds)
-    {
-        return $this->getFactory()
-            ->createCategoryAttributeQuery()
-            ->joinWithLocale()
-            ->filterByFkCategory_In($categoryIds)
-            ->find();
-    }
-
-    /**
-     * @api
-     *
-     * @param array $categoryFks
-     *
-     * @return mixed|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    public function findCategoryImageSetsByFkCategoryIn(array $categoryFks)
+    public function findCategoryImageSetsByFkCategoryIn(array $categoryIds)
     {
         $categoryImageSetsQuery = $this->getFactory()
             ->createCategoryImageSetQuery()
@@ -69,34 +45,30 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
             ->useSpyCategoryImageSetToCategoryImageQuery()
             ->innerJoinWithSpyCategoryImage()
             ->endUse()
-            ->filterByFkCategory_In($categoryFks);
+            ->filterByFkCategory_In($categoryIds);
 
         return $this->buildQueryFromCriteria($categoryImageSetsQuery)->find();
     }
 
     /**
-     * @api
-     *
-     * @param array $categoryIds
-     *
-     * @return \Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * {@inheritdoc}
      */
-    public function findCategoryImageStorageByIds(array $categoryIds)
+    public function findCategoryImageStorageByIds(array $categoryIds): array
     {
-        return $this
-            ->getFactory()
+        $categoryImageStorageQuery = $this->getFactory()
             ->createSpyCategoryImageStorageQuery()
-            ->filterByFkCategory_In($categoryIds)->find();
+            ->filterByFkCategory_In($categoryIds);
+
+        return $this->buildQueryFromCriteria($categoryImageStorageQuery)->find();
     }
 
     /**
-     * @param array $categoryImageIds
-     *
-     * @return mixed|\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * {@inheritdoc}
      */
-    public function findCategoryIdsByCategoryImageIds(array $categoryImageIds)
+    public function findCategoryIdsByCategoryImageIds(array $categoryImageIds): array
     {
-        return $this->getFactory()->createQueryCategoryImageSetToCategoryImage()
+        return $this->getFactory()
+            ->createQueryCategoryImageSetToCategoryImage()
             ->filterByFkCategoryImage_In($categoryImageIds)
             ->innerJoinSpyCategoryImageSet()
             ->withColumn('DISTINCT ' . SpyCategoryImageSetTableMap::COL_FK_CATEGORY, static::FK_CATEGORY)

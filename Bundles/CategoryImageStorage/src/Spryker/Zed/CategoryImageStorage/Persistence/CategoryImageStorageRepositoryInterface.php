@@ -17,7 +17,7 @@ interface CategoryImageStorageRepositoryInterface
      *
      * @param array $categoryImageSetToCategoryImageIds
      *
-     * @return mixed|\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findCategoryIdsByCategoryImageSetToCategoryImageIds(array $categoryImageSetToCategoryImageIds);
 
@@ -26,32 +26,23 @@ interface CategoryImageStorageRepositoryInterface
      *
      * @param array $categoryIds
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[]
      */
-    public function findCategoryAttributesByIds(array $categoryIds);
-
-    /**
-     * @api
-     *
-     * @param array $categoryFks
-     *
-     * @return mixed|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    public function findCategoryImageSetsByFkCategoryIn(array $categoryFks);
+    public function findCategoryImageSetsByFkCategoryIn(array $categoryIds);
 
     /**
      * @api
      *
      * @param array $categoryIds
      *
-     * @return \Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
      */
     public function findCategoryImageStorageByIds(array $categoryIds);
 
     /**
      * @param array $categoryImageIds
      *
-     * @return mixed|\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findCategoryIdsByCategoryImageIds(array $categoryImageIds);
 }
