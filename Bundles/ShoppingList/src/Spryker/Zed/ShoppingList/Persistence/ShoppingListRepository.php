@@ -486,4 +486,17 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->findByFkCompanyUser($idCompanyUser)
             ->toArray();
     }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return bool
+     */
+    public function isCompanyBusinessUnitSharedWithShoppingLists(int $idCompanyBusinessUnit): bool
+    {
+        return $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitQuery()
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->exists();
+    }
 }

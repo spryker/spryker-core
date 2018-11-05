@@ -160,6 +160,10 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
      */
     protected function isParentResourceMatching(array $resources, string $parentResourceType): bool
     {
+        if (count($resources) === 1) {
+            return true;
+        }
+
         foreach ($resources as $resource) {
             if ($resource[RequestConstantsInterface::ATTRIBUTE_TYPE] === $parentResourceType) {
                 return true;

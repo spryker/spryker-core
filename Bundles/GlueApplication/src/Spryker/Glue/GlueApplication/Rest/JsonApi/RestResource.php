@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -21,7 +22,7 @@ class RestResource implements RestResourceInterface
     protected $type;
 
     /**
-     * @var array
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface[]
      */
     protected $links = [];
 
@@ -86,16 +87,7 @@ class RestResource implements RestResourceInterface
      */
     public function addLink(string $name, string $resourceUri, array $meta = []): RestResourceInterface
     {
-        if (!$meta) {
-            $this->links[$name] = $resourceUri;
-
-            return $this;
-        }
-
-        $this->links[$name] = [
-            'href' => $resourceUri,
-            'meta' => $meta,
-        ];
+        $this->links[] = new RestLink($name, $resourceUri, $meta);
 
         return $this;
     }
@@ -107,7 +99,13 @@ class RestResource implements RestResourceInterface
      */
     public function hasLink(string $name): bool
     {
-        return isset($this->links[$name]);
+        foreach ($this->links as $link) {
+            if ($name === $link->getName()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -158,9 +156,7 @@ class RestResource implements RestResourceInterface
             $response[RestResourceInterface::RESOURCE_ATTRIBUTES] = $this->attributes->toArray(true, true);
         }
 
-        if ($this->links) {
-            $response[RestResourceInterface::RESOURCE_LINKS] = $this->links;
-        }
+        $response = $this->addLinksDataToResponse($response);
 
         if (!$includeRelations) {
             return $response;
@@ -169,6 +165,23 @@ class RestResource implements RestResourceInterface
         $relationships = $this->toArrayRelationships();
         if ($relationships) {
             $response[RestResourceInterface::RESOURCE_RELATIONSHIPS] = $relationships;
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return array
+     */
+    protected function addLinksDataToResponse(array $response): array
+    {
+        if ($this->links) {
+            $response[RestResourceInterface::RESOURCE_LINKS] = [];
+            foreach ($this->links as $link) {
+                $response[RestResourceInterface::RESOURCE_LINKS] += $link->toArray();
+            }
         }
 
         return $response;

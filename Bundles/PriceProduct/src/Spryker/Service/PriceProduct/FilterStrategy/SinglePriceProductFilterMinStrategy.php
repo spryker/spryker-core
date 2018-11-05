@@ -24,6 +24,10 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
         $minPriceProductTransfer = null;
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
+            if ($priceProductTransfer->getPriceTypeName() !== $priceProductFilterTransfer->getPriceTypeName()) {
+                continue;
+            }
+
             if ($minPriceProductTransfer === null) {
                 $minPriceProductTransfer = $priceProductTransfer;
             }
@@ -31,6 +35,10 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
             if ($this->isMinGreaterThan($minPriceProductTransfer, $priceProductTransfer, $priceProductFilterTransfer->getPriceMode())) {
                 $minPriceProductTransfer = $priceProductTransfer;
             }
+        }
+
+        if ($minPriceProductTransfer && !$this->isMinimumPriceHasValueForPriceMode($minPriceProductTransfer, $priceProductFilterTransfer->getPriceMode())) {
+            return null;
         }
 
         return $minPriceProductTransfer;
@@ -46,10 +54,18 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
     protected function isMinGreaterThan(PriceProductTransfer $minPriceProductTransfer, PriceProductTransfer $priceProductTransfer, string $priceMode)
     {
         if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
+            if ($priceProductTransfer->getMoneyValue()->getGrossAmount() === null) {
+                return false;
+            }
+
             if ($minPriceProductTransfer->getMoneyValue()->getGrossAmount() > $priceProductTransfer->getMoneyValue()->getGrossAmount()) {
                 return true;
             }
 
+            return false;
+        }
+
+        if ($priceProductTransfer->getMoneyValue()->getNetAmount() === null) {
             return false;
         }
 
@@ -58,5 +74,22 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $minPriceProductTransfer
+     * @param string $priceMode
+     *
+     * @return bool
+     */
+    protected function isMinimumPriceHasValueForPriceMode(PriceProductTransfer $minPriceProductTransfer, string $priceMode): bool
+    {
+        $moneyValueTransfer = $minPriceProductTransfer->getMoneyValue();
+
+        if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
+            return $moneyValueTransfer->getGrossAmount() !== null;
+        }
+
+        return $moneyValueTransfer->getNetAmount() !== null;
     }
 }
