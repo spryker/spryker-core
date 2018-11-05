@@ -253,7 +253,7 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     * - Check if production value exists with given id
+     * - Checks if production value exists with given id
      *
      * @api
      *
