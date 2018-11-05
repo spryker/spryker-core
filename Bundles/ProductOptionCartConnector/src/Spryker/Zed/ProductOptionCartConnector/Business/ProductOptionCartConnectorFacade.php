@@ -91,10 +91,10 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkProductOptionExists(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function checkProductOptionExistance(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFactory()
             ->createProductOptionExistsPreCheck()
-            ->checkProductOptionExists($cartChangeTransfer);
+            ->checkProductOptionExistance($cartChangeTransfer);
     }
 }

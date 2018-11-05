@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOptionCartConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface;
 use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -27,9 +28,9 @@ class CartItemOptionPreCheckPlugin extends AbstractPlugin implements CartPreChec
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function check(CartChangeTransfer $cartChangeTransfer)
+    public function check(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        return $this->getFacade()->checkProductOptionExists($cartChangeTransfer);
+        return $this->getFacade()->checkProductOptionExistance($cartChangeTransfer);
     }
 
     /**

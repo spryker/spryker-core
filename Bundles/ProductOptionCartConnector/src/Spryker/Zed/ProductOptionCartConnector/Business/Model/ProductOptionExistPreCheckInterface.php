@@ -17,5 +17,5 @@ interface ProductOptionExistPreCheckInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkProductOptionExists(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+    public function checkProductOptionExistance(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

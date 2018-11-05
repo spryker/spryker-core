@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductOptionCartConnectorFacadeInterface
@@ -77,5 +78,5 @@ interface ProductOptionCartConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkProductOptionExists(CartChangeTransfer $cartChangeTransfer);
+    public function checkProductOptionExistance(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }
