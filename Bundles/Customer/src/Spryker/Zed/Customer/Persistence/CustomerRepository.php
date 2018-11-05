@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
@@ -130,5 +131,28 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
         }
 
         $customerListTransfer->setCustomers($customerCollection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressById(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        $addressTransfer->requireIdCustomerAddress();
+
+        $customerAddressEntity = $this->getFactory()
+            ->createSpyCustomerAddressQuery()
+            ->filterByIdCustomerAddress($addressTransfer->getIdCustomerAddress())
+            ->findOne();
+
+        if ($customerAddressEntity !== null) {
+            return $this->getFactory()
+                ->createCustomerMapper()
+                ->mapCustomerAddressEntityToTransfer($customerAddressEntity);
+        }
+
+        return null;
     }
 }

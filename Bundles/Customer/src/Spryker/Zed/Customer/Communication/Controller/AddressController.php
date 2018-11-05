@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddressController extends AbstractController
 {
+    protected const URL_CUSTOMER_LIST = '/customer';
+    protected const URL_CUSTOMER_VIEW = '/customer/view';
+    protected const ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST = 'Customer Address with ID = %d does not exist';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -30,6 +35,25 @@ class AddressController extends AbstractController
 
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
+
+        $addressDetails = (new AddressTransfer())
+            ->setIdCustomerAddress($idCustomerAddress);
+
+        if (!$this->getFacade()->checkAddressExistsByIdCustomerAddress($addressDetails)) {
+            $this->addErrorMessage(sprintf(static::ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST, $idCustomerAddress));
+
+            $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
+
+            if ($idCustomer > 0) {
+                return $this->redirectResponse(
+                    Url::generate(static::URL_CUSTOMER_VIEW, [
+                        CustomerConstants::PARAM_ID_CUSTOMER => $idCustomer,
+                    ])->build()
+                );
+            }
+
+            return $this->redirectResponse(static::URL_CUSTOMER_LIST);
+        }
 
         $addressDetails = $this->getFacade()
             ->getAddress($customerAddress);

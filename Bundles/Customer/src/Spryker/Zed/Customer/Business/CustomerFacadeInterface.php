@@ -264,6 +264,18 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
+     * - Checks if customer address exists by customer address id.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return bool
+     */
+    public function checkAddressExistsByIdCustomerAddress(AddressTransfer $addressTransfer): bool;
+
+    /**
+     * Specification:
      * - Sets provided address as default billing address for the related customer.
      *
      * @api
