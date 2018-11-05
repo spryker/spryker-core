@@ -15,36 +15,36 @@ use Spryker\Shared\Kernel\Locator\LocatorInterface;
  */
 class BundleProxy
 {
-    private const LOCATOR_MATCHER_SUFFIX = 'Matcher';
-    private const INSTANCE = 'instance';
-    private const CLASS_NAME = 'className';
+    protected const LOCATOR_MATCHER_SUFFIX = 'Matcher';
+    protected const INSTANCE = 'instance';
+    protected const CLASS_NAME = 'className';
 
     use SharedConfigResolverAwareTrait;
 
     /**
      * @var string
      */
-    private $moduleName;
+    protected $moduleName;
 
     /**
      * @var \Spryker\Shared\Kernel\Locator\LocatorInterface[]
      */
-    private $locator;
+    protected $locator = [];
 
     /**
      * @var \Spryker\Shared\Kernel\Locator\LocatorMatcherInterface[]
      */
-    private $locatorMatcher;
+    protected $locatorMatcher;
 
     /**
      * @var bool|null
      */
-    private $isInstanceCacheEnabled;
+    protected $isInstanceCacheEnabled;
 
     /**
      * @var array
      */
-    private static $instanceCache = [];
+    protected static $instanceCache = [];
 
     /**
      * @param string $moduleName
@@ -136,7 +136,7 @@ class BundleProxy
     /**
      * @return bool
      */
-    private function isClassCacheEnabled(): bool
+    protected function isClassCacheEnabled(): bool
     {
         if ($this->isInstanceCacheEnabled === null) {
             $this->isInstanceCacheEnabled = $this->getSharedConfig()->isLocatorInstanceCacheEnabled();
@@ -150,7 +150,7 @@ class BundleProxy
      *
      * @return string
      */
-    private function buildCacheKey(string $methodName): string
+    protected function buildCacheKey(string $methodName): string
     {
         return $this->moduleName . '-' . $methodName;
     }
