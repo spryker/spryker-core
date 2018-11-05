@@ -30,6 +30,7 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPag
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductConcreteSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductImageSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageUrlSearchListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductSearchListener;
 use Spryker\Zed\ProductSearch\Dependency\ProductSearchEvents;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
@@ -72,6 +73,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
         $this->addPriceProductEvents($eventCollection);
         $this->addProductImageEvents($eventCollection);
         $this->addProductCategoryEvents($eventCollection);
+        $this->addProductSearchEvents($eventCollection);
 
         return $eventCollection;
     }
@@ -565,5 +567,18 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
     protected function addProductPageProductAbstractStoreDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE, new ProductPageProductAbstractStoreSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductSearchEvents(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection
+            ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_CREATE, new ProductSearchListener())
+            ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_UPDATE, new ProductSearchListener())
+            ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_DELETE, new ProductSearchListener());
     }
 }

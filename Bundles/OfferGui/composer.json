@@ -15,7 +15,7 @@
     "spryker/offer": "^0.1.0",
     "spryker/oms": "^8.0.0",
     "spryker/price": "^5.2.0",
-    "spryker/session": "^3.0.0",
+    "spryker/session": "^3.0.0 || ^4.0.0",
     "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
