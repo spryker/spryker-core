@@ -222,6 +222,8 @@ class CustomerWriter implements CustomerWriterInterface
 
             return $this->restApiError->addPasswordChangeError($restResponse, $error->getMessage());
         }
+
+        return $restResponse;
     }
 
     /**
