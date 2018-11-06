@@ -78,5 +78,5 @@ interface ProductOptionCartConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkProductOptionExistance(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+    public function checkProductOptionExistence(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface;
 
-class ProductOptionExistPreCheck implements ProductOptionExistPreCheckInterface
+class ProductOptionExistsPreCheck implements ProductOptionExistsPreCheckInterface
 {
     protected const MESSAGE_PARAM_ID = '%id%';
     protected const MESSAGE_ERROR_PRODUCT_OPTION_EXISTS = 'cart.item.option.pre.check.validation.error.exists';
@@ -27,7 +27,7 @@ class ProductOptionExistPreCheck implements ProductOptionExistPreCheckInterface
     /**
      * @var bool[]
      */
-    protected static $productOptionByIdActiveCache = [];
+    protected static $idProductOptionCache = [];
 
     /**
      * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade
@@ -42,7 +42,7 @@ class ProductOptionExistPreCheck implements ProductOptionExistPreCheckInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkProductOptionExistance(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function checkProductOptionExistence(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
 
@@ -65,13 +65,13 @@ class ProductOptionExistPreCheck implements ProductOptionExistPreCheckInterface
     public function productOptionExists(ProductOptionTransfer $productOptionTransfer): bool
     {
         $idProductOptionValue = $productOptionTransfer->getIdProductOptionValue();
-        if (isset(static::$productOptionByIdActiveCache[$idProductOptionValue])) {
-            return static::$productOptionByIdActiveCache[$idProductOptionValue];
+        if (isset(static::$idProductOptionCache[$idProductOptionValue])) {
+            return static::$idProductOptionCache[$idProductOptionValue];
         }
 
-        static::$productOptionByIdActiveCache[$idProductOptionValue] = $this->productOptionFacade->existsProductOptionValueByIdProductOptionValue($idProductOptionValue);
+        static::$idProductOptionCache[$idProductOptionValue] = $this->productOptionFacade->existsProductOptionValueByIdProductOptionValue($idProductOptionValue);
 
-        return static::$productOptionByIdActiveCache[$idProductOptionValue];
+        return static::$idProductOptionCache[$idProductOptionValue];
     }
 
     /**

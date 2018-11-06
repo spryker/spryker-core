@@ -241,7 +241,7 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     * - Finds product option value in persistence by id.
+     * - Finds product option value by id.
      *
      * @api
      *

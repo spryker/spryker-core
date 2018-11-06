@@ -376,7 +376,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckProductOptionExistanceShouldWriteErrorWhenOptionDoesNotExist()
+    public function testcheckProductOptionExistenceShouldWriteErrorWhenOptionDoesNotExist()
     {
         $cartChangeTransfer = new CartChangeTransfer();
 
@@ -388,7 +388,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
 
         $cartChangeTransfer->addItem($itemTransfer);
 
-        $cartPreCheckResponseTransfer = $this->productOptionCartConnectorFacade->checkProductOptionExistance($cartChangeTransfer);
+        $cartPreCheckResponseTransfer = $this->productOptionCartConnectorFacade->checkProductOptionExistence($cartChangeTransfer);
 
         $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
         $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());

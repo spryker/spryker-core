@@ -30,7 +30,7 @@ class CartItemOptionPreCheckPlugin extends AbstractPlugin implements CartPreChec
      */
     public function check(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        return $this->getFacade()->checkProductOptionExistance($cartChangeTransfer);
+        return $this->getFacade()->checkProductOptionExistence($cartChangeTransfer);
     }
 
     /**

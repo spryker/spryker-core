@@ -18,8 +18,8 @@
     </transfer>
 
     <transfer name="ProductOptionValue">
+        <property name="value" dataBuilderRule="word" />
         <property name="sku" dataBuilderRule="isbn10" />
-        <property name="value" dataBuilderRule="word()" />
     </transfer>
 
 </transfers>
