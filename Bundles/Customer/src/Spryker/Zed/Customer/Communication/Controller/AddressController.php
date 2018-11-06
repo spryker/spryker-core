@@ -30,27 +30,25 @@ class AddressController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idCustomer = false;
+        $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
         $idCustomerAddress = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS));
 
-        $customerAddress = $this->createCustomerAddressTransfer();
-        $customerAddress->setIdCustomerAddress($idCustomerAddress);
-
-        if (!$this->getFacade()->findCustomerAddressById($idCustomerAddress)) {
-            $this->addErrorMessage(sprintf(static::ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST, $idCustomerAddress));
-            $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
-
-            if ($idCustomer > 0) {
-                return $this->redirectResponse(
-                    Url::generate(static::URL_CUSTOMER_VIEW, [
-                        CustomerConstants::PARAM_ID_CUSTOMER => $idCustomer,
-                    ])->build()
-                );
-            }
-
+        if (!$idCustomer) {
             return $this->redirectResponse(static::URL_CUSTOMER_LIST);
         }
 
+        if (!$this->getFacade()->findCustomerAddressById($idCustomerAddress)) {
+            $this->addErrorMessage(sprintf(static::ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST, $idCustomerAddress));
+
+            return $this->redirectResponse(
+                Url::generate(static::URL_CUSTOMER_VIEW, [
+                    CustomerConstants::PARAM_ID_CUSTOMER => $idCustomer,
+                ])->build()
+            );
+        }
+
+        $customerAddress = $this->createCustomerAddressTransfer();
+        $customerAddress->setIdCustomerAddress($idCustomerAddress);
         $addressDetails = $this->getFacade()
             ->getAddress($customerAddress);
 
