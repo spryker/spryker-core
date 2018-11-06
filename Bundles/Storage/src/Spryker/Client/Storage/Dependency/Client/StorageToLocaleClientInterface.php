@@ -7,12 +7,10 @@
 
 namespace Spryker\Client\Storage\Dependency\Client;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
-interface StorageToStoreClientInterface
+interface StorageToLocaleClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return string
      */
-    public function getCurrentStore();
+    public function getCurrentLocale();
 }

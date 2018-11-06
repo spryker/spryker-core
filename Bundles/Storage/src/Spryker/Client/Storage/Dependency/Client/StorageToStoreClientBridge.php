@@ -7,34 +7,28 @@
 
 namespace Spryker\Client\Storage\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class StorageToStoreClientBridge implements StorageToStoreClientInterface
 {
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Client\Store\StoreClientInterface
      */
-    protected $storeInstance;
+    protected $storeClient;
 
     /**
-     * @param \Spryker\Shared\Kernel\Store $storeInstance
+     * @param \Spryker\Client\Store\StoreClientInterface $storeClient
      */
-    public function __construct($storeInstance)
+    public function __construct($storeClient)
     {
-        $this->storeInstance = $storeInstance;
+        $this->storeClient = $storeClient;
     }
 
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreName(): string
+    public function getCurrentStore()
     {
-        return $this->storeInstance->getStoreName();
-    }
-
-    /**
-     * @return string
-     */
-    public function getCurrentLocale(): string
-    {
-        return $this->storeInstance->getCurrentLocale();
+        return $this->storeClient->getCurrentStore();
     }
 }

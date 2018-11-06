@@ -11,6 +11,7 @@ use Predis\Client;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Storage\Cache\StorageCacheStrategyFactory;
 use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface;
+use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Storage\StorageConstants;
@@ -86,9 +87,17 @@ class StorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface
      */
-    public function getStore(): StorageToStoreClientInterface
+    public function getStoreClient(): StorageToStoreClientInterface
     {
-        return $this->getProvidedDependency(StorageDependencyProvider::STORE);
+        return $this->getProvidedDependency(StorageDependencyProvider::STORE_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface
+     */
+    public function getLocaleClient(): StorageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(StorageDependencyProvider::LOCALE_CLIENT);
     }
 
     /**
