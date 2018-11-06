@@ -11,13 +11,12 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientBridge;
 use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientBridge;
-use Spryker\Shared\Kernel\Store;
 
 class StorageDependencyProvider extends AbstractDependencyProvider
 {
-    public const STORE_CLIENT = 'STORE_CLIENT';
-    public const LOCALE_CLIENT = 'LOCALE_CLIENT';
-    public const STORAGE_CLIENT = 'STORAGE_CLIENT';
+    public const CLIENT_STORE = 'CLIENT_STORE';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,15 +27,15 @@ class StorageDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container[static::STORAGE_CLIENT] = function (Container $container) {
+        $container[static::CLIENT_STORAGE] = function (Container $container) {
             return $container->getLocator()->storage()->client();
         };
 
-        $container[static::STORE_CLIENT] = function (Container $container) {
+        $container[static::CLIENT_STORE] = function (Container $container) {
             return new StorageToStoreClientBridge($container->getLocator()->store()->client());
         };
 
-        $container[static::LOCALE_CLIENT] = function (Container $container) {
+        $container[static::CLIENT_LOCALE] = function (Container $container) {
             return new StorageToLocaleClientBridge($container->getLocator()->locale()->client());
         };
 

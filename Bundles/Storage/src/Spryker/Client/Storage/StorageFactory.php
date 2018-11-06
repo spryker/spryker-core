@@ -81,7 +81,7 @@ class StorageFactory extends AbstractFactory
      */
     protected function getStorageClient()
     {
-        return $this->getProvidedDependency(StorageDependencyProvider::STORAGE_CLIENT);
+        return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_STORAGE);
     }
 
     /**
@@ -89,7 +89,7 @@ class StorageFactory extends AbstractFactory
      */
     public function getStoreClient(): StorageToStoreClientInterface
     {
-        return $this->getProvidedDependency(StorageDependencyProvider::STORE_CLIENT);
+        return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_STORE);
     }
 
     /**
@@ -97,7 +97,7 @@ class StorageFactory extends AbstractFactory
      */
     public function getLocaleClient(): StorageToLocaleClientInterface
     {
-        return $this->getProvidedDependency(StorageDependencyProvider::LOCALE_CLIENT);
+        return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_LOCALE);
     }
 
     /**
