@@ -38,6 +38,8 @@ class CompanyUnitAddressLabelRelationDataImportPluginTest extends Unit
     public function testImportImportsCompanyUnitAddressLabelRelation(): void
     {
         $this->tester->ensureRelationTableIsEmpty();
+        $this->tester->ensureCompanyUnitAddressWithKeyDoesNotExist('spryker-address-1');
+        $this->tester->ensureCompanyUnitAddressWithKeyDoesNotExist('spryker-address-2');
         $this->tester->haveCompanyUnitAddress(['key' => 'spryker-address-1']);
         $this->tester->haveCompanyUnitAddress(['key' => 'spryker-address-2']);
 
