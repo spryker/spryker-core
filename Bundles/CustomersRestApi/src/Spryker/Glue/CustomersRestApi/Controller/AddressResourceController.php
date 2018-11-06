@@ -118,7 +118,7 @@ class AddressResourceController extends AbstractController
      * @Glue({
      *     "delete": {
      *          "summary": [
-     *              "Delete customer`s addresses."
+     *              "Delete customer's addresses."
      *          ],
      *          "headers": [
      *              "Accept-Language"

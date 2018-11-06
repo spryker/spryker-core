@@ -20,7 +20,7 @@ class AbstractProductImageSetsResourceController extends AbstractController
      * @Glue({
      *     "getResource": {
      *          "summary": [
-     *              "Retrieve abstract product`s image sets."
+     *              "Retrieve abstract product's image sets."
      *          ],
      *          "headers": [
      *              "Accept-Language"

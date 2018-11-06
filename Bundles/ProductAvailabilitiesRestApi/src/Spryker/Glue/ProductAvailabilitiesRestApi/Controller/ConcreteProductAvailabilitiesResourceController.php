@@ -19,7 +19,7 @@ class ConcreteProductAvailabilitiesResourceController extends AbstractController
      * @Glue({
      *     "getResource": {
      *          "summary": [
-     *              "Retrieve concrete product availability data."
+     *              "Retrieve Concrete product availability data."
      *          ],
      *          "headers": [
      *              "Accept-Language"

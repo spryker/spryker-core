@@ -32,7 +32,7 @@ class WishlistsResourceController extends AbstractController
      *     },
      *     "getCollection": {
      *          "summary": [
-     *              "Retrieve all customer`s wishlists."
+     *              "Retrieve all customer's wishlists."
      *          ],
      *          "headers": [
      *              "Accept-Language"
@@ -83,7 +83,7 @@ class WishlistsResourceController extends AbstractController
      * @Glue({
      *     "patch": {
      *          "summary": [
-     *              "Delete customer`s wishlist."
+     *              "Delete customer's wishlist."
      *          ],
      *          "headers": [
      *              "Accept-Language"

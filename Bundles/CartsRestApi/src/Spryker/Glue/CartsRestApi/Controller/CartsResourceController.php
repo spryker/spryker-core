@@ -32,7 +32,7 @@ class CartsResourceController extends AbstractController
      *     },
      *     "getCollection": {
      *          "summary": [
-     *              "Retrieve list of all customers carts."
+     *              "Retrieve list of all customer carts."
      *          ],
      *          "headers": [
      *              "Accept-Language"
