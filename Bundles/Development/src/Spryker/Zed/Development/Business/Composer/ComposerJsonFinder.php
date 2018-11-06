@@ -33,7 +33,7 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
      */
     public function findByModule(ModuleTransfer $module): ?SplFileInfo
     {
-        $this->finder->in($module->getPath())->name('composer.json')->depth('< 2');
+        $this->finder->in($module->getPath())->name('composer.json')->depth('< 1');
 
         if (!$this->finder->hasResults()) {
             return null;

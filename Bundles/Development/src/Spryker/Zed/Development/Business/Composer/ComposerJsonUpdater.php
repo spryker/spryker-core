@@ -50,14 +50,14 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         $processed = [];
 
         foreach ($modules as $module) {
-            $composerName = implode('.', [$module->getOrganization()->getName(), $module->getName()]);
+            $composerPackageName = implode('.', [$module->getOrganization()->getName(), $module->getName()]);
             $composerJsonFile = $this->finder->findByModule($module);
 
             if (!$composerJsonFile) {
                 continue;
             }
 
-            $processed[$composerName] = $this->updateComposerJsonFile($composerJsonFile, $dryRun);
+            $processed[$composerPackageName] = $this->updateComposerJsonFile($composerJsonFile, $dryRun);
         }
 
         return $processed;
@@ -181,7 +181,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     protected function assertCorrectName($composerName, SplFileInfo $composerJsonFile)
     {
         $filter = new CamelCaseToDash();
-        $moduleName = strtolower($filter->filter(basename($composerJsonFile->getPath())));
+        $moduleName = mb_strtolower($filter->filter(basename($composerJsonFile->getPath())));
         $organization = $this->getOrganizationFromComposerJsonFile($composerJsonFile);
         $expected = $organization . '/' . $moduleName;
 
