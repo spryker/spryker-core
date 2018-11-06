@@ -8,6 +8,7 @@ namespace Spryker\Glue\ProductAvailabilitiesRestApi\Processor\AbstractProductAva
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -164,7 +165,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
             $sku,
             ProductAvailabilitiesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES
         );
-        $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
+        $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
 
         return $restResource;
     }

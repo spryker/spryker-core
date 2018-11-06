@@ -11,6 +11,7 @@ use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
 use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
@@ -173,6 +174,9 @@ class CompanyUserTable extends AbstractTable
     protected function prepareQuery(SpyCompanyUserQuery $companyUserQuery): SpyCompanyUserQuery
     {
         return $companyUserQuery->joinCustomer()
+            ->useCustomerQuery()
+                ->filterByAnonymizedAt(null, Criteria::EQUAL)
+            ->endUse()
             ->withColumn(
                 'CONCAT(' . SpyCustomerTableMap::COL_FIRST_NAME . ', \' \', ' . SpyCustomerTableMap::COL_LAST_NAME . ')',
                 static::COL_COMPANY_USER_NAME

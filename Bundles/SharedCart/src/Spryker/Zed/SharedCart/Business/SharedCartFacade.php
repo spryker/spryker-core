@@ -181,4 +181,20 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
             ->createQuoteShareDetailsReader()
             ->getShareDetailsByIdQuote($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function deleteShareRelationsForCompanyUserId(int $idCompanyUser): void
+    {
+        $this->getFactory()
+            ->createQuoteCompanyUserWriter()
+            ->deleteShareRelationsForCompanyUserId($idCompanyUser);
+    }
 }

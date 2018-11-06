@@ -26,6 +26,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_CHANGE_OBSERVER = 'PLUGINS_QUOTE_CHANGE_OBSERVER';
     public const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
     public const PLUGINS_CART_REMOVE_ITEM_STRATEGY = 'PLUGINS_CART_REMOVE_ITEM_STRATEGY';
+    public const PLUGINS_POST_RELOAD_ITEMS = 'PLUGINS_POST_RELOAD_ITEMS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -47,6 +48,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteChangeObserverPlugins($container);
         $container = $this->addCartAddItemStrategyPlugins($container);
         $container = $this->addCartRemoveItemStrategyPlugins($container);
+        $container = $this->addPostReloadItemsPlugins($container);
 
         return $container;
     }
@@ -202,6 +204,20 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPostReloadItemsPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_POST_RELOAD_ITEMS] = function (Container $container): array {
+            return $this->getPostReloadItemsPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
      */
     protected function getExpanderPlugins(Container $container)
@@ -285,6 +301,16 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
      */
     protected function getCartRemoveItemStrategyPlugins(Container $container): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[]
+     */
+    protected function getPostReloadItemsPlugins(Container $container): array
     {
         return [];
     }
