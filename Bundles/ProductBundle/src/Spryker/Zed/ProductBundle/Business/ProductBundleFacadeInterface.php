@@ -25,7 +25,6 @@ interface ProductBundleFacadeInterface
     /**
      *
      * Specification:
-     *
      * - Takes all items to be added to cart and checks if any is bundle item
      * - If bundle item then it is removed, and added to QuoteTransfer::bundleItems, the identifier assigned
      * - Finds all bundled items from that bundle and puts into add to cart operation, assign bundle identifier they belong to.
@@ -42,7 +41,6 @@ interface ProductBundleFacadeInterface
     /**
      *
      * Specification:
-     *
      * - It will add images to product bundle
      *
      * @api
@@ -56,7 +54,6 @@ interface ProductBundleFacadeInterface
     /**
      *
      * Specification:
-     *
      * - The group key is build to uniquely identify bundled items.
      *
      * @api
@@ -70,7 +67,6 @@ interface ProductBundleFacadeInterface
     /**
      *
      * Specification:
-     *
      * - Updates QuoteTransfer::bundleItems to be in sync with current existing bundled items in cart.
      *
      * @api
@@ -84,7 +80,6 @@ interface ProductBundleFacadeInterface
     /**
      *
      * Specification:
-     *
      * - Checks if items which being added to cart is available, for bundle it checks bundled items.
      * - Even if same item added separatelly from bundle availability is checked together.
      * - Sets error message if not available
@@ -99,9 +94,8 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *
      * - Checks if bundled items which being added to cart is active.
-     * - Sets error message if not available.
+     * - Sets error message if they were not.
      *
      * @api
      *
@@ -114,7 +108,6 @@ interface ProductBundleFacadeInterface
     /**
      *
      * Specification:
-     *
      * - Checks if items which being added to checkout is available, for bundle it checks bundled items.
      * - Even if same item added separatelly from bundle availability is checked together.
      * - Sets error message if not available
@@ -130,7 +123,6 @@ interface ProductBundleFacadeInterface
 
     /**
      * * Specification:
-     *
      *  - Calculates QuoteTransfer::bundleItems prices
      *
      * @api
@@ -143,7 +135,6 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *
      * - Gets all items which belong to bundle
      * - Updates bundle products with new availability, given sku belong
      * - Touch abstract availability for bundle product
@@ -158,7 +149,6 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *
      * - Gets all items which belong to bundle
      * - Updates bundle products with new stock, given sku belong
      * - Touch abstract stock for bundle product
@@ -174,7 +164,6 @@ interface ProductBundleFacadeInterface
     /**
      *
      * Specification:
-     *
      *  - Calculated bundle availability based on bundled items
      *  - Persists availability
      *  - Touches availability abstract collector for bundle

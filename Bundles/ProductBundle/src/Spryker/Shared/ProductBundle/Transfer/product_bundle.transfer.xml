@@ -22,6 +22,7 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="sku" type="string"/>
         <property name="groupKeyPrefix" type="string"/>
         <property name="bundleItemIdentifier" type="string" />
         <property name="relatedBundleItemIdentifier" type="string" />
@@ -52,6 +53,15 @@
         <property name="store" type="Store" />
     </transfer>
 
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item" />
+    </transfer>
+
     <transfer name="Order">
         <property name="bundleItems" type="Item[]" singular="bundleItem" />
         <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup" />
@@ -72,6 +82,10 @@
     <transfer name="Store">
         <property name="idStore" type="int" />
         <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

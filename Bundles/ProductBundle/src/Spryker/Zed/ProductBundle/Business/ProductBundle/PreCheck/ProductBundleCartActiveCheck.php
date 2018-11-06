@@ -15,7 +15,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterface
 {
-    public const CART_PRE_CHECK_ACTIVE_FAILED = 'cart.pre.check.active.failed';
+    protected const CART_PRE_CHECK_ACTIVE_FAILED = 'cart.pre.check.active.failed';
 
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
