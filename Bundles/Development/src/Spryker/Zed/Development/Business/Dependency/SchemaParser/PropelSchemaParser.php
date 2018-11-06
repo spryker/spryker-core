@@ -143,7 +143,14 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     protected function getSchemaFileFinder(): Finder
     {
         $finder = new Finder();
-        $finder->in($this->config->getPathToCore() . '*/src/Spryker/Zed/*/Persistence/Propel/Schema')->name('*.schema.xml');
+        $finder
+            ->in(
+                [
+                    $this->config->getPathToCore() . '*/src/Spryker/Zed/*/Persistence/Propel/Schema',
+                    $this->config->getPathToEco() . '*/src/SprykerEco/Zed/*/Persistence/Propel/Schema',
+                ]
+            )
+            ->name('*.schema.xml');
 
         return $finder;
     }
