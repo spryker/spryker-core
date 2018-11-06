@@ -47,6 +47,17 @@ class ComposerJsonUpdaterConsole extends AbstractCoreModuleAwareConsole
     {
         $modules = $this->getModulesToExecute($input);
 
+        if (!$modules) {
+            $this->error(
+                sprintf(
+                    'Argument `%s` is not a valid module.',
+                    $this->input->getArgument(static::ARGUMENT_MODULE)
+                )
+            );
+
+            return static::CODE_ERROR;
+        }
+
         $isDryRun = $this->input->getOption(static::OPTION_DRY_RUN);
         $processedModules = $this->getFacade()->updateComposerJsonInModules($modules, $isDryRun);
         $modifiedModules = [];
