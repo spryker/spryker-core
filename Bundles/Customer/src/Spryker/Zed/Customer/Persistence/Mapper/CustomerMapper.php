@@ -36,9 +36,12 @@ class CustomerMapper implements CustomerMapperInterface
      */
     public function mapCustomerAddressEntityToTransfer(SpyCustomerAddress $customerAddressEntity): AddressTransfer
     {
-        return (new AddressTransfer())->fromArray(
-            $customerAddressEntity->toArray(),
-            true
-        );
+        $customerAddressTransfer = (new AddressTransfer())
+            ->fromArray(
+                $customerAddressEntity->toArray(),
+                true
+            );
+
+        return $customerAddressTransfer;
     }
 }

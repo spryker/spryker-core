@@ -145,7 +145,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
             ->filterByIdCustomerAddress($idCustomerAddress)
             ->findOne();
 
-        if ($customerAddressEntity === null) {
+        if (!$customerAddressEntity) {
             return null;
         }
 
