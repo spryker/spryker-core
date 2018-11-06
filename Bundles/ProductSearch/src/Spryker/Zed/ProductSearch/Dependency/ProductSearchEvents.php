@@ -56,4 +56,28 @@ interface ProductSearchEvents
      * @api
      */
     public const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE = 'Entity.spy_product_search_attribute.delete';
+
+    /**
+     * Specification:
+     * - Represents spy_product_search entity creation.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_SEARCH_CREATE = 'Entity.spy_product_search.create';
+
+    /**
+     * Specification:
+     * - Represents spy_product_search entity changes.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_SEARCH_UPDATE = 'Entity.spy_product_search.update';
+
+    /**
+     * Specification:
+     * - Represents spy_product_search entity deletion.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_SEARCH_DELETE = 'Entity.spy_product_search.delete';
 }
