@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -41,23 +41,23 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface
+     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface
      */
-    protected $pluginExecutor;
+    protected $companyBusinessUnitPluginExecutor;
 
     /**
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface $companyBusinessUnitEntityManager
-     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface $pluginExecutor
+     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface $companyBusinessUnitPluginExecutor
      */
     public function __construct(
         CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository,
         CompanyBusinessUnitEntityManagerInterface $companyBusinessUnitEntityManager,
-        CompanyBusinessUnitWriterPluginExecutorInterface $pluginExecutor
+        CompanyBusinessUnitPluginExecutorInterface $companyBusinessUnitPluginExecutor
     ) {
         $this->repository = $companyBusinessUnitRepository;
         $this->entityManager = $companyBusinessUnitEntityManager;
-        $this->pluginExecutor = $pluginExecutor;
+        $this->companyBusinessUnitPluginExecutor = $companyBusinessUnitPluginExecutor;
     }
 
     /**
@@ -116,7 +116,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
 
         $companyBusinessUnitTransfer = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer();
 
-        $this->pluginExecutor->executePreDeletePlugins($companyBusinessUnitTransfer);
+        $this->companyBusinessUnitPluginExecutor->executePreDeletePlugins($companyBusinessUnitTransfer);
 
         $companyBusinessUnitResponseTransfer->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer);
 
@@ -174,7 +174,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         }
 
         $companyBusinessUnitTransfer = $this->entityManager->saveCompanyBusinessUnit($companyBusinessUnitTransfer);
-        $companyBusinessUnitTransfer = $this->pluginExecutor->executePostSavePlugins($companyBusinessUnitTransfer);
+        $companyBusinessUnitTransfer = $this->companyBusinessUnitPluginExecutor->executePostSavePlugins($companyBusinessUnitTransfer);
         $companyBusinessUnitResponseTransfer->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer);
 
         return $companyBusinessUnitResponseTransfer;

@@ -13,41 +13,49 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
 {
     /**
-     * @var array|\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface[]
+     * @var \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface[]
      */
     protected $companyUserPreSavePlugins;
 
     /**
-     * @var array|\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
+     * @var \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
      */
     protected $companyUserPostSavePlugins;
 
     /**
-     * @var array|\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     * @var \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
      */
     protected $companyUserHydrationPlugins;
 
     /**
-     * @var array|\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[]
+     * @var \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[]
      */
     protected $companyUserPostCreatePlugins;
+
+    /**
+     * @var \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreDeletePluginInterface[]
+     */
+    protected $companyUserPreDeletePlugins;
 
     /**
      * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface[] $companyUserPreSavePlugins
      * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[] $companyUserPostSavePlugins
      * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[] $companyUserPostCreatePlugins
      * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[] $companyUserHydrationPlugins
+     * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreDeletePluginInterface[] $companyUserPreDeletePlugins
      */
     public function __construct(
         array $companyUserPreSavePlugins = [],
         array $companyUserPostSavePlugins = [],
         array $companyUserPostCreatePlugins = [],
-        array $companyUserHydrationPlugins = []
+        array $companyUserHydrationPlugins = [],
+        array $companyUserPreDeletePlugins = []
     ) {
         $this->companyUserPostSavePlugins = $companyUserPostSavePlugins;
         $this->companyUserHydrationPlugins = $companyUserHydrationPlugins;
         $this->companyUserPostCreatePlugins = $companyUserPostCreatePlugins;
         $this->companyUserPreSavePlugins = $companyUserPreSavePlugins;
+        $this->companyUserPreDeletePlugins = $companyUserPreDeletePlugins;
     }
 
     /**
@@ -107,5 +115,17 @@ class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
         }
 
         return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return void
+     */
+    public function executePreDeletePlugins(CompanyUserTransfer $companyUserTransfer): void
+    {
+        foreach ($this->companyUserPreDeletePlugins as $plugin) {
+            $plugin->preDelete($companyUserTransfer);
+        }
     }
 }
