@@ -83,11 +83,10 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     {
         $productOptionValueEntities = $this->productOptionQueryContainer
             ->queryProductOptionByProductOptionCriteria($productOptionCriteriaTransfer)
-            ->find();
+            ->find()
+            ->getArrayCopy();
 
-        $productOptionCollectionTransfer = $this->hydrateProductOptionCollectionTransfer($productOptionValueEntities->getArrayCopy());
-
-        return $productOptionCollectionTransfer;
+        return $this->hydrateProductOptionCollectionTransfer($productOptionValueEntities);
     }
 
     /**
@@ -97,12 +96,10 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      */
     public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue): bool
     {
-        $persistedIdProductOptionValue = $this->productOptionQueryContainer
+        return $this->productOptionQueryContainer
             ->queryProductOptionByValueId($idProductOptionValue)
             ->select([SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE])
-            ->findOne();
-
-        return $persistedIdProductOptionValue !== null;
+            ->exists();
     }
 
     /**
