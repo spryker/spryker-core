@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Development\Communication\Console;
 
-use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,10 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
-class ComposerJsonUpdaterConsole extends Console
+class ComposerJsonUpdaterConsole extends AbstractCoreModuleAwareConsole
 {
     public const COMMAND_NAME = 'dev:composer:update-json-files';
-    public const OPTION_MODULE = 'module';
     public const OPTION_DRY_RUN = 'dry-run';
     public const VERBOSE = 'verbose';
 
@@ -34,7 +32,6 @@ class ComposerJsonUpdaterConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Update composer.json of core modules (Spryker core dev only).');
 
-        $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module (comma separated for multiple ones)');
         $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only, or use in CI');
 
         $this->setAliases(['dev:dependency:update-composer-files']);
@@ -48,11 +45,7 @@ class ComposerJsonUpdaterConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $modules = [];
-        $moduleList = $this->input->getOption(static::OPTION_MODULE);
-        if ($moduleList) {
-            $modules = explode(',', $this->input->getOption(static::OPTION_MODULE));
-        }
+        $modules = $this->getModulesToExecute($input);
 
         $isDryRun = $this->input->getOption(static::OPTION_DRY_RUN);
         $processedModules = $this->getFacade()->updateComposerJsonInModules($modules, $isDryRun);
@@ -78,7 +71,7 @@ class ComposerJsonUpdaterConsole extends Console
         }
 
         if (count($modifiedModules)) {
-            $command = 'console ' . static::COMMAND_NAME . ' -m ' . implode(',', $modifiedModules);
+            $command = 'console ' . static::COMMAND_NAME . ' -m ' . $this->input->getArgument(static::ARGUMENT_MODULE);
             $this->output->writeln(sprintf('Please run `%s` locally without dry-run.', $command));
         }
 

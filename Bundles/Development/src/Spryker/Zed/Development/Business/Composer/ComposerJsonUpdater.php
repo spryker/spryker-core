@@ -40,22 +40,18 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     }
 
     /**
-     * @param array $bundles
      * @param bool $dryRun
      *
      * @return array
      */
-    public function update(array $bundles, $dryRun = false)
+    public function update($dryRun = false)
     {
         $composerJsonFiles = $this->finder->findAll();
 
         $processed = [];
         foreach ($composerJsonFiles as $composerJsonFile) {
-            if ($this->shouldSkip($composerJsonFile, $bundles)) {
-                continue;
-            }
-
-            $processed[$composerJsonFile->getRelativePath()] = $this->updateComposerJsonFile($composerJsonFile, $dryRun);
+            $processed[$composerJsonFile->getPath()] = $this->updateComposerJsonFile($composerJsonFile, $dryRun);
+            dump($composerJsonFile->getPath());
         }
 
         return $processed;
@@ -101,22 +97,6 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         }
 
         return true;
-    }
-
-    /**
-     * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
-     * @param array $bundles
-     *
-     * @return bool
-     */
-    protected function shouldSkip(SplFileInfo $composerJsonFile, array $bundles)
-    {
-        if (!$bundles) {
-            return false;
-        }
-
-        $folder = $composerJsonFile->getRelativePath();
-        return !in_array($folder, $bundles);
     }
 
     /**
@@ -195,11 +175,10 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     protected function assertCorrectName($composerName, SplFileInfo $composerJsonFile)
     {
         $filter = new CamelCaseToDash();
-        $moduleName = strtolower($filter->filter($composerJsonFile->getRelativePath()));
-
+        $moduleName = strtolower($filter->filter(basename($composerJsonFile->getPath())));
         $organization = $this->getOrganizationFromComposerJsonFile($composerJsonFile);
-
         $expected = $organization . '/' . $moduleName;
+
         if ($composerName !== $expected) {
             throw new RuntimeException(sprintf('Invalid composer name, expected %s, got %s', $expected, $composerName));
         }
@@ -214,13 +193,17 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      */
     protected function getOrganizationFromComposerJsonFile(SplFileInfo $composerJsonFile)
     {
-        if (!preg_match('/vendor\/spryker\/([a-z_-]+)\/Bundles\/\w+\/composer.json$/', $composerJsonFile->getRealPath(), $matches)) {
-            throw new InvalidComposerJsonException(sprintf(
-                'Unable to locate organization name from %s.',
-                $composerJsonFile->getRealPath()
-            ));
+        if (preg_match('/vendor\/spryker\/([a-z_-]+)\/Bundles\/\w+\/composer.json$/', $composerJsonFile->getRealPath(), $matches)) {
+            return $matches[1];
         }
 
-        return $matches[1];
+        if (preg_match('/vendor\/([a-z_-]+)\/[a-z_-]+\/composer.json$/', $composerJsonFile->getRealPath(), $matches)) {
+            return $matches[1];
+        }
+
+        throw new InvalidComposerJsonException(sprintf(
+            'Unable to locate organization name from %s.',
+            $composerJsonFile->getRealPath()
+        ));
     }
 }
