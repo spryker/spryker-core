@@ -7,39 +7,41 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
+use Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfer;
+
 /**
  * Specification:
  *  - This component describes a security scheme that can be used by the operations.
  *  - This component covers Security Scheme Object in OpenAPI specification format (see https://swagger.io/specification/#securitySchemeObject).
  */
-class SecuritySchemeSpecificationComponent extends AbstractSpecificationComponent
+class SecuritySchemeSpecificationComponent extends AbstractSpecificationComponent implements SecuritySchemeSpecificationComponentInterface
 {
     protected const KEY_TYPE = 'type';
     protected const KEY_SCHEME = 'scheme';
     protected const KEY_IN = 'in';
 
     /**
-     * @var string
+     * @var \Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfer $specificationComponentTransfer
      */
-    protected $name;
+    protected $specificationComponentTransfer;
 
     /**
-     * @var string
+     * @param \Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfer $securitySchemeComponentTransfer
+     *
+     * @return void
      */
-    protected $type;
-
-    /**
-     * @var string
-     */
-    protected $scheme;
+    public function setSecuritySchemeComponentTransfer(OpenApiSpecificationSecuritySchemeComponentTransfer $securitySchemeComponentTransfer): void
+    {
+        $this->specificationComponentTransfer = $securitySchemeComponentTransfer;
+    }
 
     /**
      * @return array
      */
-    public function toArray(): array
+    public function getSpecificationComponentData(): array
     {
-        $securitySchemaData[$this->name][static::KEY_TYPE] = $this->type;
-        $securitySchemaData[$this->name][static::KEY_SCHEME] = $this->scheme;
+        $securitySchemaData[$this->specificationComponentTransfer->getName()][static::KEY_TYPE] = $this->specificationComponentTransfer->getType();
+        $securitySchemaData[$this->specificationComponentTransfer->getName()][static::KEY_SCHEME] = $this->specificationComponentTransfer->getScheme();
 
         return $securitySchemaData;
     }
@@ -47,42 +49,12 @@ class SecuritySchemeSpecificationComponent extends AbstractSpecificationComponen
     /**
      * @return array
      */
-    public function getRequiredProperties(): array
+    protected function getRequiredProperties(): array
     {
         return [
-            $this->name,
-            $this->type,
-            $this->scheme,
+            $this->specificationComponentTransfer->getName(),
+            $this->specificationComponentTransfer->getType(),
+            $this->specificationComponentTransfer->getScheme(),
         ];
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return void
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return void
-     */
-    public function setType(string $type): void
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @param string $scheme
-     *
-     * @return void
-     */
-    public function setScheme(string $scheme): void
-    {
-        $this->scheme = $scheme;
     }
 }

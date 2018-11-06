@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
+use Generated\Shared\Transfer\OpenApiSpecificationPathRequestComponentTransfer;
+
 /**
  * Specification:
  *  - This component describes a single request body.
  *  - It covers Request Body Object in OpenAPI specification format (see https://swagger.io/specification/#requestBodyObject)
  */
-class PathRequestSpecificationComponent extends AbstractSpecificationComponent
+class PathRequestSpecificationComponent extends AbstractSpecificationComponent implements PathRequestSpecificationComponentInterface
 {
     protected const KEY_APPLICATION_JSON = 'application/json';
     protected const KEY_CONTENT = 'content';
@@ -22,31 +24,31 @@ class PathRequestSpecificationComponent extends AbstractSpecificationComponent
     protected const KEY_SCHEMA = 'schema';
 
     /**
-     * @var string
+     * @var \Generated\Shared\Transfer\OpenApiSpecificationPathRequestComponentTransfer $pathRequestComponentTransfer
      */
-    protected $description;
+    protected $pathRequestComponentTransfer;
 
     /**
-     * @var bool
+     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathRequestComponentTransfer $pathRequestComponentTransfer
+     *
+     * @return void
      */
-    protected $required = true;
-
-    /**
-     * @var string
-     */
-    protected $jsonSchemaRef;
+    public function setPathRequestComponentTransfer(OpenApiSpecificationPathRequestComponentTransfer $pathRequestComponentTransfer): void
+    {
+        $this->pathRequestComponentTransfer = $pathRequestComponentTransfer;
+    }
 
     /**
      * @return array
      */
-    public function toArray(): array
+    public function getSpecificationComponentData(): array
     {
         $result = [];
 
-        $result[static::KEY_DESCRIPTION] = $this->description;
-        $result[static::KEY_REQUIRED] = $this->required;
-        if ($this->jsonSchemaRef) {
-            $result[static::KEY_CONTENT][static::KEY_APPLICATION_JSON][static::KEY_SCHEMA][static::KEY_REF] = $this->jsonSchemaRef;
+        $result[static::KEY_DESCRIPTION] = $this->pathRequestComponentTransfer->getDescription();
+        $result[static::KEY_REQUIRED] = $this->pathRequestComponentTransfer->getRequired();
+        if ($this->pathRequestComponentTransfer->getJsonSchemaRef()) {
+            $result[static::KEY_CONTENT][static::KEY_APPLICATION_JSON][static::KEY_SCHEMA][static::KEY_REF] = $this->pathRequestComponentTransfer->getJsonSchemaRef();
         }
 
         return $result;
@@ -55,42 +57,12 @@ class PathRequestSpecificationComponent extends AbstractSpecificationComponent
     /**
      * @return array
      */
-    public function getRequiredProperties(): array
+    protected function getRequiredProperties(): array
     {
         return [
-            $this->description,
-            $this->required,
-            $this->jsonSchemaRef,
+            $this->pathRequestComponentTransfer->getDescription(),
+            $this->pathRequestComponentTransfer->getRequired(),
+            $this->pathRequestComponentTransfer->getJsonSchemaRef(),
         ];
-    }
-
-    /**
-     * @param string $description
-     *
-     * @return void
-     */
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @param bool $required
-     *
-     * @return void
-     */
-    public function setRequired(bool $required): void
-    {
-        $this->required = $required;
-    }
-
-    /**
-     * @param string $jsonSchemaRef
-     *
-     * @return void
-     */
-    public function setJsonSchemaRef(string $jsonSchemaRef): void
-    {
-        $this->jsonSchemaRef = $jsonSchemaRef;
     }
 }

@@ -37,7 +37,7 @@ class YamlOpenApiSpecificationWriter implements OpenApiSpecificationWriterInterf
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig
      */
-    protected $DocumentationGeneratorRestApiConfig;
+    protected $documentationGeneratorRestApiConfig;
 
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToYamlDumperInterface
@@ -50,16 +50,16 @@ class YamlOpenApiSpecificationWriter implements OpenApiSpecificationWriterInterf
     protected $filesystem;
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig $DocumentationGeneratorRestApiConfig
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig $documentationGeneratorRestApiConfig
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToYamlDumperInterface $yamlDumper
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFilesystemInterface $filesystem
      */
     public function __construct(
-        DocumentationGeneratorRestApiConfig $DocumentationGeneratorRestApiConfig,
+        DocumentationGeneratorRestApiConfig $documentationGeneratorRestApiConfig,
         DocumentationGeneratorRestApiToYamlDumperInterface $yamlDumper,
         DocumentationGeneratorRestApiToFilesystemInterface $filesystem
     ) {
-        $this->DocumentationGeneratorRestApiConfig = $DocumentationGeneratorRestApiConfig;
+        $this->documentationGeneratorRestApiConfig = $documentationGeneratorRestApiConfig;
         $this->yamlDumper = $yamlDumper;
         $this->filesystem = $filesystem;
     }
@@ -96,15 +96,15 @@ class YamlOpenApiSpecificationWriter implements OpenApiSpecificationWriterInterf
         return [
             static::KEY_OPENAPI => static::OPENAPI_VERSION,
             static::KEY_INFO => [
-                static::KEY_VERSION => $this->DocumentationGeneratorRestApiConfig->getApiDocumentationVersionInfo(),
-                static::KEY_TITLE => $this->DocumentationGeneratorRestApiConfig->getApiDocumentationTitleInfo(),
+                static::KEY_VERSION => $this->documentationGeneratorRestApiConfig->getApiDocumentationVersionInfo(),
+                static::KEY_TITLE => $this->documentationGeneratorRestApiConfig->getApiDocumentationTitleInfo(),
                 static::KEY_LICENSE => [
-                    static::KEY_NAME => $this->DocumentationGeneratorRestApiConfig->getApiDocumentationLicenceNameInfo(),
+                    static::KEY_NAME => $this->documentationGeneratorRestApiConfig->getApiDocumentationLicenceNameInfo(),
                 ],
             ],
             static::KEY_SERVERS => [
                 [
-                    static::KEY_URL => $this->DocumentationGeneratorRestApiConfig->getRestApplicationDomain(),
+                    static::KEY_URL => $this->documentationGeneratorRestApiConfig->getRestApplicationDomain(),
                 ],
             ],
             static::KEY_PATHS => [],
@@ -120,9 +120,9 @@ class YamlOpenApiSpecificationWriter implements OpenApiSpecificationWriterInterf
      */
     protected function resolveGeneratedFileName(): string
     {
-        return $this->DocumentationGeneratorRestApiConfig->getGeneratedFileTargetDirectory()
+        return $this->documentationGeneratorRestApiConfig->getGeneratedFileTargetDirectory()
             . DIRECTORY_SEPARATOR
-            . $this->DocumentationGeneratorRestApiConfig->getGeneratedFileNamePrefix()
+            . $this->documentationGeneratorRestApiConfig->getGeneratedFileNamePrefix()
             . static::GENERATED_FILE_POSTFIX;
     }
 }

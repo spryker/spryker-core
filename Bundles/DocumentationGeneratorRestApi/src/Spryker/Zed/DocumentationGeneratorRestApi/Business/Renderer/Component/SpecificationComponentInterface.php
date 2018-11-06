@@ -12,12 +12,7 @@ interface SpecificationComponentInterface
     /**
      * @return array
      */
-    public function toArray(): array;
-
-    /**
-     * @return array
-     */
-    public function getRequiredProperties(): array;
+    public function getSpecificationComponentData(): array;
 
     /**
      * @return bool

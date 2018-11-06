@@ -7,43 +7,41 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
+use Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer;
+
 /**
  * Specification:
  *  - This component describes a single Schema Object.
  *  - This component partly covers Schema Object in OpenAPI specification format (see https://swagger.io/specification/#schemaObject).
  */
-class SchemaSpecificationComponent extends AbstractSpecificationComponent
+class SchemaSpecificationComponent extends AbstractSpecificationComponent implements SchemaSpecificationComponentInterface
 {
     protected const KEY_PROPERTIES = 'properties';
     protected const KEY_REQUIRED = 'required';
 
     /**
-     * @var string
+     * @var \Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer $specificationComponentTransfer
      */
-    protected $name;
+    protected $specificationComponentTransfer;
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponent[]
+     * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer $schemaComponentTransfer
+     *
+     * @return void
      */
-    protected $properties;
-
-    /**
-     * @var string[]
-     */
-    protected $required;
+    public function setSchemaComponentTransfer(OpenApiSpecificationSchemaComponentTransfer $schemaComponentTransfer): void
+    {
+        $this->specificationComponentTransfer = $schemaComponentTransfer;
+    }
 
     /**
      * @return array
      */
-    public function toArray(): array
+    public function getSpecificationComponentData(): array
     {
-        $properties = [];
-        foreach ($this->properties as $property) {
-            $properties += $property->toArray();
-        }
-        $schemaData[$this->name][static::KEY_PROPERTIES] = $properties;
-        if ($this->required) {
-            $schemaData[$this->name][static::KEY_REQUIRED] = $this->required;
+        $schemaData[$this->specificationComponentTransfer->getName()][static::KEY_PROPERTIES] = $this->specificationComponentTransfer->getProperties();
+        if ($this->specificationComponentTransfer->getRequired()) {
+            $schemaData[$this->specificationComponentTransfer->getName()][static::KEY_REQUIRED] = $this->specificationComponentTransfer->getRequired();
         }
 
         return $schemaData;
@@ -52,61 +50,11 @@ class SchemaSpecificationComponent extends AbstractSpecificationComponent
     /**
      * @return array
      */
-    public function getRequiredProperties(): array
+    protected function getRequiredProperties(): array
     {
         return [
-            $this->name,
-            $this->properties,
+            $this->specificationComponentTransfer->getName(),
+            $this->specificationComponentTransfer->getProperties(),
         ];
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return void
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponent[] $properties
-     *
-     * @return void
-     */
-    public function setProperties(array $properties): void
-    {
-        $this->properties = $properties;
-    }
-
-    /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponent $schemaPropertyComponent
-     *
-     * @return void
-     */
-    public function addProperty(SchemaPropertySpecificationComponent $schemaPropertyComponent): void
-    {
-        $this->properties[] = $schemaPropertyComponent;
-    }
-
-    /**
-     * @param string[] $required
-     *
-     * @return void
-     */
-    public function setRequired(array $required): void
-    {
-        $this->required = $required;
-    }
-
-    /**
-     * @param string $required
-     *
-     * @return void
-     */
-    public function addRequired(string $required): void
-    {
-        $this->required[] = $required;
     }
 }

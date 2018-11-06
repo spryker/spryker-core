@@ -22,4 +22,9 @@ abstract class AbstractSpecificationComponent implements SpecificationComponentI
 
         return true;
     }
+
+    /**
+     * @return array
+     */
+    abstract protected function getRequiredProperties(): array;
 }

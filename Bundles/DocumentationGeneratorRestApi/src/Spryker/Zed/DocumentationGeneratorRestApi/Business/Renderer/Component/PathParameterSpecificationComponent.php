@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
+use Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer;
+
 /**
  * Specification:
  *  - This component describes a single operation parameter.
@@ -14,7 +16,7 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
  *
  * @SuppressWarnings(PHPMD.ShortVariable)
  */
-class PathParameterSpecificationComponent extends AbstractSpecificationComponent
+class PathParameterSpecificationComponent extends AbstractSpecificationComponent implements PathParameterSpecificationComponentInterface
 {
     protected const KEY_DESCRIPTION = 'description';
     protected const KEY_IN = 'in';
@@ -24,45 +26,35 @@ class PathParameterSpecificationComponent extends AbstractSpecificationComponent
     protected const KEY_TYPE = 'type';
 
     /**
-     * @var string
+     * @var \Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer $pathParameterComponentTransfer
      */
-    protected $name;
+    protected $pathParameterComponentTransfer;
 
     /**
-     * @var string
+     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer $pathParameterComponentTransfer
+     *
+     * @return void
      */
-    protected $in;
-
-    /**
-     * @var bool
-     */
-    protected $required = true;
-
-    /**
-     * @var string
-     */
-    protected $description;
-
-    /**
-     * @var string
-     */
-    protected $schemaType;
+    public function setPathParameterComponentTransfer(OpenApiSpecificationPathParameterComponentTransfer $pathParameterComponentTransfer): void
+    {
+        $this->pathParameterComponentTransfer = $pathParameterComponentTransfer;
+    }
 
     /**
      * @return array
      */
-    public function toArray(): array
+    public function getSpecificationComponentData(): array
     {
         $result = [];
 
-        $result[static::KEY_NAME] = $this->name;
-        $result[static::KEY_IN] = $this->in;
-        $result[static::KEY_REQUIRED] = $this->required;
-        if ($this->description) {
-            $result[static::KEY_DESCRIPTION] = $this->description;
+        $result[static::KEY_NAME] = $this->pathParameterComponentTransfer->getName();
+        $result[static::KEY_IN] = $this->pathParameterComponentTransfer->getIn();
+        $result[static::KEY_REQUIRED] = $this->pathParameterComponentTransfer->getRequired();
+        if ($this->pathParameterComponentTransfer->getDescription()) {
+            $result[static::KEY_DESCRIPTION] = $this->pathParameterComponentTransfer->getDescription();
         }
         $result[static::KEY_SCHEMA] = [
-            static::KEY_TYPE => $this->schemaType,
+            static::KEY_TYPE => $this->pathParameterComponentTransfer->getSchemaType(),
         ];
 
         return $result;
@@ -71,63 +63,13 @@ class PathParameterSpecificationComponent extends AbstractSpecificationComponent
     /**
      * @return array
      */
-    public function getRequiredProperties(): array
+    protected function getRequiredProperties(): array
     {
         return [
-            $this->name,
-            $this->in,
-            $this->required,
-            $this->schemaType,
+            $this->pathParameterComponentTransfer->getName(),
+            $this->pathParameterComponentTransfer->getIn(),
+            $this->pathParameterComponentTransfer->getRequired(),
+            $this->pathParameterComponentTransfer->getSchemaType(),
         ];
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return void
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param string $in
-     *
-     * @return void
-     */
-    public function setIn(string $in): void
-    {
-        $this->in = $in;
-    }
-
-    /**
-     * @param bool $required
-     *
-     * @return void
-     */
-    public function setRequired(bool $required): void
-    {
-        $this->required = $required;
-    }
-
-    /**
-     * @param string $description
-     *
-     * @return void
-     */
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @param string $schemaType
-     *
-     * @return void
-     */
-    public function setSchemaType(string $schemaType): void
-    {
-        $this->schemaType = $schemaType;
     }
 }

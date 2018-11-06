@@ -8,12 +8,16 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer;
 
 use ArrayObject;
+use Generated\Shared\Transfer\OpenApiSpecificationPathMethodComponentTransfer;
 use Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer;
+use Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer;
+use Generated\Shared\Transfer\OpenApiSpecificationPathRequestComponentTransfer;
+use Generated\Shared\Transfer\OpenApiSpecificationPathResponseComponentTransfer;
 use Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponent;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRequestSpecificationComponent;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRequestSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponentInterface;
 
 class PathMethodRenderer implements PathMethodRendererInterface
 {
@@ -27,34 +31,78 @@ class PathMethodRenderer implements PathMethodRendererInterface
     protected const PARAMETER_SECURITY_BEARER_AUTH = 'BearerAuth';
 
     /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponentInterface
+     */
+    protected $pathMethodSpecificationComponent;
+
+    /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponentInterface
+     */
+    protected $pathResponseSpecificationComponent;
+
+    /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRequestSpecificationComponentInterface
+     */
+    protected $pathRequestSpecificationComponent;
+
+    /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponentInterface
+     */
+    protected $pathParameterSpecificationComponent;
+
+    /**
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponentInterface $pathMethodSpecificationComponent
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponentInterface $pathResponseSpecificationComponent
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRequestSpecificationComponentInterface $pathRequestSpecificationComponent
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponentInterface $pathParameterSpecificationComponent
+     */
+    public function __construct(
+        PathMethodSpecificationComponentInterface $pathMethodSpecificationComponent,
+        PathResponseSpecificationComponentInterface $pathResponseSpecificationComponent,
+        PathRequestSpecificationComponentInterface $pathRequestSpecificationComponent,
+        PathParameterSpecificationComponentInterface $pathParameterSpecificationComponent
+    ) {
+        $this->pathMethodSpecificationComponent = $pathMethodSpecificationComponent;
+        $this->pathResponseSpecificationComponent = $pathResponseSpecificationComponent;
+        $this->pathRequestSpecificationComponent = $pathRequestSpecificationComponent;
+        $this->pathParameterSpecificationComponent = $pathParameterSpecificationComponent;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer $pathMethodDataTransfer
      *
      * @return array
      */
     public function render(OpenApiSpecificationPathMethodDataTransfer $pathMethodDataTransfer): array
     {
-        $methodComponent = new PathMethodSpecificationComponent();
-        $methodComponent->setMethod($pathMethodDataTransfer->getMethod());
+        $pathMethodComponentTransfer = new OpenApiSpecificationPathMethodComponentTransfer();
+        $pathMethodComponentTransfer->setMethod($pathMethodDataTransfer->getMethod());
 
-        $methodComponent->setSummary($this->getFormattedSummary($pathMethodDataTransfer));
-        $methodComponent->addTag($pathMethodDataTransfer->getResource());
+        $pathMethodComponentTransfer->setSummary($this->getFormattedSummary($pathMethodDataTransfer));
+        $pathMethodComponentTransfer->addTag($pathMethodDataTransfer->getResource());
 
-        $this->addResponseComponents($methodComponent, $pathMethodDataTransfer->getResponseSchemas());
-        $this->addIdParameterComponents($methodComponent, $this->getIdParametersFromResourcePath($pathMethodDataTransfer->getPath()));
+        $this->addResponseComponents($pathMethodComponentTransfer, $pathMethodDataTransfer->getResponseSchemas());
+        $this->addIdParameterComponents($pathMethodComponentTransfer, $this->getIdParametersFromResourcePath($pathMethodDataTransfer->getPath()));
 
         if ($pathMethodDataTransfer->getRequestSchema()) {
-            $this->addRequestComponent($methodComponent, $pathMethodDataTransfer->getRequestSchema());
+            $this->addRequestComponent($pathMethodComponentTransfer, $pathMethodDataTransfer->getRequestSchema());
         }
 
         if ($pathMethodDataTransfer->getIsProtected()) {
-            $methodComponent->addSecurity([static::PARAMETER_SECURITY_BEARER_AUTH => []]);
+            $pathMethodComponentTransfer->addSecurity([static::PARAMETER_SECURITY_BEARER_AUTH => []]);
         }
 
         if ($pathMethodDataTransfer->getHeaders()) {
-            $this->addHeaderParameterComponents($methodComponent, $pathMethodDataTransfer->getHeaders());
+            $this->addHeaderParameterComponents($pathMethodComponentTransfer, $pathMethodDataTransfer->getHeaders());
         }
 
-        return [$pathMethodDataTransfer->getPath() => $methodComponent->toArray()];
+        $this->pathMethodSpecificationComponent->setPathMethodComponentTransfer($pathMethodComponentTransfer);
+
+        if ($this->pathMethodSpecificationComponent->isValid()) {
+            return [$pathMethodDataTransfer->getPath() => $this->pathMethodSpecificationComponent->getSpecificationComponentData()];
+        }
+
+        return [];
     }
 
     /**
@@ -68,84 +116,92 @@ class PathMethodRenderer implements PathMethodRendererInterface
     }
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent $methodComponent
-     * @param \ArrayObject|\Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer[] $responseSchemas
+     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathMethodComponentTransfer $methodComponent
+     * @param \ArrayObject $responseSchemas
      *
      * @return void
      */
-    protected function addResponseComponents(PathMethodSpecificationComponent $methodComponent, ArrayObject $responseSchemas): void
+    protected function addResponseComponents(OpenApiSpecificationPathMethodComponentTransfer $methodComponent, ArrayObject $responseSchemas): void
     {
         foreach ($responseSchemas as $responseSchema) {
-            $responseComponent = new PathResponseSpecificationComponent();
-            $responseComponent->setDescription($responseSchema->getDescription());
-            $responseComponent->setCode($responseSchema->getCode());
+            $responseComponentTransfer = new OpenApiSpecificationPathResponseComponentTransfer();
+            $responseComponentTransfer->setDescription($responseSchema->getDescription());
+            $responseComponentTransfer->setCode($responseSchema->getCode());
             if ($responseSchema->getSchemaReference()) {
-                $responseComponent->setJsonSchemaRef($responseSchema->getSchemaReference());
+                $responseComponentTransfer->setJsonSchemaRef($responseSchema->getSchemaReference());
             }
 
-            if ($responseComponent->isValid()) {
-                $methodComponent->addResponse($responseComponent);
+            $this->pathResponseSpecificationComponent->setPathResponseComponentTransfer($responseComponentTransfer);
+
+            if ($this->pathResponseSpecificationComponent->isValid()) {
+                $methodComponent->addResponse($this->pathResponseSpecificationComponent->getSpecificationComponentData());
             }
         }
     }
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent $methodComponent
+     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathMethodComponentTransfer $methodComponent
      * @param \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer $schemaDataTransfer
      *
      * @return void
      */
-    protected function addRequestComponent(PathMethodSpecificationComponent $methodComponent, OpenApiSpecificationPathSchemaDataTransfer $schemaDataTransfer): void
+    protected function addRequestComponent(OpenApiSpecificationPathMethodComponentTransfer $methodComponent, OpenApiSpecificationPathSchemaDataTransfer $schemaDataTransfer): void
     {
-        $requestComponent = new PathRequestSpecificationComponent();
-        $requestComponent->setDescription($schemaDataTransfer->getDescription());
-        $requestComponent->setRequired(true);
-        $requestComponent->setJsonSchemaRef($schemaDataTransfer->getSchemaReference());
+        $requestComponentTransfer = new OpenApiSpecificationPathRequestComponentTransfer();
+        $requestComponentTransfer->setDescription($schemaDataTransfer->getDescription());
+        $requestComponentTransfer->setRequired(true);
+        $requestComponentTransfer->setJsonSchemaRef($schemaDataTransfer->getSchemaReference());
 
-        if ($requestComponent->isValid()) {
-            $methodComponent->setRequest($requestComponent);
+        $this->pathRequestSpecificationComponent->setPathRequestComponentTransfer($requestComponentTransfer);
+
+        if ($this->pathRequestSpecificationComponent->isValid()) {
+            $methodComponent->setRequest($this->pathRequestSpecificationComponent->getSpecificationComponentData());
         }
     }
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent $methodComponent
+     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathMethodComponentTransfer $methodComponent
      * @param array $idParameters
      *
      * @return void
      */
-    protected function addIdParameterComponents(PathMethodSpecificationComponent $methodComponent, array $idParameters): void
+    protected function addIdParameterComponents(OpenApiSpecificationPathMethodComponentTransfer $methodComponent, array $idParameters): void
     {
         foreach ($idParameters as $parameter) {
-            $parameterComponent = new PathParameterSpecificationComponent();
-            $parameterComponent->setName($parameter);
-            $parameterComponent->setIn(static::PARAMETER_LOCATION_PATH);
-            $parameterComponent->setRequired(true);
-            $parameterComponent->setDescription($this->getDescriptionFromIdParameter($parameter));
-            $parameterComponent->setSchemaType(static::PARAMETER_SCHEMA_TYPE_STRING);
+            $parameterComponentTransfer = new OpenApiSpecificationPathParameterComponentTransfer();
+            $parameterComponentTransfer->setName($parameter);
+            $parameterComponentTransfer->setIn(static::PARAMETER_LOCATION_PATH);
+            $parameterComponentTransfer->setRequired(true);
+            $parameterComponentTransfer->setDescription($this->getDescriptionFromIdParameter($parameter));
+            $parameterComponentTransfer->setSchemaType(static::PARAMETER_SCHEMA_TYPE_STRING);
 
-            if ($parameterComponent->isValid()) {
-                $methodComponent->addParameter($parameterComponent);
+            $this->pathParameterSpecificationComponent->setPathParameterComponentTransfer($parameterComponentTransfer);
+
+            if ($this->pathParameterSpecificationComponent->isValid()) {
+                $methodComponent->addParameter($this->pathParameterSpecificationComponent->getSpecificationComponentData());
             }
         }
     }
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent $methodComponent
+     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathMethodComponentTransfer $methodComponent
      * @param array $headers
      *
      * @return void
      */
-    protected function addHeaderParameterComponents(PathMethodSpecificationComponent $methodComponent, array $headers): void
+    protected function addHeaderParameterComponents(OpenApiSpecificationPathMethodComponentTransfer $methodComponent, array $headers): void
     {
         foreach ($headers as $header) {
-            $parameterComponent = new PathParameterSpecificationComponent();
-            $parameterComponent->setName($header);
-            $parameterComponent->setIn(static::PARAMETER_LOCATION_HEADER);
-            $parameterComponent->setRequired(false);
-            $parameterComponent->setSchemaType(static::PARAMETER_SCHEMA_TYPE_STRING);
+            $parameterComponentTransfer = new OpenApiSpecificationPathParameterComponentTransfer();
+            $parameterComponentTransfer->setName($header);
+            $parameterComponentTransfer->setIn(static::PARAMETER_LOCATION_HEADER);
+            $parameterComponentTransfer->setRequired(false);
+            $parameterComponentTransfer->setSchemaType(static::PARAMETER_SCHEMA_TYPE_STRING);
 
-            if ($parameterComponent->isValid()) {
-                $methodComponent->addParameter($parameterComponent);
+            $this->pathParameterSpecificationComponent->setPathParameterComponentTransfer($parameterComponentTransfer);
+
+            if ($this->pathParameterSpecificationComponent->isValid()) {
+                $methodComponent->addParameter($this->pathParameterSpecificationComponent->getSpecificationComponentData());
             }
         }
     }

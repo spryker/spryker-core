@@ -28,6 +28,20 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecific
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\RestApiMethodProcessor;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\RestApiMethodProcessorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRequestSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRequestSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SecuritySchemeSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SecuritySchemeSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\PathMethodRenderer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\PathMethodRendererInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRenderer;
@@ -77,7 +91,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
      */
     public function createOpenApiSpecificationSecuritySchemeGenerator(): OpenApiSpecificationSecuritySchemeGeneratorInterface
     {
-        return new OpenApiSpecificationSecuritySchemeGenerator($this->createSecuritySchemaRenderer());
+        return new OpenApiSpecificationSecuritySchemeGenerator($this->createSecuritySchemeRenderer());
     }
 
     /**
@@ -157,7 +171,12 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
      */
     public function createPathMethodRenderer(): PathMethodRendererInterface
     {
-        return new PathMethodRenderer();
+        return new PathMethodRenderer(
+            $this->createPathMethodSpecificationComponent(),
+            $this->createPathResponseSpecificationComponent(),
+            $this->createPathRequestSpecificationComponent(),
+            $this->createPathParameterSpecificationComponent()
+        );
     }
 
     /**
@@ -165,7 +184,10 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
      */
     public function createSchemaRenderer(): SchemaRendererInterface
     {
-        return new SchemaRenderer();
+        return new SchemaRenderer(
+            $this->createSchemaSpecificationComponent(),
+            $this->createSchemaPropertySpecificationComponent()
+        );
     }
 
     /**
@@ -173,15 +195,63 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
      */
     public function createSecuritySchemeRenderer(): SecuritySchemeRendererInterface
     {
-        return new SecuritySchemeRenderer();
+        return new SecuritySchemeRenderer($this->createSecuritySchemeSpecificationComponent());
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRenderer
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponentInterface
      */
-    public function createSecuritySchemaRenderer(): SecuritySchemeRenderer
+    public function createPathMethodSpecificationComponent(): PathMethodSpecificationComponentInterface
     {
-        return new SecuritySchemeRenderer();
+        return new PathMethodSpecificationComponent();
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponentInterface
+     */
+    public function createPathParameterSpecificationComponent(): PathParameterSpecificationComponentInterface
+    {
+        return new PathParameterSpecificationComponent();
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRequestSpecificationComponentInterface
+     */
+    public function createPathRequestSpecificationComponent(): PathRequestSpecificationComponentInterface
+    {
+        return new PathRequestSpecificationComponent();
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponentInterface
+     */
+    public function createPathResponseSpecificationComponent(): PathResponseSpecificationComponentInterface
+    {
+        return new PathResponseSpecificationComponent();
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponentInterface
+     */
+    public function createSchemaPropertySpecificationComponent(): SchemaPropertySpecificationComponentInterface
+    {
+        return new SchemaPropertySpecificationComponent();
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface
+     */
+    public function createSchemaSpecificationComponent(): SchemaSpecificationComponentInterface
+    {
+        return new SchemaSpecificationComponent();
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SecuritySchemeSpecificationComponentInterface
+     */
+    public function createSecuritySchemeSpecificationComponent(): SecuritySchemeSpecificationComponentInterface
+    {
+        return new SecuritySchemeSpecificationComponent();
     }
 
     /**

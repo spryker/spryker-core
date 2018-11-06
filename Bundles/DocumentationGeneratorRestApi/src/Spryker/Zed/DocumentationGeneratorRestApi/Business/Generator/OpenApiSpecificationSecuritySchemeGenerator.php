@@ -8,7 +8,7 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeTransfer;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRenderer;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRendererInterface;
 
 class OpenApiSpecificationSecuritySchemeGenerator implements OpenApiSpecificationSecuritySchemeGeneratorInterface
 {
@@ -22,14 +22,14 @@ class OpenApiSpecificationSecuritySchemeGenerator implements OpenApiSpecificatio
     protected $securitySchemes = [];
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRenderer
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRendererInterface
      */
     protected $securitySchemeRenderer;
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRenderer $securitySchemeRenderer
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRendererInterface $securitySchemeRenderer
      */
-    public function __construct(SecuritySchemeRenderer $securitySchemeRenderer)
+    public function __construct(SecuritySchemeRendererInterface $securitySchemeRenderer)
     {
         $this->securitySchemeRenderer = $securitySchemeRenderer;
 

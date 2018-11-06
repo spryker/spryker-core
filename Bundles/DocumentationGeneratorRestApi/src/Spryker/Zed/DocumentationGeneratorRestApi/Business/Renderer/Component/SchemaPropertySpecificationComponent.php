@@ -7,118 +7,60 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
+use Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyComponentTransfer;
+
 /**
  * Specification:
  *  - This component describes a single Schema Object Property.
  *  - This component partly covers Schema Object Properties in OpenAPI specification format (see https://swagger.io/specification/#schemaObject).
  */
-class SchemaPropertySpecificationComponent extends AbstractSpecificationComponent
+class SchemaPropertySpecificationComponent extends AbstractSpecificationComponent implements SchemaPropertySpecificationComponentInterface
 {
     protected const KEY_TYPE = 'type';
     protected const KEY_REF = '$ref';
     protected const KEY_ITEMS = 'items';
 
     /**
-     * @var string
+     * @var \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyComponentTransfer $schemaPropertyComponentTransfer
      */
-    protected $name;
+    protected $schemaPropertyComponentTransfer;
 
     /**
-     * @var string
+     * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyComponentTransfer $schemaPropertyComponentTransfer
+     *
+     * @return void
      */
-    protected $type;
-
-    /**
-     * @var string
-     */
-    protected $schemaReference;
-
-    /**
-     * @var string
-     */
-    protected $itemsSchemaReference;
-
-    /**
-     * @var string
-     */
-    protected $itemsType;
+    public function setSchemaPropertyComponentTransfer(OpenApiSpecificationSchemaPropertyComponentTransfer $schemaPropertyComponentTransfer): void
+    {
+        $this->schemaPropertyComponentTransfer = $schemaPropertyComponentTransfer;
+    }
 
     /**
      * @return array
      */
-    public function toArray(): array
+    public function getSpecificationComponentData(): array
     {
         $property = [];
-        if ($this->type) {
-            $property[static::KEY_TYPE] = $this->type;
+        if ($this->schemaPropertyComponentTransfer->getType()) {
+            $property[static::KEY_TYPE] = $this->schemaPropertyComponentTransfer->getType();
         }
-        if ($this->schemaReference) {
-            $property[static::KEY_REF] = $this->schemaReference;
+        if ($this->schemaPropertyComponentTransfer->getSchemaReference()) {
+            $property[static::KEY_REF] = $this->schemaPropertyComponentTransfer->getSchemaReference();
         }
-        if ($this->itemsSchemaReference) {
-            $property[static::KEY_ITEMS][static::KEY_REF] = $this->itemsSchemaReference;
+        if ($this->schemaPropertyComponentTransfer->getItemsSchemaReference()) {
+            $property[static::KEY_ITEMS][static::KEY_REF] = $this->schemaPropertyComponentTransfer->getItemsSchemaReference();
         }
 
-        return [$this->name => $property];
+        return [$this->schemaPropertyComponentTransfer->getName() => $property];
     }
 
     /**
      * @return array
      */
-    public function getRequiredProperties(): array
+    protected function getRequiredProperties(): array
     {
         return [
-            $this->name,
+            $this->schemaPropertyComponentTransfer->getName(),
         ];
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return void
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return void
-     */
-    public function setType(string $type): void
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @param string $schemaReference
-     *
-     * @return void
-     */
-    public function setSchemaReference(string $schemaReference): void
-    {
-        $this->schemaReference = $schemaReference;
-    }
-
-    /**
-     * @param string $itemsSchemaReference
-     *
-     * @return void
-     */
-    public function setItemsSchemaReference(string $itemsSchemaReference): void
-    {
-        $this->itemsSchemaReference = $itemsSchemaReference;
-    }
-
-    /**
-     * @param string $itemsType
-     *
-     * @return void
-     */
-    public function setItemsType(string $itemsType): void
-    {
-        $this->itemsType = $itemsType;
     }
 }

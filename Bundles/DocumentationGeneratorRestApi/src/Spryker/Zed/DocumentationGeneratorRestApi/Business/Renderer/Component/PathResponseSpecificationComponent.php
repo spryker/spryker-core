@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
+use Generated\Shared\Transfer\OpenApiSpecificationPathResponseComponentTransfer;
+
 /**
  * Specification:
  *  - This component describes a single response from an API Operation.
  *  - This component covers Operation Object in OpenAPI specification format (see https://swagger.io/specification/#operationObject).
  */
-class PathResponseSpecificationComponent extends AbstractSpecificationComponent
+class PathResponseSpecificationComponent extends AbstractSpecificationComponent implements PathResponseSpecificationComponentInterface
 {
     protected const KEY_APPLICATION_JSON = 'application/json';
     protected const KEY_CONTENT = 'content';
@@ -21,71 +23,41 @@ class PathResponseSpecificationComponent extends AbstractSpecificationComponent
     protected const KEY_SCHEMA = 'schema';
 
     /**
-     * @var string
+     * @var \Generated\Shared\Transfer\OpenApiSpecificationPathResponseComponentTransfer $pathResponseComponentTransfer
      */
-    protected $code;
+    protected $pathResponseComponentTransfer;
 
     /**
-     * @var string
+     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathResponseComponentTransfer $pathResponseComponentTransfer
+     *
+     * @return void
      */
-    protected $description;
-
-    /**
-     * @var string
-     */
-    protected $jsonSchemaRef;
+    public function setPathResponseComponentTransfer(OpenApiSpecificationPathResponseComponentTransfer $pathResponseComponentTransfer): void
+    {
+        $this->pathResponseComponentTransfer = $pathResponseComponentTransfer;
+    }
 
     /**
      * @return array
      */
-    public function toArray(): array
+    public function getSpecificationComponentData(): array
     {
-        $result[static::KEY_DESCRIPTION] = $this->description;
-        if ($this->jsonSchemaRef) {
-            $result[static::KEY_CONTENT][static::KEY_APPLICATION_JSON][static::KEY_SCHEMA][static::KEY_REF] = $this->jsonSchemaRef;
+        $result[static::KEY_DESCRIPTION] = $this->pathResponseComponentTransfer->getDescription();
+        if ($this->pathResponseComponentTransfer->getJsonSchemaRef()) {
+            $result[static::KEY_CONTENT][static::KEY_APPLICATION_JSON][static::KEY_SCHEMA][static::KEY_REF] = $this->pathResponseComponentTransfer->getJsonSchemaRef();
         }
 
-        return [$this->code => $result];
+        return [$this->pathResponseComponentTransfer->getCode() => $result];
     }
 
     /**
      * @return array
      */
-    public function getRequiredProperties(): array
+    protected function getRequiredProperties(): array
     {
         return [
-            $this->code,
-            $this->description,
+            $this->pathResponseComponentTransfer->getCode(),
+            $this->pathResponseComponentTransfer->getDescription(),
         ];
-    }
-
-    /**
-     * @param string $code
-     *
-     * @return void
-     */
-    public function setCode(string $code): void
-    {
-        $this->code = $code;
-    }
-
-    /**
-     * @param string $description
-     *
-     * @return void
-     */
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @param string $jsonSchemaRef
-     *
-     * @return void
-     */
-    public function setJsonSchemaRef(string $jsonSchemaRef): void
-    {
-        $this->jsonSchemaRef = $jsonSchemaRef;
     }
 }

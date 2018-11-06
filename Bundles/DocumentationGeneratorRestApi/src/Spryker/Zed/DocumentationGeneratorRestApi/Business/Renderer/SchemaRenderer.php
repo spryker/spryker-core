@@ -7,13 +7,37 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer;
 
+use Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer;
 use Generated\Shared\Transfer\OpenApiSpecificationSchemaDataTransfer;
+use Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyComponentTransfer;
 use Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyTransfer;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponent;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface;
 
 class SchemaRenderer implements SchemaRendererInterface
 {
+    /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface
+     */
+    protected $schemaSpecificationComponent;
+
+    /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponentInterface
+     */
+    protected $schemaPropertySpecificationComponent;
+
+    /**
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface $schemaSpecificationComponent
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponentInterface $schemaPropertySpecificationComponent
+     */
+    public function __construct(
+        SchemaSpecificationComponentInterface $schemaSpecificationComponent,
+        SchemaPropertySpecificationComponentInterface $schemaPropertySpecificationComponent
+    ) {
+        $this->schemaSpecificationComponent = $schemaSpecificationComponent;
+        $this->schemaPropertySpecificationComponent = $schemaPropertySpecificationComponent;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaDataTransfer $schemaDataTransfer
      *
@@ -21,44 +45,48 @@ class SchemaRenderer implements SchemaRendererInterface
      */
     public function render(OpenApiSpecificationSchemaDataTransfer $schemaDataTransfer): array
     {
-        $schemaComponent = new SchemaSpecificationComponent();
-        $schemaComponent->setName($schemaDataTransfer->getName());
+        $schemaComponentTransfer = new OpenApiSpecificationSchemaComponentTransfer();
+        $schemaComponentTransfer->setName($schemaDataTransfer->getName());
         foreach ($schemaDataTransfer->getProperties() as $property) {
-            $this->addSchemaProperty($property, $schemaComponent);
+            $this->addSchemaProperty($schemaComponentTransfer, $property);
         }
         if ($schemaDataTransfer->getRequired()) {
-            $schemaComponent->setRequired($schemaDataTransfer->getRequired());
+            $schemaComponentTransfer->setRequired($schemaDataTransfer->getRequired());
         }
 
-        if ($schemaComponent->isValid()) {
-            return $schemaComponent->toArray();
+        $this->schemaSpecificationComponent->setSchemaComponentTransfer($schemaComponentTransfer);
+
+        if ($this->schemaSpecificationComponent->isValid()) {
+            return $this->schemaSpecificationComponent->getSpecificationComponentData();
         }
 
         return [];
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer $schemaComponent
      * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyTransfer $property
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponent $schemaComponent
      *
      * @return void
      */
-    protected function addSchemaProperty(OpenApiSpecificationSchemaPropertyTransfer $property, SchemaSpecificationComponent $schemaComponent): void
+    protected function addSchemaProperty(OpenApiSpecificationSchemaComponentTransfer $schemaComponent, OpenApiSpecificationSchemaPropertyTransfer $property): void
     {
-        $propertyComponent = new SchemaPropertySpecificationComponent();
-        $propertyComponent->setName($property->getName());
+        $schemaPropertyComponentTransfer = new OpenApiSpecificationSchemaPropertyComponentTransfer();
+        $schemaPropertyComponentTransfer->setName($property->getName());
         if ($property->getType()) {
-            $propertyComponent->setType($property->getType());
+            $schemaPropertyComponentTransfer->setType($property->getType());
         }
         if ($property->getReference()) {
-            $propertyComponent->setSchemaReference($property->getReference());
+            $schemaPropertyComponentTransfer->setSchemaReference($property->getReference());
         }
         if ($property->getItemsReference()) {
-            $propertyComponent->setItemsSchemaReference($property->getItemsReference());
+            $schemaPropertyComponentTransfer->setItemsSchemaReference($property->getItemsReference());
         }
 
-        if ($propertyComponent->isValid()) {
-            $schemaComponent->addProperty($propertyComponent);
+        $this->schemaPropertySpecificationComponent->setSchemaPropertyComponentTransfer($schemaPropertyComponentTransfer);
+
+        if ($this->schemaPropertySpecificationComponent->isValid()) {
+            $schemaComponent->addProperty($this->schemaPropertySpecificationComponent->getSpecificationComponentData());
         }
     }
 }
