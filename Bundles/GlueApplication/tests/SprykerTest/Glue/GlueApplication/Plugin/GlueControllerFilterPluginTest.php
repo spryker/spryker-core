@@ -8,6 +8,7 @@ namespace SprykerTest\Glue\GlueApplication\Plugin;
 
 use Codeception\Test\Unit;
 use Spryker\Glue\GlueApplication\Plugin\Rest\GlueControllerListenerPlugin;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
@@ -231,7 +232,7 @@ class GlueControllerFilterPluginTest extends Unit
             Request::METHOD_GET,
             [
                 'page' => [
-                    'offset' => 0,
+                    'offset' => 2,
                     'limit' => 2,
                 ],
             ],
@@ -252,10 +253,10 @@ class GlueControllerFilterPluginTest extends Unit
         $content = json_decode($response->getContent(), true);
 
         $this->assertPaginationKeys($content);
-        $this->assertUri($content, 'first', 2, 0);
-        $this->assertUri($content, 'last', 2, 18);
-        $this->assertUri($content, 'next', 2, 2);
-        $this->assertUri($content, 'prev', 2, 0);
+        $this->assertUri($content, RestLinkInterface::LINK_FIRST, 2, 0);
+        $this->assertUri($content, RestLinkInterface::LINK_LAST, 2, 18);
+        $this->assertUri($content, RestLinkInterface::LINK_NEXT, 2, 4);
+        $this->assertUri($content, RestLinkInterface::LINK_PREV, 2, 0);
     }
 
     /**
@@ -274,10 +275,10 @@ class GlueControllerFilterPluginTest extends Unit
     protected function assertPaginationKeys(array $content): void
     {
         $this->assertArrayHasKey(RestResponseInterface::RESPONSE_LINKS, $content);
-        $this->assertArrayHasKey('first', $content[RestResponseInterface::RESPONSE_LINKS]);
-        $this->assertArrayHasKey('last', $content[RestResponseInterface::RESPONSE_LINKS]);
-        $this->assertArrayHasKey('next', $content[RestResponseInterface::RESPONSE_LINKS]);
-        $this->assertArrayHasKey('prev', $content[RestResponseInterface::RESPONSE_LINKS]);
+        $this->assertArrayHasKey(RestLinkInterface::LINK_FIRST, $content[RestResponseInterface::RESPONSE_LINKS]);
+        $this->assertArrayHasKey(RestLinkInterface::LINK_LAST, $content[RestResponseInterface::RESPONSE_LINKS]);
+        $this->assertArrayHasKey(RestLinkInterface::LINK_NEXT, $content[RestResponseInterface::RESPONSE_LINKS]);
+        $this->assertArrayHasKey(RestLinkInterface::LINK_PREV, $content[RestResponseInterface::RESPONSE_LINKS]);
     }
 
     /**

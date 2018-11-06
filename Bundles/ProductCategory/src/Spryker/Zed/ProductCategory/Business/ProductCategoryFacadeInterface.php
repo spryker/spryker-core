@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategory\Business;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
@@ -101,4 +102,18 @@ interface ProductCategoryFacadeInterface
      * @return void
      */
     public function updateAllProductMappingsForUpdatedCategory(CategoryTransfer $categoryTransfer);
+
+    /**
+     * Specification:
+     * - Returns all categories that are assigned to the given abstract product.
+     * - The data of the returned categories are localized based on the given locale transfer.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoryTransferCollectionByIdProductAbstract(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 }
