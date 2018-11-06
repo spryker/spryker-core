@@ -5,22 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SprykGui\Business\Finder\Module;
+namespace Spryker\Zed\SprykGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ModuleFilterTransfer;
-use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToDevelopmentFacadeInterface;
 
-class ModuleFinder implements ModuleFinderInterface
+class SprykGuiToDevelopmentFacadeBridge implements SprykGuiToDevelopmentFacadeInterface
 {
     /**
-     * @var \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToDevelopmentFacadeInterface
+     * @var \Spryker\Zed\Development\Business\DevelopmentFacadeInterface
      */
     protected $developmentFacade;
 
     /**
-     * @param \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToDevelopmentFacadeInterface $developmentFacade
+     * @param \Spryker\Zed\Development\Business\DevelopmentFacadeInterface $developmentFacade
      */
-    public function __construct(SprykGuiToDevelopmentFacadeInterface $developmentFacade)
+    public function __construct($developmentFacade)
     {
         $this->developmentFacade = $developmentFacade;
     }
@@ -30,7 +29,7 @@ class ModuleFinder implements ModuleFinderInterface
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function findModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
         return $this->developmentFacade->getModules($moduleFilterTransfer);
     }
