@@ -41,20 +41,6 @@ class BundleProxy extends KernelBundleProxy
     }
 
     /**
-     * @param string $moduleName
-     *
-     * @return $this
-     */
-    public function setBundle($moduleName)
-    {
-        parent::setBundle($moduleName);
-
-        $this->moduleName = ucfirst($moduleName);
-
-        return $this;
-    }
-
-    /**
      * @param string $methodName
      * @param array $arguments
      *

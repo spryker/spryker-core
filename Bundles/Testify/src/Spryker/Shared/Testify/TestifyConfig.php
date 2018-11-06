@@ -16,6 +16,6 @@ class TestifyConfig extends AbstractSharedConfig
      */
     public function isLocatorInstanceCacheEnabled(): bool
     {
-        return true;
+        return false;
     }
 }
