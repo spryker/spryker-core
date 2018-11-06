@@ -104,7 +104,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function updateComposerJsonInModules(array $modules, $dryRun = false): array
     {
-        return $this->getFactory()->createComposerJsonUpdater($modules)->update($dryRun);
+        return $this->getFactory()->createComposerJsonUpdater()->update($modules, $dryRun);
     }
 
     /**

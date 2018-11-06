@@ -40,17 +40,24 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer[] $modules
      * @param bool $dryRun
      *
      * @return array
      */
-    public function update($dryRun = false)
+    public function update(array $modules, $dryRun = false)
     {
-        $composerJsonFiles = $this->finder->findAll();
-
         $processed = [];
-        foreach ($composerJsonFiles as $composerJsonFile) {
-            $processed[$composerJsonFile->getPath()] = $this->updateComposerJsonFile($composerJsonFile, $dryRun);
+
+        foreach ($modules as $module) {
+            $composerName = implode('.', [$module->getOrganization()->getName(), $module->getName()]);
+            $composerJsonFile = $this->finder->findByModule($module);
+
+            if (!$composerJsonFile) {
+                continue;
+            }
+
+            $processed[$composerName] = $this->updateComposerJsonFile($composerJsonFile, $dryRun);
         }
 
         return $processed;

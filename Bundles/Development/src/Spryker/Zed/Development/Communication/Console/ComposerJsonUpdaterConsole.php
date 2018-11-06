@@ -68,12 +68,12 @@ class ComposerJsonUpdaterConsole extends AbstractCoreModuleAwareConsole
             $modifiedModules[] = $processedModule;
         }
 
-        $text = $isDryRun ? ' need(s) updating.' : 'updated.';
-        $this->output->writeln(sprintf('%s of %s module(s) ' . $text, count($modifiedModules), count($processedModules)));
+        $text = $isDryRun ? 'need(s) updating.' : 'updated.';
+        $this->info(sprintf('%s of %s module(s) ' . $text, count($modifiedModules), count($processedModules)));
 
         if ($this->input->getOption(static::VERBOSE)) {
             foreach ($modifiedModules as $modifiedModule) {
-                $this->output->writeln('- ' . $modifiedModule);
+                $this->info('- ' . $modifiedModule);
             }
         }
 
@@ -82,8 +82,19 @@ class ComposerJsonUpdaterConsole extends AbstractCoreModuleAwareConsole
         }
 
         if (count($modifiedModules)) {
-            $command = 'console ' . static::COMMAND_NAME . ' ' . $this->input->getArgument(static::ARGUMENT_MODULE);
-            $this->output->writeln(sprintf('Please run `%s` locally without dry-run.', $command));
+            $commands = [];
+
+            foreach ($modifiedModules as $modifiedModule) {
+                $commands[] = 'console ' . static::COMMAND_NAME . ' ' . $modifiedModule;
+            }
+
+            $this->info(
+                sprintf(
+                    'Please run %s locally without dry-run:',
+                    count($commands) > 1 ? 'these commands' : 'this command'
+                )
+            );
+            $this->output->writeln(implode("\n", $commands));
         }
 
         return count($modifiedModules) < 1 ? static::CODE_SUCCESS : static::CODE_ERROR;

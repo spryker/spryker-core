@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Development\Business\Composer;
 
+use Generated\Shared\Transfer\ModuleTransfer;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 class ComposerJsonFinder implements ComposerJsonFinderInterface
 {
@@ -17,36 +19,26 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
     protected $finder;
 
     /**
-     * @var string
-     */
-    protected $pathToModules;
-
-    /**
-     * @var bool
-     */
-    protected $pathIsValid = true;
-
-    /**
      * @param \Symfony\Component\Finder\Finder $finder
-     * @param string $pathToModules
      */
-    public function __construct(Finder $finder, $pathToModules)
+    public function __construct(Finder $finder)
     {
         $this->finder = $finder;
-        $this->pathToModules = $pathToModules;
     }
 
     /**
-     * @return \Symfony\Component\Finder\SplFileInfo[]
+     * @param \Generated\Shared\Transfer\ModuleTransfer $module
+     *
+     * @return \Symfony\Component\Finder\SplFileInfo|null
      */
-    public function findAll()
+    public function findByModule(ModuleTransfer $module): ?SplFileInfo
     {
-        if (!$this->pathIsValid || !glob($this->pathToModules)) {
-            $this->pathIsValid = false;
+        $this->finder->in($module->getPath())->name('composer.json')->depth('< 2');
 
-            return [];
+        if (!$this->finder->hasResults()) {
+            return null;
         }
 
-        return iterator_to_array($this->finder->in($this->pathToModules)->name('composer.json')->depth('< 2'));
+        return iterator_to_array($this->finder, false)[0];
     }
 }
