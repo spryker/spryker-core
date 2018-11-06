@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductOptionStorage\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface;
@@ -102,7 +103,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
             if ($locale === null) {
                 $locale = Store::getInstance()->getCurrentLocale();
             }
-            $clientLocatorName = '\Spryker\Client\Kernel\Locator';
+            $clientLocatorName = Locator::class;
             /** @var \Spryker\Client\ProductOption\ProductOptionClientInterface $productOptionClient */
             $productOptionClient = $clientLocatorName::getInstance()->productOption()->client();
 

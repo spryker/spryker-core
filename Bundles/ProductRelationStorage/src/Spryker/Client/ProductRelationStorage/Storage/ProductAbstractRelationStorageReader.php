@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductRelationStorage\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToStorageClientInterface;
 use Spryker\Client\ProductRelationStorage\Dependency\Service\ProductRelationStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductRelationStorage\ProductRelationStorageConfig;
@@ -55,14 +56,14 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
     }
 
     /**
-     * @param int|string $idProductAbstract
+     * @param int $idProductAbstract
      *
      * @return array|null
      */
     protected function getStorageData(int $idProductAbstract)
     {
         if (ProductRelationStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+            $clientLocatorClassName = Locator::class;
             /** @var \Spryker\Client\ProductRelation\ProductRelationClientInterface $productRelationClient */
             $productRelationClient = $clientLocatorClassName::getInstance()->productRelation()->client();
 
@@ -105,7 +106,7 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setReference($idProductAbstract);
+            ->setReference((string)$idProductAbstract);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(SharedProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_RESOURCE_NAME)

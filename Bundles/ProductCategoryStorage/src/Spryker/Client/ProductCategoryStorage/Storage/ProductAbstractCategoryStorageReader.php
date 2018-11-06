@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductCategoryStorage\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientInterface;
 use Spryker\Client\ProductCategoryStorage\Dependency\Service\ProductCategoryStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductCategoryStorage\ProductCategoryStorageConfig;
@@ -64,7 +65,7 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     protected function getStorageData(int $idProductAbstract, string $locale): array
     {
         if (ProductCategoryStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+            $clientLocatorClassName = Locator::class;
             /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
             $productClient = $clientLocatorClassName::getInstance()->product()->client();
             $collectorData = $productClient->getProductAbstractFromStorageById($idProductAbstract, $locale);

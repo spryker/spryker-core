@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductLabelStorage\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface;
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductLabelStorage\ProductLabelStorageConfig;
@@ -72,7 +73,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     protected function findIdsProductLabelByIdAbstractProduct($idProductAbstract)
     {
         if (ProductLabelStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+            $clientLocatorClassName = Locator::class;
             /** @var \Spryker\Client\ProductLabel\ProductLabelClientInterface $productLabelClient */
             $productLabelClient = $clientLocatorClassName::getInstance()->productLabel()->client();
             $collectorData = $productLabelClient->findLabelsByIdProductAbstract($idProductAbstract, Store::getInstance()->getCurrentLocale());

@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductStorage\Mapper;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\Kernel\Store;
@@ -86,7 +87,7 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
         unset($productStorageData['prices'], $productStorageData['categories'], $productStorageData['imageSets']);
         $productStorageData = $this->changeKeys($productStorageData);
 
-        $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+        $clientLocatorClassName = Locator::class;
         /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
         $productClient = $clientLocatorClassName::getInstance()->product()->client();
 

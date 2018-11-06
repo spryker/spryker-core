@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductSetStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductSetStorage\Dependency\Client\ProductSetStorageToStorageClientInterface;
 use Spryker\Client\ProductSetStorage\Dependency\Service\ProductSetStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductSetStorage\Mapper\ProductSetStorageMapperInterface;
@@ -69,10 +70,10 @@ class ProductSetStorageReader implements ProductSetStorageReaderInterface
      *
      * @return array|null
      */
-    protected function getStorageData(int $idProductAbstract, string $localeName): array
+    protected function getStorageData(int $idProductAbstract, string $localeName): ?array
     {
         if (ProductSetStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+            $clientLocatorClassName = Locator::class;
             /** @var \Spryker\Client\ProductSet\ProductSetClientInterface $productSetClient */
             $productSetClient = $clientLocatorClassName::getInstance()->productSet()->client();
             $collectorData = $productSetClient->findProductSetByIdProductSet($idProductAbstract);

@@ -9,6 +9,7 @@ namespace Spryker\Client\UrlStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface;
 use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface;
 use Spryker\Client\UrlStorage\UrlStorageConfig;
@@ -116,8 +117,8 @@ class UrlStorageReader implements UrlStorageReaderInterface
      */
     protected function getCollectorUrlData(string $url)
     {
+        $clientLocatorClassName = Locator::class;
         /** @var \Spryker\Client\Url\UrlClientInterface $urlClient */
-        $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
         $urlClient = $clientLocatorClassName::getInstance()->url()->client();
         $localeName = Store::getInstance()->getCurrentLocale();
         $urlCollectorStorageTransfer = $urlClient->findUrl($url, $localeName);

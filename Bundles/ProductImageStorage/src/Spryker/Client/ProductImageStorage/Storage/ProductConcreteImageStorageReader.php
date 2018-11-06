@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductImageStorage\Storage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductConcreteImageStorageTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface;
 use Spryker\Client\ProductImageStorage\ProductImageStorageConfig;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig as ProductImageStorageConstants;
@@ -44,7 +45,7 @@ class ProductConcreteImageStorageReader implements ProductConcreteImageStorageRe
     public function findProductImageConcreteStorageTransfer($idProductConcrete, $locale)
     {
         if (ProductImageStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+            $clientLocatorClassName = Locator::class;
             /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
             $productClient = $clientLocatorClassName::getInstance()->product()->client();
             $collectorData = $productClient->getProductConcreteByIdAndLocale($idProductConcrete, $locale);

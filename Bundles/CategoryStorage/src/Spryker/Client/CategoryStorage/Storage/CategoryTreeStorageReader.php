@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CategoryStorage\CategoryStorageConfig;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface;
 use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 
 class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
@@ -63,7 +64,7 @@ class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
     protected function getStorageData(string $localeName)
     {
         if (CategoryStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+            $clientLocatorClassName = Locator::class;
             /** @var \Spryker\Client\CategoryExporter\CategoryExporterClientInterface $categoryExporterClient */
             $categoryExporterClient = $clientLocatorClassName::getInstance()->categoryExporter()->client();
             $collectorData = $categoryExporterClient->getNavigationCategories($localeName);

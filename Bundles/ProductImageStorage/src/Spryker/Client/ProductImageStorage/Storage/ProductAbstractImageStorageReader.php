@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductImageStorage\Storage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractImageStorageTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface;
 use Spryker\Client\ProductImageStorage\ProductImageStorageConfig;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig as ProductImageStorageConstants;
@@ -44,7 +45,7 @@ class ProductAbstractImageStorageReader implements ProductAbstractImageStorageRe
     public function findProductImageAbstractStorageTransfer($idProductAbstract, $locale)
     {
         if (ProductImageStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+            $clientLocatorClassName = Locator::class;
             /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
             $productClient = $clientLocatorClassName::getInstance()->product()->client();
             $collectorData = $productClient->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);

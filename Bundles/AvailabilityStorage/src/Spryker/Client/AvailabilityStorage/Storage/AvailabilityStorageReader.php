@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\AvailabilityStorage\AvailabilityStorageConfig;
 use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface;
 use Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceInterface;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Shared\Kernel\Store;
 
@@ -90,7 +91,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
      */
     protected function getAvailabilityFromCollectorData($idProductAbstract): StorageAvailabilityTransfer
     {
-        $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+        $clientLocatorClassName = Locator::class;
         /** @var \Spryker\Client\Availability\AvailabilityClientInterface $availabilityClient */
         $availabilityClient = $clientLocatorClassName::getInstance()->availability()->client();
         $availabilityData = $availabilityClient->findProductAvailabilityByIdProductAbstract($idProductAbstract);

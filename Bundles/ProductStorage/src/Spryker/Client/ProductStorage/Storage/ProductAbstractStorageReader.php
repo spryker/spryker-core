@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
@@ -92,7 +93,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         }
 
         if (ProductStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+            $clientLocatorClassName = Locator::class;
             /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
             $productClient = $clientLocatorClassName::getInstance()->product()->client();
             $collectorData = $productClient->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
