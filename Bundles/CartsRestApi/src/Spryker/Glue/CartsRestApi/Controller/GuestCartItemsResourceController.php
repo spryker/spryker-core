@@ -18,6 +18,19 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class GuestCartItemsResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *      "post": {
+     *          "headers": [
+     *              "X-Anonymous-Customer-Unique-Id"
+     *          ],
+     *          "responseClass": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
+     *          "responses": {
+     *              "404": "Cart with given uuid not found.",
+     *              "422": "Product \"{sku}\" not found"
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $request
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -31,6 +44,20 @@ class GuestCartItemsResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *      "patch": {
+     *          "headers": [
+     *              "X-Anonymous-Customer-Unique-Id"
+     *          ],
+     *          "responseClass": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
+     *          "responses": {
+     *              "400": "Cart uuid or item group key is not specified.",
+     *              "404": "Item with the given group key not found in the cart.",
+     *              "422": "Product \"{sku}\" not found"
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $request
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -44,6 +71,20 @@ class GuestCartItemsResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *      "delete": {
+     *          "headers": [
+     *              "X-Anonymous-Customer-Unique-Id"
+     *          ],
+     *          "responseClass": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
+     *          "responses": {
+     *              "400": "Cart uuid or item group key is not specified.",
+     *              "404": "Item with the given group key not found in the cart.",
+     *              "422": "Cart item could not be deleted."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

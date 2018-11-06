@@ -17,6 +17,21 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class ProductTaxSetsResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getResource": {
+     *          "summary": [
+     *              "Retrieve tax set for abstract product."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "400": "Abstract product sku is not specified.",
+     *              "404": "Abstract product tax sets are not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

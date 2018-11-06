@@ -18,6 +18,21 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class CartItemsResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Adds an item to the cart."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "404": "Cart or item is not found.",
+     *              "422": "Errors appeared during item creation."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -34,6 +49,20 @@ class CartItemsResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "patch": {
+     *          "summary": [
+     *              "Update cart item quantity."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "404": "Cart or item is not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface$restRequest
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -50,6 +79,22 @@ class CartItemsResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "delete": {
+     *          "summary": [
+     *              "Remove item from the cart."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "400": "Cart id or item id is not specified.",
+     *              "404": "Cart or cart item not found.",
+     *              "422": "Cart item could not be deleted."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
