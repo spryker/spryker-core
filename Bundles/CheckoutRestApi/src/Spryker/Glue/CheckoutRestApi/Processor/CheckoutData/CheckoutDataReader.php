@@ -125,6 +125,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $restResponse->addResource($checkoutDataResource);
+        $restResponse->setStatus(Response::HTTP_OK);
 
         return $restResponse;
     }
