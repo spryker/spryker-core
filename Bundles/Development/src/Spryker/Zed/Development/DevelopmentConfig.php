@@ -148,14 +148,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
-     */
-    public function getCoreNamespacesFromConfig(): array
-    {
-        return $this->get(KernelConstants::CORE_NAMESPACES);
-    }
-
-    /**
      * Either a relative or full path to the ruleset.xml or a name of an installed
      * standard (see `phpcs -i` for a list of available ones).
      *

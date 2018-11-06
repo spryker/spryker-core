@@ -147,7 +147,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
         $paths = [];
         $internalPaths = $this->config->getInternalPaths();
 
-        foreach ($this->config->getCoreNamespacesFromConfig() as $namespace) {
+        foreach ($this->config->getCoreNamespaces() as $namespace) {
             if (array_key_exists($namespace, $internalPaths)) {
                 $paths[] = $internalPaths[$namespace] . sprintf(static::PROPEL_SCHEMA_PATH_PATTERN, $namespace);
             }
