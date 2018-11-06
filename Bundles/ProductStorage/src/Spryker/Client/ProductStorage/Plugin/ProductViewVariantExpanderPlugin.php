@@ -17,6 +17,10 @@ use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInt
 class ProductViewVariantExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Expands the transfer object with the attribute map, product variant map.
+     * - Expands the transfer object with product concrete ID using the values of `selectedAttributes`.
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
      * @param string $localeName

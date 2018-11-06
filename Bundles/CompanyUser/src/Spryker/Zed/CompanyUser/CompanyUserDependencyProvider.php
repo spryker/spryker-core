@@ -19,6 +19,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_COMPANY_USER_POST_SAVE = 'PLUGINS_COMPANY_USER_POST_SAVE';
     public const PLUGINS_COMPANY_USER_POST_CREATE = 'PLUGINS_COMPANY_USER_POST_CREATE';
     public const PLUGINS_COMPANY_USER_HYDRATE = 'PLUGINS_COMPANY_USER_HYDRATE';
+    public const PLUGINS_COMPANY_USER_PRE_DELETE = 'PLUGINS_COMPANY_USER_PRE_DELETE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,6 +33,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserPostSavePlugins($container);
         $container = $this->addCompanyUserPostCreatePlugins($container);
         $container = $this->addCompanyUserHydrationPlugins($container);
+        $container = $this->addCompanyUserPreDeletePlugins($container);
         $container = $this->addCustomerFacade($container);
 
         return $container;
@@ -108,6 +110,20 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserPreDeletePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USER_PRE_DELETE] = function () {
+            return $this->getCompanyUserPreDeletePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface[]
      */
     protected function getCompanyUserPreSavePlugins(): array
@@ -135,6 +151,14 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[]
      */
     protected function getCompanyUserPostCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreDeletePluginInterface[]
+     */
+    protected function getCompanyUserPreDeletePlugins(): array
     {
         return [];
     }
