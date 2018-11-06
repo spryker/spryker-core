@@ -36,7 +36,7 @@ class AddressController extends AbstractController
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
 
-        if (!$this->getFacade()->checkAddressExistsByIdCustomerAddress($idCustomerAddress)) {
+        if (!$this->getFacade()->findCustomerAddressById($idCustomerAddress) !== null) {
             $this->addErrorMessage(sprintf(static::ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST, $idCustomerAddress));
             $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
 

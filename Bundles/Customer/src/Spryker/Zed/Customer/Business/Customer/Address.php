@@ -192,11 +192,11 @@ class Address implements AddressInterface
     /**
      * @param int $idCustomerAddress
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function checkAddressExistsByIdCustomerAddress(int $idCustomerAddress): bool
+    public function findCustomerAddressById(int $idCustomerAddress): ?AddressTransfer
     {
-        return $this->customerRepository->findCustomerAddressById($idCustomerAddress) !== null;
+        return $this->customerRepository->findCustomerAddressById($idCustomerAddress);
     }
 
     /**

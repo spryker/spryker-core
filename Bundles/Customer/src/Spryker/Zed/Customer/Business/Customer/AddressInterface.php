@@ -43,9 +43,9 @@ interface AddressInterface
     /**
      * @param int $idCustomerAddress
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function checkAddressExistsByIdCustomerAddress(int $idCustomerAddress): bool;
+    public function findCustomerAddressById(int $idCustomerAddress): ?AddressTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
