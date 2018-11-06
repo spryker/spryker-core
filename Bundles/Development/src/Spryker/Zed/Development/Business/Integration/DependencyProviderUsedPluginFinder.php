@@ -51,26 +51,11 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
         $projectModules = $this->projectModuleFinder->getProjectModules($moduleFilterTransfer);
         $dependencyProviderCollectionTransfer = new DependencyProviderCollectionTransfer();
 
-        foreach ($projectModules as $moduleTransferCollection) {
-            $dependencyProviderCollectionTransfer = $this->addPluginUsageInModules(
-                $moduleTransferCollection,
+        foreach ($projectModules as $moduleTransfer) {
+            $dependencyProviderCollectionTransfer = $this->addPluginUsageInModuleApplications(
+                $moduleTransfer,
                 $dependencyProviderCollectionTransfer
             );
-        }
-
-        return $dependencyProviderCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleTransfer[] $moduleTransferCollection
-     * @param \Generated\Shared\Transfer\DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
-     */
-    protected function addPluginUsageInModules(array $moduleTransferCollection, DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer): DependencyProviderCollectionTransfer
-    {
-        foreach ($moduleTransferCollection as $moduleTransfer) {
-            $dependencyProviderCollectionTransfer = $this->addPluginUsageInModule($moduleTransfer, $dependencyProviderCollectionTransfer);
         }
 
         return $dependencyProviderCollectionTransfer;
@@ -82,9 +67,28 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
      *
      * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
      */
-    protected function addPluginUsageInModule(ModuleTransfer $moduleTransfer, DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer)
+    protected function addPluginUsageInModuleApplications(ModuleTransfer $moduleTransfer, DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer): DependencyProviderCollectionTransfer
     {
-        $finder = $this->getFinderForModule($moduleTransfer);
+        foreach ($moduleTransfer->getApplications() as $applicationTransfer) {
+            $dependencyProviderCollectionTransfer = $this->addPluginUsageInModule($moduleTransfer, $applicationTransfer, $dependencyProviderCollectionTransfer);
+        }
+
+        return $dependencyProviderCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     * @param \Generated\Shared\Transfer\ApplicationTransfer $applicationTransfer
+     * @param \Generated\Shared\Transfer\DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
+     */
+    protected function addPluginUsageInModule(ModuleTransfer $moduleTransfer, ApplicationTransfer $applicationTransfer, DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer)
+    {
+        $finder = $this->getFinderForModule(
+            $this->getPath($moduleTransfer, $applicationTransfer)
+        );
+
         foreach ($finder as $splFileInfo) {
             $dependencyProviderTransfer = $this->buildDependencyProviderTransfer($splFileInfo, $moduleTransfer);
             $dependencyProviderCollectionTransfer = $this->addPluginUsages($dependencyProviderCollectionTransfer, $dependencyProviderTransfer, $splFileInfo);
@@ -95,23 +99,32 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
 
     /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     * @param \Generated\Shared\Transfer\ApplicationTransfer $applicationTransfer
      *
-     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
+     * @return string
      */
-    protected function getFinderForModule(ModuleTransfer $moduleTransfer): Finder
+    protected function getPath(ModuleTransfer $moduleTransfer, ApplicationTransfer $applicationTransfer): string
     {
-        $pathForModule = sprintf(
+        return sprintf(
             '%ssrc/%s/%s/%s/',
             $moduleTransfer->getPath(),
             $moduleTransfer->getOrganization()->getName(),
-            $moduleTransfer->getApplication()->getName(),
+            $applicationTransfer->getName(),
             $moduleTransfer->getName()
         );
+    }
 
+    /**
+     * @param string $path
+     *
+     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
+     */
+    protected function getFinderForModule(string $path): Finder
+    {
         $finder = new Finder();
         $finder
             ->files()
-            ->in($pathForModule)
+            ->in($path)
             ->name('/DependencyProvider.php/')
             ->sort($this->getFilenameSortCallback());
 

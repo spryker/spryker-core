@@ -48,9 +48,12 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
         foreach ($spyCompanyUnitAddressEntityTransfer->getSpyCompanyUnitAddressToCompanyBusinessUnits() as $spyCompanyUnitAddressToCompanyBusinessUnits) {
             $spyCompanyBusinessUnitEntityTransfer = $spyCompanyUnitAddressToCompanyBusinessUnits->getCompanyBusinessUnit();
-            $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
-                ->fromArray($spyCompanyBusinessUnitEntityTransfer->toArray(), true);
-            $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitTransfer);
+
+            if ($spyCompanyBusinessUnitEntityTransfer->getIdCompanyBusinessUnit()) {
+                $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
+                    ->fromArray($spyCompanyBusinessUnitEntityTransfer->toArray(), true);
+                $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitTransfer);
+            }
         }
 
         return $companyBusinessUnitCollectionTransfer;

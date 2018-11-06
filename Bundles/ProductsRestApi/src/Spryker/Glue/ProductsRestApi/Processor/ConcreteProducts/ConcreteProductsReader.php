@@ -83,8 +83,15 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 
             return $response->addError($restErrorTransfer);
         }
-        $restResource = $this->concreteProductsResourceMapper
-            ->mapConcreteProductsResponseAttributesTransferToRestResponse($concreteProductData);
+
+        $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
+            ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
+
+        $restResource = $this->restResourceBuilder->createRestResource(
+            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
+            $concreteProductData[static::PRODUCT_CONCRETE_MAPPING_TYPE],
+            $restConcreteProductsAttributesTransfer
+        );
 
         return $response->addResource($restResource);
     }
@@ -127,7 +134,10 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             return null;
         }
 
-        return $this->concreteProductsResourceMapper
-            ->mapConcreteProductsResponseAttributesTransferToRestResponse($concreteProductData);
+        return $this->restResourceBuilder->createRestResource(
+            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
+            $sku,
+            $this->concreteProductsResourceMapper->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData)
+        );
     }
 }
