@@ -51,7 +51,6 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         $processed = [];
         foreach ($composerJsonFiles as $composerJsonFile) {
             $processed[$composerJsonFile->getPath()] = $this->updateComposerJsonFile($composerJsonFile, $dryRun);
-            dump($composerJsonFile->getPath());
         }
 
         return $processed;

@@ -71,7 +71,7 @@ class ComposerJsonUpdaterConsole extends AbstractCoreModuleAwareConsole
         }
 
         if (count($modifiedModules)) {
-            $command = 'console ' . static::COMMAND_NAME . ' -m ' . $this->input->getArgument(static::ARGUMENT_MODULE);
+            $command = 'console ' . static::COMMAND_NAME . ' ' . $this->input->getArgument(static::ARGUMENT_MODULE);
             $this->output->writeln(sprintf('Please run `%s` locally without dry-run.', $command));
         }
 
