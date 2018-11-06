@@ -17,6 +17,9 @@ use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
+/**
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStoragePersistenceFactory getFactory()
+ */
 class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntityManager implements PriceProductMerchantRelationshipStorageEntityManagerInterface
 {
     protected const PRICE_KEY_SEPARATOR = ':';

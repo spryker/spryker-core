@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\SalesOrderThresholdGui\Communication\SalesOrderThresholdGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig getConfig()
  */
 class GlobalThresholdType extends AbstractType
 {

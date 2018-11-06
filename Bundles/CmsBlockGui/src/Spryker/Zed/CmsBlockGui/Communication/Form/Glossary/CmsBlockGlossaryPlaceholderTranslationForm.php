@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockGui\CmsBlockGuiConfig getConfig()
  */
 class CmsBlockGlossaryPlaceholderTranslationForm extends AbstractType
 {

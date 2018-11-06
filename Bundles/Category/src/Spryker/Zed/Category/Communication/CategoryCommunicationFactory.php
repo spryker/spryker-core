@@ -22,6 +22,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {

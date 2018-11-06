@@ -22,6 +22,8 @@ use Spryker\Zed\SharedCart\Persistence\Propel\Mapper\QuoteShareDetailMapperInter
 
 /**
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
+ * @method \Spryker\Zed\SharedCart\Persistence\SharedCartEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface getRepository()
  */
 class SharedCartPersistenceFactory extends AbstractPersistenceFactory
 {

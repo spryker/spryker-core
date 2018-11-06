@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()
  */
 class TaxPersistenceFactory extends AbstractPersistenceFactory
 {

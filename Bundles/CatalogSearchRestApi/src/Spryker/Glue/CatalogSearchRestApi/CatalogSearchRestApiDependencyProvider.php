@@ -12,6 +12,9 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @method \Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig getConfig()
+ */
 class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';

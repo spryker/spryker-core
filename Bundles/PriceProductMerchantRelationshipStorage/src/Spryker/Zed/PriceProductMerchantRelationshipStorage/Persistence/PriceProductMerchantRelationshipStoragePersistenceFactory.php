@@ -17,6 +17,8 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRela
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig getConfig()
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface getRepository()
  */
 class PriceProductMerchantRelationshipStoragePersistenceFactory extends AbstractPersistenceFactory
 {

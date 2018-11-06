@@ -13,6 +13,7 @@ use Spryker\Zed\NavigationStorage\NavigationStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\NavigationStorage\NavigationStorageConfig getConfig()
+ * @method \Spryker\Zed\NavigationStorage\Business\NavigationStorageFacadeInterface getFacade()
  */
 class NavigationStorageCommunicationFactory extends AbstractCommunicationFactory
 {
