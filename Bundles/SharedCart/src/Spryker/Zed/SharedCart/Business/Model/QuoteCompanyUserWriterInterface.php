@@ -17,4 +17,11 @@ interface QuoteCompanyUserWriterInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function updateQuoteCompanyUsers(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function deleteShareRelationsForCompanyUserId(int $idCompanyUser): void;
 }

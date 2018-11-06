@@ -10,8 +10,6 @@ namespace Spryker\Zed\ProductGroupStorage\Dependency\QueryContainer;
 interface ProductGroupStorageToProductGroupQueryContainerInterface
 {
     /**
-     * @api
-     *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
      */
     public function queryAllProductAbstractGroups();

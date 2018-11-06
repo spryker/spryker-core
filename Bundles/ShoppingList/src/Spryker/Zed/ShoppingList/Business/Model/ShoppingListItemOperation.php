@@ -263,6 +263,16 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             return false;
         }
 
+        if ($shoppingListItemTransfer->getQuantity() <= 0) {
+            $this->messengerFacade->addErrorMessage(
+                (new MessageTransfer())
+                    ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_FAILED)
+                    ->setParameters([static::GLOSSARY_PARAM_SKU => $shoppingListItemTransfer->getSku()])
+            );
+
+            return false;
+        }
+
         return $this->pluginExecutor->executeAddItemPreCheckPlugins($shoppingListItemTransfer);
     }
 
