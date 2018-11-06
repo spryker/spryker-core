@@ -9,7 +9,7 @@
 
     <transfer name="PriceProductMerchantRelationshipStorage">
         <property name="storeName" type="string" />
-        <property name="idMerchantRelationship" type="int" deprecated="Use same attribute in PriceProductMerchantRelationshipValueTransfer instead." />
+        <property name="idMerchantRelationship" type="int" deprecated="Use PriceProductMerchantRelationshipValueTransfer::idMerchantRelationship instead." />
         <property name="idCompanyBusinessUnit" type="int" />
         <property name="idProduct" type="int" />
         <property name="priceKey" type="string" />
