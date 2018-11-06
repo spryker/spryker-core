@@ -21,6 +21,7 @@ class CartItemOptionPreCheckPlugin extends AbstractPlugin implements CartPreChec
 {
     /**
      * {@inheritdoc}
+     * - Checks if given product option exists.
      *
      * @api
      *
