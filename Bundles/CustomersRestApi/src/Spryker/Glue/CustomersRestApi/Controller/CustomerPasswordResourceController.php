@@ -27,7 +27,7 @@ class CustomerPasswordResourceController extends AbstractController
      *              "Accept-Language"
      *          ],
      *          "responses": {
-     *              "400": "Passwords don`t match.",
+     *              "400": "Passwords don't match.",
      *              "404": "Customer not found.",
      *              "406": "Invalid password.",
      *              "500": "Internal server error."

@@ -90,7 +90,7 @@ class WishlistsResourceController extends AbstractController
      *          ],
      *          "responses": {
      *              "400": "A wishlist with the same name already exists.",
-     *              "404": "Can`t find wishlist.",
+     *              "404": "Can't find wishlist.",
      *              "500": "Internal server error."
      *          }
      *     }
@@ -118,7 +118,7 @@ class WishlistsResourceController extends AbstractController
      *              "Accept-Language"
      *          ],
      *          "responses": {
-     *              "404": "Can`t find wishlist."
+     *              "404": "Can't find wishlist."
      *          }
      *     }
      * })

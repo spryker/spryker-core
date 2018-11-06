@@ -54,8 +54,8 @@ class WishlistItemsResourceController extends AbstractController
      *              "Accept-Language"
      *          ],
      *          "responses": {
-     *              "400": "Can`t add an item.",
-     *              "404": "Can`t find wishlist."
+     *              "400": "Can't add an item.",
+     *              "404": "Can't find wishlist."
      *          }
      *     }
      * })
