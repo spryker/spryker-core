@@ -54,7 +54,7 @@ class QuoteMerger implements QuoteMergerInterface
             $quoteTransfer,
             $restCheckoutRequestAttributesTransfer
         );
-        $this->updateQuoteWithCustomerFromRequest($quoteTransfer, $restCheckoutRequestAttributesTransfer, $restRequest);
+        $quoteTransfer = $this->updateQuoteWithCustomerFromRequest($quoteTransfer, $restCheckoutRequestAttributesTransfer, $restRequest);
 
         return $quoteTransfer;
     }
@@ -64,20 +64,22 @@ class QuoteMerger implements QuoteMergerInterface
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function updateQuoteWithCustomerFromRequest(
         QuoteTransfer $quoteTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         RestRequestInterface $restRequest
-    ): void {
+    ): QuoteTransfer {
         if (!$restRequest->getUser()->getSurrogateIdentifier()) {
-            $quoteTransfer->setCustomer((new CustomerTransfer())->fromArray($restCheckoutRequestAttributesTransfer->getQuote()->getCustomer()->toArray(), true));
+            $quoteTransfer->setCustomer((new CustomerTransfer())->fromArray($restCheckoutRequestAttributesTransfer->getCart()->getCustomer()->toArray(), true));
 
-            return;
+            return $quoteTransfer;
         }
 
         $customerResponseTransfer = $this->customerClient->findCustomerByReference((new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier()));
         $quoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
+
+        return $quoteTransfer;
     }
 }

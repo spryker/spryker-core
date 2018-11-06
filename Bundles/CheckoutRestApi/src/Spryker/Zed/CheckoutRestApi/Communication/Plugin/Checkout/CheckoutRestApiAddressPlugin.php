@@ -31,6 +31,6 @@ class CheckoutRestApiAddressPlugin extends AbstractPlugin implements CheckoutPre
      */
     public function preSave(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): QuoteTransfer
     {
-        return $this->getFacade()->expandQuoteAddressesWithCustomerAddressByUuid($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->expandQuoteAddressesWithCustomerAddressById($quoteTransfer, $checkoutResponseTransfer);
     }
 }

@@ -16,27 +16,25 @@ interface CheckoutDataMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    public function mapCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer(CheckoutDataTransfer $checkoutDataTransfer): RestCheckoutDataResponseAttributesTransfer;
+    public function mapCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer(
+        CheckoutDataTransfer $checkoutDataTransfer,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestCheckoutDataResponseAttributesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param bool $checkRequired
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mapRestCheckoutRequestAttributesTransferToQuoteTransfer(QuoteTransfer $quoteTransfer, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): QuoteTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
-     */
-    public function mapRestCheckoutRequestAttributesTransferToRestCheckoutDataResponseAttributesTransfer(
+    public function mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
+        QuoteTransfer $quoteTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
-    ): RestCheckoutDataResponseAttributesTransfer;
+        bool $checkRequired = true
+    ): QuoteTransfer;
 }

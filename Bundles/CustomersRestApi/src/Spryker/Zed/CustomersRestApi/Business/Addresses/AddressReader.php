@@ -26,13 +26,13 @@ class AddressReader implements AddressReaderInterface
     }
 
     /**
-     * @param string $addressUuid
+     * @param string $addressId
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?AddressTransfer
+    public function findCustomerAddressById(string $addressId, int $idCustomer): ?AddressTransfer
     {
-        return $this->customersRestApiRepository->findCustomerAddressByUuid($addressUuid, $idCustomer);
+        return $this->customersRestApiRepository->findCustomerAddressById($addressId, $idCustomer);
     }
 }

@@ -17,18 +17,18 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class CustomersRestApiRepository extends AbstractRepository implements CustomersRestApiRepositoryInterface
 {
     /**
-     * @param string $addressUuid
+     * @param string $addressId
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?AddressTransfer
+    public function findCustomerAddressById(string $addressId, int $idCustomer): ?AddressTransfer
     {
         $addressesPropelQuery = $this->getFactory()
             ->getAddressesPropelQuery()
             ->joinWithCountry(Criteria::INNER_JOIN)
             ->filterByFkCustomer($idCustomer)
-            ->filterByUuid($addressUuid);
+            ->filterByUuid($addressId);
 
         $customerAddressEntityTransfer = $this->buildQueryFromCriteria($addressesPropelQuery)->findOne();
 

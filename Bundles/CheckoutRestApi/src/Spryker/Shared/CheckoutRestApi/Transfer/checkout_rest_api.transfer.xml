@@ -10,17 +10,16 @@
     </transfer>
 
     <transfer name="RestCheckoutRequestAttributes">
-        <property name="quote" type="RestQuoteRequest"/>
+        <property name="cart" type="RestQuoteRequest"/>
     </transfer>
 
     <transfer name="RestQuoteRequest">
         <property name="customer" type="RestCustomer"/>
-        <property name="idCart" type="string"/>
+        <property name="id" type="string"/>
         <property name="billingAddress" type="RestAddress"/>
         <property name="shippingAddress" type="RestAddress"/>
         <property name="payments" type="Payment[]" singular="payment"/>
         <property name="shipment" type="RestShipment"/>
-        <property name="voucherCode" type="string"/>
     </transfer>
 
     <transfer name="RestCustomer">
@@ -31,7 +30,7 @@
     </transfer>
 
     <transfer name="RestAddress">
-        <property name="idCustomerAddress" type="int" />
+        <property name="id" type="string" />
         <property name="salutation" type="string" />
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
@@ -44,7 +43,6 @@
         <property name="iso2Code" type="string" />
         <property name="company" type="string" />
         <property name="phone" type="string" />
-        <property name="uuid" type="string" />
     </transfer>
 
     <transfer name="RestShipment">
@@ -52,10 +50,14 @@
         <property name="method" type="ShipmentMethod"/>
     </transfer>
 
+    <transfer name="ShipmentMethod">
+        <property name="id" type="int"/>
+    </transfer>
+
     <transfer name="RestCheckoutDataResponseAttributes">
-        <property name="restAddressesResponseData" type="RestAddress[]"/>
-        <property name="restPaymentMethodsResponseData" type="RestPaymentMethodAttributes[]"/>
-        <property name="restShipmentMethodsResponseData" type="RestShipmentMethodAttributes[]"/>
+        <property name="addresses" type="RestAddress[]"/>
+        <property name="paymentMethods" type="RestPaymentMethodAttributes[]"/>
+        <property name="shipmentMethods" type="RestShipmentMethodAttributes[]"/>
     </transfer>
 
     <transfer name="RestPaymentMethodAttributes">
@@ -65,7 +67,7 @@
 
     <transfer name="RestShipmentMethodAttributes">
         <property name="carrierName" type="string"/>
-        <property name="idShipmentMethod" type="int"/>
+        <property name="id" type="int"/>
         <property name="name" type="string"/>
         <property name="price" type="int"/>
         <property name="taxRate" type="float"/>

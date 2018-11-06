@@ -30,8 +30,8 @@ class CheckoutRestApiToCustomersRestApiFacadeBridge implements CheckoutRestApiTo
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?AddressTransfer
+    public function findCustomerAddressById(string $addressUuid, int $idCustomer): ?AddressTransfer
     {
-        return $this->customersRestApiFacade->findCustomerAddressByUuid($addressUuid, $idCustomer);
+        return $this->customersRestApiFacade->findCustomerAddressById($addressUuid, $idCustomer);
     }
 }

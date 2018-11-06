@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\AddressTransfer;
 interface CustomersRestApiRepositoryInterface
 {
     /**
-     * @param string $addressUuid
+     * @param string $addressId
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?AddressTransfer;
+    public function findCustomerAddressById(string $addressId, int $idCustomer): ?AddressTransfer;
 }

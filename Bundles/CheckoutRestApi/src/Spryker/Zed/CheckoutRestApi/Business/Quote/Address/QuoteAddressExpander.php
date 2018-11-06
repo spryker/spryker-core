@@ -31,7 +31,7 @@ class QuoteAddressExpander implements QuoteAddressExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expandQuoteAddressesWithCustomerAddressByUuid(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function expandQuoteAddressesWithCustomerAddressById(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if (!$quoteTransfer->getCustomer()->getIdCustomer()) {
             return $quoteTransfer;
@@ -65,7 +65,7 @@ class QuoteAddressExpander implements QuoteAddressExpanderInterface
             return $addressTransfer;
         }
 
-        $foundAddressTransfer = $this->customersRestApiFacade->findCustomerAddressByUuid(
+        $foundAddressTransfer = $this->customersRestApiFacade->findCustomerAddressById(
             $addressTransfer->getUuid(),
             $idCustomer
         );

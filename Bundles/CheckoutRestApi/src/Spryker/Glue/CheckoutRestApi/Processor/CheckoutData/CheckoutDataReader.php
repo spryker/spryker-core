@@ -77,22 +77,21 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     public function readCheckoutData(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
     {
-        $currentCustomerQuote = $this->getQuoteTransfer($restCheckoutRequestAttributesTransfer);
+        $currentCustomerQuote = $this->findQuoteTransfer($restCheckoutRequestAttributesTransfer);
         if ($currentCustomerQuote === null) {
             return $this->createQuoteNotFoundErrorResponse();
         }
 
         $quoteTransfer = $this->checkoutDataMapper->mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
             $currentCustomerQuote,
-            $restCheckoutRequestAttributesTransfer
+            $restCheckoutRequestAttributesTransfer,
+            false
         );
 
         $checkoutDataTransfer = $this->checkoutRestApiClient->getCheckoutData($quoteTransfer);
 
         $restCheckoutResponseAttributesTransfer = $this->checkoutDataMapper
-            ->mapCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer($checkoutDataTransfer);
-        $restCheckoutResponseAttributesTransfer = $this->checkoutDataMapper
-            ->mapRestCheckoutRequestAttributesTransferToRestCheckoutDataResponseAttributesTransfer($restCheckoutRequestAttributesTransfer, $restCheckoutResponseAttributesTransfer);
+            ->mapCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer($checkoutDataTransfer, $restCheckoutRequestAttributesTransfer);
 
         return $this->createRestResponse($restCheckoutResponseAttributesTransfer);
     }
@@ -100,7 +99,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getCurrentCustomerQuote(): ?QuoteTransfer
+    protected function findCurrentCustomerQuote(): ?QuoteTransfer
     {
         $quoteCollectionTransfer = $this->quoteCollectionReader->getQuoteCollectionByCriteria(new QuoteCriteriaFilterTransfer());
 
@@ -151,11 +150,11 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    protected function getQuoteTransfer(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
+    protected function findQuoteTransfer(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
     {
-        $idCart = $restCheckoutRequestAttributesTransfer->getQuote()->getIdCart();
-        if ($idCart === null) {
-            return $this->getCurrentCustomerQuote();
+        if ($restCheckoutRequestAttributesTransfer->getCart() === null
+            || ($restCheckoutRequestAttributesTransfer->getCart() !== null && $restCheckoutRequestAttributesTransfer->getCart()->getId() === null)) {
+            return $this->findCurrentCustomerQuote();
         }
 
         return $this->quoteProcessor->findCustomerQuote($restCheckoutRequestAttributesTransfer);

@@ -1,6 +1,6 @@
 checkout-data:
   post:
-    quote:
+    cart:
       - Collection:
           fields:
             billingAddress:
@@ -13,10 +13,10 @@ checkout-data:
               - Optional
 checkout:
   post:
-    quote:
+    cart:
       - Collection:
           fields:
-            idCart:
+            id:
               - NotBlank
             customer:
               - Collection:
@@ -55,7 +55,7 @@ checkout:
                         fields:
                           carrierName:
                             - NotBlank
-                          idShipmentMethod:
+                          id:
                             - NotBlank
                             - Type:
                                 type: numeric

@@ -39,5 +39,5 @@ interface CheckoutRestApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expandQuoteAddressesWithCustomerAddressByUuid(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): QuoteTransfer;
+    public function expandQuoteAddressesWithCustomerAddressById(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): QuoteTransfer;
 }

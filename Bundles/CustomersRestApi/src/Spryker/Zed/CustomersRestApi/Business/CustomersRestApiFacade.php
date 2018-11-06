@@ -32,13 +32,13 @@ class CustomersRestApiFacade extends AbstractFacade implements CustomersRestApiF
      *
      * @api
      *
-     * @param string $addressUuid
+     * @param string $addressId
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?AddressTransfer
+    public function findCustomerAddressById(string $addressId, int $idCustomer): ?AddressTransfer
     {
-        return $this->getFactory()->createCustomerAddressReader()->findCustomerAddressByUuid($addressUuid, $idCustomer);
+        return $this->getFactory()->createCustomerAddressReader()->findCustomerAddressById($addressId, $idCustomer);
     }
 }

@@ -17,5 +17,5 @@ interface CheckoutRestApiToCustomersRestApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findCustomerAddressByUuid(string $addressUuid, int $idCustomer): ?AddressTransfer;
+    public function findCustomerAddressById(string $addressUuid, int $idCustomer): ?AddressTransfer;
 }

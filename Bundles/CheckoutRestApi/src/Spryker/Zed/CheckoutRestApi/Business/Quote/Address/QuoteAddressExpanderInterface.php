@@ -16,5 +16,5 @@ interface QuoteAddressExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expandQuoteAddressesWithCustomerAddressByUuid(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function expandQuoteAddressesWithCustomerAddressById(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

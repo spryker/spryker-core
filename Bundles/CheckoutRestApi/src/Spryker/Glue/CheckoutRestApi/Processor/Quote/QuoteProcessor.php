@@ -55,7 +55,7 @@ class QuoteProcessor implements QuoteProcessorInterface
      */
     public function findCustomerQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
     {
-        $idCart = $restCheckoutRequestAttributesTransfer->getQuote()->getIdCart();
+        $idCart = $restCheckoutRequestAttributesTransfer->getCart()->getId();
         $quoteCollectionTransfer = $this->quoteCollectionReaderPlugin->getQuoteCollectionByCriteria(new QuoteCriteriaFilterTransfer());
         foreach ($quoteCollectionTransfer->getQuotes() as $customerQuote) {
             if ($customerQuote->getUuid() === $idCart) {
