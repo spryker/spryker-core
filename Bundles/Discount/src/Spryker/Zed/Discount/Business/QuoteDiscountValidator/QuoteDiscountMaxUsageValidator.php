@@ -17,6 +17,8 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
 {
+    protected const ERROR_VOUCHER_CODE_LIMIT_REACHED = 399;
+
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
@@ -47,7 +49,7 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
         if ($this->hasVouchersThatExceedNumberOfUses($voucherDiscounts)) {
             $message = (new MessageTransfer())
                 ->setValue(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED);
-            $this->addError($message, 399, $checkoutResponseTransfer);
+            $this->addError($message, static::ERROR_VOUCHER_CODE_LIMIT_REACHED, $checkoutResponseTransfer);
 
             return false;
         }
