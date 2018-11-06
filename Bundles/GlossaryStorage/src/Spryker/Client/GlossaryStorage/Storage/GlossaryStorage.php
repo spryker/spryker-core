@@ -51,12 +51,13 @@ class GlossaryStorage implements GlossaryStorageInterface
     public function translate($keyName, $localeName, array $parameters = [])
     {
         if (GlossaryStorageConfig::isCollectorCompatibilityMode()) {
-            $glossaryClient = Locator::getInstance()->glossary()->client();
+            $clientLocatorClass = Locator::class;
+            $glossaryClient = $clientLocatorClass::getInstance()->glossary()->client();
 
             return $glossaryClient->translate($keyName, $localeName, $parameters);
         }
 
-        if ((string)$keyName === '') {
+        if ($keyName === '') {
             return $keyName;
         }
 

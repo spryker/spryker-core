@@ -73,8 +73,9 @@ class NavigationStorage implements NavigationStorageInterface
      */
     protected function getNavigationTreeFromCollectorData(string $navigationKey, string $localeName): NavigationStorageTransfer
     {
+        $clientLocatorClass = Locator::class;
         /** @var \Spryker\Client\Navigation\NavigationClientInterface $navigationClient */
-        $navigationClient = Locator::getInstance()->navigation()->client();
+        $navigationClient = $clientLocatorClass::getInstance()->navigation()->client();
         $navigationTreeTransfer = $navigationClient->findNavigationTreeByKey($navigationKey, $localeName);
 
         if (!$navigationTreeTransfer) {
