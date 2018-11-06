@@ -359,6 +359,31 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testOwnerCanNotAddItemWithNonPositiveQuantityToShoppingList()
+    {
+        $quantities = [0, -1];
+
+        foreach ($quantities as $quantity) {
+            // Arrange
+            $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+            $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+                ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+                ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+                ShoppingListItemTransfer::QUANTITY => $quantity,
+                ShoppingListItemTransfer::SKU => $this->product->getSku(),
+            ]);
+
+            // Act
+            $resultShoppingListItemTransfer = $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+            // Assert
+            $this->assertNull($resultShoppingListItemTransfer->getIdShoppingListItem(), "Owner should not be able to add item with quantity '$quantity'' to shopping list.");
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testCustomerCanNotAddItemToSharedShoppingList()
     {
         // Arrange

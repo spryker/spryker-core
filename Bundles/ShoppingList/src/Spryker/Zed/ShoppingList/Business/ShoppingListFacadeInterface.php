@@ -80,8 +80,9 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Add item to shopping list.
-     *  - Add create shopping list success message if shopping list created.
+     *  - Adds item to shopping list.
+     *  - Adds create shopping list success message if shopping list created.
+     *  - Fails and adds error message when quantity is lesser equal than zero.
      *
      * @api
      *
@@ -257,6 +258,30 @@ interface ShoppingListFacadeInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findCompanyUserPermissions(int $idCompanyUser): PermissionCollectionTransfer;
+
+    /**
+     * Specification:
+     *  - Remove company business unit from shared shopping list.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function unShareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Remove company user relation from shared shopping lists.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function unShareCompanyUserShoppingLists(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
 
     /**
      * Specification:

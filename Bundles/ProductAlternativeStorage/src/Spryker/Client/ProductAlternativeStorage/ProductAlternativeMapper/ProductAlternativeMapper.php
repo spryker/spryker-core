@@ -177,10 +177,12 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     {
         $productConcreteStorageData = $this->productStorageClient
             ->findProductConcreteStorageData($idProduct, $localeName);
+
         if (empty($productConcreteStorageData)) {
             return null;
         }
-        $productConcreteStorageData[ProductAlternativeStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = new AttributeMapStorageTransfer();
+
+        $productConcreteStorageData[ProductAlternativeStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = (new AttributeMapStorageTransfer())->toArray();
 
         $productViewTransfer = $this->productStorageClient
             ->mapProductStorageData($productConcreteStorageData, $localeName);
@@ -193,15 +195,16 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    protected function findAbstractProductViewTransfer(int $idProduct, string $localeName): ?ProductViewTransfer
+    protected function findAbstractProductViewTransfer(int $idProductAbstract, string $localeName): ?ProductViewTransfer
     {
         $productAbstractStorageData = $this->productStorageClient
-            ->getProductAbstractStorageData($idProduct, $localeName);
+            ->findProductAbstractStorageData($idProductAbstract, $localeName);
+
         if (empty($productAbstractStorageData)) {
             return null;
         }
@@ -221,7 +224,12 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
         $productConcreteIds = [];
         foreach ($abstractProductIds as $idProductAbstract) {
             $productAbstractStorageData = $this->productStorageClient
-                ->getProductAbstractStorageData($idProductAbstract, $localeName);
+                ->findProductAbstractStorageData($idProductAbstract, $localeName);
+
+            if (empty($productAbstractStorageData)) {
+                continue;
+            }
+
             $productConcreteIds = array_merge(
                 $productConcreteIds,
                 $productAbstractStorageData[ProductAlternativeStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::PRODUCT_CONCRETE_IDS] ?? []

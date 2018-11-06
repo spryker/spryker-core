@@ -13,7 +13,7 @@
 
         <id-method-parameter value="id_product_measurement_unit_storage_pk_seq"/>
 
-        <index name="spy_product_measurement_unit_storage-fk_product_measurement_unit">
+        <index name="spy_product_measurement_unit_storage-fk_p_m_u">
             <index-column name="fk_product_measurement_unit"/>
         </index>
 

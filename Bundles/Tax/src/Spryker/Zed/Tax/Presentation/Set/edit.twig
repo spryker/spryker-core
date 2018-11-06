@@ -4,7 +4,7 @@
 {% block section_title 'Edit Tax Set: ' | trans ~ taxSet.idTaxSet %}
 
 {% block action %}
-    {{ removeActionButton(url('/tax/set/delete', {'id-tax-set': taxSet.idTaxSet}), 'Delete' | trans) }}
+    {{ removeActionButton(url('/tax/delete-set', {'id-tax-set': taxSet.idTaxSet}), 'Delete' | trans) }}
     {{ backActionButton(url('/tax/set/list'), 'Back to Tax Sets' | trans) }}
 {% endblock %}
 
@@ -19,8 +19,8 @@
 
             {{ form_label(form.taxRates) }}
             <div class="country-select-box">
-                {{ form_widget(form.taxRates) }}
                 {{ form_errors(form.taxRates) }}
+                {{ form_widget(form.taxRates) }}
             </div>
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />

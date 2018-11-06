@@ -51,12 +51,18 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
     protected $config;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface
+     */
+    protected $priceProductStoreWriter;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceTypeReader
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface $priceProductDefaultWriter
      * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[] $priceDimensionConcreteSaverPlugins
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
+     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface $priceProductStoreWriter
      */
     public function __construct(
         PriceProductTypeReaderInterface $priceTypeReader,
@@ -64,7 +70,8 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
         PriceProductDefaultWriterInterface $priceProductDefaultWriter,
         array $priceDimensionConcreteSaverPlugins,
         PriceProductEntityManagerInterface $priceProductEntityManager,
-        PriceProductConfig $config
+        PriceProductConfig $config,
+        PriceProductStoreWriterInterface $priceProductStoreWriter
     ) {
         $this->priceTypeReader = $priceTypeReader;
         $this->priceProductQueryContainer = $priceProductQueryContainer;
@@ -72,6 +79,7 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
         $this->priceDimensionConcreteSaverPlugins = $priceDimensionConcreteSaverPlugins;
         $this->priceProductEntityManager = $priceProductEntityManager;
         $this->config = $config;
+        $this->priceProductStoreWriter = $priceProductStoreWriter;
     }
 
     /**
@@ -133,6 +141,7 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
 
         $priceProductTransfer->setIdProduct($idProductConcrete);
         $priceProductTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract());
+        $priceProductTransfer = $this->priceProductStoreWriter->persistPriceProductStore($priceProductTransfer);
         $priceProductTransfer = $this->executePriceDimensionConcreteSaverPlugins($priceProductTransfer);
 
         return $priceProductTransfer;

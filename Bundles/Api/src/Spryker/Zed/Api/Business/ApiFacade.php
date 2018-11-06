@@ -44,4 +44,22 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
             ->createValidator()
             ->validate($resourceName, $apiDataTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer
+     */
+    public function filterApiRequestTransfer(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer
+    {
+        $filteredApiRequestTransfer = $this->getFactory()
+            ->createRequestTransferFilter()
+            ->filter(clone $apiRequestTransfer);
+
+        return $filteredApiRequestTransfer;
+    }
 }

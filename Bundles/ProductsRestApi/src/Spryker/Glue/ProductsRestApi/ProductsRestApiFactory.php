@@ -25,9 +25,7 @@ class ProductsRestApiFactory extends AbstractFactory
      */
     public function createAbstractProductsResourceMapper(): AbstractProductsResourceMapperInterface
     {
-        return new AbstractProductsResourceMapper(
-            $this->getResourceBuilder()
-        );
+        return new AbstractProductsResourceMapper();
     }
 
     /**
@@ -48,9 +46,7 @@ class ProductsRestApiFactory extends AbstractFactory
      */
     public function createConcreteProductsResourceMapper(): ConcreteProductsResourceMapperInterface
     {
-        return new ConcreteProductsResourceMapper(
-            $this->getResourceBuilder()
-        );
+        return new ConcreteProductsResourceMapper();
     }
 
     /**
