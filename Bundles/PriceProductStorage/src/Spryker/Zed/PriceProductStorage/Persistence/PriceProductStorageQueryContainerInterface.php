@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductStorage\Persistence;
 
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface PriceProductStorageQueryContainerInterface extends QueryContainerInterface
@@ -82,4 +83,22 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorageQuery
      */
     public function queryPriceConcreteStorageByProductIds(array $productConcreteIds);
+
+    /**
+     * @api
+     *
+     * @param array $priceProductStoreIds
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
+     */
+    public function queryProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): SpyPriceProductQuery;
+
+    /**
+     * @api
+     *
+     * @param array $priceProductStoreIds
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
+     */
+    public function queryProductConcreteIdsByPriceProductStoreIds(array $priceProductStoreIds): SpyPriceProductQuery;
 }

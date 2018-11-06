@@ -107,6 +107,9 @@
         </unique>
 
         <id-method-parameter value="spy_price_product_default_pk_seq"/>
+        <behavior name="event">
+            <parameter name="spy_price_product_store_all" column="*"/>
+        </behavior>
     </table>
 
 </database>
