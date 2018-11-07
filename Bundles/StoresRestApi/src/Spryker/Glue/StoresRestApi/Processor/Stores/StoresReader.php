@@ -74,8 +74,8 @@ class StoresReader implements StoresReaderInterface
         $currentStore = $this->storeClient->getCurrentStore();
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $storeRequestId = $restRequest->getResource()->getId();
-        if ($storeRequestId && ($storeRequestId !== $currentStore->getName())) {
+        $storeId = $restRequest->getResource()->getId();
+        if ($storeId && ($storeId !== $currentStore->getName())) {
             return $this->addInvalidStoreIdErrorToResponse($response);
         }
 
@@ -101,9 +101,9 @@ class StoresReader implements StoresReaderInterface
     protected function addInvalidStoreIdErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(StoresRestApiConfig::RESPONSE_CODE_CANT_FIND_STORE)
+            ->setCode(StoresRestApiConfig::RESPONSE_CODE_STORE_NOT_FOUND)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(StoresRestApiConfig::RESPONSE_DETAIL_CANT_FIND_STORE);
+            ->setDetail(StoresRestApiConfig::RESPONSE_MESSAGE_STORE_NOT_FOUND);
 
         return $restResponse->addError($restErrorTransfer);
     }

@@ -12,6 +12,6 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 class StoresRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_STORES = 'stores';
-    public const RESPONSE_CODE_CANT_FIND_STORE = '601';
-    public const RESPONSE_DETAIL_CANT_FIND_STORE = 'Can`t find store.';
+    public const RESPONSE_CODE_STORE_NOT_FOUND = '601';
+    public const RESPONSE_MESSAGE_STORE_NOT_FOUND = 'Can`t find store.';
 }
