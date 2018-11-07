@@ -34,12 +34,14 @@ interface ProductOptionValueReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOption($idProductOptionValue);
+    public function getProductOption(int $idProductOptionValue): ProductOptionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
+    public function getProductOptionCollectionByProductOptionCriteria(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+    ): ProductOptionCollectionTransfer;
 }

@@ -43,17 +43,17 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOption($idProductOptionValue)
+    public function getProductOption(int $idProductOptionValue): ProductOptionTransfer
     {
-        $productOptionValueEntity = $this->getOptionValueById((int)$idProductOptionValue);
+        $productOptionValueEntity = $this->findOptionValueById($idProductOptionValue);
 
-        if (!$productOptionValueEntity) {
-            throw new ProductOptionNotFoundException(
-                sprintf('Product option with id "%d" not found in persistence.', $idProductOptionValue)
-            );
+        if ($productOptionValueEntity) {
+            return $this->hydrateProductOptionTransfer($productOptionValueEntity);
         }
 
-        return $this->hydrateProductOptionTransfer($productOptionValueEntity);
+        throw new ProductOptionNotFoundException(
+            sprintf('Product option with id "%d" not found in persistence.', $idProductOptionValue)
+        );
     }
 
     /**
@@ -63,13 +63,13 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      */
     public function findProductOptionByIdProductOptionValue(int $idProductOptionValue): ?ProductOptionTransfer
     {
-        $productOptionValueEntity = $this->getOptionValueById($idProductOptionValue);
+        $productOptionValueEntity = $this->findOptionValueById($idProductOptionValue);
 
-        if (!$productOptionValueEntity) {
-            return null;
+        if ($productOptionValueEntity) {
+            return $this->hydrateProductOptionTransfer($productOptionValueEntity);
         }
 
-        return $this->hydrateProductOptionTransfer($productOptionValueEntity);
+        return null;
     }
 
     /**
@@ -142,7 +142,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */
-    protected function getOptionValueById(int $idProductOptionValue)
+    protected function findOptionValueById(int $idProductOptionValue): ?SpyProductOptionValue
     {
         $productOptionValueEntity = $this->productOptionQueryContainer
             ->queryProductOptionByValueId($idProductOptionValue)

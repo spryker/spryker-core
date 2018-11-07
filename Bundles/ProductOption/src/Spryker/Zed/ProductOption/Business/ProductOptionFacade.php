@@ -86,7 +86,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     {
         return $this->getFactory()
             ->createProductOptionValueReader()
-            ->getProductOption($idProductOptionValue);
+            ->getProductOption((int)$idProductOptionValue);
     }
 
     /**
