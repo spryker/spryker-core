@@ -135,7 +135,7 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
-            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
 
         return $this->createEmptyGuestCartRestResponse()->addError($restErrorTransfer);
