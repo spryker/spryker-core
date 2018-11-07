@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionNotFoundException;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
@@ -84,9 +82,12 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
         $productOptionValueEntities = $this->productOptionQueryContainer
             ->queryProductOptionByProductOptionCriteria($productOptionCriteriaTransfer)
             ->find()
-            ->getArrayCopy();
+            ->toArray();
 
-        return $this->hydrateProductOptionCollectionTransfer($productOptionValueEntities);
+        return $this->hydrateProductOptionCollectionTransfer(
+            new ProductOptionCollectionTransfer(),
+            $productOptionValueEntities
+        );
     }
 
     /**
@@ -98,7 +99,6 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     {
         return $this->productOptionQueryContainer
             ->queryProductOptionByValueId($idProductOptionValue)
-            ->select([SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE])
             ->exists();
     }
 
@@ -119,15 +119,20 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductOptionCollectionTransfer $productOptionCollectionTransfer
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueEntities
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    protected function hydrateProductOptionCollectionTransfer(array $productOptionValueEntities): ProductOptionCollectionTransfer
-    {
-        $productOptionCollectionTransfer = new ProductOptionCollectionTransfer();
-        $productOptionTransfers = $this->hydrateProductOptionArray($productOptionValueEntities);
-        $productOptionCollectionTransfer->setProductOptions(new ArrayObject($productOptionTransfers));
+    protected function hydrateProductOptionCollectionTransfer(
+        ProductOptionCollectionTransfer $productOptionCollectionTransfer,
+        array $productOptionValueEntities
+    ): ProductOptionCollectionTransfer {
+        foreach ($productOptionValueEntities as $productOptionValueEntity) {
+            $productOptionCollectionTransfer->addProductOption(
+                $this->hydrateProductOptionTransfer($productOptionValueEntity)
+            );
+        }
 
         return $productOptionCollectionTransfer;
     }
@@ -144,20 +149,5 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
             ->findOne();
 
         return $productOptionValueEntity;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueEntities
-     *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
-     */
-    protected function hydrateProductOptionArray(array $productOptionValueEntities): array
-    {
-        $productOptionTransfers = [];
-        foreach ($productOptionValueEntities as $productOptionValueEntity) {
-            $productOptionTransfers[] = $this->hydrateProductOptionTransfer($productOptionValueEntity);
-        }
-
-        return $productOptionTransfers;
     }
 }
