@@ -29,12 +29,12 @@ class BundleProxy
     /**
      * @var \Spryker\Shared\Kernel\Locator\LocatorInterface[]
      */
-    protected $locator = [];
+    protected $locators = [];
 
     /**
      * @var \Spryker\Shared\Kernel\Locator\LocatorMatcherInterface[]
      */
-    protected $locatorMatcher;
+    protected $locatorMatcherMap = [];
 
     /**
      * @var bool|null
@@ -59,14 +59,14 @@ class BundleProxy
     }
 
     /**
-     * @param array $locator
+     * @param array $locators
      *
      * @return $this
      */
-    public function setLocator(array $locator = [])
+    public function setLocators(array $locators = [])
     {
-        foreach ($locator as $aLocator) {
-            $this->addLocator($aLocator);
+        foreach ($locators as $locator) {
+            $this->addLocator($locator);
         }
 
         return $this;
@@ -88,8 +88,8 @@ class BundleProxy
         }
         $matcher = new $matcherClass();
 
-        $this->locator[] = $locator;
-        $this->locatorMatcher[$locatorClass] = $matcher;
+        $this->locators[] = $locator;
+        $this->locatorMatcherMap[$locatorClass] = $matcher;
 
         return $this;
     }
@@ -114,8 +114,8 @@ class BundleProxy
             return new static::$instanceCache[$cacheKey][static::CLASS_NAME]();
         }
 
-        foreach ($this->locator as $locator) {
-            $matcher = $this->locatorMatcher[get_class($locator)];
+        foreach ($this->locators as $locator) {
+            $matcher = $this->locatorMatcherMap[get_class($locator)];
             if ($matcher->match($methodName)) {
                 $located = $locator->locate(ucfirst($this->moduleName));
 
