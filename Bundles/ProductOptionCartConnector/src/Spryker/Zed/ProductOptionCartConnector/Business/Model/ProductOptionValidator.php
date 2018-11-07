@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface;
 
-class ProductOptionExistsPreCheck implements ProductOptionExistsPreCheckInterface
+class ProductOptionValidator implements ProductOptionValidatorInterface
 {
     protected const MESSAGE_PARAM_ID = '%id%';
     protected const MESSAGE_ERROR_PRODUCT_OPTION_EXISTS = 'cart.item.option.pre.check.validation.error.exists';
