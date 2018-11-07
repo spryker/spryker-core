@@ -137,7 +137,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */
-    protected function getOptionValueById(int $idProductOptionValue): SpyProductOptionValue
+    protected function getOptionValueById(int $idProductOptionValue)
     {
         $productOptionValueEntity = $this->productOptionQueryContainer
             ->queryProductOptionByValueId($idProductOptionValue)
