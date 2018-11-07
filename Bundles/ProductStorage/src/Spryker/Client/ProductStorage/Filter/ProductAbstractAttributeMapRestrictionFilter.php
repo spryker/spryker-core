@@ -38,6 +38,10 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
      */
     public function filterAbstractProductVariantsData(array $productStorageData): array
     {
+        if (!array_key_exists(static::KEY_PRODUCT_CONCRETE_IDS, $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP])) {
+            $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS] = [];
+        }
+
         $restrictedProductConcreteIds = $this->getRestrictedProductConcreteIds(
             $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS]
         );
