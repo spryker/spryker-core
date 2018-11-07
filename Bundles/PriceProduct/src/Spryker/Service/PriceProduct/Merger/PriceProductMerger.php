@@ -86,8 +86,6 @@ class PriceProductMerger implements PriceProductMergerInterface
         }
 
         if (!isset($priceProductTransfers[$abstractKey])) {
-            $abstractPriceProductTransfer->getPriceDimension()->setIdPriceProductDefault(null);
-            $abstractPriceProductTransfer->getMoneyValue()->setIdEntity(null);
             $priceProductTransfers[$abstractKey] = $abstractPriceProductTransfer;
         }
 
