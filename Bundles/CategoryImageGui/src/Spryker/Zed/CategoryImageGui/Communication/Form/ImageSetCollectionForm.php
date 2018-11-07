@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\CategoryImageGui\Communication\Form;
@@ -46,8 +46,10 @@ class ImageSetCollectionForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string $name
+     *
+     * @return void
      */
-    protected function addImageSetForm(FormBuilderInterface $builder, string $name)
+    protected function addImageSetForm(FormBuilderInterface $builder, string $name): void
     {
         $builder->add($name, CollectionType::class, [
                 'entry_type' => ImageSetForm::class,

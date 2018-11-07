@@ -4,11 +4,12 @@
   "description": "CategoryImage module",
   "license": "proprietary",
   "require": {
-    "spryker/category": "*",
-    "spryker/category-extension": "*",
-    "spryker/kernel": "*",
-    "spryker/locale": "*",
-    "spryker/propel-orm": "*"
+    "php": ">=7.1",
+    "spryker/category": "^1.0.0",
+    "spryker/category-extension": "^1.0.0",
+    "spryker/kernel": "^3.24.0",
+    "spryker/locale": "^3.1.0",
+    "spryker/propel-orm": "^1.7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

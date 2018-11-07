@@ -18,7 +18,6 @@ class LocaleTransformer implements DataTransformerInterface
     private $localeFacade;
 
     /**
-     * LocaleTransformer constructor.
      * @param \Spryker\Zed\CategoryImageGui\Dependency\Facade\CategoryImageGuiToLocaleInterface $localeFacade
      */
     public function __construct(CategoryImageGuiToLocaleInterface $localeFacade)

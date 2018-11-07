@@ -4,17 +4,22 @@
   "description": "CategoryImageStorage module",
   "license": "proprietary",
   "require": {
-    "spryker/category": "*",
-    "spryker/category-image": "*",
-    "spryker/event-behavior": "*",
-    "spryker/kernel": "*",
-    "spryker/propel-orm": "*",
-    "spryker/synchronization-extension": "*"
+    "php": ">=7.1",
+    "spryker/category-image": "^1.0.0",
+    "spryker/event-behavior": "^1.1.0",
+    "spryker/kernel": "^3.24.0",
+    "spryker/propel-orm": "^1.7.1",
+    "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker/category": "*",
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/event": "ADD SUGGEST DESCRIPTION"
   },
   "autoload": {
     "psr-4": {
@@ -35,8 +40,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/event": "ADD SUGGEST DESCRIPTION"
   }
 }
