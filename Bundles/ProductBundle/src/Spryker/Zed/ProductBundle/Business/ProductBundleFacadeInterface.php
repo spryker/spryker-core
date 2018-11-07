@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductBundle\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -95,6 +96,20 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function preCheckCartAvailability(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * Specification:
+     *
+     * - Check if bundled products of cart items has price for current store
+     * - Sets error message if prices are not available
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function preCheckBundledProductPrices(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 
     /**
      *

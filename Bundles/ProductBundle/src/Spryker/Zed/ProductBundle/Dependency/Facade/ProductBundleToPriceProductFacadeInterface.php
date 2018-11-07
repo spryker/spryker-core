@@ -25,4 +25,24 @@ interface ProductBundleToPriceProductFacadeInterface
      * @return int|null
      */
     public function findPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer);
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultPriceTypeName(): string;
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
+     *
+     * @return bool
+     */
+    public function hasValidPriceFor(PriceProductFilterTransfer $priceFilterTransfer): bool;
 }
