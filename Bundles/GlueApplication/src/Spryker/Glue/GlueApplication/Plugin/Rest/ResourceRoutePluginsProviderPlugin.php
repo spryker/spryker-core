@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\GlueApplication\Plugin\Rest;
 
+use Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface;
 
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
