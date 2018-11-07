@@ -35,7 +35,7 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function checkActiveItems(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if (!$this->isBundledProductsActive($itemTransfer)) {

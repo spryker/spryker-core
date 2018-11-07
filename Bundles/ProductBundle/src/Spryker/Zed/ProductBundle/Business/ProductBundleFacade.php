@@ -116,7 +116,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     {
         return $this->getFactory()
             ->createProductBundleCartActivePreCheck()
-            ->checkCartAvailability($cartChangeTransfer);
+            ->checkActiveItems($cartChangeTransfer);
     }
 
     /**
