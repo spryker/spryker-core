@@ -34,9 +34,13 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
     }
 
     /**
+     * @module Company
+     * @module CompanyUser
+     *
      * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
      * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      * @uses \Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap
+     * @uses \Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyTableMap
      *
      * @param int $idCustomer
      *
