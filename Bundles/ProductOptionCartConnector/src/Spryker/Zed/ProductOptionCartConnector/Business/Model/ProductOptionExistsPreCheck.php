@@ -51,7 +51,7 @@ class ProductOptionExistsPreCheck implements ProductOptionExistsPreCheckInterfac
                 continue;
             }
 
-            $this->validateProductOptions($itemTransfer, $cartPreCheckResponseTransfer);
+            $cartPreCheckResponseTransfer = $this->validateProductOptions($itemTransfer, $cartPreCheckResponseTransfer);
         }
 
         return $this->setResponseIsSuccess($cartPreCheckResponseTransfer);
@@ -104,12 +104,12 @@ class ProductOptionExistsPreCheck implements ProductOptionExistsPreCheckInterfac
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
      */
     protected function validateProductOptions(
         ItemTransfer $itemTransfer,
         CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
-    ): void {
+    ): CartPreCheckResponseTransfer {
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
             if ($this->productOptionExists($productOptionTransfer)) {
                 continue;
@@ -122,5 +122,7 @@ class ProductOptionExistsPreCheck implements ProductOptionExistsPreCheckInterfac
 
             $cartPreCheckResponseTransfer->addMessage($message);
         }
+
+        return $cartPreCheckResponseTransfer;
     }
 }

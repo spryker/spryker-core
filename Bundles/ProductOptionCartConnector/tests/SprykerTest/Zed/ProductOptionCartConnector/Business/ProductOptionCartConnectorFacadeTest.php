@@ -376,7 +376,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testcheckProductOptionExistenceShouldWriteErrorWhenOptionDoesNotExist()
+    public function testCheckProductOptionExistenceShouldWriteErrorWhenOptionDoesNotExist()
     {
         $cartChangeTransfer = new CartChangeTransfer();
 

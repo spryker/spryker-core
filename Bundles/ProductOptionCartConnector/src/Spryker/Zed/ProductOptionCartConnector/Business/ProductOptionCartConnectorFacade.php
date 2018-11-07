@@ -84,7 +84,6 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
     /**
      * {@inheritdoc}
      *
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

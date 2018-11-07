@@ -24,7 +24,7 @@ class ProductOptionDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
-    public function haveProductOption(array $productOptionGroupOverride = []): ProductOptionGroupTransfer
+    public function haveProductOptionGroup(array $productOptionGroupOverride = []): ProductOptionGroupTransfer
     {
         $productOptionGroupTransfer = (new ProductOptionGroupBuilder($productOptionGroupOverride))
             ->withProductOptionValue()
