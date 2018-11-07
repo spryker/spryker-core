@@ -19,7 +19,7 @@ class CartsResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getResourceById": {
      *          "summary": [
      *              "Retrieve a cart."
      *          ],

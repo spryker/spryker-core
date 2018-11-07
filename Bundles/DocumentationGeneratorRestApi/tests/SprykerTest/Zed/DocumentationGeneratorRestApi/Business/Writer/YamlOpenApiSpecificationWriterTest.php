@@ -8,21 +8,31 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Writer;
 
 use Codeception\Test\Unit;
-use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Fixtures\GlueAnnotationAnalyzerExpectedResult;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Fixtures\GlueAnnotationAnalyzerExpectedResult;
 use Symfony\Component\Finder\Finder;
 
-class YamlRestApiDocumentationWriterTest extends Unit
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group DocumentationGeneratorRestApi
+ * @group Business
+ * @group Writer
+ * @group YamlOpenApiSpecificationWriterTest
+ * Add your own group annotations below this line
+ */
+class YamlOpenApiSpecificationWriterTest extends Unit
 {
     protected const GENERATED_FILE_NAME_PATTERN = '*.schema.yml';
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\RestApiDocumentationWriterInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\OpenApiSpecificationWriterInterface
      */
     protected $yamlWriter;
 
     /**
-     * @var \Pyz\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig
      */
     protected $config;
 
@@ -46,7 +56,7 @@ class YamlRestApiDocumentationWriterTest extends Unit
         $this->yamlWriter->write($data);
 
         $finder = new Finder();
-        $finder->in($this->config->getTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
+        $finder->in($this->config->getGeneratedFileTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
         $this->assertCount(1, $finder);
     }
 
@@ -56,7 +66,7 @@ class YamlRestApiDocumentationWriterTest extends Unit
     protected function tearDown(): void
     {
         $finder = new Finder();
-        $finder->in($this->config->getTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
+        $finder->in($this->config->getGeneratedFileTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
         if ($finder->count() > 0) {
             foreach ($finder as $fileInfo) {
                 unlink($fileInfo->getPathname());

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Fixtures;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Fixtures;
 
 class GlueAnnotationAnalyzerExpectedResult
 {

@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Finder;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Finder;
 
 use Codeception\Test\Unit;
 use SplFileInfo;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinder;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationGeneratorTestFactory;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRoutePlugin;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group RestApiDocumentationGenerator
+ * @group DocumentationGeneratorRestApi
  * @group Business
  * @group Finder
  * @group GlueControllerFinderTest
@@ -32,7 +32,7 @@ class GlueControllerFinderTest extends Unit
      */
     public function testGetGlueControllerFilesFromPluginShouldReturnArrayOfSplFileInfoObjects(): void
     {
-        $controllerFinder = $this->getGlueControllerFinder([RestApiDocumentationGeneratorTestFactory::CONTROLLER_SOURCE_DIRECTORY]);
+        $controllerFinder = $this->getGlueControllerFinder([DocumentationGeneratorRestApiTestFactory::CONTROLLER_SOURCE_DIRECTORY]);
 
         $files = $controllerFinder->getGlueControllerFilesFromPlugin(new TestResourceRoutePlugin());
 
@@ -47,7 +47,7 @@ class GlueControllerFinderTest extends Unit
      */
     public function testGetGlueControllerFilesFromPluginShouldReturnCorrectControllerFile(): void
     {
-        $controllerFinder = $this->getGlueControllerFinder([RestApiDocumentationGeneratorTestFactory::CONTROLLER_SOURCE_DIRECTORY]);
+        $controllerFinder = $this->getGlueControllerFinder([DocumentationGeneratorRestApiTestFactory::CONTROLLER_SOURCE_DIRECTORY]);
 
         $files = $controllerFinder->getGlueControllerFilesFromPlugin(new TestResourceRoutePlugin());
 
@@ -72,10 +72,10 @@ class GlueControllerFinderTest extends Unit
     /**
      * @param array $sourceDirectories
      *
-     * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinder
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface
      */
-    protected function getGlueControllerFinder(array $sourceDirectories): GlueControllerFinder
+    protected function getGlueControllerFinder(array $sourceDirectories): GlueControllerFinderInterface
     {
-        return (new RestApiDocumentationGeneratorTestFactory())->createGlueControllerFinder($sourceDirectories);
+        return (new DocumentationGeneratorRestApiTestFactory())->createGlueControllerFinder($sourceDirectories);
     }
 }

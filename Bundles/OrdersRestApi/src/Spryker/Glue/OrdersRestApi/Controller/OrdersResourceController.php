@@ -18,7 +18,7 @@ class OrdersResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getResourceById": {
      *          "summary": [
      *              "Get order by reference."
      *          ],

@@ -88,7 +88,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
 
                 $this->processGetResourceByIdPath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetResourceById());
                 $this->processGetResourceCollectionPath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetCollection());
-                if ($pathAnnotationsTransfer->getGetResourceById() === null && $pathAnnotationsTransfer->getGetCollection() === null) {
+                if ($pathAnnotationsTransfer->getGetResource() || ($pathAnnotationsTransfer->getGetResourceById() === null && $pathAnnotationsTransfer->getGetCollection() === null)) {
                     $this->processGetResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetResource());
                 }
                 $this->processPostResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getPost());

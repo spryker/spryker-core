@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub;
 
 use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
@@ -66,7 +66,7 @@ class RestTestAlternativeAttributesTransfer extends AbstractTransfer
     /**
      * @param string $attribute3
      *
-     * @return \SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\RestTestAttributesTransfer
+     * @return \SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternativeAttributesTransfer
      */
     public function setAttribute3(string $attribute3): self
     {
@@ -87,7 +87,7 @@ class RestTestAlternativeAttributesTransfer extends AbstractTransfer
     /**
      * @param string $attribute4
      *
-     * @return \SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\RestTestAttributesTransfer
+     * @return \SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternativeAttributesTransfer
      */
     public function setAttribute4(string $attribute4): self
     {

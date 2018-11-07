@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Generator;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Codeception\Test\Unit;
 use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\InvalidTransferClassException;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationGeneratorTestFactory;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRoutePlugin;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\RestTestAlternativeAttributesTransfer;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\RestTestAttributesTransfer;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternativeAttributesTransfer;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttributesTransfer;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group RestApiDocumentationGenerator
+ * @group DocumentationGeneratorRestApi
  * @group Business
  * @group Generator
  * @group RestApiDocumentationSchemaGeneratorTest
@@ -57,7 +57,7 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_RESOURCE_DATA = 'RestTestResponseData';
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSchemaGeneratorInterface
      */
     protected $schemaGenerator;
 
@@ -68,7 +68,7 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
     {
         parent::setUp();
 
-        $this->schemaGenerator = (new RestApiDocumentationGeneratorTestFactory())->createSchemaGenerator();
+        $this->schemaGenerator = (new DocumentationGeneratorRestApiTestFactory())->createOpenApiSpecificationSchemaGenerator();
     }
 
     /**

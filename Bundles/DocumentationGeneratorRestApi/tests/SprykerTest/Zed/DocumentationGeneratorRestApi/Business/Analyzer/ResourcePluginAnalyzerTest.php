@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Analyzer;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Codeception\Test\Unit;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Fixtures\GlueAnnotationAnalyzerExpectedResult;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationGeneratorTestFactory;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Fixtures\GlueAnnotationAnalyzerExpectedResult;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group RestApiDocumentationGenerator
+ * @group DocumentationGeneratorRestApi
  * @group Business
  * @group Analyzer
  * @group ResourcePluginAnalyzerTest
@@ -24,7 +24,7 @@ use SprykerTest\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationG
 class ResourcePluginAnalyzerTest extends Unit
 {
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\ResourcePluginAnalyzerInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourcePluginAnalyzerInterface
      */
     protected $resourcePluginAnalyzer;
 
@@ -35,7 +35,7 @@ class ResourcePluginAnalyzerTest extends Unit
     {
         parent::setUp();
 
-        $this->resourcePluginAnalyzer = (new RestApiDocumentationGeneratorTestFactory())->createResourcePluginAnalyzer();
+        $this->resourcePluginAnalyzer = (new DocumentationGeneratorRestApiTestFactory())->createResourcePluginAnalyzer();
     }
 
     /**
@@ -44,8 +44,11 @@ class ResourcePluginAnalyzerTest extends Unit
     public function testCreateRestApiDocumentationFromPlugins(): void
     {
         $generatedDocumentationData = $this->resourcePluginAnalyzer->createRestApiDocumentationFromPlugins();
+        $expectedResult = GlueAnnotationAnalyzerExpectedResult::getTestCreateRestApiDocumentationFromPluginsExpectedResult();
 
         $this->assertNotEmpty($generatedDocumentationData);
-        $this->assertArraySubset(GlueAnnotationAnalyzerExpectedResult::getTestCreateRestApiDocumentationFromPluginsExpectedResult(), $generatedDocumentationData);
+        $this->assertArraySubset($expectedResult['paths'], $generatedDocumentationData['paths']);
+        $this->assertArraySubset($expectedResult['schemas'], $generatedDocumentationData['schemas']);
+        $this->assertArraySubset($expectedResult['securitySchemes'], $generatedDocumentationData['securitySchemes']);
     }
 }

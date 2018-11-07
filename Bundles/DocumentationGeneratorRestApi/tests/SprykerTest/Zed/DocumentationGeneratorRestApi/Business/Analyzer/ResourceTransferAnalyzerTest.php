@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Analyzer;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\ResourceTransferAnalyzer;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\RestTestAttributesTransfer;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzer;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttributesTransfer;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group RestApiDocumentationGenerator
+ * @group DocumentationGeneratorRestApi
  * @group Business
  * @group Analyzer
  * @group ResourceTransferAnalyzerTest
@@ -34,7 +34,7 @@ class ResourceTransferAnalyzerTest extends Unit
     protected const RESOURCE_RELATIONSHIP_SCHEMA_NAME = 'RestTestRelationships';
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\ResourceTransferAnalyzerInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface
      */
     protected $resourceTransferAnalyzer;
 

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Controller;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Controller;
 
 class TestResourceWithoutAnnotationsController
 {

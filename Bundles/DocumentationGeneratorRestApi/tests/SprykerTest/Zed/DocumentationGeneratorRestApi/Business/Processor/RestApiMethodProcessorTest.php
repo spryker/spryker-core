@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Handler;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Processor;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationGeneratorTestFactory;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRoutePlugin;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group RestApiDocumentationGenerator
+ * @group DocumentationGeneratorRestApi
  * @group Business
- * @group Handler
- * @group PluginHandlerTest
+ * @group Processor
+ * @group RestApiMethodProcessorTest
  * Add your own group annotations below this line
  */
-class PluginHandlerTest extends Unit
+class RestApiMethodProcessorTest extends Unit
 {
     protected const RESOURCE_PATH = '/test-resource';
     protected const RESOURCE_ID = '{testResourceId}';
@@ -45,9 +45,9 @@ class PluginHandlerTest extends Unit
     protected const SUMMARY = 'Test summary';
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Handler\PluginHandlerInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\RestApiMethodProcessorInterface
      */
-    protected $pluginHandler;
+    protected $methodProcessor;
 
     /**
      * @return void
@@ -56,7 +56,7 @@ class PluginHandlerTest extends Unit
     {
         parent::setUp();
 
-        $this->pluginHandler = (new RestApiDocumentationGeneratorTestFactory())->createRestApiMethodProcessor();
+        $this->methodProcessor = (new DocumentationGeneratorRestApiTestFactory())->createRestApiMethodProcessor();
     }
 
     /**
@@ -64,7 +64,7 @@ class PluginHandlerTest extends Unit
      */
     public function testAddGetResourcePathWithoutAnnotationsShouldAddGetResourceToPathsWithDefaultValues(): void
     {
-        $this->pluginHandler->addGetResourcePath(
+        $this->methodProcessor->addGetResourcePath(
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
@@ -72,7 +72,7 @@ class PluginHandlerTest extends Unit
             null
         );
 
-        $generatedPaths = $this->pluginHandler->getGeneratedPaths();
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
@@ -123,7 +123,7 @@ class PluginHandlerTest extends Unit
                 '404' => static::NOT_FOUND_RESPONSE_DESCRIPTION,
             ]);
 
-        $this->pluginHandler->addGetResourcePath(
+        $this->methodProcessor->addGetResourcePath(
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
@@ -131,7 +131,7 @@ class PluginHandlerTest extends Unit
             $annotationTransfer
         );
 
-        $generatedPaths = $this->pluginHandler->getGeneratedPaths();
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
@@ -204,7 +204,7 @@ class PluginHandlerTest extends Unit
      */
     public function testAddGetResourceCollectionPathShouldAddGetCollectionToPaths(): void
     {
-        $this->pluginHandler->addGetResourceCollectionPath(
+        $this->methodProcessor->addGetResourceCollectionPath(
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
@@ -212,7 +212,7 @@ class PluginHandlerTest extends Unit
             null
         );
 
-        $generatedPaths = $this->pluginHandler->getGeneratedPaths();
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
@@ -255,7 +255,7 @@ class PluginHandlerTest extends Unit
      */
     public function testAddGetResourceCollectionPathWithAnnotationsWithEmptyResponseShouldAddGetToPathsWithEmptyResponseSchema(): void
     {
-        $this->pluginHandler->addGetResourceCollectionPath(
+        $this->methodProcessor->addGetResourceCollectionPath(
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
@@ -263,7 +263,7 @@ class PluginHandlerTest extends Unit
             (new RestApiDocumentationAnnotationTransfer())->setIsEmptyResponse(true)
         );
 
-        $generatedPaths = $this->pluginHandler->getGeneratedPaths();
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
@@ -299,7 +299,7 @@ class PluginHandlerTest extends Unit
      */
     public function testAddGetResourceCollectionPathWithAnnotationsShouldAddGetToPathsWithDataFromAnnotations(): void
     {
-        $this->pluginHandler->addGetResourceCollectionPath(
+        $this->methodProcessor->addGetResourceCollectionPath(
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
@@ -307,7 +307,7 @@ class PluginHandlerTest extends Unit
             (new RestApiDocumentationAnnotationTransfer())->setSummary([static::SUMMARY])
         );
 
-        $generatedPaths = $this->pluginHandler->getGeneratedPaths();
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
@@ -343,14 +343,14 @@ class PluginHandlerTest extends Unit
      */
     public function testAddDeleteResourcePathShouldAddDeleteToPaths(): void
     {
-        $this->pluginHandler->addDeleteResourcePath(
+        $this->methodProcessor->addDeleteResourcePath(
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
             null
         );
 
-        $generatedPaths = $this->pluginHandler->getGeneratedPaths();
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
@@ -386,14 +386,14 @@ class PluginHandlerTest extends Unit
      */
     public function testAddPatchResourcePathShouldAddPatchToPaths(): void
     {
-        $this->pluginHandler->addPatchResourcePath(
+        $this->methodProcessor->addPatchResourcePath(
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             true,
             null
         );
 
-        $generatedPaths = $this->pluginHandler->getGeneratedPaths();
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
@@ -450,14 +450,14 @@ class PluginHandlerTest extends Unit
      */
     public function testAddPostResourcePathShouldAddPostToPaths(): void
     {
-        $this->pluginHandler->addPostResourcePath(
+        $this->methodProcessor->addPostResourcePath(
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
             null
         );
 
-        $generatedPaths = $this->pluginHandler->getGeneratedPaths();
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
@@ -511,14 +511,14 @@ class PluginHandlerTest extends Unit
      */
     public function testAddPostResourcePathWithAnnotationsWithEmptyResponseShouldAddPostToPathsWithEmptyResponseSchema(): void
     {
-        $this->pluginHandler->addPostResourcePath(
+        $this->methodProcessor->addPostResourcePath(
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
             (new RestApiDocumentationAnnotationTransfer())->setIsEmptyResponse(true)
         );
 
-        $generatedPaths = $this->pluginHandler->getGeneratedPaths();
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
@@ -565,7 +565,7 @@ class PluginHandlerTest extends Unit
      */
     public function testAddGetResourceByIdPath(): void
     {
-        $this->pluginHandler->addGetResourceByIdPath(
+        $this->methodProcessor->addGetResourceByIdPath(
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
@@ -573,7 +573,7 @@ class PluginHandlerTest extends Unit
             null
         );
 
-        $generatedPaths = $this->pluginHandler->getGeneratedPaths();
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH . '/' . static::RESOURCE_ID, $generatedPaths);

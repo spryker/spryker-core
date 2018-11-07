@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Analyzer;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationGeneratorTestFactory;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRoutePlugin;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRouteRelatedPlugin;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRouteRelatedPlugin;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group RestApiDocumentationGenerator
+ * @group DocumentationGeneratorRestApi
  * @group Business
  * @group Analyzer
  * @group ResourceRelationshipsPluginAnalyzerTest
@@ -56,10 +56,10 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface
      */
     protected function getResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
     {
-        return (new RestApiDocumentationGeneratorTestFactory())->createResourceRelationshipsPluginAnalyzer();
+        return (new DocumentationGeneratorRestApiTestFactory())->createResourceRelationshipsPluginAnalyzer();
     }
 }

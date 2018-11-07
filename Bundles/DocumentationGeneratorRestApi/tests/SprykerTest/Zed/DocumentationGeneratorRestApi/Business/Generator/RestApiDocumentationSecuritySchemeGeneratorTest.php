@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Generator;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Codeception\Test\Unit;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationGeneratorTestFactory;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group RestApiDocumentationGenerator
+ * @group DocumentationGeneratorRestApi
  * @group Business
  * @group Generator
  * @group RestApiDocumentationSecuritySchemeGeneratorTest
@@ -25,7 +25,7 @@ class RestApiDocumentationSecuritySchemeGeneratorTest extends Unit
     protected const BEARER_AUTH = 'BearerAuth';
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSecuritySchemeGeneratorInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGeneratorInterface
      */
     protected $securitySchemeGenerator;
 
@@ -36,7 +36,7 @@ class RestApiDocumentationSecuritySchemeGeneratorTest extends Unit
     {
         parent::setUp();
 
-        $this->securitySchemeGenerator = (new RestApiDocumentationGeneratorTestFactory())->createSecuritySchemeGenerator();
+        $this->securitySchemeGenerator = (new DocumentationGeneratorRestApiTestFactory())->createOpenApiSpecificationSecuritySchemeGenerator();
     }
 
     /**

@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Generator;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer;
-use Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationGeneratorTestFactory;
+use Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer;
+use Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group RestApiDocumentationGenerator
+ * @group DocumentationGeneratorRestApi
  * @group Business
  * @group Generator
  * @group RestApiDocumentationPathGeneratorTest
@@ -51,7 +51,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     protected const SCHEMA_REF_REST_RESPONSE = '#/components/schemas/RestTestResponse';
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGeneratorInterface
      */
     protected $pathGenerator;
 
@@ -62,7 +62,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     {
         parent::setUp();
 
-        $this->pathGenerator = (new RestApiDocumentationGeneratorTestFactory())->createPathGenerator();
+        $this->pathGenerator = (new DocumentationGeneratorRestApiTestFactory())->createOpenApiSpecificationPathGenerator();
     }
 
     /**
@@ -149,11 +149,11 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer
+     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer
      */
-    protected function getPathMethodDataTransferForGetMethod(): RestApiDocumentationPathMethodDataTransfer
+    protected function getPathMethodDataTransferForGetMethod(): OpenApiSpecificationPathMethodDataTransfer
     {
-        return (new RestApiDocumentationPathMethodDataTransfer())
+        return (new OpenApiSpecificationPathMethodDataTransfer())
             ->setSummary([static::SUMMARY])
             ->setResource(static::RESOURCE)
             ->setPath(static::PATH)
@@ -165,11 +165,11 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer
+     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer
      */
-    protected function getPathMethodDataTransferForPostMethod(): RestApiDocumentationPathMethodDataTransfer
+    protected function getPathMethodDataTransferForPostMethod(): OpenApiSpecificationPathMethodDataTransfer
     {
-        return (new RestApiDocumentationPathMethodDataTransfer())
+        return (new OpenApiSpecificationPathMethodDataTransfer())
             ->setSummary([static::SUMMARY])
             ->setResource(static::RESOURCE)
             ->setPath(static::PATH)
@@ -179,11 +179,11 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer
+     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer
      */
-    protected function getPathMethodDataTransferForPatchMethod(): RestApiDocumentationPathMethodDataTransfer
+    protected function getPathMethodDataTransferForPatchMethod(): OpenApiSpecificationPathMethodDataTransfer
     {
-        return (new RestApiDocumentationPathMethodDataTransfer())
+        return (new OpenApiSpecificationPathMethodDataTransfer())
             ->setSummary([static::SUMMARY])
             ->setResource(static::RESOURCE)
             ->setPath(static::PATH_WITH_ID)
@@ -193,11 +193,11 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer
+     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer
      */
-    protected function getPathMethodDataTransferForDeleteMethod(): RestApiDocumentationPathMethodDataTransfer
+    protected function getPathMethodDataTransferForDeleteMethod(): OpenApiSpecificationPathMethodDataTransfer
     {
-        return (new RestApiDocumentationPathMethodDataTransfer())
+        return (new OpenApiSpecificationPathMethodDataTransfer())
             ->setSummary([static::SUMMARY])
             ->setResource(static::RESOURCE)
             ->setPath(static::PATH_WITH_ID)
@@ -206,20 +206,20 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer
      */
-    protected function getRequestSchemaDataTransfer(): RestApiDocumentationPathSchemaDataTransfer
+    protected function getRequestSchemaDataTransfer(): OpenApiSpecificationPathSchemaDataTransfer
     {
-        return (new RestApiDocumentationPathSchemaDataTransfer())
+        return (new OpenApiSpecificationPathSchemaDataTransfer())
             ->setSchemaReference(static::SCHEMA_REF_REST_REQUEST);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer
      */
-    protected function getErrorSchemaDataTransfer(): RestApiDocumentationPathSchemaDataTransfer
+    protected function getErrorSchemaDataTransfer(): OpenApiSpecificationPathSchemaDataTransfer
     {
-        return (new RestApiDocumentationPathSchemaDataTransfer())
+        return (new OpenApiSpecificationPathSchemaDataTransfer())
             ->setCode(static::RESPONSE_CODE_DEFAULT)
             ->setDescription(static::RESPONSE_DESCRIPTION_DEFAULT)
             ->setSchemaReference(static::SCHEMA_REF_REST_ERROR_MESSAGE);
@@ -228,33 +228,33 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     /**
      * @param int $code
      *
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer
      */
-    protected function getResponseSchemaDataTransfer(int $code): RestApiDocumentationPathSchemaDataTransfer
+    protected function getResponseSchemaDataTransfer(int $code): OpenApiSpecificationPathSchemaDataTransfer
     {
-        return (new RestApiDocumentationPathSchemaDataTransfer())
+        return (new OpenApiSpecificationPathSchemaDataTransfer())
             ->setCode($code)
             ->setDescription(static::RESPONSE_DESCRIPTION_SUCCESS)
             ->setSchemaReference(static::SCHEMA_REF_REST_RESPONSE);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer
      */
-    protected function getNotFoundResponseSchema(): RestApiDocumentationPathSchemaDataTransfer
+    protected function getNotFoundResponseSchema(): OpenApiSpecificationPathSchemaDataTransfer
     {
-        return (new RestApiDocumentationPathSchemaDataTransfer())
+        return (new OpenApiSpecificationPathSchemaDataTransfer())
             ->setCode(static::RESPONSE_CODE_NOT_FOUND)
             ->setDescription(static::RESPONSE_DESCRIPTION_NOT_FOUND)
             ->setSchemaReference(static::SCHEMA_REF_REST_ERROR_MESSAGE);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer
      */
-    protected function getBadRequestResponseSchema(): RestApiDocumentationPathSchemaDataTransfer
+    protected function getBadRequestResponseSchema(): OpenApiSpecificationPathSchemaDataTransfer
     {
-        return (new RestApiDocumentationPathSchemaDataTransfer())
+        return (new OpenApiSpecificationPathSchemaDataTransfer())
             ->setCode(static::RESPONSE_CODE_BAD_REQUEST)
             ->setDescription(static::RESPONSE_DESCRIPTION_BAD_REQUEST)
             ->setSchemaReference(static::SCHEMA_REF_REST_ERROR_MESSAGE);

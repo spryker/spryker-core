@@ -74,7 +74,7 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResou
 
 class DocumentationGeneratorRestApiTestFactory extends Unit
 {
-    public const CONTROLLER_SOURCE_DIRECTORY = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/DocumentationGeneratorRestApi/tests/SprykerTest/Zed/DocumentationGeneratorRestApi/Business/Stub/Controller/';
+    public const CONTROLLER_SOURCE_DIRECTORY = __DIR__ . '/Stub/Controller/';
 
     /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\OpenApiSpecificationWriterInterface

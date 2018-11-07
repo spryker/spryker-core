@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Analyzer;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestTokenResponseAttributesTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzer;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\InvalidAnnotationFormatException;
-use Spryker\Zed\RestApiDocumentationGenerator\Dependency\Service\RestApiDocumentationGeneratorToUtilEncodingServiceInterface;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationGeneratorTestFactory;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResourceRoutePlugin;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzer;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidAnnotationFormatException;
+use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceInterface;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group RestApiDocumentationGenerator
+ * @group DocumentationGeneratorRestApi
  * @group Business
  * @group Analyzer
  * @group GlueAnnotationAnalyzerTest
@@ -28,7 +28,7 @@ use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin\TestResou
  */
 class GlueAnnotationAnalyzerTest extends Unit
 {
-    protected const CONTROLLER_SOURCE_DIRECTORY = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/RestApiDocumentationGenerator/tests/SprykerTest/Zed/RestApiDocumentationGenerator/Business/Stub/Controller/';
+    protected const CONTROLLER_SOURCE_DIRECTORY = __DIR__ . '/../Stub/Controller/';
     protected const CONTROLLER_FILE_NAME = 'TestResourceController.php';
     protected const CONTROLLER_WITH_INVALID_ANNOTATIONS_FILE_NAME = 'TestResourceWithInvalidAnnotationsController.php';
     protected const CONTROLLER_WITHOUT_ANNOTATIONS = 'TestResourceWithoutAnnotationsController.php';
@@ -45,7 +45,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     protected const VALUE_RESPONSE_SERVER_ERROR = 'Server Error';
 
     /**
-     * @var \SprykerTest\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationGeneratorTestFactory
+     * @var \SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory
      */
     protected $testFactory;
 
@@ -56,7 +56,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     {
         parent::setUp();
 
-        $this->testFactory = new RestApiDocumentationGeneratorTestFactory();
+        $this->testFactory = new DocumentationGeneratorRestApiTestFactory();
     }
 
     /**
@@ -76,7 +76,7 @@ class GlueAnnotationAnalyzerTest extends Unit
         $this->assertEmpty($parameters->getGetCollection());
         $this->assertEmpty($parameters->getGetResourceById());
         $this->assertEmpty($parameters->getDelete());
-        $this->assertEquals(static::SUMMARY, $parameters->getGetResource()->getSummary());
+        $this->assertEquals([static::SUMMARY], $parameters->getGetResource()->getSummary());
         $this->assertNotEmpty($parameters->getGetResource()->getHeaders());
         $this->assertEquals(static::HEADER_ACCEPT_LANGUAGE, $parameters->getGetResource()->getHeaders()[0]);
         $this->assertNotEmpty($parameters->getGetResource()->getResponses());
@@ -149,7 +149,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     /**
      * @param string $controller
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface
      */
     protected function getGlueControllerFinder(string $controller): MockObject
     {
@@ -157,9 +157,9 @@ class GlueAnnotationAnalyzerTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\RestApiDocumentationGenerator\Dependency\Service\RestApiDocumentationGeneratorToUtilEncodingServiceInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceInterface
      */
-    protected function getUtilEncodingService(): RestApiDocumentationGeneratorToUtilEncodingServiceInterface
+    protected function getUtilEncodingService(): DocumentationGeneratorRestApiToUtilEncodingServiceInterface
     {
         return $this->testFactory->createUtilEncodingService();
     }

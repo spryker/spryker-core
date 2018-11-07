@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\Plugin;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
-use SprykerTest\Zed\RestApiDocumentationGenerator\Business\Stub\RestTestAttributesTransfer;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttributesTransfer;
 
 class TestResourceRouteWithEmptyAnnotationsPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
@@ -63,6 +63,6 @@ class TestResourceRouteWithEmptyAnnotationsPlugin implements ResourceRoutePlugin
      */
     public function getModuleName(): string
     {
-        return 'RestApiDocumentationGenerator';
+        return 'DocumentationGeneratorRestApi';
     }
 }
