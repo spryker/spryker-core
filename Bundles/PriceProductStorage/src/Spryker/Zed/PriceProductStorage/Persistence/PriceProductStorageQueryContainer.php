@@ -164,7 +164,7 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
-     * @param array $priceProductStoreIds
+     * @param int[] $priceProductStoreIds
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
@@ -178,13 +178,13 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
                 ->filterByIdPriceProductStore_In($priceProductStoreIds)
             ->endUse()
             ->select([SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->addAnd(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, null, Criteria::NOT_EQUAL);
+            ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
     }
 
     /**
      * @api
      *
-     * @param array $priceProductStoreIds
+     * @param int[] $priceProductStoreIds
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
@@ -198,6 +198,6 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
                 ->filterByIdPriceProductStore_In($priceProductStoreIds)
             ->endUse()
             ->select([SpyPriceProductTableMap::COL_FK_PRODUCT])
-            ->addAnd(SpyPriceProductTableMap::COL_FK_PRODUCT, null, Criteria::NOT_EQUAL);
+            ->filterByFkProduct(null, Criteria::ISNOTNULL);
     }
 }

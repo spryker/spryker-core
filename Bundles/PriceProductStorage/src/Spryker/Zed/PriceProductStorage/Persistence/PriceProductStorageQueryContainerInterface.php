@@ -87,7 +87,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
     /**
      * @api
      *
-     * @param array $priceProductStoreIds
+     * @param int[] $priceProductStoreIds
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
@@ -96,7 +96,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
     /**
      * @api
      *
-     * @param array $priceProductStoreIds
+     * @param int[] $priceProductStoreIds
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
