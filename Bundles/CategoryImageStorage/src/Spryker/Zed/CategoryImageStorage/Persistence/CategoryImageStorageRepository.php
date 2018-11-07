@@ -21,10 +21,10 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     /**
      * {@inheritdoc}
      */
-    public function findCategoryIdsByCategoryImageSetToCategoryImageIds(array $categoryImageSetToCategoryImageIds): array
+    public function findCategoryIdsByCategoryImageSetToCategoryImageIds(array $categoryImageSetToCategoryImageIds)
     {
         return $this->getFactory()
-            ->createQueryCategoryImageSetToCategoryImage()
+            ->getQueryCategoryImageSetToCategoryImage()
             ->filterByIdCategoryImageSetToCategoryImage_In($categoryImageSetToCategoryImageIds)
             ->innerJoinSpyCategoryImageSet()
             ->withColumn('DISTINCT ' . SpyCategoryImageSetTableMap::COL_FK_CATEGORY, static::FK_CATEGORY)
@@ -36,10 +36,10 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     /**
      * {@inheritdoc}
      */
-    public function findCategoryImageSetsByFkCategoryIn(array $categoryIds)
+    public function findCategoryImageSetsByFkCategoryIn(array $categoryIds): array
     {
         $categoryImageSetsQuery = $this->getFactory()
-            ->createCategoryImageSetQuery()
+            ->getCategoryImageSetQuery()
             ->innerJoinWithSpyLocale()
             ->innerJoinWithSpyCategoryImageSetToCategoryImage()
             ->useSpyCategoryImageSetToCategoryImageQuery()
@@ -53,7 +53,7 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     /**
      * {@inheritdoc}
      */
-    public function findCategoryImageStorageByIds(array $categoryIds): array
+    public function findCategoryImageStorageByFkCategoryIn(array $categoryIds): array
     {
         $categoryImageStorageQuery = $this->getFactory()
             ->createSpyCategoryImageStorageQuery()
@@ -65,10 +65,10 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     /**
      * {@inheritdoc}
      */
-    public function findCategoryIdsByCategoryImageIds(array $categoryImageIds): array
+    public function findCategoryIdsByCategoryImageIds(array $categoryImageIds)
     {
         return $this->getFactory()
-            ->createQueryCategoryImageSetToCategoryImage()
+            ->getQueryCategoryImageSetToCategoryImage()
             ->filterByFkCategoryImage_In($categoryImageIds)
             ->innerJoinSpyCategoryImageSet()
             ->withColumn('DISTINCT ' . SpyCategoryImageSetTableMap::COL_FK_CATEGORY, static::FK_CATEGORY)

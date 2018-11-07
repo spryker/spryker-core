@@ -84,21 +84,4 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
             ->createCategoryImageReader()
             ->expandCategoryWithImageSets($categoryTransfer);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idCategory
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
-     */
-    public function getCombinedCategoryImageSets($idCategory, $idLocale): array
-    {
-        return $this->getFactory()
-            ->createCategoryImageSetCombiner()
-            ->getCombinedCategoryImageSets($idCategory, $idLocale);
-    }
 }

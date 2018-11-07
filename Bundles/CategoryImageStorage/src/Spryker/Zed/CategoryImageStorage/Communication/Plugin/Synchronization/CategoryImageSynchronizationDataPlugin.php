@@ -55,7 +55,7 @@ class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements S
     public function getData(array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-        $categoryImageStorageEntities = $this->getRepository()->findCategoryImageStorageByIds($ids);
+        $categoryImageStorageEntities = $this->getRepository()->findCategoryImageStorageByFkCategoryIn($ids);
 
         foreach ($categoryImageStorageEntities as $categoryImageStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();

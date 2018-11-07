@@ -9,8 +9,6 @@ namespace Spryker\Zed\CategoryImageStorage\Business;
 
 use Spryker\Zed\CategoryImageStorage\Business\Storage\CategoryImageStorageWriter;
 use Spryker\Zed\CategoryImageStorage\Business\Storage\CategoryImageStorageWriterInterface;
-use Spryker\Zed\CategoryImageStorage\CategoryImageStorageDependencyProvider;
-use Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToCategoryImageInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -26,17 +24,8 @@ class CategoryImageStorageBusinessFactory extends AbstractBusinessFactory
     public function createCategoryImageStorageWriter(): CategoryImageStorageWriterInterface
     {
         return new CategoryImageStorageWriter(
-            $this->getCategoryImageFacade(),
             $this->getRepository(),
             $this->getEntityManager()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToCategoryImageInterface
-     */
-    public function getCategoryImageFacade(): CategoryImageStorageToCategoryImageInterface
-    {
-        return $this->getProvidedDependency(CategoryImageStorageDependencyProvider::FACADE_CATEGORY_IMAGE);
     }
 }

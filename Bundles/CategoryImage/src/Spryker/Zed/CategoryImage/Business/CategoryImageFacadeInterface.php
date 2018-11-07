@@ -63,16 +63,4 @@ interface CategoryImageFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     public function expandCategoryWithImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer;
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idCategory
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
-     */
-    public function getCombinedCategoryImageSets($idCategory, $idLocale): array;
 }

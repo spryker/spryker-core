@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CategoryImage\Business;
 
-use Spryker\Zed\CategoryImage\Business\Model\CategoryImageSetCombiner;
-use Spryker\Zed\CategoryImage\Business\Model\CategoryImageSetCombinerInterface;
 use Spryker\Zed\CategoryImage\Business\Model\Reader;
 use Spryker\Zed\CategoryImage\Business\Model\ReaderInterface;
 use Spryker\Zed\CategoryImage\Business\Model\Writer;
@@ -21,6 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface getRepository()
  * @method \Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CategoryImage\CategoryImageConfig getConfig()
  */
 class CategoryImageBusinessFactory extends AbstractBusinessFactory
 {
@@ -54,16 +53,6 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     {
         return new LocaleProvider(
             $this->getLocaleFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryImage\Business\Model\CategoryImageSetCombinerInterface
-     */
-    public function createCategoryImageSetCombiner(): CategoryImageSetCombinerInterface
-    {
-        return new CategoryImageSetCombiner(
-            $this->getRepository()
         );
     }
 

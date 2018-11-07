@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\CategoryImageStorage;
 
-use Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToCategoryImageBridge;
+use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
+use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImageQuery;
 use Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToEventBehaviorBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -15,7 +16,9 @@ use Spryker\Zed\Kernel\Container;
 class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    public const FACADE_CATEGORY_IMAGE = 'FACADE_CATEGORY_IMAGE';
+
+    public const PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE = 'PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE';
+    public const PROPEL_QUERY_CATEGORY_IMAGE_SET = 'PROPEL_QUERY_CATEGORY_IMAGE_SET';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,12 +41,14 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::FACADE_CATEGORY_IMAGE] = function (Container $container) {
-            return new CategoryImageStorageToCategoryImageBridge(
-                $container->getLocator()->categoryImage()->facade()
-            );
+        $container[static::PROPEL_QUERY_CATEGORY_IMAGE_SET] = function () {
+            return SpyCategoryImageSetQuery::create();
+        };
+
+        $container[static::PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE] = function () {
+            return SpyCategoryImageSetToCategoryImageQuery::create();
         };
 
         return $container;

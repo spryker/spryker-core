@@ -14,14 +14,9 @@
         <property name="images" singular="image" type="CategoryImageStorage[]"/>
     </transfer>
 
-    <transfer name="CategoryEntityImageStorage">
+    <transfer name="CategoryImageSetCollectionStorage">
         <property name="idCategory" type="int"/>
         <property name="imageSets" singular="imageSet" type="CategoryImageSetStorage[]"/>
-    </transfer>
-
-    <transfer name="CategoryView">
-        <property name="idCategory" type="int" />
-        <property name="images" singular="image" type="CategoryImageStorage[]"/>
     </transfer>
 
 </transfers>

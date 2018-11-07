@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Persistence;
 
-use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImageQuery;
 use Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorageQuery;
+use Spryker\Zed\CategoryImageStorage\CategoryImageStorageDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -21,25 +21,17 @@ class CategoryImageStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImageQuery
      */
-    public function createQueryCategoryImageSetToCategoryImage(): SpyCategoryImageSetToCategoryImageQuery
+    public function getQueryCategoryImageSetToCategoryImage(): SpyCategoryImageSetToCategoryImageQuery
     {
-        return SpyCategoryImageSetToCategoryImageQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
-     */
-    public function createCategoryAttributeQuery(): SpyCategoryAttributeQuery
-    {
-        return SpyCategoryAttributeQuery::create();
+        return $this->getProvidedDependency(CategoryImageStorageDependencyProvider::PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE);
     }
 
     /**
      * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery
      */
-    public function createCategoryImageSetQuery(): SpyCategoryImageSetQuery
+    public function getCategoryImageSetQuery(): SpyCategoryImageSetQuery
     {
-        return SpyCategoryImageSetQuery::create();
+        return $this->getProvidedDependency(CategoryImageStorageDependencyProvider::PROPEL_QUERY_CATEGORY_IMAGE_SET);
     }
 
     /**

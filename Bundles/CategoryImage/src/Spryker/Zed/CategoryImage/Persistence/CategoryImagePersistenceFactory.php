@@ -15,6 +15,9 @@ use Spryker\Zed\CategoryImage\Persistence\Mapper\CategoryImageMapper;
 use Spryker\Zed\CategoryImage\Persistence\Mapper\CategoryImageMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\CategoryImage\CategoryImageConfig getConfig()
+ */
 class CategoryImagePersistenceFactory extends AbstractPersistenceFactory
 {
     /**

@@ -28,7 +28,7 @@ interface CategoryImageStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[]
      */
-    public function findCategoryImageSetsByFkCategoryIn(array $categoryIds);
+    public function findCategoryImageSetsByFkCategoryIn(array $categoryIds): array;
 
     /**
      * @api
@@ -37,7 +37,7 @@ interface CategoryImageStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
      */
-    public function findCategoryImageStorageByIds(array $categoryIds);
+    public function findCategoryImageStorageByFkCategoryIn(array $categoryIds): array;
 
     /**
      * @param array $categoryImageIds
