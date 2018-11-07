@@ -81,7 +81,7 @@ class StorageFactory extends AbstractFactory
      */
     protected function getStorageClient()
     {
-        return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_STORAGE);
+        return $this->getProvidedDependency(StorageDependencyProvider::STORAGE_CLIENT);
     }
 
     /**

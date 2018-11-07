@@ -16,7 +16,7 @@ class StorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
-    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const STORAGE_CLIENT = 'storage client';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -27,7 +27,7 @@ class StorageDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container[self::STORAGE_CLIENT] = function (Container $container) {
             return $container->getLocator()->storage()->client();
         };
 
