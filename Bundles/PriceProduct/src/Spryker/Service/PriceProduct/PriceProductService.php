@@ -69,6 +69,10 @@ class PriceProductService extends AbstractService implements PriceProductService
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
      *

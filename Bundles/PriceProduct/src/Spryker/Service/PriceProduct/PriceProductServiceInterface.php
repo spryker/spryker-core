@@ -55,9 +55,9 @@ interface PriceProductServiceInterface
 
     /**
      * Specification:
-     * - Returns merged product prices.
-     * - Takes arrays of PriceProductTransfer as arguments.
-     * - Takes abstract prices and override them with the existing concrete prices.
+     * - Merges one product concrete prices with its product abstract prices.
+     * - Takes product concrete prices and product abstract prices as arguments.
+     * - Overrides product abstract prices with the existing product concrete prices.
      *
      * @api
      *

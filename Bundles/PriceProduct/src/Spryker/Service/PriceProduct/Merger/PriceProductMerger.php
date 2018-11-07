@@ -53,10 +53,8 @@ class PriceProductMerger implements PriceProductMergerInterface
             array_filter([
                 $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
                 $priceProductTransfer->getPriceTypeName(),
-                $priceDimensionTransfer->getType(),
-                $priceDimensionTransfer->getName(),
-                $priceDimensionTransfer->getIdMerchantRelationship(),
-            ])
+                $priceProductTransfer->getMoneyValue()->getFkStore(),
+            ] + array_values($priceDimensionTransfer->toArray()))
         );
     }
 
