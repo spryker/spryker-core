@@ -231,9 +231,9 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
     protected function addItemSkuMissingErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_ID)
-            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_SKU);
+            ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_ID_IS_NOT_SPECIFIED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_ID_IS_NOT_SPECIFIED);
 
         return $restResponse->addError($restErrorTransfer);
     }
