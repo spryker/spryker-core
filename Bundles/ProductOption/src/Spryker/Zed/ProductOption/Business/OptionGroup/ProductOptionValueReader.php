@@ -47,7 +47,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      */
     public function getProductOption($idProductOptionValue)
     {
-        $productOptionValueEntity = $this->getOptionValueById($idProductOptionValue);
+        $productOptionValueEntity = $this->getOptionValueById((int)$idProductOptionValue);
 
         if (!$productOptionValueEntity) {
             throw new ProductOptionNotFoundException(
@@ -137,10 +137,10 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */
-    protected function getOptionValueById($idProductOptionValue)
+    protected function getOptionValueById(int $idProductOptionValue): SpyProductOptionValue
     {
         $productOptionValueEntity = $this->productOptionQueryContainer
-            ->queryProductOptionByValueId((int)$idProductOptionValue)
+            ->queryProductOptionByValueId($idProductOptionValue)
             ->findOne();
 
         return $productOptionValueEntity;
