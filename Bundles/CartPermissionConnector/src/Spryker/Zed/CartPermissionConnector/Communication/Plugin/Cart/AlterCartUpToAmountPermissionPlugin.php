@@ -57,7 +57,9 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
 
     /**
      * {@inheritdoc}
-     * - Checks cent amount field according to the plugin configuration and the passed context.
+     * - Checks if customer is allowed to create or update a cart with total price in cents up to some value, provided in configuration.
+     * - Returns false, if customer cent amount is not provided.
+     * - Returns true, if configuration does not have cent amount set.
      *
      * @api
      *
