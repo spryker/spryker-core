@@ -142,7 +142,7 @@ class CustomerWriter implements CustomerWriterInterface
 
         $customerResponseTransfer = $this->customerReader->findCustomer($restRequest);
 
-        if (!$customerResponseTransfer->getCustomerTransfer()) {
+        if (!$customerResponseTransfer->getHasCustomer()) {
             return $this->restApiError->addCustomerNotFoundError($restResponse);
         }
 
