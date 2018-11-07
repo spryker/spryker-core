@@ -253,7 +253,7 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     * - Checks if product option value exists with given id
+     * - Checks if product option value exists.
      *
      * @api
      *
