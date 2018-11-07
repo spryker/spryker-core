@@ -10,10 +10,10 @@ namespace Spryker\Zed\Development\Business\Composer;
 interface ComposerJsonUpdaterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ModuleTransfer[] $modules
+     * @param \Generated\Shared\Transfer\ModuleTransfer[] $moduleTransferCollection
      * @param bool $dryRun
      *
      * @return array
      */
-    public function update(array $modules, $dryRun = false);
+    public function update(array $moduleTransferCollection, $dryRun = false);
 }

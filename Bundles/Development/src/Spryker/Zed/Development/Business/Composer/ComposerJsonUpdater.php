@@ -40,24 +40,24 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ModuleTransfer[] $modules
+     * @param \Generated\Shared\Transfer\ModuleTransfer[] $moduleTransferCollection
      * @param bool $dryRun
      *
      * @return array
      */
-    public function update(array $modules, $dryRun = false)
+    public function update(array $moduleTransferCollection, $dryRun = false)
     {
         $processed = [];
 
-        foreach ($modules as $module) {
-            $composerPackageName = implode('.', [$module->getOrganization()->getName(), $module->getName()]);
-            $composerJsonFile = $this->finder->findByModule($module);
+        foreach ($moduleTransferCollection as $moduleTransfer) {
+            $moduleKey = implode('.', [$moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()]);
+            $composerJsonFile = $this->finder->findByModule($moduleTransfer);
 
             if (!$composerJsonFile) {
                 continue;
             }
 
-            $processed[$composerPackageName] = $this->updateComposerJsonFile($composerJsonFile, $dryRun);
+            $processed[$moduleKey] = $this->updateComposerJsonFile($composerJsonFile, $dryRun);
         }
 
         return $processed;
@@ -67,21 +67,10 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      * @param bool $dryRun
      *
-     * @throws \RuntimeException
-     *
      * @return bool
      */
     protected function updateComposerJsonFile(SplFileInfo $composerJsonFile, $dryRun = false)
     {
-        if (!file_exists(APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'composer.phar')) {
-            exec('cd ' . APPLICATION_ROOT_DIR . ' && [ ! -f composer.phar ] && curl -sS https://getcomposer.org/installer | php', $output, $returnVar);
-        }
-
-        exec('cd ' . APPLICATION_ROOT_DIR . ' && php composer.phar validate ' . $composerJsonFile->getPathname(), $output, $return);
-        if ($return !== 0) {
-            throw new RuntimeException('Invalid composer file ' . $composerJsonFile->getPathname() . ': ' . print_r($output, true));
-        }
-
         $composerJson = $composerJsonFile->getContents();
         $composerJsonArray = json_decode($composerJson, true);
 
@@ -178,7 +167,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      *
      * @return void
      */
-    protected function assertCorrectName($composerName, SplFileInfo $composerJsonFile)
+    protected function assertCorrectName(string $composerName, SplFileInfo $composerJsonFile)
     {
         $filter = new CamelCaseToDash();
         $moduleName = mb_strtolower($filter->filter(basename($composerJsonFile->getPath())));
