@@ -45,7 +45,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     public function getYvesInstallerDirectoryPattern(): array
     {
         return [
-            APPLICATION_ROOT_DIR . 'vendor/spryker/*/assets/Yves',
+            APPLICATION_ROOT_DIR . '/vendor/spryker/spryker-shop/Bundles/*/assets/Yves',
         ];
     }
 
@@ -81,8 +81,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     public function getZedInstallerDirectoryPattern(): array
     {
         return [
-            APPLICATION_ROOT_DIR . '/vendor/spryker/*/assets/Zed',
-            APPLICATION_ROOT_DIR . '/src/Pyz/Zed/*/assets/Zed',
+            APPLICATION_ROOT_DIR . '/vendor/spryker/spryker/Bundles/*/assets/Zed',
         ];
     }
 
