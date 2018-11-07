@@ -13,6 +13,10 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class ComposerJsonFinder implements ComposerJsonFinderInterface
 {
+    protected const PRESERVE_ITERATOR_KEYS = false;
+    protected const COMPOSER_JSON_FILE_NAME = 'composer.json';
+    protected const DEPTH_FOR_JSON_FILE_FINDER = '< 1';
+
     /**
      * @var \Symfony\Component\Finder\Finder
      */
@@ -33,12 +37,24 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
      */
     public function findByModule(ModuleTransfer $module): ?SplFileInfo
     {
-        $this->finder->in($module->getPath())->name('composer.json')->depth('< 1');
+        $currentFinderInstance = $this->getNewFinderInstance();
+        $currentFinderInstance
+            ->in($module->getPath())
+            ->name(static::COMPOSER_JSON_FILE_NAME)
+            ->depth(static::DEPTH_FOR_JSON_FILE_FINDER);
 
-        if (!$this->finder->hasResults()) {
+        if (!$currentFinderInstance->hasResults()) {
             return null;
         }
 
-        return iterator_to_array($this->finder, false)[0];
+        return iterator_to_array($currentFinderInstance, static::PRESERVE_ITERATOR_KEYS)[0];
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    protected function getNewFinderInstance(): Finder
+    {
+        return $this->finder::create();
     }
 }
