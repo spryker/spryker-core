@@ -15,7 +15,7 @@ class AddressValidator
 {
     protected const UUID = 'uuid';
     protected const SYMFONY_COMPONENT_VALIDATOR_CONSTRAINTS_NAMESPACE = '\\Symfony\\Component\\Validator\\Constraints\\';
-    protected const ADDRESS_CONSTRAINS = [
+    protected const ADDRESS_CONSTRAINTS = [
         'salutation' => [
             'NotBlank',
             'Choice' => [
@@ -90,7 +90,7 @@ class AddressValidator
     {
         $constraintConfig = [];
 
-        foreach (static::ADDRESS_CONSTRAINS as $field => $constraints) {
+        foreach (static::ADDRESS_CONSTRAINTS as $field => $constraints) {
             foreach ($constraints as $constraint => $parameters) {
                 if (!$constraint) {
                     $constraint = $parameters;

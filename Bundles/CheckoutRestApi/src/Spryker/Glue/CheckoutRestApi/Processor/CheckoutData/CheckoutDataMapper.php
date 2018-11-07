@@ -273,7 +273,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\RestAddressTransfer[] $restAddressesResponseData
+     * @param \Generated\Shared\Transfer\RestAddressTransfer[]|\ArrayObject $restAddressesResponseData
      * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
      *
      * @return bool

@@ -39,6 +39,7 @@ class QuoteCollectionReader implements QuoteCollectionReaderInterface
         if ($quoteTransfer->getIdQuote() === null) {
             return $quoteCollectionTransfer;
         }
+
         return $quoteCollectionTransfer->addQuote($quoteTransfer);
     }
 }

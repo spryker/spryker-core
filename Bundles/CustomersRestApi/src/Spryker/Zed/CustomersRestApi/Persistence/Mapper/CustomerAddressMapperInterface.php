@@ -10,7 +10,7 @@ namespace Spryker\Zed\CustomersRestApi\Persistence\Mapper;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\SpyCustomerAddressEntityTransfer;
 
-interface CustomerAddressPersistenceMapperInterface
+interface CustomerAddressMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpyCustomerAddressEntityTransfer $customerAddress

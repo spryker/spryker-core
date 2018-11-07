@@ -20,9 +20,9 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const ACTION_CHECKOUT_DATA_POST = 'post';
     public const ACTION_CHECKOUT_POST = 'post';
 
-    public const RESPONSE_CODE_CHECKOUT_DATA_INVALID = '1104';
-    public const RESPONSE_CODE_ORDER_NOT_PLACED = '1105';
-    public const RESPONSE_CODE_CART_NOT_FOUND = '1106';
+    public const RESPONSE_CODE_CHECKOUT_DATA_INVALID = '1101';
+    public const RESPONSE_CODE_ORDER_NOT_PLACED = '1102';
+    public const RESPONSE_CODE_CART_NOT_FOUND = '1103';
 
     public const EXCEPTION_MESSAGE_CHECKOUT_DATA_INVALID = 'Checkout data is invalid.';
     public const EXCEPTION_MESSAGE_ORDER_NOT_PLACED = 'Order could not be placed.';

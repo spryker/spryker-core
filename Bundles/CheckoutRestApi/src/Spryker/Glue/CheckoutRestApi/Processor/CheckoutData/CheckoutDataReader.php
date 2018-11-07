@@ -79,7 +79,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     {
         $currentCustomerQuote = $this->findQuoteTransfer($restCheckoutRequestAttributesTransfer);
         if ($currentCustomerQuote === null) {
-            return $this->createQuoteNotFoundErrorResponse();
+            return $this->createCartNotFoundErrorResponse();
         }
 
         $quoteTransfer = $this->checkoutDataMapper->mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
@@ -133,7 +133,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteNotFoundErrorResponse(): RestResponseInterface
+    protected function createCartNotFoundErrorResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)

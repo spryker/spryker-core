@@ -72,12 +72,20 @@ class QuoteMerger implements QuoteMergerInterface
         RestRequestInterface $restRequest
     ): QuoteTransfer {
         if (!$restRequest->getUser()->getSurrogateIdentifier()) {
-            $quoteTransfer->setCustomer((new CustomerTransfer())->fromArray($restCheckoutRequestAttributesTransfer->getCart()->getCustomer()->toArray(), true));
+            $quoteTransfer->setCustomer(
+                (new CustomerTransfer())
+                    ->fromArray(
+                        $restCheckoutRequestAttributesTransfer->getCart()->getCustomer()->toArray(),
+                        true
+                    )
+            );
 
             return $quoteTransfer;
         }
 
-        $customerResponseTransfer = $this->customerClient->findCustomerByReference((new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier()));
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
         $quoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
 
         return $quoteTransfer;

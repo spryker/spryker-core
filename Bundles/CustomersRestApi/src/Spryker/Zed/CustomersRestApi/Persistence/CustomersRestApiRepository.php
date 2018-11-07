@@ -17,6 +17,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class CustomersRestApiRepository extends AbstractRepository implements CustomersRestApiRepositoryInterface
 {
     /**
+     * @module Country
+     *
      * @param string $addressId
      * @param int $idCustomer
      *
@@ -38,7 +40,7 @@ class CustomersRestApiRepository extends AbstractRepository implements Customers
 
         return $this
             ->getFactory()
-            ->createCustomerAddressPersistenceMapper()
+            ->createCustomerAddressMapper()
             ->mapCustomerAddressEntityTransferToAddressTransfer($customerAddressEntityTransfer);
     }
 }
