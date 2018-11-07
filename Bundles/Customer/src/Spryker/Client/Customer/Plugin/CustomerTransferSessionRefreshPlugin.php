@@ -30,8 +30,8 @@ class CustomerTransferSessionRefreshPlugin extends AbstractPlugin implements Cus
     public function execute(CustomerTransfer $customerTransfer)
     {
         if ($customerTransfer->getIsDirty()) {
-            $customerTransfer->setIsDirty(false);
             $customerTransfer = $this->getClient()->getCustomerByEmail($customerTransfer);
+            $customerTransfer->setIsDirty(false);
             $this->getClient()->setCustomer($customerTransfer);
         }
     }
