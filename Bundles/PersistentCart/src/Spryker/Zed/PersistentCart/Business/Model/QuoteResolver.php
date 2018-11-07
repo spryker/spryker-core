@@ -61,14 +61,14 @@ class QuoteResolver implements QuoteResolverInterface
     }
 
     /**
-     * @param int $idQuote
+     * @param int|null $idQuote
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer|null $quoteUpdateRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function resolveCustomerQuote(
-        int $idQuote,
+        ?int $idQuote,
         CustomerTransfer $customerTransfer,
         ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
     ): QuoteResponseTransfer {
