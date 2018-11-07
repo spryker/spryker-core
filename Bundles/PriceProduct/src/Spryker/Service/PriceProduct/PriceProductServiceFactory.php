@@ -10,10 +10,10 @@ namespace Spryker\Service\PriceProduct;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterMinStrategy;
 use Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface;
+use Spryker\Service\PriceProduct\Merger\PriceProductMerger;
+use Spryker\Service\PriceProduct\Merger\PriceProductMergerInterface;
 use Spryker\Service\PriceProduct\Model\PriceProductMatcher;
 use Spryker\Service\PriceProduct\Model\PriceProductMatcherInterface;
-use Spryker\Service\PriceProduct\Model\PriceProductMerger;
-use Spryker\Service\PriceProduct\Model\PriceProductMergerInterface;
 
 class PriceProductServiceFactory extends AbstractServiceFactory
 {
@@ -37,7 +37,7 @@ class PriceProductServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\PriceProduct\Model\PriceProductMergerInterface
+     * @return \Spryker\Service\PriceProduct\Merger\PriceProductMergerInterface
      */
     public function createPriceProductMerger(): PriceProductMergerInterface
     {

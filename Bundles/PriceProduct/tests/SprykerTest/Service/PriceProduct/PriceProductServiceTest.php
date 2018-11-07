@@ -31,7 +31,7 @@ class PriceProductServiceTest extends Unit
     /**
      * @return void
      */
-    public function testMergeFullConcreteAndAbstractPrices(): void
+    public function testMergePricesWillReturnConcretePricesOnConcretePriceSet(): void
     {
         $priceProductService = $this->getPriceProductService();
 
@@ -56,7 +56,7 @@ class PriceProductServiceTest extends Unit
     /**
      * @return void
      */
-    public function testMergePartialConcreteAndAbstractPrices(): void
+    public function testMergePricesWillReturnAbstractPricesOnConcretePriceNotSet(): void
     {
         $priceProductService = $this->getPriceProductService();
         $concretePriceProductTransfers = $this->getPriceProductTransfers();

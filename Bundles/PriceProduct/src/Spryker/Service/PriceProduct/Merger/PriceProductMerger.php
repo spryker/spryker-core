@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\PriceProduct\Model;
+namespace Spryker\Service\PriceProduct\Merger;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 
@@ -20,18 +20,18 @@ class PriceProductMerger implements PriceProductMergerInterface
     public function mergeConcreteAndAbstractPrices(array $concretePriceProductTransfers, array $abstractPriceProductTransfers): array
     {
         $priceProductTransfers = [];
-        foreach ($abstractPriceProductTransfers as $priceProductAbstractTransfer) {
-            $abstractKey = $this->buildPriceProductIdentifier($priceProductAbstractTransfer);
+        foreach ($abstractPriceProductTransfers as $abstractPriceProductTransfer) {
+            $abstractKey = $this->buildPriceProductIdentifier($abstractPriceProductTransfer);
 
             $priceProductTransfers = $this->mergeConcreteProduct(
                 $concretePriceProductTransfers,
                 $abstractKey,
-                $priceProductAbstractTransfer,
+                $abstractPriceProductTransfer,
                 $priceProductTransfers
             );
 
             if (!isset($priceProductTransfers[$abstractKey])) {
-                $priceProductTransfers[$abstractKey] = $priceProductAbstractTransfer;
+                $priceProductTransfers[$abstractKey] = $abstractPriceProductTransfer;
             }
         }
 
@@ -63,34 +63,34 @@ class PriceProductMerger implements PriceProductMergerInterface
     /**
      * @param array $concretePriceProductTransfers
      * @param string $abstractKey
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductAbstractTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer
      * @param array $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function mergeConcreteProduct(
         array $concretePriceProductTransfers,
-        $abstractKey,
-        PriceProductTransfer $priceProductAbstractTransfer,
+        string $abstractKey,
+        PriceProductTransfer $abstractPriceProductTransfer,
         array $priceProductTransfers
     ) {
-        foreach ($concretePriceProductTransfers as $priceProductConcreteTransfer) {
-            $concreteKey = $this->buildPriceProductIdentifier($priceProductConcreteTransfer);
+        foreach ($concretePriceProductTransfers as $concretePriceProductTransfer) {
+            $concreteKey = $this->buildPriceProductIdentifier($concretePriceProductTransfer);
 
             if ($abstractKey !== $concreteKey) {
                 continue;
             }
 
             $priceProductTransfers[$concreteKey] = $this->resolveConcreteProductPrice(
-                $priceProductAbstractTransfer,
-                $priceProductConcreteTransfer
+                $abstractPriceProductTransfer,
+                $concretePriceProductTransfer
             );
         }
 
         if (!isset($priceProductTransfers[$abstractKey])) {
-            $priceProductAbstractTransfer->getPriceDimension()->setIdPriceProductDefault(null);
-            $priceProductAbstractTransfer->getMoneyValue()->setIdEntity(null);
-            $priceProductTransfers[$abstractKey] = $priceProductAbstractTransfer;
+            $abstractPriceProductTransfer->getPriceDimension()->setIdPriceProductDefault(null);
+            $abstractPriceProductTransfer->getMoneyValue()->setIdEntity(null);
+            $priceProductTransfers[$abstractKey] = $abstractPriceProductTransfer;
         }
 
         return $priceProductTransfers;
@@ -106,7 +106,6 @@ class PriceProductMerger implements PriceProductMergerInterface
         PriceProductTransfer $priceProductAbstractTransfer,
         PriceProductTransfer $priceProductConcreteTransfer
     ) {
-
         $abstractMoneyValueTransfer = $priceProductAbstractTransfer->getMoneyValue();
         $concreteMoneyValueTransfer = $priceProductConcreteTransfer->getMoneyValue();
 
@@ -129,14 +128,14 @@ class PriceProductMerger implements PriceProductMergerInterface
      */
     protected function addConcreteNotMergedPrices(array $concretePriceProductTransfers, array $priceProductTransfers)
     {
-        foreach ($concretePriceProductTransfers as $priceProductConcreteTransfer) {
-            $concreteKey = $this->buildPriceProductIdentifier($priceProductConcreteTransfer);
+        foreach ($concretePriceProductTransfers as $concretePriceProductTransfer) {
+            $concreteKey = $this->buildPriceProductIdentifier($concretePriceProductTransfer);
 
             if (isset($priceProductTransfers[$concreteKey])) {
                 continue;
             }
 
-            $priceProductTransfers[$concreteKey] = $priceProductConcreteTransfer;
+            $priceProductTransfers[$concreteKey] = $concretePriceProductTransfer;
         }
 
         return $priceProductTransfers;
