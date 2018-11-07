@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyComponentTransfe
  *  - This component describes a single Schema Object Property.
  *  - This component partly covers Schema Object Properties in OpenAPI specification format (see https://swagger.io/specification/#schemaObject).
  */
-class SchemaPropertySpecificationComponent extends AbstractSpecificationComponent implements SchemaPropertySpecificationComponentInterface
+class SchemaPropertySpecificationComponent implements SchemaPropertySpecificationComponentInterface
 {
     protected const KEY_TYPE = 'type';
     protected const KEY_REF = '$ref';
@@ -41,6 +41,10 @@ class SchemaPropertySpecificationComponent extends AbstractSpecificationComponen
     public function getSpecificationComponentData(): array
     {
         $property = [];
+        if (!$this->validateSchemaPropertyComponentTransfer()) {
+            return [];
+        }
+
         if ($this->schemaPropertyComponentTransfer->getType()) {
             $property[static::KEY_TYPE] = $this->schemaPropertyComponentTransfer->getType();
         }
@@ -55,12 +59,16 @@ class SchemaPropertySpecificationComponent extends AbstractSpecificationComponen
     }
 
     /**
-     * @return array
+     * @return bool
      */
-    protected function getRequiredProperties(): array
+    protected function validateSchemaPropertyComponentTransfer(): bool
     {
-        return [
-            $this->schemaPropertyComponentTransfer->getName(),
-        ];
+        if ($this->schemaPropertyComponentTransfer === null) {
+            return false;
+        }
+
+        $this->schemaPropertyComponentTransfer->requireName();
+
+        return true;
     }
 }

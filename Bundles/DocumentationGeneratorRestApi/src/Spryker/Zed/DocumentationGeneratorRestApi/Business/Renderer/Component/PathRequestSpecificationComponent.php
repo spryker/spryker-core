@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\OpenApiSpecificationPathRequestComponentTransfer;
  *  - This component describes a single request body.
  *  - It covers Request Body Object in OpenAPI specification format (see https://swagger.io/specification/#requestBodyObject)
  */
-class PathRequestSpecificationComponent extends AbstractSpecificationComponent implements PathRequestSpecificationComponentInterface
+class PathRequestSpecificationComponent implements PathRequestSpecificationComponentInterface
 {
     protected const KEY_APPLICATION_JSON = 'application/json';
     protected const KEY_CONTENT = 'content';
@@ -44,6 +44,9 @@ class PathRequestSpecificationComponent extends AbstractSpecificationComponent i
     public function getSpecificationComponentData(): array
     {
         $result = [];
+        if (!$this->validatePathRequestComponentTransfer()) {
+            return $result;
+        }
 
         $result[static::KEY_DESCRIPTION] = $this->pathRequestComponentTransfer->getDescription();
         $result[static::KEY_REQUIRED] = $this->pathRequestComponentTransfer->getRequired();
@@ -55,14 +58,18 @@ class PathRequestSpecificationComponent extends AbstractSpecificationComponent i
     }
 
     /**
-     * @return array
+     * @return bool
      */
-    protected function getRequiredProperties(): array
+    protected function validatePathRequestComponentTransfer(): bool
     {
-        return [
-            $this->pathRequestComponentTransfer->getDescription(),
-            $this->pathRequestComponentTransfer->getRequired(),
-            $this->pathRequestComponentTransfer->getJsonSchemaRef(),
-        ];
+        if ($this->pathRequestComponentTransfer === null) {
+            return false;
+        }
+
+        $this->pathRequestComponentTransfer->requireDescription();
+        $this->pathRequestComponentTransfer->requireRequired();
+        $this->pathRequestComponentTransfer->requireJsonSchemaRef();
+
+        return true;
     }
 }

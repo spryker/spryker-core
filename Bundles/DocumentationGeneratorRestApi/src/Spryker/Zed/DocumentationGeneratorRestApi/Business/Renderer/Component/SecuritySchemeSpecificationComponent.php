@@ -14,16 +14,16 @@ use Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfe
  *  - This component describes a security scheme that can be used by the operations.
  *  - This component covers Security Scheme Object in OpenAPI specification format (see https://swagger.io/specification/#securitySchemeObject).
  */
-class SecuritySchemeSpecificationComponent extends AbstractSpecificationComponent implements SecuritySchemeSpecificationComponentInterface
+class SecuritySchemeSpecificationComponent implements SecuritySchemeSpecificationComponentInterface
 {
     protected const KEY_TYPE = 'type';
     protected const KEY_SCHEME = 'scheme';
     protected const KEY_IN = 'in';
 
     /**
-     * @var \Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfer $specificationComponentTransfer
+     * @var \Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfer $securitySchemeComponentTransfer
      */
-    protected $specificationComponentTransfer;
+    protected $securitySchemeComponentTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfer $securitySchemeComponentTransfer
@@ -32,7 +32,7 @@ class SecuritySchemeSpecificationComponent extends AbstractSpecificationComponen
      */
     public function setSecuritySchemeComponentTransfer(OpenApiSpecificationSecuritySchemeComponentTransfer $securitySchemeComponentTransfer): void
     {
-        $this->specificationComponentTransfer = $securitySchemeComponentTransfer;
+        $this->securitySchemeComponentTransfer = $securitySchemeComponentTransfer;
     }
 
     /**
@@ -40,21 +40,29 @@ class SecuritySchemeSpecificationComponent extends AbstractSpecificationComponen
      */
     public function getSpecificationComponentData(): array
     {
-        $securitySchemaData[$this->specificationComponentTransfer->getName()][static::KEY_TYPE] = $this->specificationComponentTransfer->getType();
-        $securitySchemaData[$this->specificationComponentTransfer->getName()][static::KEY_SCHEME] = $this->specificationComponentTransfer->getScheme();
+        if (!$this->validateSecuritySchemeComponentTransfer()) {
+            return [];
+        }
+
+        $securitySchemaData[$this->securitySchemeComponentTransfer->getName()][static::KEY_TYPE] = $this->securitySchemeComponentTransfer->getType();
+        $securitySchemaData[$this->securitySchemeComponentTransfer->getName()][static::KEY_SCHEME] = $this->securitySchemeComponentTransfer->getScheme();
 
         return $securitySchemaData;
     }
 
     /**
-     * @return array
+     * @return bool
      */
-    protected function getRequiredProperties(): array
+    protected function validateSecuritySchemeComponentTransfer(): bool
     {
-        return [
-            $this->specificationComponentTransfer->getName(),
-            $this->specificationComponentTransfer->getType(),
-            $this->specificationComponentTransfer->getScheme(),
-        ];
+        if ($this->securitySchemeComponentTransfer === null) {
+            return false;
+        }
+
+        $this->securitySchemeComponentTransfer->requireName();
+        $this->securitySchemeComponentTransfer->requireType();
+        $this->securitySchemeComponentTransfer->requireScheme();
+
+        return true;
     }
 }

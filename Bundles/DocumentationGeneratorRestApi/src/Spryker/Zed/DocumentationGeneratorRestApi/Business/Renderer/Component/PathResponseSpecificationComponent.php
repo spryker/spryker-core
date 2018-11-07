@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\OpenApiSpecificationPathResponseComponentTransfer;
  *  - This component describes a single response from an API Operation.
  *  - This component covers Operation Object in OpenAPI specification format (see https://swagger.io/specification/#operationObject).
  */
-class PathResponseSpecificationComponent extends AbstractSpecificationComponent implements PathResponseSpecificationComponentInterface
+class PathResponseSpecificationComponent implements PathResponseSpecificationComponentInterface
 {
     protected const KEY_APPLICATION_JSON = 'application/json';
     protected const KEY_CONTENT = 'content';
@@ -42,6 +42,10 @@ class PathResponseSpecificationComponent extends AbstractSpecificationComponent 
      */
     public function getSpecificationComponentData(): array
     {
+        if (!$this->validatePathResponseComponentTransfer()) {
+            return [];
+        }
+
         $result[static::KEY_DESCRIPTION] = $this->pathResponseComponentTransfer->getDescription();
         if ($this->pathResponseComponentTransfer->getJsonSchemaRef()) {
             $result[static::KEY_CONTENT][static::KEY_APPLICATION_JSON][static::KEY_SCHEMA][static::KEY_REF] = $this->pathResponseComponentTransfer->getJsonSchemaRef();
@@ -51,13 +55,17 @@ class PathResponseSpecificationComponent extends AbstractSpecificationComponent 
     }
 
     /**
-     * @return array
+     * @return bool
      */
-    protected function getRequiredProperties(): array
+    protected function validatePathResponseComponentTransfer(): bool
     {
-        return [
-            $this->pathResponseComponentTransfer->getCode(),
-            $this->pathResponseComponentTransfer->getDescription(),
-        ];
+        if ($this->pathResponseComponentTransfer === null) {
+            return false;
+        }
+
+        $this->pathResponseComponentTransfer->requireCode();
+        $this->pathResponseComponentTransfer->requireDescription();
+
+        return true;
     }
 }

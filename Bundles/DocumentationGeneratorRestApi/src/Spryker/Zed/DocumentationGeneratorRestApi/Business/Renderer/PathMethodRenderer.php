@@ -97,9 +97,10 @@ class PathMethodRenderer implements PathMethodRendererInterface
         }
 
         $this->pathMethodSpecificationComponent->setPathMethodComponentTransfer($pathMethodComponentTransfer);
+        $pathMethodSpecificationData = $this->pathMethodSpecificationComponent->getSpecificationComponentData();
 
-        if ($this->pathMethodSpecificationComponent->isValid()) {
-            return [$pathMethodDataTransfer->getPath() => $this->pathMethodSpecificationComponent->getSpecificationComponentData()];
+        if ($pathMethodSpecificationData) {
+            return [$pathMethodDataTransfer->getPath() => $pathMethodSpecificationData];
         }
 
         return [];
@@ -132,9 +133,10 @@ class PathMethodRenderer implements PathMethodRendererInterface
             }
 
             $this->pathResponseSpecificationComponent->setPathResponseComponentTransfer($responseComponentTransfer);
+            $pathResponseSpecificationData = $this->pathResponseSpecificationComponent->getSpecificationComponentData();
 
-            if ($this->pathResponseSpecificationComponent->isValid()) {
-                $methodComponent->addResponse($this->pathResponseSpecificationComponent->getSpecificationComponentData());
+            if ($pathResponseSpecificationData) {
+                $methodComponent->addResponse($pathResponseSpecificationData);
             }
         }
     }
@@ -153,9 +155,10 @@ class PathMethodRenderer implements PathMethodRendererInterface
         $requestComponentTransfer->setJsonSchemaRef($schemaDataTransfer->getSchemaReference());
 
         $this->pathRequestSpecificationComponent->setPathRequestComponentTransfer($requestComponentTransfer);
+        $pathRequestSpecificationData = $this->pathRequestSpecificationComponent->getSpecificationComponentData();
 
-        if ($this->pathRequestSpecificationComponent->isValid()) {
-            $methodComponent->setRequest($this->pathRequestSpecificationComponent->getSpecificationComponentData());
+        if ($pathRequestSpecificationData) {
+            $methodComponent->setRequest($pathRequestSpecificationData);
         }
     }
 
@@ -176,9 +179,10 @@ class PathMethodRenderer implements PathMethodRendererInterface
             $parameterComponentTransfer->setSchemaType(static::PARAMETER_SCHEMA_TYPE_STRING);
 
             $this->pathParameterSpecificationComponent->setPathParameterComponentTransfer($parameterComponentTransfer);
+            $pathParameterSpecificationData = $this->pathParameterSpecificationComponent->getSpecificationComponentData();
 
-            if ($this->pathParameterSpecificationComponent->isValid()) {
-                $methodComponent->addParameter($this->pathParameterSpecificationComponent->getSpecificationComponentData());
+            if ($pathParameterSpecificationData) {
+                $methodComponent->addParameter($pathParameterSpecificationData);
             }
         }
     }
@@ -199,9 +203,10 @@ class PathMethodRenderer implements PathMethodRendererInterface
             $parameterComponentTransfer->setSchemaType(static::PARAMETER_SCHEMA_TYPE_STRING);
 
             $this->pathParameterSpecificationComponent->setPathParameterComponentTransfer($parameterComponentTransfer);
+            $pathParameterSpecificationData = $this->pathParameterSpecificationComponent->getSpecificationComponentData();
 
-            if ($this->pathParameterSpecificationComponent->isValid()) {
-                $methodComponent->addParameter($this->pathParameterSpecificationComponent->getSpecificationComponentData());
+            if ($pathParameterSpecificationData) {
+                $methodComponent->addParameter($pathParameterSpecificationData);
             }
         }
     }

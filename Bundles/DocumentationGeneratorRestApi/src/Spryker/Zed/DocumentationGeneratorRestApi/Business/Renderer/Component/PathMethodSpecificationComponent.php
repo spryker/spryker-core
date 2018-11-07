@@ -9,7 +9,7 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
 use Generated\Shared\Transfer\OpenApiSpecificationPathMethodComponentTransfer;
 
-class PathMethodSpecificationComponent extends AbstractSpecificationComponent implements PathMethodSpecificationComponentInterface
+class PathMethodSpecificationComponent implements PathMethodSpecificationComponentInterface
 {
     protected const KEY_PARAMETERS = 'parameters';
     protected const KEY_REQUEST_BODY = 'requestBody';
@@ -38,6 +38,10 @@ class PathMethodSpecificationComponent extends AbstractSpecificationComponent im
      */
     public function getSpecificationComponentData(): array
     {
+        if (!$this->validatePathMethodComponentTransfer()) {
+            return [];
+        }
+
         $pathData[static::KEY_SUMMARY] = $this->pathMethodComponentTransfer->getSummary();
         $pathData[static::KEY_TAGS] = $this->pathMethodComponentTransfer->getTags();
         if ($this->pathMethodComponentTransfer->getParameters()) {
@@ -59,15 +63,19 @@ class PathMethodSpecificationComponent extends AbstractSpecificationComponent im
     }
 
     /**
-     * @return array
+     * @return bool
      */
-    protected function getRequiredProperties(): array
+    protected function validatePathMethodComponentTransfer(): bool
     {
-        return [
-            $this->pathMethodComponentTransfer->getMethod(),
-            $this->pathMethodComponentTransfer->getSummary(),
-            $this->pathMethodComponentTransfer->getTags(),
-            $this->pathMethodComponentTransfer->getResponses(),
-        ];
+        if ($this->pathMethodComponentTransfer === null) {
+            return false;
+        }
+
+        $this->pathMethodComponentTransfer->requireMethod();
+        $this->pathMethodComponentTransfer->requireSummary();
+        $this->pathMethodComponentTransfer->requireTags();
+        $this->pathMethodComponentTransfer->getResponses();
+
+        return true;
     }
 }

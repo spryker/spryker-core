@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer
  *
  * @SuppressWarnings(PHPMD.ShortVariable)
  */
-class PathParameterSpecificationComponent extends AbstractSpecificationComponent implements PathParameterSpecificationComponentInterface
+class PathParameterSpecificationComponent implements PathParameterSpecificationComponentInterface
 {
     protected const KEY_DESCRIPTION = 'description';
     protected const KEY_IN = 'in';
@@ -46,6 +46,9 @@ class PathParameterSpecificationComponent extends AbstractSpecificationComponent
     public function getSpecificationComponentData(): array
     {
         $result = [];
+        if (!$this->validatePathParameterComponentTransfer()) {
+            return $result;
+        }
 
         $result[static::KEY_NAME] = $this->pathParameterComponentTransfer->getName();
         $result[static::KEY_IN] = $this->pathParameterComponentTransfer->getIn();
@@ -61,15 +64,19 @@ class PathParameterSpecificationComponent extends AbstractSpecificationComponent
     }
 
     /**
-     * @return array
+     * @return bool
      */
-    protected function getRequiredProperties(): array
+    protected function validatePathParameterComponentTransfer(): bool
     {
-        return [
-            $this->pathParameterComponentTransfer->getName(),
-            $this->pathParameterComponentTransfer->getIn(),
-            $this->pathParameterComponentTransfer->getRequired(),
-            $this->pathParameterComponentTransfer->getSchemaType(),
-        ];
+        if ($this->pathParameterComponentTransfer === null) {
+            return false;
+        }
+
+        $this->pathParameterComponentTransfer->requireName();
+        $this->pathParameterComponentTransfer->requireIn();
+        $this->pathParameterComponentTransfer->requireRequired();
+        $this->pathParameterComponentTransfer->getSchemaType();
+
+        return true;
     }
 }

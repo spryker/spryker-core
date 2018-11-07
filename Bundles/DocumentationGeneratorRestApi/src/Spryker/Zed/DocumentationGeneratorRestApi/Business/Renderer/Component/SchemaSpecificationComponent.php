@@ -14,15 +14,15 @@ use Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer;
  *  - This component describes a single Schema Object.
  *  - This component partly covers Schema Object in OpenAPI specification format (see https://swagger.io/specification/#schemaObject).
  */
-class SchemaSpecificationComponent extends AbstractSpecificationComponent implements SchemaSpecificationComponentInterface
+class SchemaSpecificationComponent implements SchemaSpecificationComponentInterface
 {
     protected const KEY_PROPERTIES = 'properties';
     protected const KEY_REQUIRED = 'required';
 
     /**
-     * @var \Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer $specificationComponentTransfer
+     * @var \Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer $schemaComponentTransfer
      */
-    protected $specificationComponentTransfer;
+    protected $schemaComponentTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer $schemaComponentTransfer
@@ -31,7 +31,7 @@ class SchemaSpecificationComponent extends AbstractSpecificationComponent implem
      */
     public function setSchemaComponentTransfer(OpenApiSpecificationSchemaComponentTransfer $schemaComponentTransfer): void
     {
-        $this->specificationComponentTransfer = $schemaComponentTransfer;
+        $this->schemaComponentTransfer = $schemaComponentTransfer;
     }
 
     /**
@@ -39,22 +39,30 @@ class SchemaSpecificationComponent extends AbstractSpecificationComponent implem
      */
     public function getSpecificationComponentData(): array
     {
-        $schemaData[$this->specificationComponentTransfer->getName()][static::KEY_PROPERTIES] = $this->specificationComponentTransfer->getProperties();
-        if ($this->specificationComponentTransfer->getRequired()) {
-            $schemaData[$this->specificationComponentTransfer->getName()][static::KEY_REQUIRED] = $this->specificationComponentTransfer->getRequired();
+        if (!$this->validateSchemaComponentTransfer()) {
+            return [];
+        }
+
+        $schemaData[$this->schemaComponentTransfer->getName()][static::KEY_PROPERTIES] = $this->schemaComponentTransfer->getProperties();
+        if ($this->schemaComponentTransfer->getRequired()) {
+            $schemaData[$this->schemaComponentTransfer->getName()][static::KEY_REQUIRED] = $this->schemaComponentTransfer->getRequired();
         }
 
         return $schemaData;
     }
 
     /**
-     * @return array
+     * @return bool
      */
-    protected function getRequiredProperties(): array
+    protected function validateSchemaComponentTransfer(): bool
     {
-        return [
-            $this->specificationComponentTransfer->getName(),
-            $this->specificationComponentTransfer->getProperties(),
-        ];
+        if ($this->schemaComponentTransfer === null) {
+            return false;
+        }
+
+        $this->schemaComponentTransfer->requireName();
+        $this->schemaComponentTransfer->requireProperties();
+
+        return true;
     }
 }

@@ -13,9 +13,4 @@ interface SpecificationComponentInterface
      * @return array
      */
     public function getSpecificationComponentData(): array;
-
-    /**
-     * @return bool
-     */
-    public function isValid(): bool;
 }

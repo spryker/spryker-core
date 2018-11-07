@@ -56,11 +56,7 @@ class SchemaRenderer implements SchemaRendererInterface
 
         $this->schemaSpecificationComponent->setSchemaComponentTransfer($schemaComponentTransfer);
 
-        if ($this->schemaSpecificationComponent->isValid()) {
-            return $this->schemaSpecificationComponent->getSpecificationComponentData();
-        }
-
-        return [];
+        return $this->schemaSpecificationComponent->getSpecificationComponentData();
     }
 
     /**
@@ -84,9 +80,10 @@ class SchemaRenderer implements SchemaRendererInterface
         }
 
         $this->schemaPropertySpecificationComponent->setSchemaPropertyComponentTransfer($schemaPropertyComponentTransfer);
+        $schemaPropertySpecificationData = $this->schemaPropertySpecificationComponent->getSpecificationComponentData();
 
-        if ($this->schemaPropertySpecificationComponent->isValid()) {
-            $schemaComponent->addProperty($this->schemaPropertySpecificationComponent->getSpecificationComponentData());
+        if ($schemaPropertySpecificationData) {
+            $schemaComponent->addProperty($schemaPropertySpecificationData);
         }
     }
 }

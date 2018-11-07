@@ -40,10 +40,6 @@ class SecuritySchemeRenderer implements SecuritySchemeRendererInterface
 
         $this->securitySchemeSpecificationComponent->setSecuritySchemeComponentTransfer($securitySchemeComponentTransfer);
 
-        if ($this->securitySchemeSpecificationComponent->isValid()) {
-            return $this->securitySchemeSpecificationComponent->getSpecificationComponentData();
-        }
-
-        return [];
+        return $this->securitySchemeSpecificationComponent->getSpecificationComponentData();
     }
 }
