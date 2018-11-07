@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -18,6 +18,21 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class CartItemsResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Adds an item to the cart."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "404": "Cart or item is not found.",
+     *              "422": "Errors appeared during item creation."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -26,7 +41,7 @@ class CartItemsResourceController extends AbstractController
     public function postAction(RestRequestInterface $restRequest, RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCartItemsWriter()
+            ->createCartItemAdder()
             ->addItem(
                 $restRequest,
                 $restCartItemsAttributesTransfer
@@ -34,6 +49,20 @@ class CartItemsResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "patch": {
+     *          "summary": [
+     *              "Update cart item quantity."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "404": "Cart or item is not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface$restRequest
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -42,7 +71,7 @@ class CartItemsResourceController extends AbstractController
     public function patchAction(RestRequestInterface $restRequest, RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCartItemsWriter()
+            ->createCartItemUpdater()
             ->updateItemQuantity(
                 $restRequest,
                 $restCartItemsAttributesTransfer
@@ -50,6 +79,22 @@ class CartItemsResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "delete": {
+     *          "summary": [
+     *              "Remove item from the cart."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "400": "Cart id or item id is not specified.",
+     *              "404": "Cart or cart item not found.",
+     *              "422": "Cart item could not be deleted."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -57,7 +102,7 @@ class CartItemsResourceController extends AbstractController
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCartItemsWriter()
+            ->createCartItemDeleter()
             ->deleteItem(
                 $restRequest
             );

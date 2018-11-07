@@ -18,6 +18,28 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class CartsResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getResource": {
+     *          "summary": [
+     *              "Retrieve a cart."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "404": "Cart was not found."
+     *          }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieve list of all customer's carts."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ]
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -27,13 +49,27 @@ class CartsResourceController extends AbstractController
         $idQuote = $restRequest->getResource()->getId();
 
         if ($idQuote !== null) {
-            return $this->getFactory()->createCartsReader()->readByIdentifier($idQuote, $restRequest);
+            return $this->getFactory()->createCartReader()->readByIdentifier($idQuote, $restRequest);
         }
 
-        return $this->getFactory()->createCartsReader()->readCurrentCustomerCarts($restRequest);
+        return $this->getFactory()->createCartReader()->readCurrentCustomerCarts($restRequest);
     }
 
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Create cart."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "500": "Can not create a cart."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
      *
@@ -41,16 +77,30 @@ class CartsResourceController extends AbstractController
      */
     public function postAction(RestRequestInterface $restRequest, RestCartsAttributesTransfer $restCartsAttributesTransfer): RestResponseInterface
     {
-        return $this->getFactory()->createCartsWriter()->create($restRequest, $restCartsAttributesTransfer);
+        return $this->getFactory()->createCartCreator()->create($restRequest, $restCartsAttributesTransfer);
     }
 
     /**
+     * @Glue({
+     *     "delete": {
+     *          "summary": [
+     *              "Delete cart by id."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "500": "Can not delete a cart."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createCartsWriter()->delete($restRequest);
+        return $this->getFactory()->createCartDeleter()->delete($restRequest);
     }
 }

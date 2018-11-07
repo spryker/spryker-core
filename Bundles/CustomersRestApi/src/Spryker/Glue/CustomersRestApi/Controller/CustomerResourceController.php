@@ -18,6 +18,22 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class CustomerResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getResource": {
+     *          "summary": [
+     *              "Retrieve customer data."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "400": "Customer reference is missing.",
+     *              "403": "Unauthorized request.",
+     *              "404": "Customer not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -30,6 +46,21 @@ class CustomerResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Create customer."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "422": "Expected response to a valid request.",
+     *              "500": "Internal server error."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
      *
@@ -43,6 +74,23 @@ class CustomerResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "patch": {
+     *          "summary": [
+     *              "Update customer data."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "400": "Failed to save customer.",
+     *              "403": "Unauthorized request.",
+     *              "404": "Customer not found.",
+     *              "500": "Internal server error."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $customerTransfer
      *
@@ -56,6 +104,22 @@ class CustomerResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "delete": {
+     *          "summary": [
+     *              "Anonymize customers."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "400": "Customer reference is missing.",
+     *              "403": "Unauthorized request.",
+     *              "404": "Customer not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

@@ -16,6 +16,21 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class AbstractProductAvailabilitiesResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getResource": {
+     *          "summary": [
+     *              "Retrieve Abstract product availabilities data for given sku."
+     *          ],
+     *          "headers": [
+     *              "Accept-Language"
+     *          ],
+     *          "responses": {
+     *              "400": "Abstract product sku is not specified.",
+     *              "404": "Abstract product availability is not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
