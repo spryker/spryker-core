@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
 use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
-use Generated\Shared\Transfer\PackageFilterTransfer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -403,20 +402,6 @@ interface DevelopmentFacadeInterface
      * @return \Generated\Shared\Transfer\PackageTransfer[]
      */
     public function getPackages(): array;
-
-    /**
-     * Specification:
-     * - Returns a list of packages out of the Spryker namespace.
-     *
-     * @api
-     *
-     * @internal
-     *
-     * @param \Generated\Shared\Transfer\PackageFilterTransfer|null $packageFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\PackageTransfer[]
-     */
-    public function getExternalPackages(?PackageFilterTransfer $packageFilterTransfer = null): array;
 
     /**
      * Specification:

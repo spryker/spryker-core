@@ -10,9 +10,6 @@ namespace Spryker\Zed\Development\Communication\Console;
 use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
-use Generated\Shared\Transfer\PackageFilterTransfer;
-use Generated\Shared\Transfer\PackageTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -109,12 +106,12 @@ class CodeArchitectureSnifferConsole extends Console
      */
     protected function runForCore(OutputInterface $output, $moduleArgument, $subPath): bool
     {
-        $pathEntityTransfers = $this->getPathEntityTransfersByModuleArgument($moduleArgument);
+        $moduleTransferCollection = $this->getModulesToExecute($moduleArgument);
 
         $count = 0;
 
-        foreach ($pathEntityTransfers as $pathEntityTransfer) {
-            $path = $this->getCorePath($pathEntityTransfer, $subPath);
+        foreach ($moduleTransferCollection as $moduleTransfer) {
+            $path = $this->getCorePath($moduleTransfer, $subPath);
 
             if (!is_dir($path)) {
                 $output->writeln(sprintf('<error>Path not found: %s</error>', $path));
@@ -129,22 +126,6 @@ class CodeArchitectureSnifferConsole extends Console
         }
 
         return $count === 0;
-    }
-
-    /**
-     * @param string $moduleArgument
-     *
-     * @return array
-     */
-    protected function getPathEntityTransfersByModuleArgument(string $moduleArgument): array
-    {
-        [$namespace] = explode('.', $moduleArgument);
-
-        if ($this->getNamespaceIsSpryker($namespace)) {
-            return $this->getModulesToExecute($moduleArgument);
-        }
-
-        return $this->getPackagesToExecute($moduleArgument);
     }
 
     /**
@@ -165,16 +146,6 @@ class CodeArchitectureSnifferConsole extends Console
     protected function getModulesToExecute(string $moduleArgument): array
     {
         return $this->getFacade()->getModules($this->buildModuleFilterTransfer($moduleArgument));
-    }
-
-    /**
-     * @param string $moduleArgument
-     *
-     * @return \Generated\Shared\Transfer\PackageTransfer[]
-     */
-    protected function getPackagesToExecute(string $moduleArgument): array
-    {
-        return $this->getFacade()->getExternalPackages($this->buildPackageFilterTransfer($moduleArgument));
     }
 
     /**
@@ -205,23 +176,6 @@ class CodeArchitectureSnifferConsole extends Console
 
     /**
      * @param string $moduleArgument
-     *
-     * @return \Generated\Shared\Transfer\PackageFilterTransfer|null
-     */
-    protected function buildPackageFilterTransfer(string $moduleArgument): ?PackageFilterTransfer
-    {
-        if (!$moduleArgument) {
-            return null;
-        }
-
-        $packageFilterTransfer = new PackageFilterTransfer();
-        $this->addPackageFilterDetails($moduleArgument, $packageFilterTransfer);
-
-        return $packageFilterTransfer;
-    }
-
-    /**
-     * @param string $moduleArgument
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ModuleFilterTransfer
@@ -246,37 +200,14 @@ class CodeArchitectureSnifferConsole extends Console
     }
 
     /**
-     * @param string $moduleArgument
-     * @param \Generated\Shared\Transfer\PackageFilterTransfer $packageFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\PackageFilterTransfer
-     */
-    protected function addPackageFilterDetails(string $moduleArgument, PackageFilterTransfer $packageFilterTransfer): PackageFilterTransfer
-    {
-        [$organization, $package] = explode('.', $moduleArgument);
-
-        if ($package !== '*' && $package !== 'all') {
-            $packageFilterTransfer->setPackageName($package);
-        }
-
-        $packageFilterTransfer->setOrganizationName($organization);
-
-        return $packageFilterTransfer;
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $pathEntityTransfer
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param string $pathSuffix
      *
      * @return string|null
      */
-    protected function getCorePath(AbstractTransfer $pathEntityTransfer, $pathSuffix): ?string
+    protected function getCorePath(ModuleTransfer $moduleTransfer, $pathSuffix): ?string
     {
-        if ($pathEntityTransfer instanceof PackageTransfer || $pathEntityTransfer instanceof ModuleTransfer) {
-            return $this->buildPath($pathEntityTransfer->getPath() . DIRECTORY_SEPARATOR, $pathSuffix);
-        }
-
-        return null;
+        return $this->buildPath($moduleTransfer->getPath() . DIRECTORY_SEPARATOR, $pathSuffix);
     }
 
     /**
