@@ -45,15 +45,18 @@ class PriceProductMerger implements PriceProductMergerInterface
      */
     protected function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
     {
-        $priceProductTransfer->requireMoneyValue()
-            ->requirePriceTypeName();
+        $priceProductTransfer->requireMoneyValue()->requirePriceTypeName();
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
 
         return implode(
             '-',
-            [
+            array_filter([
                 $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
                 $priceProductTransfer->getPriceTypeName(),
-            ]
+                $priceDimensionTransfer->getType(),
+                $priceDimensionTransfer->getName(),
+                $priceDimensionTransfer->getIdMerchantRelationship(),
+            ])
         );
     }
 

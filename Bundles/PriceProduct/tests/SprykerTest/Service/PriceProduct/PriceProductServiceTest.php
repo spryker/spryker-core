@@ -43,7 +43,7 @@ class PriceProductServiceTest extends Unit
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer */
         $concretePriceProductTransfer = $concretePriceProductTransfers[0];
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $mergedPriceProductTransfer */
-        $mergedPriceProductTransfer = $mergedPriceProductTransfers['EUR-DEFAULT'];
+        $mergedPriceProductTransfer = $mergedPriceProductTransfers[array_keys($mergedPriceProductTransfers)[0]];
         $this->assertSame($concretePriceProductTransfer, $mergedPriceProductTransfer);
         $this->assertEquals($concretePriceProductTransfer->getMoneyValue()->getGrossAmount(), $mergedPriceProductTransfer->getMoneyValue()->getGrossAmount());
         $this->assertEquals($concretePriceProductTransfer->getMoneyValue()->getNetAmount(), $mergedPriceProductTransfer->getMoneyValue()->getNetAmount());
@@ -69,7 +69,7 @@ class PriceProductServiceTest extends Unit
         $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $mergedPriceProductTransfer */
-        $mergedPriceProductTransfer = $mergedPriceProductTransfers['EUR-DEFAULT'];
+        $mergedPriceProductTransfer = $mergedPriceProductTransfers[array_keys($mergedPriceProductTransfers)[0]];
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer */
         $abstractPriceProductTransfer = $abstractPriceProductTransfers[0];
         $this->assertSame($concretePriceProductTransfer, $mergedPriceProductTransfer);
