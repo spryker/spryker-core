@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SprykGui\Business\Finder\Module;
+namespace Spryker\Zed\SprykGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ModuleFilterTransfer;
 
-interface ModuleFinderInterface
+interface SprykGuiToDevelopmentFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function findModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 }
