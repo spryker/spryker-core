@@ -31,14 +31,50 @@ class PriceProductServiceTest extends Unit
     /**
      * @return void
      */
-    public function testMergeConcreteAndAbstractPrices(): void
+    public function testMergeFullConcreteAndAbstractPrices(): void
     {
         $priceProductService = $this->getPriceProductService();
 
         $concretePriceProductTransfers = $this->getPriceProductTransfers();
         $abstractPriceProductTransfers = $this->getPriceProductTransfers();
 
-        $priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
+        $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
+
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer */
+        $concretePriceProductTransfer = $concretePriceProductTransfers[0];
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $mergedPriceProductTransfer */
+        $mergedPriceProductTransfer = $mergedPriceProductTransfers['EUR-DEFAULT'];
+        $this->assertSame($concretePriceProductTransfer, $mergedPriceProductTransfer);
+        $this->assertEquals($concretePriceProductTransfer->getMoneyValue()->getGrossAmount(), $mergedPriceProductTransfer->getMoneyValue()->getGrossAmount());
+        $this->assertEquals($concretePriceProductTransfer->getMoneyValue()->getNetAmount(), $mergedPriceProductTransfer->getMoneyValue()->getNetAmount());
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer */
+        $abstractPriceProductTransfer = $abstractPriceProductTransfers[0];
+        $this->assertNotEquals($abstractPriceProductTransfer->getMoneyValue()->getGrossAmount(), $mergedPriceProductTransfer->getMoneyValue()->getGrossAmount());
+        $this->assertNotEquals($abstractPriceProductTransfer->getMoneyValue()->getNetAmount(), $mergedPriceProductTransfer->getMoneyValue()->getNetAmount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMergePartialConcreteAndAbstractPrices(): void
+    {
+        $priceProductService = $this->getPriceProductService();
+        $concretePriceProductTransfers = $this->getPriceProductTransfers();
+
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer */
+        $concretePriceProductTransfer = $concretePriceProductTransfers[0];
+        $concretePriceProductTransfer->getMoneyValue()->setGrossAmount(null)->setNetAmount(null);
+        $abstractPriceProductTransfers = $this->getPriceProductTransfers();
+
+        $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
+
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $mergedPriceProductTransfer */
+        $mergedPriceProductTransfer = $mergedPriceProductTransfers['EUR-DEFAULT'];
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer */
+        $abstractPriceProductTransfer = $abstractPriceProductTransfers[0];
+        $this->assertSame($concretePriceProductTransfer, $mergedPriceProductTransfer);
+        $this->assertEquals($abstractPriceProductTransfer->getMoneyValue()->getGrossAmount(), $mergedPriceProductTransfer->getMoneyValue()->getGrossAmount());
+        $this->assertEquals($abstractPriceProductTransfer->getMoneyValue()->getNetAmount(), $mergedPriceProductTransfer->getMoneyValue()->getNetAmount());
     }
 
     /**
