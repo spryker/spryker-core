@@ -5,501 +5,281 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductImage\Business\Model;
+namespace SprykerTest\Zed\CategoryImage\Business;
 
 use ArrayObject;
-use Codeception\Test\Unit;
+use Codeception\TestCase\Test;
+use Generated\Shared\DataBuilder\CategoryImageBuilder;
+use Generated\Shared\DataBuilder\CategoryImageSetBuilder;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
-use Generated\Shared\Transfer\CategoryImageTransfer;
-use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductImageSetTransfer;
-use Generated\Shared\Transfer\ProductImageTransfer;
-use Orm\Zed\Category\Persistence\SpyCategory;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImage;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageQuery;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\ProductImage\Persistence\SpyProductImage;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
-use Propel\Runtime\Collection\Collection;
-use Spryker\Zed\CategoryImage\Business\CategoryImageFacade;
-use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepository;
-use Spryker\Zed\ProductImage\Business\ProductImageFacade;
-use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group ProductImage
+ * @group CategoryImage
  * @group Business
- * @group Model
  * @group Facade
- * @group ProductImageFacadeTest
+ * @group CategoryImageFacadeTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\CategoryImage\CategoryImageBusinessTester $tester
  */
-class CategoryImageFacadeTest extends Unit
+class CategoryImageFacadeTest extends Test
 {
-    /**
-     * @var \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface
-     */
-    protected $repository;
-
-    /**
-     * @var \Spryker\Zed\CategoryImage\Business\CategoryImageFacadeInterface
-     */
-    protected $categoryImageFacade;
-
-    /**
-     * @var \Orm\Zed\Category\Persistence\SpyCategory
-     */
-    protected $categoryEntity;
-
-    /**
-     * @var \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet
-     */
-    protected $imageSetCategory;
-
-    /**
-     * @var \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet
-     */
-    protected $imageSetDE;
-
-    /**
-     * @var \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet
-     */
-    protected $imageSetEN;
-
-    /**
-     * @var \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage
-     */
-    protected $imageSetToImage;
-
-    /**
-     * @var \Orm\Zed\CategoryImage\Persistence\SpyCategoryImage
-     */
-    protected $image;
-
-    public const URL_SMALL = 'small';
-    public const URL_LARGE = 'large';
-    public const SET_NAME = 'Default';
-    public const SET_NAME_DE = 'Default DE';
-    public const SET_NAME_EN = 'Default EN';
-    public const ABSTRACT_SKU = 'abstract-sku';
-    public const CONCRETE_SKU = 'concrete-sku';
-    public const ID_LOCALE_DE = 46;
-    public const ID_LOCALE_EN = 66;
+    public const DEFAULT_CATEGORY_IMAGE_SET_COUNT = 1;
+    public const LOCALE_DE = 'de_DE';
+    public const MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE = 5;
+    public const DUMMY_CATEGORY_IMAGE_SET_NAME = 'category-image-set-name';
+    public const DUMMY_EXTERNAL_URL_SMALL = 'external-url-small';
+    public const DUMMY_EXTERNAL_URL_LARGE = 'external-url-large';
 
     /**
      * @return void
      */
-    protected function setUp()
+    public function testFindCategoryImagesSetCollectionByCategoryId(): void
     {
-        $this->repository = new CategoryImageRepository();
-        $this->categoryImageFacade = new CategoryImageFacade();
-
-        $this->setupCategories();
-        $this->setupImages();
-    }
-
-    /**
-     * @return void
-     */
-    protected function setupCategories()
-    {
-        $this->categoryEntity = new SpyCategory();
-        $this->categoryEntity->setAttributes(new Collection())->save();
-    }
-
-    /**
-     * @return void
-     */
-    protected function setupImages()
-    {
-        $this->image = new SpyCategoryImage();
-        $this->image
-            ->setExternalUrlLarge(static::URL_LARGE)
-            ->setExternalUrlSmall(static::URL_SMALL)
-            ->save();
-
-        $this->imageSetCategory = new SpyCategoryImageSet();
-        $this->imageSetCategory
-            ->setName(static::SET_NAME)
-            ->setFkCategory($this->categoryEntity->getIdCategory())
-            ->setFkLocale(null)
-            ->save();
-
-        $this->imageSetDE = new SpyCategoryImageSet();
-        $this->imageSetDE
-            ->setName(static::SET_NAME_DE)
-            ->setFkCategory($this->categoryEntity->getIdCategory())
-            ->setFkLocale(static::ID_LOCALE_DE)
-            ->save();
-        $this->imageSetEN = new SpyCategoryImageSet();
-        $this->imageSetEN
-            ->setName(static::SET_NAME_EN)
-            ->setFkCategory($this->categoryEntity->getIdCategory())
-            ->setFkLocale(static::ID_LOCALE_EN)
-            ->save();
-
-        $imageSetToImage = new SpyCategoryImageSetToCategoryImage();
-        $imageSetToImage
-            ->setFkCategoryImage($this->image->getIdCategoryImage())
-            ->setFkCategoryImageSet($this->imageSetCategory->getIdCategoryImageSet())
-            ->setSortOrder(0)
-            ->save();
-        $imageSetToImage = new SpyCategoryImageSetToCategoryImage();
-        $imageSetToImage
-            ->setFkCategoryImage($this->image->getIdCategoryImage())
-            ->setFkCategoryImageSet($this->imageSetDE->getIdCategoryImageSet())
-            ->setSortOrder(0)
-            ->save();
-        $imageSetToImage = new SpyCategoryImageSetToCategoryImage();
-        $imageSetToImage
-            ->setFkCategoryImage($this->image->getIdCategoryImage())
-            ->setFkCategoryImageSet($this->imageSetEN->getIdCategoryImageSet())
-            ->setSortOrder(0)
-            ->save();
-    }
-
-    /**
-     * @return void
-     */
-    public function testPersistCategoryImageShouldCreateImage()
-    {
-        $categoryImageTransfer = (new CategoryImageTransfer())
-            ->setExternalUrlSmall(static::URL_SMALL)
-            ->setExternalUrlLarge(static::URL_LARGE);
-
-        $categoryImageTransfer = $this->categoryImageFacade->saveCategoryImage($categoryImageTransfer);
-
-        $this->assertCreateImage($categoryImageTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testPersistCategoryImageSetShouldCreateImageSet()
-    {
-        $categoryImageSetTransfer = (new CategoryImageSetTransfer())
-            ->setName(static::SET_NAME)
-            ->setIdCategory($this->categoryEntity->getIdCategory());
-
-        $categoryImageSetTransfer = $this->categoryImageFacade->saveCategoryImageSet($categoryImageSetTransfer);
-
-        $this->assertCreateImageSet($categoryImageSetTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testPersistCategoryImageSetShouldPersistImageSetAndCategoryImages()
-    {
-        $categoryImageTransfer = (new CategoryImageTransfer())
-            ->setExternalUrlSmall(self::URL_SMALL)
-            ->setExternalUrlLarge(self::URL_LARGE);
-
-        $categoryImageSetTransfer = (new CategoryImageSetTransfer())
-            ->setName(static::SET_NAME)
-            ->setIdCategory($this->categoryEntity->getIdCategory())
-            ->addCategoryImage($categoryImageTransfer);
-
-        $categoryImageSetTransfer = $this->categoryImageFacade->saveCategoryImageSet($categoryImageSetTransfer);
-
-        $this->assertCreateImageSet($categoryImageSetTransfer);
-        $this->assertCategoryCreateImageForImageSet();
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetCategoryImagesSetCollectionByCategoryId()
-    {
-        $categoryImageSetCollection = $this->categoryImageFacade->getCategoryImagesSetCollectionByCategoryId(
-            $this->categoryEntity->getIdCategory()
+        $categoryImageSetTransferCollection = $this->buildCategoryImageSetTransferCollection(
+            rand(1, static::MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE)
+        );
+        $categoryTransfer = $this->tester->haveCategory();
+        $categoryTransfer->setFormImageSets(
+            $this->buildFormImageSets($categoryImageSetTransferCollection)
         );
 
-        $this->assertNotEmpty($categoryImageSetCollection);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateCategoryImageSetCollection()
-    {
-        $categoryTransfer = $this->createCategoryTransfer();
-
-        $categoryImageTransfer = (new CategoryImageTransfer())
-            ->setExternalUrlSmall(self::URL_SMALL)
-            ->setExternalUrlLarge(self::URL_LARGE);
-
-        $categoryImageSetTransfer = (new CategoryImageSetTransfer())
-            ->setName(self::SET_NAME)
-            ->setIdCategory($this->categoryEntity->getIdCategory())
-            ->addCategoryImage($categoryImageTransfer);
-
-        $categoryTransfer->addImageSet($categoryImageSetTransfer);
-
-        $this->categoryImageFacade->createCategoryImageSetCollection(
-            $categoryTransfer
-        );
-
-        $this->assertCategoryCreateImageForImageSet();
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateCategoryImageSetCollection()
-    {
-        $categoryTransfer = $this->createCategoryTransfer();
-
-        $categoryImageTransfer = (new CategoryImageTransfer())
-            ->setIdCategoryImage($this->image->getIdCategoryImage())
-            ->setExternalUrlSmall(static::URL_SMALL . 'foo')
-            ->setExternalUrlLarge(static::URL_LARGE . 'foo');
-
-        $categoryImageSetTransfer = (new CategoryImageSetTransfer())
-            ->setIdCategoryImageSet($this->imageSetCategory->getIdCategoryImageSet())
-            ->setName(static::SET_NAME)
-            ->setIdCategory($this->categoryEntity->getIdCategory())
-            ->addCategoryImage($categoryImageTransfer);
-
-        $categoryTransfer->addImageSet($categoryImageSetTransfer);
-
-        $this->categoryImageFacade->updateCategoryImageSetCollection(
-            $categoryTransfer
-        );
-
-        $this->assertCategoryCreateImageForImageSet();
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandCategoryWithImageSets()
-    {
-        $categoryTransfer = $this->createCategoryTransfer();
-
-        $categoryTransfer = $this->categoryImageFacade->expandCategoryWithImageSets(
-            $categoryTransfer
-        );
-
-        $this->assertNotEmpty($categoryTransfer->getFormImageSets());
-        foreach ($categoryTransfer->getFormImageSets() as $imageSet) {
-            $this->assertNotEmpty($imageSet->getCategoryImages());
-
-            foreach ($imageSet->getCategoryImages() as $image) {
-                $this->assertInstanceOf(CategoryImageTransfer::class, $image);
-            }
-        }
-    }
-
-    /**
-     * @return void
-     */
-    public function testRemovalCategoryImageSetFromCategory()
-    {
-        $categoryTransfer = $this->createCategoryTransfer();
-        $categoryImageSetTransfers = new ArrayObject($this->categoryImageFacade->getCategoryImagesSetCollectionByCategoryId(
+        $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
+        $dbCategoryImageSetCollection = $this->getFacade()->findCategoryImagesSetCollectionByCategoryId(
             $categoryTransfer->getIdCategory()
+        );
+
+        $this->assertEquals(count($categoryImageSetTransferCollection), count($dbCategoryImageSetCollection));
+        $this->assertEmpty(array_diff(
+            $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection),
+            $this->getIdCategoryImageSetCollection($categoryImageSetTransferCollection)
         ));
-
-        $categoryImageTransfer = (new CategoryImageTransfer())
-            ->setExternalUrlSmall(static::URL_SMALL)
-            ->setExternalUrlLarge(static::URL_LARGE);
-
-        $categoryImageSetTransfer = (new CategoryImageSetTransfer())
-            ->setName(static::SET_NAME)
-            ->setIdCategory($this->categoryEntity->getIdCategory())
-            ->addCategoryImage($categoryImageTransfer);
-
-        $this->assertCategoryHasNumberOfCategoryImageSet($categoryImageSetTransfers->count());
-
-        $categoryImageSetTransfers->append($categoryImageSetTransfer);
-        $categoryTransfer->setFormImageSets($categoryImageSetTransfers);
-        $this->categoryImageFacade->updateCategoryImageSetCollection($categoryTransfer);
-
-        $this->assertCategoryHasNumberOfCategoryImageSet($categoryImageSetTransfers->count());
-
-        $categoryImageSetTransfers->offsetUnset($categoryImageSetTransfers->count() - 1);
-        $categoryTransfer->setFormImageSets($categoryImageSetTransfers);
-        $this->categoryImageFacade->updateCategoryImageSetCollection($categoryTransfer);
-
-        $this->assertCategoryHasNumberOfCategoryImageSet($categoryImageSetTransfers->count());
     }
 
     /**
      * @return void
      */
-    public function testRemovalCategoryImageFromCategory()
+    public function testCreateCategoryWithOneImageSet(): void
     {
-        $categoryTransfer = $this->createCategoryTransfer();
-        $categoryImageSetTransfers = new ArrayObject();
-
-        $categoryImageTransfer = (new CategoryImageTransfer())
-            ->setExternalUrlSmall(static::URL_SMALL)
-            ->setExternalUrlLarge(static::URL_LARGE);
-
-        $categoryImageSetTransfer = (new CategoryImageSetTransfer())
-            ->setName(static::SET_NAME)
-            ->setIdCategory($this->categoryEntity->getIdCategory())
-            ->addCategoryImage($categoryImageTransfer);
-
-        $categoryImageSetTransfers->append($categoryImageSetTransfer);
-        $categoryTransfer->setFormImageSets($categoryImageSetTransfers);
-        $this->categoryImageFacade->updateCategoryImageSetCollection($categoryTransfer);
-
-        $this->assertCategoryHasNumberOfCategoryImage($categoryImageSetTransfers->count());
-
-        $categoryImageSetTransfers->offsetUnset($categoryImageSetTransfers->count() - 1);
-        $categoryTransfer->setFormImageSets($categoryImageSetTransfers);
-        $this->categoryImageFacade->updateCategoryImageSetCollection($categoryTransfer);
-
-        $this->assertCategoryHasNumberOfCategoryImage($categoryImageSetTransfers->count());
-    }
-
-    /**
-     * @return void
-     */
-    public function testDeleteCategoryImageSet()
-    {
-        $categoryTransfer = $this->createCategoryTransfer();
-
-        $imageSet = new SpyCategoryImageSet();
-        $imageSet
-            ->setName(static::SET_NAME)
-            ->setFkCategory($categoryTransfer->getIdCategory())
-            ->setFkLocale(null)
-            ->save();
-
-        $this->assertCategoryImageSetExists($imageSet->getIdCategoryImageSet());
-
-        $categoryImageSetTransfer = (new CategoryImageSetTransfer())
-            ->setIdCategoryImageSet($imageSet->getIdCategoryImageSet());
-
-        $this->categoryImageFacade->deleteCategoryImageSet($categoryImageSetTransfer);
-
-        $this->assertCategoryImageSetNotExists($imageSet->getIdCategoryImageSet());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
-     *
-     * @return void
-     */
-    protected function assertCreateImage(CategoryImageTransfer $categoryImageTransfer)
-    {
-        $categoryImage = (new SpyCategoryImageQuery())
-            ->filterByIdCategoryImage($categoryImageTransfer->getIdCategoryImage())
-            ->findOne();
-
-        $this->assertNotNull($categoryImage);
-        $this->assertEquals($categoryImageTransfer->getExternalUrlSmall(), $categoryImage->getExternalUrlSmall());
-        $this->assertEquals($categoryImageTransfer->getExternalUrlLarge(), $categoryImage->getExternalUrlLarge());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
-     *
-     * @return void
-     */
-    protected function assertCreateImageSet(CategoryImageSetTransfer $categoryImageSetTransfer)
-    {
-        $categoryImage = (new SpyCategoryImageSetQuery())
-            ->filterByIdCategoryImageSet($categoryImageSetTransfer->getIdCategoryImageSet())
-            ->findOne();
-
-        $this->assertNotNull($categoryImage);
-        $this->assertEquals(static::SET_NAME, $categoryImageSetTransfer->getName());
-        $this->assertEquals($this->categoryEntity->getIdCategory(), $categoryImageSetTransfer->getIdCategory());
-    }
-
-    /**
-     * @return void
-     */
-    protected function assertCategoryCreateImageForImageSet()
-    {
-        $imageCollection = $this->repository->findCategoryImageSetsByCategoryId(
-            $this->categoryEntity->getIdCategory()
+        $categoryTransfer = $this->tester->haveCategory();
+        $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(static::DEFAULT_CATEGORY_IMAGE_SET_COUNT);
+        $categoryTransfer->setFormImageSets(
+            $this->buildFormImageSets($categoryImageSetCollection)
         );
 
-        $this->assertNotEmpty($imageCollection);
-    }
-
-    /**
-     * @param int $expectedCount
-     *
-     * @return void
-     */
-    protected function assertCategoryHasNumberOfCategoryImageSet($expectedCount)
-    {
-        $imageSetCollection = $this->repository->findCategoryImageSetsByCategoryId(
-            $this->categoryEntity->getIdCategory()
+        $resultCategoryTransfer = $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
+        $dbCategoryImageSetCollection = $this->getFacade()->findCategoryImagesSetCollectionByCategoryId(
+            $resultCategoryTransfer->getIdCategory()
         );
 
-        $this->assertCount($expectedCount, $imageSetCollection);
+        $this->assertSame($categoryTransfer, $resultCategoryTransfer);
+        $this->assertNotEmpty($dbCategoryImageSetCollection);
+        $this->assertEquals(static::DEFAULT_CATEGORY_IMAGE_SET_COUNT, count($dbCategoryImageSetCollection));
+        $this->assertEquals(
+            reset($categoryImageSetCollection)->getIdCategoryImageSet(),
+            reset($dbCategoryImageSetCollection)->getIdCategoryImageSet()
+        );
     }
 
     /**
-     * @param int $idCategoryImageSet
-     *
      * @return void
      */
-    protected function assertCategoryImageSetExists(int $idCategoryImageSet)
+    public function testUpdateCategoryImageSetCollection(): void
     {
-        $exists = (new SpyCategoryImageSetQuery())
-            ->filterByIdCategoryImageSet($idCategoryImageSet)
-            ->exists();
-
-        $this->assertTrue($exists);
-    }
-
-    /**
-     * @param int $idCategoryImageSet
-     *
-     * @return void
-     */
-    protected function assertCategoryImageSetNotExists(int $idCategoryImageSet)
-    {
-        $exists = (new SpyCategoryImageSetQuery())
-            ->filterByIdCategoryImageSet($idCategoryImageSet)
-            ->exists();
-
-        $this->assertFalse($exists);
-    }
-
-    /**
-     * @param int $expectedCount
-     *
-     * @return void
-     */
-    protected function assertCategoryHasNumberOfCategoryImage(int $expectedCount)
-    {
-        $imageCollection = $this->repository->findCategoryImageSetsByCategoryId(
-            $this->categoryEntity->getIdCategory()
+        $categoryTransfer = $this->tester->haveCategory();
+        $categoryImage = $this->buildCategoryImageTransfer();
+        $categoryImageSet = $this->buildCategoryImageSetTransfer();
+        $categoryImageSet->setCategoryImages(new ArrayObject([$categoryImage]));
+        $categoryTransfer->setFormImageSets(
+            $this->buildFormImageSets([$categoryImageSet])
         );
 
-        $this->assertCount($expectedCount, $imageCollection);
+        $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
+
+        $categoryImage->setExternalUrlSmall(static::DUMMY_EXTERNAL_URL_SMALL);
+        $categoryImage->setExternalUrlLarge(static::DUMMY_EXTERNAL_URL_LARGE);
+        $categoryImageSet->setName(static::DUMMY_CATEGORY_IMAGE_SET_NAME);
+
+        $this->getFacade()->updateCategoryImageSetCollection($categoryTransfer);
+
+        $dbCategoryImageSetCollection = $this->getFacade()->findCategoryImagesSetCollectionByCategoryId(
+            $categoryTransfer->getIdCategory()
+        );
+        $dbCategoryImageSet = $dbCategoryImageSetCollection[0];
+
+        $this->assertEquals(static::DUMMY_CATEGORY_IMAGE_SET_NAME, $dbCategoryImageSet->getName());
+        $this->assertEquals(static::DUMMY_EXTERNAL_URL_SMALL, $dbCategoryImageSet->getCategoryImages()[0]->getExternalUrlSmall());
+        $this->assertEquals(static::DUMMY_EXTERNAL_URL_LARGE, $dbCategoryImageSet->getCategoryImages()[0]->getExternalUrlLarge());
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return void
      */
-    protected function createCategoryTransfer()
+    public function testDeleteCategoryImageSet(): void
     {
-        $categoryData = $this->categoryEntity->toArray();
-        unset($categoryData[CategoryTransfer::LOCALIZED_ATTRIBUTES]);
+        $categoryTransfer = $this->tester->haveCategory();
+        $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(rand(2, static::MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE));
+        $categoryTransfer->setFormImageSets(
+            $this->buildFormImageSets($categoryImageSetCollection)
+        );
 
-        return (new CategoryTransfer())
-            ->fromArray($categoryData, true);
+        $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
+        $dbCategoryImageSetCollection = $this->getFacade()->findCategoryImagesSetCollectionByCategoryId(
+            $categoryTransfer->getIdCategory()
+        );
+        $randomImageSetKeyToBeDeleted = array_rand($categoryImageSetCollection);
+        $idCategoryImageSetToBeDeleted = $categoryImageSetCollection[$randomImageSetKeyToBeDeleted]->getIdCategoryImageSet();
+        $this->assertTrue(in_array(
+            $idCategoryImageSetToBeDeleted,
+            $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection)
+        ));
+        unset($categoryImageSetCollection[$randomImageSetKeyToBeDeleted]);
+        $categoryTransfer->setFormImageSets(
+            $this->buildFormImageSets($categoryImageSetCollection)
+        );
+        $this->getFacade()->updateCategoryImageSetCollection($categoryTransfer);
+        $dbCategoryImageSetCollection = $this->getFacade()->findCategoryImagesSetCollectionByCategoryId(
+            $categoryTransfer->getIdCategory()
+        );
+        $this->assertFalse(in_array(
+            $idCategoryImageSetToBeDeleted,
+            $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection)
+        ));
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandCategoryWithImageSets(): void
+    {
+        $categoryTransfer = $this->tester->haveCategory();
+        $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(
+            rand(1, static::MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE)
+        );
+        $categoryTransfer->setFormImageSets(
+            $this->buildFormImageSets($categoryImageSetCollection)
+        );
+
+        $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
+        $categoryTransfer->setFormImageSets([]);
+        $this->getFacade()->expandCategoryWithImageSets($categoryTransfer);
+        $dbCategoryImageSetCollection = $this->flattenFormImageSets($categoryTransfer->getFormImageSets());
+        $this->assertEquals(count($categoryImageSetCollection), count($dbCategoryImageSetCollection));
+        $this->assertEmpty(array_diff(
+            $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection),
+            $this->getIdCategoryImageSetCollection($categoryImageSetCollection)
+        ));
+    }
+
+    /**
+     * @param int $size
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
+     */
+    protected function buildCategoryImageSetTransferCollection(int $size): array
+    {
+        $categoryImageTransferCollection = [];
+        for ($i = 1; $i <= $size; ++$i) {
+            $categoryImageTransferCollection[] = $this->buildCategoryImageSetTransfer();
+        }
+
+        return $categoryImageTransferCollection;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function buildCategoryImageSetTransfer(array $seedData = [])
+    {
+        $categoryImageTransfer = $this->buildCategoryImageTransfer();
+        $seedData = $seedData + [
+                'idCategoryImageSet' => null,
+                'locale' => $this->haveLocale(),
+                'categoryImages' => new ArrayObject([
+                    $categoryImageTransfer,
+                ]),
+            ];
+
+        return (new CategoryImageSetBuilder($seedData))->build();
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function buildCategoryImageTransfer($seedData = [])
+    {
+        return (new CategoryImageBuilder($seedData))->build();
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function haveLocale(array $seedData = []): LocaleTransfer
+    {
+        $seedData = $seedData + [
+            'localeName' => static::LOCALE_DE,
+        ];
+
+        return $this->tester->haveLocale($seedData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $imageSets
+     *
+     * @return array
+     */
+    protected function buildFormImageSets(array $imageSets): array
+    {
+        $formImageSets = [];
+        foreach ($imageSets as $imageSet) {
+            $formImageSets[$imageSet->getLocale()->getLocaleName()][] = $imageSet;
+        }
+
+        return $formImageSets;
+    }
+
+    /**
+     * @param array $formImageSets
+     *
+     * @return array
+     */
+    protected function flattenFormImageSets(array $formImageSets): array
+    {
+        $imageSetCollection = [];
+        foreach ($formImageSets as $localeName => $imageSets) {
+            $imageSetCollection = array_merge($imageSetCollection, $imageSets);
+        }
+
+        return $imageSetCollection;
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImage\Business\CategoryImageFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     */
+    protected function getFacade()
+    {
+        return $this->tester->getFacade();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $categoryImageSetCollection
+     *
+     * @return array
+     */
+    protected function getIdCategoryImageSetCollection(array $categoryImageSetCollection): array
+    {
+        return array_map(function (CategoryImageSetTransfer $categoryImageSetTransfer) {
+            return $categoryImageSetTransfer->getIdCategoryImageSet();
+        }, $categoryImageSetCollection);
     }
 }
