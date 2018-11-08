@@ -59,19 +59,10 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
         $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
         $priceDimensionTransfer->requireIdMerchantRelationship();
 
-        $idPriceProductStoreBeforeUpdate = $priceProductTransfer->getMoneyValue()->getIdEntity();
-
         $priceProductTransfer = $this->priceProductFacade->persistPriceProductStore($priceProductTransfer);
 
-        if (!$this->isPriceStoreRelationChanged($priceProductTransfer, $idPriceProductStoreBeforeUpdate)) {
+        if (!$this->isPriceStoreRelationChanged($priceProductTransfer)) {
             return $priceProductTransfer;
-        }
-
-        if ($idPriceProductStoreBeforeUpdate) {
-            $this->priceProductMerchantRelationshipEntityManager->deleteByIdPriceProductStoreAndIdMerchantRelationship(
-                $idPriceProductStoreBeforeUpdate,
-                $priceDimensionTransfer->getIdMerchantRelationship()
-            );
         }
 
         $priceProductMerchantRelationshipEntityTransfer = $this->getPriceProductMerchantRelationshipEntityTransfer($priceProductTransfer);
@@ -110,13 +101,16 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param int|null $idPriceProductStoreBeforeUpdate
      *
      * @return bool
      */
-    protected function isPriceStoreRelationChanged(PriceProductTransfer $priceProductTransfer, ?int $idPriceProductStoreBeforeUpdate): bool
+    protected function isPriceStoreRelationChanged(PriceProductTransfer $priceProductTransfer): bool
     {
-        return !$idPriceProductStoreBeforeUpdate || $priceProductTransfer->getMoneyValue()->getIdEntity() !== $idPriceProductStoreBeforeUpdate;
+        return !$this->priceProductMerchantRelationshipRepository
+            ->existsPriceProductMerchantRelationship(
+                $priceProductTransfer->getPriceDimension()->getIdMerchantRelationship(),
+                $priceProductTransfer->getMoneyValue()->getIdEntity()
+            );
     }
 
     /**

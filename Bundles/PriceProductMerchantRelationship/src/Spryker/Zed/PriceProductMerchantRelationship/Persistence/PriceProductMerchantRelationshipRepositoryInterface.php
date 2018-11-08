@@ -20,4 +20,12 @@ interface PriceProductMerchantRelationshipRepositoryInterface
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
     public function buildMerchantRelationshipPriceDimensionCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer;
+
+    /**
+     * @param int $idMerchantRelationship
+     * @param int $idPriceProductStore
+     *
+     * @return bool
+     */
+    public function existsPriceProductMerchantRelationship(int $idMerchantRelationship, int $idPriceProductStore): bool;
 }
