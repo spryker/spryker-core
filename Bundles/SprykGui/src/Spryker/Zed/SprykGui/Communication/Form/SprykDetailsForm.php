@@ -69,7 +69,7 @@ class SprykDetailsForm extends AbstractType
     {
         $filteredArguments = [];
         foreach ($arguments as $argumentName => $argumentDefinition) {
-            if (in_array($argumentName, ['module', 'organization']) || !$this->requiresUserInput($argumentDefinition)) {
+            if (in_array($argumentName, ['module', 'dependentModule', 'organization']) || !$this->requiresUserInput($argumentDefinition)) {
                 continue;
             }
             $filteredArguments[$argumentName] = $argumentDefinition;
@@ -102,6 +102,9 @@ class SprykDetailsForm extends AbstractType
                 $typeOptions = $this->getFormTypeOptions($options, $argumentDefinition);
                 if (isset($argumentDefinition['isOptional'])) {
                     $typeOptions['required'] = false;
+                }
+                if (isset($argumentDefinition['isMultiple'])) {
+                    $typeOptions['multiple'] = true;
                 }
                 $formTypeName = 'Spryker\\Zed\\SprykGui\\Communication\\Form\\Type\\' . $argumentDefinition['type'] . 'Type';
 
