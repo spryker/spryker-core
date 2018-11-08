@@ -145,7 +145,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             (new RestErrorMessageTransfer())
                 ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_IS_EMPTY)
                 ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_CART_IS_EMPTY)
+                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAIL_CART_IS_EMPTY)
         );
 
         return $restResponse;

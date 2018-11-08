@@ -28,7 +28,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_CHECKOUT_DATA_INVALID = 'Checkout data is invalid.';
     public const EXCEPTION_MESSAGE_ORDER_NOT_PLACED = 'Order could not be placed.';
     public const EXCEPTION_MESSAGE_CART_NOT_FOUND = 'Cart could not be found.';
-    public const EXCEPTION_MESSAGE_CART_IS_EMPTY = 'Cart is empty.';
+    public const RESPONSE_DETAIL_CART_IS_EMPTY = 'Cart is empty.';
 
     protected const PAYMENT_REQUIRED_DATA_COMMON = [];
     protected const PAYMENT_REQUIRED_DATA = [];
