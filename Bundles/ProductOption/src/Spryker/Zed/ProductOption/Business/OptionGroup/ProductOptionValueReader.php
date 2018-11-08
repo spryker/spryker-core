@@ -43,7 +43,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOption(int $idProductOptionValue): ProductOptionTransfer
+    public function getProductOption($idProductOptionValue)
     {
         $productOptionValueEntity = $this->findOptionValueById($idProductOptionValue);
 

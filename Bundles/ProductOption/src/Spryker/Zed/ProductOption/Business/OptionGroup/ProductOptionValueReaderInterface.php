@@ -34,7 +34,7 @@ interface ProductOptionValueReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOption(int $idProductOptionValue): ProductOptionTransfer;
+    public function getProductOption($idProductOptionValue);
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
