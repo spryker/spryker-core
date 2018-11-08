@@ -102,7 +102,7 @@ class StoresReader implements StoresReaderInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(StoresRestApiConfig::RESPONSE_CODE_STORE_NOT_FOUND)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(StoresRestApiConfig::RESPONSE_MESSAGE_STORE_NOT_FOUND);
 
         return $restResponse->addError($restErrorTransfer);
