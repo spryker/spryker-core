@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\Quote\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Quote\Persistence\QuotePersistenceFactory getFactory()
@@ -102,5 +106,32 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer
     {
         return $this->getFactory()->createQuoteMapper()->mapQuoteTransfer($quoteEntityTransfer);
+    }
+
+    /**
+     * @param \DateTime $lifetimeLimitDate
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function findExpiredGuestQuotes(DateTime $lifetimeLimitDate, int $limit): QuoteCollectionTransfer
+    {
+        $quoteQuery = $this->getFactory()
+            ->createQuoteQuery()
+            ->joinWithSpyStore()
+            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
+            ->where(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE . Criteria::ISNULL)
+            ->limit($limit);
+
+        $quoteEntityCollection = $quoteQuery->find();
+
+        $quoteMapper = $this->getFactory()->createQuoteMapper();
+        $quoteCollectionTransfer = new QuoteCollectionTransfer();
+        foreach ($quoteEntityCollection as $quoteEntity) {
+            $quoteCollectionTransfer->addQuote($quoteMapper->mapQuoteEntityToQuoteTransfer($quoteEntity));
+        }
+
+        return $quoteCollectionTransfer;
     }
 }

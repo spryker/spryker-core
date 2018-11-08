@@ -47,7 +47,7 @@ class QuoteMapper implements QuoteMapperInterface
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->fromArray($quoteEntityTransfer->modifiedToArray(), true);
-        $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntityTransfer), true);
+        $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntityTransfer->getQuoteData()), true);
         $storeTransfer = new StoreTransfer();
         $storeTransfer->fromArray($quoteEntityTransfer->getSpyStore()->modifiedToArray(), true);
         $quoteTransfer->setStore($storeTransfer);
@@ -76,13 +76,31 @@ class QuoteMapper implements QuoteMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer $quoteEntityTransfer
+     * @param \Orm\Zed\Quote\Persistence\SpyQuote $quoteEntity
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function decodeQuoteData(SpyQuoteEntityTransfer $quoteEntityTransfer)
+    public function mapQuoteEntityToQuoteTransfer(SpyQuote $quoteEntity): QuoteTransfer
     {
-        return $this->encodingService->decodeJson($quoteEntityTransfer->getQuoteData(), true);
+        $storeTransfer = new StoreTransfer();
+        $storeTransfer->fromArray($quoteEntity->getSpyStore()->toArray(), true);
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->fromArray($quoteEntity->toArray(), true);
+        $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntity->getQuoteData()), true);
+        $quoteTransfer->setStore($storeTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param string|null $quoteData
+     *
+     * @return array|null
+     */
+    protected function decodeQuoteData(?string $quoteData): ?array
+    {
+        return $this->encodingService->decodeJson($quoteData, true);
     }
 
     /**
