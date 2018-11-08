@@ -23,7 +23,7 @@ use Spryker\Shared\Quote\QuoteConstants;
  * @group GuestQuoteCleanerTest
  * Add your own group annotations below this line
  */
-class GuestQuoteCleanerTest extends Unit
+class GuestQuoteDeleterTest extends Unit
 {
     protected const ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:123';
     protected const EMPTY_QUOTE_DATA = '{"currency":{"code":"EUR","name":"Euro","symbol":"\u20ac","isDefault":true,"fractionDigits":2},"priceMode":"GROSS_MODE"}';
