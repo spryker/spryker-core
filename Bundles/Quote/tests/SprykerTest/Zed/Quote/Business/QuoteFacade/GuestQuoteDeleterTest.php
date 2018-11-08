@@ -20,7 +20,7 @@ use Spryker\Shared\Quote\QuoteConstants;
  * @group Quote
  * @group Business
  * @group QuoteFacade
- * @group GuestQuoteCleanerTest
+ * @group GuestQuoteDeleterTest
  * Add your own group annotations below this line
  */
 class GuestQuoteDeleterTest extends Unit
