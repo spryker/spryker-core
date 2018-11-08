@@ -241,7 +241,7 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     * - Finds product option by id.
+     * - Finds product option by product option value id.
      *
      * @api
      *
@@ -261,5 +261,5 @@ interface ProductOptionFacadeInterface
      *
      * @return bool
      */
-    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue): bool;
+    public function checkProductOptionValueExistence(int $idProductOptionValue): bool;
 }

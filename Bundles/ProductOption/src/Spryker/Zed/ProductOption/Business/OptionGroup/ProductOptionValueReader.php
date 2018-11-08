@@ -95,7 +95,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      *
      * @return bool
      */
-    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue): bool
+    public function checkProductOptionValueExistence(int $idProductOptionValue): bool
     {
         return $this->productOptionQueryContainer
             ->queryProductOptionByValueId($idProductOptionValue)

@@ -293,10 +293,10 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @return bool
      */
-    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue): bool
+    public function checkProductOptionValueExistence(int $idProductOptionValue): bool
     {
         return $this->getFactory()
             ->createProductOptionValueReader()
-            ->existsProductOptionValueByIdProductOptionValue($idProductOptionValue);
+            ->checkProductOptionValueExistence($idProductOptionValue);
     }
 }

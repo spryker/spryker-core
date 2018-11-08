@@ -25,7 +25,7 @@ interface ProductOptionValueReaderInterface
      *
      * @return bool
      */
-    public function existsProductOptionValueByIdProductOptionValue(int $idProductOptionValue): bool;
+    public function checkProductOptionValueExistence(int $idProductOptionValue): bool;
 
     /**
      * @param int $idProductOptionValue

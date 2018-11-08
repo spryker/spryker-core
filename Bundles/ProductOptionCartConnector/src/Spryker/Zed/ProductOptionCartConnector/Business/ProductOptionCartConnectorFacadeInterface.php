@@ -69,8 +69,8 @@ interface ProductOptionCartConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Checks if given product option exists.
-     *  - If not terminates cart operation and write error messages
+     *  - Checks if product options of items in CartChangeTransfer exists.
+     *  - If not terminates cart operation and write error messages.
      *
      * @api
      *
