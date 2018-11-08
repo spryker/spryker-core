@@ -56,7 +56,7 @@ class PriceProductMerchantRelationshipRepository extends AbstractRepository impl
 
         $entity = $query->findOne();
 
-        if (!$entity) {
+        if ($entity === null) {
             return null;
         }
 
