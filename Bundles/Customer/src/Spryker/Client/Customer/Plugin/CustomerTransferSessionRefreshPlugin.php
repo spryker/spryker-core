@@ -18,6 +18,8 @@ class CustomerTransferSessionRefreshPlugin extends AbstractPlugin implements Cus
 {
     /**
      * {@inheritdoc}
+     * - Executed if customer marked as dirty.
+     * - Marks customer as not dirty.
      * - Retrieves customer by either provided id, email or restore password key.
      * - Expands the provided CustomerTransfer with persistence and stores it to session.
      *
@@ -27,8 +29,9 @@ class CustomerTransferSessionRefreshPlugin extends AbstractPlugin implements Cus
      */
     public function execute(CustomerTransfer $customerTransfer)
     {
-        if ($customerTransfer && $customerTransfer->getIsDirty()) {
+        if ($customerTransfer->getIsDirty()) {
             $customerTransfer = $this->getClient()->getCustomerByEmail($customerTransfer);
+            $customerTransfer->setIsDirty(false);
             $this->getClient()->setCustomer($customerTransfer);
         }
     }
