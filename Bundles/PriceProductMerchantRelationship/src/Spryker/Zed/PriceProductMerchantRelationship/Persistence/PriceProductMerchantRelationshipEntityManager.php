@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
+use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -74,11 +75,7 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
 
         $priceProductMerchantRelationships = $this->getFactory()->createPriceProductMerchantRelationshipQuery()
             ->filterByFkMerchantRelationship($idMerchantRelationship);
-        if ($priceProductTransfer->getIdProduct()) {
-            $priceProductMerchantRelationships = $priceProductMerchantRelationships->filterByFkProduct($priceProductTransfer->getIdProduct());
-        } else {
-            $priceProductMerchantRelationships = $priceProductMerchantRelationships->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract());
-        }
+        $priceProductMerchantRelationships = $this->setProductToQuery($priceProductTransfer, $priceProductMerchantRelationships);
         $priceProductMerchantRelationships = $priceProductMerchantRelationships
             ->filterByFkProduct($priceProductTransfer->getIdProduct())
             ->usePriceProductStoreQuery()
@@ -94,6 +91,15 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         if ($priceProductMerchantRelationships) {
             $priceProductMerchantRelationships->delete();
         }
+    }
+
+    protected function setProductToQuery(PriceProductTransfer $priceProductTransfer, SpyPriceProductMerchantRelationshipQuery $query): SpyPriceProductMerchantRelationshipQuery
+    {
+        if ($priceProductTransfer->getIdProduct()) {
+            return $query->filterByFkProduct($priceProductTransfer->getIdProduct());
+        }
+
+        return $query->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract());
     }
 
     /**
