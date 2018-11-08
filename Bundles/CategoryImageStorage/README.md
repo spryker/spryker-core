@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/category-image-storage.svg)](https://travis-ci.org/spryker/category-image-storage)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/category-image-storage/badge.svg)](https://coveralls.io/github/spryker/category-image-storage)
 
-{{ADD DESCRIPTION HERE}}
+This module synchronizes category images with Yves.
 
 ## Installation
 

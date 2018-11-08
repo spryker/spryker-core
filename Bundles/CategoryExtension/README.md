@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/category-extension.svg)](https://travis-ci.org/spryker/category-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/category-extension/badge.svg)](https://coveralls.io/github/spryker/category-extension)
 
-{{ADD DESCRIPTION HERE}}
+This module provides various extension contracts for Category module.
 
 ## Installation
 
