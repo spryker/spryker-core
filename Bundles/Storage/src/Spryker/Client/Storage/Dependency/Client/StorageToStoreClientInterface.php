@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\Storage\Dependency\Client;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface StorageToStoreClientInterface
 {
     /**
