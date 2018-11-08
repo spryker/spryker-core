@@ -1,0 +1,167 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Zed\CategoryImageStorage\Communication;
+
+use Codeception\Test\Unit;
+use Generated\Shared\Transfer\EventEntityTransfer;
+use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetTableMap;
+use Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorageQuery;
+use Spryker\Client\Kernel\Container;
+use Spryker\Client\Queue\QueueDependencyProvider;
+use Spryker\Zed\CategoryImage\Dependency\CategoryImageEvents;
+use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener\CategoryImagePublishStorageListener;
+use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener\CategoryImageSetCategoryImageStorageListener;
+use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener\CategoryImageSetStorageListener;
+use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener\CategoryImageStorageListener;
+use SprykerTest\Zed\CategoryImage\Helper\CategoryImageDataHelper;
+
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group CategoryImageStorage
+ * @group Communication
+ * @group CategoryImageSynchronizationPluginTest
+ * Add your own group annotations below this line
+ */
+class CategoryImageSynchronizationPluginTest extends Unit
+{
+    /**
+     * @var \SprykerTest\Zed\CategoryImageStorage\CategoryImageStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected $categoryTransfer;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
+            return [
+                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+            ];
+        });
+
+        $this->setUpData();
+    }
+
+    /**
+     * @void
+     *
+     * @return void
+     */
+    public function testCategoryImagePublishStorageListenerStoreData(): void
+    {
+        SpyCategoryImageStorageQuery::create()->filterByFkCategory($this->categoryTransfer->getIdCategory())->delete();
+        $beforeCount = SpyCategoryImageStorageQuery::create()->count();
+        $categoryImagePublishStorageListener = new CategoryImagePublishStorageListener();
+        $categoryImagePublishStorageListener->setFacade($this->tester->getFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->categoryTransfer->getIdCategory()),
+        ];
+        $categoryImagePublishStorageListener->handleBulk($eventTransfers, CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_PUBLISH);
+
+        $this->assertCategoryImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCategoryImageSetToCategoryImageStorageListenerStoreData(): void
+    {
+        $beforeCount = SpyCategoryImageStorageQuery::create()->count();
+        $categoryImageSetCategoryImageStorageListener = new CategoryImageSetCategoryImageStorageListener();
+        $categoryImageSetCategoryImageStorageListener->setFacade($this->tester->getFacade());
+        $idCategoryImageStorageToCategoryImageCollection = $this->tester
+            ->getIdCategoryImageSetToCategoryImageForCategory($this->categoryTransfer);
+
+        $eventTransfers = [];
+        foreach ($idCategoryImageStorageToCategoryImageCollection as $idCategoryImageStorageToCategoryImage) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($idCategoryImageStorageToCategoryImage);
+        }
+
+        $categoryImageSetCategoryImageStorageListener->handleBulk($eventTransfers, CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_PUBLISH);
+
+        $this->assertCategoryImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCategoryImageSetStorageListenerStoreData(): void
+    {
+        SpyCategoryImageStorageQuery::create()->filterByFkCategory($this->categoryTransfer->getIdCategory())->delete();
+        $beforeCount = SpyCategoryImageStorageQuery::create()->count();
+        $categoryImageSetStorageListener = new CategoryImageSetStorageListener();
+        $categoryImageSetStorageListener->setFacade($this->tester->getFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyCategoryImageSetTableMap::COL_FK_CATEGORY => $this->categoryTransfer->getIdCategory(),
+            ]),
+        ];
+        $categoryImageSetStorageListener->handleBulk($eventTransfers, CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_PUBLISH);
+
+        $this->assertCategoryImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCategoryImageStorageListenerStoreData(): void
+    {
+        SpyCategoryImageStorageQuery::create()->filterByFkCategory($this->categoryTransfer->getIdCategory())->delete();
+        $beforeCount = SpyCategoryImageStorageQuery::create()->count();
+        $categoryImagePublishStorageListener = new CategoryImageStorageListener();
+        $categoryImagePublishStorageListener->setFacade($this->tester->getFacade());
+        $idCategoryImageColletion = $this->tester->getIdCategoryImageCollectionForCategory($this->categoryTransfer);
+
+        $eventTransfers = [];
+        foreach ($idCategoryImageColletion as $idCategoryImage) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($idCategoryImage);
+        }
+
+        $categoryImagePublishStorageListener->handleBulk($eventTransfers, CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_PUBLISH);
+
+        $this->assertCategoryImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    protected function setUpData(): void
+    {
+        $this->categoryTransfer = $this->tester->haveCategory();
+        $this->tester->haveCategoryImageSetForCategory($this->categoryTransfer);
+    }
+
+    /**
+     * @param int $beforeCount
+     *
+     * @return void
+     */
+    protected function assertCategoryImageStorage($beforeCount)
+    {
+        $afterCount = SpyCategoryImageStorageQuery::create()->count();
+        $this->assertGreaterThan($beforeCount, $afterCount);
+        $categoryImageStorage = SpyCategoryImageStorageQuery::create()
+            ->orderByIdCategoryImageStorage()
+            ->findOneByFkCategory($this->categoryTransfer->getIdCategory());
+        $this->assertNotNull($categoryImageStorage);
+        $data = $categoryImageStorage->getData();
+        $this->assertSame(CategoryImageDataHelper::IMAGE_SET_NAME, $data['image_sets'][0]['name']);
+    }
+}

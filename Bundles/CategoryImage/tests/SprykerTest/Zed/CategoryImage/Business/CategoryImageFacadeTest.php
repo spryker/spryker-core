@@ -9,8 +9,6 @@ namespace SprykerTest\Zed\CategoryImage\Business;
 
 use ArrayObject;
 use Codeception\TestCase\Test;
-use Generated\Shared\DataBuilder\CategoryImageBuilder;
-use Generated\Shared\DataBuilder\CategoryImageSetBuilder;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
@@ -45,7 +43,7 @@ class CategoryImageFacadeTest extends Test
         );
         $categoryTransfer = $this->tester->haveCategory();
         $categoryTransfer->setFormImageSets(
-            $this->buildFormImageSets($categoryImageSetTransferCollection)
+            $this->tester->buildFormImageSets($categoryImageSetTransferCollection)
         );
 
         $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
@@ -68,7 +66,7 @@ class CategoryImageFacadeTest extends Test
         $categoryTransfer = $this->tester->haveCategory();
         $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(static::DEFAULT_CATEGORY_IMAGE_SET_COUNT);
         $categoryTransfer->setFormImageSets(
-            $this->buildFormImageSets($categoryImageSetCollection)
+            $this->tester->buildFormImageSets($categoryImageSetCollection)
         );
 
         $resultCategoryTransfer = $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
@@ -91,11 +89,11 @@ class CategoryImageFacadeTest extends Test
     public function testUpdateCategoryImageSetCollection(): void
     {
         $categoryTransfer = $this->tester->haveCategory();
-        $categoryImage = $this->buildCategoryImageTransfer();
-        $categoryImageSet = $this->buildCategoryImageSetTransfer();
+        $categoryImage = $this->tester->buildCategoryImageTransfer();
+        $categoryImageSet = $this->tester->buildCategoryImageSetTransfer();
         $categoryImageSet->setCategoryImages(new ArrayObject([$categoryImage]));
         $categoryTransfer->setFormImageSets(
-            $this->buildFormImageSets([$categoryImageSet])
+            $this->tester->buildFormImageSets([$categoryImageSet])
         );
 
         $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
@@ -124,7 +122,7 @@ class CategoryImageFacadeTest extends Test
         $categoryTransfer = $this->tester->haveCategory();
         $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(rand(2, static::MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE));
         $categoryTransfer->setFormImageSets(
-            $this->buildFormImageSets($categoryImageSetCollection)
+            $this->tester->buildFormImageSets($categoryImageSetCollection)
         );
 
         $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
@@ -139,7 +137,7 @@ class CategoryImageFacadeTest extends Test
         ));
         unset($categoryImageSetCollection[$randomImageSetKeyToBeDeleted]);
         $categoryTransfer->setFormImageSets(
-            $this->buildFormImageSets($categoryImageSetCollection)
+            $this->tester->buildFormImageSets($categoryImageSetCollection)
         );
         $this->getFacade()->updateCategoryImageSetCollection($categoryTransfer);
         $dbCategoryImageSetCollection = $this->getFacade()->findCategoryImagesSetCollectionByCategoryId(
@@ -161,13 +159,13 @@ class CategoryImageFacadeTest extends Test
             rand(1, static::MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE)
         );
         $categoryTransfer->setFormImageSets(
-            $this->buildFormImageSets($categoryImageSetCollection)
+            $this->tester->buildFormImageSets($categoryImageSetCollection)
         );
 
         $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
         $categoryTransfer->setFormImageSets([]);
         $this->getFacade()->expandCategoryWithImageSets($categoryTransfer);
-        $dbCategoryImageSetCollection = $this->flattenFormImageSets($categoryTransfer->getFormImageSets());
+        $dbCategoryImageSetCollection = $this->tester->flattenFormImageSets($categoryTransfer->getFormImageSets());
         $this->assertEquals(count($categoryImageSetCollection), count($dbCategoryImageSetCollection));
         $this->assertEmpty(array_diff(
             $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection),
@@ -178,45 +176,16 @@ class CategoryImageFacadeTest extends Test
     /**
      * @param int $size
      *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
      */
     protected function buildCategoryImageSetTransferCollection(int $size): array
     {
         $categoryImageTransferCollection = [];
         for ($i = 1; $i <= $size; ++$i) {
-            $categoryImageTransferCollection[] = $this->buildCategoryImageSetTransfer();
+            $categoryImageTransferCollection[] = $this->tester->buildCategoryImageSetTransfer();
         }
 
         return $categoryImageTransferCollection;
-    }
-
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
-     */
-    protected function buildCategoryImageSetTransfer(array $seedData = [])
-    {
-        $categoryImageTransfer = $this->buildCategoryImageTransfer();
-        $seedData = $seedData + [
-                'idCategoryImageSet' => null,
-                'locale' => $this->haveLocale(),
-                'categoryImages' => new ArrayObject([
-                    $categoryImageTransfer,
-                ]),
-            ];
-
-        return (new CategoryImageSetBuilder($seedData))->build();
-    }
-
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
-     */
-    protected function buildCategoryImageTransfer($seedData = [])
-    {
-        return (new CategoryImageBuilder($seedData))->build();
     }
 
     /**
@@ -231,36 +200,6 @@ class CategoryImageFacadeTest extends Test
         ];
 
         return $this->tester->haveLocale($seedData);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $imageSets
-     *
-     * @return array
-     */
-    protected function buildFormImageSets(array $imageSets): array
-    {
-        $formImageSets = [];
-        foreach ($imageSets as $imageSet) {
-            $formImageSets[$imageSet->getLocale()->getLocaleName()][] = $imageSet;
-        }
-
-        return $formImageSets;
-    }
-
-    /**
-     * @param array $formImageSets
-     *
-     * @return array
-     */
-    protected function flattenFormImageSets(array $formImageSets): array
-    {
-        $imageSetCollection = [];
-        foreach ($formImageSets as $localeName => $imageSets) {
-            $imageSetCollection = array_merge($imageSetCollection, $imageSets);
-        }
-
-        return $imageSetCollection;
     }
 
     /**
