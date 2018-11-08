@@ -47,12 +47,6 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
         $this->tester->truncateCompanyBusinessUnitRelations();
 
         $this->tester->haveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
-        $this->tester->haveCompanyBusinessUnit([
-            CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
-        ]);
-        $this->tester->haveCompanyBusinessUnit([
-            CompanyBusinessUnitTransfer::KEY => static::COMPANY_CHILD_BUSINESS_UNIT_KEY,
-        ]);
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
             static::IMPORT_COMPANY_BUSINESS_UNIT_CSV
