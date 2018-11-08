@@ -99,17 +99,6 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param int|null $idPriceProductStoreBeforeUpdate
-     *
-     * @return bool
-     */
-    protected function isPriceStoreRelationChanged(PriceProductTransfer $priceProductTransfer, ?int $idPriceProductStoreBeforeUpdate): bool
-    {
-        return !$idPriceProductStoreBeforeUpdate || $priceProductTransfer->getMoneyValue()->getIdEntity() !== $idPriceProductStoreBeforeUpdate;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer
      */
@@ -125,9 +114,11 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
 
         if ($priceProductTransfer->getIdProduct()) {
             $priceProductMerchantRelationshipEntityTransfer->setFkProduct($priceProductTransfer->getIdProduct());
-        } else {
-            $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
+            
+            return $priceProductMerchantRelationshipEntityTransfer;
         }
+        
+        $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
 
         return $priceProductMerchantRelationshipEntityTransfer;
     }
