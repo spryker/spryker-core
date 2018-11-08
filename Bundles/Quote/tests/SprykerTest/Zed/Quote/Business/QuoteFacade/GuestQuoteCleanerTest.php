@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\Quote\Business\QuoteFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Shared\Quote\QuoteConstants;
 
 /**
@@ -24,6 +26,7 @@ use Spryker\Shared\Quote\QuoteConstants;
 class GuestQuoteCleanerTest extends Unit
 {
     protected const ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:123';
+    protected const EMPTY_QUOTE_DATA = '{"currency":{"code":"EUR","name":"Euro","symbol":"\u20ac","isDefault":true,"fractionDigits":2},"priceMode":"GROSS_MODE"}';
     protected const CONFIG_LIFETIME_ONE_SECOND = 'PT01S';
     protected const CONFIG_LIFETIME_ONE_HOUR = 'PT01H';
 
@@ -42,15 +45,12 @@ class GuestQuoteCleanerTest extends Unit
     {
         $customerTransfer = $this->tester->haveCustomer();
         $customerTransfer->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
+        $this->createExpiredQuoteForCustomer($customerTransfer);
 
-        $this->tester->havePersistentQuote([
-            QuoteTransfer::CUSTOMER => $customerTransfer,
-        ]);
         $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_SECOND);
-        sleep(2);
-
         $this->tester->getFacade()->deleteExpiredGuestQuote();
         $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
+
         $this->assertNull($findQuoteResponseTransfer->getQuoteTransfer(), static::MESSAGE_SHOULD_BE_DELETED);
     }
 
@@ -70,5 +70,25 @@ class GuestQuoteCleanerTest extends Unit
         $this->tester->getFacade()->deleteExpiredGuestQuote();
         $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
         $this->assertNotNull($findQuoteResponseTransfer->getQuoteTransfer(), static::MESSAGE_SHOULD_NOT_BE_DELETED);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function createExpiredQuoteForCustomer(CustomerTransfer $customerTransfer): void
+    {
+        $currentStoreTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+        $quoteQuery = SpyQuoteQuery::create();
+        $quoteEntity = $quoteQuery
+            ->filterByCustomerReference($customerTransfer->getCustomerReference())
+            ->findOneOrCreate();
+        $quoteEntity->setName('Shopping cart')
+            ->setFkStore($currentStoreTransfer->getIdStore())
+            ->setQuoteData(static::EMPTY_QUOTE_DATA)
+            ->setCreatedAt(strtotime('-1 month'))
+            ->setUpdatedAt(strtotime('-1 month'));
+        $quoteEntity->save();
     }
 }
