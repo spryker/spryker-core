@@ -28,15 +28,28 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
     public function saveEntity(
         SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
     ): EntityTransferInterface {
-        if (!$priceProductMerchantRelationshipEntityTransfer->getIdPriceProductMerchantRelationship()) {
-            $entity = new SpyPriceProductMerchantRelationship();
-            $entity->fromArray($priceProductMerchantRelationshipEntityTransfer->toArray());
-            $entity->save();
-
-            return $priceProductMerchantRelationshipEntityTransfer;
+        if ($priceProductMerchantRelationshipEntityTransfer->getIdPriceProductMerchantRelationship()) {
+            return $this->updatePriceProductMerchantRelationshipEntity($priceProductMerchantRelationshipEntityTransfer);
         }
 
-        $this->updatePriceProductMerchantRelationshipEntity($priceProductMerchantRelationshipEntityTransfer);
+        return $this->createPriceProductMerchantRelationshipEntity($priceProductMerchantRelationshipEntityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer
+     */
+    protected function createPriceProductMerchantRelationshipEntity(
+        SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
+    ): SpyPriceProductMerchantRelationshipEntityTransfer {
+        $priceProductMerchantRelationshipEntity = new SpyPriceProductMerchantRelationship();
+        $priceProductMerchantRelationshipEntity->fromArray($priceProductMerchantRelationshipEntityTransfer->toArray());
+        $priceProductMerchantRelationshipEntity->save();
+
+        $priceProductMerchantRelationshipEntityTransfer->setIdPriceProductMerchantRelationship(
+            $priceProductMerchantRelationshipEntity->getIdPriceProductMerchantRelationship()
+        );
 
         return $priceProductMerchantRelationshipEntityTransfer;
     }
@@ -44,11 +57,11 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
     /**
      * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer
      */
     protected function updatePriceProductMerchantRelationshipEntity(
         SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
-    ): void {
+    ): SpyPriceProductMerchantRelationshipEntityTransfer {
         $priceProductMerchantRelationshipEntity = $this->getFactory()
             ->createPriceProductMerchantRelationshipQuery()
             ->filterByIdPriceProductMerchantRelationship(
@@ -57,11 +70,17 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
             ->findOne();
 
         if ($priceProductMerchantRelationshipEntity === null) {
-            return;
+            return $priceProductMerchantRelationshipEntityTransfer;
         }
 
         $priceProductMerchantRelationshipEntity->fromArray($priceProductMerchantRelationshipEntityTransfer->toArray());
         $priceProductMerchantRelationshipEntity->save();
+
+        $priceProductMerchantRelationshipEntityTransfer->setIdPriceProductMerchantRelationship(
+            $priceProductMerchantRelationshipEntity->getIdPriceProductMerchantRelationship()
+        );
+
+        return $priceProductMerchantRelationshipEntityTransfer;
     }
 
     /**
