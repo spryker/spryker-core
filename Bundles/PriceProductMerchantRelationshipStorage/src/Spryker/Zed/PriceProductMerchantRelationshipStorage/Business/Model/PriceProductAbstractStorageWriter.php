@@ -111,6 +111,10 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
             ->findMerchantRelationshipProductAbstractPricesStorageByIds($priceProductMerchantRelationshipIds);
 
+        if (empty($priceProductMerchantRelationshipStorageTransfers)) {
+            return;
+        }
+
         $priceKeys = array_map(function (PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer) {
             return $priceProductMerchantRelationshipStorageTransfer->getPriceKey();
         }, $priceProductMerchantRelationshipStorageTransfers);

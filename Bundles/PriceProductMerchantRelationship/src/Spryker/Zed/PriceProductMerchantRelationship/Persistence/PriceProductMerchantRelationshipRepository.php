@@ -30,19 +30,4 @@ class PriceProductMerchantRelationshipRepository extends AbstractRepository impl
             ->createMerchantRelationshipPriceQueryExpander()
             ->buildMerchantRelationshipPriceDimensionQueryCriteria($priceProductCriteriaTransfer);
     }
-
-    /**
-     * @param int $idMerchantRelationship
-     * @param int $idPriceProductStore
-     *
-     * @return bool
-     */
-    public function existsPriceProductMerchantRelationship(int $idMerchantRelationship, int $idPriceProductStore): bool
-    {
-        return $this->getFactory()
-            ->createPriceProductMerchantRelationshipQuery()
-            ->filterByFkMerchantRelationship($idMerchantRelationship)
-            ->filterByFkPriceProductStore($idPriceProductStore)
-            ->exists();
-    }
 }

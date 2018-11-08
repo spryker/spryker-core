@@ -123,6 +123,10 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
             ->findMerchantRelationshipProductConcretePricesStorageByIds($priceProductMerchantRelationshipIds);
 
+        if (empty($priceProductMerchantRelationshipStorageTransfers)) {
+            return;
+        }
+
         $priceKeys = array_map(function (PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer) {
             return $priceProductMerchantRelationshipStorageTransfer->getPriceKey();
         }, $priceProductMerchantRelationshipStorageTransfers);
