@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
-use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery;
+use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -29,16 +28,40 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
     public function saveEntity(
         SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
     ): EntityTransferInterface {
-        $entity = $this->getFactory()->createPriceProductMerchantRelationshipQuery()
-            ->filterByFkMerchantRelationship($priceProductMerchantRelationshipEntityTransfer->getFkMerchantRelationship())
-            ->filterByFkPriceProductStore($priceProductMerchantRelationshipEntityTransfer->getFkPriceProductStore())
-            ->filterByFkProductAbstract($priceProductMerchantRelationshipEntityTransfer->getFkProductAbstract())
-            ->filterByFkProduct($priceProductMerchantRelationshipEntityTransfer->getFkProduct())
-            ->findOneOrCreate();
+        if (!$priceProductMerchantRelationshipEntityTransfer->getIdPriceProductMerchantRelationship()) {
+            $entity = new SpyPriceProductMerchantRelationship();
+            $entity->fromArray($priceProductMerchantRelationshipEntityTransfer->toArray());
+            $entity->save();
 
-        $entity->save();
+            return $priceProductMerchantRelationshipEntityTransfer;
+        }
+
+        $this->updatePriceProductMerchantRelationshipEntity($priceProductMerchantRelationshipEntityTransfer);
 
         return $priceProductMerchantRelationshipEntityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
+     *
+     * @return void
+     */
+    protected function updatePriceProductMerchantRelationshipEntity(
+        SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
+    ): void {
+        $priceProductMerchantRelationshipEntity = $this->getFactory()
+            ->createPriceProductMerchantRelationshipQuery()
+            ->filterByIdPriceProductMerchantRelationship(
+                $priceProductMerchantRelationshipEntityTransfer->getIdPriceProductMerchantRelationship()
+            )
+            ->findOne();
+
+        if ($priceProductMerchantRelationshipEntity === null) {
+            return;
+        }
+
+        $priceProductMerchantRelationshipEntity->fromArray($priceProductMerchantRelationshipEntityTransfer->toArray());
+        $priceProductMerchantRelationshipEntity->save();
     }
 
     /**
@@ -59,34 +82,6 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
 
         if ($priceProductMerchantRelationshipEnitity) {
             $priceProductMerchantRelationshipEnitity->delete();
-        }
-    }
-
-    /**
-     * @param int $idMerchantRelationship
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return void
-     */
-    public function deletePriceProductMerchantRelationships(
-        int $idMerchantRelationship,
-        PriceProductTransfer $priceProductTransfer
-    ): void {
-        $query = $this->getFactory()
-            ->createPriceProductMerchantRelationshipQuery()
-            ->usePriceProductStoreQuery()
-                ->filterByFkStore($priceProductTransfer->getMoneyValue()->getFkStore())
-                ->filterByFkCurrency($priceProductTransfer->getMoneyValue()->getFkCurrency())
-                ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
-            ->endUse()
-            ->filterByFkMerchantRelationship($priceProductTransfer->getPriceDimension()->getIdMerchantRelationship());
-
-        $this->addFilteringByProductToQuery($priceProductTransfer, $query);
-
-        $entity = $query->findOne();
-
-        if ($entity) {
-            $entity->delete();
         }
     }
 
@@ -142,20 +137,5 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         foreach ($priceProductMerchantRelationshipEntities as $priceProductMerchantRelationshipEntity) {
             $priceProductMerchantRelationshipEntity->delete();
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery $priceProductMerchantRelationshipQuery
-     *
-     * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery
-     */
-    protected function addFilteringByProductToQuery(PriceProductTransfer $priceProductTransfer, SpyPriceProductMerchantRelationshipQuery $priceProductMerchantRelationshipQuery): SpyPriceProductMerchantRelationshipQuery
-    {
-        if ($priceProductTransfer->getIdProduct()) {
-            return $priceProductMerchantRelationshipQuery->filterByFkProduct($priceProductTransfer->getIdProduct());
-        }
-
-        return $priceProductMerchantRelationshipQuery->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract());
     }
 }

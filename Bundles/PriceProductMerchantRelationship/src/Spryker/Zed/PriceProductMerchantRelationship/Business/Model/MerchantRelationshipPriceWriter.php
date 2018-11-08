@@ -63,11 +63,6 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
             $priceProductTransfer = $this->persistPriceProductStore($priceProductTransfer);
         }
 
-        $this->priceProductMerchantRelationshipEntityManager->deletePriceProductMerchantRelationships(
-            $priceDimensionTransfer->getIdMerchantRelationship(),
-            $priceProductTransfer
-        );
-
         $priceProductMerchantRelationshipEntityTransfer = $this->getPriceProductMerchantRelationshipEntityTransfer($priceProductTransfer);
         $this->priceProductMerchantRelationshipEntityManager->saveEntity($priceProductMerchantRelationshipEntityTransfer);
 
@@ -120,17 +115,19 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
      */
     protected function getPriceProductMerchantRelationshipEntityTransfer(PriceProductTransfer $priceProductTransfer): SpyPriceProductMerchantRelationshipEntityTransfer
     {
+        $idPriceProductMerchantRelationship = $this->priceProductMerchantRelationshipRepository
+            ->findIdByPriceProductTransfer($priceProductTransfer);
+
         $priceProductMerchantRelationshipEntityTransfer = (new SpyPriceProductMerchantRelationshipEntityTransfer())
+            ->setIdPriceProductMerchantRelationship($idPriceProductMerchantRelationship)
             ->setFkMerchantRelationship($priceProductTransfer->getPriceDimension()->getIdMerchantRelationship())
             ->setFkPriceProductStore((string)$priceProductTransfer->getMoneyValue()->getIdEntity());
 
         if ($priceProductTransfer->getIdProduct()) {
             $priceProductMerchantRelationshipEntityTransfer->setFkProduct($priceProductTransfer->getIdProduct());
-
-            return $priceProductMerchantRelationshipEntityTransfer;
+        } else {
+            $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
         }
-
-        $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
 
         return $priceProductMerchantRelationshipEntityTransfer;
     }

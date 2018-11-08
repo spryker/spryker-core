@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
 use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 
@@ -31,17 +30,6 @@ interface PriceProductMerchantRelationshipEntityManagerInterface
     public function deleteByIdPriceProductStoreAndIdMerchantRelationship(
         int $idPriceProductStore,
         int $idMerchantRelationship
-    ): void;
-
-    /**
-     * @param int $idMerchantRelationship
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return void
-     */
-    public function deletePriceProductMerchantRelationships(
-        int $idMerchantRelationship,
-        PriceProductTransfer $priceProductTransfer
     ): void;
 
     /**
