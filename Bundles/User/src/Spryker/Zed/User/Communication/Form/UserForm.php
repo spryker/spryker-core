@@ -219,6 +219,7 @@ class UserForm extends AbstractType
                         'choices' => array_keys($choices),
                         'multiple' => true,
                     ]),
+                    new NotBlank(),
                 ],
                 'label' => 'Assigned groups',
                 'multiple' => true,

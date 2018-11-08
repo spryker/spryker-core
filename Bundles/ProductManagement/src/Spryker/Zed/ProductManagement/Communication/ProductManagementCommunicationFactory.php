@@ -247,14 +247,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface
-     */
-    public function getUtilTextService()
-    {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::SERVICE_UTIL_TEXT);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface
      */
     public function getPriceProductFacade()
@@ -362,7 +354,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->getUtilTextService(),
             $this->createLocaleProvider(),
             $this->getProductFormTransferMapperExpanderPlugins(),
             $this->createProductConcreteSuperAttributeFilterHelper()
