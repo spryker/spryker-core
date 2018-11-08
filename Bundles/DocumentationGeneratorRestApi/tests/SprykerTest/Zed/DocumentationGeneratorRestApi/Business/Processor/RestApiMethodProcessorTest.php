@@ -76,7 +76,199 @@ class RestApiMethodProcessorTest extends Unit
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset([
+        $this->assertArraySubset($this->getGetResourcePathWithoutAnnotationsExpectedData(), $generatedPaths);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddGetResourcePathWithAnnotationsShouldAddGetResourceToPaths(): void
+    {
+        $annotationTransfer = (new RestApiDocumentationAnnotationTransfer())
+            ->setSummary([static::SUMMARY])
+            ->addHeader(static::HEADER_ACCEPT_LANGUAGE)
+            ->setResponses([
+                '400' => static::BAD_REQUEST_RESPONSE_DESCRIPTION,
+                '404' => static::NOT_FOUND_RESPONSE_DESCRIPTION,
+            ]);
+
+        $this->methodProcessor->addGetResourcePath(
+            new TestResourceRoutePlugin(),
+            static::RESOURCE_PATH,
+            false,
+            static::RESOURCE_ID,
+            $annotationTransfer
+        );
+
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
+
+        $this->assertNotEmpty($generatedPaths);
+        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
+        $this->assertArraySubset($this->getGetResourcePathWithAnnotationsExpectedData(), $generatedPaths);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddGetResourceCollectionPathWithoutAnnotationsShouldAddGetCollectionToPaths(): void
+    {
+        $this->methodProcessor->addGetResourceCollectionPath(
+            new TestResourceRoutePlugin(),
+            static::RESOURCE_PATH,
+            false,
+            static::RESOURCE_ID,
+            null
+        );
+
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
+
+        $this->assertNotEmpty($generatedPaths);
+        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
+        $this->assertArraySubset($this->getGetResourceCollectionWithoutAnnotationsExpectedData(), $generatedPaths);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddGetResourceCollectionPathWithAnnotationsWithEmptyResponseShouldAddGetToPathsWithEmptyResponseSchema(): void
+    {
+        $this->methodProcessor->addGetResourceCollectionPath(
+            new TestResourceRoutePlugin(),
+            static::RESOURCE_PATH,
+            false,
+            static::RESOURCE_ID,
+            (new RestApiDocumentationAnnotationTransfer())->setIsEmptyResponse(true)
+        );
+
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
+
+        $this->assertNotEmpty($generatedPaths);
+        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
+        $this->assertArraySubset($this->getGetResourceCollectionPathWithAnnotationsWithEmptyResponseExpectedData(), $generatedPaths);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddGetResourceCollectionPathWithAnnotationsShouldAddGetToPathsWithDataFromAnnotations(): void
+    {
+        $this->methodProcessor->addGetResourceCollectionPath(
+            new TestResourceRoutePlugin(),
+            static::RESOURCE_PATH,
+            false,
+            static::RESOURCE_ID,
+            (new RestApiDocumentationAnnotationTransfer())->setSummary([static::SUMMARY])
+        );
+
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
+
+        $this->assertNotEmpty($generatedPaths);
+        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
+        $this->assertArraySubset($this->getGetResourceCollectionPathWithAnnotationsExpectedData(), $generatedPaths);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddDeleteResourcePathShouldAddDeleteToPaths(): void
+    {
+        $this->methodProcessor->addDeleteResourcePath(
+            new TestResourceRoutePlugin(),
+            static::RESOURCE_PATH,
+            false,
+            null
+        );
+
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
+
+        $this->assertNotEmpty($generatedPaths);
+        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
+        $this->assertArraySubset($this->getDeleteResourcePathExpectedData(), $generatedPaths);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddPatchResourcePathShouldAddPatchToPaths(): void
+    {
+        $this->methodProcessor->addPatchResourcePath(
+            new TestResourceRoutePlugin(),
+            static::RESOURCE_PATH,
+            true,
+            null
+        );
+
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
+
+        $this->assertNotEmpty($generatedPaths);
+        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
+        $this->assertArraySubset($this->getPatchResourcePathExpectedData(), $generatedPaths);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddPostResourcePathShouldAddPostToPaths(): void
+    {
+        $this->methodProcessor->addPostResourcePath(
+            new TestResourceRoutePlugin(),
+            static::RESOURCE_PATH,
+            false,
+            null
+        );
+
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
+
+        $this->assertNotEmpty($generatedPaths);
+        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
+        $this->assertArraySubset($this->getPostResourcePathExpectedData(), $generatedPaths);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddPostResourcePathWithAnnotationsWithEmptyResponseShouldAddPostToPathsWithEmptyResponseSchema(): void
+    {
+        $this->methodProcessor->addPostResourcePath(
+            new TestResourceRoutePlugin(),
+            static::RESOURCE_PATH,
+            false,
+            (new RestApiDocumentationAnnotationTransfer())->setIsEmptyResponse(true)
+        );
+
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
+
+        $this->assertNotEmpty($generatedPaths);
+        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
+        $this->assertArraySubset($this->getPostResourcePathWithAnnotationsWithEmptyResponseExpectedData(), $generatedPaths);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddGetResourceByIdPathShouldAddGetResourceToPaths(): void
+    {
+        $this->methodProcessor->addGetResourceByIdPath(
+            new TestResourceRoutePlugin(),
+            static::RESOURCE_PATH,
+            false,
+            static::RESOURCE_ID,
+            null
+        );
+
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
+
+        $this->assertNotEmpty($generatedPaths);
+        $this->assertArrayHasKey(static::RESOURCE_PATH . '/' . static::RESOURCE_ID, $generatedPaths);
+        $this->assertArraySubset($this->getGetResourceByIdPathExpectedData(), $generatedPaths);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getGetResourcePathWithoutAnnotationsExpectedData(): array
+    {
+        return [
             static::RESOURCE_PATH => [
                 'get' => [
                     'summary' => static::DEFAULT_GET_RESOURCE_SUMMARY,
@@ -107,35 +299,15 @@ class RestApiMethodProcessorTest extends Unit
                     ],
                 ],
             ],
-        ], $generatedPaths);
+        ];
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testAddGetResourcePathWithAnnotationsShouldAddGetResourceToPaths(): void
+    protected function getGetResourcePathWithAnnotationsExpectedData(): array
     {
-        $annotationTransfer = (new RestApiDocumentationAnnotationTransfer())
-            ->setSummary([static::SUMMARY])
-            ->addHeader(static::HEADER_ACCEPT_LANGUAGE)
-            ->setResponses([
-                '400' => static::BAD_REQUEST_RESPONSE_DESCRIPTION,
-                '404' => static::NOT_FOUND_RESPONSE_DESCRIPTION,
-            ]);
-
-        $this->methodProcessor->addGetResourcePath(
-            new TestResourceRoutePlugin(),
-            static::RESOURCE_PATH,
-            false,
-            static::RESOURCE_ID,
-            $annotationTransfer
-        );
-
-        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
-
-        $this->assertNotEmpty($generatedPaths);
-        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset([
+        return [
             static::RESOURCE_PATH => [
                 'get' => [
                     'summary' => static::SUMMARY,
@@ -196,27 +368,15 @@ class RestApiMethodProcessorTest extends Unit
                     ],
                 ],
             ],
-        ], $generatedPaths);
+        ];
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testAddGetResourceCollectionPathShouldAddGetCollectionToPaths(): void
+    protected function getGetResourceCollectionWithoutAnnotationsExpectedData(): array
     {
-        $this->methodProcessor->addGetResourceCollectionPath(
-            new TestResourceRoutePlugin(),
-            static::RESOURCE_PATH,
-            false,
-            static::RESOURCE_ID,
-            null
-        );
-
-        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
-
-        $this->assertNotEmpty($generatedPaths);
-        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset([
+        return [
             static::RESOURCE_PATH => [
                 'get' => [
                     'summary' => static::DEFAULT_GET_COLLECTION_SUMMARY,
@@ -247,27 +407,15 @@ class RestApiMethodProcessorTest extends Unit
                     ],
                 ],
             ],
-        ], $generatedPaths);
+        ];
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testAddGetResourceCollectionPathWithAnnotationsWithEmptyResponseShouldAddGetToPathsWithEmptyResponseSchema(): void
+    protected function getGetResourceCollectionPathWithAnnotationsWithEmptyResponseExpectedData(): array
     {
-        $this->methodProcessor->addGetResourceCollectionPath(
-            new TestResourceRoutePlugin(),
-            static::RESOURCE_PATH,
-            false,
-            static::RESOURCE_ID,
-            (new RestApiDocumentationAnnotationTransfer())->setIsEmptyResponse(true)
-        );
-
-        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
-
-        $this->assertNotEmpty($generatedPaths);
-        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset([
+        return [
             static::RESOURCE_PATH => [
                 'get' => [
                     'summary' => static::DEFAULT_GET_COLLECTION_SUMMARY,
@@ -291,27 +439,15 @@ class RestApiMethodProcessorTest extends Unit
                     ],
                 ],
             ],
-        ], $generatedPaths);
+        ];
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testAddGetResourceCollectionPathWithAnnotationsShouldAddGetToPathsWithDataFromAnnotations(): void
+    protected function getGetResourceCollectionPathWithAnnotationsExpectedData(): array
     {
-        $this->methodProcessor->addGetResourceCollectionPath(
-            new TestResourceRoutePlugin(),
-            static::RESOURCE_PATH,
-            false,
-            static::RESOURCE_ID,
-            (new RestApiDocumentationAnnotationTransfer())->setSummary([static::SUMMARY])
-        );
-
-        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
-
-        $this->assertNotEmpty($generatedPaths);
-        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset([
+        return [
             static::RESOURCE_PATH => [
                 'get' => [
                     'summary' => static::SUMMARY,
@@ -335,26 +471,15 @@ class RestApiMethodProcessorTest extends Unit
                     ],
                 ],
             ],
-        ], $generatedPaths);
+        ];
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testAddDeleteResourcePathShouldAddDeleteToPaths(): void
+    protected function getDeleteResourcePathExpectedData(): array
     {
-        $this->methodProcessor->addDeleteResourcePath(
-            new TestResourceRoutePlugin(),
-            static::RESOURCE_PATH,
-            false,
-            null
-        );
-
-        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
-
-        $this->assertNotEmpty($generatedPaths);
-        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset([
+        return [
             static::RESOURCE_PATH => [
                 'delete' => [
                     'summary' => static::DEFAULT_DELETE_SUMMARY,
@@ -378,26 +503,15 @@ class RestApiMethodProcessorTest extends Unit
                     ],
                 ],
             ],
-        ], $generatedPaths);
+        ];
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testAddPatchResourcePathShouldAddPatchToPaths(): void
+    protected function getPatchResourcePathExpectedData(): array
     {
-        $this->methodProcessor->addPatchResourcePath(
-            new TestResourceRoutePlugin(),
-            static::RESOURCE_PATH,
-            true,
-            null
-        );
-
-        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
-
-        $this->assertNotEmpty($generatedPaths);
-        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset([
+        return [
             static::RESOURCE_PATH => [
                 'patch' => [
                     'summary' => static::DEFAULT_PATCH_SUMMARY,
@@ -442,26 +556,15 @@ class RestApiMethodProcessorTest extends Unit
                     ],
                 ],
             ],
-        ], $generatedPaths);
+        ];
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testAddPostResourcePathShouldAddPostToPaths(): void
+    protected function getPostResourcePathExpectedData(): array
     {
-        $this->methodProcessor->addPostResourcePath(
-            new TestResourceRoutePlugin(),
-            static::RESOURCE_PATH,
-            false,
-            null
-        );
-
-        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
-
-        $this->assertNotEmpty($generatedPaths);
-        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset([
+        return [
             static::RESOURCE_PATH => [
                 'post' => [
                     'summary' => static::DEFAULT_POST_SUMMARY,
@@ -503,26 +606,15 @@ class RestApiMethodProcessorTest extends Unit
                     ],
                 ],
             ],
-        ], $generatedPaths);
+        ];
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testAddPostResourcePathWithAnnotationsWithEmptyResponseShouldAddPostToPathsWithEmptyResponseSchema(): void
+    protected function getPostResourcePathWithAnnotationsWithEmptyResponseExpectedData(): array
     {
-        $this->methodProcessor->addPostResourcePath(
-            new TestResourceRoutePlugin(),
-            static::RESOURCE_PATH,
-            false,
-            (new RestApiDocumentationAnnotationTransfer())->setIsEmptyResponse(true)
-        );
-
-        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
-
-        $this->assertNotEmpty($generatedPaths);
-        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset([
+        return [
             static::RESOURCE_PATH => [
                 'post' => [
                     'summary' => static::DEFAULT_POST_SUMMARY,
@@ -557,27 +649,15 @@ class RestApiMethodProcessorTest extends Unit
                     ],
                 ],
             ],
-        ], $generatedPaths);
+        ];
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testAddGetResourceByIdPath(): void
+    protected function getGetResourceByIdPathExpectedData(): array
     {
-        $this->methodProcessor->addGetResourceByIdPath(
-            new TestResourceRoutePlugin(),
-            static::RESOURCE_PATH,
-            false,
-            static::RESOURCE_ID,
-            null
-        );
-
-        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
-
-        $this->assertNotEmpty($generatedPaths);
-        $this->assertArrayHasKey(static::RESOURCE_PATH . '/' . static::RESOURCE_ID, $generatedPaths);
-        $this->assertArraySubset([
+        return [
             static::RESOURCE_PATH . '/' . static::RESOURCE_ID => [
                 'get' => [
                     'summary' => static::DEFAULT_GET_RESOURCE_SUMMARY,
@@ -608,6 +688,6 @@ class RestApiMethodProcessorTest extends Unit
                     ],
                 ],
             ],
-        ], $generatedPaths);
+        ];
     }
 }

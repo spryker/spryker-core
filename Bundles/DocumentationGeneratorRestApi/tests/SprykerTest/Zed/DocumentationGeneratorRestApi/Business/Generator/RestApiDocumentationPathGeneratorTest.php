@@ -31,6 +31,8 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     protected const SUMMARY = 'Test summary.';
     protected const PATH = '/test-path';
     protected const PATH_WITH_ID = '/test-path/{test-resource-id}';
+    protected const PARAMETER_IN_HEADER = 'header';
+    protected const PARAMETER_IN_PATH = 'path';
     protected const RESOURCE_ID = 'test-resource-id';
     protected const RESOURCE = 'test-resource';
     protected const HEADER_ACCEPT_LANGUAGE = 'Accept-Language';
@@ -274,7 +276,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
                 'parameters' => [
                     [
                         'name' => static::HEADER_ACCEPT_LANGUAGE,
-                        'in' => 'header',
+                        'in' => static::PARAMETER_IN_HEADER,
                         'required' => false,
                         'schema' => [
                             'type' => 'string',
@@ -341,7 +343,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
                 'parameters' => [
                     [
                         'name' => static::HEADER_ACCEPT_LANGUAGE,
-                        'in' => 'header',
+                        'in' => static::PARAMETER_IN_HEADER,
                         'required' => false,
                         'schema' => [
                             'type' => 'string',
@@ -388,7 +390,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
                 'parameters' => [
                     [
                         'name' => static::RESOURCE_ID,
-                        'in' => 'path',
+                        'in' => static::PARAMETER_IN_PATH,
                         'required' => true,
                         'schema' => [
                             'type' => 'string',
@@ -396,7 +398,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
                     ],
                     [
                         'name' => static::HEADER_ACCEPT_LANGUAGE,
-                        'in' => 'header',
+                        'in' => static::PARAMETER_IN_HEADER,
                         'required' => false,
                         'schema' => [
                             'type' => 'string',
@@ -443,7 +445,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
                 'parameters' => [
                     [
                         'name' => static::RESOURCE_ID,
-                        'in' => 'path',
+                        'in' => static::PARAMETER_IN_PATH,
                         'required' => true,
                         'schema' => [
                             'type' => 'string',

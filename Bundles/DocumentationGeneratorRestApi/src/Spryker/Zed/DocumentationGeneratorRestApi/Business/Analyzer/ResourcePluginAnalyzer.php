@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer;
+use Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer;
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRouteCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
@@ -86,14 +87,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
                     $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins())
                 );
 
-                $this->processGetResourceByIdPath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetResourceById());
-                $this->processGetResourceCollectionPath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetCollection());
-                if ($pathAnnotationsTransfer->getGetResource() || ($pathAnnotationsTransfer->getGetResourceById() === null && $pathAnnotationsTransfer->getGetCollection() === null)) {
-                    $this->processGetResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetResource());
-                }
-                $this->processPostResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getPost());
-                $this->processPatchResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getPatch());
-                $this->processDeleteResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getDelete());
+                $this->processMethods($plugin, $resourcePath, $pathAnnotationsTransfer);
             }
         }
 
@@ -102,6 +96,27 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             static::KEY_SCHEMAS => $this->methodProcessor->getGeneratedSchemas(),
             static::KEY_SECURITY_SCHEMES => $this->methodProcessor->getGeneratedSecuritySchemes(),
         ];
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $resourcePath
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer $pathAnnotationsTransfer
+     *
+     * @return void
+     */
+    protected function processMethods(ResourceRoutePluginInterface $plugin, string $resourcePath, RestApiDocumentationPathAnnotationsTransfer $pathAnnotationsTransfer): void
+    {
+        $this->processGetResourceByIdPath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetResourceById());
+        $this->processGetResourceCollectionPath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetCollection());
+        if ($pathAnnotationsTransfer->getGetResource()
+            || ($pathAnnotationsTransfer->getGetResourceById() === null && $pathAnnotationsTransfer->getGetCollection() === null)
+        ) {
+            $this->processGetResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetResource());
+        }
+        $this->processPostResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getPost());
+        $this->processPatchResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getPatch());
+        $this->processDeleteResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getDelete());
     }
 
     /**

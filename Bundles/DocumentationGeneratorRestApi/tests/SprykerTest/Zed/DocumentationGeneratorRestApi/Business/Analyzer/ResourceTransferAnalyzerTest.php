@@ -75,22 +75,7 @@ class ResourceTransferAnalyzerTest extends Unit
     {
         $metadata = $this->resourceTransferAnalyzer->getTransferMetadata(new RestTestAttributesTransfer());
 
-        $this->assertArraySubset([
-            'attribute1' => [
-                'type' => 'string',
-                'name_underscore' => 'attribute1',
-                'is_collection' => false,
-                'is_transfer' => false,
-                'rest_request_parameter' => 'no',
-            ],
-            'attribute2' => [
-                'type' => 'string',
-                'name_underscore' => 'attribute2',
-                'is_collection' => false,
-                'is_transfer' => false,
-                'rest_request_parameter' => 'required',
-            ],
-        ], $metadata);
+        $this->assertArraySubset($this->getGetTransferMetadataExpectedData(), $metadata);
     }
 
     /**
@@ -181,5 +166,28 @@ class ResourceTransferAnalyzerTest extends Unit
         $schemaName = $this->resourceTransferAnalyzer->createResourceRelationshipSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
         $this->assertEquals(static::RESOURCE_RELATIONSHIP_SCHEMA_NAME, $schemaName);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getGetTransferMetadataExpectedData(): array
+    {
+        return [
+            'attribute1' => [
+                'type' => 'string',
+                'name_underscore' => 'attribute1',
+                'is_collection' => false,
+                'is_transfer' => false,
+                'rest_request_parameter' => 'no',
+            ],
+            'attribute2' => [
+                'type' => 'string',
+                'name_underscore' => 'attribute2',
+                'is_collection' => false,
+                'is_transfer' => false,
+                'rest_request_parameter' => 'required',
+            ],
+        ];
     }
 }

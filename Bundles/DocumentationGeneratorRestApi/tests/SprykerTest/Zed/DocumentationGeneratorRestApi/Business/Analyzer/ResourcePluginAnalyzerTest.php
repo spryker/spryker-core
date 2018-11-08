@@ -23,6 +23,12 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Fixtures\GlueAnnotati
  */
 class ResourcePluginAnalyzerTest extends Unit
 {
+    protected const EXPECTED_KEYS = [
+        'paths',
+        'schemas',
+        'securitySchemes',
+    ];
+
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourcePluginAnalyzerInterface
      */
@@ -47,8 +53,8 @@ class ResourcePluginAnalyzerTest extends Unit
         $expectedResult = GlueAnnotationAnalyzerExpectedResult::getTestCreateRestApiDocumentationFromPluginsExpectedResult();
 
         $this->assertNotEmpty($generatedDocumentationData);
-        $this->assertArraySubset($expectedResult['paths'], $generatedDocumentationData['paths']);
-        $this->assertArraySubset($expectedResult['schemas'], $generatedDocumentationData['schemas']);
-        $this->assertArraySubset($expectedResult['securitySchemes'], $generatedDocumentationData['securitySchemes']);
+        foreach (static::EXPECTED_KEYS as $key) {
+            $this->assertArraySubset($expectedResult[$key], $generatedDocumentationData[$key]);
+        }
     }
 }
