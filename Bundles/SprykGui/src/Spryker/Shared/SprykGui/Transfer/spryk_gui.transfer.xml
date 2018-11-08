@@ -9,6 +9,15 @@
         <property name="application" type="Application"/>
         <property name="layer" type="Layer"/>
         <property name="options" type="Options"/>
+        <property name="dependentModule" type="Module"/>
+    </transfer>
+
+    <transfer name="DependentModule">
+        <property name="name" type="string" />
+        <property name="organization" type="Organization"/>
+        <property name="application" type="Application"/>
+        <property name="layer" type="Layer"/>
+        <property name="options" type="Options"/>
     </transfer>
 
     <transfer name="ModuleCollection">

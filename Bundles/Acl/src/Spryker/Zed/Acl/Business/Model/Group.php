@@ -121,7 +121,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param int $name
+     * @param string $name
      *
      * @return bool
      */
