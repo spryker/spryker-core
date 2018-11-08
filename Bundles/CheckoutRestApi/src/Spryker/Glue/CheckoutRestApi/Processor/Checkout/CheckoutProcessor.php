@@ -83,6 +83,10 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             return $this->createCartNotFoundErrorResponse();
         }
 
+        if ($quoteTransfer->getItems()->count() === 0) {
+            return $this->createCartIsEmptyErrorResponse();
+        }
+
         $quoteTransfer = $this->quoteMerger->updateQuoteWithDataFromRequest(
             $quoteTransfer,
             $restCheckoutRequestAttributesTransfer,
@@ -111,6 +115,23 @@ class CheckoutProcessor implements CheckoutProcessorInterface
                 ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
                 ->setStatus(Response::HTTP_BAD_REQUEST)
                 ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND)
+        );
+
+        return $restResponse;
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createCartIsEmptyErrorResponse(): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        $restResponse->addError(
+            (new RestErrorMessageTransfer())
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_IS_EMPTY)
+                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAIL_CART_IS_EMPTY)
         );
 
         return $restResponse;
