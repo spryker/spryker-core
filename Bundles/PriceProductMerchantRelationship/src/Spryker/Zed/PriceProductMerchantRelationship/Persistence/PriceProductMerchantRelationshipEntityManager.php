@@ -82,12 +82,12 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         $priceProductMerchantRelationships = $priceProductMerchantRelationships
             ->filterByFkProduct($priceProductTransfer->getIdProduct())
             ->usePriceProductStoreQuery()
-            ->filterByFkCurrency($priceProductTransfer->getMoneyValue()->getFkCurrency())
+                ->filterByFkCurrency($priceProductTransfer->getMoneyValue()->getFkCurrency())
             ->endUse()
             ->usePriceProductStoreQuery()
-            ->usePriceProductQuery()
-            ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
-            ->endUse()
+                ->usePriceProductQuery()
+                    ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
+                ->endUse()
             ->endUse()
             ->find();
 
