@@ -94,21 +94,6 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery $query
-     *
-     * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery
-     */
-    protected function setFilteringByProductToQuery(PriceProductTransfer $priceProductTransfer, SpyPriceProductMerchantRelationshipQuery $query): SpyPriceProductMerchantRelationshipQuery
-    {
-        if ($priceProductTransfer->getIdProduct()) {
-            return $query->filterByFkProduct($priceProductTransfer->getIdProduct());
-        }
-
-        return $query->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract());
-    }
-
-    /**
      * @param int $idMerchantRelationship
      *
      * @return void
@@ -160,5 +145,20 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         foreach ($priceProductMerchantRelationshipEntities as $priceProductMerchantRelationshipEntity) {
             $priceProductMerchantRelationshipEntity->delete();
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery $query
+     *
+     * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery
+     */
+    protected function setFilteringByProductToQuery(PriceProductTransfer $priceProductTransfer, SpyPriceProductMerchantRelationshipQuery $query): SpyPriceProductMerchantRelationshipQuery
+    {
+        if ($priceProductTransfer->getIdProduct()) {
+            return $query->filterByFkProduct($priceProductTransfer->getIdProduct());
+        }
+
+        return $query->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract());
     }
 }
