@@ -27,7 +27,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     /**
      * @var \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageEntityManagerInterface
      */
-    private $entityManager;
+    protected $entityManager;
 
     /**
      * @param \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepositoryInterface $repository
@@ -169,18 +169,18 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer $SpyCategoryimageSetTransfer
+     * @param \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer $spyCategoryImageSetTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetStorageTransfer
      */
-    protected function mapSpyCategoryImageSetEntityTransfer(SpyCategoryImageSetEntityTransfer $SpyCategoryimageSetTransfer): CategoryImageSetStorageTransfer
+    protected function mapSpyCategoryImageSetEntityTransfer(SpyCategoryImageSetEntityTransfer $spyCategoryImageSetTransfer): CategoryImageSetStorageTransfer
     {
         $categoryImageSetStorageTransfer = new CategoryImageSetStorageTransfer();
         $categoryImageSetStorageTransfer->setName(
-            $SpyCategoryimageSetTransfer->getName()
+            $spyCategoryImageSetTransfer->getName()
         );
         $categoryImageSetStorageTransfer->setImages(
-            new ArrayObject($this->mapSpyCategoryImageEntityTransferCollection($SpyCategoryimageSetTransfer))
+            new ArrayObject($this->mapSpyCategoryImageEntityTransferCollection($spyCategoryImageSetTransfer))
         );
 
         return $categoryImageSetStorageTransfer;
