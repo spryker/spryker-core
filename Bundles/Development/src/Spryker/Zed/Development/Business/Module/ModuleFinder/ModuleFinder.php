@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ApplicationTransfer;
 use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
+use Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface;
+use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\FilterChain;
@@ -21,9 +23,14 @@ use Zend\Filter\Word\DashToCamelCase;
 class ModuleFinder implements ModuleFinderInterface
 {
     /**
-     * @var string[]
+     * @var \Spryker\Zed\Development\DevelopmentConfig
      */
-    protected $moduleDirectories;
+    protected $config;
+
+    /**
+     * @var \Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface
+     */
+    protected $moduleMatcher;
 
     /**
      * @var \Generated\Shared\Transfer\ModuleTransfer[]
@@ -31,11 +38,13 @@ class ModuleFinder implements ModuleFinderInterface
     protected static $moduleTransferCollection;
 
     /**
-     * @param string[] $moduleDirectories
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @param \Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface $moduleMatcher
      */
-    public function __construct(array $moduleDirectories)
+    public function __construct(DevelopmentConfig $config, ModuleMatcherInterface $moduleMatcher)
     {
-        $this->moduleDirectories = array_filter($moduleDirectories, 'is_dir');
+        $this->config = $config;
+        $this->moduleMatcher = $moduleMatcher;
     }
 
     /**
@@ -105,7 +114,7 @@ class ModuleFinder implements ModuleFinderInterface
      */
     protected function addModuleToCollection(ModuleTransfer $moduleTransfer, array $moduleTransferCollection, ?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
-        if ($moduleFilterTransfer !== null && !$this->matches($moduleTransfer, $moduleFilterTransfer)) {
+        if ($moduleFilterTransfer !== null && !$this->moduleMatcher->matches($moduleTransfer, $moduleFilterTransfer)) {
             return $moduleTransferCollection;
         }
 
@@ -156,7 +165,20 @@ class ModuleFinder implements ModuleFinderInterface
      */
     protected function getModuleFinder(): Finder
     {
-        return (new Finder())->directories()->depth('== 0')->in($this->moduleDirectories);
+        return (new Finder())->directories()->depth('== 0')->in($this->getModuleDirectories());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getModuleDirectories(): array
+    {
+        return array_filter([
+            $this->config->getPathToCore(),
+            $this->config->getPathToShop(),
+            $this->config->getPathToSdk(),
+            $this->config->getPathToEco(),
+        ], 'is_dir');
     }
 
     /**
@@ -209,12 +231,12 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleNameDashed = $this->dasherize($moduleName);
 
         $organizationTransfer = $this->buildOrganizationTransfer($organizationName, $organizationNameDashed);
-        $applicationTransfer = $this->buildApplicationTransfer($directoryInfo);
 
         $moduleTransfer = $this->buildModuleTransfer($moduleName, $moduleNameDashed, $directoryInfo);
         $moduleTransfer
-            ->setOrganization($organizationTransfer)
-            ->setApplication($applicationTransfer);
+            ->setOrganization($organizationTransfer);
+
+        $moduleTransfer = $this->addApplications($moduleTransfer);
 
         return $moduleTransfer;
     }
@@ -235,12 +257,35 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleName = $this->camelCase($moduleNameDashed);
 
         $organizationTransfer = $this->buildOrganizationTransfer($organizationName, $organizationNameDashed);
-        $applicationTransfer = $this->buildApplicationTransfer($directoryInfo);
 
         $moduleTransfer = $this->buildModuleTransfer($moduleName, $moduleNameDashed, $directoryInfo);
         $moduleTransfer
-            ->setOrganization($organizationTransfer)
-            ->setApplication($applicationTransfer);
+            ->setOrganization($organizationTransfer);
+
+        $moduleTransfer = $this->addApplications($moduleTransfer);
+
+        return $moduleTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    protected function addApplications(ModuleTransfer $moduleTransfer): ModuleTransfer
+    {
+        $lookupDirectory = sprintf('%s/src/%s/', $moduleTransfer->getPath(), $moduleTransfer->getOrganization()->getName());
+        if (!is_dir($lookupDirectory)) {
+            return $moduleTransfer;
+        }
+        $applicationFinder = new Finder();
+        $applicationFinder->in($lookupDirectory)->depth('== 0');
+
+        foreach ($applicationFinder as $applicationDirectoryInfo) {
+            $applicationTransfer = new ApplicationTransfer();
+            $applicationTransfer->setName($applicationDirectoryInfo->getRelativePathname());
+            $moduleTransfer->addApplication($applicationTransfer);
+        }
 
         return $moduleTransfer;
     }
@@ -278,20 +323,6 @@ class ModuleFinder implements ModuleFinderInterface
             ->setIsStandalone(false);
 
         return $moduleTransfer;
-    }
-
-    /**
-     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
-     *
-     * @return \Generated\Shared\Transfer\ApplicationTransfer
-     */
-    protected function buildApplicationTransfer(SplFileInfo $directoryInfo): ApplicationTransfer
-    {
-        $applicationTransfer = new ApplicationTransfer();
-        $applicationTransfer
-            ->setName($this->getApplicationNameFromDirectory($directoryInfo));
-
-        return $applicationTransfer;
     }
 
     /**
@@ -379,7 +410,7 @@ class ModuleFinder implements ModuleFinderInterface
      *
      * @return string
      */
-    public function camelCase(string $value): string
+    protected function camelCase(string $value): string
     {
         $filterChain = new FilterChain();
         $filterChain->attach(new DashToCamelCase());
@@ -392,7 +423,7 @@ class ModuleFinder implements ModuleFinderInterface
      *
      * @return string
      */
-    public function dasherize(string $value): string
+    protected function dasherize(string $value): string
     {
         $filterChain = new FilterChain();
         $filterChain
@@ -400,104 +431,5 @@ class ModuleFinder implements ModuleFinderInterface
             ->attach(new StringToLower());
 
         return $filterChain->filter($value);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
-     *
-     * @return bool
-     */
-    protected function matches(ModuleTransfer $moduleTransfer, ModuleFilterTransfer $moduleFilterTransfer): bool
-    {
-        $accepted = true;
-
-        if (!$this->matchesOrganization($moduleFilterTransfer, $moduleTransfer->getOrganization())) {
-            $accepted = false;
-        }
-        if (!$this->matchesApplication($moduleFilterTransfer, $moduleTransfer->getApplication())) {
-            $accepted = false;
-        }
-        if (!$this->matchesModule($moduleFilterTransfer, $moduleTransfer)) {
-            $accepted = false;
-        }
-
-        return $accepted;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
-     * @param \Generated\Shared\Transfer\OrganizationTransfer $organizationTransfer
-     *
-     * @return bool
-     */
-    protected function matchesOrganization(ModuleFilterTransfer $moduleFilterTransfer, OrganizationTransfer $organizationTransfer): bool
-    {
-        if ($moduleFilterTransfer->getOrganization() === null) {
-            return true;
-        }
-
-        return $this->match($moduleFilterTransfer->getOrganization()->getName(), $organizationTransfer->getName());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
-     * @param \Generated\Shared\Transfer\ApplicationTransfer $applicationTransfer
-     *
-     * @return bool
-     */
-    protected function matchesApplication(ModuleFilterTransfer $moduleFilterTransfer, ApplicationTransfer $applicationTransfer): bool
-    {
-        if ($moduleFilterTransfer->getApplication() === null) {
-            return true;
-        }
-
-        return $this->match($moduleFilterTransfer->getApplication()->getName(), $applicationTransfer->getName());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     *
-     * @return bool
-     */
-    protected function matchesModule(ModuleFilterTransfer $moduleFilterTransfer, ModuleTransfer $moduleTransfer): bool
-    {
-        if ($moduleFilterTransfer->getModule() === null) {
-            return true;
-        }
-
-        return $this->match($moduleFilterTransfer->getModule()->getName(), $moduleTransfer->getName());
-    }
-
-    /**
-     * @param string $search
-     * @param string $given
-     *
-     * @return bool
-     */
-    protected function match(string $search, string $given): bool
-    {
-        if ($search === $given) {
-            return true;
-        }
-
-        if (mb_strpos($search, '*') !== 0) {
-            $search = '^' . $search;
-        }
-
-        if (mb_strpos($search, '*') === 0) {
-            $search = mb_substr($search, 1);
-        }
-
-        if (mb_substr($search, -1) !== '*') {
-            $search .= '$';
-        }
-
-        if (mb_substr($search, -1) === '*') {
-            $search = mb_substr($search, 0, mb_strlen($search) - 1);
-        }
-
-        return preg_match(sprintf('/%s/', $search), $given);
     }
 }
