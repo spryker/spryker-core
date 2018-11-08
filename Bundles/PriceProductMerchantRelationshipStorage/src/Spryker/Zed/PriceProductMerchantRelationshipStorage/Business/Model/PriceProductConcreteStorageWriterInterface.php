@@ -40,9 +40,10 @@ interface PriceProductConcreteStorageWriterInterface
     public function publishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
 
     /**
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param int[] $merchantRelationshipIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function unpublishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
+    public function unpublishConcretePriceProductMerchantRelationship(array $merchantRelationshipIds, array $productConcreteIds): void;
 }

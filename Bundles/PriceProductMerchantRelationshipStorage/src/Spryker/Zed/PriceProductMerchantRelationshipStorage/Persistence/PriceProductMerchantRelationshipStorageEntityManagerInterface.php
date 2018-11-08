@@ -64,4 +64,20 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
     public function deletePriceProductConcretesByPriceKeys(
         array $priceKeys
     ): void;
+
+    /**
+     * @param int[] $merchantRelationshipIds
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function deletePriceProductAbstractsByMerchantRelationshipIdsAndProductAbstractIds(array $merchantRelationshipIds, array $productAbstractIds): void;
+
+    /**
+     * @param int[] $merchantRelationshipIds
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function deletePriceProductConcretesByMerchantRelationshipIdsAndProductConcreteIds(array $merchantRelationshipIds, array $productConcreteIds): void;
 }

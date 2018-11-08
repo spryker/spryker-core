@@ -8,8 +8,12 @@
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
+use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
+use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductAbstractMerchantRelationshipStorageTableMap;
+use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductConcreteMerchantRelationshipStorageTableMap;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -120,6 +124,58 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
         $priceProductAbstractMerchantRelationshipStorageEntities = $this->getFactory()
             ->createPriceProductConcreteMerchantRelationshipStorageQuery()
             ->filterByPriceKey_In($priceKeys)
+            ->find();
+
+        foreach ($priceProductAbstractMerchantRelationshipStorageEntities as $priceProductAbstractMerchantRelationshipStorageEntity) {
+            $priceProductAbstractMerchantRelationshipStorageEntity->delete();
+        }
+    }
+
+    /**
+     * @param int[] $merchantRelationshipIds
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function deletePriceProductConcretesByMerchantRelationshipIdsAndProductConcreteIds(array $merchantRelationshipIds, array $productConcreteIds): void
+    {
+        $priceProductConcreteMerchantRelationshipStorageEntities = $this->getFactory()
+            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
+            ->distinct()
+            ->addJoin(
+                SpyPriceProductConcreteMerchantRelationshipStorageTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
+                SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
+                Criteria::LEFT_JOIN
+            )
+            ->where(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_MERCHANT_RELATIONSHIP
+                . ' IN (' . implode(',', $merchantRelationshipIds) . ')')
+            ->filterByFkProduct_In($productConcreteIds)
+            ->find();
+
+        foreach ($priceProductConcreteMerchantRelationshipStorageEntities as $priceProductConcreteMerchantRelationshipStorageEntity) {
+            $priceProductConcreteMerchantRelationshipStorageEntity->delete();
+        }
+    }
+
+    /**
+     * @param int[] $merchantRelationshipIds
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function deletePriceProductAbstractsByMerchantRelationshipIdsAndProductAbstractIds(array $merchantRelationshipIds, array $productAbstractIds): void
+    {
+        $priceProductAbstractMerchantRelationshipStorageEntities = $this->getFactory()
+            ->createPriceProductAbstractMerchantRelationshipStorageQuery()
+            ->distinct()
+            ->addJoin(
+                SpyPriceProductAbstractMerchantRelationshipStorageTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
+                SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
+                Criteria::LEFT_JOIN
+            )
+            ->where(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_MERCHANT_RELATIONSHIP
+                . ' IN (' . implode(',', $merchantRelationshipIds) . ')')
+            ->filterByFkProductAbstract_In($productAbstractIds)
             ->find();
 
         foreach ($priceProductAbstractMerchantRelationshipStorageEntities as $priceProductAbstractMerchantRelationshipStorageEntity) {

@@ -22,6 +22,21 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
     public const COL_FK_COMPANY_BUSINESS_UNIT = 'spy_merchant_relationship_to_company_business_unit.fk_company_business_unit';
 
     /**
+     * @uses \Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP
+     */
+    public const COL_FK_MERCHANT_RELATIONSHIP = 'spy_price_product_merchant_relationship.fk_merchant_relationship';
+
+    /**
+     * @uses \Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT
+     */
+    public const COL_FK_PRODUCT = 'spy_price_product_merchant_relationship.fk_product';
+
+    /**
+     * @uses \Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT_ABSTRACT
+     */
+    public const COL_FK_PRODUCT_ABSTRACT = 'spy_price_product_merchant_relationship.fk_product_abstract';
+
+    /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA
      */
     public const PRICE_DATA = 'priceData';

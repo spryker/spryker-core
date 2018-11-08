@@ -102,25 +102,19 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param int[] $merchantRelationshipIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function unpublishAbstractPriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void
+    public function unpublishAbstractPriceProductMerchantRelationship(array $merchantRelationshipIds, array $productAbstractIds): void
     {
-        $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
-            ->findMerchantRelationshipProductAbstractPricesStorageByIds($priceProductMerchantRelationshipIds);
-
-        if (empty($priceProductMerchantRelationshipStorageTransfers)) {
+        if (empty($merchantRelationshipIds) || empty($productAbstractIds)) {
             return;
         }
 
-        $priceKeys = array_map(function (PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer) {
-            return $priceProductMerchantRelationshipStorageTransfer->getPriceKey();
-        }, $priceProductMerchantRelationshipStorageTransfers);
-
         $this->priceProductMerchantRelationshipStorageEntityManager
-            ->deletePriceProductAbstractsByPriceKeys($priceKeys);
+            ->deletePriceProductAbstractsByMerchantRelationshipIdsAndProductAbstractIds($merchantRelationshipIds, $productAbstractIds);
     }
 
     /**

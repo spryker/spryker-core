@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plug
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\PriceProductMerchantRelationshipStorageFacadeInterface getFacade()
@@ -29,10 +30,15 @@ class PriceProductMerchantRelationshipConcreteDeleteListener extends AbstractPlu
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $priceProductMerchantRelationshipIds = $this->getFactory()
+        $merchantRelationshipIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferIds($eventTransfers);
+            ->getEventTransferForeignKeys($eventTransfers, PriceProductMerchantRelationshipStorageConfig::COL_FK_MERCHANT_RELATIONSHIP);
 
-        $this->getFacade()->unpublishConcretePriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
+        $productConcreteIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferForeignKeys($eventTransfers, PriceProductMerchantRelationshipStorageConfig::COL_FK_PRODUCT);
+
+        $this->getFacade()
+            ->unpublishConcretePriceProductMerchantRelationship($merchantRelationshipIds, $productConcreteIds);
     }
 }

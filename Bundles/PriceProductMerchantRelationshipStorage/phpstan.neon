@@ -2,3 +2,4 @@ parameters:
     ignoreErrors:
     - '#Method Spryker\\Zed\\Kernel\\Persistence\\AbstractEntityManager::save().+invoked with 0 parameters, 1 required.#'
     - '#Call to an undefined method.+Orm\\Zed\\Company\\Persistence\\SpyCompanyStoreQuery|Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnitQuery|Orm\\Zed\\CompanyRole\\Persistence\\SpyCompanyRoleQuery|Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProductQuery|Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanyTypeQuery|Orm\\Zed\\CompanyUnitAddress\\Persistence\\SpyCompanyUnitAddressQuery|Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUserQuery|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery::useMerchantRelationshipQuery()#'
+    - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\Criteria::where()#'

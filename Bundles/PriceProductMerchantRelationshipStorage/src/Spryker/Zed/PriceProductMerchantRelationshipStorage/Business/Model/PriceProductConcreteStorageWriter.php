@@ -114,25 +114,19 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param int[] $merchantRelationshipIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function unpublishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void
+    public function unpublishConcretePriceProductMerchantRelationship(array $merchantRelationshipIds, array $productConcreteIds): void
     {
-        $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
-            ->findMerchantRelationshipProductConcretePricesStorageByIds($priceProductMerchantRelationshipIds);
-
-        if (empty($priceProductMerchantRelationshipStorageTransfers)) {
+        if (empty($merchantRelationshipIds) || empty($productConcreteIds)) {
             return;
         }
 
-        $priceKeys = array_map(function (PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer) {
-            return $priceProductMerchantRelationshipStorageTransfer->getPriceKey();
-        }, $priceProductMerchantRelationshipStorageTransfers);
-
         $this->priceProductMerchantRelationshipStorageEntityManager
-            ->deletePriceProductConcretesByPriceKeys($priceKeys);
+            ->deletePriceProductConcretesByMerchantRelationshipIdsAndProductConcreteIds($merchantRelationshipIds, $productConcreteIds);
     }
 
     /**

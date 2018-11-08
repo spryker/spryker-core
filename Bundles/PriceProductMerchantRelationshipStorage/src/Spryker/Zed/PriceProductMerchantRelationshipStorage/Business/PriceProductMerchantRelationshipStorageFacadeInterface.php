@@ -109,15 +109,16 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
     /**
      * Specification:
      *  - Un-publish merchant relationship prices for product abstracts.
-     *  - Uses the given IDs of the parent table.
+     *  - Uses the given IDs of merchant relationships and product abstracts.
      *
      * @api
      *
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param int[] $merchantRelationshipIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function unpublishAbstractPriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
+    public function unpublishAbstractPriceProductMerchantRelationship(array $merchantRelationshipIds, array $productAbstractIds): void;
 
     /**
      * Specification:
@@ -135,13 +136,14 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
     /**
      * Specification:
      *  - Un-publish merchant relationship prices for product concretes.
-     *  - Uses the given IDs of the parent table.
+     *  - Uses the given IDs of merchant relationships and product concretes.
      *
      * @api
      *
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param int[] $merchantRelationshipIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function unpublishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
+    public function unpublishConcretePriceProductMerchantRelationship(array $merchantRelationshipIds, array $productConcreteIds): void;
 }
