@@ -64,7 +64,7 @@ class ProductOptionValidator implements ProductOptionValidatorInterface
      */
     public function productOptionExists(ProductOptionTransfer $productOptionTransfer): bool
     {
-        $idProductOptionValue = $productOptionTransfer->getIdProductOptionValue();
+        $idProductOptionValue = (int)$productOptionTransfer->getIdProductOptionValue();
         if (isset(static::$idProductOptionCache[$idProductOptionValue])) {
             return static::$idProductOptionCache[$idProductOptionValue];
         }
