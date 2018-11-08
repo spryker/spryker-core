@@ -133,13 +133,6 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
         } else {
             $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
         }
-//        dd($priceProductTransfer, $priceProductMerchantRelationshipEntityTransfer);
-
-//        if ($priceProductTransfer->getIdProductAbstract()) {
-//            $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
-//        } else {
-//            $priceProductMerchantRelationshipEntityTransfer->setFkProduct($priceProductTransfer->getIdProduct());
-//        }
 
         return $priceProductMerchantRelationshipEntityTransfer;
     }

@@ -72,14 +72,14 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         PriceProductTransfer $priceProductTransfer
     ): void {
 
-        $entities = $this->getFactory()->createPriceProductMerchantRelationshipQuery()
+        $priceProductMerchantRelationships = $this->getFactory()->createPriceProductMerchantRelationshipQuery()
             ->filterByFkMerchantRelationship($idMerchantRelationship);
         if ($priceProductTransfer->getIdProduct()) {
-            $entities = $entities->filterByFkProduct($priceProductTransfer->getIdProduct());
+            $priceProductMerchantRelationships = $priceProductMerchantRelationships->filterByFkProduct($priceProductTransfer->getIdProduct());
         } else {
-            $entities = $entities->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract());
+            $priceProductMerchantRelationships = $priceProductMerchantRelationships->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract());
         }
-        $entities = $entities
+        $priceProductMerchantRelationships = $priceProductMerchantRelationships
             ->filterByFkProduct($priceProductTransfer->getIdProduct())
             ->usePriceProductStoreQuery()
             ->filterByFkCurrency($priceProductTransfer->getMoneyValue()->getFkCurrency())
@@ -91,8 +91,8 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
             ->endUse()
             ->find();
 
-        if ($entities) {
-            $entities->delete();
+        if ($priceProductMerchantRelationships) {
+            $priceProductMerchantRelationships->delete();
         }
     }
 
