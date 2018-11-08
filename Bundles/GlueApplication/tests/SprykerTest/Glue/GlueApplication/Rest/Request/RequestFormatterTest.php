@@ -13,6 +13,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatter;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractorInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\RequestResourceExtractor;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\GlueApplication\Rest\Serialize\DecoderMatcherInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
@@ -93,8 +94,8 @@ class RequestFormatterTest extends Unit
     ): RequestFormatterInterface {
         return new RequestFormatter(
             $this->createRequestMetaDataExtractorMock(),
-            $this->createDecoderMatcherMock(),
-            $restResourceBuilderMock
+            new RequestResourceExtractor($restResourceBuilderMock, $this->createDecoderMatcherMock()),
+            []
         );
     }
 

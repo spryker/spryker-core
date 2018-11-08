@@ -66,6 +66,22 @@
         <id-method-parameter value="spy_shopping_list_company_business_unit_pk_seq"/>
     </table>
 
+    <table name="spy_shopping_list_company_business_unit_blacklist">
+        <column name="id_shopping_list_company_business_unit_blacklist" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_shopping_list_company_business_unit" required="true" type="INTEGER"/>
+        <column name="fk_company_user" required="true" type="INTEGER"/>
+
+        <foreign-key name="spy_shopping_list_business_unit_blacklist-fk_shopping_list_unit" foreignTable="spy_shopping_list_company_business_unit">
+            <reference local="fk_shopping_list_company_business_unit" foreign="id_shopping_list_company_business_unit"/>
+        </foreign-key>
+
+        <foreign-key name="spy_shopping_list_business_unit_blacklist-fk_company_user" foreignTable="spy_company_user">
+            <reference local="fk_company_user" foreign="id_company_user"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_shopping_list_company_business_unit_blacklist_pk_seq"/>
+    </table>
+
     <table name="spy_shopping_list_permission_group">
         <column name="id_shopping_list_permission_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>

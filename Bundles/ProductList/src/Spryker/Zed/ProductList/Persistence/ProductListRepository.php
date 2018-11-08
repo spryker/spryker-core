@@ -62,7 +62,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      *
      * @return int[]
      */
-    public function getAbstractProductBlacklistIds(int $idProductAbstract): array
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
     {
         $blacklistIds = [];
         $blacklistIds = array_merge(
@@ -102,38 +102,68 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getConcreteProductBlacklistIds(int $idProductConcrete): array
+    public function getConcreteProductBlacklistIds(int $idProduct): array
     {
-        return $this->getConcreteProductWhiteOrBlacklistIds(
-            $idProductConcrete,
+        return $this->getConcreteProductListIdsForType(
+            $idProduct,
             SpyProductListTableMap::COL_TYPE_BLACKLIST
         );
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getConcreteProductWhitelistIds(int $idProductConcrete): array
+    public function getConcreteProductWhitelistIds(int $idProduct): array
     {
-        return $this->getConcreteProductWhiteOrBlacklistIds(
-            $idProductConcrete,
+        return $this->getConcreteProductListIdsForType(
+            $idProduct,
             SpyProductListTableMap::COL_TYPE_WHITELIST
         );
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param string[] $productConcreteSkus
+     * @param int[] $blackListIds
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array
+    {
+        return $this->getConcreteProductSkusInList(
+            $productConcreteSkus,
+            SpyProductListTableMap::COL_TYPE_BLACKLIST,
+            $blackListIds
+        );
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     * @param int[] $whiteListIds
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array
+    {
+        return $this->getConcreteProductSkusInList(
+            $productConcreteSkus,
+            SpyProductListTableMap::COL_TYPE_WHITELIST,
+            $whiteListIds
+        );
+    }
+
+    /**
+     * @param int $idProduct
      * @param string $listType
      *
      * @return int[]
      */
-    protected function getConcreteProductWhiteOrBlacklistIds(int $idProductConcrete, string $listType): array
+    protected function getConcreteProductListIdsForType(int $idProduct, string $listType): array
     {
         /** @var \Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery $productListProductConcreteQuery */
         $productListProductConcreteQuery = $this->getFactory()
@@ -141,13 +171,66 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST);
 
         return $productListProductConcreteQuery
-            ->filterByFkProduct($idProductConcrete)
+            ->filterByFkProduct($idProduct)
             ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
                 ->filterByType($listType)
             ->endUse()
             ->groupByFkProductList()
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @module Product
+     *
+     * @param string[] $productConcreteSkus
+     * @param string $listType
+     * @param array $productListIds
+     *
+     * @return string[]
+     */
+    protected function getConcreteProductSkusInList(array $productConcreteSkus, string $listType, array $productListIds): array
+    {
+        if (empty($productConcreteSkus)) {
+            return [];
+        }
+
+        if (empty($productListIds)) {
+            return [];
+        }
+
+        $productConcreteSkusInList = $this->getFactory()
+            ->createProductListProductConcreteQuery()
+            ->filterByFkProductList_In($productListIds)
+            ->useSpyProductQuery()
+                ->filterBySku_In($productConcreteSkus)
+            ->endUse()
+            ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
+                ->filterByType($listType)
+            ->endUse()
+            ->select(SpyProductTableMap::COL_SKU)
+            ->find()
+            ->toArray();
+
+        $productConcreteSkusInListAndCategory = $this->getFactory()
+            ->createProductListCategoryQuery()
+            ->useSpyProductListQuery()
+                ->filterByType($listType)
+            ->endUse()
+            ->useSpyCategoryQuery()
+                ->useSpyProductCategoryQuery()
+                    ->useSpyProductAbstractQuery()
+                        ->useSpyProductQuery()
+                            ->filterBySku_In($productConcreteSkus)
+                        ->endUse()
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->select(SpyProductTableMap::COL_SKU)
+            ->find()
+            ->toArray();
+
+        return array_merge($productConcreteSkusInList, $productConcreteSkusInListAndCategory);
     }
 
     /**
@@ -178,6 +261,8 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
+     * @module Product
+     *
      * @param int $idProductAbstract
      *
      * @return int[]
@@ -205,6 +290,8 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
+     * @module Product
+     *
      * @param int $idProductAbstract
      *
      * @return int[]
@@ -308,6 +395,8 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
+     * @module Product
+     *
      * @param int[] $productListIds
      *
      * @return int[]

@@ -11,7 +11,6 @@ use Predis\Client;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisLockKeyGenerator;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
 use Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker;
@@ -20,12 +19,11 @@ use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerMysql;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedis;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking;
+use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 use Spryker\Shared\Session\SessionConstants;
 
 abstract class SessionFactory
 {
-    use NewRelicApiTrait;
-
     public const BUCKET_NAME_POSTFIX = 'sessions';
     public const PASSWORD = 'password';
     public const USER = 'user';
@@ -44,7 +42,7 @@ abstract class SessionFactory
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
-        $handler = new SessionHandlerCouchbase($this->createNewRelicApi(), $hosts, $user, $password, $this->getBucketName(), true, $lifetime);
+        $handler = new SessionHandlerCouchbase($this->getMonitoringService(), $hosts, $user, $password, $this->getBucketName(), true, $lifetime);
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -63,7 +61,7 @@ abstract class SessionFactory
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
-        $handler = new SessionHandlerMysql($this->createNewRelicApi(), $hosts, $user, $password, $lifetime);
+        $handler = new SessionHandlerMysql($this->getMonitoringService(), $hosts, $user, $password, $lifetime);
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -91,7 +89,7 @@ abstract class SessionFactory
     {
         $lifetime = $this->getSessionLifetime();
 
-        return new SessionHandlerRedis($savePath, $lifetime, $this->createNewRelicApi());
+        return new SessionHandlerRedis($savePath, $lifetime, $this->getMonitoringService());
     }
 
     /**
@@ -187,13 +185,18 @@ abstract class SessionFactory
     {
         $lifetime = $this->getSessionLifetime();
 
-        return new SessionHandlerFile($savePath, $lifetime, $this->createNewRelicApi());
+        return new SessionHandlerFile($savePath, $lifetime, $this->getMonitoringService());
     }
 
     /**
      * @return int
      */
     abstract protected function getSessionLifetime();
+
+    /**
+     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
+     */
+    abstract public function getMonitoringService(): SessionToMonitoringServiceInterface;
 
     /**
      * @param \SessionHandlerInterface $handler
@@ -267,15 +270,5 @@ abstract class SessionFactory
         }
 
         return $hosts;
-    }
-
-    /**
-     * @deprecated Please use `createNewRelicApi()` instead
-     *
-     * @return \Spryker\Shared\NewRelicApi\NewRelicApiInterface
-     */
-    protected function getNewRelicApi()
-    {
-        return $this->createNewRelicApi();
     }
 }
