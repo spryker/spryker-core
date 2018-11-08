@@ -114,10 +114,10 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
 
         if ($priceProductTransfer->getIdProduct()) {
             $priceProductMerchantRelationshipEntityTransfer->setFkProduct($priceProductTransfer->getIdProduct());
-            
+
             return $priceProductMerchantRelationshipEntityTransfer;
         }
-        
+
         $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
 
         return $priceProductMerchantRelationshipEntityTransfer;
