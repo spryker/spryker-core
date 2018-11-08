@@ -8,6 +8,7 @@
 namespace Spryker\Client\CheckoutRestApi;
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutRestApiClientInterface
@@ -24,4 +25,19 @@ interface CheckoutRestApiClientInterface
      * @return \Generated\Shared\Transfer\CheckoutDataTransfer
      */
     public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer;
+
+    /**
+     * Specification:
+     * - Takes Quote transfer.
+     * - Validates the Quote.
+     * - Places an order with the passed Quote.
+     * - Response is CheckoutResponseTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function placeOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer;
 }

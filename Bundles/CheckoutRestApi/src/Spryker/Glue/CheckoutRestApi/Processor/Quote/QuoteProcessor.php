@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CheckoutRestApi\Processor\Quote;
 
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface;
@@ -25,16 +24,6 @@ class QuoteProcessor implements QuoteProcessorInterface
      * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
      */
     protected $quoteCollectionReaderPlugin;
-
-    /**
-     * @var \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface
-     */
-    protected $checkoutDataMapper;
-
-    /**
-     * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCustomerClientInterface
-     */
-    protected $customerClient;
 
     /**
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface $cartClient
@@ -64,14 +53,6 @@ class QuoteProcessor implements QuoteProcessorInterface
         }
 
         return null;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function validateQuote(): QuoteResponseTransfer
-    {
-        return $this->cartClient->validateQuote();
     }
 
     /**

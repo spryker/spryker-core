@@ -10,7 +10,6 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\Quote;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCustomerClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -22,20 +21,12 @@ class QuoteMerger implements QuoteMergerInterface
     protected $checkoutDataMapper;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCustomerClientInterface
-     */
-    protected $customerClient;
-
-    /**
      * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface $checkoutDataMapper
-     * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCustomerClientInterface $customerClient
      */
     public function __construct(
-        CheckoutDataMapperInterface $checkoutDataMapper,
-        CheckoutRestApiToCustomerClientInterface $customerClient
+        CheckoutDataMapperInterface $checkoutDataMapper
     ) {
         $this->checkoutDataMapper = $checkoutDataMapper;
-        $this->customerClient = $customerClient;
     }
 
     /**
@@ -72,22 +63,41 @@ class QuoteMerger implements QuoteMergerInterface
         RestRequestInterface $restRequest
     ): QuoteTransfer {
         if (!$restRequest->getUser()->getSurrogateIdentifier()) {
-            $quoteTransfer->setCustomer(
-                (new CustomerTransfer())
-                    ->fromArray(
-                        $restCheckoutRequestAttributesTransfer->getCart()->getCustomer()->toArray(),
-                        true
-                    )
-            );
+            $quoteTransfer->setCustomer($this->prepareGuestCustomerTransfer($restCheckoutRequestAttributesTransfer));
 
             return $quoteTransfer;
         }
 
-        $customerTransfer = (new CustomerTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
-        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
-        $quoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
+        $quoteTransfer->setCustomer($this->prepareCustomerTransfer($restRequest));
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function prepareGuestCustomerTransfer(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CustomerTransfer
+    {
+        return (new CustomerTransfer())
+            ->fromArray(
+                $restCheckoutRequestAttributesTransfer->getCart()->getCustomer()->toArray(),
+                true
+            )
+            ->setCustomerReference(null)
+            ->setIdCustomer(null);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function prepareCustomerTransfer(RestRequestInterface $restRequest): CustomerTransfer
+    {
+        return (new CustomerTransfer())
+            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+            ->setIdCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
     }
 }

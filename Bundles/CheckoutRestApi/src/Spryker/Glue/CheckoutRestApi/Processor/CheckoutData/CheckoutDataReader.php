@@ -138,7 +138,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_CART_NOT_FOUND);
+            ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND);
 
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $restResponse->addError($restErrorMessageTransfer);

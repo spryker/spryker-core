@@ -232,7 +232,6 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         }
 
         foreach ($restCheckoutRequestAttributesTransfer->getCart()->getPayments() as $paymentTransfer) {
-            $quoteTransfer->addPayment($paymentTransfer);
             $quoteTransfer->setPayment($paymentTransfer);
         }
 
@@ -310,5 +309,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             )) {
             return $restCheckoutDataResponseAttributesTransfer->addAddresses($restAddressTransfer);
         }
+
+        return $restCheckoutDataResponseAttributesTransfer;
     }
 }

@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CheckoutRestApi\Business\Quote\Address;
+namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteAddressExpanderInterface
+interface PlaceOrderProcessorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function expandQuoteAddressesWithCustomerAddressById(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function placeOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer;
 }

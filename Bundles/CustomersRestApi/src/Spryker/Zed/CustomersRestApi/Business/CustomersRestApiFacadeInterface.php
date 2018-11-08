@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CustomersRestApi\Business;
 
-use Generated\Shared\Transfer\AddressTransfer;
-
 interface CustomersRestApiFacadeInterface
 {
     /**
@@ -21,17 +19,4 @@ interface CustomersRestApiFacadeInterface
      * @return void
      */
     public function updateCustomerAddressUuid(): void;
-
-    /**
-     * Specification:
-     * - Finds address by uuid, returns address idCustomerAddress.
-     *
-     * @api
-     *
-     * @param string $addressId
-     * @param int $idCustomer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
-     */
-    public function findCustomerAddressById(string $addressId, int $idCustomer): ?AddressTransfer;
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Client\CheckoutRestApi;
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -28,5 +29,19 @@ class CheckoutRestApiClient extends AbstractClient implements CheckoutRestApiCli
     public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer
     {
         return $this->getFactory()->createCheckoutRestApiZedStub()->getCheckoutData($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function placeOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    {
+        return $this->getFactory()->createCheckoutRestApiZedStub()->placeOrder($quoteTransfer);
     }
 }

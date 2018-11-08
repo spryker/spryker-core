@@ -72,22 +72,20 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function createQuoteMerger(): QuoteMergerInterface
     {
         return new QuoteMerger(
-            $this->createCheckoutDataMapper(),
-            $this->getCustomerClient()
+            $this->createCheckoutDataMapper()
         );
     }
 
     /**
      * @return \Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessorInterface
      */
-    public function createCheckoutWriter(): CheckoutProcessorInterface
+    public function createCheckoutProcessor(): CheckoutProcessorInterface
     {
         return new CheckoutProcessor(
             $this->getResourceBuilder(),
             $this->createQuoteProcessor(),
             $this->createQuoteMerger(),
-            $this->getCheckoutClient(),
-            $this->getZedRequestClient(),
+            $this->getClient(),
             $this->getGlossaryStorageClient()
         );
     }

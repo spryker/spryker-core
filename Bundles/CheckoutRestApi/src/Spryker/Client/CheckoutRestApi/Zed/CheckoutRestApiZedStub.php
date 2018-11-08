@@ -8,6 +8,7 @@
 namespace Spryker\Client\CheckoutRestApi\Zed;
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface;
 
@@ -37,5 +38,18 @@ class CheckoutRestApiZedStub implements CheckoutRestApiZedStubInterface
         $checkoutDataTransfer = $this->zedRequestClient->call('/checkout-rest-api/gateway/get-checkout-data', $quoteTransfer);
 
         return $checkoutDataTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function placeOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer */
+        $checkoutResponseTransfer = $this->zedRequestClient->call('/checkout-rest-api/gateway/place-order', $quoteTransfer);
+
+        return $checkoutResponseTransfer;
     }
 }

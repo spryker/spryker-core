@@ -9,8 +9,6 @@ namespace Spryker\Zed\CustomersRestApi\Persistence;
 
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Spryker\Zed\CustomersRestApi\CustomersRestApiDependencyProvider;
-use Spryker\Zed\CustomersRestApi\Persistence\Mapper\CustomerAddressMapper;
-use Spryker\Zed\CustomersRestApi\Persistence\Mapper\CustomerAddressMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -18,14 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CustomersRestApiPersistenceFactory extends AbstractPersistenceFactory
 {
-    /**
-     * @return \Spryker\Zed\CustomersRestApi\Persistence\Mapper\CustomerAddressMapperInterface
-     */
-    public function createCustomerAddressMapper(): CustomerAddressMapperInterface
-    {
-        return new CustomerAddressMapper();
-    }
-
     /**
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */

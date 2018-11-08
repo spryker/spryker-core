@@ -9,11 +9,14 @@ namespace Spryker\Zed\CheckoutRestApi\Business;
 
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\CheckoutDataReader;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\CheckoutDataReaderInterface;
-use Spryker\Zed\CheckoutRestApi\Business\Quote\Address\QuoteAddressExpander;
-use Spryker\Zed\CheckoutRestApi\Business\Quote\Address\QuoteAddressExpanderInterface;
+use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessor;
+use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessorInterface;
+use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpander;
+use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface;
 use Spryker\Zed\CheckoutRestApi\CheckoutRestApiDependencyProvider;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface;
-use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomersRestApiFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -36,11 +39,23 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApi\Business\Quote\Address\QuoteAddressExpanderInterface
+     * @return \Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessorInterface
      */
-    public function createQuoteAddressExpander(): QuoteAddressExpanderInterface
+    public function createPlaceOrderProcessor(): PlaceOrderProcessorInterface
     {
-        return new QuoteAddressExpander($this->getCustomersRestApiFacade());
+        return new PlaceOrderProcessor(
+            $this->getCartFacade(),
+            $this->getCheckoutFacade(),
+            $this->createQuoteCustomerExpander()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface
+     */
+    public function createQuoteCustomerExpander(): QuoteCustomerExpanderInterface
+    {
+        return new QuoteCustomerExpander($this->getCustomerFacade());
     }
 
     /**
@@ -68,10 +83,18 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomersRestApiFacadeBridge
+     * @return \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface
      */
-    public function getCustomersRestApiFacade(): CheckoutRestApiToCustomersRestApiFacadeInterface
+    public function getCartFacade(): CheckoutRestApiToCartFacadeInterface
     {
-        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::FACADE_CUSTOMERS_REST_API);
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::FACADE_CART);
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface
+     */
+    public function getCheckoutFacade(): CheckoutRestApiToCheckoutFacadeInterface
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::FACADE_CHECKOUT);
     }
 }

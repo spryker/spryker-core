@@ -29,15 +29,14 @@ interface CheckoutRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Takes QuoteTransfer and checks ShippingAddress and BillingAddress for UUID.
-     * - If UUID is set, the idCustomerAddress is looked up and populated.
+     * - Takes QuoteTransfer and places order with it.
+     * - Response is CheckoutResponseTransfer.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function expandQuoteAddressesWithCustomerAddressById(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): QuoteTransfer;
+    public function placeOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer;
 }

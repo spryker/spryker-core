@@ -12,10 +12,9 @@ use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
-use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCheckoutClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
-use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -41,41 +40,33 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $quoteMerger;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCheckoutClientInterface
-     */
-    protected $checkoutClient;
-
-    /**
-     * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface
-     */
-    protected $zedRequestClient;
-
-    /**
      * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface
      */
     protected $glossaryStorageClient;
 
     /**
+     * @var \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface
+     */
+    protected $checkoutRestApiClient;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface $quoteProcessor
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface $quoteMerger
-     * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCheckoutClientInterface $checkoutClient
-     * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface $zedRequestClient
+     * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         QuoteProcessorInterface $quoteProcessor,
         QuoteMergerInterface $quoteMerger,
-        CheckoutRestApiToCheckoutClientInterface $checkoutClient,
-        CheckoutRestApiToZedRequestClientInterface $zedRequestClient,
+        CheckoutRestApiClientInterface $checkoutRestApiClient,
         CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->quoteProcessor = $quoteProcessor;
         $this->quoteMerger = $quoteMerger;
-        $this->checkoutClient = $checkoutClient;
-        $this->zedRequestClient = $zedRequestClient;
+        $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
     }
 
@@ -92,18 +83,13 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             return $this->createCartNotFoundErrorResponse();
         }
 
-        $quoteResponseTransfer = $this->quoteProcessor->validateQuote();
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createErrorMessagesResponse($this->zedRequestClient->getLastResponseErrorMessages());
-        }
-
         $quoteTransfer = $this->quoteMerger->updateQuoteWithDataFromRequest(
             $quoteTransfer,
             $restCheckoutRequestAttributesTransfer,
             $restRequest
         );
 
-        $checkoutResponseTransfer = $this->checkoutClient->placeOrder($quoteTransfer);
+        $checkoutResponseTransfer = $this->checkoutRestApiClient->placeOrder($quoteTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
             return $this->createPlaceOrderFailedErrorResponse($checkoutResponseTransfer->getErrors(), $restRequest->getMetadata()->getLocale());
         }
@@ -124,7 +110,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             (new RestErrorMessageTransfer())
                 ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
                 ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_CART_NOT_FOUND)
+                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND)
         );
 
         return $restResponse;
@@ -141,7 +127,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             (new RestErrorMessageTransfer())
                 ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CHECKOUT_DATA_INVALID)
                 ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(CheckoutRestApiConfig::EXCEPTION_MESSAGE_CHECKOUT_DATA_INVALID)
+                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CHECKOUT_DATA_INVALID)
         );
 
         return $restResponse;

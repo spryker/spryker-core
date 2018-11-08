@@ -28,7 +28,7 @@ class CheckoutResourceController extends AbstractController
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
-            ->createCheckoutWriter()
+            ->createCheckoutProcessor()
             ->placeOrder($restRequest, $restCheckoutRequestAttributesTransfer);
     }
 }

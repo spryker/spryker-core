@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CheckoutRestApi\Communication\Controller;
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -24,5 +25,15 @@ class GatewayController extends AbstractGatewayController
     public function getCheckoutDataAction(QuoteTransfer $quoteTransfer): CheckoutDataTransfer
     {
         return $this->getFacade()->getCheckoutData($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function placeOrderAction(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    {
+        return $this->getFacade()->placeOrder($quoteTransfer);
     }
 }
