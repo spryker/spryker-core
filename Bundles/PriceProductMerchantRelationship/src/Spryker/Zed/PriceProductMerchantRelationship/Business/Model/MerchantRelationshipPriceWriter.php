@@ -59,7 +59,9 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
         $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
         $priceDimensionTransfer->requireIdMerchantRelationship();
 
-        $priceProductTransfer = $this->priceProductFacade->persistPriceProductStore($priceProductTransfer);
+        if (!$priceProductTransfer->getIdPriceProduct()) {
+            $priceProductTransfer = $this->persistPriceProductStore($priceProductTransfer);
+        }
 
         if (!$this->isPriceStoreRelationChanged($priceProductTransfer)) {
             return $priceProductTransfer;
@@ -131,5 +133,17 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
         }
 
         return $priceProductMerchantRelationshipEntityTransfer;
+    }
+
+    /**
+     * @deprecated This functionality is duplicated if you are using PriceProduct:^2.4.0
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function persistPriceProductStore(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        return $this->priceProductFacade->persistPriceProductStore($priceProductTransfer);
     }
 }
