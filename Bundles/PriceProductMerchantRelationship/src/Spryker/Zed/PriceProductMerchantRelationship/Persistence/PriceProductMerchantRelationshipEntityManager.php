@@ -88,7 +88,7 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
             ->endUse()
             ->find();
 
-        if ($priceProductMerchantRelationships) {
+        if ($priceProductMerchantRelationships->count()) {
             $priceProductMerchantRelationships->delete();
         }
     }
