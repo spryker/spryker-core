@@ -81,12 +81,11 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     {
         $productOptionValueEntities = $this->productOptionQueryContainer
             ->queryProductOptionByProductOptionCriteria($productOptionCriteriaTransfer)
-            ->find()
-            ->toArray();
+            ->find();
 
         return $this->hydrateProductOptionCollectionTransfer(
             new ProductOptionCollectionTransfer(),
-            $productOptionValueEntities
+            $productOptionValueEntities->getArrayCopy()
         );
     }
 
