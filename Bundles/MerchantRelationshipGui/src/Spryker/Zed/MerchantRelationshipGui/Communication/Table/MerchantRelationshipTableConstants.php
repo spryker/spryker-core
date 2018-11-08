@@ -22,4 +22,5 @@ interface MerchantRelationshipTableConstants
 
     public const URL_MERCHANT_RELATIONSHIP_LIST = '/merchant-relationship-gui/list-merchant-relationship';
     public const URL_MERCHANT_RELATIONSHIP_EDIT = '/merchant-relationship-gui/edit-merchant-relationship';
+    public const URL_MERCHANT_RELATIONSHIP_DELETE = '/merchant-relationship-gui/delete-merchant-relationship';
 }
