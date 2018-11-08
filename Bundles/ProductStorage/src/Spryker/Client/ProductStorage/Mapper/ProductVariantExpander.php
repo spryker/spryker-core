@@ -171,7 +171,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         $productConcreteIds = $productViewTransfer->getAttributeMap()->getProductConcreteIds();
         $idProductConcrete = array_shift($productConcreteIds);
         $productConcreteStorageData = $this->productConcreteStorageReader->findProductConcreteStorageData($idProductConcrete, $locale);
-        $productViewTransfer->setSelectedAttributes($this->getDefaultSelectedAttributes($productViewTransfer));
+        $productViewTransfer->getAttributeMap()->setSuperAttributes(null);
 
         if (!$productConcreteStorageData) {
             return $productViewTransfer;
@@ -240,20 +240,5 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         }
 
         return $selectedVariantNode[ProductConfig::VARIANT_LEAF_NODE_ID];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return array
-     */
-    protected function getDefaultSelectedAttributes(ProductViewTransfer $productViewTransfer): array
-    {
-        $defaultSelectedAttributes = [];
-        foreach ($productViewTransfer->getAttributeMap()->getSuperAttributes() as $attributeName => $attributeOptions) {
-            $defaultSelectedAttributes[$attributeName] = array_pop($attributeOptions);
-        }
-
-        return $defaultSelectedAttributes;
     }
 }
