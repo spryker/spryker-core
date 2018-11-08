@@ -15,6 +15,7 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductAbstractMerchantRelationshipStorageTableMap;
+use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductConcreteMerchantRelationshipStorageTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -159,7 +160,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         return $this->getFactory()
             ->createPriceProductConcreteMerchantRelationshipStorageQuery()
             ->filterByPriceKey_In($priceKeys)
-            ->select(SpyPriceProductAbstractMerchantRelationshipStorageTableMap::COL_PRICE_KEY)
+            ->select(SpyPriceProductConcreteMerchantRelationshipStorageTableMap::COL_PRICE_KEY)
             ->find()
             ->toArray();
     }
