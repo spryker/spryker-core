@@ -22,9 +22,10 @@ class CategoryResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve a category node."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Category node id has not been specified or invalid.",
      *              "404": "Can't find category node with the given id."

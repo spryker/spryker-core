@@ -22,9 +22,10 @@ class AbstractProductPricesResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve prices of abstract products."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Abstract product sku is not specified.",
      *              "404": "Abstract product prices are not found."

@@ -22,9 +22,10 @@ class StoresResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve current store data."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ]
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }]
      *     }
      * })
      *

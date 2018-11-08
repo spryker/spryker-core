@@ -26,7 +26,6 @@ class PathMethodRenderer implements PathMethodRendererInterface
     protected const PATTERN_DESCRIPTION_PARAMETER_ID = 'Id of %s.';
 
     protected const PARAMETER_LOCATION_PATH = 'path';
-    protected const PARAMETER_LOCATION_HEADER = 'header';
     protected const PARAMETER_SCHEMA_TYPE_STRING = 'string';
     protected const PARAMETER_SECURITY_BEARER_AUTH = 'BearerAuth';
 
@@ -92,8 +91,8 @@ class PathMethodRenderer implements PathMethodRendererInterface
             $pathMethodComponentTransfer->addSecurity([static::PARAMETER_SECURITY_BEARER_AUTH => []]);
         }
 
-        if ($pathMethodDataTransfer->getHeaders()) {
-            $this->addHeaderParameterComponents($pathMethodComponentTransfer, $pathMethodDataTransfer->getHeaders());
+        if ($pathMethodDataTransfer->getParameters()->count() > 0) {
+            $this->addPathParameterComponents($pathMethodComponentTransfer, $pathMethodDataTransfer->getParameters());
         }
 
         $this->pathMethodSpecificationComponent->setPathMethodComponentTransfer($pathMethodComponentTransfer);
@@ -189,19 +188,19 @@ class PathMethodRenderer implements PathMethodRendererInterface
 
     /**
      * @param \Generated\Shared\Transfer\OpenApiSpecificationPathMethodComponentTransfer $methodComponent
-     * @param array $headers
+     * @param \ArrayObject|\Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer[] $parameters
      *
      * @return void
      */
-    protected function addHeaderParameterComponents(OpenApiSpecificationPathMethodComponentTransfer $methodComponent, array $headers): void
+    protected function addPathParameterComponents(OpenApiSpecificationPathMethodComponentTransfer $methodComponent, ArrayObject $parameters): void
     {
-        foreach ($headers as $header) {
-            $parameterComponentTransfer = new OpenApiSpecificationPathParameterComponentTransfer();
-            $parameterComponentTransfer->setName($header);
-            $parameterComponentTransfer->setIn(static::PARAMETER_LOCATION_HEADER);
-            $parameterComponentTransfer->setRequired(false);
-            $parameterComponentTransfer->setSchemaType(static::PARAMETER_SCHEMA_TYPE_STRING);
-
+        foreach ($parameters as $parameterComponentTransfer) {
+            if ($parameterComponentTransfer->getRequired() === null) {
+                $parameterComponentTransfer->setRequired(false);
+            }
+            if ($parameterComponentTransfer->getSchemaType() === null) {
+                $parameterComponentTransfer->setSchemaType(static::PARAMETER_SCHEMA_TYPE_STRING);
+            }
             $this->pathParameterSpecificationComponent->setPathParameterComponentTransfer($parameterComponentTransfer);
             $pathParameterSpecificationData = $this->pathParameterSpecificationComponent->getSpecificationComponentData();
 

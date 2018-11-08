@@ -23,9 +23,10 @@ class WishlistsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve wishlist data."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "404": "Wishlist was not found."
      *          }
@@ -57,9 +58,10 @@ class WishlistsResourceController extends AbstractController
      *          "summary": [
      *              "Create wishlist."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "A wishlist with the same name already exists.",
      *              "500": "Internal server error."
@@ -85,9 +87,10 @@ class WishlistsResourceController extends AbstractController
      *          "summary": [
      *              "Delete customer's wishlist."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "A wishlist with the same name already exists.",
      *              "404": "Can't find wishlist.",
@@ -114,9 +117,10 @@ class WishlistsResourceController extends AbstractController
      *          "summary": [
      *              "Anonymize customers."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "404": "Can't find wishlist."
      *          }

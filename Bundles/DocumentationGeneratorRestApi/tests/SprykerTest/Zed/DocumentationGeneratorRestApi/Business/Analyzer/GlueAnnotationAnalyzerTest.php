@@ -62,8 +62,8 @@ class GlueAnnotationAnalyzerTest extends Unit
         $this->assertEmpty($parameters->getGetResourceById());
         $this->assertEmpty($parameters->getDelete());
         $this->assertEquals(static::SUMMARY, $parameters->getGetResource()->getSummary());
-        $this->assertNotEmpty($parameters->getGetResource()->getHeaders());
-        $this->assertEquals(static::HEADER_ACCEPT_LANGUAGE, $parameters->getGetResource()->getHeaders()[0]);
+        $this->assertNotEmpty($parameters->getGetResource()->getParameters());
+        $this->assertEquals(static::HEADER_ACCEPT_LANGUAGE, $parameters->getGetResource()->getParameters()[0]->getName());
         $this->assertNotEmpty($parameters->getGetResource()->getResponses());
         $this->assertArraySubset([
             static::KEY_RESPONSE_BAD_REQUEST => static::VALUE_RESPONSE_BAD_REQUEST,

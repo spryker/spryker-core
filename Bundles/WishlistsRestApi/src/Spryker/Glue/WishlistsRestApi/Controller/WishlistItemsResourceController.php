@@ -23,9 +23,10 @@ class WishlistItemsResourceController extends AbstractController
      *          "summary": [
      *              "Remove item from the wishlist."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "404": "Wishlist not found.",
      *              "422": "Wishlist item not found."
@@ -50,9 +51,10 @@ class WishlistItemsResourceController extends AbstractController
      *          "summary": [
      *              "Adds an item to the wishlist."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Can't add an item.",
      *              "404": "Can't find wishlist."
