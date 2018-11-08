@@ -72,23 +72,21 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         int $idMerchantRelationship,
         PriceProductTransfer $priceProductTransfer
     ): void {
-        $priceProductMerchantRelationships = $this->getFactory()
+        $query = $this->getFactory()
             ->createPriceProductMerchantRelationshipQuery()
-            ->filterByFkMerchantRelationship($idMerchantRelationship);
-        $priceProductMerchantRelationships = $this->setFilteringByProductToQuery($priceProductTransfer, $priceProductMerchantRelationships);
-        $priceProductMerchantRelationships = $priceProductMerchantRelationships
             ->usePriceProductStoreQuery()
+                ->filterByFkStore($priceProductTransfer->getMoneyValue()->getFkStore())
                 ->filterByFkCurrency($priceProductTransfer->getMoneyValue()->getFkCurrency())
+                ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
             ->endUse()
-            ->usePriceProductStoreQuery()
-                ->usePriceProductQuery()
-                    ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
-                ->endUse()
-            ->endUse()
-            ->find();
+            ->filterByFkMerchantRelationship($priceProductTransfer->getPriceDimension()->getIdMerchantRelationship());
 
-        if ($priceProductMerchantRelationships->count()) {
-            $priceProductMerchantRelationships->delete();
+        $this->addFilteringByProductToQuery($priceProductTransfer, $query);
+
+        $entity = $query->findOne();
+
+        if ($entity) {
+            $entity->delete();
         }
     }
 
@@ -152,7 +150,7 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
      *
      * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery
      */
-    protected function setFilteringByProductToQuery(PriceProductTransfer $priceProductTransfer, SpyPriceProductMerchantRelationshipQuery $priceProductMerchantRelationshipQuery): SpyPriceProductMerchantRelationshipQuery
+    protected function addFilteringByProductToQuery(PriceProductTransfer $priceProductTransfer, SpyPriceProductMerchantRelationshipQuery $priceProductMerchantRelationshipQuery): SpyPriceProductMerchantRelationshipQuery
     {
         if ($priceProductTransfer->getIdProduct()) {
             return $priceProductMerchantRelationshipQuery->filterByFkProduct($priceProductTransfer->getIdProduct());
