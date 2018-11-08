@@ -147,4 +147,16 @@ interface SharedCartFacadeInterface
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
     public function getShareDetailsByIdQuote(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer;
+
+    /**
+     * Specification:
+     *  - Un-shares quotes for company user.
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function deleteShareRelationsForCompanyUserId(int $idCompanyUser): void;
 }
