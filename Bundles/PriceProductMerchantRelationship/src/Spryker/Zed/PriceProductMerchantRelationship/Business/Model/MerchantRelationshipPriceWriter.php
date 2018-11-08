@@ -63,15 +63,6 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
             $priceProductTransfer = $this->persistPriceProductStore($priceProductTransfer);
         }
 
-        $idPriceProductStoreBeforeUpdate = $priceProductTransfer->getMoneyValue()->getIdEntity();
-
-        if ($idPriceProductStoreBeforeUpdate) {
-            $this->priceProductMerchantRelationshipEntityManager->deleteByIdPriceProductStoreAndIdMerchantRelationship(
-                $idPriceProductStoreBeforeUpdate,
-                $priceDimensionTransfer->getIdMerchantRelationship()
-            );
-        }
-
         $priceProductMerchantRelationshipEntityTransfer = $this->getPriceProductMerchantRelationshipEntityTransfer($priceProductTransfer);
         $this->priceProductMerchantRelationshipEntityManager->saveEntity($priceProductMerchantRelationshipEntityTransfer);
 
@@ -124,7 +115,11 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
      */
     protected function getPriceProductMerchantRelationshipEntityTransfer(PriceProductTransfer $priceProductTransfer): SpyPriceProductMerchantRelationshipEntityTransfer
     {
+        $idPriceProductMerchantRelationship = $this->priceProductMerchantRelationshipRepository
+            ->findIdByPriceProductTransfer($priceProductTransfer);
+
         $priceProductMerchantRelationshipEntityTransfer = (new SpyPriceProductMerchantRelationshipEntityTransfer())
+            ->setIdPriceProductMerchantRelationship($idPriceProductMerchantRelationship)
             ->setFkMerchantRelationship($priceProductTransfer->getPriceDimension()->getIdMerchantRelationship())
             ->setFkPriceProductStore((string)$priceProductTransfer->getMoneyValue()->getIdEntity());
 

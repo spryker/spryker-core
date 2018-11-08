@@ -193,6 +193,19 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      */
     public function findMerchantRelationshipProductConcretePricesStorageByIds(array $priceProductMerchantRelationshipIds): array
     {
+        $priceProductMerchantRelationships = $this->getFactory()->getPropelPriceProductMerchantRelationshipQuery()
+            ->filterByIdPriceProductMerchantRelationship_In($priceProductMerchantRelationshipIds)
+            ->find()
+            ->toArray();
+
+        $merchantRelationshipIds = array_unique(
+            array_column($priceProductMerchantRelationships, 'FkMerchantRelationship')
+        );
+
+        $productConcreteIds = array_unique(
+            array_column($priceProductMerchantRelationships, 'FkProduct')
+        );
+
         $priceProductMerchantRelationships = $this->getFactory()
             ->getPropelPriceProductMerchantRelationshipQuery()
             ->usePriceProductStoreQuery()
@@ -206,8 +219,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
                 ->useSpyMerchantRelationshipToCompanyBusinessUnitQuery()
                 ->endUse()
             ->endUse()
-            ->filterByIdPriceProductMerchantRelationship_In($priceProductMerchantRelationshipIds)
-            ->filterByFkProduct(null, Criteria::ISNOTNULL)
+            ->filterByFkMerchantRelationship_In($merchantRelationshipIds)
+            ->filterByFkProduct_In($productConcreteIds)
             ->withColumn(SpyStoreTableMap::COL_NAME, PriceProductMerchantRelationshipStorageTransfer::STORE_NAME)
             ->withColumn(SpyCurrencyTableMap::COL_CODE, PriceProductMerchantRelationshipValueTransfer::CURRENCY_CODE)
             ->withColumn(SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT, PriceProductMerchantRelationshipStorageTransfer::ID_PRODUCT)
@@ -240,6 +253,19 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      */
     public function findMerchantRelationshipProductAbstractPricesStorageByIds(array $priceProductMerchantRelationshipIds): array
     {
+        $priceProductMerchantRelationships = $this->getFactory()->getPropelPriceProductMerchantRelationshipQuery()
+            ->filterByIdPriceProductMerchantRelationship_In($priceProductMerchantRelationshipIds)
+            ->find()
+            ->toArray();
+
+        $merchantRelationshipIds = array_unique(
+            array_column($priceProductMerchantRelationships, 'FkMerchantRelationship')
+        );
+
+        $productAbstractIds = array_unique(
+            array_column($priceProductMerchantRelationships, 'FkProductAbstract')
+        );
+
         $priceProductMerchantRelationships = $this->getFactory()
             ->getPropelPriceProductMerchantRelationshipQuery()
             ->usePriceProductStoreQuery()
@@ -252,8 +278,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             ->useMerchantRelationshipQuery()
                 ->innerJoinSpyMerchantRelationshipToCompanyBusinessUnit()
             ->endUse()
-            ->filterByIdPriceProductMerchantRelationship_In($priceProductMerchantRelationshipIds)
-            ->filterByFkProductAbstract(null, Criteria::ISNOTNULL)
+            ->filterByFkMerchantRelationship_In($merchantRelationshipIds)
+            ->filterByFkProductAbstract_In($productAbstractIds)
             ->withColumn(SpyStoreTableMap::COL_NAME, PriceProductMerchantRelationshipStorageTransfer::STORE_NAME)
             ->withColumn(SpyCurrencyTableMap::COL_CODE, PriceProductMerchantRelationshipValueTransfer::CURRENCY_CODE)
             ->withColumn(SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT_ABSTRACT, PriceProductMerchantRelationshipStorageTransfer::ID_PRODUCT)
