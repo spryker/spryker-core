@@ -68,11 +68,10 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
      *
      * @return void
      */
-    public function deleteByPriceProductAndIdMerchantRelationship(
+    public function deletePriceProductMerchantRelationships(
         int $idMerchantRelationship,
         PriceProductTransfer $priceProductTransfer
     ): void {
-
         $priceProductMerchantRelationships = $this->getFactory()
             ->createPriceProductMerchantRelationshipQuery()
             ->filterByFkMerchantRelationship($idMerchantRelationship);
@@ -149,16 +148,16 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery $query
+     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery $priceProductMerchantRelationshipQuery
      *
      * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery
      */
-    protected function setFilteringByProductToQuery(PriceProductTransfer $priceProductTransfer, SpyPriceProductMerchantRelationshipQuery $query): SpyPriceProductMerchantRelationshipQuery
+    protected function setFilteringByProductToQuery(PriceProductTransfer $priceProductTransfer, SpyPriceProductMerchantRelationshipQuery $priceProductMerchantRelationshipQuery): SpyPriceProductMerchantRelationshipQuery
     {
         if ($priceProductTransfer->getIdProduct()) {
-            return $query->filterByFkProduct($priceProductTransfer->getIdProduct());
+            return $priceProductMerchantRelationshipQuery->filterByFkProduct($priceProductTransfer->getIdProduct());
         }
 
-        return $query->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract());
+        return $priceProductMerchantRelationshipQuery->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract());
     }
 }

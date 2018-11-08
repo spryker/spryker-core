@@ -66,7 +66,7 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
         $idPriceProductStoreBeforeUpdate = $priceProductTransfer->getMoneyValue()->getIdEntity();
 
         if ($idPriceProductStoreBeforeUpdate) {
-            $this->priceProductMerchantRelationshipEntityManager->deleteByPriceProductAndIdMerchantRelationship(
+            $this->priceProductMerchantRelationshipEntityManager->deletePriceProductMerchantRelationships(
                 $priceDimensionTransfer->getIdMerchantRelationship(),
                 $priceProductTransfer
             );
@@ -128,13 +128,27 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
             ->setFkMerchantRelationship($priceProductTransfer->getPriceDimension()->getIdMerchantRelationship())
             ->setFkPriceProductStore((string)$priceProductTransfer->getMoneyValue()->getIdEntity());
 
+        return $this->setProductToPriceProductMerchantRelationshipENtityTransfer(
+            $priceProductTransfer,
+            $priceProductMerchantRelationshipEntityTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer
+     */
+    protected function setProductToPriceProductMerchantRelationshipENtityTransfer(
+        PriceProductTransfer $priceProductTransfer,
+        SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
+    ): SpyPriceProductMerchantRelationshipEntityTransfer {
         if ($priceProductTransfer->getIdProduct()) {
-            $priceProductMerchantRelationshipEntityTransfer->setFkProduct($priceProductTransfer->getIdProduct());
-        } else {
-            $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
+            return $priceProductMerchantRelationshipEntityTransfer->setFkProduct($priceProductTransfer->getIdProduct());
         }
 
-        return $priceProductMerchantRelationshipEntityTransfer;
+        return $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
     }
 
     /**

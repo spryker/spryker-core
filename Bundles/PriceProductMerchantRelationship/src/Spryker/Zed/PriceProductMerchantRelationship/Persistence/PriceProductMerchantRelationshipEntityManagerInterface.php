@@ -39,7 +39,7 @@ interface PriceProductMerchantRelationshipEntityManagerInterface
      *
      * @return void
      */
-    public function deleteByPriceProductAndIdMerchantRelationship(
+    public function deletePriceProductMerchantRelationships(
         int $idMerchantRelationship,
         PriceProductTransfer $priceProductTransfer
     ): void;
