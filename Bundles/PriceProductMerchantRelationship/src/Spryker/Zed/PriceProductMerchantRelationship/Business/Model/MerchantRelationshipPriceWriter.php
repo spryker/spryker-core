@@ -66,9 +66,9 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
         $idPriceProductStoreBeforeUpdate = $priceProductTransfer->getMoneyValue()->getIdEntity();
 
         if ($idPriceProductStoreBeforeUpdate) {
-            $this->priceProductMerchantRelationshipEntityManager->deleteByIdPriceProductStoreAndIdMerchantRelationship(
-                $idPriceProductStoreBeforeUpdate,
-                $priceDimensionTransfer->getIdMerchantRelationship()
+            $this->priceProductMerchantRelationshipEntityManager->deleteByPriceProductAndIdMerchantRelationship(
+                $priceDimensionTransfer->getIdMerchantRelationship(),
+                $priceProductTransfer
             );
         }
 
@@ -128,11 +128,18 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
             ->setFkMerchantRelationship($priceProductTransfer->getPriceDimension()->getIdMerchantRelationship())
             ->setFkPriceProductStore((string)$priceProductTransfer->getMoneyValue()->getIdEntity());
 
-        if ($priceProductTransfer->getIdProductAbstract()) {
-            $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
-        } else {
+        if ($priceProductTransfer->getIdProduct()) {
             $priceProductMerchantRelationshipEntityTransfer->setFkProduct($priceProductTransfer->getIdProduct());
+        } else {
+            $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
         }
+//        dd($priceProductTransfer, $priceProductMerchantRelationshipEntityTransfer);
+
+//        if ($priceProductTransfer->getIdProductAbstract()) {
+//            $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
+//        } else {
+//            $priceProductMerchantRelationshipEntityTransfer->setFkProduct($priceProductTransfer->getIdProduct());
+//        }
 
         return $priceProductMerchantRelationshipEntityTransfer;
     }

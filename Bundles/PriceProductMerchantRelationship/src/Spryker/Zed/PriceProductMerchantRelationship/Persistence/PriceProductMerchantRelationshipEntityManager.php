@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence;
 
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
@@ -57,6 +58,41 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
 
         if ($priceProductMerchantRelationshipEnitity) {
             $priceProductMerchantRelationshipEnitity->delete();
+        }
+    }
+
+    /**
+     * @param int $idMerchantRelationship
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function deleteByPriceProductAndIdMerchantRelationship(
+        int $idMerchantRelationship,
+        PriceProductTransfer $priceProductTransfer
+    ): void {
+
+        $entities = $this->getFactory()->createPriceProductMerchantRelationshipQuery()
+            ->filterByFkMerchantRelationship($idMerchantRelationship);
+        if ($priceProductTransfer->getIdProduct()) {
+            $entities = $entities->filterByFkProduct($priceProductTransfer->getIdProduct());
+        } else {
+            $entities = $entities->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract());
+        }
+        $entities = $entities
+            ->filterByFkProduct($priceProductTransfer->getIdProduct())
+            ->usePriceProductStoreQuery()
+            ->filterByFkCurrency($priceProductTransfer->getMoneyValue()->getFkCurrency())
+            ->endUse()
+            ->usePriceProductStoreQuery()
+            ->usePriceProductQuery()
+            ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
+            ->endUse()
+            ->endUse()
+            ->find();
+
+        if ($entities) {
+            $entities->delete();
         }
     }
 
