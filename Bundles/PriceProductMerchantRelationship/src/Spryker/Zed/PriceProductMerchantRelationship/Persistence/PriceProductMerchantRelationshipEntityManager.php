@@ -73,11 +73,11 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         PriceProductTransfer $priceProductTransfer
     ): void {
 
-        $priceProductMerchantRelationships = $this->getFactory()->createPriceProductMerchantRelationshipQuery()
+        $priceProductMerchantRelationships = $this->getFactory()
+            ->createPriceProductMerchantRelationshipQuery()
             ->filterByFkMerchantRelationship($idMerchantRelationship);
-        $priceProductMerchantRelationships = $this->setProductToQuery($priceProductTransfer, $priceProductMerchantRelationships);
+        $priceProductMerchantRelationships = $this->setFilteringByProductToQuery($priceProductTransfer, $priceProductMerchantRelationships);
         $priceProductMerchantRelationships = $priceProductMerchantRelationships
-            ->filterByFkProduct($priceProductTransfer->getIdProduct())
             ->usePriceProductStoreQuery()
                 ->filterByFkCurrency($priceProductTransfer->getMoneyValue()->getFkCurrency())
             ->endUse()
@@ -93,7 +93,13 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         }
     }
 
-    protected function setProductToQuery(PriceProductTransfer $priceProductTransfer, SpyPriceProductMerchantRelationshipQuery $query): SpyPriceProductMerchantRelationshipQuery
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery $query
+     *
+     * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery
+     */
+    protected function setFilteringByProductToQuery(PriceProductTransfer $priceProductTransfer, SpyPriceProductMerchantRelationshipQuery $query): SpyPriceProductMerchantRelationshipQuery
     {
         if ($priceProductTransfer->getIdProduct()) {
             return $query->filterByFkProduct($priceProductTransfer->getIdProduct());
