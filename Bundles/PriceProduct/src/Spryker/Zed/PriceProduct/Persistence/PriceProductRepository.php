@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProduct\Persistence;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
@@ -205,6 +206,15 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
             $priceProductStoreQuery->filterByFkCurrency($priceProductCriteriaTransfer->getIdCurrency());
         }
 
+        if ($priceProductCriteriaTransfer->getPriceType()) {
+            $priceProductStoreQuery
+                ->usePriceProductQuery()
+                    ->usePriceTypeQuery()
+                        ->filterByName($priceProductCriteriaTransfer->getPriceType())
+                    ->endUse()
+                ->endUse();
+        }
+
         $this->getFactory()
             ->createPriceProductDimensionQueryExpander()
             ->expandPriceProductStoreQueryWithPriceDimension($priceProductStoreQuery, $priceProductCriteriaTransfer);
@@ -224,5 +234,25 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
             ->filterByFkPriceProductStore($idPriceProductStore);
 
         return $this->buildQueryFromCriteria($priceProductDefaultQuery)->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int|null
+     */
+    public function findIdPriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): ?int
+    {
+        $priceProductEntity = $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByFkProduct($priceProductTransfer->getIdProduct())
+            ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
+            ->findOne();
+
+        if ($priceProductEntity !== null) {
+            return $priceProductEntity->getIdPriceProduct();
+        }
+
+        return null;
     }
 }

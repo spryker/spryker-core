@@ -67,6 +67,7 @@ class ShoppingListCompanyBusinessUnitDataImportPluginTest extends Unit
         $this->tester->getLocator()->permission()->facade()->syncPermissionPlugins();
         $this->tester->getShoppingListFacade()->installShoppingListPermissions();
 
+        $this->tester->ensureShoppingListCompanyBusinessUnitDatabaseTableIsEmpty();
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany([
             CompanyBusinessUnitTransfer::KEY => static::TEST_COMPANY_BUSINESS_UNIT_KEY,
         ]);
