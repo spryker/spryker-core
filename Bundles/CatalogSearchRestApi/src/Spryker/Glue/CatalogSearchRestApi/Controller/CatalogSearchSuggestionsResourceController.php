@@ -21,9 +21,10 @@ class CatalogSearchSuggestionsResourceController extends AbstractController
      *          "summary": [
      *              "Catalog search suggestions."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Invalid currency."
      *          }

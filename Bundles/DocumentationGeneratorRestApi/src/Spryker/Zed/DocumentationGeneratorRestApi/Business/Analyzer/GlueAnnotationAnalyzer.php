@@ -65,7 +65,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
     {
         $glueControllerFiles = $this->glueControllerFinder->getGlueControllerFilesFromPlugin($plugin);
 
-        $pathAnnotations = new RestApiDocumentationPathAnnotationsTransfer();
+        $pathAnnotationsTransfer = new RestApiDocumentationPathAnnotationsTransfer();
         $parameters = [];
         foreach ($glueControllerFiles as $file) {
             $tokens = token_get_all(file_get_contents($file));
@@ -73,11 +73,11 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
         }
 
         if (!$parameters) {
-            return $pathAnnotations;
+            return $pathAnnotationsTransfer;
         }
-        $pathAnnotations = $pathAnnotations->fromArray(array_replace_recursive(...$parameters), true);
+        $pathAnnotationsTransfer = $pathAnnotationsTransfer->fromArray(array_replace_recursive(...$parameters), true);
 
-        return $pathAnnotations;
+        return $pathAnnotationsTransfer;
     }
 
     /**

@@ -23,9 +23,10 @@ class CustomerPasswordResourceController extends AbstractController
      *          "summary": [
      *              "Update customer password."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Passwords don't match.",
      *              "404": "Customer not found.",

@@ -22,9 +22,10 @@ class ConcreteProductImageSetsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve concrete product's image sets."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Concrete product sku is not specified.",
      *              "404": "Concrete product image sets are not found."

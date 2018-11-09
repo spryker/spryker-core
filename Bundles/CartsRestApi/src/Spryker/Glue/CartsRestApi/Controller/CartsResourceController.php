@@ -23,9 +23,10 @@ class CartsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve a cart."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "404": "Cart was not found."
      *          }
@@ -61,9 +62,10 @@ class CartsResourceController extends AbstractController
      *          "summary": [
      *              "Create cart."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "500": "Can not create a cart."
      *          }
@@ -86,9 +88,10 @@ class CartsResourceController extends AbstractController
      *          "summary": [
      *              "Delete cart by id."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "500": "Can not delete a cart."
      *          }

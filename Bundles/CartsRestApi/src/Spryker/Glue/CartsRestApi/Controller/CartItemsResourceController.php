@@ -23,9 +23,10 @@ class CartItemsResourceController extends AbstractController
      *          "summary": [
      *              "Adds an item to the cart."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "404": "Cart or item is not found.",
      *              "422": "Errors appeared during item creation."
@@ -54,9 +55,10 @@ class CartItemsResourceController extends AbstractController
      *          "summary": [
      *              "Update cart item quantity."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "404": "Cart or item is not found."
      *          }
@@ -84,9 +86,10 @@ class CartItemsResourceController extends AbstractController
      *          "summary": [
      *              "Remove item from the cart."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Cart id or item id is not specified.",
      *              "404": "Cart or cart item not found.",

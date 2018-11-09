@@ -23,9 +23,10 @@ class CustomerResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve customer data."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Customer reference is missing.",
      *              "403": "Unauthorized request.",
@@ -51,9 +52,10 @@ class CustomerResourceController extends AbstractController
      *          "summary": [
      *              "Create customer."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "422": "Expected response to a valid request.",
      *              "500": "Internal server error."

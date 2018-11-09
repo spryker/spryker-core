@@ -9,9 +9,19 @@
         <property name="summary" type="string[]" />
         <property name="resource" type="string" />
         <property name="isProtected" type="bool" />
-        <property name="headers" singular="header" type="string[]" />
+        <property name="parameters" singular="parameter" type="OpenApiSpecificationPathParameterComponent[]" />
         <property name="requestSchema" type="OpenApiSpecificationPathSchemaData" />
         <property name="responseSchemas" singular="responseSchema" type="OpenApiSpecificationPathSchemaData[]" />
+    </transfer>
+
+    <transfer name="OpenApiSpecificationPathParameter">
+        <property name="name" type="string" />
+        <property name="in" type="string" />
+        <property name="description" type="string" />
+        <property name="required" type="bool" />
+        <property name="deprecated" type="bool" />
+        <property name="allowEmptyValue" type="bool" />
+        <property name="schemaType" type="string" />
     </transfer>
 
     <transfer name="OpenApiSpecificationPathSchemaData">
@@ -53,8 +63,10 @@
     <transfer name="OpenApiSpecificationPathParameterComponent">
         <property name="name" type="string" />
         <property name="in" type="string" />
-        <property name="required" type="bool" />
         <property name="description" type="string" />
+        <property name="required" type="bool" />
+        <property name="deprecated" type="bool" />
+        <property name="allowEmptyValue" type="bool" />
         <property name="schemaType" type="string" />
     </transfer>
 
@@ -107,7 +119,7 @@
 
     <transfer name="RestApiDocumentationAnnotation">
         <property name="summary" type="string" />
-        <property name="headers" singular="header" type="string[]" />
+        <property name="parameters" singular="parameter" type="OpenApiSpecificationPathParameterComponent[]" />
         <property name="responseClass" type="string" />
         <property name="isEmptyResponse" type="bool" />
         <property name="responses" singular="response" type="array" />

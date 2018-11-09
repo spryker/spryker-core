@@ -21,8 +21,23 @@ class CatalogSearchResourceController extends AbstractController
      *          "summary": [
      *              "Catalog search."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
+     *          "parameters": [
+     *              {
+     *                  "name": "Accept-Language",
+     *                  "in": "header"
+     *              },
+     *              {
+     *                  "name": "q",
+     *                  "in": "query",
+     *                  "description": "Search query compatible with elastic search",
+     *                  "required": true
+     *              },
+     *              {
+     *                  "name": "currency",
+     *                  "in": "query",
+     *                  "description": "Currency code to process request with",
+     *                  "required": true
+     *              }
      *          ],
      *          "responses": {
      *              "400": "Invalid currency."

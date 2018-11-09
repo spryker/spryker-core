@@ -22,9 +22,10 @@ class CategoryTreeResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve category tree for specified locale."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ]
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }]
      *     }
      * })
      *
