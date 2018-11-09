@@ -8,13 +8,8 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Codeception\Test\Unit;
-use Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface;
-use Spryker\Glue\GlueApplication\Plugin\Rest\ResourceRelationshipCollectionProviderPlugin;
-use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRelationshipCollection;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
-use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRelationshipPlugin;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRouteRelatedPlugin;
 
@@ -31,15 +26,14 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResou
 class ResourceRelationshipsPluginAnalyzerTest extends Unit
 {
     protected const RELATIONSHIP_VALUE = 'test-resource-with-relationship';
-    protected const RESOURCE_NAME = 'test-resource';
 
     /**
      * @return void
      */
     public function testGetResourceRelationshipsWillReturnRelationshipNameForPluginWithRelationships(): void
     {
-        $resourceRelationshipsPluginAnalyzer = $this->createResourceRelationshipsPluginAnalyzer();
-        $plugin = $this->createTestResourceRoutePlugin();
+        $resourceRelationshipsPluginAnalyzer = $this->getResourceRelationshipsPluginAnalyzer();
+        $plugin = new TestResourceRoutePlugin();
 
         $relationships = $resourceRelationshipsPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
@@ -53,8 +47,8 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
      */
     public function testGetResourceRelationshipsWillReturnEmptyArrayForPluginWithoutRelationships(): void
     {
-        $resourceRelationshipsPluginAnalyzer = $this->createResourceRelationshipsPluginAnalyzer();
-        $plugin = $this->createTestResourceRouteRelatedPlugin();
+        $resourceRelationshipsPluginAnalyzer = $this->getResourceRelationshipsPluginAnalyzer();
+        $plugin = new TestResourceRouteRelatedPlugin();
 
         $relationships = $resourceRelationshipsPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
@@ -64,70 +58,8 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
     /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface
      */
-    protected function createResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
+    protected function getResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
     {
-        return new ResourceRelationshipsPluginAnalyzer($this->getResourceRelationshipCollectionPlugins());
-    }
-
-    /**
-     * @return \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[]
-     */
-    protected function getResourceRelationshipCollectionPlugins(): array
-    {
-        return [
-            $this->getResourceRelationshipCollectionPluginMock(),
-        ];
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface
-     */
-    protected function getResourceRelationshipCollectionPluginMock(): ResourceRelationshipCollectionProviderPluginInterface
-    {
-        $pluginMock = $this->getMockBuilder(ResourceRelationshipCollectionProviderPlugin::class)
-            ->setMethods(['getResourceRelationshipCollection'])
-            ->getMock();
-        $pluginMock->method('getResourceRelationshipCollection')
-            ->willReturn($this->createResourceRelationshipCollection());
-
-        return $pluginMock;
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
-     */
-    protected function createResourceRelationshipCollection(): ResourceRelationshipCollectionInterface
-    {
-        $resourceRelationshipCollection = new ResourceRelationshipCollection();
-        $resourceRelationshipCollection->addRelationship(
-            static::RESOURCE_NAME,
-            $this->createTestResourceRelationshipPlugin()
-        );
-
-        return $resourceRelationshipCollection;
-    }
-
-    /**
-     * @return \SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRelationshipPlugin
-     */
-    protected function createTestResourceRelationshipPlugin(): TestResourceRelationshipPlugin
-    {
-        return new TestResourceRelationshipPlugin();
-    }
-
-    /**
-     * @return \SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRouteRelatedPlugin
-     */
-    protected function createTestResourceRouteRelatedPlugin(): TestResourceRouteRelatedPlugin
-    {
-        return new TestResourceRouteRelatedPlugin();
-    }
-
-    /**
-     * @return \SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin
-     */
-    protected function createTestResourceRoutePlugin(): TestResourceRoutePlugin
-    {
-        return new TestResourceRoutePlugin();
+        return (new DocumentationGeneratorRestApiTestFactory())->createResourceRelationshipsPluginAnalyzer();
     }
 }

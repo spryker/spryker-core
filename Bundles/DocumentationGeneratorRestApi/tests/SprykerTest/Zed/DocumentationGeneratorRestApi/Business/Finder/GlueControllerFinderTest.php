@@ -9,12 +9,8 @@ namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Finder;
 
 use Codeception\Test\Unit;
 use SplFileInfo;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinder;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToDoctrineInflectorAdapter;
-use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFinderInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToSymfonyFinderAdapter;
-use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToTextInflectorInterface;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
 
 /**
@@ -29,7 +25,6 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResou
  */
 class GlueControllerFinderTest extends Unit
 {
-    protected const CONTROLLER_SOURCE_DIRECTORY = __DIR__ . '/../Stub/Controller/';
     protected const CONTROLLER_FILE_NAME = 'TestResourceController.php';
 
     /**
@@ -37,11 +32,10 @@ class GlueControllerFinderTest extends Unit
      */
     public function testGetGlueControllerFilesFromPluginShouldReturnArrayOfSplFileInfoObjects(): void
     {
-        $controllerFinder = $this->createGlueControllerFinder();
+        $controllerFinder = $this->getGlueControllerFinder([DocumentationGeneratorRestApiTestFactory::CONTROLLER_SOURCE_DIRECTORY]);
 
-        $files = $controllerFinder->getGlueControllerFilesFromPlugin($this->createTestResourceRoutePlugin());
+        $files = $controllerFinder->getGlueControllerFilesFromPlugin(new TestResourceRoutePlugin());
 
-        $this->assertInternalType('array', $files);
         $this->assertNotEmpty($files);
         foreach ($files as $file) {
             $this->assertInstanceOf(SplFileInfo::class, $file);
@@ -53,50 +47,35 @@ class GlueControllerFinderTest extends Unit
      */
     public function testGetGlueControllerFilesFromPluginShouldReturnCorrectControllerFile(): void
     {
-        $controllerFinder = $this->createGlueControllerFinder();
+        $controllerFinder = $this->getGlueControllerFinder([DocumentationGeneratorRestApiTestFactory::CONTROLLER_SOURCE_DIRECTORY]);
 
-        $files = $controllerFinder->getGlueControllerFilesFromPlugin($this->createTestResourceRoutePlugin());
+        $files = $controllerFinder->getGlueControllerFilesFromPlugin(new TestResourceRoutePlugin());
 
+        $this->assertNotEmpty($files);
         foreach ($files as $file) {
             $this->assertEquals(static::CONTROLLER_FILE_NAME, $file->getFilename());
         }
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinder
+     * @return void
      */
-    protected function createGlueControllerFinder(): GlueControllerFinderInterface
+    public function testGetGlueControllerFilesFromPluginShouldReturnEmptyArrayIfNoExistingDirectoryIsFound(): void
     {
-        return new GlueControllerFinder(
-            $this->createDocumentationGeneratorRestApiToFinder(),
-            $this->createDocumentationGeneratorRestApiToTextInflector(),
-            [
-                static::CONTROLLER_SOURCE_DIRECTORY,
-            ]
-        );
+        $controllerFinder = $this->getGlueControllerFinder([]);
+
+        $files = $controllerFinder->getGlueControllerFilesFromPlugin(new TestResourceRoutePlugin());
+
+        $this->assertEmpty($files);
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFinderInterface
+     * @param array $sourceDirectories
+     *
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface
      */
-    protected function createDocumentationGeneratorRestApiToFinder(): DocumentationGeneratorRestApiToFinderInterface
+    protected function getGlueControllerFinder(array $sourceDirectories): GlueControllerFinderInterface
     {
-        return new DocumentationGeneratorRestApiToSymfonyFinderAdapter();
-    }
-
-    /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToTextInflectorInterface
-     */
-    protected function createDocumentationGeneratorRestApiToTextInflector(): DocumentationGeneratorRestApiToTextInflectorInterface
-    {
-        return new DocumentationGeneratorRestApiToDoctrineInflectorAdapter();
-    }
-
-    /**
-     * @return \SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin
-     */
-    protected function createTestResourceRoutePlugin(): TestResourceRoutePlugin
-    {
-        return new TestResourceRoutePlugin();
+        return (new DocumentationGeneratorRestApiTestFactory())->createGlueControllerFinder($sourceDirectories);
     }
 }

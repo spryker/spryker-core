@@ -11,7 +11,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollect
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttributesTransfer;
 
-class TestResourceRoutePlugin implements ResourceRoutePluginInterface
+class TestResourceRouteWithGetResourceByIdPlugin implements ResourceRoutePluginInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
@@ -20,8 +20,7 @@ class TestResourceRoutePlugin implements ResourceRoutePluginInterface
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addGet('get', false)
-            ->addPost('post', true);
+        $resourceRouteCollection->addGet('get', false);
 
         return $resourceRouteCollection;
     }
@@ -31,7 +30,7 @@ class TestResourceRoutePlugin implements ResourceRoutePluginInterface
      */
     public function getResourceType(): string
     {
-        return 'test-resource';
+        return 'test-resource-with-get-resource-by-id';
     }
 
     /**
@@ -39,7 +38,7 @@ class TestResourceRoutePlugin implements ResourceRoutePluginInterface
      */
     public function getController(): string
     {
-        return 'test-resource';
+        return 'test-resource-with-get-resource-by-id';
     }
 
     /**

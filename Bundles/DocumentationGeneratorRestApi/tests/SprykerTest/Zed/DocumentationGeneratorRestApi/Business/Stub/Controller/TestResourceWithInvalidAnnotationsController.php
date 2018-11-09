@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Controller;
 
-class TestResourceController
+class TestResourceWithInvalidAnnotationsController
 {
     /**
-     * @Glue({
+     * @Glue(
      *     "getResource": {
      *          "summary": [
      *              "Summary example"
@@ -28,24 +28,24 @@ class TestResourceController
      *
      * @return void
      */
-    public function getAction(): void
+    public function getAction()
     {
     }
 
     /**
      * @Glue({
      *     "post": {
-     *          "responseClass": "SprykerTest\\Zed\\DocumentationGeneratorRestApi\\Business\\Stub\\RestTestAlternativeAttributesTransfer",
+     *          "responseClass": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
-     *              "500": "Server Error"
+     *              "500": "Server Error",
      *          }
      *     }
      * })
      *
      * @return void
      */
-    public function postAction(): void
+    public function postAction()
     {
     }
 }

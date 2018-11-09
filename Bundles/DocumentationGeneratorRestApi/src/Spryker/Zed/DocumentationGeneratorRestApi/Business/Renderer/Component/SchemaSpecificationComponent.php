@@ -43,7 +43,7 @@ class SchemaSpecificationComponent implements SchemaSpecificationComponentInterf
             return [];
         }
 
-        $schemaData[$this->schemaComponentTransfer->getName()][static::KEY_PROPERTIES] = $this->schemaComponentTransfer->getProperties();
+        $schemaData[$this->schemaComponentTransfer->getName()][static::KEY_PROPERTIES] = array_merge(...$this->schemaComponentTransfer->getProperties());
         if ($this->schemaComponentTransfer->getRequired()) {
             $schemaData[$this->schemaComponentTransfer->getName()][static::KEY_REQUIRED] = $this->schemaComponentTransfer->getRequired();
         }

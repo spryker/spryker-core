@@ -19,7 +19,7 @@ class WishlistsResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getResourceById": {
      *          "summary": [
      *              "Retrieve wishlist data."
      *          ],

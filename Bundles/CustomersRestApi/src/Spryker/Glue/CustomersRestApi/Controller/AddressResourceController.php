@@ -19,7 +19,7 @@ class AddressResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getResourceById": {
      *          "summary": [
      *              "Retrieve one customer address."
      *          ],
