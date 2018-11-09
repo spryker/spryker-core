@@ -1,0 +1,2 @@
+shopping_list_key,business_unit_key,permission_group_name
+test-shopping-list,incorrect-company-business-unit-key,FULL_ACCESS

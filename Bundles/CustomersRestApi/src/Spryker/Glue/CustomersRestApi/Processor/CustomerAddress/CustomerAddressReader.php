@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
@@ -77,7 +78,7 @@ class CustomerAddressReader implements CustomerAddressReaderInterface
             );
 
             $restResource->addLink(
-                RestResourceInterface::RESOURCE_LINKS_SELF,
+                RestLinkInterface::LINK_SELF,
                 $this->createSelfLink($customerTransfer, $addressTransfer)
             );
 

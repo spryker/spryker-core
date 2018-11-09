@@ -14,8 +14,12 @@ use Spryker\Glue\Kernel\Container;
 
 class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_SESSION = 'CLIENT_SESSION';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @deprecated Will be removed in the next major.
+     */
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
+    public const PLUGINS_CUSTOMER_POST_REGISTER = 'PLUGINS_CUSTOMER_POST_REGISTER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -24,13 +28,30 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->addSessionClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addSessionClient($container);
+        $container = $this->addCustomerPostRegisterPlugins($container);
 
         return $container;
     }
 
     /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container): Container
+    {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+            return new CustomersRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed in the next major.
+     *
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -49,12 +70,20 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addCustomerClient(Container $container): Container
+    protected function addCustomerPostRegisterPlugins(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
-            return new CustomersRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
+        $container[static::PLUGINS_CUSTOMER_POST_REGISTER] = function () {
+            return $this->getCustomerPostRegisterPlugins();
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[]
+     */
+    protected function getCustomerPostRegisterPlugins(): array
+    {
+        return [];
     }
 }
