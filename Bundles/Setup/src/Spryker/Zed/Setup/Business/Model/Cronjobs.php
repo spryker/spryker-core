@@ -9,6 +9,7 @@ namespace Spryker\Zed\Setup\Business\Model;
 
 use ErrorException;
 use Spryker\Shared\Config\Environment;
+use Spryker\Shared\Setup\SetupConstants;
 use Spryker\Zed\Setup\SetupConfig;
 
 class Cronjobs
@@ -19,6 +20,9 @@ class Cronjobs
     public const DEFAULT_ROLE = self::ROLE_ADMIN;
     public const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
     public const JENKINS_API_JOBS_URL = 'api/json/jobs?pretty=true&tree=jobs[name]';
+
+    protected const JENKINS_URL_API_CSRF_TOKEN = 'crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)';
+    protected const JENKINS_CSRF_TOKEN_NAME = 'crumb';
 
     /**
      * @var array
@@ -272,22 +276,31 @@ class Cronjobs
      *
      * @return int
      */
-    protected function callJenkins($url, $body = '')
+    protected function callJenkins($url, $body = ''): int
     {
         $postUrl = $this->getJenkinsUrl($url);
+
+        $httpHeader = ['Content-Type: text/xml'];
+
+        if ($this->config->isJenkinsCsrfProtectionEnabled()) {
+            $httpHeader[] = $this->getJenkinsCsrfHeader();
+        }
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $postUrl);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: text/xml']);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $httpHeader);
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
 
         $curlResponse = curl_exec($ch);
 
         if ($curlResponse === false) {
-            throw new ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
+            $exceptionMessage = $this->getExceptionMessage(curl_error($ch), $postUrl);
+
+            throw new ErrorException($exceptionMessage);
         }
 
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -491,5 +504,35 @@ $command</command>";
     protected function getJobsDir()
     {
         return $this->config->getJenkinsJobsDirectory();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getJenkinsCsrfHeader(): string
+    {
+        return $this->getJenkinsApiResponse(static::JENKINS_URL_API_CSRF_TOKEN);
+    }
+
+    /**
+     * @param string $errorMessage
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function getExceptionMessage(string $errorMessage, string $url): string
+    {
+        $curlErrorMessageTemplate = 'cURL error: %s  while calling Jenkins URL %s';
+        $csrfErrorMessageTemplate = 'Please check %s in your config.';
+
+        $curlErrorMessage = sprintf($curlErrorMessageTemplate, $errorMessage, $url);
+
+        if (mb_stripos($curlErrorMessage, static::JENKINS_CSRF_TOKEN_NAME)) {
+            $crumbErrorMessage = sprintf($csrfErrorMessageTemplate, SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED);
+
+            return $curlErrorMessage . PHP_EOL . $crumbErrorMessage;
+        }
+
+        return $curlErrorMessage;
     }
 }

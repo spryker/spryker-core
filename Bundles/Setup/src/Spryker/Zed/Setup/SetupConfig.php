@@ -96,4 +96,12 @@ class SetupConfig extends AbstractBundleConfig
             SearchConsole::COMMAND_NAME,
         ];
     }
+
+    /**
+     * @return bool
+     */
+    public function isJenkinsCsrfProtectionEnabled(): bool
+    {
+        return $this->get(SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED, false);
+    }
 }
