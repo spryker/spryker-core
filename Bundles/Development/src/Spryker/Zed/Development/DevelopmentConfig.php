@@ -142,8 +142,6 @@ class DevelopmentConfig extends AbstractBundleConfig
         return [
             'Spryker' => $this->getPathToCore(),
             'SprykerEco' => $this->getPathToEco(),
-            'SprykerSdk' => $this->getPathToSdk(),
-            'SprykerShop' => $this->getPathToShop(),
         ];
     }
 
