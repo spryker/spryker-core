@@ -33,9 +33,9 @@ interface PriceProductAbstractStorageWriterInterface
     public function publishAbstractPriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function updateAbstractPriceProductByPriceKeys(array $priceKeyTransfers): void;
+    public function publishAbstractPriceProductByProductAbstractIds(array $productAbstractIds): void;
 }

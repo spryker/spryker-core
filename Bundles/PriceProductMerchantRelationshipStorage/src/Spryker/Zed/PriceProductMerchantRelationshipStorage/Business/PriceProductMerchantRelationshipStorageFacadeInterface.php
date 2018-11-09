@@ -83,15 +83,15 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
     /**
      * Specification:
      *  - Publish merchant relationship prices for product abstracts.
-     *  - Uses the given generated price key identifiers.
+     *  - Uses the given abstract product IDs.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function updateAbstractPriceProductByPriceKeys(array $priceKeyTransfers): void;
+    public function publishAbstractPriceProductByProductAbstractIds(array $productAbstractIds): void;
 
     /**
      * Specification:
@@ -109,13 +109,13 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
     /**
      * Specification:
      *  - Publish merchant relationship prices for product concretes.
-     *  - Uses the given generated price key identifiers.
+     *  - Uses the given concrete product IDs.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
+     * @param int[] $productIds
      *
      * @return void
      */
-    public function updateConcretePriceProductByPriceKeys(array $priceKeyTransfers): void;
+    public function publishConcretePriceProductByProductIds(array $productIds): void;
 }

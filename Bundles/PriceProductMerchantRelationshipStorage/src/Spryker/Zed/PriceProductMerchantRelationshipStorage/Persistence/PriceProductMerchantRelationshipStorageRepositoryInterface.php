@@ -27,14 +27,6 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
     public function findProductConcretePriceDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 
     /**
-     * @param int $companyBusinessUnitId
-     * @param int[] $productIds
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
-     */
-    public function findProductConcretePriceDataByCompanyBusinessUnitIdAndProductIds(int $companyBusinessUnitId, array $productIds): array;
-
-    /**
      * @param int[] $companyBusinessUnitIds
      *
      * @return string[]
@@ -49,11 +41,25 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
     public function findExistingPriceKeysOfPriceProductAbstractMerchantRelationshipStorage(array $priceKeys): array;
 
     /**
+     * @param int[] $productAbstractIds
+     *
+     * @return string[]
+     */
+    public function findExistingPriceProductAbstractMerchantRelationshipPriceKeysByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
      * @param string[] $priceKeys
      *
      * @return string[]
      */
     public function findExistingPriceKeysOfPriceProductConcreteMerchantRelationship(array $priceKeys): array;
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return string[]
+     */
+    public function findExistingPriceProductAbstractMerchantRelationshipPriceKeysByProductIds(array $productIds): array;
 
     /**
      * @param int[] $companyBusinessUnitIds
@@ -70,11 +76,11 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
     public function findMerchantRelationshipProductConcretePricesByIds(array $priceProductMerchantRelationshipIds): array;
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeys
+     * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findMerchantRelationshipProductConcretePricesStorageByPriceKeys(array $priceKeys): array;
+    public function findMerchantRelationshipProductConcretePriceDataByProductIds(array $productIds): array;
 
     /**
      * @param int[] $priceProductMerchantRelationshipIds
@@ -84,11 +90,11 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
     public function findMerchantRelationshipProductAbstractPricesByIds(array $priceProductMerchantRelationshipIds): array;
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeys
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findMerchantRelationshipProductAbstractPricesStorageByPriceKeys(array $priceKeys): array;
+    public function findMerchantRelationshipProductAbstractPriceDataByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @return array
@@ -113,18 +119,4 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
      * @return array
      */
     public function findPriceProductAbstractMerchantRelationshipStorageEntitiesByIds(array $priceProductAbstractMerchantRelationshipStorageEntityIds): array;
-
-    /**
-     * @param int[] $merchantRelationshipIds
-     *
-     * @return int[]
-     */
-    public function findCompanyBusinessUnitIdsByMerchantRelationshipIds(array $merchantRelationshipIds): array;
-
-    /**
-     * @param int[] $priceProductStoreIds
-     *
-     * @return string[]
-     */
-    public function findStoreNamesByPriceProductStoreIds(array $priceProductStoreIds): array;
 }

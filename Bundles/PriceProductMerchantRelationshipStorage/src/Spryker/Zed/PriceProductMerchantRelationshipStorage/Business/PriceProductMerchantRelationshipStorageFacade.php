@@ -99,14 +99,14 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function updateAbstractPriceProductByPriceKeys(array $priceKeyTransfers): void
+    public function publishAbstractPriceProductByProductAbstractIds(array $productAbstractIds): void
     {
         $this->getFactory()->createPriceProductAbstractStorageWriter()
-            ->updateAbstractPriceProductByPriceKeys($priceKeyTransfers);
+            ->publishAbstractPriceProductByProductAbstractIds($productAbstractIds);
     }
 
     /**
@@ -129,13 +129,13 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
+     * @param int[] $productIds
      *
      * @return void
      */
-    public function updateConcretePriceProductByPriceKeys(array $priceKeyTransfers): void
+    public function publishConcretePriceProductByProductIds(array $productIds): void
     {
         $this->getFactory()->createPriceProductConcreteStorageWriter()
-            ->updateConcretePriceProductByPriceKeys($priceKeyTransfers);
+            ->publishConcretePriceProductByProductIds($productIds);
     }
 }

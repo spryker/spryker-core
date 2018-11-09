@@ -100,30 +100,17 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
+     * @param int[] $productIds
      *
      * @return void
      */
-    public function updateConcretePriceProductByPriceKeys(array $priceKeyTransfers): void
+    public function publishConcretePriceProductByProductIds(array $productIds): void
     {
-        if (empty($priceKeyTransfers)) {
-            return;
-        }
-
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
-            ->findMerchantRelationshipProductConcretePricesStorageByPriceKeys($priceKeyTransfers);
-
-        if (empty($priceProductMerchantRelationshipStorageTransfers)) {
-            $this->priceProductMerchantRelationshipStorageEntityManager
-                ->deletePriceProductConcretesByPriceKeys(array_keys($priceKeyTransfers));
-
-            return;
-        }
+            ->findMerchantRelationshipProductConcretePriceDataByProductIds($productIds);
 
         $existingPriceKeys = $this->priceProductMerchantRelationshipStorageRepository
-            ->findExistingPriceKeysOfPriceProductConcreteMerchantRelationship(array_keys($priceKeyTransfers));
-
-        $existingPriceKeys = array_merge($existingPriceKeys, array_keys($priceProductMerchantRelationshipStorageTransfers));
+            ->findExistingPriceProductAbstractMerchantRelationshipPriceKeysByProductIds($productIds);
 
         $this->write($priceProductMerchantRelationshipStorageTransfers, $existingPriceKeys);
     }

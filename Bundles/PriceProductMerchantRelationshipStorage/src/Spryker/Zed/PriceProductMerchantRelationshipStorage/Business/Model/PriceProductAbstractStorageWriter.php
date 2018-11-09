@@ -53,10 +53,6 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
             ->findProductAbstractPriceDataByCompanyBusinessUnitIds($companyBusinessUnitIds);
 
-        if (empty($priceProductMerchantRelationshipStorageTransfers)) {
-            return;
-        }
-
         $existingPriceKeys = $this->priceProductMerchantRelationshipStorageRepository
             ->findExistingPriceProductAbstractMerchantRelationshipPriceKeysByCompanyBusinessUnitIds($companyBusinessUnitIds);
 
@@ -88,30 +84,17 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function updateAbstractPriceProductByPriceKeys(array $priceKeyTransfers): void
+    public function publishAbstractPriceProductByProductAbstractIds(array $productAbstractIds): void
     {
-        if (empty($priceKeyTransfers)) {
-            return;
-        }
-
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
-            ->findMerchantRelationshipProductAbstractPricesStorageByPriceKeys($priceKeyTransfers);
-
-        if (empty($priceProductMerchantRelationshipStorageTransfers)) {
-            $this->priceProductMerchantRelationshipStorageEntityManager
-                ->deletePriceProductAbstractsByPriceKeys(array_keys($priceKeyTransfers));
-
-            return;
-        }
+            ->findMerchantRelationshipProductAbstractPriceDataByProductAbstractIds($productAbstractIds);
 
         $existingPriceKeys = $this->priceProductMerchantRelationshipStorageRepository
-            ->findExistingPriceKeysOfPriceProductAbstractMerchantRelationshipStorage(array_keys($priceKeyTransfers));
-
-        $existingPriceKeys = array_merge($existingPriceKeys, array_keys($priceProductMerchantRelationshipStorageTransfers));
+            ->findExistingPriceProductAbstractMerchantRelationshipPriceKeysByProductAbstractIds($productAbstractIds);
 
         $this->write($priceProductMerchantRelationshipStorageTransfers, $existingPriceKeys);
     }

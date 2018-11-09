@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
-use Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipValueTransfer;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
@@ -122,54 +121,6 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @module Store
-     * @module Currency
-     * @module PriceProduct
-     * @module MerchantRelationship
-     * @module PriceProductMerchantRelationship
-     *
-     * @param int $companyBusinessUnitId
-     * @param int[] $productIds
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
-     */
-    public function findProductConcretePriceDataByCompanyBusinessUnitIdAndProductIds(int $companyBusinessUnitId, array $productIds): array
-    {
-        $priceProductMerchantRelationships = $this->getFactory()
-            ->getPropelPriceProductStoreQuery()
-            ->innerJoinStore()
-            ->innerJoinCurrency()
-            ->usePriceProductQuery()
-                ->innerJoinPriceType()
-            ->endUse()
-            ->usePriceProductMerchantRelationshipQuery()
-                ->filterByFkProduct_In($productIds)
-                ->useMerchantRelationshipQuery()
-                    ->useSpyMerchantRelationshipToCompanyBusinessUnitQuery()
-                        ->filterByFkCompanyBusinessUnit($companyBusinessUnitId)
-                    ->endUse()
-                ->endUse()
-            ->endUse()
-            ->withColumn(SpyStoreTableMap::COL_NAME, PriceProductMerchantRelationshipStorageTransfer::STORE_NAME)
-            ->withColumn(SpyCurrencyTableMap::COL_CODE, PriceProductMerchantRelationshipValueTransfer::CURRENCY_CODE)
-            ->withColumn(SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT, PriceProductMerchantRelationshipStorageTransfer::ID_PRODUCT)
-            ->withColumn(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT, PriceProductMerchantRelationshipStorageTransfer::ID_COMPANY_BUSINESS_UNIT)
-            ->withColumn(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_MERCHANT_RELATIONSHIP, PriceProductMerchantRelationshipStorageTransfer::ID_MERCHANT_RELATIONSHIP)
-            ->withColumn(SpyPriceTypeTableMap::COL_NAME, PriceProductMerchantRelationshipValueTransfer::PRICE_TYPE)
-            ->withColumn(SpyPriceProductStoreTableMap::COL_PRICE_DATA, PriceProductMerchantRelationshipValueTransfer::PRICE_DATA)
-            ->withColumn(SpyPriceProductStoreTableMap::COL_GROSS_PRICE, PriceProductMerchantRelationshipValueTransfer::GROSS_PRICE)
-            ->withColumn(SpyPriceProductStoreTableMap::COL_NET_PRICE, PriceProductMerchantRelationshipValueTransfer::NET_PRICE)
-            ->setFormatter(new PropelArraySetFormatter())
-            ->find();
-
-        return $this->getFactory()
-            ->createCompanyBusinessUnitPriceProductMapper()
-            ->mapPriceProductMerchantRelationshipArrayToTransfers(
-                $priceProductMerchantRelationships
-            );
-    }
-
-    /**
      * @param int[] $companyBusinessUnitIds
      *
      * @return string[]
@@ -200,6 +151,21 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
+     * @param int[] $productAbstractIds
+     *
+     * @return string[]
+     */
+    public function findExistingPriceProductAbstractMerchantRelationshipPriceKeysByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createPriceProductAbstractMerchantRelationshipStorageQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->select(SpyPriceProductAbstractMerchantRelationshipStorageTableMap::COL_PRICE_KEY)
+            ->find()
+            ->toArray();
+    }
+
+    /**
      * @param string[] $priceKeys
      *
      * @return string[]
@@ -209,6 +175,21 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         return $this->getFactory()
             ->createPriceProductConcreteMerchantRelationshipStorageQuery()
             ->filterByPriceKey_In($priceKeys)
+            ->select(SpyPriceProductConcreteMerchantRelationshipStorageTableMap::COL_PRICE_KEY)
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return string[]
+     */
+    public function findExistingPriceProductAbstractMerchantRelationshipPriceKeysByProductIds(array $productIds): array
+    {
+        return $this->getFactory()
+            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
+            ->filterByFkProduct_In($productIds)
             ->select(SpyPriceProductConcreteMerchantRelationshipStorageTableMap::COL_PRICE_KEY)
             ->find()
             ->toArray();
@@ -276,26 +257,16 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeys
+     * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findMerchantRelationshipProductConcretePricesStorageByPriceKeys(array $priceKeys): array
+    public function findMerchantRelationshipProductConcretePriceDataByProductIds(array $productIds): array
     {
-        $storeNames = array_unique(array_map(function (PriceProductMerchantRelationshipPriceKeyTransfer $priceProductMerchantRelationshipPriceKeyTransfer) {
-            return $priceProductMerchantRelationshipPriceKeyTransfer->getStoreName();
-        }, $priceKeys));
-
-        $productIds = array_unique(array_map(function (PriceProductMerchantRelationshipPriceKeyTransfer $priceProductMerchantRelationshipPriceKeyTransfer) {
-            return $priceProductMerchantRelationshipPriceKeyTransfer->getIdProduct();
-        }, $priceKeys));
-
         $priceProductMerchantRelationships = $this->getFactory()
             ->getPropelPriceProductMerchantRelationshipQuery()
             ->usePriceProductStoreQuery()
-                ->useStoreQuery()
-                    ->filterByName_In($storeNames)
-                ->endUse()
+                ->innerJoinStore()
                 ->innerJoinCurrency()
                 ->usePriceProductQuery()
                     ->innerJoinPriceType()
@@ -371,26 +342,16 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeys
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findMerchantRelationshipProductAbstractPricesStorageByPriceKeys(array $priceKeys): array
+    public function findMerchantRelationshipProductAbstractPriceDataByProductAbstractIds(array $productAbstractIds): array
     {
-        $storeNames = array_unique(array_map(function (PriceProductMerchantRelationshipPriceKeyTransfer $priceProductMerchantRelationshipPriceKeyTransfer) {
-            return $priceProductMerchantRelationshipPriceKeyTransfer->getStoreName();
-        }, $priceKeys));
-
-        $productAbstractIds = array_unique(array_map(function (PriceProductMerchantRelationshipPriceKeyTransfer $priceProductMerchantRelationshipPriceKeyTransfer) {
-            return $priceProductMerchantRelationshipPriceKeyTransfer->getIdProduct();
-        }, $priceKeys));
-
         $priceProductMerchantRelationships = $this->getFactory()
             ->getPropelPriceProductMerchantRelationshipQuery()
             ->usePriceProductStoreQuery()
-                ->useStoreQuery()
-                    ->filterByName_In($storeNames)
-                ->endUse()
+                ->innerJoinStore()
                 ->innerJoinCurrency()
                 ->usePriceProductQuery()
                     ->innerJoinPriceType()
@@ -467,48 +428,5 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             ->filterByIdPriceProductAbstractMerchantRelationshipStorage_In($priceProductAbstractMerchantRelationshipStorageEntityIds)
             ->find()
             ->getArrayCopy();
-    }
-
-    /**
-     * @param int[] $merchantRelationshipIds
-     *
-     * @return int[]
-     */
-    public function findCompanyBusinessUnitIdsByMerchantRelationshipIds(array $merchantRelationshipIds): array
-    {
-        $merchantRelationshipToCompanyBusinessUnitEntities = $this->getFactory()
-            ->getPropelMerchantRelationshipToCompanyBusinessUnitQuery()
-            ->filterByFkMerchantRelationship_In($merchantRelationshipIds)
-            ->find();
-
-        $companyBusinessUnitIdsAndMerchantRelationshipIdsMap = [];
-        foreach ($merchantRelationshipToCompanyBusinessUnitEntities as $merchantRelationshipToCompanyBusinessUnitEntity) {
-            $companyBusinessUnitIdsAndMerchantRelationshipIdsMap[$merchantRelationshipToCompanyBusinessUnitEntity->getFKMerchantRelationship()] = $merchantRelationshipToCompanyBusinessUnitEntity->getFkCompanyBusinessUnit();
-        }
-
-        return $companyBusinessUnitIdsAndMerchantRelationshipIdsMap;
-    }
-
-    /**
-     * @module Store
-     *
-     * @param int[] $priceProductStoreIds
-     *
-     * @return string[]
-     */
-    public function findStoreNamesByPriceProductStoreIds(array $priceProductStoreIds): array
-    {
-        $priceProductStoreEntities = $this->getFactory()
-            ->getPropelPriceProductStoreQuery()
-            ->joinWithStore()
-            ->filterByIdPriceProductStore_In($priceProductStoreIds)
-            ->find();
-
-        $priceProductStoreIdsAndStoreNameMap = [];
-        foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
-            $priceProductStoreIdsAndStoreNameMap[$priceProductStoreEntity->getIdPriceProductStore()] = $priceProductStoreEntity->getStore()->getName();
-        }
-
-        return $priceProductStoreIdsAndStoreNameMap;
     }
 }

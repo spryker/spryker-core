@@ -26,10 +26,4 @@
         <property name="currencyCode" type="string" />
     </transfer>
 
-    <transfer name="PriceProductMerchantRelationshipPriceKey">
-        <property name="storeName" type="string" />
-        <property name="idProduct" type="int" />
-        <property name="idCompanyBusinessUnit" type="int" />
-    </transfer>
-
 </transfers>
