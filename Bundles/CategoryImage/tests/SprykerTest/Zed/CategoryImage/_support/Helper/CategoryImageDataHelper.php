@@ -188,9 +188,10 @@ class CategoryImageDataHelper extends Module
      */
     private function cleanupCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): void
     {
-        $idCategoryImageCollection = array_map(function (CategoryImageTransfer $categoryImageTransfer) {
-            return $categoryImageTransfer->getIdCategoryImage();
-        }, $categoryImageSetTransfer->getCategoryImages());
+        $idCategoryImageCollection = [];
+        foreach ($categoryImageSetTransfer->getCategoryImages() as $categoryImageTransfer) {
+            $idCategoryImageCollection[] = $categoryImageTransfer->getIdCategoryImage();
+        }
 
         SpyCategoryImageSetToCategoryImageQuery::create()
             ->filterByFkCategoryImageSet($categoryImageSetTransfer->getIdCategoryImageSet())
