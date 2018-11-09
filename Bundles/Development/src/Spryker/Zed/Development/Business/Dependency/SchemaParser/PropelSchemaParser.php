@@ -144,18 +144,9 @@ class PropelSchemaParser implements PropelSchemaParserInterface
      */
     protected function getSchemaFileFinder(): Finder
     {
-        $paths = [];
-        $internalPaths = $this->config->getInternalPaths();
-
-        foreach ($this->config->getCoreNamespaces() as $namespace) {
-            if (array_key_exists($namespace, $internalPaths)) {
-                $paths[] = $internalPaths[$namespace] . sprintf(static::PROPEL_SCHEMA_PATH_PATTERN, $namespace);
-            }
-        }
-
         $finder = new Finder();
         $finder
-            ->in(array_filter($paths, 'glob'))
+            ->in($this->computeLookupPaths())
             ->name('*.schema.xml');
 
         return $finder;
@@ -267,5 +258,19 @@ class PropelSchemaParser implements PropelSchemaParserInterface
         }
 
         return $uniqueFieldToModuleNameMap;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function computeLookupPaths(): array
+    {
+        $lookupPaths = $this->config->getInternalPaths();
+
+        foreach ($lookupPaths as $organizationName => $path) {
+            $lookupPaths[$organizationName] = $path . sprintf(static::PROPEL_SCHEMA_PATH_PATTERN, $organizationName);
+        }
+
+        return array_filter($lookupPaths, 'glob');
     }
 }
