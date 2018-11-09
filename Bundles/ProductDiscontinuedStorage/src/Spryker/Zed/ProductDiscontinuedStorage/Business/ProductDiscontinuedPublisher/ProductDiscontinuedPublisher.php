@@ -199,12 +199,12 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string
+     * @return string|null
      */
     protected function getLocalizedNote(
         ProductDiscontinuedTransfer $productDiscontinuedTransfer,
         LocaleTransfer $localeTransfer
-    ): string {
+    ): ?string {
         foreach ($productDiscontinuedTransfer->getProductDiscontinuedNotes() as $discontinuedNoteTransfer) {
             if ($discontinuedNoteTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
                 return $discontinuedNoteTransfer->getNote();
