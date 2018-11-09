@@ -33,6 +33,7 @@ class PriceProductMerchantRelationshipConcreteListener extends AbstractPlugin im
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->publishConcretePriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
+        $this->getFacade()
+            ->publishConcretePriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
     }
 }

@@ -12,12 +12,11 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantRelationship\Dependency\MerchantRelationshipEvents;
 use Spryker\Zed\PriceProductMerchantRelationship\Dependency\PriceProductMerchantRelationshipEvents;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener\MerchantRelationshipDeleteListener;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener\MerchantRelationshipListener;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener\PriceProductMerchantRelationshipAbstractDeleteListener;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener\PriceProductMerchantRelationshipAbstractListener;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener\PriceProductMerchantRelationshipConcreteDeleteListener;
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener\PriceProductMerchantRelationshipAbstractUpdateListener;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener\PriceProductMerchantRelationshipConcreteListener;
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener\PriceProductMerchantRelationshipConcreteUpdateListener;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\PriceProductMerchantRelationshipStorageFacadeInterface getFacade()
@@ -89,7 +88,7 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
     {
         $eventCollection->addListenerQueued(
             MerchantRelationshipEvents::ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_DELETE,
-            new MerchantRelationshipDeleteListener()
+            new MerchantRelationshipListener()
         );
 
         return $this;
@@ -119,7 +118,7 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
     {
         $eventCollection->addListenerQueued(
             PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_UPDATE,
-            new PriceProductMerchantRelationshipConcreteListener()
+            new PriceProductMerchantRelationshipConcreteUpdateListener()
         );
 
         return $this;
@@ -134,7 +133,7 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
     {
         $eventCollection->addListenerQueued(
             PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE,
-            new PriceProductMerchantRelationshipConcreteDeleteListener()
+            new PriceProductMerchantRelationshipConcreteUpdateListener()
         );
 
         return $this;
@@ -164,7 +163,7 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
     {
         $eventCollection->addListenerQueued(
             PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_UPDATE,
-            new PriceProductMerchantRelationshipAbstractListener()
+            new PriceProductMerchantRelationshipAbstractUpdateListener()
         );
 
         return $this;
@@ -179,7 +178,7 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
     {
         $eventCollection->addListenerQueued(
             PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE,
-            new PriceProductMerchantRelationshipAbstractDeleteListener()
+            new PriceProductMerchantRelationshipAbstractUpdateListener()
         );
 
         return $this;

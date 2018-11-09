@@ -27,6 +27,11 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
     public const COL_FK_MERCHANT_RELATIONSHIP = 'spy_price_product_merchant_relationship.fk_merchant_relationship';
 
     /**
+     * @uses \Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRICE_PRODUCT_STORE
+     */
+    public const COL_FK_PRICE_PRODUCT_STORE = 'spy_price_product_merchant_relationship.fk_price_product_store';
+
+    /**
      * @uses \Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT
      */
     public const COL_FK_PRODUCT = 'spy_price_product_merchant_relationship.fk_product';

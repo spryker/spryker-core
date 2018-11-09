@@ -64,20 +64,6 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param int[] $companyBusinessUnitIds
-     *
-     * @return void
-     */
-    public function unpublishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void
-    {
-        $existingPriceKeys = $this->priceProductMerchantRelationshipStorageRepository
-            ->findExistingPriceProductAbstractMerchantRelationshipPriceKeysByCompanyBusinessUnitIds($companyBusinessUnitIds);
-
-        $this->priceProductMerchantRelationshipStorageEntityManager
-            ->deletePriceProductAbstractsByPriceKeys($existingPriceKeys);
-    }
-
-    /**
      * @param int[] $priceProductMerchantRelationshipIds
      *
      * @return void
@@ -85,7 +71,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     public function publishAbstractPriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void
     {
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
-            ->findMerchantRelationshipProductAbstractPricesStorageByIds($priceProductMerchantRelationshipIds);
+            ->findMerchantRelationshipProductAbstractPricesByIds($priceProductMerchantRelationshipIds);
 
         if (empty($priceProductMerchantRelationshipStorageTransfers)) {
             return;
@@ -102,19 +88,32 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param int[] $merchantRelationshipIds
-     * @param int[] $productAbstractIds
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
      *
      * @return void
      */
-    public function unpublishAbstractPriceProductMerchantRelationship(array $merchantRelationshipIds, array $productAbstractIds): void
+    public function updateAbstractPriceProductByPriceKeys(array $priceKeyTransfers): void
     {
-        if (empty($merchantRelationshipIds) || empty($productAbstractIds)) {
+        if (empty($priceKeyTransfers)) {
             return;
         }
 
-        $this->priceProductMerchantRelationshipStorageEntityManager
-            ->deletePriceProductAbstractsByMerchantRelationshipIdsAndProductAbstractIds($merchantRelationshipIds, $productAbstractIds);
+        $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
+            ->findMerchantRelationshipProductAbstractPricesStorageByPriceKeys($priceKeyTransfers);
+
+        if (empty($priceProductMerchantRelationshipStorageTransfers)) {
+            $this->priceProductMerchantRelationshipStorageEntityManager
+                ->deletePriceProductAbstractsByPriceKeys(array_keys($priceKeyTransfers));
+
+            return;
+        }
+
+        $existingPriceKeys = $this->priceProductMerchantRelationshipStorageRepository
+            ->findExistingPriceKeysOfPriceProductAbstractMerchantRelationshipStorage(array_keys($priceKeyTransfers));
+
+        $existingPriceKeys = array_merge($existingPriceKeys, array_keys($priceProductMerchantRelationshipStorageTransfers));
+
+        $this->write($priceProductMerchantRelationshipStorageTransfers, $existingPriceKeys);
     }
 
     /**

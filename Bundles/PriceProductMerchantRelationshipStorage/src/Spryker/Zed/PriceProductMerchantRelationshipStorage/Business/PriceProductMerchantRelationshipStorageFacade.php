@@ -28,7 +28,8 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      */
     public function publishConcretePriceProductByBusinessUnitProducts(array $businessUnitProducts): void
     {
-        $this->getFactory()->createPriceProductConcreteStorageWriter()->publishByBusinessUnitProducts($businessUnitProducts);
+        $this->getFactory()->createPriceProductConcreteStorageWriter()
+            ->publishByBusinessUnitProducts($businessUnitProducts);
     }
 
     /**
@@ -44,7 +45,8 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      */
     public function publishAbstractPriceProductByBusinessUnitProducts(array $businessUnitProducts): void
     {
-        $this->getFactory()->createPriceProductAbstractStorageWriter()->publishByBusinessUnitProducts($businessUnitProducts);
+        $this->getFactory()->createPriceProductAbstractStorageWriter()
+            ->publishByBusinessUnitProducts($businessUnitProducts);
     }
 
     /**
@@ -58,21 +60,8 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      */
     public function publishAbstractPriceProductByBusinessUnits(array $companyBusinessUnitIds): void
     {
-        $this->getFactory()->createPriceProductAbstractStorageWriter()->publishByCompanyBusinessUnitIds($companyBusinessUnitIds);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int[] $companyBusinessUnitIds
-     *
-     * @return void
-     */
-    public function unpublishAbstractPriceProductByBusinessUnits(array $companyBusinessUnitIds): void
-    {
-        $this->getFactory()->createPriceProductAbstractStorageWriter()->unpublishByCompanyBusinessUnitIds($companyBusinessUnitIds);
+        $this->getFactory()->createPriceProductAbstractStorageWriter()
+            ->publishByCompanyBusinessUnitIds($companyBusinessUnitIds);
     }
 
     /**
@@ -86,21 +75,8 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      */
     public function publishConcretePriceProductByBusinessUnits(array $companyBusinessUnitIds): void
     {
-        $this->getFactory()->createPriceProductConcreteStorageWriter()->publishByCompanyBusinessUnitIds($companyBusinessUnitIds);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int[] $companyBusinessUnitIds
-     *
-     * @return void
-     */
-    public function unpublishConcretePriceProductByBusinessUnits(array $companyBusinessUnitIds): void
-    {
-        $this->getFactory()->createPriceProductConcreteStorageWriter()->unpublishByCompanyBusinessUnitIds($companyBusinessUnitIds);
+        $this->getFactory()->createPriceProductConcreteStorageWriter()
+            ->publishByCompanyBusinessUnitIds($companyBusinessUnitIds);
     }
 
     /**
@@ -114,7 +90,8 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      */
     public function publishAbstractPriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void
     {
-        $this->getFactory()->createPriceProductAbstractStorageWriter()->publishAbstractPriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
+        $this->getFactory()->createPriceProductAbstractStorageWriter()
+            ->publishAbstractPriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
     }
 
     /**
@@ -122,15 +99,14 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $merchantRelationshipIds
-     * @param int[] $productAbstractIds
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
      *
      * @return void
      */
-    public function unpublishAbstractPriceProductMerchantRelationship(array $merchantRelationshipIds, array $productAbstractIds): void
+    public function updateAbstractPriceProductByPriceKeys(array $priceKeyTransfers): void
     {
         $this->getFactory()->createPriceProductAbstractStorageWriter()
-            ->unpublishAbstractPriceProductMerchantRelationship($merchantRelationshipIds, $productAbstractIds);
+            ->updateAbstractPriceProductByPriceKeys($priceKeyTransfers);
     }
 
     /**
@@ -144,7 +120,8 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      */
     public function publishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void
     {
-        $this->getFactory()->createPriceProductConcreteStorageWriter()->publishConcretePriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
+        $this->getFactory()->createPriceProductConcreteStorageWriter()
+            ->publishConcretePriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
     }
 
     /**
@@ -152,14 +129,13 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $merchantRelationshipIds
-     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
      *
      * @return void
      */
-    public function unpublishConcretePriceProductMerchantRelationship(array $merchantRelationshipIds, array $productConcreteIds): void
+    public function updateConcretePriceProductByPriceKeys(array $priceKeyTransfers): void
     {
         $this->getFactory()->createPriceProductConcreteStorageWriter()
-            ->unpublishConcretePriceProductMerchantRelationship($merchantRelationshipIds, $productConcreteIds);
+            ->updateConcretePriceProductByPriceKeys($priceKeyTransfers);
     }
 }

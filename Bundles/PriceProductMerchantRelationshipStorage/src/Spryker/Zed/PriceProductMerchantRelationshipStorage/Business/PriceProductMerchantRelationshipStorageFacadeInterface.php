@@ -56,19 +56,6 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  - Un-publish merchant relationship prices for product abstracts.
-     *  - Uses the given company business unit IDs.
-     *
-     * @api
-     *
-     * @param int[] $companyBusinessUnitIds
-     *
-     * @return void
-     */
-    public function unpublishAbstractPriceProductByBusinessUnits(array $companyBusinessUnitIds): void;
-
-    /**
-     * Specification:
      *  - Publish merchant relationship prices for product concretes.
      *  - Uses the given company business unit IDs.
      *
@@ -79,19 +66,6 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      * @return void
      */
     public function publishConcretePriceProductByBusinessUnits(array $companyBusinessUnitIds): void;
-
-    /**
-     * Specification:
-     *  - Un-publish merchant relationship prices for product concretes.
-     *  - Uses the given company business unit IDs.
-     *
-     * @api
-     *
-     * @param int[] $companyBusinessUnitIds
-     *
-     * @return void
-     */
-    public function unpublishConcretePriceProductByBusinessUnits(array $companyBusinessUnitIds): void;
 
     /**
      * Specification:
@@ -108,17 +82,16 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  - Un-publish merchant relationship prices for product abstracts.
-     *  - Uses the given IDs of merchant relationships and product abstracts.
+     *  - Publish merchant relationship prices for product abstracts.
+     *  - Uses the given generated price key identifiers.
      *
      * @api
      *
-     * @param int[] $merchantRelationshipIds
-     * @param int[] $productAbstractIds
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
      *
      * @return void
      */
-    public function unpublishAbstractPriceProductMerchantRelationship(array $merchantRelationshipIds, array $productAbstractIds): void;
+    public function updateAbstractPriceProductByPriceKeys(array $priceKeyTransfers): void;
 
     /**
      * Specification:
@@ -135,15 +108,14 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
 
     /**
      * Specification:
-     *  - Un-publish merchant relationship prices for product concretes.
-     *  - Uses the given IDs of merchant relationships and product concretes.
+     *  - Publish merchant relationship prices for product concretes.
+     *  - Uses the given generated price key identifiers.
      *
      * @api
      *
-     * @param int[] $merchantRelationshipIds
-     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
      *
      * @return void
      */
-    public function unpublishConcretePriceProductMerchantRelationship(array $merchantRelationshipIds, array $productConcreteIds): void;
+    public function updateConcretePriceProductByPriceKeys(array $priceKeyTransfers): void;
 }

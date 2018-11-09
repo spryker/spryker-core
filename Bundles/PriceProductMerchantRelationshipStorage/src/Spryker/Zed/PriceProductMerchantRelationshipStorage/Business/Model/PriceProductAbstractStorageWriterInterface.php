@@ -26,13 +26,6 @@ interface PriceProductAbstractStorageWriterInterface
     public function publishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void;
 
     /**
-     * @param int[] $companyBusinessUnitIds
-     *
-     * @return void
-     */
-    public function unpublishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void;
-
-    /**
      * @param int[] $priceProductMerchantRelationshipIds
      *
      * @return void
@@ -40,10 +33,9 @@ interface PriceProductAbstractStorageWriterInterface
     public function publishAbstractPriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
 
     /**
-     * @param int[] $merchantRelationshipIds
-     * @param int[] $productAbstractIds
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
      *
      * @return void
      */
-    public function unpublishAbstractPriceProductMerchantRelationship(array $merchantRelationshipIds, array $productAbstractIds): void;
+    public function updateAbstractPriceProductByPriceKeys(array $priceKeyTransfers): void;
 }

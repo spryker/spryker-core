@@ -26,13 +26,6 @@ interface PriceProductConcreteStorageWriterInterface
     public function publishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void;
 
     /**
-     * @param int[] $companyBusinessUnitIds
-     *
-     * @return void
-     */
-    public function unpublishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void;
-
-    /**
      * @param int[] $priceProductMerchantRelationshipIds
      *
      * @return void
@@ -40,10 +33,9 @@ interface PriceProductConcreteStorageWriterInterface
     public function publishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
 
     /**
-     * @param int[] $merchantRelationshipIds
-     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
      *
      * @return void
      */
-    public function unpublishConcretePriceProductMerchantRelationship(array $merchantRelationshipIds, array $productConcreteIds): void;
+    public function updateConcretePriceProductByPriceKeys(array $priceKeyTransfers): void;
 }

@@ -76,20 +76,6 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param int[] $companyBusinessUnitIds
-     *
-     * @return void
-     */
-    public function unpublishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void
-    {
-        $existingPriceKeys = $this->priceProductMerchantRelationshipStorageRepository
-            ->findExistingPriceProductConcreteMerchantRelationshipPriceKeysByCompanyBusinessUnitIds($companyBusinessUnitIds);
-
-        $this->priceProductMerchantRelationshipStorageEntityManager
-            ->deletePriceProductConcretesByPriceKeys($existingPriceKeys);
-    }
-
-    /**
      * @param int[] $priceProductMerchantRelationshipIds
      *
      * @return void
@@ -97,7 +83,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     public function publishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void
     {
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
-            ->findMerchantRelationshipProductConcretePricesStorageByIds($priceProductMerchantRelationshipIds);
+            ->findMerchantRelationshipProductConcretePricesByIds($priceProductMerchantRelationshipIds);
 
         if (empty($priceProductMerchantRelationshipStorageTransfers)) {
             return;
@@ -114,19 +100,32 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param int[] $merchantRelationshipIds
-     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipPriceKeyTransfer[] $priceKeyTransfers
      *
      * @return void
      */
-    public function unpublishConcretePriceProductMerchantRelationship(array $merchantRelationshipIds, array $productConcreteIds): void
+    public function updateConcretePriceProductByPriceKeys(array $priceKeyTransfers): void
     {
-        if (empty($merchantRelationshipIds) || empty($productConcreteIds)) {
+        if (empty($priceKeyTransfers)) {
             return;
         }
 
-        $this->priceProductMerchantRelationshipStorageEntityManager
-            ->deletePriceProductConcretesByMerchantRelationshipIdsAndProductConcreteIds($merchantRelationshipIds, $productConcreteIds);
+        $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
+            ->findMerchantRelationshipProductConcretePricesStorageByPriceKeys($priceKeyTransfers);
+
+        if (empty($priceProductMerchantRelationshipStorageTransfers)) {
+            $this->priceProductMerchantRelationshipStorageEntityManager
+                ->deletePriceProductConcretesByPriceKeys(array_keys($priceKeyTransfers));
+
+            return;
+        }
+
+        $existingPriceKeys = $this->priceProductMerchantRelationshipStorageRepository
+            ->findExistingPriceKeysOfPriceProductConcreteMerchantRelationship(array_keys($priceKeyTransfers));
+
+        $existingPriceKeys = array_merge($existingPriceKeys, array_keys($priceProductMerchantRelationshipStorageTransfers));
+
+        $this->write($priceProductMerchantRelationshipStorageTransfers, $existingPriceKeys);
     }
 
     /**
