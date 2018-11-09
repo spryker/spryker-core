@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -29,36 +28,59 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
     public function saveEntity(
         SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
     ): EntityTransferInterface {
-        if (!$priceProductMerchantRelationshipEntityTransfer->getIdPriceProductMerchantRelationship()) {
-            $entity = new SpyPriceProductMerchantRelationship();
-            $entity->fromArray($priceProductMerchantRelationshipEntityTransfer->toArray());
-            $entity->save();
-
-            return $priceProductMerchantRelationshipEntityTransfer;
+        if ($priceProductMerchantRelationshipEntityTransfer->getIdPriceProductMerchantRelationship()) {
+            return $this->updatePriceProductMerchantRelationshipEntity($priceProductMerchantRelationshipEntityTransfer);
         }
 
-        $this->updateEntity($priceProductMerchantRelationshipEntityTransfer);
+        return $this->createPriceProductMerchantRelationshipEntity($priceProductMerchantRelationshipEntityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer
+     */
+    protected function createPriceProductMerchantRelationshipEntity(
+        SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
+    ): SpyPriceProductMerchantRelationshipEntityTransfer {
+        $priceProductMerchantRelationshipEntity = new SpyPriceProductMerchantRelationship();
+        $priceProductMerchantRelationshipEntity->fromArray($priceProductMerchantRelationshipEntityTransfer->toArray());
+        $priceProductMerchantRelationshipEntity->save();
+
+        $priceProductMerchantRelationshipEntityTransfer->setIdPriceProductMerchantRelationship(
+            $priceProductMerchantRelationshipEntity->getIdPriceProductMerchantRelationship()
+        );
 
         return $priceProductMerchantRelationshipEntityTransfer;
     }
 
-    protected function updateEntity(
+    /**
+     * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer
+     */
+    protected function updatePriceProductMerchantRelationshipEntity(
         SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
-    ): void {
-        /** @var SpyPriceProductMerchantRelationship */
-        $entity = $this->getFactory()
+    ): SpyPriceProductMerchantRelationshipEntityTransfer {
+        $priceProductMerchantRelationshipEntity = $this->getFactory()
             ->createPriceProductMerchantRelationshipQuery()
             ->filterByIdPriceProductMerchantRelationship(
                 $priceProductMerchantRelationshipEntityTransfer->getIdPriceProductMerchantRelationship()
             )
             ->findOne();
 
-        if (!$entity) {
-            return;
+        if ($priceProductMerchantRelationshipEntity === null) {
+            return $priceProductMerchantRelationshipEntityTransfer;
         }
 
-        $entity->fromArray($priceProductMerchantRelationshipEntityTransfer->toArray());
-        $entity->save();
+        $priceProductMerchantRelationshipEntity->fromArray($priceProductMerchantRelationshipEntityTransfer->toArray());
+        $priceProductMerchantRelationshipEntity->save();
+
+        $priceProductMerchantRelationshipEntityTransfer->setIdPriceProductMerchantRelationship(
+            $priceProductMerchantRelationshipEntity->getIdPriceProductMerchantRelationship()
+        );
+
+        return $priceProductMerchantRelationshipEntityTransfer;
     }
 
     /**

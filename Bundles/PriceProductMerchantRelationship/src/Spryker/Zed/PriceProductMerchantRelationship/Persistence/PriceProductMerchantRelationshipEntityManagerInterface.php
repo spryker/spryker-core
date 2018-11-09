@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
 use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 
