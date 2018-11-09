@@ -34,6 +34,7 @@ class CodeArchitectureSnifferConsole extends Console
 
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
     protected const NAMESPACE_SPRYKER = 'Spryker';
+    protected const SOURCE_FOLDER_NAME = 'src';
 
     /**
      * @return void
@@ -76,14 +77,13 @@ class CodeArchitectureSnifferConsole extends Console
         if ($path) {
             $message .= ' (' . $path . ')';
         }
-
         $this->info($message);
 
         if ($isCore) {
             $success = $this->runForCore($output, $module, $path);
         } else {
-            $pathToRoot = $this->getFactory()->getConfig()->getPathToRoot();
-            $customPath = $pathToRoot . $path;
+            $customPath = $this->getCustomPath($module, $path);
+
             if (!$module && file_exists($customPath)) {
                 $success = $this->runCustomPath($output, $customPath);
             } else {
@@ -303,5 +303,23 @@ class CodeArchitectureSnifferConsole extends Console
     protected function isVerboseModeEnabled(): bool
     {
         return $this->input->getOption(static::OPTION_VERBOSE);
+    }
+
+    /**
+     * @param string|null $module
+     * @param string|null $path
+     *
+     * @return string
+     */
+    protected function getCustomPath(?string $module, ?string $path): string
+    {
+        $pathToRoot = $this->getFactory()->getConfig()->getPathToRoot();
+        $customPath = $pathToRoot . $path;
+
+        if (!$module && !$path) {
+            $customPath .= static::SOURCE_FOLDER_NAME . DIRECTORY_SEPARATOR;
+        }
+
+        return $customPath;
     }
 }

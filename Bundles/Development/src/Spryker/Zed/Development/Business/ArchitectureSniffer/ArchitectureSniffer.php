@@ -21,6 +21,9 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     public const OPTION_STRICT = 'strict';
     public const OPTION_DRY_RUN = 'dry-run';
 
+    protected const SOURCE_FOLDER_NAME = 'src';
+    protected const OPTION_MODULE = 'module';
+
     /**
      * @var string
      */
@@ -108,6 +111,10 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
         if ($options === []) {
             return $this->formatResult($options);
+        }
+
+        if ($this->isCoreModule($options)) {
+            $directory = $this->addSourcePathForCoreModulePath($directory);
         }
 
         $output = $this->runCommand($directory, $options);
@@ -245,5 +252,31 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             }
         }
         return $fileViolations;
+    }
+
+    /**
+     * @param string $directory
+     *
+     * @return string
+     */
+    protected function addSourcePathForCoreModulePath(string $directory): string
+    {
+        return $directory . static::SOURCE_FOLDER_NAME . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return bool
+     */
+    protected function isCoreModule(array $options): bool
+    {
+        if (!isset($options[static::OPTION_MODULE])) {
+            return false;
+        }
+
+        $module = $options[static::OPTION_MODULE];
+
+        return mb_strpos($module, '.') !== false;
     }
 }
