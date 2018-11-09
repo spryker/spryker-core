@@ -1,22 +1,18 @@
 <?php
 
-namespace Spryker\Glue\CartsRestApiExtension\Dependency\Plugin;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\CartsRestApi\Reader;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 
-/**
- * @deprecated Use \Spryker\Client\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface instead.
- */
-interface QuoteCollectionReaderPluginInterface
+interface CartQuoteCollectionReaderInterface
 {
     /**
-     * Specification:
-     * - This plugin method is used to find quote collection in CartsRestApi module.
-     * - Method provides quote collection.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer

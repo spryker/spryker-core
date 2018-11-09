@@ -1,13 +1,15 @@
 <?php
 
-namespace Spryker\Glue\CartsRestApiExtension\Dependency\Plugin;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\CartsRestApiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 
-/**
- * @deprecated Use \Spryker\Client\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface instead.
- */
 interface QuoteCollectionReaderPluginInterface
 {
     /**
