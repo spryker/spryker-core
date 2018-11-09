@@ -8,8 +8,6 @@
 namespace Spryker\Glue\CheckoutRestApi;
 
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface;
-use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCheckoutClientInterface;
-use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCustomerClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessor;
@@ -112,22 +110,6 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function getCartClient(): CheckoutRestApiToCartClientInterface
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_CART);
-    }
-
-    /**
-     * @return \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCheckoutClientInterface
-     */
-    public function getCheckoutClient(): CheckoutRestApiToCheckoutClientInterface
-    {
-        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_CHECKOUT);
-    }
-
-    /**
-     * @return \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCustomerClientInterface
-     */
-    public function getCustomerClient(): CheckoutRestApiToCustomerClientInterface
-    {
-        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**

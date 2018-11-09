@@ -10,12 +10,7 @@ namespace Spryker\Glue\CheckoutRestApi\Dependency\Client;
 interface CheckoutRestApiToCartClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function validateQuote();
-
-    /**
-     * @return mixed
+     * @return void
      */
     public function clearQuote();
 

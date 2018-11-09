@@ -58,11 +58,12 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $checkoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
-
-        return $this->mapRestCheckoutRequestAttributesTransferToRestCheckoutDataResponseAttributesTransfer(
+        $restCheckoutDataResponseAttributesTransfer = $this->mapRestCheckoutRequestAttributesTransferToRestCheckoutDataResponseAttributesTransfer(
             $restCheckoutRequestAttributesTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
+
+        return $restCheckoutDataResponseAttributesTransfer;
     }
 
     /**
@@ -190,27 +191,17 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $restCheckoutRequestAttributesTransfer->getCart()->requireBillingAddress();
         }
 
-        if ($restCheckoutRequestAttributesTransfer->getCart()->getBillingAddress() !== null) {
-            $quoteTransfer->setBillingAddress(
-                (new AddressTransfer())->fromArray(
-                    $restCheckoutRequestAttributesTransfer->getCart()->getBillingAddress()->toArray(),
-                    true
-                )->setUuid($restCheckoutRequestAttributesTransfer->getCart()->getBillingAddress()->getId())
-            );
-        }
+        $quoteTransfer->setBillingAddress(
+            $this->prepareAddressTransfer($restCheckoutRequestAttributesTransfer->getCart()->getBillingAddress())
+        );
 
         if ($checkRequired === true) {
             $restCheckoutRequestAttributesTransfer->getCart()->requireShippingAddress();
         }
 
-        if ($restCheckoutRequestAttributesTransfer->getCart()->getShippingAddress() !== null) {
-            $quoteTransfer->setShippingAddress(
-                (new AddressTransfer())->fromArray(
-                    $restCheckoutRequestAttributesTransfer->getCart()->getShippingAddress()->toArray(),
-                    true
-                )->setUuid($restCheckoutRequestAttributesTransfer->getCart()->getShippingAddress()->getId())
-            );
-        }
+        $quoteTransfer->setShippingAddress(
+            $this->prepareAddressTransfer($restCheckoutRequestAttributesTransfer->getCart()->getShippingAddress())
+        );
 
         return $quoteTransfer;
     }
@@ -284,7 +275,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         }
 
         foreach ($restAddressesResponseData as $restAddressResponseTransfer) {
-            if ($restAddressResponseTransfer->getId() !== null && $restAddressResponseTransfer->getId() == $restAddressTransfer->getId()) {
+            if ($this->isAddressIdMatch($restAddressTransfer, $restAddressResponseTransfer)) {
                 return true;
             }
         }
@@ -311,5 +302,33 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         }
 
         return $restCheckoutDataResponseAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestAddressTransfer|null $restAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function prepareAddressTransfer(?RestAddressTransfer $restAddressTransfer): AddressTransfer
+    {
+        if ($restAddressTransfer === null) {
+            return new AddressTransfer();
+        }
+
+        return (new AddressTransfer())->fromArray(
+            $restAddressTransfer->toArray(),
+            true
+        )->setUuid($restAddressTransfer->getId());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
+     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressResponseTransfer
+     *
+     * @return bool
+     */
+    protected function isAddressIdMatch(RestAddressTransfer $restAddressTransfer, RestAddressTransfer $restAddressResponseTransfer): bool
+    {
+        return $restAddressResponseTransfer->getId() !== null && $restAddressResponseTransfer->getId() === $restAddressTransfer->getId();
     }
 }

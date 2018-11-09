@@ -27,6 +27,6 @@ class CheckoutDataResourceController extends AbstractController
         RestRequestInterface $restRequest,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestResponseInterface {
-        return $this->getFactory()->createCheckoutDataReader()->readCheckoutData($restRequest, $restCheckoutRequestAttributesTransfer);
+        return $this->getFactory()->createCheckoutDataReader()->getCheckoutData($restRequest, $restCheckoutRequestAttributesTransfer);
     }
 }

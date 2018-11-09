@@ -9,6 +9,7 @@ namespace Spryker\Glue\CheckoutRestApi\Constraints;
 
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class AddressValidator
@@ -54,26 +55,17 @@ class AddressValidator
         'allowExtraFields' => true,
         'groups' => ['Default'],
     ];
-    protected const FIELDS = 'fields';
+    protected const FIELDS_CONSTRAINT_PARAMETERS = 'fields';
 
     /**
-     * @param string $value
+     * @param string[] $value
      * @param \Symfony\Component\Validator\Context\ExecutionContext $context
      *
      * @return void
      */
     public function validate($value, ExecutionContext $context): void
     {
-        $violationList = [];
-        if (isset($value[static::UUID])) {
-            $constraint = new NotBlank();
-            $violationList = $context->getValidator()->validate($value[static::UUID], $constraint);
-        }
-
-        if (!isset($value[static::UUID])) {
-            $constraintsCollection = new Collection([static::FIELDS => static::getNestedConstraints()] + static::CONSTRAINT_PARAMETERS);
-            $violationList = $context->getValidator()->validate($value, $constraintsCollection);
-        }
+        $violationList = static::getViolationsList($value, $context);
 
         foreach ($violationList as $violation) {
             $context
@@ -103,5 +95,25 @@ class AddressValidator
         }
 
         return $constraintConfig;
+    }
+
+    /**
+     * @param string[] $value
+     * @param \Symfony\Component\Validator\Context\ExecutionContext $context
+     *
+     * @return \Symfony\Component\Validator\ConstraintViolationListInterface
+     */
+    protected static function getViolationsList(array $value, ExecutionContext $context): ConstraintViolationListInterface
+    {
+        if (isset($value[static::UUID])) {
+            $constraint = new NotBlank();
+
+            return $context->getValidator()->validate($value[static::UUID], $constraint);
+        }
+
+        $constraintOptions = [static::FIELDS_CONSTRAINT_PARAMETERS => static::getNestedConstraints()] + static::CONSTRAINT_PARAMETERS;
+        $constraintsCollection = new Collection($constraintOptions);
+
+        return $context->getValidator()->validate($value, $constraintsCollection);
     }
 }

@@ -28,10 +28,12 @@ interface CheckoutRestApiClientInterface
 
     /**
      * Specification:
-     * - Takes Quote transfer.
-     * - Validates the Quote.
-     * - Places an order with the passed Quote.
-     * - Response is CheckoutResponseTransfer.
+     * - Takes QuoteTransfer as parameter.
+     * - Extends the Customer transfer with the customer data (for registered users).
+     * - Updated billing and shipping addresses with full details if UUID is passed.
+     * - Validates quote via CartClient.
+     * - Places an order via CheckoutClient.
+     * - Returns CheckoutResponseTransfer.
      *
      * @api
      *

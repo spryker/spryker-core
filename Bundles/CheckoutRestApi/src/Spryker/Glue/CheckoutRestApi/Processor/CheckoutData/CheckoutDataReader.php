@@ -75,7 +75,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readCheckoutData(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
+    public function getCheckoutData(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
     {
         $currentCustomerQuote = $this->findQuoteTransfer($restCheckoutRequestAttributesTransfer);
         if ($currentCustomerQuote === null) {
@@ -94,20 +94,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             ->mapCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer($checkoutDataTransfer, $restCheckoutRequestAttributesTransfer);
 
         return $this->createRestResponse($restCheckoutResponseAttributesTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function findCurrentCustomerQuote(): ?QuoteTransfer
-    {
-        $quoteCollectionTransfer = $this->quoteCollectionReader->getQuoteCollectionByCriteria(new QuoteCriteriaFilterTransfer());
-
-        if (!$quoteCollectionTransfer->getQuotes()->offsetExists(0)) {
-            return null;
-        }
-
-        return $quoteCollectionTransfer->getQuotes()->offsetGet(0);
     }
 
     /**
@@ -159,5 +145,19 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         }
 
         return $this->quoteProcessor->findCustomerQuote($restCheckoutRequestAttributesTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function findCurrentCustomerQuote(): ?QuoteTransfer
+    {
+        $quoteCollectionTransfer = $this->quoteCollectionReader->getQuoteCollectionByCriteria(new QuoteCriteriaFilterTransfer());
+
+        if (!$quoteCollectionTransfer->getQuotes()->offsetExists(0)) {
+            return null;
+        }
+
+        return $quoteCollectionTransfer->getQuotes()->offsetGet(0);
     }
 }

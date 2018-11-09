@@ -23,9 +23,8 @@ class QuoteMerger implements QuoteMergerInterface
     /**
      * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface $checkoutDataMapper
      */
-    public function __construct(
-        CheckoutDataMapperInterface $checkoutDataMapper
-    ) {
+    public function __construct(CheckoutDataMapperInterface $checkoutDataMapper)
+    {
         $this->checkoutDataMapper = $checkoutDataMapper;
     }
 
@@ -80,6 +79,10 @@ class QuoteMerger implements QuoteMergerInterface
      */
     protected function prepareGuestCustomerTransfer(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CustomerTransfer
     {
+        if ($restCheckoutRequestAttributesTransfer->getCart() === null || $restCheckoutRequestAttributesTransfer->getCart()->getCustomer() === null) {
+            return new CustomerTransfer();
+        }
+
         return (new CustomerTransfer())
             ->fromArray(
                 $restCheckoutRequestAttributesTransfer->getCart()->getCustomer()->toArray(),

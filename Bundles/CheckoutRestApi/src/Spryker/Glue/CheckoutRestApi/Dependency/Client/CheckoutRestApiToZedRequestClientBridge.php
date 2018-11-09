@@ -25,7 +25,7 @@ class CheckoutRestApiToZedRequestClientBridge implements CheckoutRestApiToZedReq
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getLastResponseErrorMessages(): array
+    public function getLastResponseErrorMessages()
     {
         return $this->zedRequestClient->getLastResponseErrorMessages();
     }

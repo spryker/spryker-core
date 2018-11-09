@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Dependency\Facade;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class CheckoutRestApiToCheckoutFacadeBridge implements CheckoutRestApiToCheckoutFacadeInterface
@@ -30,7 +29,7 @@ class CheckoutRestApiToCheckoutFacadeBridge implements CheckoutRestApiToCheckout
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function placeOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    public function placeOrder(QuoteTransfer $quoteTransfer)
     {
         return $this->checkoutFacade->placeOrder($quoteTransfer);
     }
