@@ -105,4 +105,12 @@ class SetupConfig extends AbstractBundleConfig
     {
         return static::CRONJOBS_DEFINITION_FILE_PATH;
     }
+
+    /**
+     * @return bool
+     */
+    public function isJenkinsCsrfProtectionEnabled(): bool
+    {
+        return $this->get(SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED, false);
+    }
 }
