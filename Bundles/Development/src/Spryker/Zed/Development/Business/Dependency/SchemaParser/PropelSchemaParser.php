@@ -265,7 +265,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
      */
     protected function computeLookupPaths(): array
     {
-        $lookupPaths = $this->config->getInternalPaths();
+        $lookupPaths = $this->config->getOrganizationPathMap();
 
         foreach ($lookupPaths as $organizationName => $path) {
             $lookupPaths[$organizationName] = $path . sprintf(static::PROPEL_SCHEMA_PATH_PATTERN, $organizationName);

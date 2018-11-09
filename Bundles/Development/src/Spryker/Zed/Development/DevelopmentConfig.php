@@ -137,7 +137,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getInternalPaths(): array
+    public function getOrganizationPathMap(): array
     {
         return [
             'Spryker' => $this->getPathToCore(),
