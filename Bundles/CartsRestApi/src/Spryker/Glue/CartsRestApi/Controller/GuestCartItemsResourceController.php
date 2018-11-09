@@ -22,7 +22,8 @@ class GuestCartItemsResourceController extends AbstractController
      *      "post": {
      *          "parameters": [{
      *              "name": "X-Anonymous-Customer-Unique-Id",
-     *              "in": "header"
+     *              "in": "header",
+     *              "required": true
      *          }],
      *          "responseClass": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
