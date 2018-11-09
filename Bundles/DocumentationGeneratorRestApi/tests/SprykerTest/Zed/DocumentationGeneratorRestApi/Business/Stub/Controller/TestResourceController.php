@@ -15,9 +15,10 @@ class TestResourceController
      *          "summary": [
      *              "Summary example"
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Bad Request",
      *              "404": "Item not found"
@@ -27,14 +28,14 @@ class TestResourceController
      *
      * @return void
      */
-    public function getAction()
+    public function getAction(): void
     {
     }
 
     /**
      * @Glue({
      *     "post": {
-     *          "responseClass": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
+     *          "responseClass": "SprykerTest\\Zed\\DocumentationGeneratorRestApi\\Business\\Stub\\RestTestAlternativeAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "500": "Server Error"
@@ -44,7 +45,7 @@ class TestResourceController
      *
      * @return void
      */
-    public function postAction()
+    public function postAction(): void
     {
     }
 }

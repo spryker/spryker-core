@@ -22,9 +22,10 @@ class RefreshTokensResourceController extends AbstractController
      *          "summary": [
      *              "Refresh customer's auth token."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "401": "Failed to authenticate user."
      *          }

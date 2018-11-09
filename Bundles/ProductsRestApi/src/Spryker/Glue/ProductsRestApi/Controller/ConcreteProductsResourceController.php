@@ -22,9 +22,10 @@ class ConcreteProductsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve product concrete data."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Concrete product sku is not specified.",
      *              "404": "Concrete product is not found."

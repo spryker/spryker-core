@@ -21,9 +21,10 @@ class AbstractProductAvailabilitiesResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve Abstract product availabilities data for given sku."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Abstract product sku is not specified.",
      *              "404": "Abstract product availability is not found."

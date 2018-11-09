@@ -23,9 +23,10 @@ class AccessTokensResourceController extends AbstractController
      *          "summary": [
      *              "Create access token for user."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "401": "Failed to authenticate user.",
      *              "403": "Unauthorized request."

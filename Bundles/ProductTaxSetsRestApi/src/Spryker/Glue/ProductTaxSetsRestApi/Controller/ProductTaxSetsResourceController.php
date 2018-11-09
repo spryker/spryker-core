@@ -22,9 +22,10 @@ class ProductTaxSetsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve tax set for abstract product."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Abstract product sku is not specified.",
      *              "404": "Abstract product tax sets are not found."

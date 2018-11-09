@@ -22,9 +22,10 @@ class AbstractProductImageSetsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve abstract product's image sets."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Abstract product sku is not specified.",
      *              "404": "Abstract product image sets are not found."

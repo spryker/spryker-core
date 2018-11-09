@@ -20,9 +20,11 @@ class GuestCartItemsResourceController extends AbstractController
     /**
      * @Glue({
      *      "post": {
-     *          "headers": [
-     *              "X-Anonymous-Customer-Unique-Id"
-     *          ],
+     *          "parameters": [{
+     *              "name": "X-Anonymous-Customer-Unique-Id",
+     *              "in": "header",
+     *              "required": true
+     *          }],
      *          "responseClass": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
      *              "404": "Cart with given uuid not found.",
@@ -46,9 +48,11 @@ class GuestCartItemsResourceController extends AbstractController
     /**
      * @Glue({
      *      "patch": {
-     *          "headers": [
-     *              "X-Anonymous-Customer-Unique-Id"
-     *          ],
+     *          "parameters": [{
+     *              "name": "X-Anonymous-Customer-Unique-Id",
+     *              "in": "header",
+     *              "required": true
+     *          }],
      *          "responseClass": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
      *              "400": "Cart uuid or item group key is not specified.",
@@ -73,9 +77,11 @@ class GuestCartItemsResourceController extends AbstractController
     /**
      * @Glue({
      *      "delete": {
-     *          "headers": [
-     *              "X-Anonymous-Customer-Unique-Id"
-     *          ],
+     *          "parameters": [{
+     *              "name": "X-Anonymous-Customer-Unique-Id",
+     *              "in": "header",
+     *              "required": true
+     *          }],
      *          "responseClass": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
      *              "400": "Cart uuid or item group key is not specified.",

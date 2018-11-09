@@ -23,9 +23,10 @@ class AddressResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve one customer address."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "404": "Address not found."
      *          }
@@ -34,9 +35,10 @@ class AddressResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve list of all customer addresses."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Customer not found.",
      *              "403": "Unauthorized request.",
@@ -62,9 +64,10 @@ class AddressResourceController extends AbstractController
      *          "summary": [
      *              "Create customer addresses."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "403": "Unauthorized request.",
      *              "404": "Customer not found.",
@@ -91,9 +94,10 @@ class AddressResourceController extends AbstractController
      *          "summary": [
      *              "Update customer address."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Customer not found or Address UUID is missing.",
      *              "403": "Unauthorized request.",
@@ -120,9 +124,10 @@ class AddressResourceController extends AbstractController
      *          "summary": [
      *              "Delete customer's addresses."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "404": "Address was not found."
      *          }
