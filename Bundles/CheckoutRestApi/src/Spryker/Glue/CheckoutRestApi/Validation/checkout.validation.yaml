@@ -41,10 +41,6 @@ checkout:
                             - NotBlank
                           paymentSelection:
                             - NotBlank
-                          amount:
-                            - NotBlank
-                            - Type:
-                                type: numeric
             shipment:
               - Collection:
                   fields:

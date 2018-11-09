@@ -223,6 +223,9 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         }
 
         foreach ($restCheckoutRequestAttributesTransfer->getCart()->getPayments() as $paymentTransfer) {
+            if ($quoteTransfer->getTotals() !== null && $quoteTransfer->getTotals()->getPriceToPay() !== null) {
+                $paymentTransfer->setAmount($quoteTransfer->getTotals()->getPriceToPay());
+            }
             $quoteTransfer->setPayment($paymentTransfer);
         }
 
