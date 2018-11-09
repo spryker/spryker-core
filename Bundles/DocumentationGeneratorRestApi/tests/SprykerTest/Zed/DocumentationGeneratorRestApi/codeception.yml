@@ -14,7 +14,7 @@ coverage:
 suites:
     Service:
         path: .
-        class_name: DocumentationGeneratorRestApiFacadeTester
+        class_name: DocumentationGeneratorRestApiTester
         modules:
             enabled:
                 - Asserts

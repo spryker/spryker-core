@@ -118,7 +118,7 @@
     </transfer>
 
     <transfer name="RestApiDocumentationAnnotation">
-        <property name="summary" type="string" />
+        <property name="summary" type="string[]" />
         <property name="parameters" singular="parameter" type="OpenApiSpecificationPathParameterComponent[]" />
         <property name="responseClass" type="string" />
         <property name="isEmptyResponse" type="bool" />

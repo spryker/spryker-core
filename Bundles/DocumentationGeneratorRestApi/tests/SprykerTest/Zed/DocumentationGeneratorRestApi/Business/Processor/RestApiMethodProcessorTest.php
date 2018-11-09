@@ -26,23 +26,14 @@ class RestApiMethodProcessorTest extends Unit
 {
     protected const RESOURCE_PATH = '/test-resource';
     protected const RESOURCE_ID = '{testResourceId}';
-    protected const DEFAULT_GET_RESOURCE_SUMMARY = 'Get test resource';
-    protected const DEFAULT_GET_COLLECTION_SUMMARY = 'Get collection of test resource';
-    protected const DEFAULT_DELETE_SUMMARY = 'Delete test resource';
-    protected const DEFAULT_PATCH_SUMMARY = 'Update test resource';
-    protected const DEFAULT_POST_SUMMARY = 'Create test resource';
-    protected const RESOURCE_TAG = 'test-resource';
-    protected const SUCCESSFUL_RESPONSE_DESCRIPTION = 'Expected response to a valid request.';
-    protected const DEFAULT_RESPONSE_DESCRIPTION = 'Expected response to a bad request.';
-    protected const DEFAULT_REQUEST_DESCRIPTION = 'Expected request body.';
     protected const BAD_REQUEST_RESPONSE_DESCRIPTION = 'Bad Request.';
     protected const NOT_FOUND_RESPONSE_DESCRIPTION = 'Not found.';
-    protected const RESOURCE_RESPONSE_SCHEMA_REF = '#/components/schemas/RestTestResponse';
-    protected const COLLECTION_RESPONSE_SCHEMA_REF = '#/components/schemas/RestTestCollectionResponse';
-    protected const ERROR_SCHEMA_REF = '#/components/schemas/RestErrorMessage';
-    protected const REQUEST_SCHEMA_REF = '#/components/schemas/RestTestRequest';
-    protected const HEADER_ACCEPT_LANGUAGE = 'Accept-Language';
-    protected const SUMMARY = 'Test summary';
+    protected const SUMMARY = 'Test summary.';
+
+    /**
+     * @var \SprykerTest\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\RestApiMethodProcessorInterface
@@ -76,7 +67,7 @@ class RestApiMethodProcessorTest extends Unit
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset($this->getGetResourcePathWithoutAnnotationsExpectedData(), $generatedPaths);
+        $this->assertArraySubset($this->tester->getMethodProcessorGetResourcePathWithoutAnnotationsExpectedData(), $generatedPaths);
     }
 
     /**
@@ -86,7 +77,7 @@ class RestApiMethodProcessorTest extends Unit
     {
         $annotationTransfer = (new RestApiDocumentationAnnotationTransfer())
             ->setSummary([static::SUMMARY])
-            ->addHeader(static::HEADER_ACCEPT_LANGUAGE)
+            ->addParameter($this->tester->getAcceptLanguageHeaderPathParameterComponent())
             ->setResponses([
                 '400' => static::BAD_REQUEST_RESPONSE_DESCRIPTION,
                 '404' => static::NOT_FOUND_RESPONSE_DESCRIPTION,
@@ -104,7 +95,7 @@ class RestApiMethodProcessorTest extends Unit
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset($this->getGetResourcePathWithAnnotationsExpectedData(), $generatedPaths);
+        $this->assertArraySubset($this->tester->getMethodProcessorGetResourcePathWithAnnotationsExpectedData(), $generatedPaths);
     }
 
     /**
@@ -124,7 +115,7 @@ class RestApiMethodProcessorTest extends Unit
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset($this->getGetResourceCollectionWithoutAnnotationsExpectedData(), $generatedPaths);
+        $this->assertArraySubset($this->tester->getMethodProcessorGetResourceCollectionWithoutAnnotationsExpectedData(), $generatedPaths);
     }
 
     /**
@@ -144,7 +135,7 @@ class RestApiMethodProcessorTest extends Unit
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset($this->getGetResourceCollectionPathWithAnnotationsWithEmptyResponseExpectedData(), $generatedPaths);
+        $this->assertArraySubset($this->tester->getMethodProcessorGetResourceCollectionPathWithAnnotationsWithEmptyResponseExpectedData(), $generatedPaths);
     }
 
     /**
@@ -164,7 +155,7 @@ class RestApiMethodProcessorTest extends Unit
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset($this->getGetResourceCollectionPathWithAnnotationsExpectedData(), $generatedPaths);
+        $this->assertArraySubset($this->tester->getMethodProcessorGetResourceCollectionPathWithAnnotationsExpectedData(), $generatedPaths);
     }
 
     /**
@@ -183,7 +174,7 @@ class RestApiMethodProcessorTest extends Unit
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset($this->getDeleteResourcePathExpectedData(), $generatedPaths);
+        $this->assertArraySubset($this->tester->getMethodProcessorDeleteResourcePathExpectedData(), $generatedPaths);
     }
 
     /**
@@ -202,7 +193,7 @@ class RestApiMethodProcessorTest extends Unit
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset($this->getPatchResourcePathExpectedData(), $generatedPaths);
+        $this->assertArraySubset($this->tester->getMethodProcessorPatchResourcePathExpectedData(), $generatedPaths);
     }
 
     /**
@@ -221,7 +212,7 @@ class RestApiMethodProcessorTest extends Unit
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset($this->getPostResourcePathExpectedData(), $generatedPaths);
+        $this->assertArraySubset($this->tester->getMethodProcessorPostResourcePathExpectedData(), $generatedPaths);
     }
 
     /**
@@ -240,7 +231,7 @@ class RestApiMethodProcessorTest extends Unit
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset($this->getPostResourcePathWithAnnotationsWithEmptyResponseExpectedData(), $generatedPaths);
+        $this->assertArraySubset($this->tester->getMethodProcessorPostResourcePathWithAnnotationsWithEmptyResponseExpectedData(), $generatedPaths);
     }
 
     /**
@@ -260,434 +251,6 @@ class RestApiMethodProcessorTest extends Unit
 
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH . '/' . static::RESOURCE_ID, $generatedPaths);
-        $this->assertArraySubset($this->getGetResourceByIdPathExpectedData(), $generatedPaths);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getGetResourcePathWithoutAnnotationsExpectedData(): array
-    {
-        return [
-            static::RESOURCE_PATH => [
-                'get' => [
-                    'summary' => static::DEFAULT_GET_RESOURCE_SUMMARY,
-                    'tags' => [
-                        'test-resource',
-                    ],
-                    'responses' => [
-                        '200' => [
-                            'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::RESOURCE_RESPONSE_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                        'default' => [
-                            'description' => static::DEFAULT_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::ERROR_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getGetResourcePathWithAnnotationsExpectedData(): array
-    {
-        return [
-            static::RESOURCE_PATH => [
-                'get' => [
-                    'summary' => static::SUMMARY,
-                    'tags' => [
-                        'test-resource',
-                    ],
-                    'parameters' => [
-                        [
-                            'name' => static::HEADER_ACCEPT_LANGUAGE,
-                            'in' => 'header',
-                            'required' => false,
-                            'schema' => [
-                                'type' => 'string',
-                            ],
-                        ],
-                    ],
-                    'responses' => [
-                        '200' => [
-                            'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::RESOURCE_RESPONSE_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                        '400' => [
-                            'description' => static::BAD_REQUEST_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::ERROR_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                        '404' => [
-                            'description' => static::NOT_FOUND_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::ERROR_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                        'default' => [
-                            'description' => static::DEFAULT_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::ERROR_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getGetResourceCollectionWithoutAnnotationsExpectedData(): array
-    {
-        return [
-            static::RESOURCE_PATH => [
-                'get' => [
-                    'summary' => static::DEFAULT_GET_COLLECTION_SUMMARY,
-                    'tags' => [
-                        'test-resource',
-                    ],
-                    'responses' => [
-                        '200' => [
-                            'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::COLLECTION_RESPONSE_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                        'default' => [
-                            'description' => static::DEFAULT_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::ERROR_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getGetResourceCollectionPathWithAnnotationsWithEmptyResponseExpectedData(): array
-    {
-        return [
-            static::RESOURCE_PATH => [
-                'get' => [
-                    'summary' => static::DEFAULT_GET_COLLECTION_SUMMARY,
-                    'tags' => [
-                        'test-resource',
-                    ],
-                    'responses' => [
-                        '200' => [
-                            'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
-                        ],
-                        'default' => [
-                            'description' => static::DEFAULT_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::ERROR_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getGetResourceCollectionPathWithAnnotationsExpectedData(): array
-    {
-        return [
-            static::RESOURCE_PATH => [
-                'get' => [
-                    'summary' => static::SUMMARY,
-                    'tags' => [
-                        'test-resource',
-                    ],
-                    'responses' => [
-                        '200' => [
-                            'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
-                        ],
-                        'default' => [
-                            'description' => static::DEFAULT_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::ERROR_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDeleteResourcePathExpectedData(): array
-    {
-        return [
-            static::RESOURCE_PATH => [
-                'delete' => [
-                    'summary' => static::DEFAULT_DELETE_SUMMARY,
-                    'tags' => [
-                        'test-resource',
-                    ],
-                    'responses' => [
-                        '204' => [
-                            'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
-                        ],
-                        'default' => [
-                            'description' => static::DEFAULT_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::ERROR_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getPatchResourcePathExpectedData(): array
-    {
-        return [
-            static::RESOURCE_PATH => [
-                'patch' => [
-                    'summary' => static::DEFAULT_PATCH_SUMMARY,
-                    'tags' => [
-                        'test-resource',
-                    ],
-                    'requestBody' => [
-                        'description' => static::DEFAULT_REQUEST_DESCRIPTION,
-                        'required' => true,
-                        'content' => [
-                            'application/json' => [
-                                'schema' => [
-                                    '$ref' => static::REQUEST_SCHEMA_REF,
-                                ],
-                            ],
-                        ],
-                    ],
-                    'security' => [
-                        ['BearerAuth' => []],
-                    ],
-                    'responses' => [
-                        '202' => [
-                            'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::RESOURCE_RESPONSE_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                        'default' => [
-                            'description' => static::DEFAULT_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::ERROR_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getPostResourcePathExpectedData(): array
-    {
-        return [
-            static::RESOURCE_PATH => [
-                'post' => [
-                    'summary' => static::DEFAULT_POST_SUMMARY,
-                    'tags' => [
-                        'test-resource',
-                    ],
-                    'requestBody' => [
-                        'description' => static::DEFAULT_REQUEST_DESCRIPTION,
-                        'required' => true,
-                        'content' => [
-                            'application/json' => [
-                                'schema' => [
-                                    '$ref' => static::REQUEST_SCHEMA_REF,
-                                ],
-                            ],
-                        ],
-                    ],
-                    'responses' => [
-                        '201' => [
-                            'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::RESOURCE_RESPONSE_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                        'default' => [
-                            'description' => static::DEFAULT_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::ERROR_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getPostResourcePathWithAnnotationsWithEmptyResponseExpectedData(): array
-    {
-        return [
-            static::RESOURCE_PATH => [
-                'post' => [
-                    'summary' => static::DEFAULT_POST_SUMMARY,
-                    'tags' => [
-                        'test-resource',
-                    ],
-                    'requestBody' => [
-                        'description' => static::DEFAULT_REQUEST_DESCRIPTION,
-                        'required' => true,
-                        'content' => [
-                            'application/json' => [
-                                'schema' => [
-                                    '$ref' => static::REQUEST_SCHEMA_REF,
-                                ],
-                            ],
-                        ],
-                    ],
-                    'responses' => [
-                        '201' => [
-                            'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
-                        ],
-                        'default' => [
-                            'description' => static::DEFAULT_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::ERROR_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getGetResourceByIdPathExpectedData(): array
-    {
-        return [
-            static::RESOURCE_PATH . '/' . static::RESOURCE_ID => [
-                'get' => [
-                    'summary' => static::DEFAULT_GET_RESOURCE_SUMMARY,
-                    'tags' => [
-                        'test-resource',
-                    ],
-                    'responses' => [
-                        '200' => [
-                            'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::RESOURCE_RESPONSE_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                        'default' => [
-                            'description' => static::DEFAULT_RESPONSE_DESCRIPTION,
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => static::ERROR_SCHEMA_REF,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
+        $this->assertArraySubset($this->tester->getMethodProcessorGetResourceByIdPathExpectedData(), $generatedPaths);
     }
 }

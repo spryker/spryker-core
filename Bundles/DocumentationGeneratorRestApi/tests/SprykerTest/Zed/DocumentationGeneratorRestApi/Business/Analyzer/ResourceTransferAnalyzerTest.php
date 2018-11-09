@@ -23,6 +23,11 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttribut
  */
 class ResourceTransferAnalyzerTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiTester
+     */
+    protected $tester;
+
     protected const REQUEST_SCHEMA_NAME = 'RestTestRequest';
     protected const REQUEST_DATA_SCHEMA_NAME = 'RestTestRequestData';
     protected const REQUEST_ATTRIBUTES_SCHEMA_NAME = 'RestTestRequestAttributes';
@@ -75,7 +80,7 @@ class ResourceTransferAnalyzerTest extends Unit
     {
         $metadata = $this->resourceTransferAnalyzer->getTransferMetadata(new RestTestAttributesTransfer());
 
-        $this->assertArraySubset($this->getGetTransferMetadataExpectedData(), $metadata);
+        $this->assertArraySubset($this->tester->getTestAttributesTransferMetadataExpectedData(), $metadata);
     }
 
     /**
@@ -166,28 +171,5 @@ class ResourceTransferAnalyzerTest extends Unit
         $schemaName = $this->resourceTransferAnalyzer->createResourceRelationshipSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
         $this->assertEquals(static::RESOURCE_RELATIONSHIP_SCHEMA_NAME, $schemaName);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getGetTransferMetadataExpectedData(): array
-    {
-        return [
-            'attribute1' => [
-                'type' => 'string',
-                'name_underscore' => 'attribute1',
-                'is_collection' => false,
-                'is_transfer' => false,
-                'rest_request_parameter' => 'no',
-            ],
-            'attribute2' => [
-                'type' => 'string',
-                'name_underscore' => 'attribute2',
-                'is_collection' => false,
-                'is_transfer' => false,
-                'rest_request_parameter' => 'required',
-            ],
-        ];
     }
 }

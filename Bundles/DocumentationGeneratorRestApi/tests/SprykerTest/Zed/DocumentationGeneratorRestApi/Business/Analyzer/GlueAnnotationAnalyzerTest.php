@@ -8,13 +8,13 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\RestTokenResponseAttributesTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidAnnotationFormatException;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceInterface;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternativeAttributesTransfer;
 
 /**
  * Auto-generated group annotations
@@ -35,7 +35,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     protected const CONTROLLER_WITH_EMPTY_ANNOTATIONS = 'TestResourceWithEmptyAnnotationsController.php';
 
     protected const SUMMARY = 'Summary example';
-    protected const RESPONSE_CLASS = RestTokenResponseAttributesTransfer::class;
+    protected const ALTERNATIVE_RESPONSE_CLASS = RestTestAlternativeAttributesTransfer::class;
     protected const HEADER_ACCEPT_LANGUAGE = 'Accept-Language';
     protected const KEY_RESPONSE_BAD_REQUEST = 400;
     protected const KEY_RESPONSE_NOT_FOUND = 404;
@@ -85,7 +85,7 @@ class GlueAnnotationAnalyzerTest extends Unit
             static::KEY_RESPONSE_NOT_FOUND => static::VALUE_RESPONSE_NOT_FOUND,
         ], $parameters->getGetResource()->getResponses());
         $this->assertNotEmpty($parameters->getPost()->getResponseClass());
-        $this->assertEquals(static::RESPONSE_CLASS, $parameters->getPost()->getResponseClass());
+        $this->assertEquals(static::ALTERNATIVE_RESPONSE_CLASS, $parameters->getPost()->getResponseClass());
         $this->assertArraySubset([
             static::KEY_RESPONSE_BAD_REQUEST => static::VALUE_RESPONSE_BAD_REQUEST,
             static::KEY_RESPONSE_SERVER_ERROR => static::VALUE_RESPONSE_SERVER_ERROR,

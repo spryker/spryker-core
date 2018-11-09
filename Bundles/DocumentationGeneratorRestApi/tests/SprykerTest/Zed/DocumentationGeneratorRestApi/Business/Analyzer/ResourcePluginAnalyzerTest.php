@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Codeception\Test\Unit;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
-use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Fixtures\GlueAnnotationAnalyzerExpectedResult;
 
 /**
  * Auto-generated group annotations
@@ -28,6 +27,11 @@ class ResourcePluginAnalyzerTest extends Unit
         'schemas',
         'securitySchemes',
     ];
+
+    /**
+     * @var \SprykerTest\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourcePluginAnalyzerInterface
@@ -50,7 +54,7 @@ class ResourcePluginAnalyzerTest extends Unit
     public function testCreateRestApiDocumentationFromPlugins(): void
     {
         $generatedDocumentationData = $this->resourcePluginAnalyzer->createRestApiDocumentationFromPlugins();
-        $expectedResult = GlueAnnotationAnalyzerExpectedResult::getTestCreateRestApiDocumentationFromPluginsExpectedResult();
+        $expectedResult = $this->tester->getRestApiDocumentationFromPluginsExpectedResult();
 
         $this->assertNotEmpty($generatedDocumentationData);
         foreach (static::EXPECTED_KEYS as $key) {
