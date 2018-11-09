@@ -112,7 +112,7 @@ class PhpstanConfigFileManager implements PhpstanConfigFileManagerInterface
             $this->filesystem->mkdir($directory);
         }
 
-        $newConfigFilePath = $directory . DIRECTORY_SEPARATOR . $newConfigFileName;
+        $newConfigFilePath = $directory . $newConfigFileName;
         $this->configLoader->save($mergedConfig, $newConfigFilePath . $this->config->getPhpstanConfigFilename());
 
         return $newConfigFilePath;

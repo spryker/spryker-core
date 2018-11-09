@@ -196,7 +196,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getPathToPhpstanModuleTemporaryConfigFolder()
     {
-        return APPLICATION_ROOT_DIR . '/data/phpstan';
+        return APPLICATION_ROOT_DIR . '/data/phpstan/';
     }
 
     /**
