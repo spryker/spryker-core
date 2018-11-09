@@ -13,7 +13,6 @@ use Generated\Shared\DataBuilder\CategoryImageBuilder;
 use Generated\Shared\DataBuilder\CategoryImageSetBuilder;
 use Generated\Shared\DataBuilder\LocaleBuilder;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
-use Generated\Shared\Transfer\CategoryImageTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetToCategoryImageTableMap;
 use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageTableMap;
