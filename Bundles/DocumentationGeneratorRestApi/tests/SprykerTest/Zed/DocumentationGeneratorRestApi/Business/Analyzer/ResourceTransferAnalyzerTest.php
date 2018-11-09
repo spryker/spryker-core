@@ -23,11 +23,6 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttribut
  */
 class ResourceTransferAnalyzerTest extends Unit
 {
-    /**
-     * @var \SprykerTest\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiTester
-     */
-    protected $tester;
-
     protected const REQUEST_SCHEMA_NAME = 'RestTestRequest';
     protected const REQUEST_DATA_SCHEMA_NAME = 'RestTestRequestData';
     protected const REQUEST_ATTRIBUTES_SCHEMA_NAME = 'RestTestRequestAttributes';
@@ -37,6 +32,11 @@ class ResourceTransferAnalyzerTest extends Unit
     protected const RESPONSE_RESOURCE_DATA_SCHEMA_NAME = 'RestTestResponseData';
     protected const RESPONSE_ATTRIBUTES_SCHEMA_NAME = 'RestTestAttributes';
     protected const RESOURCE_RELATIONSHIP_SCHEMA_NAME = 'RestTestRelationships';
+
+    /**
+     * @var \SprykerTest\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface
