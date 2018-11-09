@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
@@ -54,10 +55,14 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     {
         $this->quoteCustomerExpander->expandQuoteTransferWithCustomerTransfer($quoteTransfer);
 
-        $quoteResponseTransfer = $this->cartFacade->validateQuote(clone $quoteTransfer);
+        $paymentTransfer = $quoteTransfer->getPayment();
+
+        $quoteResponseTransfer = $this->cartFacade->validateQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return (new CheckoutResponseTransfer())->fromArray($quoteResponseTransfer->toArray(), true);
         }
+
+        $quoteTransfer = $this->restorePaymentTransferInQuoteTransfer($quoteResponseTransfer->getQuoteTransfer(), $paymentTransfer);
 
         $checkoutResponseTransfer = $this->checkoutFacade->placeOrder($quoteTransfer);
 
@@ -66,5 +71,19 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         }
 
         return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function restorePaymentTransferInQuoteTransfer(QuoteTransfer $quoteTransfer, PaymentTransfer $paymentTransfer): QuoteTransfer
+    {
+        $paymentTransfer->setAmount($quoteTransfer->getTotals()->getPriceToPay());
+        $quoteTransfer->setPayment($paymentTransfer);
+
+        return $quoteTransfer;
     }
 }
