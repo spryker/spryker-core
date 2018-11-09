@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\Propel\Business\Model\Schema\XmlValidator;
 
+use Generated\Shared\Transfer\SchemaValidationErrorTransfer;
+use Generated\Shared\Transfer\SchemaValidationTransfer;
+use SimpleXMLElement;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Finder\SplFileInfo;
 
-class PropelSchemaXmlValidator implements PropelSchemaXmlValidatorInterface
+class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
 {
     /**
      * @var \Generated\Shared\Transfer\SchemaValidationTransfer|null
@@ -24,7 +27,7 @@ class PropelSchemaXmlValidator implements PropelSchemaXmlValidatorInterface
     {
         $filePaths = $this->getSchemaFiles();
 
-        foreach ($this->findInvalidIdIdentifiersInFiles($fileNames) as $filePath => $identifier) {
+        foreach ($this->findInvalidIdIdentifiersInFiles($filePaths) as $filePath => $identifier) {
             $this->addError(sprintf(
                 'There is a problem with %s . The identifier "%s" has a length beyond the maximum identifier length "%s". Your database will persist a truncated identifier leading to more problems!',
                 $filePath,
@@ -36,29 +39,37 @@ class PropelSchemaXmlValidator implements PropelSchemaXmlValidatorInterface
         return $this->getSchemaValidationTransfer();
     }
 
-    protected function getSchemaFiles()
+    /**
+     * @return array
+     */
+    protected function getSchemaFiles(): array
     {
         return [];
     }
+
     /**
-     * @param Symfony\Component\Finder\SplFileInfo[] $files
+     * @param \Symfony\Component\Finder\SplFileInfo[] $files
      *
-     * @return void
+     * @return array
      */
-    protected function findInvalidIdIdentifiersInFiles(array $files)
+    protected function findInvalidIdIdentifiersInFiles(array $files): array
     {
+        $invalidIdIdentifiers = [];
         foreach ($files as $file) {
-            yield from $this->findInvalidIdentifiers($file);
+            foreach ($this->findInvalidIdentifiers($file) as $invalidIdIdentifier) {
+                $invalidIdIdentifiers[] = $invalidIdIdentifier;
+            }
         }
+
+        return $invalidIdIdentifiers;
     }
 
     /**
-     * @param Symfony\Component\Finder\SplFileInfo[] $files
+     * @param \Symfony\Component\Finder\SplFileInfo $file
      *
-     * @ye
-     * @return void
+     * @return array
      */
-    protected function findInvalidIdentifiers(SplFileInfo $file)
+    protected function findInvalidIdentifiers(SplFileInfo $file): array
     {
         $xml = new SimpleXMLElement($file->getContents());
         $elements = array_merge(
@@ -67,12 +78,18 @@ class PropelSchemaXmlValidator implements PropelSchemaXmlValidatorInterface
             $xml->xpath('/database/table/foreign-key/reference/@local'),
             $xml->xpath('/database/table/id-method-parameter/@value')
         );
+
+        $fileNames = [];
         foreach ($elements as $element) {
             $attributeValue = $element->__toString();
             if ($this->isLongerThanIdentifierMaxLength($attributeValue)) {
-                yield $file->getFilename() => $attributeValue;
+                $fileNames[] = [
+                    $file->getFilename() => $attributeValue,
+                ];
             }
         }
+
+        return $fileNames;
     }
 
     /**

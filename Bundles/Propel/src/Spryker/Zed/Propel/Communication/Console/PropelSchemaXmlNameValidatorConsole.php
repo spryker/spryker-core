@@ -11,17 +11,21 @@ use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PropelSchemaXmlValidatorConsole extends Console
+/**
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ */
+class PropelSchemaXmlNameValidatorConsole extends Console
 {
-    public const COMMAND_NAME = 'propel:schema:xml-validate';
+    public const COMMAND_NAME = 'propel:schema:validate-xml-names';
+    public const DESCRIPTION = 'Validates XML element name rules for schema files.';
 
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
-        $this->setDescription('Validates XML rules for schema files.');
+        $this->setDescription(static::DESCRIPTION);
 
         parent::configure();
     }
@@ -32,7 +36,7 @@ class PropelSchemaXmlValidatorConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $schemaValidationTransfer = $this->getFacade()->validateSchemaXmlFiles();
         if ($schemaValidationTransfer->getIsSuccess()) {

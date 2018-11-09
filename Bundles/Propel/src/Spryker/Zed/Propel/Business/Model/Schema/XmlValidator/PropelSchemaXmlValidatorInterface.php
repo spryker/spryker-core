@@ -15,5 +15,4 @@ interface PropelSchemaXmlValidatorInterface
      * @return \Generated\Shared\Transfer\SchemaValidationTransfer
      */
     public function validate(): SchemaValidationTransfer;
-
 }

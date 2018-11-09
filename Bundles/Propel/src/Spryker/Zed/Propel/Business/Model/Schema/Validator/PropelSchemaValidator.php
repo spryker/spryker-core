@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\SchemaValidationTransfer;
 use SimpleXMLElement;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
 use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface;
-use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaValidator implements PropelSchemaValidatorInterface
@@ -139,8 +138,6 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     protected function validateSchema(SimpleXMLElement $mergeTargetXmlElement, ArrayObject $schemaXmlElements, $fileName): void
     {
         foreach ($schemaXmlElements as $schemaXmlElement) {
-            $this->validateIdentifierNames($schemaXmlElement, $fileName);
-
             $mergeTargetXmlElement = $this->validateSchemasRecursive($mergeTargetXmlElement, $schemaXmlElement, $fileName);
         }
     }

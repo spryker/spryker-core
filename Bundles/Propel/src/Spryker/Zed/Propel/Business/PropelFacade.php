@@ -238,5 +238,4 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     {
         return $this->getFactory()->createSchemaXmlValidator()->validate();
     }
-
 }
