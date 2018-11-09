@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CheckoutRestApi;
 
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface;
+use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessor;
@@ -22,7 +23,6 @@ use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMerger;
 use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessor;
 use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface;
-use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -40,7 +40,7 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->getResourceBuilder(),
             $this->createCheckoutDataMapper(),
-            $this->getQuoteCollectionReaderPlugin(),
+            $this->getCartsRestApiClient(),
             $this->createQuoteProcessor()
         );
     }
@@ -60,7 +60,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     {
         return new QuoteProcessor(
             $this->getCartClient(),
-            $this->getQuoteCollectionReaderPlugin()
+            $this->getCartsRestApiClient()
         );
     }
 
@@ -97,19 +97,19 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
-     */
-    public function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
-    {
-        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGIN_QUOTE_COLLECTION_READER);
-    }
-
-    /**
      * @return \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface
      */
     public function getCartClient(): CheckoutRestApiToCartClientInterface
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_CART);
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface
+     */
+    public function getCartsRestApiClient(): CheckoutRestApiToCartsRestApiClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_CARTS_REST_API);
     }
 
     /**

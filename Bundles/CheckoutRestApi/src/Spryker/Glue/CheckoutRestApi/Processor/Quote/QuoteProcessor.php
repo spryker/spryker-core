@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface;
-use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
+use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface;
 
 class QuoteProcessor implements QuoteProcessorInterface
 {
@@ -21,20 +21,20 @@ class QuoteProcessor implements QuoteProcessorInterface
     protected $cartClient;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
+     * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface
      */
-    protected $quoteCollectionReaderPlugin;
+    protected $cartsRestApiClient;
 
     /**
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface $cartClient
-     * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin
+     * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient
      */
     public function __construct(
         CheckoutRestApiToCartClientInterface $cartClient,
-        QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin
+        CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient
     ) {
         $this->cartClient = $cartClient;
-        $this->quoteCollectionReaderPlugin = $quoteCollectionReaderPlugin;
+        $this->cartsRestApiClient = $cartsRestApiClient;
     }
 
     /**
@@ -45,7 +45,7 @@ class QuoteProcessor implements QuoteProcessorInterface
     public function findCustomerQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
     {
         $idCart = $restCheckoutRequestAttributesTransfer->getCart()->getId();
-        $quoteCollectionTransfer = $this->quoteCollectionReaderPlugin->getQuoteCollectionByCriteria(new QuoteCriteriaFilterTransfer());
+        $quoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollectionByCriteria(new QuoteCriteriaFilterTransfer());
         foreach ($quoteCollectionTransfer->getQuotes() as $customerQuote) {
             if ($customerQuote->getUuid() === $idCart) {
                 return $customerQuote;

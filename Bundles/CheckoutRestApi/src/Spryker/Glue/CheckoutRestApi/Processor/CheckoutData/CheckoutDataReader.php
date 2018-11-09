@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
+use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface;
-use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -39,9 +39,9 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $checkoutDataMapper;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
+     * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface
      */
-    protected $quoteCollectionReader;
+    protected $cartsRestApiClient;
 
     /**
      * @var \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface
@@ -52,20 +52,20 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface $checkoutDataMapper
-     * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReader
+     * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface $quoteProcessor
      */
     public function __construct(
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CheckoutDataMapperInterface $checkoutDataMapper,
-        QuoteCollectionReaderPluginInterface $quoteCollectionReader,
+        CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient,
         QuoteProcessorInterface $quoteProcessor
     ) {
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutDataMapper = $checkoutDataMapper;
-        $this->quoteCollectionReader = $quoteCollectionReader;
+        $this->cartsRestApiClient = $cartsRestApiClient;
         $this->quoteProcessor = $quoteProcessor;
     }
 
@@ -152,7 +152,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     protected function findCurrentCustomerQuote(): ?QuoteTransfer
     {
-        $quoteCollectionTransfer = $this->quoteCollectionReader->getQuoteCollectionByCriteria(new QuoteCriteriaFilterTransfer());
+        $quoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollectionByCriteria(new QuoteCriteriaFilterTransfer());
 
         if (!$quoteCollectionTransfer->getQuotes()->offsetExists(0)) {
             return null;
