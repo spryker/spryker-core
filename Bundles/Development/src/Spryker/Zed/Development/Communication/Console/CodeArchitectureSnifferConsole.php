@@ -29,6 +29,7 @@ class CodeArchitectureSnifferConsole extends Console
     protected const OPTION_PRIORITY = 'priority';
     protected const OPTION_DRY_RUN = 'dry-run';
     protected const ARGUMENT_SUB_PATH = 'path';
+    protected const OPTION_VERBOSE = 'verbose';
     protected const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
 
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
@@ -112,7 +113,7 @@ class CodeArchitectureSnifferConsole extends Console
         $output->writeln($path, OutputInterface::VERBOSITY_VERBOSE);
         $violations = $this->getFacade()->runArchitectureSniffer($path, $this->input->getOptions());
         $count = $this->displayViolations($output, $violations);
-        $output->writeln($count . ' violations found');
+        $this->displayViolationsCountMessage($output, $count);
 
         return $count === 0;
     }
@@ -209,7 +210,7 @@ class CodeArchitectureSnifferConsole extends Console
             return false;
         }
 
-        $output->writeln($result . ' violations found');
+        $this->displayViolationsCountMessage($output, $result);
 
         return $result === 0;
     }
@@ -227,7 +228,7 @@ class CodeArchitectureSnifferConsole extends Console
         $violations = $this->getFacade()->runArchitectureSniffer($customPath, $this->input->getOptions());
         $count = $this->displayViolations($output, $violations);
 
-        $output->writeln($count . ' violations found');
+        $this->displayViolationsCountMessage($output, $count);
 
         return $count === 0;
     }
@@ -279,6 +280,29 @@ class CodeArchitectureSnifferConsole extends Console
             ->attach(new StringToLower());
 
         return $filterChain->filter($name);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param int $count
+     *
+     * @return void
+     */
+    protected function displayViolationsCountMessage(OutputInterface $output, int $count): void
+    {
+        if (!$this->isVerboseModeEnabled() && $count === 0) {
+            return;
+        }
+
+        $output->writeln($count . ' violations found');
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isVerboseModeEnabled(): bool
+    {
+        return $this->input->getOption(static::OPTION_VERBOSE);
     }
 
     /**

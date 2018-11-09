@@ -9,6 +9,7 @@ namespace Spryker\Zed\Development\Business;
 
 use Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinder;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
+use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSnifferInterface;
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
 use Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
@@ -148,10 +149,15 @@ use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
 use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidator;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidatorInterface;
+use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\ArchitectureSnifferConfigurationBuilder;
+use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
+use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReader;
+use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface;
 use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
+use Symfony\Component\Yaml\Parser;
 use Zend\Config\Reader\Xml;
 use Zend\Filter\Word\CamelCaseToDash;
 
@@ -1757,13 +1763,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSnifferInterface
      */
-    public function createArchitectureSniffer()
+    public function createArchitectureSniffer(): ArchitectureSnifferInterface
     {
         $xml = $this->createXmlReader();
         $command = $this->getConfig()->getArchitectureSnifferCommand();
         $defaultPriority = $this->getConfig()->getArchitectureSnifferDefaultPriority();
 
-        return new ArchitectureSniffer($xml, $command, $defaultPriority);
+        return new ArchitectureSniffer(
+            $xml,
+            $command,
+            $defaultPriority,
+            $this->createArchitectureSnifferConfigurationBuilder()
+        );
     }
 
     /**
@@ -1809,5 +1820,34 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createPackageFinder(): PackageFinderInterface
     {
         return new PackageFinder($this->getConfig());
+    }
+
+    /**
+     * @return \Symfony\Component\Yaml\Parser
+     */
+    public function createYamlParser(): Parser
+    {
+        return new Parser();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface
+     */
+    public function createConfigurationReader(): ConfigurationReaderInterface
+    {
+        return new ConfigurationReader(
+            $this->createYamlParser()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface
+     */
+    public function createArchitectureSnifferConfigurationBuilder(): SnifferConfigurationBuilderInterface
+    {
+        return new ArchitectureSnifferConfigurationBuilder(
+            $this->createConfigurationReader(),
+            $this->getConfig()->getArchitectureSnifferDefaultPriority()
+        );
     }
 }

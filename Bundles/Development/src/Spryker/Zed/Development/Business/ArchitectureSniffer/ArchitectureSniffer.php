@@ -10,6 +10,7 @@ namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 use Exception;
 use PHPMD\RuleSetFactory;
 use PHPMD\TextUI\CommandLineOptions;
+use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
 use Zend\Config\Reader\ReaderInterface;
@@ -39,15 +40,26 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected $defaultPriority;
 
     /**
+     * @var \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface
+     */
+    protected $configurationBuilder;
+
+    /**
      * @param \Zend\Config\Reader\ReaderInterface $xmlReader
      * @param string $command
      * @param int $defaultPriority
+     * @param \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface $configurationBuilder
      */
-    public function __construct(ReaderInterface $xmlReader, $command, $defaultPriority)
-    {
+    public function __construct(
+        ReaderInterface $xmlReader,
+        $command,
+        $defaultPriority,
+        SnifferConfigurationBuilderInterface $configurationBuilder
+    ) {
         $this->xmlReader = $xmlReader;
         $this->command = $command;
         $this->defaultPriority = $defaultPriority;
+        $this->configurationBuilder = $configurationBuilder;
     }
 
     /**
@@ -95,6 +107,12 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     public function run($directory, array $options = [])
     {
+        $options = $this->configurationBuilder->getConfiguration($directory, $options);
+
+        if ($options === []) {
+            return $this->formatResult($options);
+        }
+
         if ($this->isCoreModule($options)) {
             $directory = $this->addSourcePathForCoreModulePath($directory);
         }
