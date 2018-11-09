@@ -11,4 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class NavigationGuiConfig extends AbstractBundleConfig
 {
+    protected const REDIRECT_URL_DEFAULT = '/navigation-gui';
+
+    /**
+     * @return string
+     */
+    public function getDefaultRedirectUrl(): string
+    {
+        return static::REDIRECT_URL_DEFAULT;
+    }
 }
