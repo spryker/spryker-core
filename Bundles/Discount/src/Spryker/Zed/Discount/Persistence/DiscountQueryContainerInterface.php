@@ -80,7 +80,7 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param array $codes
+     * @param string[] $codes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
