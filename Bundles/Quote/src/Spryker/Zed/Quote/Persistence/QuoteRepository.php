@@ -122,14 +122,15 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
             ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
             ->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
             ->where(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE . Criteria::ISNULL)
+            ->orderByUpdatedAt()
             ->limit($limit);
 
-        $quoteEntityCollection = $quoteQuery->find();
+        $quoteEntityCollectionTransfer = $this->buildQueryFromCriteria($quoteQuery)->find();
 
         $quoteMapper = $this->getFactory()->createQuoteMapper();
         $quoteCollectionTransfer = new QuoteCollectionTransfer();
-        foreach ($quoteEntityCollection as $quoteEntity) {
-            $quoteCollectionTransfer->addQuote($quoteMapper->mapQuoteEntityToQuoteTransfer($quoteEntity));
+        foreach ($quoteEntityCollectionTransfer as $quoteEntityTransfer) {
+            $quoteCollectionTransfer->addQuote($quoteMapper->mapQuoteTransfer($quoteEntityTransfer));
         }
 
         return $quoteCollectionTransfer;

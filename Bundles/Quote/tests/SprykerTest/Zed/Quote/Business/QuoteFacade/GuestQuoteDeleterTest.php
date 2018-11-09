@@ -45,7 +45,10 @@ class GuestQuoteDeleterTest extends Unit
     {
         $customerTransfer = $this->tester->haveCustomer();
         $customerTransfer->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
-        $this->createExpiredQuoteForCustomer($customerTransfer);
+        $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+        ]);
+        $this->updateQuoteForCustomer($customerTransfer);
 
         $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_SECOND);
         $this->tester->getFacade()->deleteExpiredGuestQuote();
@@ -77,18 +80,14 @@ class GuestQuoteDeleterTest extends Unit
      *
      * @return void
      */
-    protected function createExpiredQuoteForCustomer(CustomerTransfer $customerTransfer): void
+    protected function updateQuoteForCustomer(CustomerTransfer $customerTransfer): void
     {
-        $currentStoreTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
         $quoteQuery = SpyQuoteQuery::create();
         $quoteEntity = $quoteQuery
             ->filterByCustomerReference($customerTransfer->getCustomerReference())
-            ->findOneOrCreate();
-        $quoteEntity->setName('Shopping cart')
-            ->setFkStore($currentStoreTransfer->getIdStore())
-            ->setQuoteData(static::EMPTY_QUOTE_DATA)
-            ->setCreatedAt(strtotime('-1 month'))
-            ->setUpdatedAt(strtotime('-1 month'));
-        $quoteEntity->save();
+            ->findOne();
+        $quoteEntity
+            ->setUpdatedAt(strtotime('-1 month'))
+            ->save();
     }
 }

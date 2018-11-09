@@ -27,11 +27,4 @@ interface QuoteMapperInterface
      * @return \Orm\Zed\Quote\Persistence\SpyQuote
      */
     public function mapTransferToEntity(QuoteTransfer $quoteTransfer, SpyQuote $quoteEntity): SpyQuote;
-
-    /**
-     * @param \Orm\Zed\Quote\Persistence\SpyQuote $quoteEntity
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapQuoteEntityToQuoteTransfer(SpyQuote $quoteEntity): QuoteTransfer;
 }

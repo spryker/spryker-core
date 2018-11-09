@@ -68,11 +68,9 @@ class GuestQuoteDeleter implements GuestQuoteDeleterInterface
         $quoteCollectionTransfer = $this->findExpiredGuestQuotes();
 
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if ($this->validateQuote($quoteTransfer)) {
-                $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
-                    $this->executeDeleteTransaction($quoteTransfer);
-                });
-            }
+            $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
+                $this->executeDeleteTransaction($quoteTransfer);
+            });
         }
     }
 
@@ -86,21 +84,6 @@ class GuestQuoteDeleter implements GuestQuoteDeleterInterface
         $lifetimeLimitDate = (new DateTime())->sub($lifetimeInterval);
 
         return $this->quoteRepository->findExpiredGuestQuotes($lifetimeLimitDate, static::BATCH_SIZE_LIMIT);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function validateQuote(QuoteTransfer $quoteTransfer): bool
-    {
-        $loadedQuoteTransfer = $this->quoteRepository->findQuoteById($quoteTransfer->getIdQuote());
-        if (!$loadedQuoteTransfer) {
-            return false;
-        }
-
-        return true;
     }
 
     /**
