@@ -8,6 +8,7 @@
 namespace Spryker\Zed\BusinessOnBehalf\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -33,9 +34,13 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
     }
 
     /**
+     * @module Company
+     * @module CompanyUser
+     *
      * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
      * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      * @uses \Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap
+     * @uses \Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyTableMap
      *
      * @param int $idCustomer
      *
@@ -49,6 +54,7 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
             ->filterByIsActive(true)
             ->useCompanyQuery()
                 ->filterByIsActive(true)
+                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
             ->endUse()
             ->orderByIdCompanyUser();
         $query->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER);

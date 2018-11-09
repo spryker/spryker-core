@@ -44,12 +44,15 @@ $(document).ready(function() {
         window.parent.document.dispatchEvent(event);
     });
 
-    resetButton.on('click', function(e) {
+    resetButton.one('click', function(e) {
         e.preventDefault();
+        $(this).addClass('disabled');
+
         var event = new CustomEvent(
             'resetCategory',
             { detail: { idCategory: idCategory }}
         );
+
         window.parent.document.dispatchEvent(event);
         window.location.href = e.target.href;
     });

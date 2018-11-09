@@ -11,6 +11,6 @@ class ProductOptionEditPage
 {
     public const URL = '/product-option/edit/index?id-product-option-group=%d';
 
-    public const PRODUCT_GROUP_EDIT_SUCCESS_MESSAGE = 'Product option group modifed.';
+    public const PRODUCT_GROUP_EDIT_SUCCESS_MESSAGE = 'Product option group modified.';
     public const PRODUCT_GROUP_EDIT_ACTIVATE_SUCCESS_MESSAGE = 'Option successfully activated.';
 }
