@@ -16,7 +16,7 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRela
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\PriceProductMerchantRelationshipStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface getRepository()
  */
-class PriceProductMerchantRelationshipAbstractUpdateListener extends AbstractPlugin implements EventBulkHandlerInterface
+class PriceProductMerchantRelationshipAbstractDeleteListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * {@inheritdoc}
