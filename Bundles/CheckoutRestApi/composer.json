@@ -22,7 +22,8 @@
     "spryker/code-sniffer": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
-    "spryker/quote": "^1.0.0",
+    "spryker/quote": "*",
+    "spryker/stock": "*",
     "spryker/testify": "*"
   },
   "autoload": {

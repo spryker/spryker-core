@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
@@ -53,13 +55,13 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      */
     public function placeOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
     {
-        $this->quoteCustomerExpander->expandQuoteTransferWithCustomerTransfer($quoteTransfer);
+        $quoteTransfer = $this->quoteCustomerExpander->expandQuoteTransferWithCustomerTransfer($quoteTransfer);
 
         $paymentTransfer = $quoteTransfer->getPayment();
 
         $quoteResponseTransfer = $this->cartFacade->validateQuote($quoteTransfer);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return (new CheckoutResponseTransfer())->fromArray($quoteResponseTransfer->toArray(), true);
+        if ($quoteResponseTransfer->getIsSuccessful() === false) {
+            return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
         }
 
         $quoteTransfer = $this->restorePaymentTransferInQuoteTransfer($quoteResponseTransfer->getQuoteTransfer(), $paymentTransfer);
@@ -85,5 +87,24 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         $quoteTransfer->setPayment($paymentTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function createCheckoutResponseTransferFromQuoteErrorTransfer(QuoteResponseTransfer $quoteResponseTransfer): CheckoutResponseTransfer
+    {
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $checkoutResponseTransfer->setIsSuccess(false);
+        foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
+            $checkoutResponseTransfer->addError(
+                (new CheckoutErrorTransfer())
+                    ->setMessage($quoteErrorTransfer->getMessage())
+            );
+        }
+
+        return $checkoutResponseTransfer;
     }
 }
