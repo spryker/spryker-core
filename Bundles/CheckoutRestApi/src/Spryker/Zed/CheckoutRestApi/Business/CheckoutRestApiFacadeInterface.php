@@ -15,9 +15,8 @@ interface CheckoutRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Takes QuoteTransfer and returns CheckoutDataTransfer.
-     * - Response will contain the payment and shipment methods
-     * filtered by the provided Quote data (addresses, payment and shipment methods).
+     * - Provides checkout data based on data passed in QuoteTransfer.
+     * - Checkout data will include available shipping methods, available payment methods and available customer addresses.
      *
      * @api
      *
@@ -29,7 +28,6 @@ interface CheckoutRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Takes QuoteTransfer as parameter.
      * - Extends the Customer transfer with the customer data (for registered users).
      * - Updated billing and shipping addresses with full details if UUID is passed.
      * - Validates quote via CartClient.
