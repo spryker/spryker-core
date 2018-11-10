@@ -14,8 +14,7 @@ interface QuoteCollectionReaderPluginInterface
 {
     /**
      * Specification:
-     * - This plugin method is used to find quote collection in CartsRestApi module.
-     * - Method provides quote collection.
+     * - This plugin is used to retrieve quote collection in CartsRestApi module.
      *
      * @api
      *

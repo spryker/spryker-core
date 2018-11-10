@@ -15,20 +15,20 @@ interface CartsRestApiClientInterface
 {
     /**
      * Specification:
-     * - Takes quote criteria transfer and returns carts data.
+     * - Finds quote by uuid.
      *
      * @api
      *
-     * @param string $uuidQuote
+     * @param string $uuid
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByIdentifier(string $uuidQuote, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer;
+    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer;
 
     /**
      * Specification
-     * - Takes quote criteria transfer and returns collection of carts.
+     * - Retrieves customer quote collection.
      *
      * @api
      *

@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface;
-use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -29,9 +28,9 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $checkoutRestApiClient;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface
      */
-    protected $restResourceBuilder;
+    protected $cartsRestApiClient;
 
     /**
      * @var \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface
@@ -39,34 +38,26 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $checkoutDataMapper;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
-    protected $cartsRestApiClient;
-
-    /**
-     * @var \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface
-     */
-    protected $quoteProcessor;
+    protected $restResourceBuilder;
 
     /**
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
+     * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface $checkoutDataMapper
-     * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient
-     * @param \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface $quoteProcessor
      */
     public function __construct(
         CheckoutRestApiClientInterface $checkoutRestApiClient,
-        RestResourceBuilderInterface $restResourceBuilder,
-        CheckoutDataMapperInterface $checkoutDataMapper,
         CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient,
-        QuoteProcessorInterface $quoteProcessor
+        RestResourceBuilderInterface $restResourceBuilder,
+        CheckoutDataMapperInterface $checkoutDataMapper
     ) {
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutDataMapper = $checkoutDataMapper;
         $this->cartsRestApiClient = $cartsRestApiClient;
-        $this->quoteProcessor = $quoteProcessor;
     }
 
     /**
@@ -144,7 +135,10 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             return $this->findCurrentCustomerQuote();
         }
 
-        return $this->quoteProcessor->findCustomerQuote($restCheckoutRequestAttributesTransfer);
+        return $this->cartsRestApiClient->findQuoteByUuid(
+            $restCheckoutRequestAttributesTransfer->getCart()->getId(),
+            new QuoteCriteriaFilterTransfer()
+        );
     }
 
     /**

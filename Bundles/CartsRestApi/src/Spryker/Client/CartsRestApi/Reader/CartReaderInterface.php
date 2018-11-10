@@ -14,12 +14,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CartReaderInterface
 {
     /**
-     * @param string $uuidQuote
+     * @param string $uuid
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByIdentifier(string $uuidQuote, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer;
+    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer

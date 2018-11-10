@@ -22,16 +22,16 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
      *
      * @api
      *
-     * @param string $uuidQuote
+     * @param string $uuid
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByIdentifier(string $uuidQuote, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer
+    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer
     {
         return $this->getFactory()
             ->createCartReader()
-            ->findQuoteByIdentifier($uuidQuote, $quoteCriteriaFilterTransfer);
+            ->findQuoteByUuid($uuid, $quoteCriteriaFilterTransfer);
     }
 
     /**

@@ -64,7 +64,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
         }
 
-        $quoteTransfer = $this->restorePaymentTransferInQuoteTransfer($quoteResponseTransfer->getQuoteTransfer(), $paymentTransfer);
+        $quoteTransfer = $this->restorePaymentInQuote($quoteResponseTransfer->getQuoteTransfer(), $paymentTransfer);
 
         $checkoutResponseTransfer = $this->checkoutFacade->placeOrder($quoteTransfer);
 
@@ -81,7 +81,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function restorePaymentTransferInQuoteTransfer(QuoteTransfer $quoteTransfer, PaymentTransfer $paymentTransfer): QuoteTransfer
+    protected function restorePaymentInQuote(QuoteTransfer $quoteTransfer, PaymentTransfer $paymentTransfer): QuoteTransfer
     {
         $paymentTransfer->setAmount($quoteTransfer->getTotals()->getPriceToPay());
         $quoteTransfer->setPayment($paymentTransfer);

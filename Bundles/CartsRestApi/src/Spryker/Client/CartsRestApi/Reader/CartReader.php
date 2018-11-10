@@ -28,15 +28,15 @@ class CartReader implements CartReaderInterface
     }
 
     /**
-     * @param string $uuidQuote
+     * @param string $uuid
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByIdentifier(string $uuidQuote, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer
+    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer
     {
         foreach ($this->getQuoteCollection($quoteCriteriaFilterTransfer)->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getUuid() === $uuidQuote) {
+            if ($quoteTransfer->getUuid() === $uuid) {
                 return $quoteTransfer;
             }
         }

@@ -9,9 +9,18 @@ namespace Spryker\Glue\CheckoutRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutRestApiToCartsRestApiClientInterface
 {
+    /**
+     * @param string $uuid
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *

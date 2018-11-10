@@ -10,19 +10,14 @@ namespace Spryker\Glue\CheckoutRestApi;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
-use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessor;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessorInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReaderInterface;
-use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteCollectionReader;
-use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteCollectionReaderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMerger;
 use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface;
-use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessor;
-use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -38,10 +33,9 @@ class CheckoutRestApiFactory extends AbstractFactory
     {
         return new CheckoutDataReader(
             $this->getClient(),
-            $this->getResourceBuilder(),
-            $this->createCheckoutDataMapper(),
             $this->getCartsRestApiClient(),
-            $this->createQuoteProcessor()
+            $this->getResourceBuilder(),
+            $this->createCheckoutDataMapper()
         );
     }
 
@@ -51,17 +45,6 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function createCheckoutDataMapper(): CheckoutDataMapperInterface
     {
         return new CheckoutDataMapper($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteProcessorInterface
-     */
-    public function createQuoteProcessor(): QuoteProcessorInterface
-    {
-        return new QuoteProcessor(
-            $this->getCartClient(),
-            $this->getCartsRestApiClient()
-        );
     }
 
     /**
@@ -81,19 +64,12 @@ class CheckoutRestApiFactory extends AbstractFactory
     {
         return new CheckoutProcessor(
             $this->getResourceBuilder(),
-            $this->createQuoteProcessor(),
             $this->createQuoteMerger(),
             $this->getClient(),
-            $this->getGlossaryStorageClient()
+            $this->getGlossaryStorageClient(),
+            $this->getCartsRestApiClient(),
+            $this->getCartClient()
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteCollectionReaderInterface
-     */
-    public function createQuoteCollectionReader(): QuoteCollectionReaderInterface
-    {
-        return new QuoteCollectionReader($this->getCartClient());
     }
 
     /**
@@ -110,14 +86,6 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function getCartsRestApiClient(): CheckoutRestApiToCartsRestApiClientInterface
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_CARTS_REST_API);
-    }
-
-    /**
-     * @return \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface
-     */
-    public function getZedRequestClient(): CheckoutRestApiToZedRequestClientInterface
-    {
-        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
     /**

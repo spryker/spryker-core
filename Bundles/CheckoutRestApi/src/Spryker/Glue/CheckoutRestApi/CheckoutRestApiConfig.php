@@ -27,23 +27,23 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_DETAILS_CHECKOUT_DATA_INVALID = 'Checkout data is invalid.';
     public const RESPONSE_DETAILS_ORDER_NOT_PLACED = 'Order could not be placed.';
-    public const RESPONSE_DETAILS_CART_NOT_FOUND = 'Cart could not be found.';
+    public const RESPONSE_DETAILS_CART_NOT_FOUND = 'Cart not found.';
     public const RESPONSE_DETAIL_CART_IS_EMPTY = 'Cart is empty.';
 
-    protected const PAYMENT_REQUIRED_DATA_COMMON = [];
-    protected const PAYMENT_REQUIRED_DATA = [];
+    protected const PAYMENT_REQUIRED_FIELDS = [];
+    protected const PAYMENT_METHOD_REQUIRED_FIELDS = [];
 
     /**
      * @param string $methodName
      *
      * @return array
      */
-    public function getRequiredPaymentDataForMethod(string $methodName): array
+    public function getRequiredRequestDataForMethod(string $methodName): array
     {
-        if (!isset(static::PAYMENT_REQUIRED_DATA[$methodName])) {
-            return static::PAYMENT_REQUIRED_DATA_COMMON;
+        if (!isset(static::PAYMENT_METHOD_REQUIRED_FIELDS[$methodName])) {
+            return static::PAYMENT_REQUIRED_FIELDS;
         }
 
-        return static::PAYMENT_REQUIRED_DATA_COMMON + [$methodName => static::PAYMENT_REQUIRED_DATA[$methodName]];
+        return static::PAYMENT_REQUIRED_FIELDS + [static::PAYMENT_METHOD_REQUIRED_FIELDS[$methodName]];
     }
 }

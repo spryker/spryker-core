@@ -145,7 +145,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
                 (new RestPaymentMethodAttributesTransfer())->fromArray(
                     $paymentMethodTransfer->toArray(),
                     true
-                )->setRequiredResponseData($this->config->getRequiredPaymentDataForMethod($paymentMethodTransfer->getMethodName()))
+                )->setRequiredRequestData($this->config->getRequiredRequestDataForMethod($paymentMethodTransfer->getMethodName()))
             );
         }
 
