@@ -91,6 +91,10 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
 
         $productStorageData = $this->storageClient->get($key);
 
+        if (!$productStorageData) {
+            return null;
+        }
+
         $productStorageData = $this->productAbstractVariantsRestrictionFilter
             ->filterAbstractProductVariantsData($productStorageData);
 
