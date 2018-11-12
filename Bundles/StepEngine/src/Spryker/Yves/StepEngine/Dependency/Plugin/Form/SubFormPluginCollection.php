@@ -122,5 +122,6 @@ class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
     public function offsetUnset($offset)
     {
         unset($this->subForms[$offset]);
+        $this->subForms = array_values($this->subForms);
     }
 }
