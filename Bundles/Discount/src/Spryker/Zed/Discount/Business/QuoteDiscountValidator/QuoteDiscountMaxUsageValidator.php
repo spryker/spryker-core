@@ -13,24 +13,23 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface;
 
 class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
 {
     protected const ERROR_VOUCHER_CODE_LIMIT_REACHED = 399;
 
     /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface
      */
-    protected $discountQueryContainer;
+    protected $discountRepository;
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface $discountRepository
      */
-    public function __construct(
-        DiscountQueryContainerInterface $discountQueryContainer
-    ) {
-        $this->discountQueryContainer = $discountQueryContainer;
+    public function __construct(DiscountRepositoryInterface $discountRepository)
+    {
+        $this->discountRepository = $discountRepository;
     }
 
     /**
@@ -64,11 +63,11 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
      */
     protected function hasVouchersThatExceedNumberOfUses(ArrayObject $voucherDiscounts): bool
     {
-        return $this->discountQueryContainer
-            ->queryVouchersExceedsMaxNumberOfUsageByCodes(
+        return (bool)$this->discountRepository
+            ->findVouchersThatExceedUsageLimitByCodes(
                 $this->getVoucherCodes($voucherDiscounts)
             )
-            ->exists();
+            ->count();
     }
 
     /**

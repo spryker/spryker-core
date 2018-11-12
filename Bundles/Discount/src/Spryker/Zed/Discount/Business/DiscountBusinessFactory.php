@@ -647,7 +647,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createQuoteVoucherDiscountMaxUsageValidator(): QuoteDiscountMaxUsageValidator
     {
         return new QuoteDiscountMaxUsageValidator(
-            $this->getQueryContainer()
+            $this->getRepository()
         );
     }
 }

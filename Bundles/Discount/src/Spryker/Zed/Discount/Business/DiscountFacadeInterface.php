@@ -331,7 +331,6 @@ interface DiscountFacadeInterface
     public function updateDiscount(DiscountConfiguratorTransfer $discountConfigurator);
 
     /**
-     *
      * Specification:
      * - Read idDiscount from persistence
      * - Hydrate data from entities to DiscountConfiguratorTransfer
