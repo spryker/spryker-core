@@ -35,7 +35,8 @@ class CartReader implements CartReaderInterface
      */
     public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer
     {
-        foreach ($this->getQuoteCollection($quoteCriteriaFilterTransfer)->getQuotes() as $quoteTransfer) {
+        $quoteCollection = $this->quoteCollectionReaderPlugin->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
+        foreach ($quoteCollection->getQuotes() as $quoteTransfer) {
             if ($quoteTransfer->getUuid() === $uuid) {
                 return $quoteTransfer;
             }
@@ -50,16 +51,6 @@ class CartReader implements CartReaderInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
-    {
-        return $this->getQuoteCollection($quoteCriteriaFilterTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    protected function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
         return $this->quoteCollectionReaderPlugin->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
     }

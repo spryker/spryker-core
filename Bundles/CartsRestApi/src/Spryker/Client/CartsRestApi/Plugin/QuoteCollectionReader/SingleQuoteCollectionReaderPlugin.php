@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Client\CartsRestApi\CartsRestApiFactory getFactory()
  */
-class CartQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
+class SingleQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
 {
     /**
      * {@inheritdoc}

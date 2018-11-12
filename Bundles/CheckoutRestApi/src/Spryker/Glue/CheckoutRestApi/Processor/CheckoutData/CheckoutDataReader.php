@@ -100,9 +100,10 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             $restCheckoutResponseAttributesTransfer
         );
 
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-        $restResponse->addResource($checkoutDataResource);
-        $restResponse->setStatus(Response::HTTP_OK);
+        $restResponse = $this->restResourceBuilder
+            ->createRestResponse()
+            ->addResource($checkoutDataResource)
+            ->setStatus(Response::HTTP_OK);
 
         return $restResponse;
     }
@@ -114,11 +115,12 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND);
 
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-        $restResponse->addError($restErrorMessageTransfer);
+        $restResponse = $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorMessageTransfer);
 
         return $restResponse;
     }
@@ -130,28 +132,9 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     protected function findQuoteTransfer(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
     {
-        if ($restCheckoutRequestAttributesTransfer->getCart() === null
-            || ($restCheckoutRequestAttributesTransfer->getCart() !== null && $restCheckoutRequestAttributesTransfer->getCart()->getId() === null)) {
-            return $this->findCurrentCustomerQuote();
-        }
-
         return $this->cartsRestApiClient->findQuoteByUuid(
             $restCheckoutRequestAttributesTransfer->getCart()->getId(),
             new QuoteCriteriaFilterTransfer()
         );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function findCurrentCustomerQuote(): ?QuoteTransfer
-    {
-        $quoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollectionByCriteria(new QuoteCriteriaFilterTransfer());
-
-        if (!$quoteCollectionTransfer->getQuotes()->offsetExists(0)) {
-            return null;
-        }
-
-        return $quoteCollectionTransfer->getQuotes()->offsetGet(0);
     }
 }

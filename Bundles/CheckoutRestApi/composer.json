@@ -14,6 +14,7 @@
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.23.0",
     "spryker/payment": "^4.3.0",
+    "spryker/quote": "^2.0.0",
     "spryker/shipment": "^1.0.0",
     "spryker/symfony": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
@@ -22,7 +23,6 @@
     "spryker/code-sniffer": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
-    "spryker/quote": "*",
     "spryker/stock": "*",
     "spryker/testify": "*"
   },

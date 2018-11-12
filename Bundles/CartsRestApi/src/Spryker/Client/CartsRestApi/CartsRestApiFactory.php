@@ -8,21 +8,21 @@
 namespace Spryker\Client\CartsRestApi;
 
 use Spryker\Client\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
-use Spryker\Client\CartsRestApi\Reader\CartQuoteCollectionReader;
-use Spryker\Client\CartsRestApi\Reader\CartQuoteCollectionReaderInterface;
 use Spryker\Client\CartsRestApi\Reader\CartReader;
 use Spryker\Client\CartsRestApi\Reader\CartReaderInterface;
+use Spryker\Client\CartsRestApi\Reader\SingleQuoteCollectionReader;
+use Spryker\Client\CartsRestApi\Reader\SingleQuoteCollectionReaderInterface;
 use Spryker\Client\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CartsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\CartsRestApi\Reader\CartQuoteCollectionReaderInterface
+     * @return \Spryker\Client\CartsRestApi\Reader\SingleQuoteCollectionReaderInterface
      */
-    public function createCartQuoteCollectionReader(): CartQuoteCollectionReaderInterface
+    public function createCartQuoteCollectionReader(): SingleQuoteCollectionReaderInterface
     {
-        return new CartQuoteCollectionReader($this->getCartClient());
+        return new SingleQuoteCollectionReader($this->getCartClient());
     }
 
     /**
@@ -30,7 +30,7 @@ class CartsRestApiFactory extends AbstractFactory
      */
     public function createCartReader(): CartReaderInterface
     {
-        return new CartReader($this->getCartQuoteCollectionReaderPlugin());
+        return new CartReader($this->getQuoteCollectionReaderPlugin());
     }
 
     /**
@@ -44,8 +44,8 @@ class CartsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
      */
-    public function getCartQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
+    public function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
     {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CART_QUOTE_COLLECTION_READER_PLUGIN);
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_COLLECTION_READER);
     }
 }

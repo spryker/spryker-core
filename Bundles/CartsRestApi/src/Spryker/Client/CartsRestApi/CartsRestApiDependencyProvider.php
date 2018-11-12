@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\Container;
 class CartsRestApiDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_CART = 'CLIENT_CART';
-    public const CART_QUOTE_COLLECTION_READER_PLUGIN = 'CART_QUOTE_COLLECTION_READER_PLUGIN';
+    public const PLUGIN_QUOTE_COLLECTION_READER = 'PLUGIN_QUOTE_COLLECTION_READER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -27,7 +27,7 @@ class CartsRestApiDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addCartClient($container);
-        $container = $this->addCartQuoteCollectionReaderPlugin($container);
+        $container = $this->addQuoteCollectionReaderPlugin($container);
 
         return $container;
     }
@@ -51,9 +51,9 @@ class CartsRestApiDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCartQuoteCollectionReaderPlugin(Container $container)
+    protected function addQuoteCollectionReaderPlugin(Container $container)
     {
-        $container[self::CART_QUOTE_COLLECTION_READER_PLUGIN] = function () {
+        $container[static::PLUGIN_QUOTE_COLLECTION_READER] = function () {
             return $this->getQuoteCollectionReaderPlugin();
         };
 

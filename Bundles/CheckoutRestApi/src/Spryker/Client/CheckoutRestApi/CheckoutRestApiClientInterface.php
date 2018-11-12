@@ -30,9 +30,8 @@ interface CheckoutRestApiClientInterface
      * Specification:
      * - Extends the Customer transfer with the customer data (for registered users).
      * - Updated billing and shipping addresses with full details if UUID is passed.
-     * - Validates quote via CartClient.
-     * - Places an order via CheckoutClient.
-     * - Returns CheckoutResponseTransfer.
+     * - Validates quote.
+     * - Places an order.
      *
      * @api
      *

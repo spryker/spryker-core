@@ -10,14 +10,13 @@ namespace Spryker\Glue\OrdersRestApi\Plugin;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 
 /**
  * @method \Spryker\Glue\OrdersRestApi\OrdersRestApiFactory getFactory()
  */
 class OrderRelationshipByOrderReferencePlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
-    protected const CHECKOUT_RESOURCE = 'checkout';
-
     /**
      * {@inheritdoc}
      * - Adds relationship to the order by order reference.
@@ -46,6 +45,6 @@ class OrderRelationshipByOrderReferencePlugin extends AbstractPlugin implements 
      */
     public function getRelationshipResourceType(): string
     {
-        return static::CHECKOUT_RESOURCE;
+        return OrdersRestApiConfig::RESOURCE_ORDERS;
     }
 }

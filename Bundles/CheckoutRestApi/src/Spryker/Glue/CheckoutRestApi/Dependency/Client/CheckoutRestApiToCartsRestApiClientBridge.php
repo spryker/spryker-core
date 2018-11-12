@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CheckoutRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -35,15 +34,5 @@ class CheckoutRestApiToCartsRestApiClientBridge implements CheckoutRestApiToCart
     public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer
     {
         return $this->cartsRestApiClient->findQuoteByUuid($uuid, $quoteCriteriaFilterTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
-    {
-        return $this->cartsRestApiClient->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
     }
 }

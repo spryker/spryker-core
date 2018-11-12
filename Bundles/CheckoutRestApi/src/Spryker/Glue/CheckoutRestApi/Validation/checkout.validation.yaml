@@ -3,6 +3,8 @@ checkout-data:
     cart:
       - Collection:
           fields:
+            id:
+              - NotBlank
             billingAddress:
               - Optional
             shippingAddress:

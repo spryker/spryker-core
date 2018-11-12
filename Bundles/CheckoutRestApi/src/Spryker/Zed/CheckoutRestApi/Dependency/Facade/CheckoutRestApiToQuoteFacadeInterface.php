@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CheckoutRestApi\Business\Customer;
+namespace Spryker\Zed\CheckoutRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteCustomerExpanderInterface
+interface CheckoutRestApiToQuoteFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function expandQuoteWithCustomerData(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function deleteQuote(QuoteTransfer $quoteTransfer);
 }

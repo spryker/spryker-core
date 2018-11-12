@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Spryker\Client\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
 
-class CartQuoteCollectionReader implements CartQuoteCollectionReaderInterface
+class SingleQuoteCollectionReader implements SingleQuoteCollectionReaderInterface
 {
     /**
      * @var \Spryker\Client\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface

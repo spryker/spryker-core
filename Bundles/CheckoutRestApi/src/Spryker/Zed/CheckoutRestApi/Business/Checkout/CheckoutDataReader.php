@@ -55,14 +55,10 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer
     {
-        $shipmentMethodsTransfer = $this->getShipmentMethodsTransfer($quoteTransfer);
-        $paymentMethodsTransfer = $this->getPaymentMethodsTransfer($quoteTransfer);
-        $addressesTransfer = $this->getAddressesTransfer($quoteTransfer);
-
         return (new CheckoutDataTransfer())
-            ->setShipmentMethods($shipmentMethodsTransfer)
-            ->setPaymentMethods($paymentMethodsTransfer)
-            ->setAddresses($addressesTransfer);
+            ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
+            ->setPaymentMethods($this->getPaymentMethodsTransfer($quoteTransfer))
+            ->setAddresses($this->getAddressesTransfer($quoteTransfer));
     }
 
     /**

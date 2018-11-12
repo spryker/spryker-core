@@ -56,16 +56,16 @@
 
     <transfer name="RestCheckoutDataResponseAttributes">
         <property name="addresses" type="RestAddress[]"/>
-        <property name="paymentMethods" type="RestPaymentMethodAttributes[]"/>
-        <property name="shipmentMethods" type="RestShipmentMethodAttributes[]"/>
+        <property name="paymentMethods" type="RestPaymentMethod[]"/>
+        <property name="shipmentMethods" type="RestShipmentMethod[]"/>
     </transfer>
 
-    <transfer name="RestPaymentMethodAttributes">
+    <transfer name="RestPaymentMethod">
         <property name="methodName" type="string"/>
         <property name="requiredRequestData" type="array"/>
     </transfer>
 
-    <transfer name="RestShipmentMethodAttributes">
+    <transfer name="RestShipmentMethod">
         <property name="carrierName" type="string"/>
         <property name="id" type="int"/>
         <property name="name" type="string"/>

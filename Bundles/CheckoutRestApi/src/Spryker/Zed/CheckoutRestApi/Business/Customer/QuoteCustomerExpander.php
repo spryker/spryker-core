@@ -32,7 +32,7 @@ class QuoteCustomerExpander implements QuoteCustomerExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expandQuoteTransferWithCustomerTransfer(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function expandQuoteWithCustomerData(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $customerTransfer = $quoteTransfer->getCustomer();
 
@@ -52,7 +52,7 @@ class QuoteCustomerExpander implements QuoteCustomerExpanderInterface
             $customerResponseTransfer->getCustomerTransfer()
         );
 
-        $quoteTransfer = $this->expandQuoteTransferWithCustomerAddresses(
+        $quoteTransfer = $this->expandQuoteWithCustomerAddresses(
             $quoteTransfer,
             $customerResponseTransfer->getCustomerTransfer()
         );
@@ -66,7 +66,7 @@ class QuoteCustomerExpander implements QuoteCustomerExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function expandQuoteTransferWithCustomerAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
+    protected function expandQuoteWithCustomerAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
     {
         $quoteTransfer->setBillingAddress(
             $this->getAddressByUuid($quoteTransfer->getBillingAddress(), $customerTransfer)
@@ -92,8 +92,7 @@ class QuoteCustomerExpander implements QuoteCustomerExpanderInterface
         }
 
         foreach ($customerTransfer->getAddresses()->getAddresses() as $customerAddressTransfer) {
-            if ($customerAddressTransfer->getUuid() === null
-                || $customerAddressTransfer->getUuid() !== $addressTransfer->getUuid()) {
+            if ($customerAddressTransfer->getUuid() !== $addressTransfer->getUuid()) {
                 continue;
             }
 

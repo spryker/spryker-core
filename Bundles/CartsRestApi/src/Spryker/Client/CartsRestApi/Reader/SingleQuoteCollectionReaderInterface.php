@@ -10,7 +10,7 @@ namespace Spryker\Client\CartsRestApi\Reader;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 
-interface CartQuoteCollectionReaderInterface
+interface SingleQuoteCollectionReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer

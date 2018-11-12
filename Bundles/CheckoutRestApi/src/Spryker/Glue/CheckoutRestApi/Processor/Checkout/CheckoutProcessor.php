@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
-use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface;
@@ -52,32 +51,24 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $cartsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface
-     */
-    protected $cartClient;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface $quoteMerger
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient
-     * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface $cartClient
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         QuoteMergerInterface $quoteMerger,
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient,
-        CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient,
-        CheckoutRestApiToCartClientInterface $cartClient
+        CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->quoteMerger = $quoteMerger;
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
         $this->cartsRestApiClient = $cartsRestApiClient;
-        $this->cartClient = $cartClient;
     }
 
     /**
@@ -112,8 +103,6 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             return $this->createPlaceOrderFailedErrorResponse($checkoutResponseTransfer->getErrors(), $restRequest->getMetadata()->getLocale());
         }
 
-        $this->cartClient->clearQuote();
-
         return $this->createOrderPlacedResponse($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
     }
 
@@ -127,7 +116,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
         $restResponse->addError(
             (new RestErrorMessageTransfer())
                 ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                 ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND)
         );
 
@@ -146,23 +135,6 @@ class CheckoutProcessor implements CheckoutProcessorInterface
                 ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_IS_EMPTY)
                 ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                 ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAIL_CART_IS_EMPTY)
-        );
-
-        return $restResponse;
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCheckoutDataInvalidErrorResponse(): RestResponseInterface
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        $restResponse->addError(
-            (new RestErrorMessageTransfer())
-                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CHECKOUT_DATA_INVALID)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CHECKOUT_DATA_INVALID)
         );
 
         return $restResponse;
@@ -205,27 +177,6 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             $localeName,
             $checkoutErrorTransfer->getParameters()
         ) ?: $checkoutErrorMessage;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createErrorMessagesResponse(array $messageTransfers): RestResponseInterface
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        foreach ($messageTransfers as $messageTransfer) {
-            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_ORDER_NOT_PLACED)
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail($messageTransfer->getValue());
-
-            $restResponse->addError($restErrorMessageTransfer);
-        }
-
-        return $restResponse;
     }
 
     /**

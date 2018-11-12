@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Generated\Shared\Transfer\RestPaymentMethodAttributesTransfer;
-use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
+use Generated\Shared\Transfer\RestPaymentMethodTransfer;
+use Generated\Shared\Transfer\RestShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 
@@ -142,7 +142,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     ): RestCheckoutDataResponseAttributesTransfer {
         foreach ($checkoutDataTransfer->getPaymentMethods()->getMethods() as $paymentMethodTransfer) {
             $restCheckoutDataResponseAttributesTransfer->addPaymentMethods(
-                (new RestPaymentMethodAttributesTransfer())->fromArray(
+                (new RestPaymentMethodTransfer())->fromArray(
                     $paymentMethodTransfer->toArray(),
                     true
                 )->setRequiredRequestData($this->config->getRequiredRequestDataForMethod($paymentMethodTransfer->getMethodName()))
@@ -164,7 +164,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     ): RestCheckoutDataResponseAttributesTransfer {
         foreach ($checkoutDataTransfer->getShipmentMethods()->getMethods() as $shipmentMethodTransfer) {
             $restCheckoutDataResponseAttributesTransfer->addShipmentMethods(
-                (new RestShipmentMethodAttributesTransfer())->fromArray(
+                (new RestShipmentMethodTransfer())->fromArray(
                     $shipmentMethodTransfer->toArray(),
                     true
                 )->setPrice($shipmentMethodTransfer->getStoreCurrencyPrice())

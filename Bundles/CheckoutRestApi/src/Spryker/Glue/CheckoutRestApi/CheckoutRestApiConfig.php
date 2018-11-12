@@ -44,6 +44,6 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
             return static::PAYMENT_REQUIRED_FIELDS;
         }
 
-        return static::PAYMENT_REQUIRED_FIELDS + [static::PAYMENT_METHOD_REQUIRED_FIELDS[$methodName]];
+        return array_merge(static::PAYMENT_REQUIRED_FIELDS, static::PAYMENT_METHOD_REQUIRED_FIELDS[$methodName]);
     }
 }

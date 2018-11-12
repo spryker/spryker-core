@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CheckoutRestApi;
 
-use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessor;
@@ -67,17 +66,8 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->createQuoteMerger(),
             $this->getClient(),
             $this->getGlossaryStorageClient(),
-            $this->getCartsRestApiClient(),
-            $this->getCartClient()
+            $this->getCartsRestApiClient()
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartClientInterface
-     */
-    public function getCartClient(): CheckoutRestApiToCartClientInterface
-    {
-        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::CLIENT_CART);
     }
 
     /**

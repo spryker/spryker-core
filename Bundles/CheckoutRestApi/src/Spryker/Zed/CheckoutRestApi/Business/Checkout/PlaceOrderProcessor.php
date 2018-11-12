@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface;
 
 class PlaceOrderProcessor implements PlaceOrderProcessorInterface
 {
@@ -29,6 +30,11 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     protected $checkoutFacade;
 
     /**
+     * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface
+     */
+    protected $quoteFacade;
+
+    /**
      * @var \Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface
      */
     protected $quoteCustomerExpander;
@@ -36,15 +42,18 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     /**
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade
+     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface $quoteCustomerExpander
      */
     public function __construct(
         CheckoutRestApiToCartFacadeInterface $cartFacade,
         CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade,
+        CheckoutRestApiToQuoteFacadeInterface $quoteFacade,
         QuoteCustomerExpanderInterface $quoteCustomerExpander
     ) {
         $this->cartFacade = $cartFacade;
         $this->checkoutFacade = $checkoutFacade;
+        $this->quoteFacade = $quoteFacade;
         $this->quoteCustomerExpander = $quoteCustomerExpander;
     }
 
@@ -55,7 +64,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      */
     public function placeOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
     {
-        $quoteTransfer = $this->quoteCustomerExpander->expandQuoteTransferWithCustomerTransfer($quoteTransfer);
+        $quoteTransfer = $this->quoteCustomerExpander->expandQuoteWithCustomerData($quoteTransfer);
 
         $paymentTransfer = $quoteTransfer->getPayment();
 
@@ -67,9 +76,13 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         $quoteTransfer = $this->restorePaymentInQuote($quoteResponseTransfer->getQuoteTransfer(), $paymentTransfer);
 
         $checkoutResponseTransfer = $this->checkoutFacade->placeOrder($quoteTransfer);
-
         if (!$checkoutResponseTransfer->getIsSuccess()) {
             return $checkoutResponseTransfer;
+        }
+
+        $quoteResponseTransfer = $this->quoteFacade->deleteQuote($quoteTransfer);
+        if ($quoteResponseTransfer->getIsSuccessful() === false) {
+            return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
         }
 
         return $checkoutResponseTransfer;
