@@ -17,6 +17,8 @@ class DiscountConfig extends AbstractBundleConfig
     public const KEY_VOUCHER_CODE_VOWELS = 'vowels';
     public const KEY_VOUCHER_CODE_NUMBERS = 'numbers';
 
+    protected const REDIRECT_URL_DEFAULT = '/discount/index/list';
+
     /**
      * @return int
      */
@@ -63,5 +65,13 @@ class DiscountConfig extends AbstractBundleConfig
     public function getVoucherPoolTemplateReplacementString()
     {
         return '[code]';
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultRedirectUrl(): string
+    {
+        return static::REDIRECT_URL_DEFAULT;
     }
 }

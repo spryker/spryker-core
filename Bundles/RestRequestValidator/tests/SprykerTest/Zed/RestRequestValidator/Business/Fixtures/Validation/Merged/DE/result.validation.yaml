@@ -1,0 +1,49 @@
+endpoint:
+  post:
+    emailField:
+    stringField:
+    - NotBlank
+    - Regex:
+        pattern: '/\w{7}/'
+    integerField:
+    - Regex:
+        pattern: '/\d(15)/'
+  patch:
+    booleanField:
+    - IsTrue
+    - Required
+  get:
+    dateField:
+    - Date
+
+endpoint_two:
+  put:
+    choiceField:
+    - Choice:
+        choices:
+        - chOne
+        - chTwo
+        - chThree
+        - chFour
+        - chFive
+        - chSix
+
+endpoint_three:
+  post:
+    emailField:
+    - Email
+    stringField:
+    - Regex:
+        pattern: '/\w*/'
+    integerField:
+    - Regex:
+        pattern: '/\d{6}/'
+    floatField:
+    - Regex:
+        pattern: '/\d*/'
+  patch:
+    booleanField:
+    - IsFalse
+  get:
+    dateField:
+    - Date

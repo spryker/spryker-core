@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
@@ -20,6 +21,11 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 class ProductConcreteImageSetStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
+
+    protected const PUBLISH_EVENTS = [
+        ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE,
+        ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE,
+    ];
 
     /**
      * @api
@@ -34,6 +40,12 @@ class ProductConcreteImageSetStorageListener extends AbstractPlugin implements E
         $this->preventTransaction();
         $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyProductImageSetTableMap::COL_FK_PRODUCT);
 
-        $this->getFacade()->publishProductConcreteImages($productIds);
+        if ($eventName === ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE) {
+            $this->getFacade()->unpublishProductConcreteImages($productIds);
+        }
+
+        if (in_array($eventName, static::PUBLISH_EVENTS)) {
+            $this->getFacade()->publishProductConcreteImages($productIds);
+        }
     }
 }

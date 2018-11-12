@@ -30,6 +30,7 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $idGlossaryKey = $this->castId($request->query->get(static::URL_PARAMETER_GLOSSARY_KEY));
+
         $formData = $this
             ->getFactory()
             ->createTranslationDataProvider()
@@ -37,6 +38,12 @@ class EditController extends AbstractController
                 $idGlossaryKey,
                 $this->getFactory()->getEnabledLocales()
             );
+
+        if ($formData === []) {
+            $this->addErrorMessage(sprintf('Glossary with id %s doesn\'t exist', $idGlossaryKey));
+
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
+        }
 
         $glossaryForm = $this
             ->getFactory()

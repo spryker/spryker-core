@@ -17,8 +17,13 @@
         <property name="priceDimension" type="PriceProductDimension" />
     </transfer>
 
+    <transfer name="MoneyValue">
+        <property name="priceDataChecksum" type="string" />
+    </transfer>
+
     <transfer name="PriceProductDimension">
         <property name="type" type="string" />
+        <property name="name" type="string" />
         <property name="idPriceProductDefault" type="int" />
     </transfer>
 
