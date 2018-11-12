@@ -10,15 +10,29 @@ namespace Spryker\Zed\Propel\Business\Model\Schema\XmlValidator;
 use Generated\Shared\Transfer\SchemaValidationErrorTransfer;
 use Generated\Shared\Transfer\SchemaValidationTransfer;
 use SimpleXMLElement;
+use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
 {
     /**
+     * @var \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface
+     */
+    protected $finder;
+
+    /**
      * @var \Generated\Shared\Transfer\SchemaValidationTransfer|null
      */
     protected $schemaValidationTransfer;
+
+    /**
+     * @param \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface $finder
+     */
+    public function __construct(PropelGroupedSchemaFinderInterface $finder)
+    {
+        $this->finder = $finder;
+    }
 
     /**
      * @return \Generated\Shared\Transfer\SchemaValidationTransfer
@@ -27,11 +41,11 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
     {
         $filePaths = $this->getSchemaFiles();
 
-        foreach ($this->findInvalidIdIdentifiersInFiles($filePaths) as $filePath => $identifier) {
+        foreach ($this->findInvalidIdIdentifiersInFiles($filePaths) as $identifier) {
             $this->addError(sprintf(
                 'There is a problem with %s . The identifier "%s" has a length beyond the maximum identifier length "%s". Your database will persist a truncated identifier leading to more problems!',
-                $filePath,
-                $identifier,
+                key($identifier),
+                reset($identifier),
                 PropelConfig::POSTGRES_INDEX_NAME_MAX_LENGTH
             ));
         }
@@ -44,20 +58,30 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
      */
     protected function getSchemaFiles(): array
     {
-        return [];
+        $schemaFiles = $this->finder->getGroupedSchemaFiles();
+        $filteredGroupedSchemas = [];
+        foreach ($schemaFiles as $fileName => $groupedSchemas) {
+            if (count($groupedSchemas) > 1) {
+                $filteredGroupedSchemas[$fileName] = $groupedSchemas;
+            }
+        }
+
+        return $filteredGroupedSchemas;
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo[] $files
+     * @param array $files
      *
      * @return array
      */
     protected function findInvalidIdIdentifiersInFiles(array $files): array
     {
         $invalidIdIdentifiers = [];
-        foreach ($files as $file) {
-            foreach ($this->findInvalidIdentifiers($file) as $invalidIdIdentifier) {
-                $invalidIdIdentifiers[] = $invalidIdIdentifier;
+        foreach ($files as $schema) {
+            foreach ($schema as $file) {
+                foreach ($this->findInvalidIdentifiers($file) as $invalidIdIdentifier) {
+                    $invalidIdIdentifiers[] = $invalidIdIdentifier;
+                }
             }
         }
 
@@ -75,6 +99,7 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
         $elements = array_merge(
             $xml->xpath('/database/table/index/@name'),
             $xml->xpath('/database/table/@name'),
+            $xml->xpath('/database/table/foreign-key/@name'),
             $xml->xpath('/database/table/foreign-key/reference/@local'),
             $xml->xpath('/database/table/id-method-parameter/@value')
         );

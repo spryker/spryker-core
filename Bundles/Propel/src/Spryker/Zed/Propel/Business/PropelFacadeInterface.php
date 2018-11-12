@@ -177,7 +177,7 @@ interface PropelFacadeInterface
     /**
      * Specification:
      * - Validates schema XML files.
-     * - Valiates against illogical XML issues in a specific file.
+     * - Validates against illogical XML issues in a specific file.
      *
      * @api
      *

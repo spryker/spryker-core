@@ -23,6 +23,7 @@ use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
 use Spryker\Zed\Propel\Business\Model\Schema\Validator\PropelSchemaValidator;
+use Spryker\Zed\Propel\Business\Model\Schema\XmlValidator\PropelSchemaXmlNameValidator;
 use Spryker\Zed\Propel\Communication\Console\BuildModelConsole;
 use Spryker\Zed\Propel\Communication\Console\BuildSqlConsole;
 use Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole;
@@ -388,16 +389,13 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Propel\Business\Model\Schema\Validator\PropelSchemaValidatorInterface
+     * @return \Spryker\Zed\Propel\Business\Model\Schema\XmlValidator\PropelSchemaXmlValidatorInterface
      */
     public function createSchemaXmlValidator()
     {
-        $propelSchemaXmlValidator = new PropelSchemaValidator(
-            $this->createGroupedSchemaFinder(),
-            $this->getUtilTextService()
+        return new PropelSchemaXmlNameValidator(
+            $this->createGroupedSchemaFinder()
         );
-
-        return $propelSchemaXmlValidator;
     }
 
     /**
