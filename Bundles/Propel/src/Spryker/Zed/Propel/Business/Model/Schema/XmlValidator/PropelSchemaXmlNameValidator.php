@@ -99,6 +99,7 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
         $elements = array_merge(
             $xml->xpath('/database/table/index/@name'),
             $xml->xpath('/database/table/@name'),
+            $xml->xpath('/database/table/unique/@name'),
             $xml->xpath('/database/table/foreign-key/@name'),
             $xml->xpath('/database/table/foreign-key/reference/@local'),
             $xml->xpath('/database/table/id-method-parameter/@value')
