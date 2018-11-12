@@ -14,8 +14,6 @@ use Generated\Shared\DataBuilder\CategoryImageSetBuilder;
 use Generated\Shared\DataBuilder\LocaleBuilder;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetToCategoryImageTableMap;
-use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageTableMap;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageQuery;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImageQuery;
@@ -54,43 +52,6 @@ class CategoryImageDataHelper extends Module
         });
 
         return $categoryTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return array
-     */
-    public function getIdCategoryImageSetToCategoryImageForCategory(CategoryTransfer $categoryTransfer): array
-    {
-        return SpyCategoryImageSetToCategoryImageQuery::create()
-            ->joinSpyCategoryImageSet()
-            ->useSpyCategoryImageSetQuery()
-            ->filterByFkCategory($categoryTransfer->getIdCategory())
-            ->endUse()
-            ->select(SpyCategoryImageSetToCategoryImageTableMap::COL_ID_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE)
-            ->find()
-            ->getData();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return array
-     */
-    public function getIdCategoryImageCollectionForCategory(CategoryTransfer $categoryTransfer): array
-    {
-        return SpyCategoryImageQuery::create()
-            ->joinSpyCategoryImageSetToCategoryImage()
-            ->useSpyCategoryImageSetToCategoryImageQuery()
-            ->joinSpyCategoryImageSet()
-            ->useSpyCategoryImageSetQuery()
-            ->filterByFkCategory($categoryTransfer->getIdCategory())
-            ->endUse()
-            ->endUse()
-            ->select(SpyCategoryImageTableMap::COL_ID_CATEGORY_IMAGE)
-            ->find()
-            ->getData();
     }
 
     /**
@@ -164,7 +125,7 @@ class CategoryImageDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    protected function buildLocaleTransfer(array $seedData = [])
+    public function buildLocaleTransfer(array $seedData = [])
     {
         $seedData = $seedData + [
             'localeName' => static::LOCALE_NAME_DE,

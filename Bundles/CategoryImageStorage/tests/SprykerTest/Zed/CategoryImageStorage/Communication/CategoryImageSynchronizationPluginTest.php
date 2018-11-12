@@ -8,8 +8,13 @@
 namespace SprykerTest\Zed\CategoryImageStorage\Communication;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetTableMap;
+use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetToCategoryImageTableMap;
+use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageTableMap;
+use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageQuery;
+use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImageQuery;
 use Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorageQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
@@ -85,8 +90,7 @@ class CategoryImageSynchronizationPluginTest extends Unit
         $beforeCount = SpyCategoryImageStorageQuery::create()->count();
         $categoryImageSetCategoryImageStorageListener = new CategoryImageSetCategoryImageStorageListener();
         $categoryImageSetCategoryImageStorageListener->setFacade($this->tester->getFacade());
-        $idCategoryImageStorageToCategoryImageCollection = $this->tester
-            ->getIdCategoryImageSetToCategoryImageForCategory($this->categoryTransfer);
+        $idCategoryImageStorageToCategoryImageCollection = $this->getIdCategoryImageSetToCategoryImageForCategory($this->categoryTransfer);
 
         $eventTransfers = [];
         foreach ($idCategoryImageStorageToCategoryImageCollection as $idCategoryImageStorageToCategoryImage) {
@@ -127,7 +131,7 @@ class CategoryImageSynchronizationPluginTest extends Unit
         $beforeCount = SpyCategoryImageStorageQuery::create()->count();
         $categoryImagePublishStorageListener = new CategoryImageStorageListener();
         $categoryImagePublishStorageListener->setFacade($this->tester->getFacade());
-        $idCategoryImageColletion = $this->tester->getIdCategoryImageCollectionForCategory($this->categoryTransfer);
+        $idCategoryImageColletion = $this->getIdCategoryImageCollectionForCategory($this->categoryTransfer);
 
         $eventTransfers = [];
         foreach ($idCategoryImageColletion as $idCategoryImage) {
@@ -163,5 +167,42 @@ class CategoryImageSynchronizationPluginTest extends Unit
         $this->assertNotNull($categoryImageStorage);
         $data = $categoryImageStorage->getData();
         $this->assertSame(CategoryImageDataHelper::IMAGE_SET_NAME, $data['image_sets'][0]['name']);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return array
+     */
+    protected function getIdCategoryImageSetToCategoryImageForCategory(CategoryTransfer $categoryTransfer): array
+    {
+        return SpyCategoryImageSetToCategoryImageQuery::create()
+            ->joinSpyCategoryImageSet()
+            ->useSpyCategoryImageSetQuery()
+            ->filterByFkCategory($categoryTransfer->getIdCategory())
+            ->endUse()
+            ->select(SpyCategoryImageSetToCategoryImageTableMap::COL_ID_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE)
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return array
+     */
+    protected function getIdCategoryImageCollectionForCategory(CategoryTransfer $categoryTransfer): array
+    {
+        return SpyCategoryImageQuery::create()
+            ->joinSpyCategoryImageSetToCategoryImage()
+            ->useSpyCategoryImageSetToCategoryImageQuery()
+            ->joinSpyCategoryImageSet()
+            ->useSpyCategoryImageSetQuery()
+            ->filterByFkCategory($categoryTransfer->getIdCategory())
+            ->endUse()
+            ->endUse()
+            ->select(SpyCategoryImageTableMap::COL_ID_CATEGORY_IMAGE)
+            ->find()
+            ->getData();
     }
 }

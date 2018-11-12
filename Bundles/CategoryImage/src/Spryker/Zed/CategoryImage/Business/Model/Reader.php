@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\CategoryImage\Business\Model;
 
-use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface;
 
 class Reader implements ReaderInterface
@@ -20,20 +18,20 @@ class Reader implements ReaderInterface
     protected $categoryImageRepository;
 
     /**
-     * @var \Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface
+     * @var \Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface
      */
-    private $localeProvider;
+    private $imageSetLocalizer;
 
     /**
      * @param \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface $categoryImageRepository
-     * @param \Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface $localeProvider
+     * @param \Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface $imageSetLocalizer
      */
     public function __construct(
         CategoryImageRepositoryInterface $categoryImageRepository,
-        LocaleProviderInterface $localeProvider
+        ImageSetLocalizerInterface $imageSetLocalizer
     ) {
         $this->categoryImageRepository = $categoryImageRepository;
-        $this->localeProvider = $localeProvider;
+        $this->imageSetLocalizer = $imageSetLocalizer;
     }
 
     /**
@@ -72,36 +70,6 @@ class Reader implements ReaderInterface
      */
     protected function buildLocalizedImageSetCollection(array $categoryImageSetCollection): array
     {
-        $localizedImageSetCollection = [];
-
-        foreach ($this->localeProvider->getLocaleCollection(true) as $localeTransfer) {
-            $localeName = $localeTransfer->getLocaleName();
-            $localizedImageSetCollection[$localeName] = array_filter(
-                $categoryImageSetCollection,
-                function (CategoryImageSetTransfer $categoryImageSet) use ($localeName) {
-                    $this->prepareLocale($categoryImageSet);
-
-                    return $categoryImageSet->getLocale()->getLocaleName() === $localeName;
-                }
-            );
-        }
-
-        return $localizedImageSetCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
-     */
-    protected function prepareLocale(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer
-    {
-        if ($categoryImageSetTransfer->getLocale() === null) {
-            $categoryImageSetTransfer->setLocale(
-                $this->localeProvider->createDefaultLocale()
-            );
-        }
-
-        return $categoryImageSetTransfer;
+        return $this->imageSetLocalizer->buildFormImageSetCollection($categoryImageSetCollection);
     }
 }

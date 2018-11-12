@@ -10,7 +10,6 @@ namespace Spryker\Zed\CategoryImage\Business\Model;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryImageTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface;
 
@@ -29,23 +28,23 @@ class Writer implements WriterInterface
     protected $categoryImageEntityManager;
 
     /**
-     * @var \Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface
+     * @var \Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface
      */
-    private $localeProvider;
+    private $imageSetLocalizer;
 
     /**
      * @param \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface $categoryImageRepository
      * @param \Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface $categoryImageEntityManager
-     * @param \Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface $localeProvider
+     * @param \Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface $imageSetLocalizer
      */
     public function __construct(
         CategoryImageRepositoryInterface $categoryImageRepository,
         CategoryImageEntityManagerInterface $categoryImageEntityManager,
-        LocaleProviderInterface $localeProvider
+        ImageSetLocalizerInterface $imageSetLocalizer
     ) {
         $this->categoryImageRepository = $categoryImageRepository;
         $this->categoryImageEntityManager = $categoryImageEntityManager;
-        $this->localeProvider = $localeProvider;
+        $this->imageSetLocalizer = $imageSetLocalizer;
     }
 
     /**
@@ -80,8 +79,12 @@ class Writer implements WriterInterface
      */
     protected function saveFormCategoryImageSetCollection(CategoryTransfer $categoryTransfer): void
     {
-        $localizedImageSetCollection = $this->localizeCategoryImageSetCollection($categoryTransfer);
+        $localizedImageSetCollection = $this->imageSetLocalizer
+            ->buildCategoryImageSetCollection($categoryTransfer->getFormImageSets());
         foreach ($localizedImageSetCollection as $imageSetTransfer) {
+            $imageSetTransfer->setIdCategory(
+                $categoryTransfer->requireIdCategory()->getIdCategory()
+            );
             $this->saveCategoryImageSet($imageSetTransfer);
         }
     }
@@ -214,32 +217,5 @@ class Writer implements WriterInterface
             );
 
         $this->deleteCategoryImageSetCollection($missingCategoryImageSetCollection);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
-     */
-    protected function localizeCategoryImageSetCollection(CategoryTransfer $categoryTransfer): array
-    {
-        $localeCollection = $this->localeProvider->getLocaleCollection(true);
-        $localizedImageSetCollection = [];
-
-        foreach ($localeCollection as $localeTransfer) {
-            $localeName = $localeTransfer->getLocaleName();
-            $imageSetTransferCollection = $categoryTransfer->getFormImageSets()[$localeName] ?? [];
-
-            /** @var \Generated\Shared\Transfer\CategoryImageSetTransfer $imageSetTransfer */
-            foreach ($imageSetTransferCollection as $imageSetTransfer) {
-                $imageSetTransfer->setIdCategory(
-                    $categoryTransfer->requireIdCategory()->getIdCategory()
-                );
-                $imageSetTransfer->setLocale($localeTransfer);
-                $localizedImageSetCollection[] = $imageSetTransfer;
-            }
-        }
-
-        return $localizedImageSetCollection;
     }
 }

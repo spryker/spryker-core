@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CategoryImage\Business;
 
+use Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizer;
+use Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface;
 use Spryker\Zed\CategoryImage\Business\Model\Reader;
 use Spryker\Zed\CategoryImage\Business\Model\ReaderInterface;
 use Spryker\Zed\CategoryImage\Business\Model\Writer;
@@ -30,7 +32,7 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     {
         return new Reader(
             $this->getRepository(),
-            $this->createLocaleProvider()
+            $this->createImageSetLocalizer()
         );
     }
 
@@ -42,7 +44,7 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
         return new Writer(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createLocaleProvider()
+            $this->createImageSetLocalizer()
         );
     }
 
@@ -53,6 +55,16 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     {
         return new LocaleProvider(
             $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface
+     */
+    public function createImageSetLocalizer(): ImageSetLocalizerInterface
+    {
+        return new ImageSetLocalizer(
+            $this->createLocaleProvider()
         );
     }
 
