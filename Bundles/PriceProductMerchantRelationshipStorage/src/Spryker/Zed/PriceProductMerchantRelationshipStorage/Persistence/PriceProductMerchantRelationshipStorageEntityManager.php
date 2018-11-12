@@ -29,13 +29,8 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     ): void {
         $priceProductAbstractMerchantRelationshipStorageEntity
             ->setData($this->formatData($priceProductMerchantRelationshipStorageTransfer))
-            ->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue());
-
-        if (!$priceProductAbstractMerchantRelationshipStorageEntity->isModified()) {
-            return;
-        }
-
-        $priceProductAbstractMerchantRelationshipStorageEntity->save();
+            ->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue())
+            ->save();
     }
 
     /**
@@ -80,13 +75,8 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     ): void {
         $priceProductConcreteMerchantRelationshipStorageEntity
             ->setData($this->formatData($priceProductMerchantRelationshipStorageTransfer))
-            ->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue());
-
-        if (!$priceProductConcreteMerchantRelationshipStorageEntity->isModified()) {
-            return;
-        }
-
-        $priceProductConcreteMerchantRelationshipStorageEntity->save();
+            ->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue())
+            ->save();
     }
 
     /**
