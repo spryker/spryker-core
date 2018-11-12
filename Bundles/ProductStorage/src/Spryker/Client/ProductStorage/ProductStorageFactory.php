@@ -79,6 +79,17 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface
+     */
+    public function createAbstractProductStorageDataMapper()
+    {
+        return new ProductStorageDataMapper(
+            $this->getAbstractStorageProductExpanderPlugins(),
+            $this->createProductAbstractAttributeMapRestrictionFilter()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\ProductStorage\Mapper\ProductVariantExpanderInterface
      */
     public function createVariantExpander()
@@ -126,5 +137,13 @@ class ProductStorageFactory extends AbstractFactory
     public function getProductConcreteRestrictionPlugins(): array
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_CONCRETE_RESTRICTION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     */
+    protected function getAbstractStorageProductExpanderPlugins()
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGIN_ABSTRACT_PRODUCT_VIEW_EXPANDERS);
     }
 }
