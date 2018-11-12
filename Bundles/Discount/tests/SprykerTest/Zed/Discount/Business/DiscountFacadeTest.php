@@ -412,7 +412,7 @@ class DiscountFacadeTest extends Unit
         $checkoutErrorTransfer = reset($checkoutErrorTransferCollection);
 
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
-        $this->assertEquals('general fail', $checkoutErrorTransfer->getErrorCode());
+        $this->assertEquals(399, $checkoutErrorTransfer->getErrorCode());
         $this->assertEquals(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED, $checkoutErrorTransfer->getMessage());
         $this->assertFalse($result);
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
