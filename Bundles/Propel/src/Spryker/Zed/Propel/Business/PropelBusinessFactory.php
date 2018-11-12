@@ -58,7 +58,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface
      */
-    public function createGroupedSchemaFinder()
+    protected function createGroupedSchemaFinder()
     {
         $schemaFinder = new PropelGroupedSchemaFinder(
             $this->createSchemaFinder()
@@ -70,7 +70,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
      */
-    public function createSchemaFinder()
+    protected function createSchemaFinder()
     {
         $schemaFinder = new PropelSchemaFinder(
             $this->getConfig()->getPropelSchemaPathPatterns()
@@ -82,7 +82,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
      */
-    public function createCoreSchemaFinder()
+    protected function createCoreSchemaFinder()
     {
         $schemaFinder = new PropelSchemaFinder(
             $this->getConfig()->getCorePropelSchemaPathPatterns()
@@ -94,7 +94,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaWriterInterface
      */
-    public function createSchemaWriter()
+    protected function createSchemaWriter()
     {
         $schemaWriter = new PropelSchemaWriter(
             $this->createFilesystem(),
@@ -107,7 +107,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaMergerInterface
      */
-    public function createSchemaMerger()
+    protected function createSchemaMerger()
     {
         $propelSchemaMerger = new PropelSchemaMerger(
             $this->getConfig()
@@ -159,7 +159,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Symfony\Component\Filesystem\Filesystem
      */
-    public function createFilesystem()
+    protected function createFilesystem()
     {
         $filesystem = new Filesystem();
 
@@ -183,7 +183,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollectionInterface
      */
-    public function createDatabaseCreatorCollection()
+    protected function createDatabaseCreatorCollection()
     {
         $databaseCreatorCollection = new DatabaseCreatorCollection();
         $databaseCreatorCollection
@@ -198,7 +198,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */
-    public function createMySqlDatabaseCreator()
+    protected function createMySqlDatabaseCreator()
     {
         return new MySqlDatabaseCreator();
     }
@@ -208,7 +208,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */
-    public function createPostgreSqlDatabaseCreator()
+    protected function createPostgreSqlDatabaseCreator()
     {
         return new PostgreSqlDatabaseCreator();
     }
@@ -248,7 +248,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Communication\Console\PropelInstallConsole
      */
-    public function createPropelInstallConsole()
+    protected function createPropelInstallConsole()
     {
         return new PropelInstallConsole();
     }
@@ -258,7 +258,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Communication\Console\PostgresqlCompatibilityConsole
      */
-    public function createPostgresqlCompatibilityConsole()
+    protected function createPostgresqlCompatibilityConsole()
     {
         return new PostgresqlCompatibilityConsole();
     }
@@ -268,7 +268,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Communication\Console\BuildModelConsole
      */
-    public function createBuildModelConsole()
+    protected function createBuildModelConsole()
     {
         return new BuildModelConsole();
     }
@@ -278,7 +278,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Communication\Console\BuildSqlConsole
      */
-    public function createBuildSqlConsole()
+    protected function createBuildSqlConsole()
     {
         return new BuildSqlConsole();
     }
@@ -288,7 +288,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole
      */
-    public function createConvertConfigConsole()
+    protected function createConvertConfigConsole()
     {
         return new ConvertConfigConsole();
     }
@@ -298,7 +298,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Communication\Console\CreateDatabaseConsole
      */
-    public function createCreateDatabaseConsole()
+    protected function createCreateDatabaseConsole()
     {
         return new CreateDatabaseConsole();
     }
@@ -308,7 +308,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Communication\Console\DiffConsole
      */
-    public function createDiffConsole()
+    protected function createDiffConsole()
     {
         return new DiffConsole();
     }
@@ -318,7 +318,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Communication\Console\InsertSqlConsole
      */
-    public function createInsertSqlConsole()
+    protected function createInsertSqlConsole()
     {
         return new InsertSqlConsole();
     }
@@ -328,7 +328,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Communication\Console\MigrateConsole
      */
-    public function createMigrateConsole()
+    protected function createMigrateConsole()
     {
         return new MigrateConsole();
     }
@@ -338,7 +338,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Communication\Console\SchemaCopyConsole
      */
-    public function createSchemaCopyConsole()
+    protected function createSchemaCopyConsole()
     {
         return new SchemaCopyConsole();
     }
@@ -348,7 +348,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Propel\Communication\Console\MigrationCheckConsole
      */
-    public function createMigrationCheckConsole()
+    protected function createMigrationCheckConsole()
     {
         return new MigrationCheckConsole();
     }
@@ -369,7 +369,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\AdapterFactoryInterface
      */
-    public function createAdapterFactory()
+    protected function createAdapterFactory()
     {
         return new AdapterFactory();
     }
@@ -389,7 +389,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Propel\Business\Model\Schema\XmlValidator\PropelSchemaXmlValidatorInterface
+     * @return \Spryker\Zed\Propel\Business\Model\Schema\XmlValidator\PropelSchemaXmlNameValidator
      */
     public function createSchemaXmlValidator()
     {
@@ -401,7 +401,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface
      */
-    public function getUtilTextService()
+    protected function getUtilTextService()
     {
         return $this->getProvidedDependency(PropelDependencyProvider::UTIL_TEXT_SERVICE);
     }

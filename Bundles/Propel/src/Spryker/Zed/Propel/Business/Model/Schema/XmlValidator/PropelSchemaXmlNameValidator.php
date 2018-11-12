@@ -45,7 +45,7 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
             $this->addError(sprintf(
                 'There is a problem with %s . The identifier "%s" has a length beyond the maximum identifier length "%s". Your database will persist a truncated identifier leading to more problems!',
                 key($identifier),
-                reset($identifier),
+                current($identifier),
                 PropelConfig::POSTGRES_INDEX_NAME_MAX_LENGTH
             ));
         }
@@ -58,12 +58,10 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
      */
     protected function getSchemaFiles(): array
     {
-        $schemaFiles = $this->finder->getGroupedSchemaFiles();
         $filteredGroupedSchemas = [];
-        foreach ($schemaFiles as $fileName => $groupedSchemas) {
-            if (count($groupedSchemas) > 1) {
-                $filteredGroupedSchemas[$fileName] = $groupedSchemas;
-            }
+
+        foreach ($this->finder->getGroupedSchemaFiles() as $fileName => $groupedSchemas) {
+            $filteredGroupedSchemas[$fileName] = $groupedSchemas;
         }
 
         return $filteredGroupedSchemas;
@@ -77,10 +75,11 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
     protected function findInvalidIdIdentifiersInFiles(array $files): array
     {
         $invalidIdIdentifiers = [];
+
         foreach ($files as $schema) {
             foreach ($schema as $file) {
-                foreach ($this->findInvalidIdentifiers($file) as $invalidIdIdentifier) {
-                    $invalidIdIdentifiers[] = $invalidIdIdentifier;
+                foreach ($this->findInvalidIdentifiers($file) as $invalidId) {
+                    $invalidIdIdentifiers[] = $invalidId;
                 }
             }
         }
