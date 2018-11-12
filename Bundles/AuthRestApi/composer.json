@@ -16,7 +16,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/oauth-customer-connector": "*"
+    "spryker/oauth-customer-connector": "If you want to declare global environment configuration keys according to oauth-customer-connector module"
   },
   "autoload": {
     "psr-4": {
