@@ -53,6 +53,10 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     protected const ZED_API_SSL_ENABLED = 'ZED_API_SSL_ENABLED';
 
+    protected const PORT_ZED = 'APPLICATION:PORT_ZED';
+
+    public const PORT_SSL_ZED = 'APPLICATION:PORT_SSL_ZED';
+
     protected const ZED_REQUEST_ERROR = 'Failed to complete request with server authority %s.
 Configured with %s %s:%s in %s. Error: Stacktrace:';
 
@@ -175,9 +179,10 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     protected function getConfigServerPort()
     {
         if (Config::get(static::ZED_API_SSL_ENABLED)) {
-            return Config::get(ApplicationConstants::PORT_SSL_ZED) ?: static::DEFAULT_SSL_PORT;
+            return Config::get(static::PORT_SSL_ZED, static::DEFAULT_SSL_PORT);
         }
-        return Config::get(ApplicationConstants::PORT_ZED) ?: static::DEFAULT_PORT;
+
+        return Config::get(static::PORT_ZED, static::DEFAULT_PORT);
     }
 
     /**
