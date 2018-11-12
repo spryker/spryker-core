@@ -101,7 +101,7 @@ class ImageSetLocalizerTest extends Unit
     /**
      * @param string[] $localeNameCollection
      *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
      */
     protected function buildImageSetTransferCollectionByLocales(array $localeNameCollection): array
     {
@@ -120,9 +120,7 @@ class ImageSetLocalizerTest extends Unit
      */
     protected function createLocaleProviderStub()
     {
-        $localeProvider = $this->getMockBuilder(LocaleProviderInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $localeProvider = $this->createMock(LocaleProviderInterface::class);
         $localeProvider->method('getLocaleCollection')
             ->willReturn([
                 $this->tester->buildLocaleTransfer(['localeName' => static::VALID_LOCALE_1_NAME]),
