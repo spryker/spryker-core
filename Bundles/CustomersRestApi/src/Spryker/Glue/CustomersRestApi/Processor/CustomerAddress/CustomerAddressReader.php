@@ -71,18 +71,18 @@ class CustomerAddressReader implements CustomerAddressReaderInterface
                     $customerResponseTransfer->getCustomerTransfer()
                 );
 
-            $restResource = $this->restResourceBuilder->createRestResource(
+            $addressRestResource = $this->restResourceBuilder->createRestResource(
                 CustomersRestApiConfig::RESOURCE_ADDRESSES,
                 $addressTransfer->getUuid(),
                 $restAddressAttributesTransfer
             );
 
-            $restResource->addLink(
+            $addressRestResource->addLink(
                 RestLinkInterface::LINK_SELF,
                 $this->createSelfLink($customerTransfer, $addressTransfer)
             );
 
-            $restResource->addRelationship($restResource);
+            $restResource->addRelationship($addressRestResource);
         }
 
         return $restResource;
