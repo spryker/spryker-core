@@ -45,7 +45,7 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
             return true;
         }
 
-        if ($this->hasVouchersThatExceedNumberOfUses($voucherDiscounts)) {
+        if ($this->hasVouchersExceedingUsageLimitByCodes($voucherDiscounts)) {
             $message = (new MessageTransfer())
                 ->setValue(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED);
             $this->addError($message, static::ERROR_VOUCHER_CODE_LIMIT_REACHED, $checkoutResponseTransfer);
@@ -61,10 +61,10 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
      *
      * @return bool
      */
-    protected function hasVouchersThatExceedNumberOfUses(ArrayObject $voucherDiscounts): bool
+    protected function hasVouchersExceedingUsageLimitByCodes(ArrayObject $voucherDiscounts): bool
     {
         return (bool)$this->discountRepository
-            ->findVouchersThatExceedUsageLimitByCodes(
+            ->findVouchersExceedingUsageLimitByCodes(
                 $this->getVoucherCodes($voucherDiscounts)
             )
             ->count();

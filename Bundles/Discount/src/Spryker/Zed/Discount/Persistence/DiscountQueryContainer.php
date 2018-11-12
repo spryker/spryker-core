@@ -178,20 +178,6 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @api
      *
-     * @param array $codes
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
-     */
-    public function queryVoucherByVoucherCodes(array $codes)
-    {
-        return $this->getFactory()
-            ->createDiscountVoucherQuery()
-            ->filterByCode($codes, Criteria::IN);
-    }
-
-    /**
-     * @api
-     *
      * @param int $idVoucherCode
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
@@ -318,23 +304,5 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->useSpyDiscountStoreQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithSpyStore()
             ->endUse();
-    }
-
-    /**
-     * @api
-     *
-     * @param string[] $codes
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery|\Propel\Runtime\ActiveQuery\Criteria
-     */
-    public function queryVouchersExceedsMaxNumberOfUsageByCodes($codes)
-    {
-        return $this->queryVoucherByVoucherCodes($codes)
-            ->filterByMaxNumberOfUses(0, Criteria::GREATER_THAN)
-            ->add(
-                SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES,
-                SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES . '>=' . SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES,
-                Criteria::CUSTOM
-            );
     }
 }

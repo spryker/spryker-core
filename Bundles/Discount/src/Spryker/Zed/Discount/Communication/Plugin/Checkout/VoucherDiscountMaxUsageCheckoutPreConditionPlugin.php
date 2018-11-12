@@ -22,7 +22,7 @@ class VoucherDiscountMaxUsageCheckoutPreConditionPlugin extends AbstractPlugin i
      * {@inheritdoc}
      * - Validates voucher discounts on Max Usage in Quote.
      * - Returns `true` if all used vouchers are under the usage limit.
-     * - Otherwise it returns `false` and adds messages to `$checkoutResponseTransfer`
+     * - Otherwise it returns `false` and adds messages to `$checkoutResponseTransfer`.
      *
      * @api
      *
