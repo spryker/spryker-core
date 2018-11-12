@@ -51,7 +51,9 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
                 continue;
             }
 
-            $this->customerAccessCreator->createCustomerAccess($contentType, $defaultContentAccess[$contentType]);
+            $isRestricted = $defaultContentAccess[$contentType] ?? false;
+
+            $this->customerAccessCreator->createCustomerAccess($contentType, $isRestricted);
         }
     }
 }
