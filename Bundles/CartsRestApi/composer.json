@@ -22,7 +22,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/auth-rest-api": "*",
+    "spryker/auth-rest-api": "Used to authenticate user.",
     "spryker/uuid-behavior": "Used to generate UUIDs for the cart entities."
 
   },
