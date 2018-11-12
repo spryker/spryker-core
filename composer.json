@@ -188,7 +188,6 @@
     "spryker/product-management": "*",
     "spryker/product-measurement-unit": "*",
     "spryker/product-measurement-unit-data-import": "*",
-    "spryker/product-measurement-unit-gui": "*",
     "spryker/product-measurement-unit-storage": "*",
     "spryker/product-new": "*",
     "spryker/product-option": "*",
