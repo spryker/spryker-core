@@ -29,10 +29,20 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $this->getFacade()->syncCategoryTemplate();
+        $idCategory = $request->query->getInt(CategoryConstants::PARAM_ID_CATEGORY);
+
+        $categoryTransfer = $this->getFacade()->findCategoryById($idCategory);
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
-        $form = $this->getFactory()->createCategoryEditForm();
-        $form->handleRequest($request);
+        if ($categoryTransfer === null) {
+            $this->addErrorMessage(sprintf('Category with id %s doesn\'t exist', $request->get('id-category')));
+
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
+        }
+
+        $form = $this->getFactory()
+            ->createCategoryEditForm($categoryTransfer)
+            ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryTransfer = $this->getCategoryTransferFromForm($form);
