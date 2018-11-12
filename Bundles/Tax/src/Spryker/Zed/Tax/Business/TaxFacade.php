@@ -437,4 +437,36 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
             ->createTaxRateAverageAggregationCalculator()
             ->recalculate($calculableObjectTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idTaxRate
+     *
+     * @return \Generated\Shared\Transfer\TaxRateTransfer|null
+     */
+    public function findTaxRate(int $idTaxRate): ?TaxRateTransfer
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findTaxRate($idTaxRate);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idTaxSet
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    public function findTaxSet(int $idTaxSet): ?TaxSetTransfer
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findTaxSet($idTaxSet);
+    }
 }
