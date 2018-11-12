@@ -47,7 +47,7 @@ class OrderByOrderReferenceResourceRelationshipExpander implements OrderByOrderR
             }
             $orderReference = $resource->getAttributes()->offsetGet(static::ORDER_REFERENCE);
             $orderResource = $this->orderReader->findCustomerOrder($orderReference, $customerReference);
-            if ($orderResource !== null) {
+            if ($orderResource) {
                 $resource->addRelationship($orderResource);
             }
         }

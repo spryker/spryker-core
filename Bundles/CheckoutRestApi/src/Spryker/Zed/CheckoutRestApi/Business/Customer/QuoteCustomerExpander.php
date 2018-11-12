@@ -44,7 +44,7 @@ class QuoteCustomerExpander implements QuoteCustomerExpanderInterface
 
         $customerResponseTransfer = $this->customerFacade->findCustomerByReference($customerTransfer->getCustomerReference());
 
-        if ($customerResponseTransfer->getIsSuccess() === false) {
+        if (!$customerResponseTransfer->getIsSuccess()) {
             return $quoteTransfer;
         }
 
