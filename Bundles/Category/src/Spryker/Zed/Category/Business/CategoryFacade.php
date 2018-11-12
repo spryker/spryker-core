@@ -671,4 +671,21 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
             ->createCategory()
             ->getAllCategoryCollection($localeTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategoryById(int $idCategory): ?CategoryTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createCategoryReader()
+            ->findCategoryById($idCategory);
+    }
 }
