@@ -12,22 +12,22 @@ use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
+use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class DiscountFormDataProvider extends BaseDiscountFormDataProvider
 {
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface
+     * @var \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
-    protected $currencyFacade;
+    protected $discountFacade;
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface $currencyFacade
+     * @param \Spryker\Zed\Discount\Business\DiscountFacadeInterface $discountFacade
      */
-    public function __construct(DiscountToCurrencyInterface $currencyFacade)
+    public function __construct(DiscountFacadeInterface $discountFacade)
     {
-        $this->currencyFacade = $currencyFacade;
+        $this->discountFacade = $discountFacade;
     }
 
     /**
@@ -37,10 +37,18 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
      */
     public function getData($idDiscount = null)
     {
-        if ($idDiscount) {
-            return null;
+        if ($idDiscount === null) {
+            return $this->createDefaultDiscountConfiguratorTransfer();
         }
 
+        return $this->discountFacade->findHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     */
+    protected function createDefaultDiscountConfiguratorTransfer(): DiscountConfiguratorTransfer
+    {
         $discountConfiguratorTransfer = new DiscountConfiguratorTransfer();
 
         $discountGeneralTransfer = $this->createDiscountGeneralTransferDefaults();

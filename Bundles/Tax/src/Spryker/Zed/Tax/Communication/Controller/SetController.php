@@ -20,6 +20,8 @@ class SetController extends AbstractController
 {
     public const PARAM_URL_ID_TAX_SET = 'id-tax-set';
 
+    public const REDIRECT_URL_DEFAULT = '/tax/set/list';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -55,15 +57,24 @@ class SetController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function editAction(Request $request)
     {
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
-        $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
-        $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider($taxSetTransfer);
-        $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider);
+        $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider();
+        $taxSetTransfer = $taxSetFormDataProvider->getData($idTaxSet);
+
+        if ($taxSetTransfer === null) {
+            $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
+
+            return $this->redirectResponse(
+                static::REDIRECT_URL_DEFAULT
+            );
+        }
+
+        $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider, $taxSetTransfer);
 
         if ($request->request->count() > 0) {
             $taxSetForm->handleRequest($request);
@@ -90,13 +101,19 @@ class SetController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function viewAction(Request $request)
     {
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
-        $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
+        $taxSetTransfer = $this->getFacade()->findTaxSet($idTaxSet);
+
+        if ($taxSetTransfer === null) {
+            $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
+
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+        }
 
         return [
             'taxSet' => $taxSetTransfer,
