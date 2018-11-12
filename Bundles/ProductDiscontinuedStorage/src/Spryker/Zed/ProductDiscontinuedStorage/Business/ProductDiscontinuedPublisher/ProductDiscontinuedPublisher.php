@@ -207,9 +207,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     ): string {
         foreach ($productDiscontinuedTransfer->getProductDiscontinuedNotes() as $discontinuedNoteTransfer) {
             if ($discontinuedNoteTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
-                $discontinuedNote = $discontinuedNoteTransfer->getNote() ?? '';
-
-                return $discontinuedNote;
+                return $discontinuedNoteTransfer->getNote() ?? '';
             }
         }
 
