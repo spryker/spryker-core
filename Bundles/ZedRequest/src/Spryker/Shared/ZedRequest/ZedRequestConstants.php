@@ -62,16 +62,22 @@ interface ZedRequestConstants
     public const DIRECTORY_PERMISSION = 'ZED_REQUEST:DIRECTORY_PERMISSION';
 
     /**
-     * Port definition for Zed with leading colon (e.g. :9080)
+     * Specification:
+     * - Port definition for Zed with leading colon (e.g. :9080)
      *
      * @api
+     *
+     * @uses ApplicationConstants::PORT_ZED
      */
     public const PORT_ZED = 'APPLICATION:PORT_ZED';
 
     /**
-     * Secure port definition for Zed with leading colon (e.g. :9443)
+     * Specification:
+     * - Secure port definition for Zed with leading colon (e.g. :9443)
      *
      * @api
+     *
+     * @uses ApplicationConstants::PORT_SSL_ZED
      */
     public const PORT_SSL_ZED = 'APPLICATION:PORT_SSL_ZED';
 }
