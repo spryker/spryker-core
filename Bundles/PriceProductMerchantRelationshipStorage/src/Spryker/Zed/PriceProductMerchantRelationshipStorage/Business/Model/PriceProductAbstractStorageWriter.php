@@ -53,10 +53,10 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
             ->findProductAbstractPriceDataByCompanyBusinessUnitIds($companyBusinessUnitIds);
 
-        $existingPriceKeys = $this->priceProductMerchantRelationshipStorageRepository
-            ->findExistingPriceProductAbstractMerchantRelationshipPriceKeysByCompanyBusinessUnitIds($companyBusinessUnitIds);
+        $existingStorageEntites = $this->priceProductMerchantRelationshipStorageRepository
+            ->findExistingPriceProductAbstractMerchantRelationshipEntitiesByCompanyBusinessUnitIds($companyBusinessUnitIds);
 
-        $this->write($priceProductMerchantRelationshipStorageTransfers, $existingPriceKeys);
+        $this->write($priceProductMerchantRelationshipStorageTransfers, $existingStorageEntites);
     }
 
     /**
@@ -77,10 +77,10 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
             return $priceProductMerchantRelationshipStorageTransfer->getPriceKey();
         }, $priceProductMerchantRelationshipStorageTransfers);
 
-        $existingPriceKeys = $this->priceProductMerchantRelationshipStorageRepository
-            ->findExistingPriceKeysOfPriceProductAbstractMerchantRelationshipStorage($priceKeys);
+        $existingStorageEntites = $this->priceProductMerchantRelationshipStorageRepository
+            ->findExistingPriceProductAbstractMerchantRelationshipEntitiesByPriceKeys($priceKeys);
 
-        $this->write($priceProductMerchantRelationshipStorageTransfers, $existingPriceKeys);
+        $this->write($priceProductMerchantRelationshipStorageTransfers, $existingStorageEntites);
     }
 
     /**
@@ -93,10 +93,10 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
             ->findMerchantRelationshipProductAbstractPriceDataByProductAbstractIds($productAbstractIds);
 
-        $existingPriceKeys = $this->priceProductMerchantRelationshipStorageRepository
-            ->findExistingPriceProductAbstractMerchantRelationshipPriceKeysByProductAbstractIds($productAbstractIds);
+        $existingStorageEntites = $this->priceProductMerchantRelationshipStorageRepository
+            ->findExistingPriceProductAbstractMerchantRelationshipEntitiesByProductAbstractIds($productAbstractIds);
 
-        $this->write($priceProductMerchantRelationshipStorageTransfers, $existingPriceKeys);
+        $this->write($priceProductMerchantRelationshipStorageTransfers, $existingStorageEntites);
     }
 
     /**
@@ -113,24 +113,25 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransfers
-     * @param string[] $existingPriceKeys
+     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[] $existingStorageEntites
      *
      * @return void
      */
-    protected function write(array $priceProductMerchantRelationshipStorageTransfers, array $existingPriceKeys = []): void
+    protected function write(array $priceProductMerchantRelationshipStorageTransfers, array $existingStorageEntites = []): void
     {
-        $existingPriceKeys = array_flip($existingPriceKeys);
+        $existingStorageEntites = $this->mapStorageEntitesByPriceKey($existingStorageEntites);
         $priceProductMerchantRelationshipStorageTransfers = $this->priceGrouper->groupPrices(
             $priceProductMerchantRelationshipStorageTransfers
         );
 
         foreach ($priceProductMerchantRelationshipStorageTransfers as $merchantRelationshipStorageTransfer) {
-            if (isset($existingPriceKeys[$merchantRelationshipStorageTransfer->getPriceKey()])) {
+            if (isset($existingStorageEntites[$merchantRelationshipStorageTransfer->getPriceKey()])) {
                 $this->priceProductMerchantRelationshipStorageEntityManager->updatePriceProductAbstract(
-                    $merchantRelationshipStorageTransfer
+                    $merchantRelationshipStorageTransfer,
+                    $existingStorageEntites[$merchantRelationshipStorageTransfer->getPriceKey()]
                 );
 
-                unset($existingPriceKeys[$merchantRelationshipStorageTransfer->getPriceKey()]);
+                unset($existingStorageEntites[$merchantRelationshipStorageTransfer->getPriceKey()]);
                 continue;
             }
 
@@ -138,11 +139,26 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
                 $merchantRelationshipStorageTransfer
             );
 
-            unset($existingPriceKeys[$merchantRelationshipStorageTransfer->getPriceKey()]);
+            unset($existingStorageEntites[$merchantRelationshipStorageTransfer->getPriceKey()]);
         }
 
         // Delete the rest of the entites
         $this->priceProductMerchantRelationshipStorageEntityManager
-            ->deletePriceProductAbstractsByPriceKeys(array_keys($existingPriceKeys));
+            ->deletePriceProductAbstractEntities($existingStorageEntites);
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[] $priceProductMerchantRelationshipStorageEntites
+     *
+     * @return array
+     */
+    protected function mapStorageEntitesByPriceKey(array $priceProductMerchantRelationshipStorageEntites): array
+    {
+        $mappedPriceProductAbstractMerchantRelationshipStorageEntites = [];
+        foreach ($priceProductMerchantRelationshipStorageEntites as $priceProductMerchantRelationshipStorageEntity) {
+            $mappedPriceProductAbstractMerchantRelationshipStorageEntites[$priceProductMerchantRelationshipStorageEntity->getPriceKey()] = $priceProductMerchantRelationshipStorageEntity;
+        }
+
+        return $mappedPriceProductAbstractMerchantRelationshipStorageEntites;
     }
 }

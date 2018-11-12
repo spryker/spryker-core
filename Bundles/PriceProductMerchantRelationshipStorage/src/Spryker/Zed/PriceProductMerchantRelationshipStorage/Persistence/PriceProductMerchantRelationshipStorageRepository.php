@@ -14,8 +14,6 @@ use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompan
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
-use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductAbstractMerchantRelationshipStorageTableMap;
-use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductConcreteMerchantRelationshipStorageTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -123,76 +121,43 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     /**
      * @param int[] $companyBusinessUnitIds
      *
-     * @return string[]
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[]
      */
-    public function findExistingPriceProductConcreteMerchantRelationshipPriceKeysByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    public function findExistingPriceProductAbstractMerchantRelationshipEntitiesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
         return $this->getFactory()
-            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
+            ->createPriceProductAbstractMerchantRelationshipStorageQuery()
             ->filterByFkCompanyBusinessUnit_In($companyBusinessUnitIds)
-            ->select(SpyPriceProductAbstractMerchantRelationshipStorageTableMap::COL_PRICE_KEY)
             ->find()
-            ->toArray();
+            ->getData();
     }
 
     /**
      * @param string[] $priceKeys
      *
-     * @return string[]
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[]
      */
-    public function findExistingPriceKeysOfPriceProductAbstractMerchantRelationshipStorage(array $priceKeys): array
+    public function findExistingPriceProductAbstractMerchantRelationshipEntitiesByPriceKeys(array $priceKeys): array
     {
         return $this->getFactory()
             ->createPriceProductAbstractMerchantRelationshipStorageQuery()
             ->filterByPriceKey_In($priceKeys)
-            ->select(SpyPriceProductAbstractMerchantRelationshipStorageTableMap::COL_PRICE_KEY)
             ->find()
-            ->toArray();
+            ->getData();
     }
 
     /**
      * @param int[] $productAbstractIds
      *
-     * @return string[]
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[]
      */
-    public function findExistingPriceProductAbstractMerchantRelationshipPriceKeysByProductAbstractIds(array $productAbstractIds): array
+    public function findExistingPriceProductAbstractMerchantRelationshipEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
         return $this->getFactory()
             ->createPriceProductAbstractMerchantRelationshipStorageQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
-            ->select(SpyPriceProductAbstractMerchantRelationshipStorageTableMap::COL_PRICE_KEY)
             ->find()
-            ->toArray();
-    }
-
-    /**
-     * @param string[] $priceKeys
-     *
-     * @return string[]
-     */
-    public function findExistingPriceKeysOfPriceProductConcreteMerchantRelationship(array $priceKeys): array
-    {
-        return $this->getFactory()
-            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
-            ->filterByPriceKey_In($priceKeys)
-            ->select(SpyPriceProductConcreteMerchantRelationshipStorageTableMap::COL_PRICE_KEY)
-            ->find()
-            ->toArray();
-    }
-
-    /**
-     * @param int[] $productIds
-     *
-     * @return string[]
-     */
-    public function findExistingPriceProductAbstractMerchantRelationshipPriceKeysByProductIds(array $productIds): array
-    {
-        return $this->getFactory()
-            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
-            ->filterByFkProduct_In($productIds)
-            ->select(SpyPriceProductConcreteMerchantRelationshipStorageTableMap::COL_PRICE_KEY)
-            ->find()
-            ->toArray();
+            ->getData();
     }
 
     /**
@@ -200,14 +165,41 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return string[]
      */
-    public function findExistingPriceProductAbstractMerchantRelationshipPriceKeysByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    public function findExistingPriceProductConcreteMerchantRelationshipEntitiesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
         return $this->getFactory()
-            ->createPriceProductAbstractMerchantRelationshipStorageQuery()
+            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
             ->filterByFkCompanyBusinessUnit_In($companyBusinessUnitIds)
-            ->select(SpyPriceProductAbstractMerchantRelationshipStorageTableMap::COL_PRICE_KEY)
             ->find()
-            ->toArray();
+            ->getData();
+    }
+
+    /**
+     * @param string[] $priceKeys
+     *
+     * @return string[]
+     */
+    public function findExistingPriceProductConcreteMerchantRelationshipEntitiesByPriceKeys(array $priceKeys): array
+    {
+        return $this->getFactory()
+            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
+            ->filterByPriceKey_In($priceKeys)
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return string[]
+     */
+    public function findExistingPriceProductConcreteMerchantRelationshipEntitiesByProductIds(array $productIds): array
+    {
+        return $this->getFactory()
+            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
+            ->filterByFkProduct_In($productIds)
+            ->find()
+            ->getData();
     }
 
     /**
