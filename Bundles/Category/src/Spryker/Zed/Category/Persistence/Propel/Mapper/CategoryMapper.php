@@ -27,8 +27,20 @@ class CategoryMapper implements CategoryMapperInterface
      */
     public function mapCategory(SpyCategory $spyCategory, CategoryTransfer $categoryTransfer): CategoryTransfer
     {
-        $categoryTransfer = $categoryTransfer->fromArray($spyCategory->toArray(), true);
+        return $categoryTransfer->fromArray($spyCategory->toArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $spyCategory
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function mapCategoryWithRelations(SpyCategory $spyCategory, CategoryTransfer $categoryTransfer): CategoryTransfer
+    {
+        $categoryTransfer = $this->mapCategory($spyCategory, $categoryTransfer);
         $categoryTransfer = $this->mapCategoryNodes($spyCategory, $categoryTransfer);
+        $categoryTransfer = $this->mapParentCategoryNodes($spyCategory, $categoryTransfer);
         $categoryTransfer = $this->mapLocalizedAttributes($spyCategory, $categoryTransfer);
 
         return $categoryTransfer;
@@ -94,9 +106,31 @@ class CategoryMapper implements CategoryMapperInterface
     protected function mapCategoryNodes(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         foreach ($categoryEntity->getNodes() as $categoryNodeEntity) {
+            if (!$categoryNodeEntity->isMain()) {
+                continue;
+            }
+            $categoryTransfer->setCategoryNode($this->mapCategoryNode($categoryNodeEntity, new NodeTransfer()));
+        }
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function mapParentCategoryNodes(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer): CategoryTransfer
+    {
+        foreach ($categoryEntity->getNodes() as $categoryNodeEntity) {
             $parentCategoryNodeEntity = $categoryNodeEntity->getParentCategoryNode();
+
+            if ($parentCategoryNodeEntity == null) {
+                continue;
+            }
+
             if ($categoryNodeEntity->isMain()) {
-                $categoryTransfer->setCategoryNode($this->mapCategoryNode($categoryNodeEntity, new NodeTransfer()));
                 $categoryTransfer->setParentCategoryNode($this->mapCategoryNode($parentCategoryNodeEntity, new NodeTransfer()));
 
                 continue;

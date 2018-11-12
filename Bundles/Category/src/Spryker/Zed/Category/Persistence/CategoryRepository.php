@@ -137,7 +137,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             return null;
         }
 
-        return $this->getFactory()->createCategoryMapper()->mapCategory(
+        return $this->getFactory()->createCategoryMapper()->mapCategoryWithRelations(
             $spyCategoryEntity,
             new CategoryTransfer()
         );
