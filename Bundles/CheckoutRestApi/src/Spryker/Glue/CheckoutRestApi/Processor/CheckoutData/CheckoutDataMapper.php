@@ -270,10 +270,6 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      */
     protected function addressExists(ArrayObject $restAddressesResponseData, RestAddressTransfer $restAddressTransfer): bool
     {
-        if ($restAddressTransfer->getId() !== null) {
-            return true;
-        }
-
         foreach ($restAddressesResponseData as $restAddressResponseTransfer) {
             if ($this->isAddressIdMatch($restAddressTransfer, $restAddressResponseTransfer)) {
                 return true;
@@ -294,6 +290,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         ?RestAddressTransfer $restAddressTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
         if ($restAddressTransfer !== null
+            && !$this->addressEmpty($restAddressTransfer)
             && !$this->addressExists(
                 $restCheckoutDataResponseAttributesTransfer->getAddresses(),
                 $restAddressTransfer
@@ -330,5 +327,15 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     protected function isAddressIdMatch(RestAddressTransfer $restAddressTransfer, RestAddressTransfer $restAddressResponseTransfer): bool
     {
         return $restAddressResponseTransfer->getId() !== null && $restAddressResponseTransfer->getId() === $restAddressTransfer->getId();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
+     *
+     * @return bool
+     */
+    protected function addressEmpty(RestAddressTransfer $restAddressTransfer): bool
+    {
+        return count(array_filter($restAddressTransfer->toArray())) === 0;
     }
 }
