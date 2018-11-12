@@ -67,7 +67,7 @@ interface ZedRequestConstants
      *
      * @api
      *
-     * @uses ApplicationConstants::PORT_ZED
+     * @uses \Spryker\Shared\Application\ApplicationConstants::PORT_ZED
      */
     public const PORT_ZED = 'APPLICATION:PORT_ZED';
 
@@ -77,7 +77,7 @@ interface ZedRequestConstants
      *
      * @api
      *
-     * @uses ApplicationConstants::PORT_SSL_ZED
+     * @uses \Spryker\Shared\Application\ApplicationConstants::PORT_SSL_ZED
      */
     public const PORT_SSL_ZED = 'APPLICATION:PORT_SSL_ZED';
 }
