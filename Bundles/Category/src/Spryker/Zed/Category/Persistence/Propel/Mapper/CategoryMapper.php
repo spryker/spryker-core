@@ -94,14 +94,14 @@ class CategoryMapper implements CategoryMapperInterface
     protected function mapCategoryNodes(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         foreach ($categoryEntity->getNodes() as $categoryNodeEntity) {
+            $parentCategoryNodeEntity = $categoryNodeEntity->getParentCategoryNode();
             if ($categoryNodeEntity->isMain()) {
                 $categoryTransfer->setCategoryNode($this->mapCategoryNode($categoryNodeEntity, new NodeTransfer()));
-                $categoryTransfer->setParentCategoryNode($this->mapCategoryNode($categoryNodeEntity->getParentCategoryNode(), new NodeTransfer()));
+                $categoryTransfer->setParentCategoryNode($this->mapCategoryNode($parentCategoryNodeEntity, new NodeTransfer()));
 
                 continue;
             }
 
-            $parentCategoryNodeEntity = $categoryNodeEntity->getParentCategoryNode();
             $categoryTransfer->addExtraParent($this->mapCategoryNode($parentCategoryNodeEntity, new NodeTransfer()));
         }
 
