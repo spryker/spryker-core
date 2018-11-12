@@ -22,9 +22,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/auth-rest-api": "Used to authenticate user.",
+    "spryker/auth-rest-api": "Used for Rest API user authentication.",
     "spryker/uuid-behavior": "Used to generate UUIDs for the cart entities."
-
   },
   "autoload": {
     "psr-4": {

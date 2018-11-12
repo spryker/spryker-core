@@ -17,7 +17,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/auth-rest-api": "Used to authenticate user."
+    "spryker/auth-rest-api": "Used for Rest API user authentication."
   },
   "autoload": {
     "psr-4": {
