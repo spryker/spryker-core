@@ -140,7 +140,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @api
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery|\Propel\Runtime\ActiveQuery\Criteria
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
     public function queryDiscountVoucher()
     {
