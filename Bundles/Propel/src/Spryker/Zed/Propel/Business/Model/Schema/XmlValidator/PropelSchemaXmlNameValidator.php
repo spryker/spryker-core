@@ -41,7 +41,7 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
     {
         $schemaFiles = $this->getSchemaFiles();
 
-        foreach ($this->findInvalidIdIdentifiersInFiles($schemaFiles) as $identifier) {
+        foreach ($this->getInvalidIdentifiersInFiles($schemaFiles) as $identifier) {
             $this->addError(sprintf(
                 'There is a problem with %s . The identifier "%s" has a length beyond the maximum identifier length "%s". Your database will persist a truncated identifier leading to more problems!',
                 key($identifier),
@@ -72,7 +72,7 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
      *
      * @return array
      */
-    protected function findInvalidIdIdentifiersInFiles(array $schemaFiles): array
+    protected function getInvalidIdentifiersInFiles(array $schemaFiles): array
     {
         $invalidIdIdentifiers = [];
 

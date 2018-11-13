@@ -391,7 +391,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Propel\Business\Model\Schema\XmlValidator\PropelSchemaXmlNameValidator
      */
-    public function createSchemaXmlValidator()
+    public function createSchemaXmlValidator(): PropelSchemaXmlNameValidator
     {
         return new PropelSchemaXmlNameValidator(
             $this->createCoreSchemaFinder()
