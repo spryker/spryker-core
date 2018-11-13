@@ -145,15 +145,8 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
         PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
         array $pricesData
     ): PriceProductMerchantRelationshipStorageTransfer {
-        $prices = $priceProductMerchantRelationshipStorageTransfer->getPrices();
-        foreach ($pricesData[static::PRICES] as $index => $price) {
-            if (isset($priceProductMerchantRelationshipStorageTransfer->getPrices()[$index])) {
-                continue;
-            }
-
-            $prices[$index] = $price;
-        }
-
-        return $priceProductMerchantRelationshipStorageTransfer->setPrices($prices);
+        return $priceProductMerchantRelationshipStorageTransfer->setPrices(
+            array_replace_recursive($pricesData[static::PRICES], $priceProductMerchantRelationshipStorageTransfer->getPrices())
+        );
     }
 }
