@@ -103,6 +103,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getStockQueryContainer(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
+            $this->getPriceProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
@@ -126,6 +127,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getStockQueryContainer(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
+            $this->getPriceProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
@@ -168,6 +170,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getStockQueryContainer(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
+            $this->getPriceProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
@@ -241,14 +244,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface
-     */
-    public function getUtilTextService()
-    {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::SERVICE_UTIL_TEXT);
     }
 
     /**
@@ -359,7 +354,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->getUtilTextService(),
             $this->createLocaleProvider(),
             $this->getProductFormTransferMapperExpanderPlugins(),
             $this->createProductConcreteSuperAttributeFilterHelper()
@@ -592,6 +586,22 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductConcreteFormEditTabsExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
+     */
+    public function getProductAbstractFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface[]
+     */
+    public function getProductConcreteFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER);
     }
 
     /**

@@ -27,6 +27,8 @@ class CategoryConfig extends AbstractBundleConfig
      */
     public const RESOURCE_TYPE_NAVIGATION = SharedCategoryConfig::RESOURCE_TYPE_NAVIGATION;
 
+    protected const REDIRECT_URL_DEFAULT = '/category/root';
+
     /**
      * @return array
      */
@@ -35,5 +37,13 @@ class CategoryConfig extends AbstractBundleConfig
         return [
             static::CATEGORY_TEMPLATE_DEFAULT => '',
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultRedirectUrl(): string
+    {
+        return static::REDIRECT_URL_DEFAULT;
     }
 }

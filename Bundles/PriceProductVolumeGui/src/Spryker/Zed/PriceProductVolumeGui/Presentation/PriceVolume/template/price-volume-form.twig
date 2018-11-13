@@ -1,0 +1,89 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set page_title = data.title %}
+{% block head_title page_title %}
+{% block section_title page_title %}
+
+{% block action %}
+{% endblock %}
+
+{% block content %}
+
+    <h4>Enter a quantity and the item price that should be applied if customer buys above that threshold</h4>
+
+    {{ form_start(form) }}
+    <table class="price-volume-table">
+        <tbody>
+        <tr>
+            <td>Price Dimension:</td>
+            <td>{{ price_product.priceDimension.name }}</td>
+        </tr>
+        <tr>
+            <td>Price Type:</td>
+            <td>{{ price_product.priceType.name }}</td>
+        </tr>
+        <tr>
+            <td>Currency:</td>
+            <td>{{ price_product.moneyValue.currency.name }}</td>
+        </tr>
+        <tr>
+            <td>Store:</td>
+            <td>{{ store_name }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table table--expand">
+        <thead>
+            <tr class="active">
+                <th>{{ 'Quantity' | trans }}</th>
+                <th>{{ 'Gross price' | trans }}</th>
+                <th>{{ 'Net price' | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <input type="text" class="form-control" value="1" disabled>
+            </td>
+            <td>
+                {{ form_widget(form.net_price) }}
+            </td>
+            <td>
+                {{ form_widget(form.gross_price) }}
+            </td>
+        </tr>
+
+        {{ form_errors(form) }}
+
+        {% for volume in form.volumes %}
+            <tr>
+                <td>
+                    {{ form_widget(volume.quantity) }}
+                    {{ form_errors(volume.quantity) }}
+                </td>
+                <td>
+                    {{ form_widget(volume.gross_price) }}
+                    {{ form_errors(volume.gross_price) }}
+                </td>
+                <td>
+                    {{ form_widget(volume.net_price) }}
+                    {{ form_errors(volume.net_price) }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ back_url }}" class="btn btn-back">{{ 'Back' | trans}}</a>
+    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save and add more rows' | trans }}"/>
+    <input type="submit" name="save_and_exit" class="btn btn-primary safe-submit" value="{{ 'Save and exit' | trans }}"/>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-price-product-volume-gui.css" />
+{% endblock %}

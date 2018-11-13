@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestCartsDiscountsTransfer;
 use Generated\Shared\Transfer\RestCartsTotalsTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -95,7 +96,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
                 $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer)
             );
             $itemResource->addLink(
-                'self',
+                RestLinkInterface::LINK_SELF,
                 CartsRestApiConfig::RESOURCE_CARTS . '/' . $cartResource->getId() . '/' . CartsRestApiConfig::RESOURCE_CART_ITEMS . '/' . $itemTransfer->getGroupKey()
             );
 
