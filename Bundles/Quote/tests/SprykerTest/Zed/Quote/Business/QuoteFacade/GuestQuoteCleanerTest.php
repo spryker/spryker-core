@@ -20,13 +20,12 @@ use Spryker\Shared\Quote\QuoteConstants;
  * @group Quote
  * @group Business
  * @group QuoteFacade
- * @group GuestQuoteDeleterTest
+ * @group GuestQuoteCleanerTest
  * Add your own group annotations below this line
  */
-class GuestQuoteDeleterTest extends Unit
+class GuestQuoteCleanerTest extends Unit
 {
     protected const ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:123';
-    protected const EMPTY_QUOTE_DATA = '{"currency":{"code":"EUR","name":"Euro","symbol":"\u20ac","isDefault":true,"fractionDigits":2},"priceMode":"GROSS_MODE"}';
     protected const CONFIG_LIFETIME_ONE_SECOND = 'PT01S';
     protected const CONFIG_LIFETIME_ONE_HOUR = 'PT01H';
 
@@ -43,17 +42,20 @@ class GuestQuoteDeleterTest extends Unit
      */
     public function testGuestQuoteClearAfterLifetimeIsExceeded(): void
     {
-        $customerTransfer = $this->tester->haveCustomer();
+        // Arrange
+        $customerTransfer = new CustomerTransfer();
         $customerTransfer->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
         $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
-        $this->updateQuoteForCustomer($customerTransfer);
-
+        $this->createExpiredGuestQuote($customerTransfer);
         $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_SECOND);
-        $this->tester->getFacade()->deleteExpiredGuestQuote();
-        $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
 
+        // Act
+        $this->tester->getFacade()->deleteExpiredGuestQuote();
+
+        // Assert
+        $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
         $this->assertNull($findQuoteResponseTransfer->getQuoteTransfer(), static::MESSAGE_SHOULD_BE_DELETED);
     }
 
@@ -62,15 +64,18 @@ class GuestQuoteDeleterTest extends Unit
      */
     public function testGuestQuoteNotClearedBeforeLifetimeIsExceeded(): void
     {
+        // Arrange
         $customerTransfer = $this->tester->haveCustomer();
         $customerTransfer->setCustomerReference(static::ANONYMOUS_CUSTOMER_REFERENCE);
 
+        // Act
         $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
         $this->tester->setConfig(QuoteConstants::GUEST_QUOTE_LIFETIME, static::CONFIG_LIFETIME_ONE_HOUR);
-
         $this->tester->getFacade()->deleteExpiredGuestQuote();
+
+        // Assert
         $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
         $this->assertNotNull($findQuoteResponseTransfer->getQuoteTransfer(), static::MESSAGE_SHOULD_NOT_BE_DELETED);
     }
@@ -80,7 +85,7 @@ class GuestQuoteDeleterTest extends Unit
      *
      * @return void
      */
-    protected function updateQuoteForCustomer(CustomerTransfer $customerTransfer): void
+    protected function createExpiredGuestQuote(CustomerTransfer $customerTransfer): void
     {
         $quoteQuery = SpyQuoteQuery::create();
         $quoteEntity = $quoteQuery
