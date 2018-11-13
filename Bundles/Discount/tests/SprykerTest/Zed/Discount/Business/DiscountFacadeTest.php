@@ -369,10 +369,10 @@ class DiscountFacadeTest extends Unit
     {
         // Arrange
         $discountVoucherTransfer = $this->getDiscountVoucher([
-            'maxNumberOfUses' => 5,
-            'customCode' => 'functional spryker test voucher',
-            'quantity' => 1,
-            'randomGeneratedCodeLength' => 3,
+            DiscountVoucherTransfer::MAX_NUMBER_OF_USES => 5,
+            DiscountVoucherTransfer::CUSTOM_CODE => 'functional spryker test voucher',
+            DiscountVoucherTransfer::QUANTITY => 1,
+            DiscountVoucherTransfer::RANDOM_GENERATED_CODE_LENGTH => 3,
         ]);
         $quoteTransfer = $this->getQuoteWithVoucherDiscount($discountVoucherTransfer);
 
@@ -393,10 +393,10 @@ class DiscountFacadeTest extends Unit
         // Arrange
         $maxNumberOfUses = 5;
         $discountVoucherTransfer = $this->getDiscountVoucher([
-            'maxNumberOfUses' => $maxNumberOfUses,
-            'customCode' => 'functional spryker test voucher',
-            'quantity' => 1,
-            'randomGeneratedCodeLength' => 3,
+            DiscountVoucherTransfer::MAX_NUMBER_OF_USES => $maxNumberOfUses,
+            DiscountVoucherTransfer::CUSTOM_CODE => 'functional spryker test voucher',
+            DiscountVoucherTransfer::QUANTITY => 1,
+            DiscountVoucherTransfer::RANDOM_GENERATED_CODE_LENGTH => 3,
         ]);
         $quoteTransfer = $this->getQuoteWithVoucherDiscount($discountVoucherTransfer);
 
