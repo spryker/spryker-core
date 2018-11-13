@@ -142,7 +142,7 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
-    protected function getStorageProductAbstractExpanderPlugins()
+    public function getStorageProductAbstractExpanderPlugins()
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGIN_PRODUCT_ABSTRACT_VIEW_EXPANDERS);
     }
