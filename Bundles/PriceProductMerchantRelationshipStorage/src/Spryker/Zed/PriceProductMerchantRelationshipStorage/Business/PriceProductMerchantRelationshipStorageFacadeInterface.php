@@ -45,6 +45,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      * Specification:
      *  - Publish merchant relationship prices for product abstracts.
      *  - Uses the given company business unit IDs.
+     *  - Refreshes the prices data for business units for all product abstracts and merchant relationships.
      *
      * @api
      *
@@ -58,6 +59,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      * Specification:
      *  - Publish merchant relationship prices for product concretes.
      *  - Uses the given company business unit IDs.
+     *  - Refreshes the prices data for business units for all product concretes and merchant relationships.
      *
      * @api
      *
@@ -71,6 +73,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      * Specification:
      *  - Publish merchant relationship prices for product abstracts.
      *  - Uses the given IDs of the parent table.
+     *  - Merges created or updated prices to the existing ones.
      *
      * @api
      *
@@ -84,6 +87,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      * Specification:
      *  - Publish merchant relationship prices for product abstracts.
      *  - Uses the given abstract product IDs.
+     *  - Refreshes the prices data for product abstracts for all business units and merchant relationships.
      *
      * @api
      *
@@ -97,6 +101,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      * Specification:
      *  - Publish merchant relationship prices for product concretes.
      *  - Uses the given IDs of the parent table.
+     *  - Merges created or updated prices to the existing ones.
      *
      * @api
      *
@@ -110,6 +115,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      * Specification:
      *  - Publish merchant relationship prices for product concretes.
      *  - Uses the given concrete product IDs.
+     *  - Refreshes the prices data for product concretes for all business units and merchant relationships.
      *
      * @api
      *

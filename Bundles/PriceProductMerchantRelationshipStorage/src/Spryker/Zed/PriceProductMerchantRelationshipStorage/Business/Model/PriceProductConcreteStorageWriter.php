@@ -96,7 +96,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
         $existingStorageEntities = $this->priceProductMerchantRelationshipStorageRepository
             ->findExistingPriceProductConcreteMerchantRelationshipEntitiesByPriceKeys($priceKeys);
 
-        $this->write($priceProductMerchantRelationshipStorageTransfers, $existingStorageEntities);
+        $this->write($priceProductMerchantRelationshipStorageTransfers, $existingStorageEntities, true);
     }
 
     /**
@@ -118,11 +118,15 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransfers
      * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[] $existingStorageEntities
+     * @param bool $mergePrices
      *
      * @return void
      */
-    protected function write(array $priceProductMerchantRelationshipStorageTransfers, array $existingStorageEntities = []): void
-    {
+    protected function write(
+        array $priceProductMerchantRelationshipStorageTransfers,
+        array $existingStorageEntities = [],
+        bool $mergePrices = false
+    ): void {
         $existingStorageEntities = $this->mapStorageEntitiesByPriceKey($existingStorageEntities);
         $priceProductMerchantRelationshipStorageTransfers = $this->priceGrouper->groupPrices(
             $priceProductMerchantRelationshipStorageTransfers
@@ -132,7 +136,8 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
             if (isset($existingStorageEntities[$merchantRelationshipStorageTransfer->getPriceKey()])) {
                 $this->priceProductMerchantRelationshipStorageEntityManager->updatePriceProductConcrete(
                     $merchantRelationshipStorageTransfer,
-                    $existingStorageEntities[$merchantRelationshipStorageTransfer->getPriceKey()]
+                    $existingStorageEntities[$merchantRelationshipStorageTransfer->getPriceKey()],
+                    $mergePrices
                 );
 
                 unset($existingStorageEntities[$merchantRelationshipStorageTransfer->getPriceKey()]);
