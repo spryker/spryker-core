@@ -11,8 +11,11 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
@@ -22,6 +25,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ConditionsForm extends AbstractType
 {
     public const FIELD_DECISION_RULE_QUERY_STRING = 'decision_rule_query_string';
+    public const FIELD_MINIMUM_ITEM_AMOUNT = 'minimum_item_amount';
+    public const FIELD_MINIMUM_ITEM_AMOUNT_DEFAULT_VALUE = 1;
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -32,6 +37,7 @@ class ConditionsForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addDecisionRuleQueryString($builder);
+        $this->addMinimumItemAmount($builder);
     }
 
     /**
@@ -60,6 +66,31 @@ class ConditionsForm extends AbstractType
                     ]
                 )->build(),
             ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addMinimumItemAmount(FormBuilderInterface $builder)
+    {
+        $label = 'The discount can be applied if the query applies for at least X item(s).';
+
+        $builder->add(static::FIELD_MINIMUM_ITEM_AMOUNT, NumberType::class, [
+            'label' => $label,
+            'constraints' => [
+                new NotBlank(),
+                new GreaterThanOrEqual(static::FIELD_MINIMUM_ITEM_AMOUNT_DEFAULT_VALUE),
+            ],
+            'data' => static::FIELD_MINIMUM_ITEM_AMOUNT_DEFAULT_VALUE,
+            'attr' => [
+                'min' => static::FIELD_MINIMUM_ITEM_AMOUNT_DEFAULT_VALUE,
+            ],
+            'required' => true,
         ]);
 
         return $this;

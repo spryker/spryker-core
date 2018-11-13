@@ -15,7 +15,7 @@
            <h4>{{ 'General Information' | trans }}</h4>
            <table class="table">
                <tr>
-                   <td style="width: 150px;">{{ 'Store relation:' | trans }}</td>
+                   <td style="width: 220px;">{{ 'Store relation:' | trans }}</td>
                    <td>
                        {% for store in discountConfigurator.discountGeneral.storeRelation.stores %}
                            <span class="label label-info">{{ store.name }}</span>
@@ -23,7 +23,7 @@
                    </td>
                </tr>
                <tr>
-                   <td style="width: 150px;">{{ 'Discount Type:' | trans }}</td>
+                   <td style="width: 220px;">{{ 'Discount Type:' | trans }}</td>
                    <td>
                        {{ discountConfigurator.discountGeneral.discountType|replace('_', ' ')|trans  }}
                    </td>
@@ -60,7 +60,7 @@
           <h4>{{ 'Discount calculation' | trans }}</h4>
           <table class="table">
               <tr>
-                  <td style="width: 150px;">{{ 'Type:' | trans }}</td>
+                  <td style="width: 220px;">{{ 'Type:' | trans }}</td>
                   <td>{{ discountConfigurator.discountCalculator.calculatorPlugin|replace({'_' :' ', 'PLUGIN' : ''})|capitalize }}</td>
               </tr>
               <tr>
@@ -86,12 +86,19 @@
 
           <table class="table">
               <tr>
+                  <td style="width: 220px;">{{ 'Apply to query:' | trans }}</td>
                   <td>
                       {% if discountConfigurator.discountCondition.decisionRuleQueryString %}
                         {{ discountConfigurator.discountCondition.decisionRuleQueryString }}
                       {% else %}
                           {{  'No conditions, discount always applied.' | trans }}
                       {% endif %}
+                  </td>
+              </tr>
+              <tr>
+                  <td style="width: 220px;">{{ 'The discount can be applied if the query applies for at least X item(s):' | trans }}</td>
+                  <td>
+                      {{ discountConfigurator.discountCondition.minimumItemAmount }}
                   </td>
               </tr>
           </table>
