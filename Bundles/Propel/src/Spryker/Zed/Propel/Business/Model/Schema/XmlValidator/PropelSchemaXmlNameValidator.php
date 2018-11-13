@@ -10,16 +10,16 @@ namespace Spryker\Zed\Propel\Business\Model\Schema\XmlValidator;
 use Generated\Shared\Transfer\SchemaValidationErrorTransfer;
 use Generated\Shared\Transfer\SchemaValidationTransfer;
 use SimpleXMLElement;
-use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface
+     * @var \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
      */
-    protected $finder;
+    protected $schemaFinder;
 
     /**
      * @var \Generated\Shared\Transfer\SchemaValidationTransfer|null
@@ -27,11 +27,11 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
     protected $schemaValidationTransfer;
 
     /**
-     * @param \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface $finder
+     * @param \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface $schemaFinder
      */
-    public function __construct(PropelGroupedSchemaFinderInterface $finder)
+    public function __construct(PropelSchemaFinderInterface $schemaFinder)
     {
-        $this->finder = $finder;
+        $this->schemaFinder = $schemaFinder;
     }
 
     /**
@@ -39,9 +39,9 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
      */
     public function validate(): SchemaValidationTransfer
     {
-        $groupedSchemaFiles = $this->finder->getGroupedSchemaFiles();
+        $schemaFiles = $this->getSchemaFiles();
 
-        foreach ($this->findInvalidIdIdentifiersInFiles($groupedSchemaFiles) as $identifier) {
+        foreach ($this->findInvalidIdIdentifiersInFiles($schemaFiles) as $identifier) {
             $this->addError(sprintf(
                 'There is a problem with %s . The identifier "%s" has a length beyond the maximum identifier length "%s". Your database will persist a truncated identifier leading to more problems!',
                 key($identifier),
@@ -54,19 +54,31 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
     }
 
     /**
-     * @param array $files
+     * @return array
+     */
+    protected function getSchemaFiles(): array
+    {
+        $schemaFiles = [];
+
+        foreach ($this->schemaFinder->getSchemaFiles() as $schemaFile) {
+            $schemaFiles[] = $schemaFile;
+        }
+
+        return $schemaFiles;
+    }
+
+    /**
+     * @param array $schemaFiles
      *
      * @return array
      */
-    protected function findInvalidIdIdentifiersInFiles(array $files): array
+    protected function findInvalidIdIdentifiersInFiles(array $schemaFiles): array
     {
         $invalidIdIdentifiers = [];
 
-        foreach ($files as $schema) {
-            foreach ($schema as $file) {
-                foreach ($this->findInvalidIdentifiers($file) as $invalidId) {
-                    $invalidIdIdentifiers[] = $invalidId;
-                }
+        foreach ($schemaFiles as $schemaFile) {
+            foreach ($this->findInvalidIdentifiers($schemaFile) as $invalidId) {
+                $invalidIdIdentifiers[] = $invalidId;
             }
         }
 

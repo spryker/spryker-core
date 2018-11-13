@@ -394,7 +394,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createSchemaXmlValidator()
     {
         return new PropelSchemaXmlNameValidator(
-            $this->createGroupedSchemaFinder()
+            $this->createCoreSchemaFinder()
         );
     }
 
