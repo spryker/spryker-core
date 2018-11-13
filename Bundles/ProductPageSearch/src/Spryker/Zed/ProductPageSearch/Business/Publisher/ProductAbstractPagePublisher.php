@@ -245,7 +245,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      *
      * @return bool
      */
-    protected function isActual(array $productAbstractLocalizedEntity)
+    protected function isActual(array $productAbstractLocalizedEntity): bool
     {
         foreach ($productAbstractLocalizedEntity['SpyProductAbstract']['SpyProducts'] as $spyProduct) {
             if ($spyProduct['is_active'] && $this->isSearchable($spyProduct, $productAbstractLocalizedEntity['fk_locale'])) {
