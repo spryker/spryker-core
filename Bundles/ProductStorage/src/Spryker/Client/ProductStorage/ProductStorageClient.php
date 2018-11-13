@@ -115,10 +115,10 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapAbstractProductStorageData(array $data, $localeName, array $selectedAttributes = [])
+    public function mapProductAbstractStorageData(array $data, $localeName, array $selectedAttributes = [])
     {
         return $this->getFactory()
-            ->createAbstractProductStorageDataMapper()
+            ->createProductAbstractStorageDataMapper()
             ->mapProductStorageData($localeName, $data, $selectedAttributes);
     }
 

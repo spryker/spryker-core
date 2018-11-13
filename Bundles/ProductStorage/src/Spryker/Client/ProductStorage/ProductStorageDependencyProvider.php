@@ -20,7 +20,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const STORE = 'STORE';
-    public const PLUGIN_ABSTRACT_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_ABSTRACT_PRODUCT_VIEW_EXPANDERS';
+    public const PLUGIN_PRODUCT_ABSTRACT_VIEW_EXPANDERS = 'PLUGIN_PRODUCT_ABSTRACT_VIEW_EXPANDERS';
     public const PLUGIN_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_STORAGE_PRODUCT_EXPANDERS';
     public const PLUGINS_PRODUCT_ABSTRACT_RESTRICTION = 'PLUGINS_PRODUCT_ABSTRACT_RESTRICTION';
     public const PLUGINS_PRODUCT_CONCRETE_RESTRICTION = 'PLUGINS_PRODUCT_CONCRETE_RESTRICTION';
@@ -37,7 +37,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addLocaleClient($container);
         $container = $this->addStore($container);
         $container = $this->addProductViewExpanderPlugins($container);
-        $container = $this->addAbstractProductViewExpanderPlugins($container);
+        $container = $this->addProductAbstractViewExpanderPlugins($container);
         $container = $this->addProductAbstractRestrictionPlugins($container);
         $container = $this->addProductConcreteRestrictionPlugins($container);
 
@@ -171,10 +171,10 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addAbstractProductViewExpanderPlugins(Container $container)
+    protected function addProductAbstractViewExpanderPlugins(Container $container)
     {
-        $container[static::PLUGIN_ABSTRACT_PRODUCT_VIEW_EXPANDERS] = function () {
-            return $this->getAbstractProductViewExpanderPlugins();
+        $container[static::PLUGIN_PRODUCT_ABSTRACT_VIEW_EXPANDERS] = function () {
+            return $this->getProductAbstractViewExpanderPlugins();
         };
 
         return $container;
@@ -183,7 +183,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     /**
      * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
-    protected function getAbstractProductViewExpanderPlugins()
+    protected function getProductAbstractViewExpanderPlugins()
     {
         return [];
     }

@@ -81,10 +81,10 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface
      */
-    public function createAbstractProductStorageDataMapper()
+    public function createProductAbstractStorageDataMapper()
     {
         return new ProductStorageDataMapper(
-            $this->getAbstractStorageProductExpanderPlugins(),
+            $this->getStorageProductAbstractExpanderPlugins(),
             $this->createProductAbstractAttributeMapRestrictionFilter()
         );
     }
@@ -142,8 +142,8 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
-    protected function getAbstractStorageProductExpanderPlugins()
+    protected function getStorageProductAbstractExpanderPlugins()
     {
-        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGIN_ABSTRACT_PRODUCT_VIEW_EXPANDERS);
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGIN_PRODUCT_ABSTRACT_VIEW_EXPANDERS);
     }
 }
