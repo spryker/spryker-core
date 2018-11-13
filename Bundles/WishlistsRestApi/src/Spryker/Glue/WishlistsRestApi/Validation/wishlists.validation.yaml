@@ -3,12 +3,12 @@ wishlists:
     name:
       - NotBlank
       - Length:
-        max: 256
+          max: 256
   patch:
     name:
       - NotBlank
       - Length:
-        max: 256
+          max: 256
 wishlist-items:
   post:
     sku:

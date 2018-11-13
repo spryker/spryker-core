@@ -6,7 +6,7 @@ customers:
     salutation:
       - NotBlank
       - Choice:
-        choices: [Mr, Mrs, Ms, Dr]
+          choices: [Mr, Mrs, Ms, Dr]
     firstName:
       - NotBlank
     lastName:
@@ -14,23 +14,23 @@ customers:
     gender:
       - NotBlank
       - Choice:
-        choices: [Male, Female]
+          choices: [Male, Female]
     password:
       - NotBlank
     passwordConfirmation:
       - NotBlank
       - IdenticalTo:
-        propertyPath: password
+          propertyPath: password
     acceptedTerms:
       - NotBlank
       - Type:
-        type: bool
+          type: bool
 
   patch:
     salutation:
       - NotBlank
       - Choice:
-        choices: [Mr, Mrs, Ms, Dr]
+          choices: [Mr, Mrs, Ms, Dr]
     firstName:
       - NotBlank
     lastName:
@@ -38,7 +38,7 @@ customers:
     gender:
       - NotBlank
       - Choice:
-        choices: [Male, Female]
+          choices: [Male, Female]
     dateOfBirth:
       - Date
 addresses:
@@ -46,7 +46,7 @@ addresses:
     salutation:
       - NotBlank
       - Choice:
-        choices: [Mr, Mrs, Ms, Dr]
+          choices: [Mr, Mrs, Ms, Dr]
     firstName:
       - NotBlank
     lastName:
@@ -60,14 +60,14 @@ addresses:
     city:
       - NotBlank
       - Length:
-        min: 3
+          min: 3
     iso2Code:
       - NotBlank
   patch:
     salutation:
       - NotBlank
       - Choice:
-        choices: [Mr, Mrs, Ms, Dr]
+          choices: [Mr, Mrs, Ms, Dr]
     firstName:
       - NotBlank
     lastName:
@@ -81,7 +81,7 @@ addresses:
     city:
       - NotBlank
       - Length:
-        min: 3
+          min: 3
     iso2Code:
       - NotBlank
 
@@ -94,7 +94,7 @@ customer-password:
     confirmPassword:
       - NotBlank
       - IdenticalTo:
-        propertyPath: newPassword
+          propertyPath: newPassword
 
 customer-forgotten-password:
   post:
@@ -111,5 +111,5 @@ customer-restore-password:
     confirmPassword:
       - NotBlank
       - IdenticalTo:
-        propertyPath: password
+          propertyPath: password
 

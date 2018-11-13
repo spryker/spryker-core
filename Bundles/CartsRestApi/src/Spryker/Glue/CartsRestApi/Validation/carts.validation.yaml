@@ -3,7 +3,7 @@ carts:
     priceMode:
       - NotBlank
       - Choice:
-        choices: [NET_MODE, GROSS_MODE]
+          choices: [NET_MODE, GROSS_MODE]
     currency:
       - NotBlank
     store:
@@ -16,12 +16,12 @@ items:
     quantity:
       - NotBlank
       - Type:
-        type: numeric
+          type: numeric
   patch:
     quantity:
       - NotBlank
       - Type:
-        type: numeric
+          type: numeric
 
 guest-cart-items:
   post:
@@ -30,9 +30,9 @@ guest-cart-items:
     quantity:
       - NotBlank
       - Type:
-        type: numeric
+          type: numeric
   patch:
     quantity:
       - NotBlank
       - Type:
-        type: numeric
+          type: numeric
