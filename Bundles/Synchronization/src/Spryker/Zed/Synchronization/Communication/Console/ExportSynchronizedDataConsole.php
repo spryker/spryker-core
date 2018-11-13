@@ -29,8 +29,14 @@ class ExportSynchronizedDataConsole extends Console
         $this->addArgument(static::RESOURCE, InputArgument::OPTIONAL, 'Defines which resource(s) should be exported, if there is more than one, use comma to separate them. 
         If not, full export will be executed.');
 
+        $availableResourceNames = $this->getFacade()->getAvailableResourceNames();
+
         $this->setName(self::COMMAND_NAME)
-            ->setDescription(self::DESCRIPTION);
+            ->setDescription(self::DESCRIPTION)
+            ->addUsage(sprintf(
+                '[' . PHP_EOL . "\t%s" . PHP_EOL . ']',
+                implode(',' . PHP_EOL . "\t", $availableResourceNames)
+            ));
     }
 
     /**
