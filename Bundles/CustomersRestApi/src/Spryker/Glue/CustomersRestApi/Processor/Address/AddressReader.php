@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Address;
 
-use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -15,7 +14,9 @@ use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerCl
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -75,7 +76,11 @@ class AddressReader implements AddressReaderInterface
     public function getAddressesByAddressUuid(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
+        $parentResource = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS);
+        if (!$parentResource) {
+            return $this->restApiError->addCustomerReferenceMissingError($restResponse);
+        }
+        $customerReference = $parentResource->getId();
 
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
@@ -90,49 +95,13 @@ class AddressReader implements AddressReaderInterface
             return $restResponse;
         }
 
-        $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
-
         if (!$restRequest->getResource()->getId()) {
-            $this->getAllAddresses($addressesTransfer, $customerResponseTransfer->getCustomerTransfer(), $restResponse);
+            $this->getAllAddresses($customerResponseTransfer->getCustomerTransfer(), $restResponse);
 
             return $restResponse;
         }
 
-        $addressTransfer = $this->findAddressByUuid($restRequest, $restRequest->getResource()->getId());
-
-        if (!$addressTransfer) {
-            return $this->restApiError->addAddressNotFoundError($restResponse);
-        }
-
-        $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource(
-            $addressTransfer,
-            $customerResponseTransfer->getCustomerTransfer()
-        );
-
-        return $restResponse->addResource($addressesResource);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function getAllAddresses(
-        AddressesTransfer $addressesTransfer,
-        CustomerTransfer $customerTransfer,
-        RestResponseInterface $restResponse
-    ): RestResponseInterface {
-        foreach ($addressesTransfer->getAddresses() as $address) {
-            $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource(
-                $address,
-                $customerTransfer
-            );
-
-            $restResponse->addResource($addressesResource);
-        }
-        return $restResponse;
+        return $this->getAddressByCustomerTransfer($customerResponseTransfer->getCustomerTransfer(), $restRequest->getResource()->getId(), $restResponse);
     }
 
     /**
@@ -153,5 +122,90 @@ class AddressReader implements AddressReaderInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param string $addressUuid
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getAddressByCustomerTransfer(
+        CustomerTransfer $customerTransfer,
+        string $addressUuid,
+        RestResponseInterface $restResponse
+    ): RestResponseInterface {
+        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {
+            if ($addressTransfer->getUuid() == $addressUuid) {
+                return $restResponse->addResource(
+                    $this->getAddressResource($addressTransfer, $customerTransfer)
+                );
+            }
+        }
+
+        return $this->restApiError->addAddressNotFoundError($restResponse);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getAllAddresses(
+        CustomerTransfer $customerTransfer,
+        RestResponseInterface $restResponse
+    ): RestResponseInterface {
+        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {
+            $restResponse->addResource($this->getAddressResource($addressTransfer, $customerTransfer));
+        }
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function getAddressResource(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): RestResourceInterface
+    {
+        $restAddressAttributesTransfer = $this->addressesResourceMapper
+            ->mapAddressTransferToRestAddressAttributesTransfer(
+                $addressTransfer,
+                $customerTransfer
+            );
+
+        $restResource = $this->restResourceBuilder
+            ->createRestResource(
+                CustomersRestApiConfig::RESOURCE_ADDRESSES,
+                $addressTransfer->getUuid(),
+                $restAddressAttributesTransfer
+            )
+            ->addLink(
+                RestLinkInterface::LINK_SELF,
+                $this->createSelfLink($customerTransfer, $addressTransfer)
+            );
+
+        return $restResource;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function createSelfLink(CustomerTransfer $customerTransfer, AddressTransfer $addressTransfer): string
+    {
+        return sprintf(
+            CustomersRestApiConfig::FORMAT_SELF_LINK_ADDRESS_RESOURCE,
+            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
+            $customerTransfer->getCustomerReference(),
+            CustomersRestApiConfig::RESOURCE_ADDRESSES,
+            $addressTransfer->getUuid()
+        );
     }
 }

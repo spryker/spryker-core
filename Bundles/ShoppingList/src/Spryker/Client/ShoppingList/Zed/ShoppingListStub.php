@@ -9,6 +9,7 @@ namespace Spryker\Client\ShoppingList\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
@@ -16,7 +17,6 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
@@ -242,20 +242,6 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
-     */
-    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
-    {
-        /** @var \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer */
-        $shoppingListPermissionGroupTransfer = $this->zedRequestClient->call(
-            '/shopping-list/gateway/get-shopping-list-permission-group',
-            new ShoppingListPermissionGroupTransfer()
-        );
-
-        return $shoppingListPermissionGroupTransfer;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
     public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
@@ -323,5 +309,21 @@ class ShoppingListStub implements ShoppingListStubInterface
     public function getLastResponseErrorMessages(): array
     {
         return $this->zedRequestClient->getLastResponseErrorMessages();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListShareResponseTransfer */
+        $shoppingListShareResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/dismiss-shopping-list-sharing',
+            $shoppingListDismissRequest
+        );
+
+        return $shoppingListShareResponseTransfer;
     }
 }

@@ -959,6 +959,23 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string
+     */
+    public function generateProductConcreteSku(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer): string
+    {
+        return $this->getFactory()
+            ->createSkuGenerator()
+            ->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]

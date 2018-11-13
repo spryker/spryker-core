@@ -20,6 +20,7 @@
     <transfer name="RestCustomersResponseAttributes">
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
+        <property name="email" type="string" />
         <property name="gender" type="string" />
         <property name="dateOfBirth" type="string" />
         <property name="salutation" type="string" />
@@ -64,5 +65,14 @@
         <property name="uuid" type="string" />
     </transfer>
 
+    <transfer name="RestCustomerForgottenPasswordAttributes">
+        <property name="email" type="string" />
+    </transfer>
+
+    <transfer name="RestCustomerRestorePasswordAttributes">
+        <property name="restorePasswordKey" type="string" />
+        <property name="password" type="string" />
+        <property name="confirmPassword" type="string" />
+    </transfer>
 
 </transfers>

@@ -241,6 +241,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         }
 
         if (!$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()) {
+            $this->shoppingListEntityManager->deleteCompanyBusinessUnitBlacklistByBusinessUnitId($shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit());
             $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
             return;
         }
@@ -274,6 +275,43 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function unShareShoppingListCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    {
+        $idCompanyBusinessUnit = $shoppingListShareRequestTransfer->getIdCompanyBusinessUnit();
+
+        $isCompanyBusinessUnitSharedWithShoppingLists = $this->shoppingListRepository
+            ->isCompanyBusinessUnitSharedWithShoppingLists($idCompanyBusinessUnit);
+
+        if (!$isCompanyBusinessUnitSharedWithShoppingLists) {
+            return (new ShoppingListShareResponseTransfer())->setIsSuccess(false);
+        }
+
+        return $this->getTransactionHandler()->handleTransaction(
+            function () use ($idCompanyBusinessUnit) {
+                return $this->executeRemoveShoppingListCompanyBusinessUnitTransaction($idCompanyBusinessUnit);
+            }
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function unShareCompanyUserShoppingLists(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    {
+        $idCompanyUser = $shoppingListShareRequestTransfer->getIdCompanyUser();
+
+        $this->shoppingListEntityManager->deleteShoppingListsCompanyUserByCompanyUserId($idCompanyUser);
+
+        return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
     }
 
     /**
@@ -343,5 +381,17 @@ class ShoppingListSharer implements ShoppingListSharerInterface
             $shoppingListTransfer->getIdCompanyUser(),
             $shoppingListTransfer->getIdShoppingList()
         );
+    }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    protected function executeRemoveShoppingListCompanyBusinessUnitTransaction(int $idCompanyBusinessUnit): ShoppingListShareResponseTransfer
+    {
+        $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnitsByCompanyBusinessUnitId($idCompanyBusinessUnit);
+
+        return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
     }
 }

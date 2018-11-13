@@ -20,7 +20,9 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceDimensionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductPriceNotBlank;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -28,6 +30,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -58,6 +61,7 @@ class ProductFormAdd extends AbstractType
     public const FORM_SEO = 'seo';
     public const FORM_STORE_RELATION = 'store_relation';
     public const FORM_IMAGE_SET = 'image_set';
+    public const FORM_PRICE_DIMENSION = 'price_dimension';
 
     public const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
     public const OPTION_ATTRIBUTE_SUPER = 'option_attribute_super';
@@ -73,6 +77,7 @@ class ProductFormAdd extends AbstractType
     public const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
     public const VALIDATION_GROUP_SEO = 'validation_group_seo';
     public const VALIDATION_GROUP_IMAGE_SET = 'validation_group_image';
+    public const VALIDATION_GROUP_PRICE_SOURCE = 'validation_group_price_source';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -114,7 +119,9 @@ class ProductFormAdd extends AbstractType
         $resolver->setDefaults([
             'constraints' => new Valid(),
             'required' => false,
-            'validation_groups' => function () use ($validationGroups) {
+            'validation_groups' => function (FormInterface $form) use ($validationGroups) {
+                $validationGroups = $this->prepareDefaultsValidationGroups($validationGroups, $form);
+
                 return $validationGroups;
             },
             'compound' => true,
@@ -137,6 +144,7 @@ class ProductFormAdd extends AbstractType
             static::VALIDATION_GROUP_ATTRIBUTE_SUPER,
             static::VALIDATION_GROUP_SEO,
             static::VALIDATION_GROUP_IMAGE_SET,
+            static::VALIDATION_GROUP_PRICE_SOURCE,
         ];
     }
 
@@ -155,11 +163,14 @@ class ProductFormAdd extends AbstractType
             ->addProductAbstractIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
             ->addAttributeSuperForm($builder, $options[self::OPTION_ATTRIBUTE_SUPER])
+            ->addPriceDimensionForm($builder)
             ->addPriceForm($builder, $options)
             ->addTaxRateField($builder, $options)
             ->addSeoLocalizedForms($builder)
             ->addImageLocalizedForms($builder)
             ->addStoreRelationForm($builder);
+
+        $this->executeProductAbstractFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -285,7 +296,6 @@ class ProductFormAdd extends AbstractType
                         'callback' => function ($sku, ExecutionContextInterface $context) {
                             $form = $context->getRoot();
                             $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-                            $sku = $this->getFactory()->getUtilTextService()->generateSlug($sku);
 
                             $skuCount = $this->getFactory()->getProductQueryContainer()
                                 ->queryProduct()
@@ -470,6 +480,24 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPriceDimensionForm(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FORM_PRICE_DIMENSION,
+            PriceDimensionForm::class,
+            [
+                'label' => false,
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return $this
@@ -484,6 +512,11 @@ class ProductFormAdd extends AbstractType
                     'data_class' => PriceProductTransfer::class,
                 ],
                 'entry_type' => ProductMoneyType::class,
+                'constraints' => [
+                    new ProductPriceNotBlank([
+                        'groups' => [self::VALIDATION_GROUP_PRICE_SOURCE],
+                    ]),
+                ],
             ]
         );
 
@@ -673,5 +706,31 @@ class ProductFormAdd extends AbstractType
                 return $value;
             }
         );
+    }
+
+    /**
+     * @param array $validationGroups
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return array
+     */
+    protected function prepareDefaultsValidationGroups(array $validationGroups, FormInterface $form): array
+    {
+        return $validationGroups;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function executeProductAbstractFormExpanderPlugins(FormBuilderInterface $builder, array $options): self
+    {
+        foreach ($this->getFactory()->getProductAbstractFormExpanderPlugins() as $formExpanderPlugin) {
+            $builder = $formExpanderPlugin->expand($builder, $options);
+        }
+
+        return $this;
     }
 }

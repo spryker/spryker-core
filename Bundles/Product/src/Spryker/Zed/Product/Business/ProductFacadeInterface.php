@@ -829,6 +829,19 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Returns the generated SKU for new concrete product that build from the given attributes or incremented value within the abstract product.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string
+     */
+    public function generateProductConcreteSku(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer): string;
+
+    /**
+     * Specification:
      * - Retrieves products by given ids.
      *
      * @api

@@ -9,6 +9,10 @@ namespace SprykerTest\Zed\Product\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
+use Spryker\Zed\Product\Business\ProductFacade;
 
 /**
  * Auto-generated group annotations
@@ -28,6 +32,11 @@ class ProductFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
      * @return void
      */
     protected function setUp()
@@ -35,6 +44,20 @@ class ProductFacadeTest extends Unit
         parent::setUp();
 
         $this->tester->setUpDatabase();
+        $this->productFacade = new ProductFacade();
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateProductConcreteSku()
+    {
+        $sku = $this->productFacade->generateProductConcreteSku(
+            $this->createProductAbstractTransfer(),
+            $this->createProductConcreteTransfer()
+        );
+
+        $this->assertSame($this->getExpectedProductConcreteSku(), $sku);
     }
 
     /**
@@ -52,5 +75,46 @@ class ProductFacadeTest extends Unit
             $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcreteTransfer);
             $this->assertContains($productConcreteTransfer->getIdProductConcrete(), $productConcreteIds);
         }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function createProductAbstractTransfer()
+    {
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setSku('abstract_sku');
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function createProductConcreteTransfer()
+    {
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setAttributes([
+            'processor_frequency' => '4 GHz',
+            'processor_cache' => '12 MB',
+        ]);
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExpectedProductConcreteSku()
+    {
+        return 'abstract_sku' .
+            SkuGenerator::SKU_ABSTRACT_SEPARATOR .
+            'processor_frequency' .
+            SkuGenerator::SKU_TYPE_SEPARATOR .
+            '4GHz' .
+            SkuGenerator::SKU_VALUE_SEPARATOR .
+            'processor_cache' .
+            SkuGenerator::SKU_TYPE_SEPARATOR .
+            '12MB';
     }
 }

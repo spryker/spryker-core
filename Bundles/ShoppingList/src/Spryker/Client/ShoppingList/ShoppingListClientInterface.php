@@ -9,6 +9,7 @@ namespace Spryker\Client\ShoppingList;
 
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
@@ -16,7 +17,6 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
@@ -86,6 +86,7 @@ interface ShoppingListClientInterface
     /**
      * Specification:
      *  - Makes Zed request.
+     *  - Hydrates ShoppingListItem with provided optional params.
      *  - Add item to shopping list.
      *  - Updates customer permissions.
      *  - Get messages from zed request and put them to session.
@@ -93,10 +94,11 @@ interface ShoppingListClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer;
 
     /**
      * Specification:
@@ -255,19 +257,6 @@ interface ShoppingListClientInterface
     /**
      * Specification:
      *  - Makes Zed request.
-     *  - Get shopping list permission group.
-     *
-     * @api
-     *
-     * @deprecated Use getShoppingListPermissionGroups() instead
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
-     */
-    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer;
-
-    /**
-     * Specification:
-     *  - Makes Zed request.
      *  - Get shopping list permission groups.
      *
      * @api
@@ -302,4 +291,20 @@ interface ShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Makes zed request.
+     *  - Removes shopping list to company user relation if exists.
+     *  - Adds shopping list to company user blacklist if company user business unit has access to shopping list.
+     *  - Returns success if at least one action was executed.
+     *  - Updates customer permissions.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer;
 }
