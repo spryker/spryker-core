@@ -35,7 +35,8 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
         return new CheckoutDataReader(
             $this->getShipmentFacade(),
             $this->getPaymentFacade(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
+            $this->createQuoteCustomerExpander()
         );
     }
 

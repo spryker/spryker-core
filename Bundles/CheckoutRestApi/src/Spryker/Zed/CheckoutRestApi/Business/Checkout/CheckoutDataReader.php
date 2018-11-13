@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
+use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface;
@@ -34,18 +35,26 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $customerFacade;
 
     /**
+     * @var \Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface
+     */
+    protected $quoteCustomerExpander;
+
+    /**
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface $paymentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface $customerFacade
+     * @param \Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface $quoteCustomerExpander
      */
     public function __construct(
         CheckoutRestApiToShipmentFacadeInterface $shipmentFacade,
         CheckoutRestApiToPaymentFacadeInterface $paymentFacade,
-        CheckoutRestApiToCustomerFacadeInterface $customerFacade
+        CheckoutRestApiToCustomerFacadeInterface $customerFacade,
+        QuoteCustomerExpanderInterface $quoteCustomerExpander
     ) {
         $this->shipmentFacade = $shipmentFacade;
         $this->paymentFacade = $paymentFacade;
         $this->customerFacade = $customerFacade;
+        $this->quoteCustomerExpander = $quoteCustomerExpander;
     }
 
     /**
@@ -55,6 +64,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer
     {
+        $quoteTransfer = $this->quoteCustomerExpander->expandQuoteWithCustomerData($quoteTransfer);
+
         return (new CheckoutDataTransfer())
             ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
             ->setPaymentMethods($this->getPaymentMethodsTransfer($quoteTransfer))

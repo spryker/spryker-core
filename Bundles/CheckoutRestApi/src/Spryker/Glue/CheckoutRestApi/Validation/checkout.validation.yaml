@@ -6,13 +6,13 @@ checkout-data:
             id:
               - NotBlank
             billingAddress:
-              - Optional
+              - Callback: [Spryker\Glue\CheckoutRestApi\Constraints\Optional\AddressValidator, validate]
             shippingAddress:
-              - Optional
+              - Callback: [Spryker\Glue\CheckoutRestApi\Constraints\Optional\AddressValidator, validate]
             payments:
-              - Optional
+              - Callback: [Spryker\Glue\CheckoutRestApi\Constraints\Optional\PaymentsValidator, validate]
             shipment:
-              - Optional
+              - Callback: [Spryker\Glue\CheckoutRestApi\Constraints\Optional\ShipmentValidator, validate]
 checkout:
   post:
     cart:
@@ -49,17 +49,17 @@ checkout:
                     shipmentSelection:
                       - NotBlank
                     method:
-                    - Collection:
-                        fields:
-                          carrierName:
-                            - NotBlank
-                          id:
-                            - NotBlank
-                            - Type:
-                                type: numeric
-                          name:
-                            - NotBlank
-                          price:
-                            - NotBlank
-                            - Type:
-                                type: numeric
+                      - Collection:
+                          fields:
+                            carrierName:
+                              - NotBlank
+                            id:
+                              - NotBlank
+                              - Type:
+                                  type: numeric
+                            name:
+                              - NotBlank
+                            price:
+                              - NotBlank
+                              - Type:
+                                  type: numeric

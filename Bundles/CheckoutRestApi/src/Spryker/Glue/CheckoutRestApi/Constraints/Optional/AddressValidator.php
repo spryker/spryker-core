@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CheckoutRestApi\Constraints;
+namespace Spryker\Glue\CheckoutRestApi\Constraints\Optional;
 
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Context\ExecutionContext;
 
 class AddressValidator
 {
-    protected const UUID = 'uuid';
+    protected const UUID = 'id';
 
     protected const SYMFONY_COMPONENT_VALIDATOR_CONSTRAINTS_NAMESPACE = '\\Symfony\\Component\\Validator\\Constraints\\';
 
@@ -29,8 +29,8 @@ class AddressValidator
                         'Ms',
                         'Dr',
                     ],
-                ],
             ],
+        ],
         'firstName' => [
             'NotBlank',
         ],
@@ -76,6 +76,10 @@ class AddressValidator
      */
     public function validate($value, ExecutionContext $context): void
     {
+        if (count(array_filter($value)) === 0) {
+            return;
+        }
+
         $violationList = static::getViolationsList($value, $context);
 
         foreach ($violationList as $violation) {

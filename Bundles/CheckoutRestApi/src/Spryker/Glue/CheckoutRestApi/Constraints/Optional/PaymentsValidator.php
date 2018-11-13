@@ -5,59 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CheckoutRestApi\Constraints;
+namespace Spryker\Glue\CheckoutRestApi\Constraints\Optional;
 
+use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Collection;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
-class AddressValidator
+class PaymentsValidator
 {
-    protected const UUID = 'uuid';
-
     protected const SYMFONY_COMPONENT_VALIDATOR_CONSTRAINTS_NAMESPACE = '\\Symfony\\Component\\Validator\\Constraints\\';
 
-    protected const ADDRESS_CONSTRAINTS = [
-        'salutation' => [
-            'NotBlank',
-            'Choice' => [
-                'choices' =>
-                    [
-                        'Mr',
-                        'Mrs',
-                        'Ms',
-                        'Dr',
-                    ],
-                ],
-            ],
-        'firstName' => [
+    protected const PAYMENT_CONSTRAINTS = [
+        'paymentMethod' => [
             'NotBlank',
         ],
-        'lastName' => [
+        'paymentProvider' => [
             'NotBlank',
         ],
-        'address1' => [
+        'paymentSelection' => [
             'NotBlank',
-        ],
-        'address2' => [
-            'NotBlank',
-        ],
-        'zipCode' => [
-            'NotBlank',
-        ],
-        'city' => [
-            'NotBlank',
-        ],
-        'iso2Code' => [
-            'NotBlank',
-            'Choice' => [
-                'choices' =>
-                    [
-                        'DE',
-                        'AT',
-                    ],
-            ],
         ],
     ];
 
@@ -66,6 +33,7 @@ class AddressValidator
         'groups' => ['Default'],
     ];
 
+    protected const CONSTRAINTS_CONSTRAINT_PARAMETERS = 'constraints';
     protected const FIELDS_CONSTRAINT_PARAMETERS = 'fields';
 
     /**
@@ -76,6 +44,10 @@ class AddressValidator
      */
     public function validate($value, ExecutionContext $context): void
     {
+        if (count(array_filter($value)) === 0) {
+            return;
+        }
+
         $violationList = static::getViolationsList($value, $context);
 
         foreach ($violationList as $violation) {
@@ -93,7 +65,7 @@ class AddressValidator
     {
         $constraintConfig = [];
 
-        foreach (static::ADDRESS_CONSTRAINTS as $field => $constraints) {
+        foreach (static::PAYMENT_CONSTRAINTS as $field => $constraints) {
             foreach ($constraints as $constraint => $parameters) {
                 if (!$constraint) {
                     $constraint = $parameters;
@@ -116,14 +88,10 @@ class AddressValidator
      */
     protected static function getViolationsList(array $value, ExecutionContext $context): ConstraintViolationListInterface
     {
-        if (isset($value[static::UUID])) {
-            $constraint = new NotBlank();
-
-            return $context->getValidator()->validate($value[static::UUID], $constraint);
-        }
-
-        $constraintOptions = [static::FIELDS_CONSTRAINT_PARAMETERS => static::getNestedConstraints()] + static::CONSTRAINT_PARAMETERS;
-        $constraintsCollection = new Collection($constraintOptions);
+        $collectionConstraintOptions = [static::FIELDS_CONSTRAINT_PARAMETERS => static::getNestedConstraints()] + static::CONSTRAINT_PARAMETERS;
+        $collectionConstraint = new Collection($collectionConstraintOptions);
+        $constraintOptions = [static::CONSTRAINTS_CONSTRAINT_PARAMETERS => $collectionConstraint];
+        $constraintsCollection = new All($constraintOptions);
 
         return $context->getValidator()->validate($value, $constraintsCollection);
     }
