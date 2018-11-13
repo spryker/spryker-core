@@ -39,9 +39,9 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
      */
     public function validate(): SchemaValidationTransfer
     {
-        $filePaths = $this->getSchemaFiles();
+        $groupedSchemaFiles = $this->finder->getGroupedSchemaFiles();
 
-        foreach ($this->findInvalidIdIdentifiersInFiles($filePaths) as $identifier) {
+        foreach ($this->findInvalidIdIdentifiersInFiles($groupedSchemaFiles) as $identifier) {
             $this->addError(sprintf(
                 'There is a problem with %s . The identifier "%s" has a length beyond the maximum identifier length "%s". Your database will persist a truncated identifier leading to more problems!',
                 key($identifier),
@@ -51,20 +51,6 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
         }
 
         return $this->getSchemaValidationTransfer();
-    }
-
-    /**
-     * @return array
-     */
-    protected function getSchemaFiles(): array
-    {
-        $filteredGroupedSchemas = [];
-
-        foreach ($this->finder->getGroupedSchemaFiles() as $fileName => $groupedSchemas) {
-            $filteredGroupedSchemas[$fileName] = $groupedSchemas;
-        }
-
-        return $filteredGroupedSchemas;
     }
 
     /**
