@@ -109,7 +109,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      */
     protected function createFacetFilterQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
-        if (empty($filterValue)) {
+        if (empty($filterValue) && !is_numeric($filterValue)) {
             return null;
         }
 
