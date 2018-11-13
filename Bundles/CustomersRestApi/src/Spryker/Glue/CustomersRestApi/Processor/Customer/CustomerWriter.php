@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Customer;
 
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
@@ -187,14 +188,11 @@ class CustomerWriter implements CustomerWriterInterface
         RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
+        $customerResponseTransfer = $this->customerReader->getCurrentCustomer($restRequest);
 
-        $customerResponseTransfer = $this->customerReader->findCustomer($restRequest);
-
-        $restResponse = $this->restApiValidator->validateCustomerResponseTransfer(
-            $customerResponseTransfer,
-            $restRequest,
-            $restResponse
-        );
+        if (!$customerResponseTransfer->getHasCustomer() || $restRequest->getResource()->getId()) {
+            return $this->restApiError->addCustomerNotFoundError($restResponse);
+        }
 
         $restResponse = $this->restApiValidator->validatePassword($passwordAttributesTransfer, $restResponse);
 
@@ -204,9 +202,22 @@ class CustomerWriter implements CustomerWriterInterface
 
         $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
         $customerTransfer->fromArray($passwordAttributesTransfer->toArray(), true);
-
         $customerResponseTransfer = $this->customerClient->updateCustomerPassword($customerTransfer);
+        if (!$customerResponseTransfer->getErrors()->count()) {
+            return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
+        }
 
+        return $this->addUpdatePasswordErrorsToResponse($customerResponseTransfer, $restResponse);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addUpdatePasswordErrorsToResponse(CustomerResponseTransfer $customerResponseTransfer, RestResponseInterface $restResponse)
+    {
         foreach ($customerResponseTransfer->getErrors() as $error) {
             if ($error->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
                 return $this->restApiError->addPasswordNotValidError($restResponse);
@@ -215,7 +226,7 @@ class CustomerWriter implements CustomerWriterInterface
             return $this->restApiError->addPasswordChangeError($restResponse, $error->getMessage());
         }
 
-        return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
+        return $restResponse;
     }
 
     /**
