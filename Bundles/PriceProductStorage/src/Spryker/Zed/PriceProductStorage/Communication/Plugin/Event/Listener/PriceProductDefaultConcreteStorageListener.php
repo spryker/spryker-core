@@ -32,8 +32,8 @@ class PriceProductDefaultConcreteStorageListener extends AbstractPlugin implemen
     public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
-        $priceProductIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyPriceProductDefaultTableMap::COL_FK_PRICE_PRODUCT_STORE);
-        $productIds = $this->getQueryContainer()->queryProductConcreteIdsByPriceProductStoreIds($priceProductIds)->find()->getData();
+        $priceProductStoreIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyPriceProductDefaultTableMap::COL_FK_PRICE_PRODUCT_STORE);
+        $productIds = $this->getQueryContainer()->queryProductConcreteIdsByPriceProductStoreIds($priceProductStoreIds)->find()->getData();
 
         $this->getFacade()->publishPriceProductConcrete($productIds);
     }
