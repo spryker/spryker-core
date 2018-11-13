@@ -13,7 +13,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginWithAmountInputTypeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Validator\Constraints\Range;
-use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
@@ -79,10 +79,9 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     public function getAmountValidators()
     {
         return [
-            new Regex([
-                'pattern' => '/[0-9\.\,]+/',
+            new Type([
+                'type' => 'numeric',
                 'groups' => DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE,
-
             ]),
             new Range([
                 'min' => 1,

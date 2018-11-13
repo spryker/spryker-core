@@ -374,6 +374,27 @@ class ProductOptionCartConnectorFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCheckProductOptionExistenceShouldWriteErrorWhenOptionDoesNotExist()
+    {
+        $cartChangeTransfer = new CartChangeTransfer();
+
+        $itemTransfer = new ItemTransfer();
+
+        $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setIdProductOptionValue(0);
+        $itemTransfer->addProductOption($productOptionTransfer);
+
+        $cartChangeTransfer->addItem($itemTransfer);
+
+        $cartPreCheckResponseTransfer = $this->productOptionCartConnectorFacade->checkProductOptionExistence($cartChangeTransfer);
+
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
      * @return string
      */
     protected function getGrossPriceModeIdentifier()

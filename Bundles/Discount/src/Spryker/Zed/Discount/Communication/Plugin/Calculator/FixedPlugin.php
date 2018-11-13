@@ -12,6 +12,7 @@ use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginWithAmountInputTypeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
@@ -51,7 +52,7 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
      */
     public function transformForPersistence($value)
     {
-        return $this->getMoneyPlugin()->convertDecimalToInteger((float)$value);
+        return $this->getMoneyPlugin()->convertDecimalToInteger($value);
     }
 
     /**
@@ -88,7 +89,12 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
      */
     public function getAmountValidators()
     {
-        return [];
+        return [
+            new Type([
+                'type' => 'numeric',
+                'groups' => DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE,
+            ]),
+        ];
     }
 
     /**

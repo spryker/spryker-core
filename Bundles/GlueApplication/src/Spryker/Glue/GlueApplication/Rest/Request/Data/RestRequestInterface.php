@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -120,4 +119,18 @@ interface RestRequestInterface
      * @return array|null
      */
     public function getAttributesDataFromRequest(): ?array;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
+     *
+     * @return void
+     */
+    public function setPage(PageInterface $page): void;
+
+    /**
+     * @param string[] $excludeParams
+     *
+     * @return string
+     */
+    public function getQueryString(array $excludeParams = []): string;
 }
