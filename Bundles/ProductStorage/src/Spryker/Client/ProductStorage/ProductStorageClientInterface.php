@@ -121,7 +121,7 @@ interface ProductStorageClientInterface
      * Specification:
      * - Maps raw product data from Storage to StorageProductTransfer for the current locale.
      * - Executes a stack of Spryker\Client\ProductStorage\Dependency\Plugin\StorageProductExpanderPluginInterface plugins
-     *   that configured for for abstract products in ProductStorageDependencyProvider::getAbstractProductViewExpanderPlugins()
+     *   that configured for abstract products in ProductStorageDependencyProvider::getAbstractProductViewExpanderPlugins()
      *   and can expand ProductViewTransfer with extra data.
      *
      * @api
