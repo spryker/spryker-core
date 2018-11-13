@@ -171,7 +171,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addProductAbstractViewExpanderPlugins(Container $container)
+    protected function addProductAbstractViewExpanderPlugins(Container $container): Container
     {
         $container[static::PLUGIN_PRODUCT_ABSTRACT_VIEW_EXPANDERS] = function () {
             return $this->getProductAbstractViewExpanderPlugins();
