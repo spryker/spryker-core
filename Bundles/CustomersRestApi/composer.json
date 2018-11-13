@@ -19,7 +19,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/auth-rest-api": "Used for Rest API user authentication."
+    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
   },
   "autoload": {
     "psr-4": {
