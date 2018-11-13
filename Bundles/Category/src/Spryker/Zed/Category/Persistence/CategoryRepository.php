@@ -125,10 +125,10 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         $spyCategoryEntity = $this->getFactory()
             ->createCategoryQuery()
-            ->useNodeQuery()
+            ->useNodeQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkCategory($idCategory)
             ->endUse()
-            ->useAttributeQuery()
+            ->useAttributeQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkCategory($idCategory)
             ->endUse()
             ->findOneByIdCategory($idCategory);
