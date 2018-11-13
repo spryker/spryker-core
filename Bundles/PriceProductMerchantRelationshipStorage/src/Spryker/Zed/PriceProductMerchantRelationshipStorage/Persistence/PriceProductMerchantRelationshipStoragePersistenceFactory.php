@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
-use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorageQuery;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorageQuery;
@@ -31,27 +29,11 @@ class PriceProductMerchantRelationshipStoragePersistenceFactory extends Abstract
     }
 
     /**
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
-     */
-    public function getPropelPriceProductStoreQuery(): SpyPriceProductStoreQuery
-    {
-        return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_STORE);
-    }
-
-    /**
      * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery
      */
     public function getPropelPriceProductMerchantRelationshipQuery(): SpyPriceProductMerchantRelationshipQuery
     {
         return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP);
-    }
-
-    /**
-     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery
-     */
-    public function getPropelMerchantRelationshipToCompanyBusinessUnitQuery(): SpyMerchantRelationshipToCompanyBusinessUnitQuery
-    {
-        return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::PROPEL_QUERY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT);
     }
 
     /**

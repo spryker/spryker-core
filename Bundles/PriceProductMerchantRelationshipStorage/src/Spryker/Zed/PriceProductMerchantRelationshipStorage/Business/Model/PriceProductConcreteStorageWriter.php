@@ -8,41 +8,9 @@
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface;
 
-class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWriterInterface
+class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRelationshipStorageWriter implements PriceProductConcreteStorageWriterInterface
 {
-    /**
-     * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface
-     */
-    protected $priceProductMerchantRelationshipStorageEntityManager;
-
-    /**
-     * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface
-     */
-    protected $priceProductMerchantRelationshipStorageRepository;
-
-    /**
-     * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceGrouperInterface
-     */
-    protected $priceGrouper;
-
-    /**
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface $priceProductMerchantRelationshipStorageEntityManager
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface $priceProductMerchantRelationshipStorageRepository
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceGrouperInterface $priceGrouper
-     */
-    public function __construct(
-        PriceProductMerchantRelationshipStorageEntityManagerInterface $priceProductMerchantRelationshipStorageEntityManager,
-        PriceProductMerchantRelationshipStorageRepositoryInterface $priceProductMerchantRelationshipStorageRepository,
-        PriceGrouperInterface $priceGrouper
-    ) {
-        $this->priceProductMerchantRelationshipStorageEntityManager = $priceProductMerchantRelationshipStorageEntityManager;
-        $this->priceProductMerchantRelationshipStorageRepository = $priceProductMerchantRelationshipStorageRepository;
-        $this->priceGrouper = $priceGrouper;
-    }
-
     /**
      * @deprecated Will be removed without replacement.
      *
@@ -63,7 +31,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     public function publishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void
     {
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
-            ->findProductConcretePriceDataByCompanyBusinessUnitIds($companyBusinessUnitIds);
+            ->findMerchantRelationshipProductConcretePricesDataByCompanyBusinessUnitIds($companyBusinessUnitIds);
 
         if (empty($priceProductMerchantRelationshipStorageTransfers)) {
             return;
@@ -83,7 +51,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     public function publishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void
     {
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
-            ->findMerchantRelationshipProductConcretePricesByIds($priceProductMerchantRelationshipIds);
+            ->findMerchantRelationshipProductConcretePricesDataByIds($priceProductMerchantRelationshipIds);
 
         if (empty($priceProductMerchantRelationshipStorageTransfers)) {
             return;
@@ -107,7 +75,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     public function publishConcretePriceProductByProductIds(array $productIds): void
     {
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
-            ->findMerchantRelationshipProductConcretePriceDataByProductIds($productIds);
+            ->findMerchantRelationshipProductConcretePricesDataByProductIds($productIds);
 
         $existingStorageEntities = $this->priceProductMerchantRelationshipStorageRepository
             ->findExistingPriceProductConcreteMerchantRelationshipEntitiesByProductIds($productIds);

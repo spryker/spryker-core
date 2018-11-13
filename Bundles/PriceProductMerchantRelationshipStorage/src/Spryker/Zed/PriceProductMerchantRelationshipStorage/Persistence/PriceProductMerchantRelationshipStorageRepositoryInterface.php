@@ -17,14 +17,42 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findProductAbstractPriceDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
+    public function findMerchantRelationshipProductAbstractPricesDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 
     /**
      * @param int[] $companyBusinessUnitIds
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findProductConcretePriceDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
+    public function findMerchantRelationshipProductConcretePricesDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
+
+    /**
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     */
+    public function findMerchantRelationshipProductConcretePricesDataByIds(array $priceProductMerchantRelationshipIds): array;
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     */
+    public function findMerchantRelationshipProductConcretePricesDataByProductIds(array $productIds): array;
+
+    /**
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     */
+    public function findMerchantRelationshipProductAbstractPricesByIds(array $priceProductMerchantRelationshipIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     */
+    public function findMerchantRelationshipProductAbstractPricesDataByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @param int[] $companyBusinessUnitIds
@@ -67,34 +95,6 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
      * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
      */
     public function findExistingPriceProductConcreteMerchantRelationshipEntitiesByProductIds(array $productIds): array;
-
-    /**
-     * @param int[] $priceProductMerchantRelationshipIds
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
-     */
-    public function findMerchantRelationshipProductConcretePricesByIds(array $priceProductMerchantRelationshipIds): array;
-
-    /**
-     * @param int[] $productIds
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
-     */
-    public function findMerchantRelationshipProductConcretePriceDataByProductIds(array $productIds): array;
-
-    /**
-     * @param int[] $priceProductMerchantRelationshipIds
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
-     */
-    public function findMerchantRelationshipProductAbstractPricesByIds(array $priceProductMerchantRelationshipIds): array;
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
-     */
-    public function findMerchantRelationshipProductAbstractPriceDataByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @return array

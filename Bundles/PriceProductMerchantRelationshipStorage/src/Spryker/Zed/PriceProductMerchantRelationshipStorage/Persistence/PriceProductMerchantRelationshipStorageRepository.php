@@ -31,7 +31,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findProductAbstractPriceDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    public function findMerchantRelationshipProductAbstractPricesDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
         $priceProductMerchantRelationshipsQuery = $this->queryPriceProductMerchantRelationship($companyBusinessUnitIds)
             ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
@@ -52,12 +52,98 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findProductConcretePriceDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    public function findMerchantRelationshipProductConcretePricesDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
         $priceProductMerchantRelationshipsQuery = $this->queryPriceProductMerchantRelationship($companyBusinessUnitIds)
             ->filterByFkProduct(null, Criteria::ISNOTNULL);
 
         $priceProductMerchantRelationships = $this->withPriceProductConcreteData($priceProductMerchantRelationshipsQuery)
+            ->setFormatter(new PropelArraySetFormatter())
+            ->find();
+
+        return $this->getFactory()
+            ->createCompanyBusinessUnitPriceProductMapper()
+            ->mapPriceProductMerchantRelationshipArrayToTransfers(
+                $priceProductMerchantRelationships
+            );
+    }
+
+    /**
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     */
+    public function findMerchantRelationshipProductConcretePricesDataByIds(array $priceProductMerchantRelationshipIds): array
+    {
+        $priceProductMerchantRelationshipsQuery = $this->queryPriceProductMerchantRelationship()
+            ->filterByIdPriceProductMerchantRelationship_In($priceProductMerchantRelationshipIds)
+            ->filterByFkProduct(null, Criteria::ISNOTNULL);
+
+        $priceProductMerchantRelationships = $this->withPriceProductConcreteData($priceProductMerchantRelationshipsQuery)
+            ->setFormatter(new PropelArraySetFormatter())
+            ->find();
+
+        return $this->getFactory()
+            ->createCompanyBusinessUnitPriceProductMapper()
+            ->mapPriceProductMerchantRelationshipArrayToTransfers(
+                $priceProductMerchantRelationships
+            );
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     */
+    public function findMerchantRelationshipProductConcretePricesDataByProductIds(array $productIds): array
+    {
+        $priceProductMerchantRelationshipsQuery = $this->queryPriceProductMerchantRelationship()
+            ->filterByFkProduct_In($productIds);
+
+        $priceProductMerchantRelationships = $this->withPriceProductConcreteData($priceProductMerchantRelationshipsQuery)
+            ->setFormatter(new PropelArraySetFormatter())
+            ->find();
+
+        return $this->getFactory()
+            ->createCompanyBusinessUnitPriceProductMapper()
+            ->mapPriceProductMerchantRelationshipArrayToTransfers(
+                $priceProductMerchantRelationships
+            );
+    }
+
+    /**
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     */
+    public function findMerchantRelationshipProductAbstractPricesByIds(array $priceProductMerchantRelationshipIds): array
+    {
+        $priceProductMerchantRelationshipsQuery = $this->queryPriceProductMerchantRelationship()
+            ->filterByIdPriceProductMerchantRelationship_In($priceProductMerchantRelationshipIds)
+            ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
+
+        $priceProductMerchantRelationships = $this->withPriceProductAbstractData($priceProductMerchantRelationshipsQuery)
+            ->setFormatter(new PropelArraySetFormatter())
+            ->find();
+
+        return $this->getFactory()
+            ->createCompanyBusinessUnitPriceProductMapper()
+            ->mapPriceProductMerchantRelationshipArrayToTransfers(
+                $priceProductMerchantRelationships
+            );
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     */
+    public function findMerchantRelationshipProductAbstractPricesDataByProductAbstractIds(array $productAbstractIds): array
+    {
+        $priceProductMerchantRelationshipsQuery = $this->queryPriceProductMerchantRelationship()
+            ->filterByFkProductAbstract_In($productAbstractIds);
+
+        $priceProductMerchantRelationships = $this->withPriceProductAbstractData($priceProductMerchantRelationshipsQuery)
             ->setFormatter(new PropelArraySetFormatter())
             ->find();
 
@@ -150,92 +236,6 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             ->filterByFkProduct_In($productIds)
             ->find()
             ->getData();
-    }
-
-    /**
-     * @param int[] $priceProductMerchantRelationshipIds
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
-     */
-    public function findMerchantRelationshipProductConcretePricesByIds(array $priceProductMerchantRelationshipIds): array
-    {
-        $priceProductMerchantRelationshipsQuery = $this->queryPriceProductMerchantRelationship()
-            ->filterByIdPriceProductMerchantRelationship_In($priceProductMerchantRelationshipIds)
-            ->filterByFkProduct(null, Criteria::ISNOTNULL);
-
-        $priceProductMerchantRelationships = $this->withPriceProductConcreteData($priceProductMerchantRelationshipsQuery)
-            ->setFormatter(new PropelArraySetFormatter())
-            ->find();
-
-        return $this->getFactory()
-            ->createCompanyBusinessUnitPriceProductMapper()
-            ->mapPriceProductMerchantRelationshipArrayToTransfers(
-                $priceProductMerchantRelationships
-            );
-    }
-
-    /**
-     * @param int[] $productIds
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
-     */
-    public function findMerchantRelationshipProductConcretePriceDataByProductIds(array $productIds): array
-    {
-        $priceProductMerchantRelationshipsQuery = $this->queryPriceProductMerchantRelationship()
-            ->filterByFkProduct_In($productIds);
-
-        $priceProductMerchantRelationships = $this->withPriceProductConcreteData($priceProductMerchantRelationshipsQuery)
-            ->setFormatter(new PropelArraySetFormatter())
-            ->find();
-
-        return $this->getFactory()
-            ->createCompanyBusinessUnitPriceProductMapper()
-            ->mapPriceProductMerchantRelationshipArrayToTransfers(
-                $priceProductMerchantRelationships
-            );
-    }
-
-    /**
-     * @param int[] $priceProductMerchantRelationshipIds
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
-     */
-    public function findMerchantRelationshipProductAbstractPricesByIds(array $priceProductMerchantRelationshipIds): array
-    {
-        $priceProductMerchantRelationshipsQuery = $this->queryPriceProductMerchantRelationship()
-            ->filterByIdPriceProductMerchantRelationship_In($priceProductMerchantRelationshipIds)
-            ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
-
-        $priceProductMerchantRelationships = $this->withPriceProductAbstractData($priceProductMerchantRelationshipsQuery)
-            ->setFormatter(new PropelArraySetFormatter())
-            ->find();
-
-        return $this->getFactory()
-            ->createCompanyBusinessUnitPriceProductMapper()
-            ->mapPriceProductMerchantRelationshipArrayToTransfers(
-                $priceProductMerchantRelationships
-            );
-    }
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
-     */
-    public function findMerchantRelationshipProductAbstractPriceDataByProductAbstractIds(array $productAbstractIds): array
-    {
-        $priceProductMerchantRelationshipsQuery = $this->queryPriceProductMerchantRelationship()
-            ->filterByFkProductAbstract_In($productAbstractIds);
-
-        $priceProductMerchantRelationships = $this->withPriceProductAbstractData($priceProductMerchantRelationshipsQuery)
-            ->setFormatter(new PropelArraySetFormatter())
-            ->find();
-
-        return $this->getFactory()
-            ->createCompanyBusinessUnitPriceProductMapper()
-            ->mapPriceProductMerchantRelationshipArrayToTransfers(
-                $priceProductMerchantRelationships
-            );
     }
 
     /**
