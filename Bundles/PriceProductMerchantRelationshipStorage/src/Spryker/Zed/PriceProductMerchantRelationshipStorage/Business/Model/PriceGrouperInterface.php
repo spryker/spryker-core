@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
+
 interface PriceGrouperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransfers
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
      */
-    public function groupPrices(array $priceProductMerchantRelationshipStorageTransfers): array;
+    public function groupPrices(
+        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+    ): PriceProductMerchantRelationshipStorageTransfer;
 }

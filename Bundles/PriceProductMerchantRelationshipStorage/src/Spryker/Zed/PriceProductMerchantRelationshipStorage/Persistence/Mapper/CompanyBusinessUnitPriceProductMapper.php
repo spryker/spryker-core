@@ -15,71 +15,71 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
     protected const PRICE_KEY_SEPARATOR = ':';
 
     /**
-     * @param array $priceProductMerchantRelationships
+     * @param array $priceProductMerchantRelationshipsData
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function mapPriceProductMerchantRelationshipArrayToTransfers(array $priceProductMerchantRelationships): array
+    public function mapPriceProductMerchantRelationshipArrayToTransfers(array $priceProductMerchantRelationshipsData): array
     {
         $pricesByKey = [];
-        foreach ($priceProductMerchantRelationships as $priceProductMerchantRelationship) {
-            $uniquePriceIndex = $this->createUniquePriceIndex($priceProductMerchantRelationship);
+        foreach ($priceProductMerchantRelationshipsData as $priceProductMerchantRelationshipData) {
+            $uniquePriceIndex = $this->createUniquePriceIndex($priceProductMerchantRelationshipData);
             if (!isset($pricesByKey[$uniquePriceIndex])) {
                 $pricesByKey[$uniquePriceIndex] = $this->createPriceProductMerchantRelationshipStorageTransfer(
-                    $priceProductMerchantRelationship,
+                    $priceProductMerchantRelationshipData,
                     $uniquePriceIndex
                 );
             }
 
-            $this->addUngroupedPrice($pricesByKey[$uniquePriceIndex], $priceProductMerchantRelationship);
+            $this->addUngroupedPrice($pricesByKey[$uniquePriceIndex], $priceProductMerchantRelationshipData);
         }
 
         return $pricesByKey;
     }
 
     /**
-     * @param array $priceProductMerchantRelationship
+     * @param array $priceProductMerchantRelationshipData
      * @param string $uniquePriceIndex
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
      */
     protected function createPriceProductMerchantRelationshipStorageTransfer(
-        array $priceProductMerchantRelationship,
+        array $priceProductMerchantRelationshipData,
         string $uniquePriceIndex
     ): PriceProductMerchantRelationshipStorageTransfer {
         return (new PriceProductMerchantRelationshipStorageTransfer())
-            ->fromArray($priceProductMerchantRelationship, true)
+            ->fromArray($priceProductMerchantRelationshipData, true)
             ->setPriceKey($uniquePriceIndex)
             ->setIdMerchantRelationship(null);
     }
 
     /**
-     * @param array $priceProductMerchantRelationship
+     * @param array $priceProductMerchantRelationshipData
      *
      * @return string
      */
-    protected function createUniquePriceIndex(array $priceProductMerchantRelationship): string
+    protected function createUniquePriceIndex(array $priceProductMerchantRelationshipData): string
     {
         return implode(static::PRICE_KEY_SEPARATOR, [
-            $priceProductMerchantRelationship[PriceProductMerchantRelationshipStorageTransfer::STORE_NAME],
-            $priceProductMerchantRelationship[PriceProductMerchantRelationshipStorageTransfer::ID_PRODUCT],
-            $priceProductMerchantRelationship[PriceProductMerchantRelationshipStorageTransfer::ID_COMPANY_BUSINESS_UNIT],
+            $priceProductMerchantRelationshipData[PriceProductMerchantRelationshipStorageTransfer::STORE_NAME],
+            $priceProductMerchantRelationshipData[PriceProductMerchantRelationshipStorageTransfer::ID_PRODUCT],
+            $priceProductMerchantRelationshipData[PriceProductMerchantRelationshipStorageTransfer::ID_COMPANY_BUSINESS_UNIT],
         ]);
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $merchantRelationshipStorageTransfer
-     * @param array $priceProductMerchantRelationship
+     * @param array $priceProductMerchantRelationshipData
      *
      * @return void
      */
     protected function addUngroupedPrice(
         PriceProductMerchantRelationshipStorageTransfer $merchantRelationshipStorageTransfer,
-        array $priceProductMerchantRelationship
+        array $priceProductMerchantRelationshipData
     ): void {
         $merchantRelationshipStorageTransfer->addUngroupedPrice(
             (new PriceProductMerchantRelationshipValueTransfer())
-                ->fromArray($priceProductMerchantRelationship, true)
+                ->fromArray($priceProductMerchantRelationshipData, true)
         );
     }
 }

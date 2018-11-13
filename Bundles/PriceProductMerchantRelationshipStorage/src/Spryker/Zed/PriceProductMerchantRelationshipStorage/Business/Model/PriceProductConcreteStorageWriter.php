@@ -128,27 +128,28 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
         bool $mergePrices = false
     ): void {
         $existingStorageEntities = $this->mapStorageEntitiesByPriceKey($existingStorageEntities);
-        $priceProductMerchantRelationshipStorageTransfers = $this->priceGrouper->groupPrices(
-            $priceProductMerchantRelationshipStorageTransfers
-        );
 
-        foreach ($priceProductMerchantRelationshipStorageTransfers as $merchantRelationshipStorageTransfer) {
-            if (isset($existingStorageEntities[$merchantRelationshipStorageTransfer->getPriceKey()])) {
+        foreach ($priceProductMerchantRelationshipStorageTransfers as $priceProductMerchantRelationshipStorageTransfer) {
+            $priceProductMerchantRelationshipStorageTransfer = $this->priceGrouper->groupPrices(
+                $priceProductMerchantRelationshipStorageTransfer
+            );
+
+            if (isset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()])) {
                 $this->priceProductMerchantRelationshipStorageEntityManager->updatePriceProductConcrete(
-                    $merchantRelationshipStorageTransfer,
-                    $existingStorageEntities[$merchantRelationshipStorageTransfer->getPriceKey()],
+                    $priceProductMerchantRelationshipStorageTransfer,
+                    $existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()],
                     $mergePrices
                 );
 
-                unset($existingStorageEntities[$merchantRelationshipStorageTransfer->getPriceKey()]);
+                unset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]);
                 continue;
             }
 
             $this->priceProductMerchantRelationshipStorageEntityManager->createPriceProductConcrete(
-                $merchantRelationshipStorageTransfer
+                $priceProductMerchantRelationshipStorageTransfer
             );
 
-            unset($existingStorageEntities[$merchantRelationshipStorageTransfer->getPriceKey()]);
+            unset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]);
         }
 
         // Delete the rest of the entities
