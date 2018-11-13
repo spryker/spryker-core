@@ -60,24 +60,4 @@ interface ZedRequestConstants
      * @api
      */
     public const DIRECTORY_PERMISSION = 'ZED_REQUEST:DIRECTORY_PERMISSION';
-
-    /**
-     * Specification:
-     * - Port definition for Zed with leading colon (e.g. :9080)
-     *
-     * @api
-     *
-     * @uses \Spryker\Shared\Application\ApplicationConstants::PORT_ZED
-     */
-    public const PORT_ZED = 'APPLICATION:PORT_ZED';
-
-    /**
-     * Specification:
-     * - Secure port definition for Zed with leading colon (e.g. :9443)
-     *
-     * @api
-     *
-     * @uses \Spryker\Shared\Application\ApplicationConstants::PORT_SSL_ZED
-     */
-    public const PORT_SSL_ZED = 'APPLICATION:PORT_SSL_ZED';
 }
