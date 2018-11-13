@@ -31,8 +31,8 @@ class ExportSynchronizedDataConsole extends Console
 
         $availableResourceNames = $this->getFacade()->getAvailableResourceNames();
 
-        $this->setName(self::COMMAND_NAME)
-            ->setDescription(self::DESCRIPTION)
+        $this->setName(static::COMMAND_NAME)
+            ->setDescription(static::DESCRIPTION)
             ->addUsage(sprintf(
                 '[' . PHP_EOL . "\t%s" . PHP_EOL . ']',
                 implode(',' . PHP_EOL . "\t", $availableResourceNames)
