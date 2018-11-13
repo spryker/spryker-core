@@ -51,7 +51,6 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
         $query = $this->getFactory()->getCompanyUserQuery();
         $query->filterByFkCustomer($idCustomer)
             ->joinCompany()
-            ->filterByIsActive(true)
             ->useCompanyQuery()
                 ->filterByIsActive(true)
                 ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
@@ -74,7 +73,6 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
         $spyCompanyUser = $this->getFactory()
             ->getCompanyUserQuery()
             ->filterByFkCustomer($idCustomer)
-            ->filterByIsActive(true)
             ->filterByIsDefault(true)
             ->findOne();
 
