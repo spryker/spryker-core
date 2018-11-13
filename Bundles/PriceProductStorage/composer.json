@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.21.0",
-    "spryker/price-product": "^2.2.0",
+    "spryker/price-product": "^2.5.0",
     "spryker/price-product-storage-extension": "^1.0.0",
     "spryker/product": "^5.5.0 || ^6.0.0",
     "spryker/propel-orm": "^1.5.0",
