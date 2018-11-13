@@ -26,15 +26,13 @@ interface CheckoutDataMapperInterface
     ): RestCheckoutDataResponseAttributesTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param bool $checkRequired
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
-        QuoteTransfer $quoteTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        bool $checkRequired = true
+        QuoteTransfer $quoteTransfer
     ): QuoteTransfer;
 }

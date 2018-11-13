@@ -74,9 +74,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         }
 
         $quoteTransfer = $this->checkoutDataMapper->mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
-            $currentCustomerQuote,
             $restCheckoutRequestAttributesTransfer,
-            false
+            $currentCustomerQuote
         );
 
         $checkoutDataTransfer = $this->checkoutRestApiClient->getCheckoutData($quoteTransfer);

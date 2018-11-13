@@ -15,8 +15,6 @@ use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReaderInterface;
-use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMerger;
-use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -47,23 +45,13 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface
-     */
-    public function createQuoteMerger(): QuoteMergerInterface
-    {
-        return new QuoteMerger(
-            $this->createCheckoutDataMapper()
-        );
-    }
-
-    /**
      * @return \Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessorInterface
      */
     public function createCheckoutProcessor(): CheckoutProcessorInterface
     {
         return new CheckoutProcessor(
             $this->getResourceBuilder(),
-            $this->createQuoteMerger(),
+            $this->createCheckoutDataMapper(),
             $this->getClient(),
             $this->getGlossaryStorageClient(),
             $this->getCartsRestApiClient()

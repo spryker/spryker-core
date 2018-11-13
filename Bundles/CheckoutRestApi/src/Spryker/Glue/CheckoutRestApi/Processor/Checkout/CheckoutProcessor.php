@@ -9,6 +9,7 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\Checkout;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
@@ -17,7 +18,7 @@ use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
-use Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -31,9 +32,9 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface
      */
-    protected $quoteMerger;
+    protected $checkoutDataMapper;
 
     /**
      * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface
@@ -52,20 +53,20 @@ class CheckoutProcessor implements CheckoutProcessorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CheckoutRestApi\Processor\Quote\QuoteMergerInterface $quoteMerger
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface $checkoutDataMapper
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        QuoteMergerInterface $quoteMerger,
+        CheckoutDataMapperInterface $checkoutDataMapper,
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient,
         CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->quoteMerger = $quoteMerger;
+        $this->checkoutDataMapper = $checkoutDataMapper;
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
         $this->cartsRestApiClient = $cartsRestApiClient;
@@ -92,11 +93,12 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             return $this->createCartIsEmptyErrorResponse();
         }
 
-        $quoteTransfer = $this->quoteMerger->updateQuoteWithDataFromRequest(
-            $quoteTransfer,
+        $quoteTransfer = $this->checkoutDataMapper->mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
             $restCheckoutRequestAttributesTransfer,
-            $restRequest
+            $quoteTransfer
         );
+
+        $quoteTransfer->setCustomer($this->getCustomerTransferFromRequest($restRequest, $restCheckoutRequestAttributesTransfer));
 
         $checkoutResponseTransfer = $this->checkoutRestApiClient->placeOrder($quoteTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
@@ -104,6 +106,36 @@ class CheckoutProcessor implements CheckoutProcessorInterface
         }
 
         return $this->createOrderPlacedResponse($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function getCustomerTransferFromRequest(
+        RestRequestInterface $restRequest,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): CustomerTransfer {
+        $customerTransfer = new CustomerTransfer();
+        if ($restRequest->getUser()->getSurrogateIdentifier()) {
+            return $customerTransfer->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+                ->setIdCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
+        }
+
+        $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
+
+        if (!$restQuoteRequestTransfer || !$restQuoteRequestTransfer->getCustomer()) {
+            return $customerTransfer;
+        }
+
+        return $customerTransfer->fromArray(
+            $restQuoteRequestTransfer->getCustomer()->toArray(),
+            true
+        )
+            ->setCustomerReference(null)
+            ->setIdCustomer(null);
     }
 
     /**

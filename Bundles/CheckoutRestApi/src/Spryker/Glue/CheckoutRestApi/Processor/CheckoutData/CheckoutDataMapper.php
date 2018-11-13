@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData;
 
-use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -46,20 +45,16 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     ): RestCheckoutDataResponseAttributesTransfer {
         $restCheckoutDataResponseAttributesTransfer = new RestCheckoutDataResponseAttributesTransfer();
 
-        $restCheckoutDataResponseAttributesTransfer = $this->mapAddressesTransferToRestAddressTransfer(
+        $restCheckoutDataResponseAttributesTransfer = $this->mapAddresses(
             $checkoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
-        $restCheckoutDataResponseAttributesTransfer = $this->mapPaymentMethodsTransferToRestPaymentMethodResponseTransfer(
+        $restCheckoutDataResponseAttributesTransfer = $this->mapPaymentMethods(
             $checkoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
-        $restCheckoutDataResponseAttributesTransfer = $this->mapShipmentMethodsTransferToRestShipmentMethodResponseTransfer(
+        $restCheckoutDataResponseAttributesTransfer = $this->mapShipmentMethods(
             $checkoutDataTransfer,
-            $restCheckoutDataResponseAttributesTransfer
-        );
-        $restCheckoutDataResponseAttributesTransfer = $this->mapRestCheckoutRequestAttributesTransferToRestCheckoutDataResponseAttributesTransfer(
-            $restCheckoutRequestAttributesTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
 
@@ -67,45 +62,20 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param bool $checkRequired
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
-        QuoteTransfer $quoteTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        bool $checkRequired = true
+        QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        $quoteTransfer = $this->mapRestAddressTransfersToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer, $checkRequired);
-        $quoteTransfer = $this->mapPaymentsToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer, $checkRequired);
-        $quoteTransfer = $this->mapRestShipmentTransferToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer, $checkRequired);
+        $quoteTransfer = $this->mapRestAddressTransfersToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
+        $quoteTransfer = $this->mapPaymentsToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
+        $quoteTransfer = $this->mapRestShipmentTransferToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
-     */
-    protected function mapRestCheckoutRequestAttributesTransferToRestCheckoutDataResponseAttributesTransfer(
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
-    ): RestCheckoutDataResponseAttributesTransfer {
-        $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
-        $this->addRestAddressTransferToRestCheckoutDataResponseAttributesTransfer(
-            $restCheckoutDataResponseAttributesTransfer,
-            $restQuoteRequestTransfer->getBillingAddress()
-        );
-        $this->addRestAddressTransferToRestCheckoutDataResponseAttributesTransfer(
-            $restCheckoutDataResponseAttributesTransfer,
-            $restQuoteRequestTransfer->getShippingAddress()
-        );
-
-        return $restCheckoutDataResponseAttributesTransfer;
     }
 
     /**
@@ -114,7 +84,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function mapAddressesTransferToRestAddressTransfer(
+    protected function mapAddresses(
         CheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
@@ -136,17 +106,16 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function mapPaymentMethodsTransferToRestPaymentMethodResponseTransfer(
+    protected function mapPaymentMethods(
         CheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
         foreach ($checkoutDataTransfer->getPaymentMethods()->getMethods() as $paymentMethodTransfer) {
-            $restCheckoutDataResponseAttributesTransfer->addPaymentMethods(
-                (new RestPaymentMethodTransfer())->fromArray(
-                    $paymentMethodTransfer->toArray(),
-                    true
-                )->setRequiredRequestData($this->config->getRequiredRequestDataForMethod($paymentMethodTransfer->getMethodName()))
-            );
+            $restPaymentMethodTransfer = new RestPaymentMethodTransfer();
+            $restPaymentMethodTransfer->fromArray($paymentMethodTransfer->toArray(), true)
+                ->setRequiredRequestData($this->config->getRequiredRequestDataForMethod($paymentMethodTransfer->getMethodName()));
+
+            $restCheckoutDataResponseAttributesTransfer->addPaymentMethods($restPaymentMethodTransfer);
         }
 
         return $restCheckoutDataResponseAttributesTransfer;
@@ -158,18 +127,17 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function mapShipmentMethodsTransferToRestShipmentMethodResponseTransfer(
+    protected function mapShipmentMethods(
         CheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
         foreach ($checkoutDataTransfer->getShipmentMethods()->getMethods() as $shipmentMethodTransfer) {
-            $restCheckoutDataResponseAttributesTransfer->addShipmentMethods(
-                (new RestShipmentMethodTransfer())->fromArray(
-                    $shipmentMethodTransfer->toArray(),
-                    true
-                )->setPrice($shipmentMethodTransfer->getStoreCurrencyPrice())
-                ->setId($shipmentMethodTransfer->getIdShipmentMethod())
-            );
+            $restShipmentMethodTransfer = new RestShipmentMethodTransfer();
+            $restShipmentMethodTransfer->fromArray($shipmentMethodTransfer->toArray(), true)
+                ->setPrice($shipmentMethodTransfer->getStoreCurrencyPrice())
+                ->setId($shipmentMethodTransfer->getIdShipmentMethod());
+
+            $restCheckoutDataResponseAttributesTransfer->addShipmentMethods($restShipmentMethodTransfer);
         }
 
         return $restCheckoutDataResponseAttributesTransfer;
@@ -178,30 +146,23 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param bool $checkRequired
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function mapRestAddressTransfersToQuoteTransfer(
         QuoteTransfer $quoteTransfer,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        bool $checkRequired = true
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): QuoteTransfer {
-        if ($checkRequired === true) {
-            $restCheckoutRequestAttributesTransfer->getCart()->requireBillingAddress();
-        }
+        $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
+        $billingAddress = (new AddressTransfer())
+            ->fromArray($restQuoteRequestTransfer->getBillingAddress()->toArray(), true)
+            ->setUuid($restQuoteRequestTransfer->getBillingAddress()->getId());
+        $quoteTransfer->setBillingAddress($billingAddress);
 
-        $quoteTransfer->setBillingAddress(
-            $this->prepareAddressTransfer($restCheckoutRequestAttributesTransfer->getCart()->getBillingAddress())
-        );
-
-        if ($checkRequired === true) {
-            $restCheckoutRequestAttributesTransfer->getCart()->requireShippingAddress();
-        }
-
-        $quoteTransfer->setShippingAddress(
-            $this->prepareAddressTransfer($restCheckoutRequestAttributesTransfer->getCart()->getShippingAddress())
-        );
+        $shippingAddress = (new AddressTransfer())
+            ->fromArray($restQuoteRequestTransfer->getShippingAddress()->toArray(), true)
+            ->setUuid($restQuoteRequestTransfer->getShippingAddress()->getId());
+        $quoteTransfer->setShippingAddress($shippingAddress);
 
         return $quoteTransfer;
     }
@@ -209,19 +170,13 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param bool $checkRequired
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function mapPaymentsToQuoteTransfer(
         QuoteTransfer $quoteTransfer,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        bool $checkRequired = true
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): QuoteTransfer {
-        if ($checkRequired === true) {
-            $restCheckoutRequestAttributesTransfer->getCart()->requirePayments();
-        }
-
         foreach ($restCheckoutRequestAttributesTransfer->getCart()->getPayments() as $paymentTransfer) {
             $quoteTransfer->setPayment($paymentTransfer);
         }
@@ -232,19 +187,13 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param bool $checkRequired
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function mapRestShipmentTransferToQuoteTransfer(
         QuoteTransfer $quoteTransfer,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        bool $checkRequired = true
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): QuoteTransfer {
-        if ($checkRequired === true) {
-            $restCheckoutRequestAttributesTransfer->getCart()->requireShipment();
-        }
-
         if ($restCheckoutRequestAttributesTransfer->getCart()->getShipment() !== null) {
             $quoteTransfer->setShipment(
                 (new ShipmentTransfer())->fromArray(
@@ -260,82 +209,5 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestAddressTransfer[]|\ArrayObject $restAddressesResponseData
-     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
-     *
-     * @return bool
-     */
-    protected function addressExists(ArrayObject $restAddressesResponseData, RestAddressTransfer $restAddressTransfer): bool
-    {
-        foreach ($restAddressesResponseData as $restAddressResponseTransfer) {
-            if ($this->isAddressIdMatch($restAddressTransfer, $restAddressResponseTransfer)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
-     * @param \Generated\Shared\Transfer\RestAddressTransfer|null $restAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
-     */
-    protected function addRestAddressTransferToRestCheckoutDataResponseAttributesTransfer(
-        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
-        ?RestAddressTransfer $restAddressTransfer
-    ): RestCheckoutDataResponseAttributesTransfer {
-        if ($restAddressTransfer !== null
-            && !$this->addressEmpty($restAddressTransfer)
-            && !$this->addressExists(
-                $restCheckoutDataResponseAttributesTransfer->getAddresses(),
-                $restAddressTransfer
-            )) {
-            return $restCheckoutDataResponseAttributesTransfer->addAddresses($restAddressTransfer);
-        }
-
-        return $restCheckoutDataResponseAttributesTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestAddressTransfer|null $restAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function prepareAddressTransfer(?RestAddressTransfer $restAddressTransfer): AddressTransfer
-    {
-        if ($restAddressTransfer === null) {
-            return new AddressTransfer();
-        }
-
-        return (new AddressTransfer())->fromArray(
-            $restAddressTransfer->toArray(),
-            true
-        )->setUuid($restAddressTransfer->getId());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
-     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressResponseTransfer
-     *
-     * @return bool
-     */
-    protected function isAddressIdMatch(RestAddressTransfer $restAddressTransfer, RestAddressTransfer $restAddressResponseTransfer): bool
-    {
-        return $restAddressResponseTransfer->getId() !== null && $restAddressResponseTransfer->getId() === $restAddressTransfer->getId();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
-     *
-     * @return bool
-     */
-    protected function addressEmpty(RestAddressTransfer $restAddressTransfer): bool
-    {
-        return count(array_filter($restAddressTransfer->toArray())) === 0;
     }
 }
