@@ -6,7 +6,7 @@
 ## Installation
 
 ```
-composer require spryker/price-storage
+composer require spryker/price-product-storage
 ```
 
 ## Documentation
