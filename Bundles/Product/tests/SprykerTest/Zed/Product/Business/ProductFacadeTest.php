@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Product\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
