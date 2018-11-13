@@ -1,12 +1,13 @@
 {
   "name": "spryker/price-product-merchant-relationship",
+  "type": "library",
   "description": "PriceProductMerchantRelationship module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/cart": "^5.1.0",
     "spryker/kernel": "^3.21.0",
-    "spryker/merchant-relationship": "^1.1.0",
+    "spryker/merchant-relationship": "^1.4.0",
     "spryker/price-product": "^2.0.0",
     "spryker/price-product-extension": "^1.0.0",
     "spryker/product": "^6.1.0",

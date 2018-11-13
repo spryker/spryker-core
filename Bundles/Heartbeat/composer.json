@@ -1,5 +1,6 @@
 {
   "name": "spryker/heartbeat",
+  "type": "library",
   "description": "Heartbeat module",
   "license": "proprietary",
   "require": {
@@ -10,7 +11,7 @@
     "spryker/kernel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/redis": "^2.0.0",
-    "spryker/session": "^3.0.0",
+    "spryker/session": "^3.0.0 || ^4.0.0",
     "spryker/storage": "^3.2.0",
     "spryker/symfony": "^3.0.0"
   },

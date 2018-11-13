@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Tax\Communication\Controller;
 
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 class SetController extends AbstractController
 {
     public const PARAM_URL_ID_TAX_SET = 'id-tax-set';
+
+    public const REDIRECT_URL_DEFAULT = '/tax/set/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -56,15 +57,24 @@ class SetController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function editAction(Request $request)
     {
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
-        $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
-        $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider($taxSetTransfer);
-        $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider);
+        $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider();
+        $taxSetTransfer = $taxSetFormDataProvider->getData($idTaxSet);
+
+        if ($taxSetTransfer === null) {
+            $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
+
+            return $this->redirectResponse(
+                static::REDIRECT_URL_DEFAULT
+            );
+        }
+
+        $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider, $taxSetTransfer);
 
         if ($request->request->count() > 0) {
             $taxSetForm->handleRequest($request);
@@ -91,13 +101,19 @@ class SetController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function viewAction(Request $request)
     {
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
-        $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
+        $taxSetTransfer = $this->getFacade()->findTaxSet($idTaxSet);
+
+        if ($taxSetTransfer === null) {
+            $this->addErrorMessage(sprintf('Tax set with id %s doesn\'t exist', $idTaxSet));
+
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+        }
 
         return [
             'taxSet' => $taxSetTransfer,
@@ -105,23 +121,20 @@ class SetController extends AbstractController
     }
 
     /**
+     * @deprecated Use DeleteSetController::indexAction() instead.
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
-        $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
+        $idTaxSet = $this->castId($request->query->get(static::PARAM_URL_ID_TAX_SET));
+        $url = Url::generate('/tax/delete-set', [
+            static::PARAM_URL_ID_TAX_SET => $idTaxSet,
+        ])->build();
 
-        try {
-            $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
-            $this->getFacade()->deleteTaxSet($idTaxSet);
-            $this->addSuccessMessage(sprintf('Tax set %d was deleted successfully.', $idTaxSet));
-        } catch (PropelException $e) {
-            $this->addErrorMessage('Could not delete tax set. Is it assigned to product or shipping method?');
-        }
-
-        return $this->redirectResponse(Url::generate('/tax/set/list')->build());
+        return $this->redirectResponse($url, 301);
     }
 
     /**

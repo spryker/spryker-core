@@ -15,7 +15,7 @@
 {% endif %}
 
 {% block head_title -%}
-    {{ widget_title | trans }}ó
+    {{ widget_title | trans }}
 {%- endblock %}
 
 {% block action %}
@@ -53,7 +53,8 @@
             'idProduct': idProduct,
             'idProductAbstract': idProductAbstract,
             'bundledProductTable' : bundledProductTable,
-            'currentProduct' : currentProduct
+            'currentProduct' : currentProduct,
+            'priceDimension': priceDimension
         }) }}
 
     {{ form_end(form) }}

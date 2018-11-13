@@ -16,14 +16,21 @@ interface ProductListReaderInterface
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
+    public function getProductWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
@@ -33,18 +40,34 @@ interface ProductListReaderInterface
     public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer;
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array;
+    public function getProductBlacklistIdsByIdProduct(int $idProduct): array;
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
+    public function getProductWhitelistIdsByIdProduct(int $idProduct): array;
+
+    /**
+     * @param string[] $productConcreteSkus
+     * @param int[] $blackListIds
+     *
+     * @return array
+     */
+    public function getProductConcreteSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array;
+
+    /**
+     * @param string[] $productConcreteSkus
+     * @param int[] $whiteListIds
+     *
+     * @return array
+     */
+    public function getProductConcreteSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array;
 
     /**
      * @param int[] $productListIds

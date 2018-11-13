@@ -339,6 +339,16 @@ $(document).ready(function(){
             $(this).unbind("ajaxStop");
         });
     });
+
+    $('.gui-table-data').on('init.dt', function () {
+        var $rows = $(this).find('tbody tr'),
+            $lastRows = $rows.slice(-2),
+            $dropdownMenus = $lastRows.find('.column-Actions button.dropdown-toggle').next();
+
+        if($dropdownMenus.hasClass('dropdown-menu')) {
+            $dropdownMenus.addClass('dropdown-menu--top');
+        }
+    });
 });
 
 $(document).on('click', function(e) {

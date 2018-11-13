@@ -62,6 +62,7 @@ class ViewController extends AddController
         $productGroupTable = $this->getFactory()
             ->createProductGroupTable($idProductAbstract);
 
+        $attributes = [];
         $attributes[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $productAbstractTransfer->getAttributes();
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();
@@ -82,6 +83,10 @@ class ViewController extends AddController
             ->createProductTypeHelper()
             ->isGiftCardByProductAbstractTransfer($productAbstractTransfer);
 
+        $categoryCollectionTransfer = $this->getFactory()
+            ->getProductCategoryFacade()
+            ->getCategoryTransferCollectionByIdProductAbstract($idProductAbstract, $localeProvider->getCurrentLocale());
+
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
@@ -100,6 +105,7 @@ class ViewController extends AddController
             'relatedStoreNames' => $relatedStoreNames,
             'isProductBundle' => $isProductBundle,
             'isGiftCard' => $isGiftCard,
+            'categories' => $categoryCollectionTransfer->getCategories(),
         ]);
     }
 
@@ -133,6 +139,7 @@ class ViewController extends AddController
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
+        $attributes = [];
         $attributes[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $productTransfer->getAttributes();
         foreach ($productTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();

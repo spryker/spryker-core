@@ -49,9 +49,11 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product abstract blacklists by product abstract id.
+     *  - Retrieves product blacklist ids by product abstract id.
      *
      * @api
+     *
+     * @deprecated Use ProductListFacadeInterface::getProductBlacklistIdsByIdProductAbstract() instead.
      *
      * @param int $idProductAbstract
      *
@@ -61,9 +63,24 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product abstract whitelists by product abstract id.
+     *  - Retrieves product list IDs with type "blacklist".
+     *  - Retrieves the product list IDs for product concretes related to the given product abstract ID.
      *
      * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product whitelist ids by product abstract id.
+     *
+     * @api
+     *
+     * @deprecated Use ProductListFacadeInterface::getProductWhitelistIdsByIdProductAbstract() instead.
      *
      * @param int $idProductAbstract
      *
@@ -73,27 +90,80 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product concrete whitelists by product abstract id.
+     *  - Retrieves product list IDs with type "whitelist".
+     *  - Retrieves the product list IDs for product concretes related to the given product abstract ID.
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProductAbstract
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array;
+    public function getProductWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * Specification:
-     *  - Retrieves product concrete whitelists by product abstract id.
+     *  - Retrieves category whitelists by product abstract id.
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProductAbstract
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
+    public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product blacklist ids by product concrete id.
+     *
+     * @api
+     *
+     * @deprecated Use ProductListFacadeInterface::getProductBlacklistIdsByIdProduct() instead.
+     *
+     * @param int $idProduct
+     *
+     * @return int[]
+     */
+    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProduct): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product list IDs with type "blacklist" for the given product concrete ID.
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return int[]
+     */
+    public function getProductBlacklistIdsByIdProduct(int $idProduct): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product whitelist ids by product concrete id.
+     *
+     * @api
+     *
+     * @deprecated Use ProductListFacadeInterface::getProductWhitelistIdsByIdProduct() instead.
+     *
+     * @param int $idProduct
+     *
+     * @return int[]
+     */
+    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProduct): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product list IDs with type "whitelist" for the given product concrete ID.
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return int[]
+     */
+    public function getProductWhitelistIdsByIdProduct(int $idProduct): array;
 
     /**
      * Specification:

@@ -10,6 +10,8 @@ namespace Spryker\Zed\Cart\Business;
 use Spryker\Zed\Cart\Business\Model\Operation;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserver;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface;
+use Spryker\Zed\Cart\Business\Model\QuoteCleaner;
+use Spryker\Zed\Cart\Business\Model\QuoteCleanerInterface;
 use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
@@ -34,7 +36,8 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->getCartPreCheckPlugins(),
             $this->getPostSavePlugins(),
             $this->getTerminationPlugins(),
-            $this->getCartRemovalPreCheckPlugins()
+            $this->getCartRemovalPreCheckPlugins(),
+            $this->getPostReloadItemsPlugins()
         );
 
         $operation->setPreReloadLoadPlugins($this->getPreReloadItemsPlugins());
@@ -52,6 +55,14 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteChangeObserver(),
             $this->getMessengerFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cart\Business\Model\QuoteCleanerInterface
+     */
+    public function createQuoteCleaner(): QuoteCleanerInterface
+    {
+        return new QuoteCleaner();
     }
 
     /**
@@ -159,5 +170,13 @@ class CartBusinessFactory extends AbstractBusinessFactory
     public function getCartRemoveItemStrategyPlugins(): array
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_CART_REMOVE_ITEM_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[]
+     */
+    public function getPostReloadItemsPlugins(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_POST_RELOAD_ITEMS);
     }
 }

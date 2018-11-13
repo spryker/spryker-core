@@ -18,6 +18,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     protected const ERROR_QUANTITY_MIN_NOT_FULFILLED = 'cart.pre.check.quantity.min.failed';
     protected const ERROR_QUANTITY_MAX_NOT_FULFILLED = 'cart.pre.check.quantity.max.failed';
     protected const ERROR_QUANTITY_INTERVAL_NOT_FULFILLED = 'cart.pre.check.quantity.interval.failed';
+    protected const ERROR_QUANTITY_INCORRECT = 'cart.pre.check.quantity.value.failed';
 
     protected const RESTRICTION_MIN = 'min';
     protected const RESTRICTION_MAX = 'max';
@@ -51,10 +52,31 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
 
         foreach ($cartQuantityMapByGroupKey as $productGroupKey => $productQuantity) {
             $productSku = $changedSkuMapByGroupKey[$productGroupKey];
+            if (!$this->validateQuantityIsPositive($productSku, $productQuantity, $responseTransfer)) {
+                continue;
+            }
             $this->validateItem($productSku, $productQuantity, $productQuantityTransferMapBySku[$productSku], $responseTransfer);
         }
 
         return $responseTransfer;
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
+     *
+     * @return bool
+     */
+    protected function validateQuantityIsPositive(string $sku, int $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
+    {
+        if ($quantity <= 0) {
+            $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, 1, $quantity, $responseTransfer);
+
+            return false;
+        }
+
+        return true;
     }
 
     /**

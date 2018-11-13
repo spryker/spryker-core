@@ -9,8 +9,10 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +25,8 @@ use Symfony\Component\HttpFoundation\Request;
 class AddController extends AbstractController
 {
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    protected const PARAM_ID_PRODUCT = 'id-product';
+    protected const PARAM_PRICE_DIMENSION = 'price-dimension';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -38,7 +42,7 @@ class AddController extends AbstractController
         $form = $this
             ->getFactory()
             ->createProductFormAdd(
-                $dataProvider->getData(),
+                $dataProvider->getData($request->query->get(static::PARAM_PRICE_DIMENSION)),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
@@ -66,8 +70,10 @@ class AddController extends AbstractController
                     $productAbstractTransfer->getSku()
                 ));
 
-                return $this->createRedirectResponseAfterAdd($idProductAbstract);
+                return $this->createRedirectResponseAfterAdd($idProductAbstract, $request);
             } catch (CategoryUrlExistsException $exception) {
+                $this->addErrorMessage($exception->getMessage());
+            } catch (ProductAbstractExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
         }
@@ -85,16 +91,18 @@ class AddController extends AbstractController
 
     /**
      * @param int $idProductAbstract
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createRedirectResponseAfterAdd($idProductAbstract)
+    protected function createRedirectResponseAfterAdd(int $idProductAbstract, Request $request)
     {
-        return $this->redirectResponse(sprintf(
-            '/product-management/edit?%s=%d',
-            self::PARAM_ID_PRODUCT_ABSTRACT,
-            $idProductAbstract
-        ));
+        $params = $request->query->all();
+        $params[static::PARAM_ID_PRODUCT_ABSTRACT] = $idProductAbstract;
+
+        return $this->redirectResponse(
+            urldecode(Url::generate('/product-management/edit', $params)->build())
+        );
     }
 
     /**

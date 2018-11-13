@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -36,12 +37,12 @@ class SetCustomerBeforeActionPlugin extends AbstractPlugin implements Controller
 
         //workaround for customer data, most clients use session client to retrieve customer data.
         $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer((int)$user->getSurrogateIdentifier())
+            ->setIdCustomer($user->getSurrogateIdentifier() ? (int)$user->getSurrogateIdentifier() : null)
             ->setIsDirty(false)
             ->setCustomerReference($user->getNaturalIdentifier());
 
         $this->getFactory()
-            ->getSessionClient()
-            ->set('customer data', $customerTransfer);
+            ->getCustomerClient()
+            ->setCustomer($customerTransfer);
     }
 }

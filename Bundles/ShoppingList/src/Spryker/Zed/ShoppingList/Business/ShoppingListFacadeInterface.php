@@ -10,13 +10,14 @@ namespace Spryker\Zed\ShoppingList\Business;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
@@ -67,8 +68,21 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Add item to shopping list.
-     *  - Add create shopping list success message if shopping list created.
+     *  - Remove all shopping list items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Adds item to shopping list.
+     *  - Adds create shopping list success message if shopping list created.
+     *  - Fails and adds error message when quantity is lesser equal than zero.
      *
      * @api
      *
@@ -117,6 +131,7 @@ interface ShoppingListFacadeInterface
     /**
      * Specification:
      *  - Get shopping list collection by customer.
+     *  - Shopping lists blacklisted for customer will be hidden.
      *
      * @api
      *
@@ -164,6 +179,8 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
+     *  - Finds shopping list by id if exists.
+     *  - Finds or creates shopping list by name if shopping list id absent.
      *  - Push items from quote to shopping list.
      *
      * @api
@@ -190,9 +207,9 @@ interface ShoppingListFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
-    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer;
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer;
 
     /**
      * Specification:
@@ -220,7 +237,19 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Find company user shopping list permissions.
+     *  - Updates share shopping list with company business units and company users.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Finds company user shopping list permissions.
      *
      * @api
      *
@@ -229,4 +258,42 @@ interface ShoppingListFacadeInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findCompanyUserPermissions(int $idCompanyUser): PermissionCollectionTransfer;
+
+    /**
+     * Specification:
+     *  - Remove company business unit from shared shopping list.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function unShareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Remove company user relation from shared shopping lists.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function unShareCompanyUserShoppingLists(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Removes shopping list to company user relation if exists.
+     *  - Adds shopping list to company user blacklist if company user business unit has access to shopping list.
+     *  - Returns success if at least one action was executed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer;
 }
