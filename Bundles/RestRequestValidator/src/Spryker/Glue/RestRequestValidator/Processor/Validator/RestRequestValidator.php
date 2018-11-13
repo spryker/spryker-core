@@ -108,8 +108,8 @@ class RestRequestValidator implements RestRequestValidatorInterface
             $restErrorCollection->addRestError(
                 (new RestErrorMessageTransfer())
                     ->setCode(RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID)
-                    ->setStatus(Response::HTTP_BAD_REQUEST)
-                    ->setDetail($validationError->getPropertyPath() . ' => ' . $validationError->getMessage())
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setDetail(str_replace(['][', '[', ']'], ['.', '', ''], $validationError->getPropertyPath()) . ' => ' . $validationError->getMessage())
             );
         }
 

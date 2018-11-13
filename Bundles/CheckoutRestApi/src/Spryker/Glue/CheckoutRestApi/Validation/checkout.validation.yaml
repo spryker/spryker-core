@@ -24,8 +24,8 @@ checkout:
               - Collection:
                   fields:
                     salutation:
-                      - Choice:
-                          choices: [Mr, Mrs, Ms, Dr]
+                    - Choice:
+                        choices: [Mr, Mrs, Ms, Dr]
                     email:
                       - EmailConstraint
             billingAddress:

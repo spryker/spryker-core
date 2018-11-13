@@ -49,6 +49,13 @@ class AddressValidator
         ],
         'iso2Code' => [
             'NotBlank',
+            'Choice' => [
+                'choices' =>
+                    [
+                        'DE',
+                        'AT',
+                    ],
+            ],
         ],
     ];
     protected const CONSTRAINT_PARAMETERS = [
