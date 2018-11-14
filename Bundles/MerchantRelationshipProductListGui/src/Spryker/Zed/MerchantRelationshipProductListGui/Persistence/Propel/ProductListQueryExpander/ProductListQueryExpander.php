@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantRelationshipProductListGui\Persistance\Propel\ProductListQueryExpander;
+namespace Spryker\Zed\MerchantRelationshipProductListGui\Persistence\Propel\ProductListQueryExpander;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
@@ -14,7 +14,7 @@ use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\MerchantRelationshipProductListGui\Persistance\MerchantRelationshipProductListGuiRepositoryInterface;
+use Spryker\Zed\MerchantRelationshipProductListGui\Persistence\MerchantRelationshipProductListGuiRepositoryInterface;
 
 class ProductListQueryExpander implements ProductListQueryExpanderInterface
 {

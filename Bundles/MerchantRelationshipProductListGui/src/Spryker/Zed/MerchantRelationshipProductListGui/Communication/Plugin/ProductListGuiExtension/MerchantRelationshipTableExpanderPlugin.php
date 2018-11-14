@@ -13,7 +13,7 @@ use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantRelationshipProductListGui\Persistance\MerchantRelationshipProductListGuiRepositoryInterface;
+use Spryker\Zed\MerchantRelationshipProductListGui\Persistence\MerchantRelationshipProductListGuiRepositoryInterface;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableHeaderExpanderPluginInterface;
@@ -64,7 +64,7 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
     {
         return $this
             ->getFactory()
-            ->getProductListQueryExpander()
+            ->createProductListQueryExpander()
             ->buildProductListMerchantQueryCriteria($queryCriteriaTransfer);
     }
 

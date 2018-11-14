@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantRelationshipProductListGui\Persistance\Propel\ProductListQueryExpander;
+namespace Spryker\Zed\MerchantRelationshipProductListGui\Persistence\Propel\ProductListQueryExpander;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 

@@ -12,8 +12,8 @@ use Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\Me
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Form\MerchantRelationshipChoiceFormType;
 use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface;
 use Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiDependencyProvider;
-use Spryker\Zed\MerchantRelationshipProductListGui\Persistance\Propel\ProductListQueryExpander\ProductListQueryExpander;
-use Spryker\Zed\MerchantRelationshipProductListGui\Persistance\Propel\ProductListQueryExpander\ProductListQueryExpanderInterface;
+use Spryker\Zed\MerchantRelationshipProductListGui\Persistence\Propel\ProductListQueryExpander\ProductListQueryExpander;
+use Spryker\Zed\MerchantRelationshipProductListGui\Persistence\Propel\ProductListQueryExpander\ProductListQueryExpanderInterface;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiConfig getConfig()
@@ -45,9 +45,9 @@ class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Persistance\Propel\ProductListQueryExpander\ProductListQueryExpanderInterface
+     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Persistence\Propel\ProductListQueryExpander\ProductListQueryExpanderInterface
      */
-    public function getProductListQueryExpander(): ProductListQueryExpanderInterface
+    public function createProductListQueryExpander(): ProductListQueryExpanderInterface
     {
         return new ProductListQueryExpander();
     }
