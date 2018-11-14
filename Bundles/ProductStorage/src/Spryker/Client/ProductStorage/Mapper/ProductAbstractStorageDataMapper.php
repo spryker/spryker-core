@@ -9,13 +9,14 @@ namespace Spryker\Client\ProductStorage\Mapper;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
+use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteViewExpanderPluginInterface;
 
-class ProductStorageDataMapper implements ProductStorageDataMapperInterface
+class ProductAbstractStorageDataMapper implements ProductStorageDataMapperInterface
 {
     /**
      * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
-    protected $productStorageExpanderPlugins;
+    protected $productAbstractStorageExpanderPlugins;
 
     /**
      * @var \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface
@@ -30,7 +31,7 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
         array $storageProductExpanderPlugins,
         ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
     ) {
-        $this->productStorageExpanderPlugins = $storageProductExpanderPlugins;
+        $this->productAbstractStorageExpanderPlugins = $storageProductExpanderPlugins;
         $this->productAbstractVariantsRestrictionFilter = $productAbstractVariantsRestrictionFilter;
     }
 
@@ -47,7 +48,10 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
         $productViewTransfer = $this->createProductViewTransfer($productStorageData);
         $productViewTransfer->setSelectedAttributes($selectedAttributes);
 
-        foreach ($this->productStorageExpanderPlugins as $productViewExpanderPlugin) {
+        foreach ($this->productAbstractStorageExpanderPlugins as $productViewExpanderPlugin) {
+            if ($productViewExpanderPlugin instanceof ProductConcreteViewExpanderPluginInterface) {
+                continue;
+            }
             $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer($productViewTransfer, $productStorageData, $locale);
         }
 

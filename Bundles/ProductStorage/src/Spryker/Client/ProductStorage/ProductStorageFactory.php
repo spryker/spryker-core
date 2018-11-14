@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
+use Spryker\Client\ProductStorage\Mapper\ProductAbstractStorageDataMapper;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapper;
 use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
 use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader;
@@ -83,8 +84,8 @@ class ProductStorageFactory extends AbstractFactory
      */
     public function createProductAbstractStorageDataMapper()
     {
-        return new ProductStorageDataMapper(
-            $this->getStorageProductAbstractExpanderPlugins(),
+        return new ProductAbstractStorageDataMapper(
+            $this->getStorageProductExpanderPlugins(),
             $this->createProductAbstractAttributeMapRestrictionFilter()
         );
     }
@@ -137,13 +138,5 @@ class ProductStorageFactory extends AbstractFactory
     public function getProductConcreteRestrictionPlugins(): array
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_CONCRETE_RESTRICTION);
-    }
-
-    /**
-     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
-     */
-    public function getStorageProductAbstractExpanderPlugins()
-    {
-        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGIN_PRODUCT_ABSTRACT_VIEW_EXPANDERS);
     }
 }

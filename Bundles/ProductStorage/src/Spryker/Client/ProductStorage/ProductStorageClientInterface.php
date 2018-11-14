@@ -120,7 +120,8 @@ interface ProductStorageClientInterface
     /**
      * Specification:
      * - Maps raw product data from Storage to StorageProductTransfer for the current locale.
-     * - Executes a stack of StorageProductExpanderPluginInterface plugins on ProductViewTransfer.
+     * - Executes a stack of ProductViewExpanderPluginInterface plugins but not ProductConcreteViewExpanderPluginInterface
+     *   on ProductViewTransfer.
      *
      * @api
      *
