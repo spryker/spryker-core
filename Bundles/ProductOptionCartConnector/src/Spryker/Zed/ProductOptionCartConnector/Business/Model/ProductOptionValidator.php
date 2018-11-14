@@ -69,7 +69,7 @@ class ProductOptionValidator implements ProductOptionValidatorInterface
             return static::$idProductOptionCache[$idProductOptionValue];
         }
 
-        static::$idProductOptionCache[$idProductOptionValue] = $this->productOptionFacade->checkProductOptionValueExistence($idProductOptionValue);
+        static::$idProductOptionCache[$idProductOptionValue] = $this->productOptionFacade->checkProductOptionGroupExistenceByProductOptionValueId($idProductOptionValue);
 
         return static::$idProductOptionCache[$idProductOptionValue];
     }

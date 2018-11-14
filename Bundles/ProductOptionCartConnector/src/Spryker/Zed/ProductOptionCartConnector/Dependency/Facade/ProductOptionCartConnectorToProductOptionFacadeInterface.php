@@ -29,4 +29,11 @@ interface ProductOptionCartConnectorToProductOptionFacadeInterface
      * @return bool
      */
     public function checkProductOptionValueExistence(int $idProductOptionValue): bool;
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool;
 }

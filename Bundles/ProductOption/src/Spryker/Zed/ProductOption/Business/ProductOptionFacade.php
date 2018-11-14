@@ -299,4 +299,20 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
             ->createProductOptionValueReader()
             ->checkProductOptionValueExistence($idProductOptionValue);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool
+    {
+        return $this->getFactory()
+            ->createProductOptionGroupReader()
+            ->checkProductOptionGroupExistenceByProductOptionValueId($idProductOptionValue);
+    }
 }
