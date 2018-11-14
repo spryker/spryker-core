@@ -72,7 +72,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
     /**
      * Specification:
      *  - Publish merchant relationship prices for product abstracts.
-     *  - Uses the given IDs of the parent table.
+     *  - Uses the given IDs of the `spy_price_product_merchant_relationship` table.
      *  - Merges created or updated prices to the existing ones.
      *
      * @api
@@ -100,7 +100,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
     /**
      * Specification:
      *  - Publish merchant relationship prices for product concretes.
-     *  - Uses the given IDs of the parent table.
+     *  - Uses the given IDs of the `spy_price_product_merchant_relationship` table.
      *  - Merges created or updated prices to the existing ones.
      *
      * @api

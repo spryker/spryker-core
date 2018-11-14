@@ -17,8 +17,8 @@ interface PriceGrouperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
      */
-    public function groupAndMergePricesData(
+    public function groupPricesData(
         PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
-        array $pricesData
+        array $pricesData = []
     ): PriceProductMerchantRelationshipStorageTransfer;
 }

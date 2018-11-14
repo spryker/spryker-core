@@ -98,30 +98,32 @@ class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRela
         $existingStorageEntities = $this->mapStorageEntitiesByPriceKey($existingStorageEntities);
 
         foreach ($priceProductMerchantRelationshipStorageTransfers as $priceProductMerchantRelationshipStorageTransfer) {
-            $existingPriceProductConcreteMerchantRelationshipStorageEntity = $existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()] ?? null;
-
-            $priceProductMerchantRelationshipStorageTransfer = $this->priceGrouper->groupAndMergePricesData(
+            $priceProductMerchantRelationshipStorageTransfer = $this->groupPrices(
                 $priceProductMerchantRelationshipStorageTransfer,
-                $mergePrices && $existingPriceProductConcreteMerchantRelationshipStorageEntity ? $existingPriceProductConcreteMerchantRelationshipStorageEntity->getData() : []
+                $existingStorageEntities,
+                $mergePrices
             );
 
-            if (empty($priceProductMerchantRelationshipStorageTransfer->getPrices())) { // Skip it, should be deleted
+            // Skip if no prices, the price entity will be deleted at the end
+            if (empty($priceProductMerchantRelationshipStorageTransfer->getPrices())) {
                 continue;
             }
 
-            unset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]);
-            if ($existingPriceProductConcreteMerchantRelationshipStorageEntity) {
+            if (isset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()])) {
                 $this->priceProductMerchantRelationshipStorageEntityManager->updatePriceProductConcrete(
                     $priceProductMerchantRelationshipStorageTransfer,
-                    $existingPriceProductConcreteMerchantRelationshipStorageEntity
+                    $existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]
                 );
 
+                unset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]);
                 continue;
             }
 
             $this->priceProductMerchantRelationshipStorageEntityManager->createPriceProductConcrete(
                 $priceProductMerchantRelationshipStorageTransfer
             );
+
+            unset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]);
         }
 
         // Delete the rest of the entities
@@ -142,5 +144,44 @@ class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRela
         }
 
         return $mappedPriceProductConcreteMerchantRelationshipStorageEntities;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[] $existingStorageEntities
+     * @param bool $mergePrices
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
+     */
+    protected function groupPrices(
+        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
+        array $existingStorageEntities = [],
+        bool $mergePrices = false
+    ): PriceProductMerchantRelationshipStorageTransfer {
+        $priceProductMerchantRelationshipStorageTransfer = $this->priceGrouper->groupPricesData($priceProductMerchantRelationshipStorageTransfer);
+
+        if (!$mergePrices) {
+            return $priceProductMerchantRelationshipStorageTransfer;
+        }
+
+        return $this->priceGrouper->groupPricesData(
+            $priceProductMerchantRelationshipStorageTransfer,
+            $this->getExistingPricesDataForPriceKey($existingStorageEntities, $priceProductMerchantRelationshipStorageTransfer->getPriceKey())
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[] $existingStorageEntities
+     * @param string $priceKey
+     *
+     * @return array
+     */
+    protected function getExistingPricesDataForPriceKey(array $existingStorageEntities, string $priceKey): array
+    {
+        if (isset($existingStorageEntities[$priceKey])) {
+            return $existingStorageEntities[$priceKey]->getData();
+        }
+
+        return [];
     }
 }

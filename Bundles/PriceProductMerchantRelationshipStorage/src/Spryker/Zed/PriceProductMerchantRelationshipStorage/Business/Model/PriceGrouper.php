@@ -20,10 +20,31 @@ class PriceGrouper implements PriceGrouperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
      */
-    public function groupAndMergePricesData(
+    public function groupPricesData(
         PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
         array $existingPricesData = []
     ): PriceProductMerchantRelationshipStorageTransfer {
+        $groupedPrices = $this->groupPrices($priceProductMerchantRelationshipStorageTransfer);
+
+        if (isset($existingPricesData[static::PRICES])) {
+            $groupedPrices = array_replace_recursive($existingPricesData[static::PRICES], $groupedPrices);
+        }
+
+        $groupedPrices = $this->arrayFilterRecursive($groupedPrices, PriceProductMerchantRelationshipStorageConfig::PRICE_DATA);
+
+        return $priceProductMerchantRelationshipStorageTransfer->setPrices(
+            $this->formatData($groupedPrices)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+     *
+     * @return array
+     */
+    protected function groupPrices(
+        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+    ): array {
         $groupedPrices = [];
         foreach ($priceProductMerchantRelationshipStorageTransfer->getUngroupedPrices() as $priceTransfer) {
             if ($priceTransfer->getGrossPrice() || $priceTransfer->getNetPrice()) {
@@ -34,16 +55,7 @@ class PriceGrouper implements PriceGrouperInterface
             $groupedPrices[$priceTransfer->getIdMerchantRelationship()][$priceTransfer->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_MODE_NET][$priceTransfer->getPriceType()] = $priceTransfer->getNetPrice();
         }
 
-        $groupedPrices = array_replace_recursive($existingPricesData[static::PRICES] ?? [], $groupedPrices);
-        $groupedPrices = $this->arrayFilterRecursive($groupedPrices, PriceProductMerchantRelationshipStorageConfig::PRICE_DATA);
-
-        if (!empty($groupedPrices)) {
-            $priceProductMerchantRelationshipStorageTransfer->setPrices([
-                static::PRICES => $groupedPrices,
-            ]);
-        }
-
-        return $priceProductMerchantRelationshipStorageTransfer;
+        return $groupedPrices;
     }
 
     /**
@@ -73,5 +85,21 @@ class PriceGrouper implements PriceGrouperInterface
         }
 
         return $array;
+    }
+
+    /**
+     * @param array $prices
+     *
+     * @return array
+     */
+    protected function formatData(array $prices): array
+    {
+        if (!empty($prices)) {
+            return [
+                static::PRICES => $prices,
+            ];
+        }
+
+        return [];
     }
 }
