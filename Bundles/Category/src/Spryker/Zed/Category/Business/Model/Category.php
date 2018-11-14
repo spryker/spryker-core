@@ -67,6 +67,11 @@ class Category
     protected $eventFacade;
 
     /**
+     * @var \Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface
+     */
+    protected $categoryPluginExecutor;
+
+    /**
      * @param \Spryker\Zed\Category\Business\Model\Category\CategoryInterface $category
      * @param \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface $categoryNode
      * @param \Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface $categoryAttribute
@@ -75,6 +80,7 @@ class Category
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[] $deletePlugins
      * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $updatePlugins
+     * @param \Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface $categoryPluginExecutor
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface|null $eventFacade
      */
     public function __construct(
@@ -86,6 +92,7 @@ class Category
         CategoryQueryContainerInterface $queryContainer,
         array $deletePlugins,
         array $updatePlugins,
+        CategoryPluginExecutorInterface $categoryPluginExecutor,
         ?CategoryToEventInterface $eventFacade = null
     ) {
         $this->category = $category;
@@ -96,6 +103,7 @@ class Category
         $this->queryContainer = $queryContainer;
         $this->deletePlugins = $deletePlugins;
         $this->updatePlugins = $updatePlugins;
+        $this->categoryPluginExecutor = $categoryPluginExecutor;
         $this->eventFacade = $eventFacade;
     }
 
@@ -112,6 +120,8 @@ class Category
         $categoryTransfer = $this->categoryNode->read($idCategory, $categoryTransfer);
         $categoryTransfer = $this->categoryAttribute->read($idCategory, $categoryTransfer);
         $categoryTransfer = $this->categoryExtraParents->read($idCategory, $categoryTransfer);
+
+        $categoryTransfer = $this->categoryPluginExecutor->executePostReadPlugins($categoryTransfer);
 
         return $categoryTransfer;
     }
@@ -136,6 +146,8 @@ class Category
 
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_CREATE, $categoryTransfer);
 
+        $this->categoryPluginExecutor->executePostCreatePlugins($categoryTransfer);
+
         $this->queryContainer->getConnection()->commit();
     }
 
@@ -159,6 +171,8 @@ class Category
         $this->categoryExtraParents->update($categoryTransfer);
 
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_UPDATE, $categoryTransfer);
+
+        $this->categoryPluginExecutor->executePostUpdatePlugins($categoryTransfer);
 
         $this->queryContainer->getConnection()->commit();
     }

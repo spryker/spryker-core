@@ -21,6 +21,8 @@ class CategoryEditDataProvider
 {
     public const DATA_CLASS = 'data_class';
 
+    public const DEFAULT_LOCALE = 'default';
+
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -56,9 +58,7 @@ class CategoryEditDataProvider
      */
     public function getData()
     {
-        $categoryTransfer = $this->buildCategoryTransfer();
-
-        return $categoryTransfer;
+        return $this->buildCategoryTransfer();
     }
 
     /**

@@ -32,6 +32,7 @@ class EditController extends AbstractController
         $idCategory = $request->query->getInt(CategoryConstants::PARAM_ID_CATEGORY);
 
         $categoryTransfer = $this->getFacade()->findCategoryById($idCategory);
+        $localeProvider = $this->getFactory()->createLocaleProvider();
 
         if ($categoryTransfer === null) {
             $this->addErrorMessage(sprintf('Category with id %s doesn\'t exist', $request->get('id-category')));
@@ -61,6 +62,8 @@ class EditController extends AbstractController
             'categoryForm' => $form->createView(),
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
             'idCategory' => $this->castId($request->query->get(CategoryConstants::PARAM_ID_CATEGORY)),
+            'localeCollection' => $localeProvider->getLocaleCollection(),
+            'categoryFormEditTabs' => $this->getFactory()->createCategoryFormEditTabs()->createView(),
         ]);
     }
 

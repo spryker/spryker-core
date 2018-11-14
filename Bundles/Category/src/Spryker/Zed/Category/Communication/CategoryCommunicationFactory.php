@@ -13,10 +13,13 @@ use Spryker\Zed\Category\Communication\Form\CategoryType;
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryCreateDataProvider;
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryDeleteDataProvider;
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryEditDataProvider;
+use Spryker\Zed\Category\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\Category\Communication\Form\DeleteType;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
+use Spryker\Zed\Category\Communication\Tabs\CategoryFormAddTabs;
+use Spryker\Zed\Category\Communication\Tabs\CategoryFormEditTabs;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -122,6 +125,14 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Category\Communication\Form\DataProvider\LocaleProvider
+     */
+    public function createLocaleProvider(): LocaleProvider
+    {
+        return new LocaleProvider($this->getLocaleFacade());
+    }
+
+    /**
      * @param int $idCategory
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -203,5 +214,21 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     public function getCategoryFormPlugins()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_FORM_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createCategoryFormAddTabs()
+    {
+        return new CategoryFormAddTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createCategoryFormEditTabs()
+    {
+        return new CategoryFormEditTabs();
     }
 }

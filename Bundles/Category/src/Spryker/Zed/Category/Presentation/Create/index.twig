@@ -4,6 +4,11 @@
     {% set widget_title = 'Create category' | trans %}
 {% endif %}
 
+{% form_theme categoryForm with [
+    '@Category/_partials/category-image-set-theme.twig',
+    '@Category/_partials/category-image-collection-theme.twig',
+]%}
+
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
@@ -17,27 +22,12 @@
 
             {{ form_start(categoryForm) }}
                 {% do categoryForm.localized_attributes.setRendered %}
-                {{ form_widget(categoryForm) }}
-
-                <hr />
-                <p><strong>{{ 'Translations' | trans }}</strong></p>
-
-                {% for localizedAttributes in categoryForm.localized_attributes %}
-                    {% set localeName = localizedAttributes.vars.value.locale.localeName %}
-
-                    {% embed '@Gui/Partials/localized-ibox.twig' with {
-                        localeName: localeName,
-                        collapsed: false
-                    } %}
-                        {% block content %}
-                            {{ form_widget(localizedAttributes) }}
-                        {% endblock %}
-                    {% endembed %}
-                {% endfor %}
-
-                <hr />
-
-                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Create' | trans }}"/>
+                {% do categoryForm.formImageSets.setRendered %}
+            {{ tabs(categoryFormCreateTabs, {
+                'categoryForm': categoryForm,
+                'currentLocale': currentLocale,
+                'localeCollection': localeCollection
+            }) }}
             {{ form_end(categoryForm) }}
 
         {% endblock %}
