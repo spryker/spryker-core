@@ -21,7 +21,7 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "suggested": {
+  "suggest": {
     "spryker/merchant-relationship-product-list-gui": "If you want to use MerchantRelationshipProductListGui plugins. Minimum required version: ^1.0.0"
   },
   "autoload": {
