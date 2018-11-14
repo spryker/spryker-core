@@ -98,26 +98,30 @@ class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRela
         $existingStorageEntities = $this->mapStorageEntitiesByPriceKey($existingStorageEntities);
 
         foreach ($priceProductMerchantRelationshipStorageTransfers as $priceProductMerchantRelationshipStorageTransfer) {
-            $priceProductMerchantRelationshipStorageTransfer = $this->priceGrouper->groupPrices(
-                $priceProductMerchantRelationshipStorageTransfer
+            $existingPriceProductConcreteMerchantRelationshipStorageEntity = $existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()] ?? null;
+
+            $priceProductMerchantRelationshipStorageTransfer = $this->priceGrouper->groupAndMergePricesData(
+                $priceProductMerchantRelationshipStorageTransfer,
+                $mergePrices && $existingPriceProductConcreteMerchantRelationshipStorageEntity ? $existingPriceProductConcreteMerchantRelationshipStorageEntity->getData() : []
             );
 
-            if (isset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()])) {
+            if (empty($priceProductMerchantRelationshipStorageTransfer->getPrices())) { // Skip it, should be deleted
+                continue;
+            }
+
+            unset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]);
+            if ($existingPriceProductConcreteMerchantRelationshipStorageEntity) {
                 $this->priceProductMerchantRelationshipStorageEntityManager->updatePriceProductConcrete(
                     $priceProductMerchantRelationshipStorageTransfer,
-                    $existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()],
-                    $mergePrices
+                    $existingPriceProductConcreteMerchantRelationshipStorageEntity
                 );
 
-                unset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]);
                 continue;
             }
 
             $this->priceProductMerchantRelationshipStorageEntityManager->createPriceProductConcrete(
                 $priceProductMerchantRelationshipStorageTransfer
             );
-
-            unset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]);
         }
 
         // Delete the rest of the entities

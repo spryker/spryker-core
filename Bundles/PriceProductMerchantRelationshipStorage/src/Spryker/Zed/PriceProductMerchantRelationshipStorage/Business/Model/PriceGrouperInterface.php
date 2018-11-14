@@ -13,10 +13,12 @@ interface PriceGrouperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+     * @param array $pricesData
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
      */
-    public function groupPrices(
-        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+    public function groupAndMergePricesData(
+        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
+        array $pricesData
     ): PriceProductMerchantRelationshipStorageTransfer;
 }

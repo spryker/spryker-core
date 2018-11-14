@@ -12,29 +12,66 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRela
 
 class PriceGrouper implements PriceGrouperInterface
 {
+    protected const PRICES = 'prices';
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+     * @param array $existingPricesData
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
      */
-    public function groupPrices(
-        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+    public function groupAndMergePricesData(
+        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
+        array $existingPricesData = []
     ): PriceProductMerchantRelationshipStorageTransfer {
         $groupedPrices = [];
-        foreach ($priceProductMerchantRelationshipStorageTransfer->getUngroupedPrices() as $price) {
-            $groupedPrices[$price->getIdMerchantRelationship()][$price->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_DATA] = $price->getPriceData();
-
-            if ($price->getGrossPrice()) {
-                $groupedPrices[$price->getIdMerchantRelationship()][$price->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_MODE_GROSS][$price->getPriceType()] = $price->getGrossPrice();
+        foreach ($priceProductMerchantRelationshipStorageTransfer->getUngroupedPrices() as $priceTransfer) {
+            if ($priceTransfer->getGrossPrice() || $priceTransfer->getNetPrice()) {
+                $groupedPrices[$priceTransfer->getIdMerchantRelationship()][$priceTransfer->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_DATA] = $priceTransfer->getPriceData();
             }
 
-            if ($price->getNetPrice()) {
-                $groupedPrices[$price->getIdMerchantRelationship()][$price->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_MODE_NET][$price->getPriceType()] = $price->getNetPrice();
+            $groupedPrices[$priceTransfer->getIdMerchantRelationship()][$priceTransfer->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_MODE_GROSS][$priceTransfer->getPriceType()] = $priceTransfer->getGrossPrice();
+            $groupedPrices[$priceTransfer->getIdMerchantRelationship()][$priceTransfer->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_MODE_NET][$priceTransfer->getPriceType()] = $priceTransfer->getNetPrice();
+        }
+
+        $groupedPrices = array_replace_recursive($existingPricesData[static::PRICES] ?? [], $groupedPrices);
+        $groupedPrices = $this->arrayFilterRecursive($groupedPrices, PriceProductMerchantRelationshipStorageConfig::PRICE_DATA);
+
+        if (!empty($groupedPrices)) {
+            $priceProductMerchantRelationshipStorageTransfer->setPrices([
+                static::PRICES => $groupedPrices,
+            ]);
+        }
+
+        return $priceProductMerchantRelationshipStorageTransfer;
+    }
+
+    /**
+     * @param array $array
+     * @param string $excludeKey
+     *
+     * @return array
+     */
+    protected function arrayFilterRecursive(array $array, string $excludeKey): array
+    {
+        $array = array_filter($array, function ($v, $k) use ($excludeKey) {
+            if ($k === $excludeKey) {
+                return true;
+            }
+
+            return !empty($v);
+        }, ARRAY_FILTER_USE_BOTH);
+
+        foreach ($array as $key => &$value) {
+            if (is_array($value)) {
+                $value = $this->arrayFilterRecursive($value, $excludeKey);
+
+                if (empty($value) || $value === [$excludeKey => null]) {
+                    unset($array[$key]);
+                }
             }
         }
 
-        $priceProductMerchantRelationshipStorageTransfer->setPrices($groupedPrices);
-
-        return $priceProductMerchantRelationshipStorageTransfer;
+        return $array;
     }
 }

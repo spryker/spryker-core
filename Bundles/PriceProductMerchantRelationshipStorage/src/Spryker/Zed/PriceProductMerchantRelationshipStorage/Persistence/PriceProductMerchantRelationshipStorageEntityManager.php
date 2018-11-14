@@ -17,26 +17,18 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntityManager implements PriceProductMerchantRelationshipStorageEntityManagerInterface
 {
-    protected const PRICES = 'prices';
-
     /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage $priceProductAbstractMerchantRelationshipStorageEntity
-     * @param bool $mergePrices
      *
      * @return void
      */
     public function updatePriceProductAbstract(
         PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
-        SpyPriceProductAbstractMerchantRelationshipStorage $priceProductAbstractMerchantRelationshipStorageEntity,
-        bool $mergePrices
+        SpyPriceProductAbstractMerchantRelationshipStorage $priceProductAbstractMerchantRelationshipStorageEntity
     ): void {
-        if ($mergePrices) {
-            $priceProductMerchantRelationshipStorageTransfer = $this->mergePricesData($priceProductMerchantRelationshipStorageTransfer, $priceProductAbstractMerchantRelationshipStorageEntity->getData());
-        }
-
         $priceProductAbstractMerchantRelationshipStorageEntity
-            ->setData($this->formatData($priceProductMerchantRelationshipStorageTransfer))
+            ->setData($priceProductMerchantRelationshipStorageTransfer->getPrices())
             ->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue())
             ->save();
     }
@@ -53,7 +45,7 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
             ->setFkProductAbstract($priceProductMerchantRelationshipStorageTransfer->getIdProduct())
             ->setFkCompanyBusinessUnit($priceProductMerchantRelationshipStorageTransfer->getIdCompanyBusinessUnit())
             ->setPriceKey($priceProductMerchantRelationshipStorageTransfer->getPriceKey())
-            ->setData($this->formatData($priceProductMerchantRelationshipStorageTransfer))
+            ->setData($priceProductMerchantRelationshipStorageTransfer->getPrices())
             ->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue())
             ->save();
     }
@@ -74,21 +66,15 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage $priceProductConcreteMerchantRelationshipStorageEntity
-     * @param bool $mergePrices
      *
      * @return void
      */
     public function updatePriceProductConcrete(
         PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
-        SpyPriceProductConcreteMerchantRelationshipStorage $priceProductConcreteMerchantRelationshipStorageEntity,
-        bool $mergePrices
+        SpyPriceProductConcreteMerchantRelationshipStorage $priceProductConcreteMerchantRelationshipStorageEntity
     ): void {
-        if ($mergePrices) {
-            $priceProductMerchantRelationshipStorageTransfer = $this->mergePricesData($priceProductMerchantRelationshipStorageTransfer, $priceProductConcreteMerchantRelationshipStorageEntity->getData());
-        }
-
         $priceProductConcreteMerchantRelationshipStorageEntity
-            ->setData($this->formatData($priceProductMerchantRelationshipStorageTransfer))
+            ->setData($priceProductMerchantRelationshipStorageTransfer->getPrices())
             ->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue())
             ->save();
     }
@@ -105,7 +91,7 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
             ->setFkProduct($priceProductMerchantRelationshipStorageTransfer->getIdProduct())
             ->setFkCompanyBusinessUnit($priceProductMerchantRelationshipStorageTransfer->getIdCompanyBusinessUnit())
             ->setPriceKey($priceProductMerchantRelationshipStorageTransfer->getPriceKey())
-            ->setData($this->formatData($priceProductMerchantRelationshipStorageTransfer))
+            ->setData($priceProductMerchantRelationshipStorageTransfer->getPrices())
             ->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue())
             ->save();
     }
@@ -121,32 +107,5 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
         foreach ($priceProductConcreteMerchantRelationshipStorageEntities as $priceProductConcreteMerchantRelationshipStorageEntity) {
             $priceProductConcreteMerchantRelationshipStorageEntity->delete();
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
-     *
-     * @return array
-     */
-    protected function formatData(PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer): array
-    {
-        return [
-            static::PRICES => $priceProductMerchantRelationshipStorageTransfer->getPrices(),
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
-     * @param array $pricesData
-     *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
-     */
-    protected function mergePricesData(
-        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
-        array $pricesData
-    ): PriceProductMerchantRelationshipStorageTransfer {
-        return $priceProductMerchantRelationshipStorageTransfer->setPrices(
-            array_replace_recursive($pricesData[static::PRICES], $priceProductMerchantRelationshipStorageTransfer->getPrices())
-        );
     }
 }
