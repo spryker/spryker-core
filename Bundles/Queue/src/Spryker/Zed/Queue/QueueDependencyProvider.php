@@ -10,6 +10,9 @@ namespace Spryker\Zed\Queue;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Queue\QueueConfig getConfig()
+ */
 class QueueDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_QUEUE = 'queue client';

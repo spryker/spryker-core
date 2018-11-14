@@ -17,6 +17,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * @method \Spryker\Zed\ZedRequest\Communication\ZedRequestCommunicationFactory getFactory()
  * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
+ * @method \Spryker\Zed\ZedRequest\ZedRequestConfig getConfig()
  */
 class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProviderInterface
 {

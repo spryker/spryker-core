@@ -17,6 +17,9 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\Mer
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToMoneyFacadeBridge;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToStoreFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig getConfig()
+ */
 class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
