@@ -19,7 +19,6 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
-    "spryker/availability-storage": "*",
     "spryker/checkout": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"

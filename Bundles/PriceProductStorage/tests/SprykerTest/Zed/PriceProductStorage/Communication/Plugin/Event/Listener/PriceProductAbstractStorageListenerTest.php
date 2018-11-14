@@ -40,6 +40,7 @@ use SprykerTest\Zed\PriceProductStorage\PriceProductStorageConfigMock;
  */
 class PriceProductAbstractStorageListenerTest extends Unit
 {
+    protected const EXPECTED_PRICES_COUNT = 1;
     /**
      * @var \SprykerTest\Zed\PriceProductStorage\PriceProductStorageCommunicationTester
      */
@@ -203,6 +204,6 @@ class PriceProductAbstractStorageListenerTest extends Unit
         $spyPriceProductAbstractStorage = SpyPriceProductAbstractStorageQuery::create()->orderByIdPriceProductAbstractStorage()->findOneByFkProductAbstract($this->priceProductTransfer->getIdProductAbstract());
         $this->assertNotNull($spyPriceProductAbstractStorage);
         $data = $spyPriceProductAbstractStorage->getData();
-        $this->assertSame(1, count($data['prices']));
+        $this->assertSame(static::EXPECTED_PRICES_COUNT, count($data['prices']));
     }
 }

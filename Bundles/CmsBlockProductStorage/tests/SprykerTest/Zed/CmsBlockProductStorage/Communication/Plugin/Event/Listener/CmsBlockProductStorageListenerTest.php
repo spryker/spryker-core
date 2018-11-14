@@ -35,6 +35,7 @@ use SprykerTest\Zed\CmsBlockProductStorage\CmsBlockProductStorageConfigMock;
  */
 class CmsBlockProductStorageListenerTest extends Unit
 {
+    protected const EXPECTED_BLOCK_NAME_COUNT = 1;
     /**
      * @var \SprykerTest\Zed\CmsBlockProductStorage\CmsBlockProductStorageCommunicationTester
      */
@@ -137,6 +138,6 @@ class CmsBlockProductStorageListenerTest extends Unit
         $cmsBlockProductStorage = SpyCmsBlockProductStorageQuery::create()->orderByIdCmsBlockProductStorage()->findOneByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
         $this->assertNotNull($cmsBlockProductStorage);
         $data = $cmsBlockProductStorage->getData();
-        $this->assertSame(1, count($data['block_names']));
+        $this->assertSame(static::EXPECTED_BLOCK_NAME_COUNT, count($data['block_names']));
     }
 }
