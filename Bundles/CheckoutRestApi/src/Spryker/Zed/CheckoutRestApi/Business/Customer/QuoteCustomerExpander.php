@@ -68,13 +68,17 @@ class QuoteCustomerExpander implements QuoteCustomerExpanderInterface
      */
     protected function expandQuoteWithCustomerAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
     {
-        $quoteTransfer->setBillingAddress(
-            $this->getAddressByUuid($quoteTransfer->getBillingAddress(), $customerTransfer)
-        );
+        if ($quoteTransfer->getBillingAddress() !== null) {
+            $quoteTransfer->setBillingAddress(
+                $this->getAddressByUuid($quoteTransfer->getBillingAddress(), $customerTransfer)
+            );
+        }
 
-        $quoteTransfer->setShippingAddress(
-            $this->getAddressByUuid($quoteTransfer->getShippingAddress(), $customerTransfer)
-        );
+        if ($quoteTransfer->getShippingAddress() !== null) {
+            $quoteTransfer->setShippingAddress(
+                $this->getAddressByUuid($quoteTransfer->getShippingAddress(), $customerTransfer)
+            );
+        }
 
         return $quoteTransfer;
     }

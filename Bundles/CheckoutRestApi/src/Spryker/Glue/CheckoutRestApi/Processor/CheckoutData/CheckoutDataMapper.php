@@ -154,15 +154,19 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): QuoteTransfer {
         $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
-        $billingAddress = (new AddressTransfer())
-            ->fromArray($restQuoteRequestTransfer->getBillingAddress()->toArray(), true)
-            ->setUuid($restQuoteRequestTransfer->getBillingAddress()->getId());
-        $quoteTransfer->setBillingAddress($billingAddress);
+        if ($restQuoteRequestTransfer->getBillingAddress() !== null) {
+            $billingAddress = (new AddressTransfer())
+                ->fromArray($restQuoteRequestTransfer->getBillingAddress()->toArray(), true)
+                ->setUuid($restQuoteRequestTransfer->getBillingAddress()->getId());
+            $quoteTransfer->setBillingAddress($billingAddress);
+        }
 
-        $shippingAddress = (new AddressTransfer())
-            ->fromArray($restQuoteRequestTransfer->getShippingAddress()->toArray(), true)
-            ->setUuid($restQuoteRequestTransfer->getShippingAddress()->getId());
-        $quoteTransfer->setShippingAddress($shippingAddress);
+        if ($restQuoteRequestTransfer->getShippingAddress() !== null) {
+            $shippingAddress = (new AddressTransfer())
+                ->fromArray($restQuoteRequestTransfer->getShippingAddress()->toArray(), true)
+                ->setUuid($restQuoteRequestTransfer->getShippingAddress()->getId());
+            $quoteTransfer->setShippingAddress($shippingAddress);
+        }
 
         return $quoteTransfer;
     }
