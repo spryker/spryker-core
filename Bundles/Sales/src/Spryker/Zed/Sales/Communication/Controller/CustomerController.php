@@ -14,9 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
- */
-
-/**
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  */
