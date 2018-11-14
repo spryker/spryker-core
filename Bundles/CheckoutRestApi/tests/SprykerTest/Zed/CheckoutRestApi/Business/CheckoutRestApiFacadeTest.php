@@ -34,9 +34,11 @@ use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeBri
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeBridge;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeBridge;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Payment\Business\PaymentFacade;
+use Spryker\Zed\Quote\Business\QuoteFacade;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 
 /**
@@ -179,7 +181,7 @@ class CheckoutRestApiFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCheckoutRestApiFactory(): MockObject
+    protected function initMockCheckoutRestApiFactory(): MockObject
     {
         $mockCheckoutRestApiFactory = $this->createPartialMock(
             CheckoutRestApiBusinessFactory::class,
@@ -189,14 +191,26 @@ class CheckoutRestApiFacadeTest extends Unit
                 'getCustomerFacade',
                 'getCartFacade',
                 'getCheckoutFacade',
+                'getQuoteFacade',
             ]
         );
 
         $mockCheckoutRestApiFactory = $this->addMockShipmentFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockPaymentFacade($mockCheckoutRestApiFactory);
+        $mockCheckoutRestApiFactory = $this->addMockCheckoutFacade($mockCheckoutRestApiFactory);
+        $mockCheckoutRestApiFactory = $this->addMockQuoteFacade($mockCheckoutRestApiFactory);
+
+        return $mockCheckoutRestApiFactory;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getMockCheckoutRestApiFactory(): MockObject
+    {
+        $mockCheckoutRestApiFactory = $this->initMockCheckoutRestApiFactory();
         $mockCheckoutRestApiFactory = $this->addMockCustomerFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockCartFacade($mockCheckoutRestApiFactory);
-        $mockCheckoutRestApiFactory = $this->addMockCheckoutFacade($mockCheckoutRestApiFactory);
 
         return $mockCheckoutRestApiFactory;
     }
@@ -206,22 +220,9 @@ class CheckoutRestApiFacadeTest extends Unit
      */
     protected function getMockCheckoutRestApiFactoryWithFailingValidation(): MockObject
     {
-        $mockCheckoutRestApiFactory = $this->createPartialMock(
-            CheckoutRestApiBusinessFactory::class,
-            [
-                'getShipmentFacade',
-                'getPaymentFacade',
-                'getCustomerFacade',
-                'getCartFacade',
-                'getCheckoutFacade',
-            ]
-        );
-
-        $mockCheckoutRestApiFactory = $this->addMockShipmentFacade($mockCheckoutRestApiFactory);
-        $mockCheckoutRestApiFactory = $this->addMockPaymentFacade($mockCheckoutRestApiFactory);
+        $mockCheckoutRestApiFactory = $this->initMockCheckoutRestApiFactory();
         $mockCheckoutRestApiFactory = $this->addMockCustomerFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockCartFacadeWithFailingValidation($mockCheckoutRestApiFactory);
-        $mockCheckoutRestApiFactory = $this->addMockCheckoutFacade($mockCheckoutRestApiFactory);
 
         return $mockCheckoutRestApiFactory;
     }
@@ -231,22 +232,9 @@ class CheckoutRestApiFacadeTest extends Unit
      */
     protected function getMockCheckoutRestApiFactoryForGuest(): MockObject
     {
-        $mockCheckoutRestApiFactory = $this->createPartialMock(
-            CheckoutRestApiBusinessFactory::class,
-            [
-                'getShipmentFacade',
-                'getPaymentFacade',
-                'getCustomerFacade',
-                'getCartFacade',
-                'getCheckoutFacade',
-            ]
-        );
-
-        $mockCheckoutRestApiFactory = $this->addMockShipmentFacade($mockCheckoutRestApiFactory);
-        $mockCheckoutRestApiFactory = $this->addMockPaymentFacade($mockCheckoutRestApiFactory);
+        $mockCheckoutRestApiFactory = $this->initMockCheckoutRestApiFactory();
         $mockCheckoutRestApiFactory = $this->addMockCustomerFacadeForGuest($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockCartFacade($mockCheckoutRestApiFactory);
-        $mockCheckoutRestApiFactory = $this->addMockCheckoutFacade($mockCheckoutRestApiFactory);
 
         return $mockCheckoutRestApiFactory;
     }
@@ -618,5 +606,31 @@ class CheckoutRestApiFacadeTest extends Unit
         ];
 
         return (new PaymentBuilder($paymentTransferData))->build();
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function addMockQuoteFacade(MockObject $mockCheckoutRestApiFactory): MockObject
+    {
+        $mockQuoteFacade = $this->createPartialMock(
+            QuoteFacade::class,
+            ['deleteQuote']
+        );
+        $mockQuoteFacade
+            ->method('deleteQuote')
+            ->willReturn($this->createQuoteResponseTransfer());
+
+        $mockCheckoutRestApiFactory
+            ->method('getQuoteFacade')
+            ->willReturn(
+                new CheckoutRestApiToQuoteFacadeBridge(
+                    $mockQuoteFacade
+                )
+            );
+
+        return $mockCheckoutRestApiFactory;
     }
 }
