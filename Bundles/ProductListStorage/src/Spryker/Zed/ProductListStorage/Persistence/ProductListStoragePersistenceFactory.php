@@ -17,6 +17,7 @@ use Spryker\Zed\ProductListStorage\ProductListStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductListStorage\ProductListStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface getRepository()
  */
 class ProductListStoragePersistenceFactory extends AbstractPersistenceFactory
 {

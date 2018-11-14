@@ -14,6 +14,7 @@ use Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresho
 /**
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipSalesOrderThresholdFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Communication\MerchantRelationshipSalesOrderThresholdCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\MerchantRelationshipSalesOrderThresholdConfig getConfig()
  */
 class MerchantRelationshipSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin implements SalesOrderThresholdDataSourceStrategyPluginInterface
 {

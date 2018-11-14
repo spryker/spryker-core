@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\SalesReclamation\Business\SalesReclamationFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesReclamation\Communication\SalesReclamationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SalesReclamation\SalesReclamationConfig getConfig()
+ * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface getQueryContainer()
  */
 class ReclamationOrderSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {

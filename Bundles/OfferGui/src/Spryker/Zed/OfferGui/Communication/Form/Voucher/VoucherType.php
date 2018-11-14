@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
  */
 class VoucherType extends AbstractType
 {

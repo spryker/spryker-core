@@ -11,6 +11,9 @@ use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
+/**
+ * @method \Spryker\Yves\Session\SessionConfig getConfig()
+ */
 class SessionDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const MONITORING_SERVICE = 'monitoring service';

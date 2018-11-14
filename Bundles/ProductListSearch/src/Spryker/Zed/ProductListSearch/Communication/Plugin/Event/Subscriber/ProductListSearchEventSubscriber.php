@@ -24,6 +24,7 @@ use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductSea
 /**
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\Communication\ProductListSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
  */
 class ProductListSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
