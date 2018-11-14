@@ -14,7 +14,7 @@ use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Plugin\ProductListGuiExtension\MerchantRelationshipTableExpanderPlugin;
+use Spryker\Zed\MerchantRelationshipProductListGui\Persistance\MerchantRelationshipProductListGuiRepositoryInterface;
 
 class ProductListQueryExpander implements ProductListQueryExpanderInterface
 {
@@ -32,8 +32,8 @@ class ProductListQueryExpander implements ProductListQueryExpanderInterface
             ->addJoin($this->createMerchantJoin())
             ->addJoin($this->createCompanyBusinessUnitJoin())
             ->setWithColumns([
-                SpyMerchantTableMap::COL_NAME => MerchantRelationshipTableExpanderPlugin::COL_MERCHANT_NAME_ALIAS,
-                SpyCompanyBusinessUnitTableMap::COL_NAME => MerchantRelationshipTableExpanderPlugin::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS,
+                SpyMerchantTableMap::COL_NAME => MerchantRelationshipProductListGuiRepositoryInterface::COL_MERCHANT_NAME_ALIAS,
+                SpyCompanyBusinessUnitTableMap::COL_NAME => MerchantRelationshipProductListGuiRepositoryInterface::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS,
             ]);
     }
 

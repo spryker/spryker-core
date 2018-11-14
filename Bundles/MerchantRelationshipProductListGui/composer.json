@@ -20,7 +20,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/gui": "If you want to use ProductListGuiExtension plugins interfaces. Minimum required version: ^1.0.0"
+    "spryker/gui": "If you want to provide plugins for ProductListGui module. Minimum required version: ^1.0.0"
   },
   "autoload": {
     "psr-4": {

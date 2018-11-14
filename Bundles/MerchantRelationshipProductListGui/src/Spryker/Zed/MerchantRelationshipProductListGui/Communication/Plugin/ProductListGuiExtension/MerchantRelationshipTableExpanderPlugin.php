@@ -13,6 +13,7 @@ use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\MerchantRelationshipProductListGui\Persistance\MerchantRelationshipProductListGuiRepositoryInterface;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableHeaderExpanderPluginInterface;
@@ -23,8 +24,8 @@ use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryE
  */
 class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements ProductListTableConfigExpanderPluginInterface, ProductListTableQueryExpanderPluginInterface, ProductListTableDataExpanderPluginInterface, ProductListTableHeaderExpanderPluginInterface
 {
-    public const COL_MERCHANT_NAME_ALIAS = 'spy_merchant_name';
-    public const COL_BUSINESS_UNIT_OWNER_NAME_ALIAS = 'spy_company_business_unit_name';
+    public const COL_MERCHANT_NAME_ALIAS = MerchantRelationshipProductListGuiRepositoryInterface::COL_MERCHANT_NAME_ALIAS;
+    public const COL_BUSINESS_UNIT_OWNER_NAME_ALIAS = MerchantRelationshipProductListGuiRepositoryInterface::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS;
 
     protected const HEADER_MERCHANT_RELATION_ID = 'ID Merchant Relation';
     protected const HEADER_MERCHANT_NAME = 'Merchant Name';
