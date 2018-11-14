@@ -21,8 +21,6 @@ class CategoryEditDataProvider
 {
     public const DATA_CLASS = 'data_class';
 
-    public const DEFAULT_LOCALE = 'default';
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */

@@ -29,8 +29,6 @@ class CategoryConfig extends AbstractBundleConfig
 
     protected const REDIRECT_URL_DEFAULT = '/category/root';
 
-    public const BASE_URL_YVES = 'PRODUCT_MANAGEMENT:BASE_URL_YVES';
-
     /**
      * @return array
      */
@@ -47,13 +45,5 @@ class CategoryConfig extends AbstractBundleConfig
     public function getDefaultRedirectUrl(): string
     {
         return static::REDIRECT_URL_DEFAULT;
-    }
-
-    /**
-     * @return string
-     */
-    public function getImageUrlPrefix()
-    {
-        return $this->get(static::BASE_URL_YVES);
     }
 }

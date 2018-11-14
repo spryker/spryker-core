@@ -24,7 +24,6 @@ class ImageCollectionForm extends AbstractType
     public const FIELD_IMAGE_LARGE = 'externalUrlLarge';
     public const FIELD_SORT_ORDER = 'sortOrder';
     public const FIELD_IMAGE_PREVIEW = 'imagePreview';
-    public const FIELD_IMAGE_PREVIEW_LARGE_URL = 'imagePreviewLargeUrl';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -42,6 +41,14 @@ class ImageCollectionForm extends AbstractType
             ->addImageSmallField($builder)
             ->addImageBigField($builder)
             ->addOrderHiddenField($builder);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'category_image_collection';
     }
 
     /**
@@ -137,18 +144,6 @@ class ImageCollectionForm extends AbstractType
     protected function addOrderHiddenField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_SORT_ORDER, HiddenType::class, []);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addProductImageLargeUrlHiddenField(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_IMAGE_PREVIEW_LARGE_URL, HiddenType::class, []);
 
         return $this;
     }

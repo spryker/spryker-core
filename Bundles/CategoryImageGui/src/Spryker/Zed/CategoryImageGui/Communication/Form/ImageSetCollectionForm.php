@@ -16,9 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ImageSetCollectionForm extends AbstractType
 {
-    public const FORM_IMAGE_SET = 'image_set';
-    public const CATEGORY_DEFAULT_LOCALE = 'default';
-
     /**
      * {@inheritdoc}
      */

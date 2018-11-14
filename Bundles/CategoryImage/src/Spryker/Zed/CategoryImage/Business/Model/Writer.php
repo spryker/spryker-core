@@ -15,8 +15,6 @@ use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface;
 
 class Writer implements WriterInterface
 {
-    public const LOCALIZED_CATEGORY_IMAGE_SET_PREFIX = 'image_set';
-
     /**
      * @var \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface
      */
