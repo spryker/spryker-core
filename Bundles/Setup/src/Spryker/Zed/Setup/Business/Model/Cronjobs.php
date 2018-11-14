@@ -23,6 +23,9 @@ class Cronjobs
     protected const JENKINS_URL_API_CSRF_TOKEN = 'crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)';
     protected const JENKINS_CSRF_TOKEN_NAME = 'crumb';
 
+    protected const TEMPLATE_MESSAGE_ERROR_CURL = 'cURL error: %s  while calling Jenkins URL %s';
+    protected const MESSAGE_ERROR_CSRF = 'You need turn on Jenkins CSRF protection.' . PHP_EOL . 'Please add next line in your config file:' . PHP_EOL . '$config[SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED] = true;';
+
     /**
      * @var array
      */
@@ -525,25 +528,17 @@ cd %s
      */
     protected function buildExceptionMessage(string $errorMessage, string $url): string
     {
-        $curlErrorMessageTemplate = 'cURL error: %s  while calling Jenkins URL %s';
-
-        $csrfErrorMessage = 'You need turn on Jenkins CSRF protection.'
-            . PHP_EOL
-            . 'Please add next line in your config file:'
-            . PHP_EOL
-            . '$config[SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED] = true;';
-
-        $curlErrorMessage = sprintf($curlErrorMessageTemplate, $errorMessage, $url);
+        $curlErrorMessage = sprintf(static::TEMPLATE_MESSAGE_ERROR_CURL, $errorMessage, $url);
 
         if (strpos($curlErrorMessage, static::JENKINS_CSRF_TOKEN_NAME) !== false) {
-            return $curlErrorMessage . PHP_EOL . $csrfErrorMessage; //todo: check
+            return $curlErrorMessage . PHP_EOL . static::TEMPLATE_MESSAGE_ERROR_CURL;
         }
 
         return $curlErrorMessage;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getHeaders(): array
     {
