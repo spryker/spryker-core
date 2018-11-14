@@ -15,6 +15,7 @@ use Spryker\Zed\MerchantDataImport\MerchantDataImportConfig;
 
 /**
  * @method \Spryker\Zed\MerchantDataImport\Business\MerchantDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantDataImport\MerchantDataImportConfig getConfig()
  */
 class MerchantDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

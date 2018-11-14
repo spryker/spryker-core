@@ -13,6 +13,9 @@ use Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorT
 use Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToOauthFacadeBridge;
 use Spryker\Zed\OauthCustomerConnector\Dependency\Service\OauthCustomerConnectorToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig getConfig()
+ */
 class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';

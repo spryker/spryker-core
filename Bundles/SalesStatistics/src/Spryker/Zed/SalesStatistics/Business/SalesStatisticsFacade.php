@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsBusinessFactory getFactory()
+ * @method \Spryker\Zed\SalesStatistics\Persistence\SalesStatisticsRepositoryInterface getRepository()
  */
 class SalesStatisticsFacade extends AbstractFacade implements SalesStatisticsFacadeInterface
 {

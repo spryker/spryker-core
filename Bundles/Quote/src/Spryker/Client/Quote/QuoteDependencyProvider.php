@@ -14,6 +14,9 @@ use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientBridge;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientBridge;
 use Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyBridge;
 
+/**
+ * @method \Spryker\Client\Quote\QuoteConfig getConfig()
+ */
 class QuoteDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_SESSION = 'session client';

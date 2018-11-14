@@ -14,6 +14,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 /**
  * @method \Spryker\Zed\CompanyUserInvitation\Business\CompanyUserInvitationFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyUserInvitation\Communication\CompanyUserInvitationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyUserInvitation\CompanyUserInvitationConfig getConfig()
  */
 class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {

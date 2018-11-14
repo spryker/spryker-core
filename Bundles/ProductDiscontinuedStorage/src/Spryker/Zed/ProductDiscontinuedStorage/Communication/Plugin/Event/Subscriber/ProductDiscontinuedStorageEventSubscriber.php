@@ -17,6 +17,7 @@ use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\P
 /**
  * @method \Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinuedStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig getConfig()
  */
 class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

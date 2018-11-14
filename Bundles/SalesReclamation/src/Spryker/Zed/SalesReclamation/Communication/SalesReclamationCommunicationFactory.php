@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\SalesReclamation\SalesReclamationConfig getConfig()
+ * @method \Spryker\Zed\SalesReclamation\Business\SalesReclamationFacadeInterface getFacade()
  */
 class SalesReclamationCommunicationFactory extends AbstractCommunicationFactory
 {
