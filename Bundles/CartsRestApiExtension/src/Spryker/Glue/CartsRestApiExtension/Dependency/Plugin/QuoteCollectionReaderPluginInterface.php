@@ -6,7 +6,7 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 
 /**
- * @deprecated Use \Spryker\Client\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface instead.
+ * @deprecated Use \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface instead.
  */
 interface QuoteCollectionReaderPluginInterface
 {

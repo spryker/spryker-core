@@ -5,23 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CartsRestApi;
+namespace Spryker\Zed\CheckoutRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Kernel\AbstractClient;
 
-/**
- * @method \Spryker\Client\CartsRestApi\CartsRestApiFactory getFactory()
- */
-class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInterface
+class CheckoutRestApiToCartsRestApiFacadeBridge implements CheckoutRestApiToCartsRestApiFacadeInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
+     * @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface
+     */
+    protected $cartsRestApiFacade;
+
+    /**
+     * @param \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface $cartsRestApiFacade
+     */
+    public function __construct($cartsRestApiFacade)
+    {
+        $this->cartsRestApiFacade = $cartsRestApiFacade;
+    }
+
+    /**
      * @param string $uuid
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
@@ -29,24 +34,16 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
      */
     public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer
     {
-        return $this->getFactory()
-            ->createCartReader()
-            ->findQuoteByUuid($uuid, $quoteCriteriaFilterTransfer);
+        return $this->cartsRestApiFacade->findQuoteByUuid($uuid, $quoteCriteriaFilterTransfer);
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        return $this->getFactory()
-            ->createCartReader()
-            ->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
+        return $this->cartsRestApiFacade->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
     }
 }

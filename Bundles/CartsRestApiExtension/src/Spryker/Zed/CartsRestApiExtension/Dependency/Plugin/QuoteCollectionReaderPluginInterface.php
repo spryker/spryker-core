@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CartsRestApiExtension\Dependency\Plugin;
+namespace Spryker\Zed\CartsRestApiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;

@@ -10,15 +10,22 @@ namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface;
 
 class CheckoutDataReader implements CheckoutDataReaderInterface
 {
+    /**
+     * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface
+     */
+    protected $cartsRestApiFacade;
+
     /**
      * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface
      */
@@ -40,17 +47,20 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $quoteCustomerExpander;
 
     /**
+     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface $paymentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface $quoteCustomerExpander
      */
     public function __construct(
+        CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade,
         CheckoutRestApiToShipmentFacadeInterface $shipmentFacade,
         CheckoutRestApiToPaymentFacadeInterface $paymentFacade,
         CheckoutRestApiToCustomerFacadeInterface $customerFacade,
         QuoteCustomerExpanderInterface $quoteCustomerExpander
     ) {
+        $this->cartsRestApiFacade = $cartsRestApiFacade;
         $this->shipmentFacade = $shipmentFacade;
         $this->paymentFacade = $paymentFacade;
         $this->customerFacade = $customerFacade;
@@ -64,12 +74,26 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer
     {
-        $quoteTransfer = $this->quoteCustomerExpander->expandQuoteWithCustomerData($quoteTransfer);
+        $currentQuoteTransfer = $this->cartsRestApiFacade
+            ->findQuoteByUuid(
+                $quoteTransfer->getUuid(),
+                (new QuoteCriteriaFilterTransfer())->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference())
+            );
+
+        // todo: handle the case when quote is not found.
+
+        $currentQuoteTransfer->setBillingAddress($quoteTransfer->getBillingAddress());
+        $currentQuoteTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
+        $currentQuoteTransfer->setPayment($quoteTransfer->getPayment());
+        $currentQuoteTransfer->setShipment($quoteTransfer->getShipment());
+        $currentQuoteTransfer->setCustomer($quoteTransfer->getCustomer());
+
+        $currentQuoteTransfer = $this->quoteCustomerExpander->expandQuoteWithCustomerData($currentQuoteTransfer);
 
         return (new CheckoutDataTransfer())
-            ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
-            ->setPaymentMethods($this->getPaymentMethodsTransfer($quoteTransfer))
-            ->setAddresses($this->getAddressesTransfer($quoteTransfer));
+            ->setShipmentMethods($this->getShipmentMethodsTransfer($currentQuoteTransfer))
+            ->setPaymentMethods($this->getPaymentMethodsTransfer($currentQuoteTransfer))
+            ->setAddresses($this->getAddressesTransfer($currentQuoteTransfer));
     }
 
     /**

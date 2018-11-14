@@ -27,12 +27,10 @@ interface CheckoutDataMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        QuoteTransfer $quoteTransfer
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): QuoteTransfer;
 }

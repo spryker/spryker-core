@@ -10,10 +10,12 @@ namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface;
 
@@ -23,6 +25,11 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface
      */
     protected $cartFacade;
+
+    /**
+     * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface
+     */
+    protected $cartsRestApiFacade;
 
     /**
      * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface
@@ -41,17 +48,20 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
 
     /**
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface $cartFacade
+     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface $quoteCustomerExpander
      */
     public function __construct(
         CheckoutRestApiToCartFacadeInterface $cartFacade,
+        CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade,
         CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade,
         CheckoutRestApiToQuoteFacadeInterface $quoteFacade,
         QuoteCustomerExpanderInterface $quoteCustomerExpander
     ) {
         $this->cartFacade = $cartFacade;
+        $this->cartsRestApiFacade = $cartsRestApiFacade;
         $this->checkoutFacade = $checkoutFacade;
         $this->quoteFacade = $quoteFacade;
         $this->quoteCustomerExpander = $quoteCustomerExpander;
@@ -64,23 +74,37 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      */
     public function placeOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
     {
-        $quoteTransfer = $this->quoteCustomerExpander->expandQuoteWithCustomerData($quoteTransfer);
+        $currentQuoteTransfer = $this->cartsRestApiFacade
+            ->findQuoteByUuid(
+                $quoteTransfer->getUuid(),
+                (new QuoteCriteriaFilterTransfer())->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference())
+            );
 
-        $paymentTransfer = $quoteTransfer->getPayment();
+        // todo: handle the case when quote is not found.
 
-        $quoteResponseTransfer = $this->cartFacade->validateQuote($quoteTransfer);
+        $currentQuoteTransfer->setBillingAddress($quoteTransfer->getBillingAddress());
+        $currentQuoteTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
+        $currentQuoteTransfer->setPayment($quoteTransfer->getPayment());
+        $currentQuoteTransfer->setShipment($quoteTransfer->getShipment());
+        $currentQuoteTransfer->setCustomer($quoteTransfer->getCustomer());
+
+        $currentQuoteTransfer = $this->quoteCustomerExpander->expandQuoteWithCustomerData($currentQuoteTransfer);
+
+        $paymentTransfer = $currentQuoteTransfer->getPayment();
+
+        $quoteResponseTransfer = $this->cartFacade->validateQuote($currentQuoteTransfer);
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
         }
 
-        $quoteTransfer = $this->restorePaymentInQuote($quoteResponseTransfer->getQuoteTransfer(), $paymentTransfer);
+        $currentQuoteTransfer = $this->restorePaymentInQuote($quoteResponseTransfer->getQuoteTransfer(), $paymentTransfer);
 
-        $checkoutResponseTransfer = $this->checkoutFacade->placeOrder($quoteTransfer);
+        $checkoutResponseTransfer = $this->checkoutFacade->placeOrder($currentQuoteTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
             return $checkoutResponseTransfer;
         }
 
-        $quoteResponseTransfer = $this->quoteFacade->deleteQuote($quoteTransfer);
+        $quoteResponseTransfer = $this->quoteFacade->deleteQuote($currentQuoteTransfer);
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
         }

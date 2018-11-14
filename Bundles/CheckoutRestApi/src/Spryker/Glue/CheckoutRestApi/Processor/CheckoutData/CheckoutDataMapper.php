@@ -63,17 +63,17 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        QuoteTransfer $quoteTransfer
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): QuoteTransfer {
+        $quoteTransfer = new QuoteTransfer();
         $quoteTransfer = $this->mapRestAddressTransfersToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
         $quoteTransfer = $this->mapPaymentsToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
         $quoteTransfer = $this->mapRestShipmentTransferToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
+        $quoteTransfer->setUuid($restCheckoutRequestAttributesTransfer->getCart()->getId());
 
         return $quoteTransfer;
     }

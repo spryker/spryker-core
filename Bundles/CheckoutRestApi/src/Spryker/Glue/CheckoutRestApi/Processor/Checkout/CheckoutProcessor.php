@@ -10,13 +10,11 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\Checkout;
 use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
-use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -47,29 +45,21 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $checkoutRestApiClient;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface
-     */
-    protected $cartsRestApiClient;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface $checkoutDataMapper
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
-     * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CheckoutDataMapperInterface $checkoutDataMapper,
         CheckoutRestApiClientInterface $checkoutRestApiClient,
-        CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient,
-        CheckoutRestApiToCartsRestApiClientInterface $cartsRestApiClient
+        CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutDataMapper = $checkoutDataMapper;
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
-        $this->cartsRestApiClient = $cartsRestApiClient;
     }
 
     /**
@@ -80,23 +70,8 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      */
     public function placeOrder(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
     {
-        $quoteTransfer = $this->cartsRestApiClient->findQuoteByUuid(
-            $restCheckoutRequestAttributesTransfer->getCart()->getId(),
-            new QuoteCriteriaFilterTransfer()
-        );
-
-        if ($quoteTransfer === null) {
-            return $this->createCartNotFoundErrorResponse();
-        }
-
-        if ($quoteTransfer->getItems()->count() === 0) {
-            return $this->createCartIsEmptyErrorResponse();
-        }
-
-        $quoteTransfer = $this->checkoutDataMapper->mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
-            $restCheckoutRequestAttributesTransfer,
-            $quoteTransfer
-        );
+        $quoteTransfer = $this->checkoutDataMapper
+            ->mapRestCheckoutRequestAttributesTransferToQuoteTransfer($restCheckoutRequestAttributesTransfer);
 
         $quoteTransfer->setCustomer($this->getCustomerTransferFromRequest($restRequest, $restCheckoutRequestAttributesTransfer));
 

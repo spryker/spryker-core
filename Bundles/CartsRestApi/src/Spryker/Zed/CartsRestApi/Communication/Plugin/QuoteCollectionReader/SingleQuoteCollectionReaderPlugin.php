@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CartsRestApi\Plugin\QuoteCollectionReader;
+namespace Spryker\Zed\CartsRestApi\Communication\Plugin\QuoteCollectionReader;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Spryker\Client\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
-use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Client\CartsRestApi\CartsRestApiFactory getFactory()
+ * @method \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade getFacade()
  */
 class SingleQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
 {
@@ -21,14 +21,14 @@ class SingleQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteC
      * {@inheritdoc}
      * - Returns quote collection transfer with single quote for customer.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        return $this->getFactory()
-            ->createCartQuoteCollectionReader()
-            ->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
+        return $this->getFacade()->getSingleQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
     }
 }
