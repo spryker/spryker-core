@@ -77,7 +77,13 @@ class FilterPreferencesDataProvider
             ];
         }
 
+        $data = [];
+
         $productSearchAttributeEntity = $this->getProductSearchAttributeEntity($idProductSearchAttribute);
+
+        if ($productSearchAttributeEntity === null) {
+            return $data;
+        }
 
         $attributeKey = $productSearchAttributeEntity->getSpyProductAttributeKey()->getKey();
 
