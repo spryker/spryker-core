@@ -9,7 +9,6 @@ namespace Spryker\Zed\Setup\Business\Model;
 
 use ErrorException;
 use Spryker\Shared\Config\Environment;
-use Spryker\Shared\Setup\SetupConstants;
 use Spryker\Zed\Setup\SetupConfig;
 
 class Cronjobs
@@ -280,16 +279,10 @@ class Cronjobs
     {
         $postUrl = $this->getJenkinsUrl($url);
 
-        $httpHeader = ['Content-Type: text/xml'];
-
-        if ($this->config->isJenkinsCsrfProtectionEnabled()) {
-            $httpHeader[] = $this->getJenkinsCsrfHeader();
-        }
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $postUrl);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $httpHeader);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->getHeaders());
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -298,7 +291,7 @@ class Cronjobs
         $curlResponse = curl_exec($ch);
 
         if ($curlResponse === false) {
-            $exceptionMessage = $this->getExceptionMessage(curl_error($ch), $postUrl);
+            $exceptionMessage = $this->buildExceptionMessage(curl_error($ch), $postUrl);
 
             throw new ErrorException($exceptionMessage);
         }
@@ -461,27 +454,33 @@ class Cronjobs
      */
     protected function getCommand($command, $store)
     {
-        $environment = Environment::getInstance();
-        $environment_name = $environment->getEnvironment();
+        $commandTemplate = '<command>%s
+export APPLICATION_ENV=%s
+export APPLICATION_STORE=%s
+cd %s
+. %s
+%s</command>';
 
         $cronjobsConfigPath = $this->config->getCronjobsConfigFilePath();
 
+        $environment = Environment::getInstance();
+        $testBashCommand = '';
+        $destination = APPLICATION_ROOT_DIR;
+
         if ($environment->isNotDevelopment()) {
-            return "<command>[ -f " . APPLICATION_ROOT_DIR . "/deploy/vars ] &amp;&amp; . " . APPLICATION_ROOT_DIR . "/deploy/vars
-export APPLICATION_ENV=$environment_name
-export APPLICATION_STORE=$store
-cd \$destination_release_dir
-. $cronjobsConfigPath
-$command</command>";
+            $testBashCommand = '[ -f ' . APPLICATION_ROOT_DIR . '/deploy/vars ] &amp;&amp; . ' . APPLICATION_ROOT_DIR . '/deploy/vars';
+            $destination = '\$destination_release_dir';
         }
 
-        $applicationRoot = APPLICATION_ROOT_DIR;
-        return "<command>
-export APPLICATION_ENV=$environment_name
-export APPLICATION_STORE=$store
-cd $applicationRoot
-. $cronjobsConfigPath
-$command</command>";
+        return sprintf(
+            $commandTemplate,
+            $testBashCommand,
+            $environment->getEnvironment(),
+            $store,
+            $destination,
+            $cronjobsConfigPath,
+            $command
+        );
     }
 
     /**
@@ -524,19 +523,36 @@ $command</command>";
      *
      * @return string
      */
-    protected function getExceptionMessage(string $errorMessage, string $url): string
+    protected function buildExceptionMessage(string $errorMessage, string $url): string
     {
         $curlErrorMessageTemplate = 'cURL error: %s  while calling Jenkins URL %s';
-        $csrfErrorMessageTemplate = 'Please check %s in your config.';
+
+        $csrfErrorMessage = 'You need turn on Jenkins CSRF protection.'
+            . PHP_EOL
+            . 'Please add next line in your config file:'
+            . PHP_EOL
+            . '$config[SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED] = true;';
 
         $curlErrorMessage = sprintf($curlErrorMessageTemplate, $errorMessage, $url);
 
-        if (mb_stripos($curlErrorMessage, static::JENKINS_CSRF_TOKEN_NAME)) {
-            $crumbErrorMessage = sprintf($csrfErrorMessageTemplate, SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED);
-
-            return $curlErrorMessage . PHP_EOL . $crumbErrorMessage;
+        if (strpos($curlErrorMessage, static::JENKINS_CSRF_TOKEN_NAME) !== false) {
+            return $curlErrorMessage . PHP_EOL . $csrfErrorMessage; //todo: check
         }
 
         return $curlErrorMessage;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getHeaders(): array
+    {
+        $httpHeader = ['Content-Type: text/xml'];
+
+        if ($this->config->isJenkinsCsrfProtectionEnabled()) {
+            $httpHeader[] = $this->getJenkinsCsrfHeader();
+        }
+
+        return $httpHeader;
     }
 }
