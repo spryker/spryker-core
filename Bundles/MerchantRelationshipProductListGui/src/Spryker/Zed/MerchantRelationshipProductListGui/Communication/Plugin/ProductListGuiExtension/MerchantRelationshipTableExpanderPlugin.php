@@ -55,6 +55,8 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
+     *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
     public function expandQuery(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer

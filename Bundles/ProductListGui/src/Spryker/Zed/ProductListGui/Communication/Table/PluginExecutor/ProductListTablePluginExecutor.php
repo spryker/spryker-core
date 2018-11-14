@@ -23,7 +23,7 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
     protected $productListTableConfigExpanderPlugins;
 
     /**
-     * @var array|\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryExpanderPluginInterface[]
+     * @var \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryExpanderPluginInterface[]
      */
     protected $productListTableQueryExpanderPlugins;
 
@@ -95,7 +95,7 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
         $queryCriteriaTransfer = new QueryCriteriaTransfer();
 
         foreach ($this->productListTableQueryExpanderPlugins as $productListTableQueryExpanderPlugin) {
-            $productListTableQueryExpanderPlugin->expandQuery($queryCriteriaTransfer);
+            $queryCriteriaTransfer = $productListTableQueryExpanderPlugin->expandQuery($queryCriteriaTransfer);
         }
 
         return $queryCriteriaTransfer;
