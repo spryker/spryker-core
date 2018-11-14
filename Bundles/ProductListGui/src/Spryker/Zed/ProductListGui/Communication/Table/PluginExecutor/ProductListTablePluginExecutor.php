@@ -95,7 +95,7 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
         $queryCriteriaTransfer = new QueryCriteriaTransfer();
 
         foreach ($this->productListTableQueryExpanderPlugins as $productListTableQueryExpanderPlugin) {
-            $queryCriteriaTransfer = $productListTableQueryExpanderPlugin->expandQuery($queryCriteriaTransfer);
+            $queryCriteriaTransfer = $productListTableQueryExpanderPlugin->expandProductListQuery($queryCriteriaTransfer);
         }
 
         return $queryCriteriaTransfer;

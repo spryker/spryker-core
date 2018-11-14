@@ -23,6 +23,9 @@ use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryE
  */
 class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements ProductListTableConfigExpanderPluginInterface, ProductListTableQueryExpanderPluginInterface, ProductListTableDataExpanderPluginInterface, ProductListTableHeaderExpanderPluginInterface
 {
+    public const COL_MERCHANT_NAME_ALIAS = 'spy_merchant_name';
+    public const COL_BUSINESS_UNIT_OWNER_NAME_ALIAS = 'spy_company_business_unit_name';
+
     protected const HEADER_MERCHANT_RELATION_ID = 'ID Merchant Relation';
     protected const HEADER_MERCHANT_NAME = 'Merchant Name';
     protected const HEADER_BUSINESS_UNIT_OWNER_NAME = 'Business Unit Owner Name';
@@ -30,9 +33,6 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
     protected const COL_FK_MERCHANT_RELATIONSHIP = SpyProductListTableMap::COL_FK_MERCHANT_RELATIONSHIP;
     protected const COL_MERCHANT_NAME = SpyMerchantTableMap::COL_NAME;
     protected const COL_COMPANY_BUSINESS_UNIT_NAME = SpyCompanyBusinessUnitTableMap::COL_NAME;
-
-    public const COL_MERCHANT_NAME_ALIAS = 'spy_merchant_name';
-    public const COL_BUSINESS_UNIT_OWNER_NAME_ALIAS = 'spy_company_business_unit_name';
 
     /**
      * {@inheritdoc}
@@ -59,7 +59,7 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    public function expandQuery(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
+    public function expandProductListQuery(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
     {
         return $this
             ->getFactory()

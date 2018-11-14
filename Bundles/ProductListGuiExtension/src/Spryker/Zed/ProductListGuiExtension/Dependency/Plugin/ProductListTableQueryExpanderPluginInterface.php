@@ -13,7 +13,7 @@ interface ProductListTableQueryExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Prepares query criteria transfer for extending criteria
+     * - Prepares QueryCriteriaTransfer for expanding default query running in ProductListTable.
      *
      * @api
      *
@@ -21,5 +21,5 @@ interface ProductListTableQueryExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    public function expandQuery(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer;
+    public function expandProductListQuery(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer;
 }
