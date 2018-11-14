@@ -1,5 +1,6 @@
 {
   "name": "spryker/index-generator",
+  "type": "library",
   "description": "IndexGenerator module",
   "license": "proprietary",
   "require": {

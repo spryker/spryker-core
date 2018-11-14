@@ -49,6 +49,8 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
+     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProductAbstract() instead.
+     *
      * {@inheritdoc}
      *
      * @api
@@ -59,9 +61,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      */
     public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
     {
-        return $this->getFactory()
-            ->createProductListReader()
-            ->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
+        return $this->getProductBlacklistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -73,11 +73,27 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @return int[]
      */
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductBlacklistIdsByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProductAbstract() instead.
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
     public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
-        return $this->getFactory()
-            ->createProductListReader()
-            ->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
+        return $this->getProductWhitelistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -85,15 +101,15 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProductAbstract
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array
+    public function getProductWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
         return $this->getFactory()
             ->createProductListReader()
-            ->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete);
+            ->getProductWhitelistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -101,15 +117,79 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProductAbstract
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array
+    public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
         return $this->getFactory()
             ->createProductListReader()
-            ->getProductAbstractWhitelistIdsByIdProductConcrete($idProductConcrete);
+            ->getCategoryWhitelistIdsByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProduct() instead.
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return int[]
+     */
+    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProduct): array
+    {
+        return $this->getProductBlacklistIdsByIdProduct($idProduct);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return int[]
+     */
+    public function getProductBlacklistIdsByIdProduct(int $idProduct): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductBlacklistIdsByIdProduct($idProduct);
+    }
+
+    /**
+     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProduct() instead.
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return int[]
+     */
+    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProduct): array
+    {
+        return $this->getProductWhitelistIdsByIdProduct($idProduct);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return int[]
+     */
+    public function getProductWhitelistIdsByIdProduct(int $idProduct): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductWhitelistIdsByIdProduct($idProduct);
     }
 
     /**

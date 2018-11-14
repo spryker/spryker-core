@@ -150,6 +150,10 @@ class AttributeMap implements AttributeMapInterface
     {
         $key = $this->getProductAbstractLocaleKey($idProductAbstract, $idLocale);
 
+        if (!isset($attributeMapBulk[$key])) {
+            return new AttributeMapStorageTransfer();
+        }
+
         return $attributeMapBulk[$key];
     }
 

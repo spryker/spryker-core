@@ -1,0 +1,8 @@
+endpoint_three:
+  post:
+    integerField:
+    - Regex:
+        pattern: '/\d{5}/'
+  get:
+    dateField:
+    - DateTime

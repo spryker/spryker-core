@@ -28,17 +28,18 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
      * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider|null $taxRateFormDataProvider Deprecated: TaxRateFormDataProvider must not be passed in.
+     * @param \Generated\Shared\Transfer\TaxRateTransfer|null $taxRateTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getTaxRateForm(?TaxRateFormDataProvider $taxRateFormDataProvider = null)
+    public function getTaxRateForm(?TaxRateFormDataProvider $taxRateFormDataProvider = null, ?TaxRateTransfer $taxRateTransfer = null)
     {
         return $this->getFormFactory()->create(
             TaxRateForm::class,
-            $this->getTaxRateFormData($taxRateFormDataProvider),
+            $taxRateTransfer ?: $this->getTaxRateFormData($taxRateFormDataProvider),
             [
-                 'data_class' => TaxRateTransfer::class,
-              ]
+                'data_class' => TaxRateTransfer::class,
+            ]
         );
     }
 
@@ -67,14 +68,15 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider|null $taxSetFormDataProvider Deprecated: TaxSetFormDataProvider must not be passed in.
+     * @param \Generated\Shared\Transfer\TaxSetTransfer|null $taxSetTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getTaxSetForm(?TaxSetFormDataProvider $taxSetFormDataProvider = null)
+    public function getTaxSetForm(?TaxSetFormDataProvider $taxSetFormDataProvider = null, ?TaxSetTransfer $taxSetTransfer = null)
     {
         return $this->getFormFactory()->create(
             TaxSetForm::class,
-            $this->getTaxSetFormData($taxSetFormDataProvider),
+            $taxSetTransfer ?? $this->getTaxSetFormData($taxSetFormDataProvider),
             [
                 'data_class' => TaxSetTransfer::class,
             ]
@@ -121,7 +123,11 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createTaxRateFormDataProvider(?TaxRateTransfer $taxRateTransfer = null)
     {
-        return new TaxRateFormDataProvider($this->getCountryFacade(), $taxRateTransfer);
+        return new TaxRateFormDataProvider(
+            $this->getCountryFacade(),
+            $this->getFacade(),
+            $taxRateTransfer
+        );
     }
 
     /**

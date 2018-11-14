@@ -111,6 +111,18 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    public function deleteShoppingListItems(ShoppingListTransfer $shoppingListTransfer): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListTransfer) {
+            $this->executeDeleteShoppingListItemsTransaction($shoppingListTransfer);
+        });
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
@@ -169,7 +181,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    protected function deleteShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
+    public function deleteShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
         $shoppingListItemTransfer = $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItemTransfer);
 
@@ -188,6 +200,21 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
             return $this->saveShoppingListItemTransaction($shoppingListItemTransfer);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function executeDeleteShoppingListItemsTransaction(ShoppingListTransfer $shoppingListTransfer): void
+    {
+        $shoppingListItemCollectionTransfer = $this->shoppingListRepository
+            ->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
+
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $this->deleteShoppingListItem($shoppingListItemTransfer);
+        }
     }
 
     /**
@@ -227,6 +254,16 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         $shoppingListItemTransfer->requireQuantity();
 
         if (!$this->productFacade->hasProductConcrete($shoppingListItemTransfer->getSku())) {
+            $this->messengerFacade->addErrorMessage(
+                (new MessageTransfer())
+                    ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_FAILED)
+                    ->setParameters([static::GLOSSARY_PARAM_SKU => $shoppingListItemTransfer->getSku()])
+            );
+
+            return false;
+        }
+
+        if ($shoppingListItemTransfer->getQuantity() <= 0) {
             $this->messengerFacade->addErrorMessage(
                 (new MessageTransfer())
                     ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_FAILED)
