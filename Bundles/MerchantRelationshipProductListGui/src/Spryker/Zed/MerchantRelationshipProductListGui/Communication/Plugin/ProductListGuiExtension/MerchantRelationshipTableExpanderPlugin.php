@@ -24,8 +24,8 @@ use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryE
  */
 class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements ProductListTableConfigExpanderPluginInterface, ProductListTableQueryExpanderPluginInterface, ProductListTableDataExpanderPluginInterface, ProductListTableHeaderExpanderPluginInterface
 {
-    public const COL_MERCHANT_NAME_ALIAS = MerchantRelationshipProductListGuiRepositoryInterface::COL_MERCHANT_NAME_ALIAS;
-    public const COL_BUSINESS_UNIT_OWNER_NAME_ALIAS = MerchantRelationshipProductListGuiRepositoryInterface::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS;
+    protected const COL_MERCHANT_NAME_ALIAS = MerchantRelationshipProductListGuiRepositoryInterface::COL_MERCHANT_NAME_ALIAS;
+    protected const COL_BUSINESS_UNIT_OWNER_NAME_ALIAS = MerchantRelationshipProductListGuiRepositoryInterface::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS;
 
     protected const HEADER_MERCHANT_RELATION_ID = 'ID Merchant Relation';
     protected const HEADER_MERCHANT_NAME = 'Merchant Name';
