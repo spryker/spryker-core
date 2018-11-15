@@ -24,6 +24,8 @@ class CreateCompanyUserController extends AbstractController
 
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
+    protected const URL_REDIRECT_CUSTOMER_NOT_EXISTS = '/customer';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -61,16 +63,22 @@ class CreateCompanyUserController extends AbstractController
     {
         $idCompanyUser = $this->castId($request->query->get(CompanyUserGuiConfig::PARAM_ID_CUSTOMER));
         $dataProvider = $this->getFactory()->createCustomerCompanyAttachFormDataProvider();
+        $companyUserTransfer = $dataProvider->getData($idCompanyUser);
 
         $form = $this->getFactory()
             ->getCustomerCompanyAttachForm(
-                $dataProvider->getData($idCompanyUser),
+                $companyUserTransfer,
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
+        if ($companyUserTransfer->getCustomer() === null) {
+            $this->addErrorMessage(sprintf('Customer with id %s doesn\'t exist', $idCompanyUser));
+
+            return $this->redirectResponse(static::URL_REDIRECT_CUSTOMER_NOT_EXISTS);
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $companyUserTransfer = $form->getData();
             $companyUserResponseTransfer = $this->getFactory()
                 ->getCompanyUserFacade()
                 ->create($companyUserTransfer);
