@@ -17,14 +17,17 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Money\Dependency\Facade\MoneyToCurrencyBridge;
 use Spryker\Zed\Money\Dependency\Facade\MoneyToStoreBridge;
 
+/**
+ * @method \Spryker\Zed\Money\MoneyConfig getConfig()
+ */
 class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const STORE = 'store';
+    public const STORE = 'store';
 
-    const FACADE_CURRENCY = 'currency facade';
-    const FACADE_STORE = 'store facade';
+    public const FACADE_CURRENCY = 'currency facade';
+    public const FACADE_STORE = 'store facade';
 
-    const MONEY_PARSER = 'money parser';
+    public const MONEY_PARSER = 'money parser';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -13,11 +13,14 @@ use Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
+ */
 class DatasetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'FACADE_LOCALE';
-    const PROPEL_DATASET_QUERY = 'PROPEL_DATASET_QUERY';
-    const CSV_ADAPTER = 'CSV_ADAPTER';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const PROPEL_DATASET_QUERY = 'PROPEL_DATASET_QUERY';
+    public const CSV_ADAPTER = 'CSV_ADAPTER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

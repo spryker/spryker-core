@@ -115,10 +115,10 @@ class Discount implements DiscountInterface
      */
     protected function addNonApplicableDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts)
     {
-        $quoteTransfer->setUsedNotAppliedVoucherCodes([]);
+        $usedNotAppliedVoucherCodes = $quoteTransfer->getUsedNotAppliedVoucherCodes();
 
         foreach ($discounts as $discount) {
-            if ($discount->getVoucherCode()) {
+            if ($discount->getVoucherCode() && !in_array($discount->getVoucherCode(), $usedNotAppliedVoucherCodes)) {
                 $quoteTransfer->addUsedNotAppliedVoucherCode($discount->getVoucherCode());
             }
         }
@@ -149,7 +149,7 @@ class Discount implements DiscountInterface
      * @param string[] $voucherCodes
      * @param int $idStore
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes, $idStore)
     {
@@ -280,7 +280,7 @@ class Discount implements DiscountInterface
             $voucherCodes[] = $voucherDiscountTransfer->getVoucherCode();
         }
 
-        $voucherCodes = array_merge($voucherCodes, (array)$quoteTransfer->getUsedNotAppliedVoucherCodes());
+        $voucherCodes = array_merge($voucherCodes, $quoteTransfer->getUsedNotAppliedVoucherCodes());
 
         return $voucherCodes;
     }
@@ -358,7 +358,7 @@ class Discount implements DiscountInterface
     protected function filterDiscountApplicableItems(QuoteTransfer $quoteTransfer, $idDiscount)
     {
         if (count($this->discountApplicableFilterPlugins) === 0) {
-            $quoteTransfer->getItems();
+            return (array)$quoteTransfer->getItems();
         }
 
         $discountApplicableItems = (array)$quoteTransfer->getItems();

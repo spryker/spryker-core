@@ -17,13 +17,14 @@ use Symfony\Component\Form\FormEvents;
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSetGui\ProductSetGuiConfig getConfig()
  */
 class UpdateProductsFormType extends AbstractType
 {
-    const FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS = 'assign_id_product_abstracts';
-    const FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS = 'deassign_id_product_abstracts';
-    const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
-    const FIELD_PRODUCT_POSITION = 'product_position';
+    public const FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS = 'assign_id_product_abstracts';
+    public const FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS = 'deassign_id_product_abstracts';
+    public const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
+    public const FIELD_PRODUCT_POSITION = 'product_position';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

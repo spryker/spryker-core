@@ -24,6 +24,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
+ * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
  */
 class CmsCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -116,6 +117,8 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use getCmsGlossaryForm() instead.
+     *
      * @param \Spryker\Zed\Cms\Business\CmsFacade $cmsFacade
      * @param array $formData
      * @param array $formOptions
@@ -123,6 +126,17 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createCmsGlossaryForm(CmsFacade $cmsFacade, array $formData = [], array $formOptions = [])
+    {
+        return $this->getCmsGlossaryForm($formData, $formOptions);
+    }
+
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCmsGlossaryForm(array $formData = [], array $formOptions = [])
     {
         return $this->getFormFactory()->create(CmsGlossaryForm::class, $formData, $formOptions);
     }

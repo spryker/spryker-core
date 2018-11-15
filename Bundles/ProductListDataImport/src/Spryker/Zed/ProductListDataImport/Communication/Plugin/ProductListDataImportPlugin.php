@@ -15,11 +15,14 @@ use Spryker\Zed\ProductListDataImport\ProductListDataImportConfig;
 
 /**
  * @method \Spryker\Zed\ProductListDataImport\Business\ProductListDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductListDataImport\ProductListDataImportConfig getConfig()
  */
 class ProductListDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
@@ -32,6 +35,8 @@ class ProductListDataImportPlugin extends AbstractPlugin implements DataImportPl
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @return string
      */

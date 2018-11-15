@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -12,7 +13,7 @@ use Spryker\Service\UtilValidate\Dependency\External\UtilValidateToEguliasRfcEma
 
 class UtilValidateDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const EMAIL_VALIDATOR = 'EMAIL_VALIDATOR';
+    public const EMAIL_VALIDATOR = 'EMAIL_VALIDATOR';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container

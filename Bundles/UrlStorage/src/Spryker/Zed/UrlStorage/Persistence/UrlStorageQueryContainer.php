@@ -22,7 +22,7 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
      *
      * @param array $urlIds
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery|\Spryker\Zed\UrlStorage\Dependency\QueryContainer\UrlStorageToUrlQueryContainerInterface
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrls(array $urlIds)
     {

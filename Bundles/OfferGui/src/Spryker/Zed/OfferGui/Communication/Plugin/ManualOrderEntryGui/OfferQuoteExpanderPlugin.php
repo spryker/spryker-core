@@ -14,12 +14,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
  */
 class OfferQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPluginInterface
 {
     public const PARAM_ID_OFFER = 'id-offer';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

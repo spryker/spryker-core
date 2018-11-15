@@ -13,14 +13,18 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
+ */
 class PropelInstallConsole extends Console
 {
-    const OPTION_NO_DIFF = 'no-diff';
-    const OPTION_NO_DIFF_SHORTCUT = 'o';
-    const OPTION_NO_DIFF_DESCRIPTION = 'Runs without propel:diff';
+    public const OPTION_NO_DIFF = 'no-diff';
+    public const OPTION_NO_DIFF_SHORTCUT = 'o';
+    public const OPTION_NO_DIFF_DESCRIPTION = 'Runs without propel:diff';
 
-    const COMMAND_NAME = 'propel:install';
-    const DESCRIPTION = 'Runs config convert, create database, postgres compatibility, copy schemas, runs Diff, build models and migrate tasks';
+    public const COMMAND_NAME = 'propel:install';
+    public const DESCRIPTION = 'Runs config convert, create database, postgres compatibility, copy schemas, runs Diff, build models and migrate tasks';
 
     /**
      * @return void

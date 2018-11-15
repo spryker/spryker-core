@@ -14,12 +14,15 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */
 class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {
-    const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
+    public const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
      * @return void
@@ -49,6 +52,8 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public static function getSubscribedEvents(): array

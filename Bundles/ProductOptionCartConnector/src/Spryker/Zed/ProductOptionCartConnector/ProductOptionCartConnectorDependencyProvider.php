@@ -12,10 +12,13 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeBridge;
 use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorConfig getConfig()
+ */
 class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
-    const FACADE_PRICE = 'FACADE_PRICE';
+    public const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
+    public const FACADE_PRICE = 'FACADE_PRICE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -15,7 +15,7 @@ use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation
 
 class FacetExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
-    const DOC_COUNT = 'doc_count';
+    public const DOC_COUNT = 'doc_count';
 
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer

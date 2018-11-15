@@ -36,18 +36,26 @@ class QuoteDeleter implements QuoteDeleterInterface
     protected $quoteDeleteBeforePlugins;
 
     /**
+     * @var array|\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteDeleteAfterPluginInterface[]
+     */
+    protected $quoteDeleteAfterPlugins;
+
+    /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
      * @param \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface $quoteEntityManager
      * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[] $quoteDeleteBeforePlugins
+     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteDeleteAfterPluginInterface[] $quoteDeleteAfterPlugins
      */
     public function __construct(
         QuoteRepositoryInterface $quoteRepository,
         QuoteEntityManagerInterface $quoteEntityManager,
-        array $quoteDeleteBeforePlugins
+        array $quoteDeleteBeforePlugins,
+        array $quoteDeleteAfterPlugins
     ) {
         $this->quoteEntityManager = $quoteEntityManager;
         $this->quoteRepository = $quoteRepository;
         $this->quoteDeleteBeforePlugins = $quoteDeleteBeforePlugins;
+        $this->quoteDeleteAfterPlugins = $quoteDeleteAfterPlugins;
     }
 
     /**
@@ -97,6 +105,7 @@ class QuoteDeleter implements QuoteDeleterInterface
         $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteTransfer = $this->executeDeleteBeforePlugins($quoteTransfer);
         $this->quoteEntityManager->deleteQuoteById($quoteTransfer->getIdQuote());
+        $this->executeDeleteAfterPlugins($quoteTransfer);
         $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
         $quoteResponseTransfer->setIsSuccessful(true);
 
@@ -112,6 +121,20 @@ class QuoteDeleter implements QuoteDeleterInterface
     {
         foreach ($this->quoteDeleteBeforePlugins as $quoteWritePlugin) {
             $quoteTransfer = $quoteWritePlugin->execute($quoteTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeDeleteAfterPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->quoteDeleteAfterPlugins as $quoteDeleteAfterPlugin) {
+            $quoteTransfer = $quoteDeleteAfterPlugin->execute($quoteTransfer);
         }
 
         return $quoteTransfer;

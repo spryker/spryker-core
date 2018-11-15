@@ -10,9 +10,9 @@ use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
 class RestTestAttributesTransfer extends AbstractTransfer
 {
-    const ATTRIBUTE1 = 'attribute1';
+    public const ATTRIBUTE1 = 'attribute1';
 
-    const ATTRIBUTE2 = 'attribute2';
+    public const ATTRIBUTE2 = 'attribute2';
 
     /**
      * @var string
@@ -63,7 +63,7 @@ class RestTestAttributesTransfer extends AbstractTransfer
     /**
      * @param string $attribute1
      *
-     * @return \SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer
+     * @return $this
      */
     public function setAttribute1(string $attribute1): self
     {
@@ -84,7 +84,7 @@ class RestTestAttributesTransfer extends AbstractTransfer
     /**
      * @param string $attribute2
      *
-     * @return \SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer
+     * @return $this
      */
     public function setAttribute2(string $attribute2): self
     {

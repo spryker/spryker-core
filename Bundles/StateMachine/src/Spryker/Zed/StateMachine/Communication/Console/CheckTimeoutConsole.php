@@ -15,13 +15,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\StateMachine\Communication\StateMachineCommunicationFactory getFactory()
  */
 class CheckTimeoutConsole extends Console
 {
-    const COMMAND_NAME = 'state-machine:check-timeout';
-    const COMMAND_DESCRIPTION = 'Check timeouts';
-    const ARGUMENT_STATE_MACHINE_NAME = 'state machine name';
-    const OPTION_STATE_MACHINE_NAME = 'state-machine-name';
+    public const COMMAND_NAME = 'state-machine:check-timeout';
+    public const COMMAND_DESCRIPTION = 'Check timeouts';
+    public const ARGUMENT_STATE_MACHINE_NAME = 'state machine name';
+    public const OPTION_STATE_MACHINE_NAME = 'state-machine-name';
 
     /**
      * @return void

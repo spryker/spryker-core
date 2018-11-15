@@ -19,10 +19,10 @@ use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
  */
 class CatalogSearchConfigBuilder extends AbstractPlugin implements SearchConfigBuilderInterface
 {
-    const DEFAULT_ITEMS_PER_PAGE = 12;
-    const VALID_ITEMS_PER_PAGE_OPTIONS = [12, 24, 36];
-    const PARAMETER_NAME_PAGE = 'page';
-    const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
+    public const DEFAULT_ITEMS_PER_PAGE = 12;
+    public const VALID_ITEMS_PER_PAGE_OPTIONS = [12, 24, 36];
+    public const PARAMETER_NAME_PAGE = 'page';
+    public const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface $facetConfigBuilder

@@ -14,11 +14,15 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 /**
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
  */
 class ProductOptionOrderHydratePlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

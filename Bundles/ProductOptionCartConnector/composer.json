@@ -1,12 +1,14 @@
 {
   "name": "spryker/product-option-cart-connector",
+  "type": "library",
   "description": "ProductOptionCartConnector module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/cart-extension": "^2.1.0",
     "spryker/kernel": "^3.0.0",
     "spryker/price": "^5.0.0",
-    "spryker/product-option": "^6.0.0"
+    "spryker/product-option": "^6.5.0"
   },
   "require-dev": {
     "spryker/cart": "*",

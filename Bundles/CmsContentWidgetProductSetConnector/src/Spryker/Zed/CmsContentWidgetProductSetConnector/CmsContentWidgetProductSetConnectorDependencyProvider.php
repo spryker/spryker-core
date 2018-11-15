@@ -11,9 +11,12 @@ use Spryker\Zed\CmsContentWidgetProductSetConnector\Dependency\QueryContainer\Cm
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorConfig getConfig()
+ */
 class CmsContentWidgetProductSetConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_PRODUCT_SET = 'PRODUCT SET QUERY CONTAINER';
+    public const QUERY_CONTAINER_PRODUCT_SET = 'PRODUCT SET QUERY CONTAINER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

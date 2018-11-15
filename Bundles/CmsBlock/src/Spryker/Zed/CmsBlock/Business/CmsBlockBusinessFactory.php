@@ -19,6 +19,7 @@ use Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManager;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateMapper;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockWriter;
 use Spryker\Zed\CmsBlock\CmsBlockDependencyProvider;
+use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToEventFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder;
 
@@ -74,6 +75,14 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToEventFacadeInterface
+     */
+    public function getEventFacade(): CmsBlockToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
      * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManagerInterface
      */
     public function createCmsBlockTemplateManager()
@@ -108,7 +117,8 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_GLOSSARY),
             $this->createCmsBlockGlossaryKeyGenerator(),
             $this->getProvidedDependency(CmsBlockDependencyProvider::QUERY_CONTAINER_GLOSSARY),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
+            $this->getEventFacade()
         );
     }
 

@@ -13,13 +13,16 @@ use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiQueryBuild
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CustomerApi\CustomerApiConfig getConfig()
+ */
 class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
+    public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
 
-    const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
-    const QUERY_CONTAINER_API_QUERY_BUILDER = 'QUERY_CONTAINER_API_QUERY_BUILDER';
-    const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
+    public const QUERY_CONTAINER_API_QUERY_BUILDER = 'QUERY_CONTAINER_API_QUERY_BUILDER';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

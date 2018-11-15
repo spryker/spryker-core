@@ -15,10 +15,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
  */
 class ItemBySkuCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
@@ -32,6 +36,8 @@ class ItemBySkuCollectorPlugin extends AbstractPlugin implements CollectorPlugin
     /**
      * Name of field as used in query string
      *
+     * @api
+     *
      * @return string
      */
     public function getFieldName()
@@ -40,6 +46,8 @@ class ItemBySkuCollectorPlugin extends AbstractPlugin implements CollectorPlugin
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function acceptedDataTypes()

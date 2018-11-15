@@ -11,6 +11,9 @@ use Spryker\Glue\CartItemsProductsRelationship\Dependency\RestResource\CartItems
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\CartItemsProductsRelationship\CartItemsProductsRelationshipConfig getConfig()
+ */
 class CartItemsProductsRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const RESOURCE_PRODUCTS = 'RESOURCE_PRODUCTS';

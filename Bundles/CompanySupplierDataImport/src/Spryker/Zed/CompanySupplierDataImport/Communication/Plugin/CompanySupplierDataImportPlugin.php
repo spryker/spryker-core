@@ -14,10 +14,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanySupplierDataImport\Business\CompanySupplierDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanySupplierDataImport\CompanySupplierDataImportConfig getConfig()
  */
 class CompanySupplierDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -28,6 +31,8 @@ class CompanySupplierDataImportPlugin extends AbstractPlugin implements DataImpo
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getImportType()

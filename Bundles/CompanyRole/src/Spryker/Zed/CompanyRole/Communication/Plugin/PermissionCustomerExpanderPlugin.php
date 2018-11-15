@@ -14,10 +14,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyRole\CompanyRoleConfig getConfig()
  */
 class PermissionCustomerExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer

@@ -22,6 +22,8 @@ class RemoveInactiveItemsPreReloadPlugin extends AbstractPlugin implements PreRe
      * Specification:
      *   - This plugin is execute before reloading cart items, with this plugin you can modify quote before reloading it.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

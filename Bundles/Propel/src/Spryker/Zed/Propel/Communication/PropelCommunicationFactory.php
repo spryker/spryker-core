@@ -14,10 +14,11 @@ use Spryker\Zed\Propel\PropelDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Propel\PropelConfig getConfig()
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  */
 class PropelCommunicationFactory extends AbstractCommunicationFactory
 {
-    const LOGGER_NAME = 'defaultLogger';
+    public const LOGGER_NAME = 'defaultLogger';
 
     /**
      * @return \Monolog\Logger[]

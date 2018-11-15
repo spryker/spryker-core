@@ -15,14 +15,17 @@ use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductF
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToProductLabelBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
+ */
 class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'FACADE_LOCALE';
-    const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
-    const FACADE_MONEY = 'FACADE_MONEY';
-    const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+    public const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
 
-    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

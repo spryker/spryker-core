@@ -12,7 +12,7 @@
             <reference local="fk_price_product_store" foreign="id_price_product_store"/>
         </foreign-key>
 
-        <foreign-key name="spy_price_product_merchant_relationship-fk_merchant_relationship" foreignTable="spy_merchant_relationship" onDelete="CASCADE" phpName="MerchantRelationship" refPhpName="PriceProductMerchantRelationship">
+        <foreign-key name="spy_price_product_merchant_relationship-fk_m_r" foreignTable="spy_merchant_relationship" onDelete="CASCADE" phpName="MerchantRelationship" refPhpName="PriceProductMerchantRelationship">
             <reference local="fk_merchant_relationship" foreign="id_merchant_relationship"/>
         </foreign-key>
 
@@ -24,13 +24,20 @@
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
 
-        <index name="spy_price_product_merchant_relationship-index-fk_product_abstract">
+        <index name="spy_price_product_merchant_relationship-index-fk_p_a">
             <index-column name="fk_product_abstract"/>
         </index>
 
         <index name="spy_price_product_merchant_relationship-index-fk_product">
             <index-column name="fk_product"/>
         </index>
-    <id-method-parameter value="spy_price_product_merchant_relationship_pk_seq"/></table>
+
+        <index name="spy_price_product_merchant_relationship-index-fk_m_r-fk_p_p_s">
+            <index-column name="fk_merchant_relationship"/>
+            <index-column name="fk_price_product_store"/>
+        </index>
+
+        <id-method-parameter value="spy_price_product_merchant_relationship_pk_seq"/>
+    </table>
 
 </database>

@@ -26,8 +26,8 @@ use SprykerTest\Zed\Cart\Business\Mocks\CartItemAddTripleStrategy;
  */
 class NonPersistentProviderTest extends Unit
 {
-    const COUPON_CODE_1 = 'coupon code 1';
-    const COUPON_CODE_2 = 'coupon code 2';
+    public const COUPON_CODE_1 = 'coupon code 1';
+    public const COUPON_CODE_2 = 'coupon code 2';
 
     /**
      * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
@@ -214,7 +214,7 @@ class NonPersistentProviderTest extends Unit
 
     /**
      * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change cart item "123" with "-3" as value.
+     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "-3".
      *
      * @return void
      */
@@ -237,7 +237,7 @@ class NonPersistentProviderTest extends Unit
 
     /**
      * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change cart item "123" with "0" as value.
+     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "0".
      *
      * @return void
      */
@@ -260,7 +260,7 @@ class NonPersistentProviderTest extends Unit
 
     /**
      * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change cart item "123" with "-3" as value.
+     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "-3".
      *
      * @return void
      */
@@ -283,7 +283,7 @@ class NonPersistentProviderTest extends Unit
 
     /**
      * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change cart item "123" with "0" as value.
+     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "0".
      *
      * @return void
      */

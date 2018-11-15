@@ -15,10 +15,13 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 /**
  * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DummyPayment\DummyPaymentConfig getConfig()
  */
 class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data

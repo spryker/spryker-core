@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Communication;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Form\CategoryType;
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryCreateDataProvider;
@@ -16,11 +18,13 @@ use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -90,16 +94,18 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCategoryEditForm()
+    public function createCategoryEditForm(CategoryTransfer $categoryTransfer): FormInterface
     {
         $categoryCreateDataFormProvider = $this->createCategoryEditFormDataProvider();
         $formFactory = $this->getFormFactory();
 
         return $formFactory->create(
             CategoryType::class,
-            $categoryCreateDataFormProvider->getData(),
+            $categoryTransfer,
             $categoryCreateDataFormProvider->getOptions()
         );
     }
@@ -107,7 +113,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Category\Communication\Form\DataProvider\CategoryEditDataProvider
      */
-    protected function createCategoryEditFormDataProvider()
+    public function createCategoryEditFormDataProvider()
     {
         return new CategoryEditDataProvider(
             $this->getQueryContainer(),

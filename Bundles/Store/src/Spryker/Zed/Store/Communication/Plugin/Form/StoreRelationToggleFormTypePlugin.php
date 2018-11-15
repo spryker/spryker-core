@@ -14,10 +14,14 @@ use Spryker\Zed\Store\Communication\Form\Type\StoreRelationToggleType;
 /**
  * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
  * @method \Spryker\Zed\Store\Communication\StoreCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Store\StoreConfig getConfig()
+ * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
  */
 class StoreRelationToggleFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getType()

@@ -17,6 +17,8 @@ use Spryker\Zed\ProductSearchConfigStorage\Communication\Plugin\Event\Listener\P
 /**
  * @method \Spryker\Zed\ProductSearchConfigStorage\Communication\ProductSearchConfigStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSearchConfigStorage\Business\ProductSearchConfigStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductSearchConfigStorage\Persistence\ProductSearchConfigStorageQueryContainerInterface getQueryContainer()
  */
 class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

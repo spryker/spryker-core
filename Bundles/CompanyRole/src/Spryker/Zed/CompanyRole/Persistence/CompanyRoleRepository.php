@@ -124,7 +124,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      */
     protected function jsonDecode($value)
     {
-        $decodedValue = \json_decode($value, true);
+        $decodedValue = json_decode($value, true);
 
         if (json_last_error() === \JSON_ERROR_NONE) {
             return $decodedValue;
@@ -208,10 +208,11 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         }
 
         $collection = $this->buildQueryFromCriteria($query, $companyRoleCriteriaFilterTransfer->getFilter());
-        $collection = $this->getPaginatedCollection($collection, $companyRoleCriteriaFilterTransfer->getPagination());
+        /** @var \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[] $spyCompanyRoleCollection */
+        $spyCompanyRoleCollection = $this->getPaginatedCollection($collection, $companyRoleCriteriaFilterTransfer->getPagination());
 
         $collectionTransfer = new CompanyRoleCollectionTransfer();
-        foreach ($collection as $spyCompanyRole) {
+        foreach ($spyCompanyRoleCollection as $spyCompanyRole) {
             $companyRoleTransfer = $this->prepareCompanyRoleTransfer($spyCompanyRole);
             $collectionTransfer->addRole($companyRoleTransfer);
         }
@@ -252,7 +253,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return mixed|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {
@@ -313,6 +314,8 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     }
 
     /**
+     * @deprecated Use CompanyRoleRepository::findDefaultCompanyRoleByIdCompany() instead.
+     *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
     public function getDefaultCompanyRole(): CompanyRoleTransfer
@@ -324,6 +327,26 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         $spyCompanyRole = $this->buildQueryFromCriteria($query)->findOne();
 
         return $this->prepareCompanyRoleTransfer($spyCompanyRole);
+    }
+
+    /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findDefaultCompanyRoleByIdCompany(int $idCompany): ?CompanyRoleTransfer
+    {
+        $companyRoleEntity = $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->filterByFkCompany($idCompany)
+            ->filterByIsDefault(true)
+            ->findOne();
+
+        if (!$companyRoleEntity) {
+            return null;
+        }
+
+        return $this->prepareCompanyRoleTransfer($companyRoleEntity);
     }
 
     /**

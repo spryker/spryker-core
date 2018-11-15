@@ -17,17 +17,20 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * @method \Spryker\Zed\ZedRequest\Communication\ZedRequestCommunicationFactory getFactory()
  * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
+ * @method \Spryker\Zed\ZedRequest\ZedRequestConfig getConfig()
  */
 class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
      * @deprecated Please don't use this property anymore. The needed ControllerListenerInterface is now retrieved by the Factory.
      *
-     * @var \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerInterface
+     * @var \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerInterface|null
      */
     protected $controllerListener;
 
     /**
+     * @api
+     *
      * @deprecated Please remove usage of this setter. The needed ControllerListenerInterface is now retrieved by the Factory.
      *
      * @param \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerInterface $controllerListener
@@ -40,6 +43,8 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
     }
 
     /**
+     * @api
+     *
      * @param \Silex\Application $app
      *
      * @return void
@@ -68,6 +73,8 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
     }
 
     /**
+     * @api
+     *
      * @param \Silex\Application $app
      *
      * @return void

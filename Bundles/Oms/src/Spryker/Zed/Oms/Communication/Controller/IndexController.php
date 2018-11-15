@@ -15,11 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
-    const DEFAULT_FORMAT = 'svg';
-    const DEFAULT_FONT_SIZE = 14;
+    public const DEFAULT_FORMAT = 'svg';
+    public const DEFAULT_FONT_SIZE = 14;
 
     /**
      * @var array

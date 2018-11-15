@@ -17,10 +17,13 @@ use Symfony\Component\Form\FormView;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  */
 class ProductMoneyType extends AbstractType
 {
-    const FIELD_FK_PRICE_TYPE = 'fk_price_type';
+    public const FIELD_FK_PRICE_TYPE = 'fk_price_type';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

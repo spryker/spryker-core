@@ -1,5 +1,6 @@
 {
   "name": "spryker/navigation-gui",
+  "type": "library",
   "description": "NavigationGui module",
   "license": "proprietary",
   "require": {

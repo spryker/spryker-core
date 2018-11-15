@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -7,6 +8,7 @@
 namespace Spryker\Zed\Discount\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,10 +22,13 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class VoucherController extends AbstractController
 {
-    const URL_PARAM_ID_POOL = 'id-pool';
-    const URL_PARAM_ID_DISCOUNT = 'id-discount';
-    const URL_PARAM_ID_VOUCHER = 'id-voucher';
-    const CSV_FILENAME = 'vouchers.csv';
+    public const URL_PARAM_ID_POOL = 'id-pool';
+    public const URL_PARAM_ID_DISCOUNT = 'id-discount';
+    public const URL_PARAM_ID_VOUCHER = 'id-voucher';
+    public const CSV_FILENAME = 'vouchers.csv';
+    protected const URL_DISCOUNT_EDIT_PAGE = '/discount/index/edit';
+    protected const URL_DISCOUNT_VIEW_PAGE = '/discount/index/view';
+    protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -62,7 +67,6 @@ class VoucherController extends AbstractController
      */
     public function deleteVoucherCodeAction(Request $request)
     {
-        $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
         $idVoucher = $this->castId($request->query->get(self::URL_PARAM_ID_VOUCHER));
 
         $voucherEntity = $this->getQueryContainer()
@@ -77,7 +81,7 @@ class VoucherController extends AbstractController
         }
 
         return new RedirectResponse(
-            $this->createEditDiscountRedirectUrl($idDiscount)
+            $this->createVoucherCodeDeleteRedirectUrl($request)
         );
     }
 
@@ -135,9 +139,52 @@ class VoucherController extends AbstractController
             '/discount/index/edit',
             [
                 self::URL_PARAM_ID_DISCOUNT => $idDiscount,
+            ],
+            [
+                Url::FRAGMENT => DiscountsTable::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
             ]
         )->build();
 
         return $redirectUrl;
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return string
+     */
+    protected function createViewDiscountRedirectUrl(int $idDiscount): string
+    {
+        $redirectUrl = Url::generate(
+            static::URL_DISCOUNT_VIEW_PAGE,
+            [
+                static::URL_PARAM_ID_DISCOUNT => $idDiscount,
+            ],
+            [
+                Url::FRAGMENT => DiscountsTable::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
+            ]
+        )->build();
+
+        return $redirectUrl;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    protected function createVoucherCodeDeleteRedirectUrl(Request $request): string
+    {
+        $referrerUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
+
+        if (!$referrerUrl) {
+            return $this->createViewDiscountRedirectUrl($this->castId($request->get(static::URL_PARAM_ID_DISCOUNT)));
+        }
+
+        if (strpos($referrerUrl, static::URL_DISCOUNT_EDIT_PAGE) !== false) {
+            $referrerUrl .= '#' . DiscountsTable::URL_FRAGMENT_TAB_CONTENT_VOUCHER;
+        }
+
+        return $referrerUrl;
     }
 }
