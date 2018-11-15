@@ -126,7 +126,7 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
     protected function addResourceRoutePluginProviderPlugins(Container $container): Container
     {
         $container[static::PLUGIN_RESOURCE_ROUTE_PLUGIN_PROVIDERS] = function () {
-            return $this->getResourceRoutePluginsProviderPlugins();
+            return $this->getResourceRoutePluginProviderPlugins();
         };
 
         return $container;
@@ -149,7 +149,7 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
     /**
      * @return \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[]
      */
-    protected function getResourceRoutePluginsProviderPlugins(): array
+    protected function getResourceRoutePluginProviderPlugins(): array
     {
         return [];
     }
