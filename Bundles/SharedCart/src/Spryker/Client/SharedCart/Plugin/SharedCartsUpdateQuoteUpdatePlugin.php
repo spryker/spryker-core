@@ -65,10 +65,10 @@ class SharedCartsUpdateQuoteUpdatePlugin extends AbstractPlugin implements Quote
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransferA
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransferB
      *
-     * @return int
+     * @return bool
      */
-    protected function compareQuotes(QuoteTransfer $quoteTransferA, QuoteTransfer $quoteTransferB): int
+    protected function compareQuotes(QuoteTransfer $quoteTransferA, QuoteTransfer $quoteTransferB): bool
     {
-        return (int)($quoteTransferA->getName() === $quoteTransferB->getName());
+        return $quoteTransferA->getName() === $quoteTransferB->getName();
     }
 }
