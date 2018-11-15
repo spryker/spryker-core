@@ -3,6 +3,7 @@ parameters:
 
     ignoreErrors:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
+    - '#Call to an undefined method .+StorageWriter::save\(\)#'
     - '#Method .+PriceProductStorageQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
 
 services:

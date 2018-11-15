@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceBridge;
 
+/**
+ * @method \Spryker\Zed\Merchant\MerchantConfig getConfig()
+ */
 class MerchantDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';

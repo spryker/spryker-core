@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  * @api
  *
  * @method \Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory getFactory()
+ * @method \Spryker\Zed\CartsRestApi\Persistence\CartsRestApiEntityManagerInterface getEntityManager()
  */
 class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInterface
 {

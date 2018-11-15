@@ -11,6 +11,9 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientBridge;
 
+/**
+ * @method \Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig getConfig()
+ */
 class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_WISHLIST = 'CLIENT_WISHLIST';

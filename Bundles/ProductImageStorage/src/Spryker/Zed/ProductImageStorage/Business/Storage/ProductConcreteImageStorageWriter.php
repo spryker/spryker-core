@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteImageStorageTransfer;
 use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage;
 use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface;
@@ -149,7 +148,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      */
     protected function generateProductConcreteImageSets(array $productIds)
     {
-        $imageSetEntitiesByIdProduct = $this->getCombinedImageSets($productIds);
+        $imageSetEntitiesByIdProduct = $this->getImageSets($productIds);
 
         $imageSets = [];
         foreach ($imageSetEntitiesByIdProduct as $idProduct => $imageLocalizedAttributes) {
@@ -195,60 +194,47 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      *
      * @return array
      */
-    protected function getCombinedImageSets(array $productIds): array
+    protected function getImageSets(array $productIds): array
     {
         $productLocalizedAttributes = $this->repository->getProductLocalizedAttributesWithProductByIdProductIn($productIds);
-
         $productFks = array_column($productLocalizedAttributes, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);
-        $productAbstractFks = array_column($productLocalizedAttributes, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+        $productImageSets = $this->repository->getProductImageSetsByFkProductIn($productFks);
+        $productImageSetsIndexedByFkProduct = $this->indexImageSetsByProduct($productImageSets);
 
-        $productImageSets = $this->repository->getProductImageSetsByFkProductInOrFkAbstractProductIn($productFks, $productAbstractFks);
-
-        [$productImageSetsIndexedByFkProductAbstract, $productImageSetsIndexedByFkProduct]
-            = $this->indexImageSetsByProductAbstractAndProduct($productImageSets);
-
-        $combinedImageSets = [];
+        $imageSets = [];
         foreach ($productLocalizedAttributes as $productLocalizedAttribute) {
             $idProduct = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT];
             $colIdProductAttributes = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_ID_PRODUCT_ATTRIBUTES];
 
-            $combinedImageSets[$idProduct][$colIdProductAttributes] = $this->getCombinedImageSetForLocalizedAttribute(
+            $imageSets[$idProduct][$colIdProductAttributes] = $this->getImageSetForLocalizedAttribute(
                 $productLocalizedAttribute,
-                $productImageSetsIndexedByFkProductAbstract,
                 $productImageSetsIndexedByFkProduct
             );
         }
 
-        return $combinedImageSets;
+        return $imageSets;
     }
 
     /**
      * @param array $productLocalizedAttribute
-     * @param array $productImageSetsIndexedByFkProductAbstract pass by reference to get rid of array copying
      * @param array $productImageSetsIndexedByFkProduct
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
      */
-    protected function getCombinedImageSetForLocalizedAttribute(
+    protected function getImageSetForLocalizedAttribute(
         array $productLocalizedAttribute,
-        array &$productImageSetsIndexedByFkProductAbstract,
         array &$productImageSetsIndexedByFkProduct
     ): ArrayObject {
-        $combinedImageSet = new ArrayObject();
+        $imageSet = new ArrayObject();
 
         $colFkProduct = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT];
-        $colFkProductAbstract = $productLocalizedAttribute[SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT];
         $colFkLocale = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE];
 
         foreach ($productImageSetsIndexedByFkProduct[$colFkProduct][$colFkLocale] ?? [] as $item) {
-            $combinedImageSet->append($item);
+            $imageSet->append($item);
         }
 
-        foreach ($productImageSetsIndexedByFkProductAbstract[$colFkProductAbstract][$colFkLocale] ?? [] as $item) {
-            $combinedImageSet->append($item);
-        }
-
-        return $combinedImageSet;
+        return $imageSet;
     }
 
     /**
@@ -259,22 +245,17 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      *
      * @return array
      */
-    protected function indexImageSetsByProductAbstractAndProduct(array $productImageSets): array
+    protected function indexImageSetsByProduct(array $productImageSets): array
     {
-        $productImageSetsIndexedByFkProductAbstract = [];
         $productImageSetsIndexedByFkProduct = [];
 
         foreach ($productImageSets as $productImageSet) {
-            if ($productImageSet->getFkProductAbstract()) {
-                $productImageSetsIndexedByFkProductAbstract[$productImageSet->getFkProductAbstract()][$productImageSet->getFkLocale()][] = $productImageSet;
-            }
-
             if ($productImageSet->getFkProduct()) {
                 $productImageSetsIndexedByFkProduct[$productImageSet->getFkProduct()][$productImageSet->getFkLocale()][] = $productImageSet;
             }
         }
 
-        return [$productImageSetsIndexedByFkProductAbstract, $productImageSetsIndexedByFkProduct];
+        return $productImageSetsIndexedByFkProduct;
     }
 
     /**

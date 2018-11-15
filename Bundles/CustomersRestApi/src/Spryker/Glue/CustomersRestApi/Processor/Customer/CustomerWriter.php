@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Customer;
 
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
@@ -56,12 +57,18 @@ class CustomerWriter implements CustomerWriterInterface
     protected $customerReader;
 
     /**
+     * @var \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[]
+     */
+    protected $customerPostRegisterPlugins;
+
+    /**
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\CustomersRestApi\Processor\Customer\CustomerReaderInterface $customerReader
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface $customerResourceMapper
      * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $restApiError
      * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface $restApiValidator
+     * @param \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[] $customerPostRegisterPlugins
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,
@@ -69,7 +76,8 @@ class CustomerWriter implements CustomerWriterInterface
         RestResourceBuilderInterface $restResourceBuilder,
         CustomerResourceMapperInterface $customerResourceMapper,
         RestApiErrorInterface $restApiError,
-        RestApiValidatorInterface $restApiValidator
+        RestApiValidatorInterface $restApiValidator,
+        array $customerPostRegisterPlugins
     ) {
         $this->customerClient = $customerClient;
         $this->customerReader = $customerReader;
@@ -77,6 +85,7 @@ class CustomerWriter implements CustomerWriterInterface
         $this->customerResourceMapper = $customerResourceMapper;
         $this->restApiError = $restApiError;
         $this->restApiValidator = $restApiValidator;
+        $this->customerPostRegisterPlugins = $customerPostRegisterPlugins;
     }
 
     /**
@@ -105,7 +114,11 @@ class CustomerWriter implements CustomerWriterInterface
             }
         }
 
-        $restCustomersResponseAttributesTransfer = $this->customerResourceMapper->mapCustomerTransferToRestCustomersResponseAttributesTransfer($customerResponseTransfer->getCustomerTransfer());
+        $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
+        $customerTransfer = $this->executeCustomerPostRegisterPlugins($customerTransfer);
+
+        $restCustomersResponseAttributesTransfer = $this->customerResourceMapper
+            ->mapCustomerTransferToRestCustomersResponseAttributesTransfer($customerTransfer);
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_CUSTOMERS,
@@ -129,6 +142,10 @@ class CustomerWriter implements CustomerWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $customerResponseTransfer = $this->customerReader->findCustomer($restRequest);
+
+        if (!$customerResponseTransfer->getHasCustomer()) {
+            return $this->restApiError->addCustomerNotFoundError($restResponse);
+        }
 
         if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
             return $this->restApiError->addCustomerUnauthorizedError($restResponse);
@@ -175,14 +192,11 @@ class CustomerWriter implements CustomerWriterInterface
         RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
+        $customerResponseTransfer = $this->customerReader->getCurrentCustomer($restRequest);
 
-        $customerResponseTransfer = $this->customerReader->findCustomer($restRequest);
-
-        $restResponse = $this->restApiValidator->validateCustomerResponseTransfer(
-            $customerResponseTransfer,
-            $restRequest,
-            $restResponse
-        );
+        if (!$customerResponseTransfer->getHasCustomer() || $restRequest->getResource()->getId()) {
+            return $this->restApiError->addCustomerNotFoundError($restResponse);
+        }
 
         $restResponse = $this->restApiValidator->validatePassword($passwordAttributesTransfer, $restResponse);
 
@@ -192,9 +206,22 @@ class CustomerWriter implements CustomerWriterInterface
 
         $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
         $customerTransfer->fromArray($passwordAttributesTransfer->toArray(), true);
-
         $customerResponseTransfer = $this->customerClient->updateCustomerPassword($customerTransfer);
+        if (!$customerResponseTransfer->getErrors()->count()) {
+            return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
+        }
 
+        return $this->addUpdatePasswordErrorsToResponse($customerResponseTransfer, $restResponse);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addUpdatePasswordErrorsToResponse(CustomerResponseTransfer $customerResponseTransfer, RestResponseInterface $restResponse)
+    {
         foreach ($customerResponseTransfer->getErrors() as $error) {
             if ($error->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
                 return $this->restApiError->addPasswordNotValidError($restResponse);
@@ -203,7 +230,7 @@ class CustomerWriter implements CustomerWriterInterface
             return $this->restApiError->addPasswordChangeError($restResponse, $error->getMessage());
         }
 
-        return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
+        return $restResponse;
     }
 
     /**
@@ -264,5 +291,19 @@ class CustomerWriter implements CustomerWriterInterface
         );
 
         return $customerAttributes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function executeCustomerPostRegisterPlugins(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        foreach ($this->customerPostRegisterPlugins as $customerPostRegisterPlugin) {
+            $customerTransfer = $customerPostRegisterPlugin->postRegister($customerTransfer);
+        }
+
+        return $customerTransfer;
     }
 }
