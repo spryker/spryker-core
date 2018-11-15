@@ -12,6 +12,13 @@ use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
 interface PriceGrouperInterface
 {
     /**
+     * @see \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface::groupPriceProductCollection()
+     *
+     * Specification:
+     *  - Groups provided transfers by currency, price mode and price type.
+     *  - Merges the grouped prices with provided existing price data (optional).
+     *  - Filters empty prices.
+     *
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      * @param array $pricesData
      *

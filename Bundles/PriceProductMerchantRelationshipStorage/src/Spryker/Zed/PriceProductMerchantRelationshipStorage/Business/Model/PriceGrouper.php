@@ -30,7 +30,7 @@ class PriceGrouper implements PriceGrouperInterface
             $groupedPrices = array_replace_recursive($existingPricesData[static::PRICES], $groupedPrices);
         }
 
-        $groupedPrices = $this->arrayFilterRecursive($groupedPrices, PriceProductMerchantRelationshipStorageConfig::PRICE_DATA);
+        $groupedPrices = $this->filterPriceData($groupedPrices, PriceProductMerchantRelationshipStorageConfig::PRICE_DATA);
 
         return $priceProductMerchantRelationshipStorageTransfer->setPrices(
             $this->formatData($groupedPrices)
@@ -59,14 +59,14 @@ class PriceGrouper implements PriceGrouperInterface
     }
 
     /**
-     * @param array $array
+     * @param array $priceData
      * @param string $excludeKey
      *
      * @return array
      */
-    protected function arrayFilterRecursive(array $array, string $excludeKey): array
+    protected function filterPriceData(array $priceData, string $excludeKey): array
     {
-        $array = array_filter($array, function ($v, $k) use ($excludeKey) {
+        $priceData = array_filter($priceData, function ($v, $k) use ($excludeKey) {
             if ($k === $excludeKey) {
                 return true;
             }
@@ -74,17 +74,17 @@ class PriceGrouper implements PriceGrouperInterface
             return !empty($v);
         }, ARRAY_FILTER_USE_BOTH);
 
-        foreach ($array as $key => &$value) {
+        foreach ($priceData as $key => &$value) {
             if (is_array($value)) {
-                $value = $this->arrayFilterRecursive($value, $excludeKey);
+                $value = $this->filterPriceData($value, $excludeKey);
 
                 if (empty($value) || $value === [$excludeKey => null]) {
-                    unset($array[$key]);
+                    unset($priceData[$key]);
                 }
             }
         }
 
-        return $array;
+        return $priceData;
     }
 
     /**
