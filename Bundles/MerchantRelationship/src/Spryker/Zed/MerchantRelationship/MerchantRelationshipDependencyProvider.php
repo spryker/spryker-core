@@ -9,6 +9,9 @@ namespace Spryker\Zed\MerchantRelationship;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\MerchantRelationship\MerchantRelationshipConfig getConfig()
+ */
 class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

@@ -14,6 +14,7 @@ use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteResponseExpanderP
 /**
  * @method \Spryker\Zed\MultiCart\Communication\MultiCartCommunicationFactory getFactory()
  * @method \Spryker\Zed\MultiCart\Business\MultiCartFacadeInterface getFacade()
+ * @method \Spryker\Zed\MultiCart\MultiCartConfig getConfig()
  */
 class CustomerCartQuoteResponseExpanderPlugin extends AbstractPlugin implements QuoteResponseExpanderPluginInterface
 {

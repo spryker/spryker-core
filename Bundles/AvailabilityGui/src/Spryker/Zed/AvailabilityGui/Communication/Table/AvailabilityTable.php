@@ -159,18 +159,17 @@ class AvailabilityTable extends AbstractTable
 
     /**
      * @param string $neverOutOfStockSet
-     * @param bool $isBundle
+     * @param bool $isBundleProduct
      *
      * @return bool
      */
-    protected function isNeverOutOfStock(string $neverOutOfStockSet, bool $isBundle): bool
+    protected function isNeverOutOfStock(string $neverOutOfStockSet, bool $isBundleProduct): bool
     {
-        $hasNeverOutOfStock = strpos($neverOutOfStockSet, 'true') !== false;
-        if ($isBundle && $hasNeverOutOfStock) {
-            return true;
+        if ($isBundleProduct && strpos($neverOutOfStockSet, 'false') !== false) {
+            return false;
         }
 
-        return filter_var($neverOutOfStockSet, FILTER_VALIDATE_BOOLEAN) ?: false;
+        return strpos($neverOutOfStockSet, 'true') !== false;
     }
 
     /**

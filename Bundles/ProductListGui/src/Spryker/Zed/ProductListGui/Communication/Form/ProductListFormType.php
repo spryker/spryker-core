@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\ProductListGui\Communication\ProductListGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductListGui\ProductListGuiConfig getConfig()
  */
 class ProductListFormType extends AbstractType
 {

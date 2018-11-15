@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationGeneratorFacadeInterface getFacade()
+ * @method \Spryker\Zed\RestApiDocumentationGenerator\Communication\RestApiDocumentationGeneratorCommunicationFactory getFactory()
  */
 class RestApiDocumentationGeneratorConsole extends Console
 {
