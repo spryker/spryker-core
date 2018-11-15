@@ -122,9 +122,9 @@ class ResponseBuilder implements ResponseBuilderInterface
                 $link = $resource->getType();
                 if ($resource->getId()) {
                     $link .= '/' . $resource->getId();
-                } else {
-                    $link .= $this->buildQueryString($restRequest);
                 }
+
+                $link .= $this->buildQueryString($resource, $restRequest);
 
                 $resource->addLink(RestLinkInterface::LINK_SELF, $link);
             }
@@ -208,7 +208,7 @@ class ResponseBuilder implements ResponseBuilderInterface
                 $linkParts[] = $parentResource->getId();
             }
             $linkParts[] = $restRequest->getResource()->getType();
-            $queryString = $this->buildQueryString($restRequest);
+            $queryString = $this->buildQueryString($restRequest->getResource(), $restRequest);
 
             return $this->formatLinks([
                 RestLinkInterface::LINK_SELF => implode('/', $linkParts) . $queryString,
@@ -219,12 +219,17 @@ class ResponseBuilder implements ResponseBuilderInterface
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return string
      */
-    protected function buildQueryString(RestRequestInterface $restRequest): string
+    protected function buildQueryString(RestResourceInterface $resource, RestRequestInterface $restRequest): string
     {
+        if ($resource->getType() !== $restRequest->getResource()->getType()) {
+            return '';
+        }
+
         $queryString = $restRequest->getQueryString();
 
         if (mb_strlen($queryString)) {
