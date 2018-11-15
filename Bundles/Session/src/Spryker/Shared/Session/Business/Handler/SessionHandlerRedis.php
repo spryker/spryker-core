@@ -9,7 +9,7 @@ namespace Spryker\Shared\Session\Business\Handler;
 
 use Predis\Client;
 use SessionHandlerInterface;
-use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
+use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 
 class SessionHandlerRedis implements SessionHandlerInterface
 {
@@ -38,20 +38,20 @@ class SessionHandlerRedis implements SessionHandlerInterface
     protected $lifetime;
 
     /**
-     * @var \Spryker\Shared\NewRelicApi\NewRelicApiInterface
+     * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
      */
-    protected $newRelicApi;
+    protected $monitoringService;
 
     /**
      * @param string $savePath
      * @param int $lifetime
-     * @param \Spryker\Shared\NewRelicApi\NewRelicApiInterface $newRelicApi
+     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
      */
-    public function __construct($savePath, $lifetime, NewRelicApiInterface $newRelicApi)
+    public function __construct($savePath, $lifetime, SessionToMonitoringServiceInterface $monitoringService)
     {
         $this->savePath = $savePath;
         $this->lifetime = $lifetime;
-        $this->newRelicApi = $newRelicApi;
+        $this->monitoringService = $monitoringService;
     }
 
     /**
@@ -87,7 +87,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
         $key = $this->keyPrefix . $sessionId;
         $startTime = microtime(true);
         $result = $this->connection->get($key);
-        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
         return $result ? json_decode($result, true) : '';
     }
@@ -108,7 +108,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->setex($key, $this->lifetime, json_encode($sessionData));
-        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result ? true : false;
     }
@@ -124,7 +124,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
 
         $startTime = microtime(true);
         $this->connection->del($key);
-        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
         return true;
     }

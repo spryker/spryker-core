@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\Required;
  * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Cms\CmsConfig getConfig()
  */
 class CmsPageLocalizedAttributesForm extends AbstractType
 {

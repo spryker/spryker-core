@@ -15,7 +15,11 @@ use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeBridge;
+use Spryker\Zed\PriceProduct\Dependency\Service\PriceProductToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
+ */
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_TOUCH = 'FACADE_TOUCH';
@@ -25,6 +29,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STORE = 'FACADE_STORE';
 
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     public const PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA = 'PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA';
     public const PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER = 'PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER';
@@ -51,6 +56,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPriceProductDimensionExpanderStrategyPlugins($container);
         $container = $this->addPriceProductPricesExtractorPlugins($container);
         $container = $this->addPriceProductStorePreDeletePlugins($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -216,6 +222,20 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE] = function () {
             return $this->getPriceProductStorePreDeletePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new PriceProductToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

@@ -14,6 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapperInterface;
+use Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpanderInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,18 +38,26 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     protected $concreteProductsResourceMapper;
 
     /**
+     * @var \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpanderInterface
+     */
+    protected $concreteProductAttributeTranslationExpander;
+
+    /**
      * @param \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper
+     * @param \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander
      */
     public function __construct(
         ProductsRestApiToProductStorageClientInterface $productStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper
+        ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper,
+        ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->concreteProductsResourceMapper = $concreteProductsResourceMapper;
+        $this->concreteProductAttributeTranslationExpander = $concreteProductAttributeTranslationExpander;
     }
 
     /**
@@ -66,25 +75,16 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             return $this->addConcreteSkuNotSpecifiedError($response);
         }
 
-        $concreteProductData = $this->productStorageClient
-            ->findProductConcreteStorageDataByMapping(
-                static::PRODUCT_CONCRETE_MAPPING_TYPE,
-                $resourceIdentifier,
-                $restRequest->getMetadata()->getLocale()
-            );
+        $restResource = $this->findOneByProductConcrete($resourceIdentifier, $restRequest);
 
-        if (!$concreteProductData) {
-            return $this->addConcreteProductNotFoundError($response);
+        if (!$restResource) {
+            $restErrorTransfer = (new RestErrorMessageTransfer())
+                ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT)
+                ->setStatus(Response::HTTP_NOT_FOUND)
+                ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_CONCRETE_PRODUCT);
+
+            return $response->addError($restErrorTransfer);
         }
-
-        $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
-            ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
-
-        $restResource = $this->restResourceBuilder->createRestResource(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            $concreteProductData[static::PRODUCT_CONCRETE_MAPPING_TYPE],
-            $restConcreteProductsAttributesTransfer
-        );
 
         return $response->addResource($restResource);
     }
@@ -127,10 +127,16 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             return null;
         }
 
+        $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
+            ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
+
+        $restConcreteProductsAttributesTransfer = $this->concreteProductAttributeTranslationExpander
+            ->addProductAttributeTranslation($restConcreteProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
+
         return $this->restResourceBuilder->createRestResource(
             ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
             $sku,
-            $this->concreteProductsResourceMapper->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData)
+            $restConcreteProductsAttributesTransfer
         );
     }
 

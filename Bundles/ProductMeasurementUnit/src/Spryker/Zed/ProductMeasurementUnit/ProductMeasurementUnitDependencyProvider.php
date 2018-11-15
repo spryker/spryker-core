@@ -14,6 +14,9 @@ use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitT
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeBridge;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitConfig getConfig()
+ */
 class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION = 'SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION';

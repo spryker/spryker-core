@@ -14,6 +14,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 /**
  * @method \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinued\Communication\ProductDiscontinuedCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig getConfig()
  */
 class SaveDiscontinuedNotesProductConcretePluginUpdate extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {

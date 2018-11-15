@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductQuantity;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\ProductQuantity\ProductQuantityConfig getConfig()
+ */
 class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

@@ -14,6 +14,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMa
 
 /**
  * @method \Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOptionConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\ShoppingListProductOptionConnector\ShoppingListProductOptionConnectorConfig getConfig()
  */
 class CartItemProductOptionToShoppingListItemProductOptionMapperPlugin extends AbstractPlugin implements ItemToShoppingListItemMapperPluginInterface
 {

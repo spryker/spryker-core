@@ -13,8 +13,10 @@ use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Silex\ServiceControllerResolver;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\WebProfiler\DataCollector\RequestDataCollector;
+use Spryker\Shared\WebProfiler\WebProfilerConstants;
 use Symfony\Bridge\Twig\DataCollector\TwigDataCollector;
 use Symfony\Bridge\Twig\Extension\CodeExtension;
 use Symfony\Bridge\Twig\Extension\ProfilerExtension;
@@ -52,7 +54,9 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
     public function register(Application $app)
     {
         $app['profiler.cache_dir'] = function () {
-            return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/profiler';
+            $defaultPath = APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/profiler';
+
+            return Config::get(WebProfilerConstants::PROFILER_CACHE_DIRECTORY, $defaultPath);
         };
 
         $app['profiler.mount_prefix'] = '/_profiler';
