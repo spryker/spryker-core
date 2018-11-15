@@ -78,12 +78,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
         $restResource = $this->findOneByProductConcrete($resourceIdentifier, $restRequest);
 
         if (!$restResource) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_CONCRETE_PRODUCT);
-
-            return $response->addError($restErrorTransfer);
+            return $this->addConcreteProductNotFoundError($response);
         }
 
         return $response->addResource($restResource);
