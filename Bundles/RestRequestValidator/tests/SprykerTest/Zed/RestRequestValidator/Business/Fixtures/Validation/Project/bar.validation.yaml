@@ -1,0 +1,5 @@
+endpoint_three:
+  post:
+    floatField:
+    - Regex:
+        pattern: '/\d*/'

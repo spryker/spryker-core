@@ -13,6 +13,8 @@ use Spryker\Zed\ProductRelationStorage\ProductRelationStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductRelationStorage\ProductRelationStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface getFacade()
  */
 class ProductRelationStorageCommunicationFactory extends AbstractCommunicationFactory
 {

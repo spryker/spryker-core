@@ -14,6 +14,7 @@ use Spryker\Zed\ManualOrderEntry\Persistence\Propel\Mapper\OrderSourceMapperInte
 
 /**
  * @method \Spryker\Zed\ManualOrderEntry\ManualOrderEntryConfig getConfig()
+ * @method \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface getRepository()
  */
 class ManualOrderEntryPersistenceFactory extends AbstractPersistenceFactory
 {
