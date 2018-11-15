@@ -14,12 +14,12 @@ interface CategoryImageStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $categoryIds);
+    public function publish(array $categoryIds): void;
 
     /**
      * @param array $categoryIds
      *
      * @return void
      */
-    public function unpublish(array $categoryIds);
+    public function unpublish(array $categoryIds): void;
 }

@@ -385,7 +385,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function getCategoryPostCreatePlugins(): array
     {
-        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_CATEGORY_CREATE);
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_CATEGORY_POST_CREATE);
     }
 
     /**
@@ -393,7 +393,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function getCategoryPostUpdatePlugins(): array
     {
-        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_CATEGORY_UPDATE);
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_CATEGORY_POST_UPDATE);
     }
 
     /**
@@ -401,7 +401,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function getCategoryPostReadPlugins(): array
     {
-        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_CATEGORY_READ);
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_CATEGORY_POST_READ);
     }
 
     /**

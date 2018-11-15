@@ -13,7 +13,7 @@ interface CategoryUpdateAfterPluginInterface
 {
     /**
      * Specification:
-     * - execute category after update plugin
+     * - Execute category after update plugin.
      *
      * @api
      *

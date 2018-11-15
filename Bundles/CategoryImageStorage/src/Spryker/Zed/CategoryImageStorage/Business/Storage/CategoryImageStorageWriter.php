@@ -46,7 +46,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $categoryIds)
+    public function publish(array $categoryIds): void
     {
         $imageSets = $this->getImageSetsIndexedByCategoryIdAndLocale(
             $this->repository->findCategoryImageSetsByFkCategoryIn($categoryIds)
@@ -61,7 +61,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
      *
      * @return void
      */
-    public function unpublish(array $categoryIds)
+    public function unpublish(array $categoryIds): void
     {
         $spyCategoryImageStorageEntities = $this->repository->findCategoryImageStorageByFkCategoryIn($categoryIds);
         foreach ($spyCategoryImageStorageEntities as $spyCategoryImageStorageEntity) {
@@ -141,7 +141,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     protected function storeDataSet(
         SpyCategoryImageStorageEntityTransfer $spyCategoryImageStorage,
         array $imageSets
-    ) {
+    ): void {
         $categoryStorageTransfer = new CategoryImageSetCollectionStorageTransfer();
         $categoryStorageTransfer->setIdCategory($spyCategoryImageStorage->getFkCategory());
         $categoryStorageTransfer->setImageSets(new ArrayObject(
@@ -158,7 +158,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetStorageTransfer[]
      */
-    protected function mapSpyCategoryImageSetEntityTransferCollection(array $spyCategoryImageSetTransferCollection)
+    protected function mapSpyCategoryImageSetEntityTransferCollection(array $spyCategoryImageSetTransferCollection): array
     {
         $categoryImageSetStorageTransferCollection = [];
         foreach ($spyCategoryImageSetTransferCollection as $spyImageSetTransfer) {
@@ -216,7 +216,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
      *
      * @return array
      */
-    protected function findCategoryImageStorageTransfersByCategoryIds(array $categoryIds)
+    protected function findCategoryImageStorageTransfersByCategoryIds(array $categoryIds): array
     {
         $categoryImageStorageTransfers = $this->repository->findCategoryImageStorageByFkCategoryIn($categoryIds);
         $categoryStorageEntitiesByIdAndLocale = [];
@@ -233,7 +233,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
      *
      * @return void
      */
-    protected function deleteStorageEntities(array $spyCategoryImageStorageEntities)
+    protected function deleteStorageEntities(array $spyCategoryImageStorageEntities): void
     {
         foreach ($spyCategoryImageStorageEntities as $localizedImageStorageEntities) {
             /** @var \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $imageStorageEntityTransfer */

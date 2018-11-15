@@ -25,6 +25,10 @@ class ImageCollectionForm extends AbstractType
     public const FIELD_SORT_ORDER = 'sortOrder';
     public const FIELD_IMAGE_PREVIEW = 'imagePreview';
 
+    public const IMAGE_URL_MIN_LENGTH = 0;
+    public const IMAGE_URL_MAX_LENGTH = 2048;
+    public const IMAGE_PREVIEW_WIDTH = 150;
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -88,8 +92,8 @@ class ImageCollectionForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Length([
-                    'min' => 0,
-                    'max' => 2048,
+                    'min' => static::IMAGE_URL_MIN_LENGTH,
+                    'max' => static::IMAGE_URL_MAX_LENGTH,
                 ]),
             ],
         ]);
@@ -108,7 +112,7 @@ class ImageCollectionForm extends AbstractType
             'required' => false,
             'label' => false,
             'property_path' => self::FIELD_IMAGE_SMALL,
-            ImageType::OPTION_IMAGE_WIDTH => 150,
+            ImageType::OPTION_IMAGE_WIDTH => static::IMAGE_PREVIEW_WIDTH,
         ]);
 
         return $this;
@@ -127,8 +131,8 @@ class ImageCollectionForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Length([
-                    'min' => 0,
-                    'max' => 2048,
+                    'min' => static::IMAGE_URL_MIN_LENGTH,
+                    'max' => static::IMAGE_URL_MAX_LENGTH,
                 ]),
             ],
         ]);

@@ -26,7 +26,9 @@ class ImageSetLocalizer implements ImageSetLocalizerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param array $formImageSetCollection
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
     public function buildCategoryImageSetCollection(array $formImageSetCollection): array
     {
@@ -46,7 +48,9 @@ class ImageSetLocalizer implements ImageSetLocalizerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $categoryImageSetCollection
+     *
+     * @return array
      */
     public function buildFormImageSetCollection(array $categoryImageSetCollection): array
     {

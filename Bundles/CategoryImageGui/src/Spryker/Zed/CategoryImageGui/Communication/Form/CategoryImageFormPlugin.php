@@ -19,11 +19,15 @@ class CategoryImageFormPlugin extends AbstractPlugin implements CategoryFormPlug
     public const FORM_IMAGE_SETS = 'formImageSets';
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder)
+    public function buildForm(FormBuilderInterface $builder): void
     {
         $builder->add(static::FORM_IMAGE_SETS, ImageSetCollectionForm::class);
     }

@@ -16,6 +16,7 @@ use Spryker\Zed\CategoryImage\Business\Model\WriterInterface;
 use Spryker\Zed\CategoryImage\Business\Provider\LocaleProvider;
 use Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface;
 use Spryker\Zed\CategoryImage\CategoryImageDependencyProvider;
+use Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -71,7 +72,7 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface
      */
-    protected function getLocaleFacade()
+    protected function getLocaleFacade(): CategoryImageToLocaleInterface
     {
         return $this->getProvidedDependency(CategoryImageDependencyProvider::FACADE_LOCALE);
     }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\CategoryImageGui\Communication\Form;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -123,7 +124,7 @@ class ImageSetForm extends AbstractType
     {
         $builder->add(self::FIELD_LOCALE, HiddenType::class);
         $builder->get(static::FIELD_LOCALE)
-            ->addModelTransformer($this->getFactory()->createLocaleTransformer());
+            ->addModelTransformer($this->createLocaleModelTransformer());
 
         return $this;
     }
@@ -190,6 +191,26 @@ class ImageSetForm extends AbstractType
             },
             function ($value) {
                 return new ArrayObject($value);
+            }
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createLocaleModelTransformer(): CallbackTransformer
+    {
+        return new CallbackTransformer(
+            function (?LocaleTransfer $value) {
+                if ($value !== null) {
+                    return $value->getIdLocale();
+                }
+            },
+            function (?int $value) {
+                $localeFacade = $this->getFactory()->getLocaleFacade();
+                if ($value !== null) {
+                    return $localeFacade->getLocaleById($value);
+                }
             }
         );
     }

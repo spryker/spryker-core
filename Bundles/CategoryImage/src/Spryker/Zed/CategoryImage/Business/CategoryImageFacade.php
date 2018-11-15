@@ -16,8 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeInterface
 {
     /**
-     * Specification:
-     * - Returns all category image sets from database for the given category id.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -33,9 +32,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
     }
 
     /**
-     * Specification:
-     * - Persists all provided image sets to database for the given category.
-     * - Returns CategoryTransfer along with the data from the persisted CategoryImageSetTransfers.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -51,9 +48,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
     }
 
     /**
-     * Specification:
-     * - Persists all provided image sets to database for the given category.
-     * - Returns CategoryTransfer along with the data from the persisted CategoryImageSetTransfers.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -69,8 +64,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
     }
 
     /**
-     * Specification:
-     * - Expands the CategoryTransfer with the category's image sets from database.
+     * {@inheritdoc}
      *
      * @api
      *

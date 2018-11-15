@@ -25,7 +25,7 @@ class CategoryImageRepository extends AbstractRepository implements CategoryImag
             ->createCategoryImageSetQuery()
             ->joinWithSpyCategoryImageSetToCategoryImage()
             ->useSpyCategoryImageSetToCategoryImageQuery()
-            ->joinWithSpyCategoryImage()
+                ->joinWithSpyCategoryImage()
             ->endUse()
             ->filterByFkCategory($categoryId)
             ->filterByIdCategoryImageSet($excludeIdCategoryImageSets, Criteria::NOT_IN)
@@ -44,8 +44,8 @@ class CategoryImageRepository extends AbstractRepository implements CategoryImag
         $categoryImageCollection = $this->getFactory()
             ->createCategoryImageQuery()
             ->useSpyCategoryImageSetToCategoryImageQuery()
-            ->filterByFkCategoryImageSet($idCategoryImageSet)
-            ->filterByFkCategoryImage($excludeIdCategoryImage, Criteria::NOT_IN)
+                ->filterByFkCategoryImageSet($idCategoryImageSet)
+                ->filterByFkCategoryImage($excludeIdCategoryImage, Criteria::NOT_IN)
             ->endUse()
             ->find();
 

@@ -27,6 +27,31 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $this->addEventBehaviorFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $this->addCategoryImageSetQuery($container);
+        $this->addCategoryImageSetToCategoryImageQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventBehaviorFacade(Container $container): Container
+    {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new CategoryImageStorageToEventBehaviorBridge(
                 $container->getLocator()->eventBehavior()->facade()
@@ -41,12 +66,22 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container)
+    protected function addCategoryImageSetQuery(Container $container): Container
     {
         $container[static::PROPEL_QUERY_CATEGORY_IMAGE_SET] = function () {
             return SpyCategoryImageSetQuery::create();
         };
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryImageSetToCategoryImageQuery(Container $container): Container
+    {
         $container[static::PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE] = function () {
             return SpyCategoryImageSetToCategoryImageQuery::create();
         };

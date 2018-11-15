@@ -13,7 +13,7 @@ interface CategoryTransferExpanderPluginInterface
 {
     /**
      * Specification:
-     * - expand CategoryTransfer with additional subtransfers
+     * - Expand CategoryTransfer with additional subtransfers.
      *
      * @api
      *

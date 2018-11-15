@@ -20,6 +20,7 @@ use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
 use Spryker\Zed\Category\Communication\Tabs\CategoryFormAddTabs;
 use Spryker\Zed\Category\Communication\Tabs\CategoryFormEditTabs;
+use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -219,7 +220,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
      */
-    public function createCategoryFormAddTabs()
+    public function createCategoryFormAddTabs(): TabsInterface
     {
         return new CategoryFormAddTabs();
     }
@@ -227,7 +228,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
      */
-    public function createCategoryFormEditTabs()
+    public function createCategoryFormEditTabs(): TabsInterface
     {
         return new CategoryFormEditTabs();
     }

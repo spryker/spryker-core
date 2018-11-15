@@ -13,7 +13,7 @@ interface CategoryFormPluginInterface
 {
     /**
      * Specification:
-     * - Add form parts to the main form builder
+     * - Add form parts to the main form builder.
      *
      * @api
      *
@@ -21,5 +21,5 @@ interface CategoryFormPluginInterface
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder);
+    public function buildForm(FormBuilderInterface $builder): void;
 }

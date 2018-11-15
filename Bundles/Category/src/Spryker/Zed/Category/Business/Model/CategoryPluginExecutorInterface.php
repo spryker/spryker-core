@@ -15,8 +15,6 @@ interface CategoryPluginExecutorInterface
      * Specification:
      * - execute category post update plugin stack
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
@@ -27,8 +25,6 @@ interface CategoryPluginExecutorInterface
      * Specification:
      * - execute category post create plugin stack
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
@@ -38,8 +34,6 @@ interface CategoryPluginExecutorInterface
     /**
      * Specification:
      * - execute category post read plugin stack
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *

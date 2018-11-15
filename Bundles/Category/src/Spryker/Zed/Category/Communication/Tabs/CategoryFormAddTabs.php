@@ -16,7 +16,7 @@ class CategoryFormAddTabs extends AbstractCategoryFormTabs
      *
      * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
-    protected function build(TabsViewTransfer $tabsViewTransfer)
+    protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $this
             ->addGeneralTab($tabsViewTransfer)

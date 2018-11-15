@@ -19,7 +19,7 @@ interface ImageSetLocalizerInterface
     public function buildCategoryImageSetCollection(array $formImageSetCollection): array;
 
     /**
-     * Build form image set collection array, where image sets are grouped by locale name.
+     * Builds form image set collection array, where image sets are grouped by locale name.
      *
      * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $categoryImageSetCollection
      *
