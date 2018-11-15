@@ -20,6 +20,8 @@ use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface;
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  */
 class SalesPersistenceFactory extends AbstractPersistenceFactory
 {

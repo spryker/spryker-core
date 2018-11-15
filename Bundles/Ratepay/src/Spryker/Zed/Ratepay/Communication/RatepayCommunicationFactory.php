@@ -26,6 +26,7 @@ use Spryker\Zed\Ratepay\RatepayDependencyProvider;
 /**
  * @method \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Ratepay\RatepayConfig getConfig()
+ * @method \Spryker\Zed\Ratepay\Business\RatepayFacadeInterface getFacade()
  */
 class RatepayCommunicationFactory extends AbstractCommunicationFactory
 {

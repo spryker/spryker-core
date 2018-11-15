@@ -27,10 +27,10 @@ class CartsResourceController extends AbstractController
         $idQuote = $restRequest->getResource()->getId();
 
         if ($idQuote !== null) {
-            return $this->getFactory()->createCartsReader()->readByIdentifier($idQuote, $restRequest);
+            return $this->getFactory()->createCartReader()->readByIdentifier($idQuote, $restRequest);
         }
 
-        return $this->getFactory()->createCartsReader()->readCurrentCustomerCarts($restRequest);
+        return $this->getFactory()->createCartReader()->readCurrentCustomerCarts($restRequest);
     }
 
     /**
@@ -41,7 +41,7 @@ class CartsResourceController extends AbstractController
      */
     public function postAction(RestRequestInterface $restRequest, RestCartsAttributesTransfer $restCartsAttributesTransfer): RestResponseInterface
     {
-        return $this->getFactory()->createCartsWriter()->create($restRequest, $restCartsAttributesTransfer);
+        return $this->getFactory()->createCartCreator()->create($restRequest, $restCartsAttributesTransfer);
     }
 
     /**
@@ -51,6 +51,6 @@ class CartsResourceController extends AbstractController
      */
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createCartsWriter()->delete($restRequest);
+        return $this->getFactory()->createCartDeleter()->delete($restRequest);
     }
 }

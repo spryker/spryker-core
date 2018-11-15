@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CompanyRole\CompanyRoleConfig getConfig()
+ * @method \Spryker\Zed\CompanyRole\Persistence\CompanyRoleEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepositoryInterface getRepository()
  */
 class CompanyRolePersistenceFactory extends AbstractPersistenceFactory
 {
