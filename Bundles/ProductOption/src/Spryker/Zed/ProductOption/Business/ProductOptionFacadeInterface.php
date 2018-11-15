@@ -257,6 +257,8 @@ interface ProductOptionFacadeInterface
      *
      * @api
      *
+     * @deprecated Use checkProductOptionGroupExistenceByProductOptionValueId() instead
+     *
      * @param int $idProductOptionValue
      *
      * @return bool

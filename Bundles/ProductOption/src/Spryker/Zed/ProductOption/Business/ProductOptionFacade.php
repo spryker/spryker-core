@@ -289,6 +289,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
+     * @deprecated Use checkProductOptionGroupExistenceByProductOptionValueId() instead
+     *
      * @param int $idProductOptionValue
      *
      * @return bool
