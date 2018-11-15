@@ -92,7 +92,7 @@ class ResetPasswordForm extends AbstractType
             'first_options' => ['label' => 'Password', 'attr' => ['autocomplete' => 'off']],
             'second_options' => ['label' => 'Repeat Password', 'attr' => ['autocomplete' => 'off']],
             'required' => true,
-            'type' => 'password',
+            'type' => PasswordType::class,
         ]);
 
         return $this;
