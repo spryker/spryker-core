@@ -118,8 +118,13 @@ class ResponseBuilder implements ResponseBuilderInterface
         $data = [];
 
         foreach ($resources as $resource) {
-            if (!$resource->hasLink(RestLinkInterface::LINK_SELF) && $resource->getId()) {
-                $link = $resource->getType() . '/' . $resource->getId();
+            if (!$resource->hasLink(RestLinkInterface::LINK_SELF)) {
+                $link = $resource->getType();
+                if ($resource->getId()) {
+                    $link .= '/' . $resource->getId();
+                } else {
+                    $link .= $this->buildQueryString($restRequest);
+                }
 
                 $resource->addLink(RestLinkInterface::LINK_SELF, $link);
             }
@@ -203,10 +208,7 @@ class ResponseBuilder implements ResponseBuilderInterface
                 $linkParts[] = $parentResource->getId();
             }
             $linkParts[] = $restRequest->getResource()->getType();
-            $queryString = $restRequest->getQueryString();
-            if (strlen($queryString)) {
-                $queryString = '?' . $queryString;
-            }
+            $queryString = $this->buildQueryString($restRequest);
 
             return $this->formatLinks([
                 RestLinkInterface::LINK_SELF => implode('/', $linkParts) . $queryString,
@@ -214,5 +216,21 @@ class ResponseBuilder implements ResponseBuilderInterface
         }
 
         return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return string
+     */
+    protected function buildQueryString(RestRequestInterface $restRequest): string
+    {
+        $queryString = $restRequest->getQueryString();
+
+        if (mb_strlen($queryString)) {
+            $queryString = '?' . $queryString;
+        }
+
+        return $queryString;
     }
 }
