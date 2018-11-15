@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroup;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
@@ -110,7 +111,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
      */
     public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup)
     {
-        $productOptionGroupEntity = $this->getOptionGroupById($idProductOptionGroup);
+        $productOptionGroupEntity = $this->findOptionGroupEntityById($idProductOptionGroup);
         if (!$productOptionGroupEntity) {
             throw new ProductOptionGroupNotFoundException(sprintf(
                 'Product option group with id "%s" not found.',
@@ -118,7 +119,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
             ));
         }
 
-        $productAbstractEntity = $this->getProductAbstractBySku($abstractSku);
+        $productAbstractEntity = $this->findProductAbstractEntityBySku($abstractSku);
         if (!$productAbstractEntity) {
             throw new AbstractProductNotFoundException(sprintf(
                 'Abstract product with sku "%s" not found.',
@@ -147,13 +148,11 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null
      */
-    protected function getOptionGroupById($idProductOptionGroup)
+    protected function findOptionGroupEntityById(int $idProductOptionGroup): ?SpyProductOptionGroup
     {
-        $productOptionGroupEntity = $this->productOptionQueryContainer
+        return $this->productOptionQueryContainer
             ->queryProductOptionGroupById($idProductOptionGroup)
             ->findOne();
-
-        return $productOptionGroupEntity;
     }
 
     /**
@@ -161,13 +160,11 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
      */
-    protected function getProductAbstractBySku($abstractSku)
+    protected function findProductAbstractEntityBySku(string $abstractSku): ?SpyProductAbstract
     {
-        $productAbstractEntity = $this->productOptionQueryContainer
+        return $this->productOptionQueryContainer
             ->queryProductAbstractBySku($abstractSku)
             ->findOne();
-
-        return $productAbstractEntity;
     }
 
     /**

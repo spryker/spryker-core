@@ -67,7 +67,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
      */
     public function getProductOptionGroupById($idProductOptionGroup)
     {
-        $productOptionGroupEntity = $this->queryProductGroupById($idProductOptionGroup);
+        $productOptionGroupEntity = $this->findProductOptionGroupEntityWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup);
 
         if (!$productOptionGroupEntity) {
             throw new ProductOptionGroupNotFoundException(
@@ -218,12 +218,10 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null
      */
-    protected function queryProductGroupById($idProductOptionGroup)
+    protected function findProductOptionGroupEntityWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup): ?SpyProductOptionGroup
     {
-        $productOptionGroupCollection = $this->productOptionQueryContainer
+        return $this->productOptionQueryContainer
             ->queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
-            ->find();
-
-        return $productOptionGroupCollection->getFirst();
+            ->findOne();
     }
 }
