@@ -62,9 +62,7 @@ class CustomerAddressReader implements CustomerAddressReaderInterface
             return $restResource;
         }
 
-        $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
-
-        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
+        foreach ($customerResponseTransfer->getCustomerTransfer()->getAddresses()->getAddresses() as $addressTransfer) {
             $restAddressAttributesTransfer = $this->addressesResourceMapper
                 ->mapAddressTransferToRestAddressAttributesTransfer(
                     $addressTransfer,
