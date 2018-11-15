@@ -13,7 +13,7 @@ use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap;
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig;
+use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
+    protected const PARAM_ID_RECLAMATION_ITEM = 'id-reclamation-item';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -29,7 +31,7 @@ class DetailController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idReclamation = $this->castId($request->get(SalesReclamationGuiConfig::PARAM_ID_RECLAMATION));
+        $idReclamation = $this->castId($request->get(ReclamationTable::PARAM_ID_RECLAMATION));
         $reclamationTransfer = new ReclamationTransfer();
         $reclamationTransfer->setIdSalesReclamation($idReclamation);
 
@@ -55,7 +57,7 @@ class DetailController extends AbstractController
      */
     public function closeAction(Request $request): RedirectResponse
     {
-        $idReclamation = $this->castId($request->get(SalesReclamationGuiConfig::PARAM_ID_RECLAMATION));
+        $idReclamation = $this->castId($request->get(ReclamationTable::PARAM_ID_RECLAMATION));
 
         $reclamationTransfer = new ReclamationTransfer();
         $reclamationTransfer->setIdSalesReclamation($idReclamation);
@@ -95,8 +97,8 @@ class DetailController extends AbstractController
      */
     public function closeItemAction(Request $request): RedirectResponse
     {
-        $idReclamation = $this->castId($request->get(SalesReclamationGuiConfig::PARAM_ID_RECLAMATION));
-        $idReclamationItem = $this->castId($request->get(SalesReclamationGuiConfig::PARAM_ID_RECLAMATION_ITEM));
+        $idReclamation = $this->castId($request->get(ReclamationTable::PARAM_ID_RECLAMATION));
+        $idReclamationItem = $this->castId($request->get(static::PARAM_ID_RECLAMATION_ITEM));
 
         $reclamationItemTransfer = new ReclamationItemTransfer();
         $reclamationItemTransfer->setIdSalesReclamationItem($idReclamationItem);
@@ -140,7 +142,7 @@ class DetailController extends AbstractController
             Url::generate(
                 '/sales-reclamation-gui/detail',
                 [
-                    SalesReclamationGuiConfig::PARAM_ID_RECLAMATION => $idReclamation,
+                    ReclamationTable::PARAM_ID_RECLAMATION => $idReclamation,
                 ]
             )->build()
         );

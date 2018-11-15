@@ -42,7 +42,7 @@ class SalesReclamationToSalesFacadeBridge implements SalesReclamationToSalesFaca
      *
      * @return void
      */
-    public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $this->salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
     }
@@ -53,7 +53,7 @@ class SalesReclamationToSalesFacadeBridge implements SalesReclamationToSalesFaca
      *
      * @return void
      */
-    public function updateOrder(OrderTransfer $orderTransfer, int $idSalesOrder): void
+    public function updateOrder(OrderTransfer $orderTransfer, $idSalesOrder)
     {
         $this->salesFacade->updateOrder($orderTransfer, $idSalesOrder);
     }

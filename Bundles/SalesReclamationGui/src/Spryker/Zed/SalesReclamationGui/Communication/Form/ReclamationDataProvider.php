@@ -8,7 +8,7 @@
 namespace Spryker\Zed\SalesReclamationGui\Communication\Form;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig;
+use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
 use Symfony\Component\HttpFoundation\Request;
 
 class ReclamationDataProvider
@@ -32,14 +32,14 @@ class ReclamationDataProvider
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions(QuoteTransfer $quoteTransfer): array
     {
         $value = null;
 
         if (!$quoteTransfer->getReclamationId()
-            && $this->request->query->has(SalesReclamationGuiConfig::PARAM_ID_RECLAMATION)
+            && $this->request->query->has(ReclamationTable::PARAM_ID_RECLAMATION)
         ) {
-            $value = $this->request->query->get(SalesReclamationGuiConfig::PARAM_ID_RECLAMATION);
+            $value = $this->request->query->get(ReclamationTable::PARAM_ID_RECLAMATION);
         }
 
         return [

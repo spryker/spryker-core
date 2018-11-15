@@ -7,14 +7,18 @@
 
 namespace Spryker\Zed\SalesReclamationGui\Communication\Plugin\Sales;
 
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface;
-use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig;
+use Spryker\Zed\SalesReclamationGui\Communication\Controller\CreateController;
 
 class ReclamationSalesTablePlugin implements SalesTablePluginInterface
 {
-    public const URL_CREATE_RECLAMATION = '/sales-reclamation-gui/create';
+    protected const URL_CREATE_RECLAMATION = '/sales-reclamation-gui/create';
+
+    /**
+     * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_ID_SALES_ORDER
+     */
+    protected const COL_ID_SALES_ORDER = 'spy_sales_order.id_sales_order';
 
     /**
      * @api
@@ -26,7 +30,7 @@ class ReclamationSalesTablePlugin implements SalesTablePluginInterface
      */
     public function formatTableRow(callable $buttonGenerator, array $item): array
     {
-        $newButton = $this->generateClaimButton($buttonGenerator, $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER]);
+        $newButton = $this->generateClaimButton($buttonGenerator, $item[static::COL_ID_SALES_ORDER]);
         $item[static::ROW_ACTIONS] .= ' ' . $newButton;
 
         return $item;
@@ -42,7 +46,7 @@ class ReclamationSalesTablePlugin implements SalesTablePluginInterface
     {
         return $buttonGenerator(
             Url::generate(static::URL_CREATE_RECLAMATION, [
-                SalesReclamationGuiConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
+                CreateController::PARAM_ID_SALES_ORDER => $idSalesOrder,
             ]),
             'Claim',
             [

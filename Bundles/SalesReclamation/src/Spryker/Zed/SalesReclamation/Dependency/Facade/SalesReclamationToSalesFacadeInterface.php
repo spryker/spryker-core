@@ -26,7 +26,7 @@ interface SalesReclamationToSalesFacadeInterface
      *
      * @return void
      */
-    public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+    public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -34,5 +34,5 @@ interface SalesReclamationToSalesFacadeInterface
      *
      * @return void
      */
-    public function updateOrder(OrderTransfer $orderTransfer, int $idSalesOrder): void;
+    public function updateOrder(OrderTransfer $orderTransfer, $idSalesOrder);
 }

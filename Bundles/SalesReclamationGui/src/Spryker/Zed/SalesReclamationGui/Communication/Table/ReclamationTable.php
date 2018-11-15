@@ -13,13 +13,14 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface;
-use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig;
 
 class ReclamationTable extends AbstractTable
 {
     public const COL_ACTIONS = 'COL_ACTIONS';
-    public const URL_RECLAMATION_DETAIL = '/sales-reclamation-gui/detail';
-    public const URL_RECLAMATION_CLOSE = '/sales-reclamation-gui/detail/close';
+    public const PARAM_ID_RECLAMATION = 'id-reclamation';
+
+    protected const URL_RECLAMATION_DETAIL = '/sales-reclamation-gui/detail';
+    protected const URL_RECLAMATION_CLOSE = '/sales-reclamation-gui/detail/close';
 
     /**
      * @var \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery
@@ -166,7 +167,7 @@ class ReclamationTable extends AbstractTable
     {
         return $this->generateViewButton(
             Url::generate(static::URL_RECLAMATION_DETAIL, [
-                SalesReclamationGuiConfig::PARAM_ID_RECLAMATION => $idReclamation,
+                static::PARAM_ID_RECLAMATION => $idReclamation,
             ]),
             'View'
         );
@@ -181,7 +182,7 @@ class ReclamationTable extends AbstractTable
     {
         return $this->generateViewButton(
             Url::generate(static::URL_RECLAMATION_CLOSE, [
-                SalesReclamationGuiConfig::PARAM_ID_RECLAMATION => $idReclamation,
+                static::PARAM_ID_RECLAMATION => $idReclamation,
             ]),
             'Close',
             [

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\ManualOrderEntryFormPluginInterface;
 use Spryker\Zed\SalesReclamationGui\Communication\Form\ReclamationType;
-use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig;
+use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,6 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
 class ReclamationOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -31,6 +33,8 @@ class ReclamationOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -44,6 +48,8 @@ class ReclamationOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -58,6 +64,8 @@ class ReclamationOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -70,6 +78,8 @@ class ReclamationOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -82,9 +92,9 @@ class ReclamationOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
         $value = null;
 
         if (!$quoteTransfer->getReclamationId()
-            && $request->query->has(SalesReclamationGuiConfig::PARAM_ID_RECLAMATION)
+            && $request->query->has(ReclamationTable::PARAM_ID_RECLAMATION)
         ) {
-            $value = $request->query->get(SalesReclamationGuiConfig::PARAM_ID_RECLAMATION);
+            $value = $request->query->get(ReclamationTable::PARAM_ID_RECLAMATION);
         }
 
         return $value === null;

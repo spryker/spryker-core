@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig;
+use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,6 +21,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+
+    protected const PARAM_IDS_SALES_ORDER_ITEMS = 'id-order-item';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -28,7 +32,7 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idSalesOrder = $this->castId($request->get(SalesReclamationGuiConfig::PARAM_ID_SALES_ORDER));
+        $idSalesOrder = $this->castId($request->get(static::PARAM_ID_SALES_ORDER));
 
         $orderTransfer = $this
             ->getFactory()
@@ -39,7 +43,7 @@ class CreateController extends AbstractController
             return $this->showForm($orderTransfer);
         }
 
-        $idsOrderItem = (array)$request->request->getDigits(SalesReclamationGuiConfig::PARAM_IDS_SALES_ORDER_ITEMS);
+        $idsOrderItem = (array)$request->request->getDigits(static::PARAM_IDS_SALES_ORDER_ITEMS);
 
         if (empty($idsOrderItem)) {
             $this->addErrorMessage('No order items provided');
@@ -61,7 +65,7 @@ class CreateController extends AbstractController
             Url::generate(
                 '/sales-reclamation-gui/detail',
                 [
-                    SalesReclamationGuiConfig::PARAM_ID_RECLAMATION => $reclamationTransfer->getIdSalesReclamation(),
+                    ReclamationTable::PARAM_ID_RECLAMATION => $reclamationTransfer->getIdSalesReclamation(),
                 ]
             )->build()
         );

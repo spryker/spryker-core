@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\SalesReclamationGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\OrderTransfer;
-
 class SalesReclamationGuiToSalesFacadeBridge implements SalesReclamationGuiToSalesFacadeInterface
 {
     /**
@@ -29,7 +27,7 @@ class SalesReclamationGuiToSalesFacadeBridge implements SalesReclamationGuiToSal
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderByIdSalesOrder($idSalesOrder): OrderTransfer
+    public function getOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
     }

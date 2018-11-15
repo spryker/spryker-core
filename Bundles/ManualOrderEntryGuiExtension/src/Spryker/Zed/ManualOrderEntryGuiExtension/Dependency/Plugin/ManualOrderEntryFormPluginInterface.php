@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 interface ManualOrderEntryFormPluginInterface
 {
     /**
+     * Specification:
+     * - Provides form name.
+     *
      * @api
      *
      * @return string
@@ -21,6 +24,9 @@ interface ManualOrderEntryFormPluginInterface
     public function getName(): string;
 
     /**
+     * Specification:
+     * - Provides a form type.
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -31,6 +37,9 @@ interface ManualOrderEntryFormPluginInterface
     public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface;
 
     /**
+     * Specification:
+     * - Handle data on form submit.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -42,6 +51,9 @@ interface ManualOrderEntryFormPluginInterface
     public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer;
 
     /**
+     * Specification:
+     * - Checks if form has pre defined values.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -51,6 +63,9 @@ interface ManualOrderEntryFormPluginInterface
     public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool;
 
     /**
+     * Specification:
+     * - Checks if form is skipped.
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request

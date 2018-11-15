@@ -30,6 +30,8 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        parent::provideCommunicationLayerDependencies($container);
+
         $this->addSalesFacade($container);
         $this->addSalesReclamationFacade($container);
         $this->addSalesReclamationPropelQuery($container);
