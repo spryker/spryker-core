@@ -29,6 +29,8 @@ use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListPermissionGro
 
 /**
  * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
+ * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface getRepository()
  */
 class ShoppingListPersistenceFactory extends AbstractPersistenceFactory
 {

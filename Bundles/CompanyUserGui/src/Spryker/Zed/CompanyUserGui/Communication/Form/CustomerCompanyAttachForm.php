@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\CompanyUserGui\Communication\CompanyUserGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig getConfig()
  */
 class CustomerCompanyAttachForm extends AbstractType
 {

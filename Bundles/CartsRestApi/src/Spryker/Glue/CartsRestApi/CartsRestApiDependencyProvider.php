@@ -18,6 +18,9 @@ use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInter
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\CartsRestApi\CartsRestApiConfig getConfig()
+ */
 class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CART = 'CLIENT_CART';

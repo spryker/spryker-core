@@ -17,6 +17,9 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\CompanyUnitAddressGui\Communication\CompanyUnitAddressGuiCommunicationFactory getFactory()
+ */
 class CompanyBusinessUnitAddressChoiceFormType extends AbstractType
 {
     public const OPTION_VALUES_ADDRESSES_CHOICES = 'company_business_unit_address_value_options';

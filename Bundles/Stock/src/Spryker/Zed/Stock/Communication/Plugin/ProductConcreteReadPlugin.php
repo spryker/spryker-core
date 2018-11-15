@@ -14,6 +14,8 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 /**
  * @method \Spryker\Zed\Stock\Business\StockFacadeInterface getFacade()
  * @method \Spryker\Zed\Stock\Communication\StockCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Stock\StockConfig getConfig()
+ * @method \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface getQueryContainer()
  */
 class ProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
