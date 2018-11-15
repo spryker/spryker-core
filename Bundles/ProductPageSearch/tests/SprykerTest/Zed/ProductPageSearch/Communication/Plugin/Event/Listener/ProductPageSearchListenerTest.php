@@ -55,6 +55,7 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPag
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\ProductCategoryPageDataExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainer;
+use Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 use SprykerTest\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactoryMock;
@@ -134,6 +135,7 @@ class ProductPageSearchListenerTest extends Unit
 
         $locale = $this->getLocaleFacade()->getCurrentLocale();
         $this->categoryTransfer = $this->tester->haveLocalizedCategory(['locale' => $locale]);
+        $this->getProductSearchFacade()->activateProductSearch($this->productConcreteTransfer->getIdProductConcrete(), [$locale]);
 
         $productIdsToAssign = [$this->productAbstractTransfer->getIdProductAbstract()];
 
@@ -644,6 +646,14 @@ class ProductPageSearchListenerTest extends Unit
     protected function getLocaleFacade(): LocaleFacadeInterface
     {
         return $this->tester->getLocator()->locale()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface
+     */
+    protected function getProductSearchFacade(): ProductSearchFacadeInterface
+    {
+        return $this->tester->getLocator()->productSearch()->facade();
     }
 
     /**
