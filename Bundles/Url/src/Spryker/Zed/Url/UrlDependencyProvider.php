@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Url\Dependency\UrlToLocaleBridge;
 use Spryker\Zed\Url\Dependency\UrlToTouchBridge;
 
+/**
+ * @method \Spryker\Zed\Url\UrlConfig getConfig()
+ */
 class UrlDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'locale facade';

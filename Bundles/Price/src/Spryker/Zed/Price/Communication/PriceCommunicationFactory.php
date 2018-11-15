@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Price\PriceConfig getConfig()
+ * @method \Spryker\Zed\Price\Business\PriceFacadeInterface getFacade()
  */
 class PriceCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -20,6 +20,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceDimensionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductPriceNotBlank;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
@@ -41,6 +42,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  */
 class ProductFormAdd extends AbstractType
 {
@@ -60,6 +62,7 @@ class ProductFormAdd extends AbstractType
     public const FORM_SEO = 'seo';
     public const FORM_STORE_RELATION = 'store_relation';
     public const FORM_IMAGE_SET = 'image_set';
+    public const FORM_PRICE_DIMENSION = 'price_dimension';
 
     public const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
     public const OPTION_ATTRIBUTE_SUPER = 'option_attribute_super';
@@ -161,11 +164,14 @@ class ProductFormAdd extends AbstractType
             ->addProductAbstractIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
             ->addAttributeSuperForm($builder, $options[self::OPTION_ATTRIBUTE_SUPER])
+            ->addPriceDimensionForm($builder)
             ->addPriceForm($builder, $options)
             ->addTaxRateField($builder, $options)
             ->addSeoLocalizedForms($builder)
             ->addImageLocalizedForms($builder)
             ->addStoreRelationForm($builder);
+
+        $this->executeProductAbstractFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -291,7 +297,6 @@ class ProductFormAdd extends AbstractType
                         'callback' => function ($sku, ExecutionContextInterface $context) {
                             $form = $context->getRoot();
                             $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-                            $sku = $this->getFactory()->getUtilTextService()->generateSlug($sku);
 
                             $skuCount = $this->getFactory()->getProductQueryContainer()
                                 ->queryProduct()
@@ -470,6 +475,24 @@ class ProductFormAdd extends AbstractType
                     'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_SUPER],
                 ])],
             ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPriceDimensionForm(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FORM_PRICE_DIMENSION,
+            PriceDimensionForm::class,
+            [
+                'label' => false,
+            ]
+        );
 
         return $this;
     }
@@ -695,5 +718,20 @@ class ProductFormAdd extends AbstractType
     protected function prepareDefaultsValidationGroups(array $validationGroups, FormInterface $form): array
     {
         return $validationGroups;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function executeProductAbstractFormExpanderPlugins(FormBuilderInterface $builder, array $options): self
+    {
+        foreach ($this->getFactory()->getProductAbstractFormExpanderPlugins() as $formExpanderPlugin) {
+            $builder = $formExpanderPlugin->expand($builder, $options);
+        }
+
+        return $this;
     }
 }

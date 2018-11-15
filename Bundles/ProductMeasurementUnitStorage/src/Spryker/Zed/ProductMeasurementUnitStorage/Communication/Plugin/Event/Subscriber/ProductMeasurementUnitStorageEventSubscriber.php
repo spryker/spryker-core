@@ -17,6 +17,7 @@ use Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Event\Listene
 /**
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Communication\ProductMeasurementUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Business\ProductMeasurementUnitStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig getConfig()
  */
 class ProductMeasurementUnitStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

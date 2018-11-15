@@ -12,6 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductDiscontinuedGui\Communication\ProductDiscontinuedGuiCommunicationFactory getFactory()
+ */
 class ProductDiscontinuedNoteForm extends AbstractType
 {
     public const FIELD_FK_LOCALE = 'fkLocale';

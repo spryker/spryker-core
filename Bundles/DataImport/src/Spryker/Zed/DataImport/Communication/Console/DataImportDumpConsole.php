@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\DataImport\Business\DataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\DataImport\Communication\DataImportCommunicationFactory getFactory()
  */
 class DataImportDumpConsole extends Console
 {

@@ -143,10 +143,10 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
      */
     public function addProductConcreteRelations(int $idProductList, array $productIds): void
     {
-        foreach ($productIds as $idProductConcrete) {
+        foreach ($productIds as $idProduct) {
             $productListProductConcreteEntity = new SpyProductListProductConcrete();
             $productListProductConcreteEntity->setFkProductList($idProductList)
-                ->setFkProduct($idProductConcrete)
+                ->setFkProduct($idProduct)
                 ->save();
         }
     }
