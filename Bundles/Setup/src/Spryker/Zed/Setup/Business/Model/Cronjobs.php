@@ -466,17 +466,20 @@ cd %s
         $cronjobsConfigPath = $this->config->getCronjobsConfigFilePath();
 
         $environment = Environment::getInstance();
-        $testBashCommand = '';
+        $customBashCommand = '';
         $destination = APPLICATION_ROOT_DIR;
 
         if ($environment->isNotDevelopment()) {
-            $testBashCommand = '[ -f ' . APPLICATION_ROOT_DIR . '/deploy/vars ] &amp;&amp; . ' . APPLICATION_ROOT_DIR . '/deploy/vars';
+            $checkDeployFolderExistsBashCommand = '[ -f ' . APPLICATION_ROOT_DIR . '/deploy/vars ]';
+            $sourceBashCommand = '. ' . APPLICATION_ROOT_DIR . '/deploy/vars';
+
+            $customBashCommand = $checkDeployFolderExistsBashCommand . ' ' . '&amp;&amp;' . ' ' . $sourceBashCommand;
             $destination = '\$destination_release_dir';
         }
 
         return sprintf(
             $commandTemplate,
-            $testBashCommand,
+            $customBashCommand,
             $environment->getEnvironment(),
             $store,
             $destination,
@@ -528,17 +531,26 @@ cd %s
     protected function buildExceptionMessage(string $errorMessage, string $url): string
     {
         $curlErrorMessage = sprintf(static::TEMPLATE_MESSAGE_ERROR_CURL, $errorMessage, $url);
-        $csrfErrorMessage = 'You need turn on Jenkins CSRF protection.'
-            . PHP_EOL
-            . 'Please add next line in your config file:'
-            . PHP_EOL
-            . '$config[SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED] = true;';
 
         if (strpos($curlErrorMessage, static::JENKINS_CSRF_TOKEN_NAME) !== false) {
-            return $curlErrorMessage . PHP_EOL . $csrfErrorMessage;
+            $curlErrorMessage = $this->buildCsrfProtectionErrorMessage($curlErrorMessage);
         }
 
         return $curlErrorMessage;
+    }
+
+    /**
+     * @param string $errorMessage
+     *
+     * @return string
+     */
+    protected function buildCsrfProtectionErrorMessage(string $errorMessage): string
+    {
+        $csrfErrorMessage = 'Please add the following configuration to your config_* file to enable the CSRF protection for Jenkins.'
+            . PHP_EOL
+            . '$config[SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED] = true;';
+
+        return $errorMessage . PHP_EOL . $csrfErrorMessage;
     }
 
     /**
