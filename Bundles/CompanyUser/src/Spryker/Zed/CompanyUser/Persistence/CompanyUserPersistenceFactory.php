@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CompanyUser\CompanyUserConfig getConfig()
+ * @method \Spryker\Zed\CompanyUser\Persistence\CompanyUserEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface getRepository()
  */
 class CompanyUserPersistenceFactory extends AbstractPersistenceFactory
 {

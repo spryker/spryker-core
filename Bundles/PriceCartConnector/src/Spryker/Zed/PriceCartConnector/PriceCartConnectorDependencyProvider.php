@@ -13,6 +13,9 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerFacadeB
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductBridge;
 
+/**
+ * @method \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig getConfig()
+ */
 class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRICE_PRODUCT = 'price product facade';

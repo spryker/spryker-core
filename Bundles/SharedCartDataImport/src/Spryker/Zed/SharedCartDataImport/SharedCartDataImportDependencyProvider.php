@@ -9,6 +9,9 @@ namespace Spryker\Zed\SharedCartDataImport;
 
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig getConfig()
+ */
 class SharedCartDataImportDependencyProvider extends DataImportDependencyProvider
 {
 }

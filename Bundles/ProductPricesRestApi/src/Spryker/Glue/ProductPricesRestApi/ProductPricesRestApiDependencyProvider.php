@@ -14,6 +14,9 @@ use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPr
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientBridge;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientBridge;
 
+/**
+ * @method \Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig getConfig()
+ */
 class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
