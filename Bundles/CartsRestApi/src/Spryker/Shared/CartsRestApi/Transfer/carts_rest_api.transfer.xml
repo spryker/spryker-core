@@ -84,4 +84,9 @@
         <property name="errors" type="QuoteError[]" singular="error"/>
     </transfer>
 
+    <transfer name="QuoteByIdCriteriaFilter">
+        <property name="uuid" type="string"/>
+        <property name="quoteCriteriaFilter" type="QuoteCriteriaFilter"/>
+    </transfer>
+
 </transfers>

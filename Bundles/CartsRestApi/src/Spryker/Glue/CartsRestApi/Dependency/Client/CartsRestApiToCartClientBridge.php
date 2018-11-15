@@ -70,12 +70,4 @@ class CartsRestApiToCartClientBridge implements CartsRestApiToCartClientInterfac
     {
         return $this->cartClient->findQuoteItem($quoteTransfer, $sku, $groupKey);
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote(): QuoteTransfer
-    {
-        return $this->cartClient->getQuote();
-    }
 }
