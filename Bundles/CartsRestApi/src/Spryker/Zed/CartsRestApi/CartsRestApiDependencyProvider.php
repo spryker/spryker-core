@@ -11,6 +11,9 @@ use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
+ */
 class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_QUOTE = 'PROPEL_QUERY_QUOTE';

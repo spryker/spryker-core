@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 /**
  * @method \Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerAccessStorage\Communication\CustomerAccessStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerAccessStorage\CustomerAccessStorageConfig getConfig()
  */
 class CustomerAccessStorageListener extends AbstractPlugin implements EventHandlerInterface
 {

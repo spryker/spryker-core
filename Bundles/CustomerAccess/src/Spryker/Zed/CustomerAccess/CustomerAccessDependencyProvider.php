@@ -9,6 +9,9 @@ namespace Spryker\Zed\CustomerAccess;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\CustomerAccess\CustomerAccessConfig getConfig()
+ */
 class CustomerAccessDependencyProvider extends AbstractBundleDependencyProvider
 {
 }
