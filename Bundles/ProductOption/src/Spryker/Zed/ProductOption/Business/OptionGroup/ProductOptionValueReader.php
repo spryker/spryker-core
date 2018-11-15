@@ -45,7 +45,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      */
     public function getProductOption($idProductOptionValue)
     {
-        $productOptionValueEntity = $this->findOptionValueById((int)$idProductOptionValue);
+        $productOptionValueEntity = $this->findOptionValueById($idProductOptionValue);
 
         if ($productOptionValueEntity) {
             return $this->hydrateProductOptionTransfer($productOptionValueEntity);
