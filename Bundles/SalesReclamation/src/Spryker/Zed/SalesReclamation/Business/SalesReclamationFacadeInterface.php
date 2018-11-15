@@ -18,8 +18,8 @@ interface SalesReclamationFacadeInterface
 {
     /**
      * Specification:
-     * - Creates new Reclamation by SalesOrder and SalesOrderItemIds
-     * - If incoming data inconsistent - return null
+     * - Creates new Reclamation by SalesOrder and SalesOrderItemIds.
+     * - If incoming data inconsistent - return null.
      *
      * @api
      *
@@ -55,9 +55,9 @@ interface SalesReclamationFacadeInterface
 
     /**
      * Specification:
-     * - Gets Reclamation by id from database
-     * - Hydrates Reclamation with data from database
-     * - Hydrates Reclamation items with data from database
+     * - Gets Reclamation by id from database.
+     * - Hydrates Reclamation with data from database.
+     * - Hydrates Reclamation items with data from database.
      *
      * @api
      *
@@ -69,8 +69,8 @@ interface SalesReclamationFacadeInterface
 
     /**
      * Specification:
-     * - Hydrates Reclamation with data from order
-     * - Hydrates Reclamation items with data from order items
+     * - Hydrates Reclamation with data from order.
+     * - Hydrates Reclamation items with data from order items.
      *
      * @api
      *
