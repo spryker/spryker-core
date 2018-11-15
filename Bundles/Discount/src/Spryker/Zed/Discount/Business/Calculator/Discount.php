@@ -341,12 +341,13 @@ class Discount implements DiscountInterface
             $matchedProductAmount = 0;
 
             foreach ($discountApplicableItems as $itemTransfer) {
-                if ($compositeSpecification->isSatisfiedBy($quoteTransfer, $itemTransfer) === true) {
-                    $matchedProductAmount += $itemTransfer->getQuantity();
+                if ($compositeSpecification->isSatisfiedBy($quoteTransfer, $itemTransfer) !== true) {
+                    continue;
+                }
 
-                    if ($matchedProductAmount >= $minimumItemAmount) {
-                        return true;
-                    }
+                $matchedProductAmount += $itemTransfer->getQuantity();
+                if ($matchedProductAmount >= $minimumItemAmount) {
+                    return true;
                 }
             }
         } catch (QueryStringException $exception) {

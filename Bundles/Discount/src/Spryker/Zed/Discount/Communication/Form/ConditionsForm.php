@@ -10,6 +10,7 @@ namespace Spryker\Zed\Discount\Communication\Form;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
+use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -27,7 +28,6 @@ class ConditionsForm extends AbstractType
 {
     public const FIELD_DECISION_RULE_QUERY_STRING = 'decision_rule_query_string';
     public const FIELD_MINIMUM_ITEM_AMOUNT = 'minimum_item_amount';
-    public const FIELD_MINIMUM_ITEM_AMOUNT_DEFAULT_VALUE = 1;
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -77,7 +77,7 @@ class ConditionsForm extends AbstractType
      *
      * @return $this
      */
-    protected function addMinimumItemAmount(FormBuilderInterface $builder)
+    protected function addMinimumItemAmount(FormBuilderInterface $builder): self
     {
         $label = 'The discount can be applied if the query applies for at least X item(s).';
 
@@ -85,11 +85,10 @@ class ConditionsForm extends AbstractType
             'label' => $label,
             'constraints' => [
                 new NotBlank(),
-                new GreaterThanOrEqual(static::FIELD_MINIMUM_ITEM_AMOUNT_DEFAULT_VALUE),
+                new GreaterThanOrEqual(DiscountConfig::DEFAULT_MINIMUM_ITEM_AMOUNT),
             ],
-            'data' => static::FIELD_MINIMUM_ITEM_AMOUNT_DEFAULT_VALUE,
             'attr' => [
-                'min' => static::FIELD_MINIMUM_ITEM_AMOUNT_DEFAULT_VALUE,
+                'min' => DiscountConfig::DEFAULT_MINIMUM_ITEM_AMOUNT,
             ],
             'required' => true,
         ]);

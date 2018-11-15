@@ -87,7 +87,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateWhenMinimumItemAmountNotMatchesItemsIncludeAllProvidedDiscounts()
+    public function testCalculateWhenMinimumItemAmountNotMatchesItemsIncludeAllProvidedDiscounts(): void
     {
         $this->createDiscountEntity(
             '(sku = "123")',
@@ -109,7 +109,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateWhenMinimumItemAmountMatchesMoreThanOneItemIncludeAllProvidedDiscounts()
+    public function testCalculateWhenMinimumItemAmountMatchesMoreThanOneItemIncludeAllProvidedDiscounts(): void
     {
         $discountEntity = $this->createDiscountEntity(
             '(sku = "123" or sku = "431")',
