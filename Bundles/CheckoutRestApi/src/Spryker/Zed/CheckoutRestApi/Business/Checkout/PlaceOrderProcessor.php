@@ -14,10 +14,12 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface;
+use Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class PlaceOrderProcessor implements PlaceOrderProcessorInterface
 {
@@ -80,15 +82,17 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
                 (new QuoteCriteriaFilterTransfer())->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference())
             );
 
-        // todo: handle the case when quote is not found.
+        if (!$currentQuoteTransfer) {
+            return (new CheckoutResponseTransfer())
+                ->setIsSuccess(false)
+                ->addError(
+                    (new CheckoutErrorTransfer())
+                        ->setErrorCode(Response::HTTP_UNPROCESSABLE_ENTITY)
+                        ->setMessage(CheckoutRestApiConfig::ERROR_MESSAGE_CART_NOT_FOUND)
+                );
+        }
 
-        $currentQuoteTransfer->setBillingAddress($quoteTransfer->getBillingAddress());
-        $currentQuoteTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
-        $currentQuoteTransfer->setPayment($quoteTransfer->getPayment());
-        $currentQuoteTransfer->setShipment($quoteTransfer->getShipment());
-        $currentQuoteTransfer->setCustomer($quoteTransfer->getCustomer());
-
-        $currentQuoteTransfer = $this->quoteCustomerExpander->expandQuoteWithCustomerData($currentQuoteTransfer);
+        $currentQuoteTransfer = $this->mergeSavedQuoteWithIncomingQuote($currentQuoteTransfer, $quoteTransfer);
 
         $paymentTransfer = $currentQuoteTransfer->getPayment();
 
@@ -143,5 +147,24 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         }
 
         return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $incomingQuoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function mergeSavedQuoteWithIncomingQuote(QuoteTransfer $quoteTransfer, QuoteTransfer $incomingQuoteTransfer): QuoteTransfer
+    {
+        $quoteTransfer->setBillingAddress($incomingQuoteTransfer->getBillingAddress());
+        $quoteTransfer->setShippingAddress($incomingQuoteTransfer->getShippingAddress());
+        $quoteTransfer->setPayment($incomingQuoteTransfer->getPayment());
+        $quoteTransfer->setShipment($incomingQuoteTransfer->getShipment());
+        $quoteTransfer->setCustomer($incomingQuoteTransfer->getCustomer());
+
+        $quoteTransfer = $this->quoteCustomerExpander->expandQuoteWithCustomerData($quoteTransfer);
+
+        return $quoteTransfer;
     }
 }

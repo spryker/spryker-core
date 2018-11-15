@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData;
 
+use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -63,10 +64,14 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
         $quoteTransfer->setCustomer($this->getCustomerTransferFromRequest($restRequest, $restCheckoutRequestAttributesTransfer));
 
-        $checkoutDataTransfer = $this->checkoutRestApiClient->getCheckoutData($quoteTransfer);
+        $checkoutDataResponseTransfer = $this->checkoutRestApiClient->getCheckoutData($quoteTransfer);
+
+        if (!$checkoutDataResponseTransfer->getIsSuccess()) {
+            return $this->createCheckoutDataErrorResponse($checkoutDataResponseTransfer);
+        }
 
         $restCheckoutResponseAttributesTransfer = $this->checkoutDataMapper
-            ->mapCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer($checkoutDataTransfer, $restCheckoutRequestAttributesTransfer);
+            ->mapCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer($checkoutDataResponseTransfer->getCheckoutData(), $restCheckoutRequestAttributesTransfer);
 
         return $this->createRestResponse($restCheckoutResponseAttributesTransfer);
     }
@@ -105,6 +110,26 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $restResponse = $this->restResourceBuilder
             ->createRestResponse()
             ->addError($restErrorMessageTransfer);
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutDataResponseTransfer $checkoutDataResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createCheckoutDataErrorResponse(CheckoutDataResponseTransfer $checkoutDataResponseTransfer): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        foreach ($checkoutDataResponseTransfer->getErrors() as $checkoutRestApiErrorTransfer) {
+            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CHECKOUT_DATA_INVALID)
+                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                ->setDetail($checkoutRestApiErrorTransfer->getMessage());
+
+            $restResponse->addError($restErrorMessageTransfer);
+        }
 
         return $restResponse;
     }

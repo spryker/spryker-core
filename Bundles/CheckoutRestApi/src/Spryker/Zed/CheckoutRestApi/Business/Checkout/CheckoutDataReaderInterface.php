@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
-use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutDataReaderInterface
@@ -15,7 +15,7 @@ interface CheckoutDataReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
+     * @return \Generated\Shared\Transfer\CheckoutDataResponseTransfer
      */
-    public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer;
+    public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataResponseTransfer;
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CheckoutRestApi;
 
-use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -22,9 +22,9 @@ interface CheckoutRestApiClientInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
+     * @return \Generated\Shared\Transfer\CheckoutDataResponseTransfer
      */
-    public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer;
+    public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataResponseTransfer;
 
     /**
      * Specification:

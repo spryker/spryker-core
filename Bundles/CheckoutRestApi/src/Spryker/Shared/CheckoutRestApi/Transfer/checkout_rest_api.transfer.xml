@@ -9,6 +9,17 @@
         <property name="paymentMethods" type="PaymentMethods"/>
     </transfer>
 
+    <transfer name="CheckoutRestApiError">
+        <property name="errorCode" type="int"/>
+        <property name="message" type="string"/>CheckoutDataReader.php
+    </transfer>
+
+    <transfer name="CheckoutDataResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="CheckoutRestApiError[]" singular="error" />
+        <property name="checkoutData" type="CheckoutData"/>
+    </transfer>
+
     <transfer name="RestCheckoutRequestAttributes">
         <property name="cart" type="RestQuoteRequest"/>
     </transfer>

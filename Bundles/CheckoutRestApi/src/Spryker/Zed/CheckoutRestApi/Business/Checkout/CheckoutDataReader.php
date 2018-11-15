@@ -8,16 +8,20 @@
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
 use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutRestApiErrorTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface;
+use Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutDataReader implements CheckoutDataReaderInterface
 {
@@ -70,9 +74,9 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
+     * @return \Generated\Shared\Transfer\CheckoutDataResponseTransfer
      */
-    public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataTransfer
+    public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataResponseTransfer
     {
         $currentQuoteTransfer = $this->cartsRestApiFacade
             ->findQuoteByUuid(
@@ -80,20 +84,26 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
                 (new QuoteCriteriaFilterTransfer())->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference())
             );
 
-        // todo: handle the case when quote is not found.
+        if (!$currentQuoteTransfer) {
+            return (new CheckoutDataResponseTransfer())
+                ->setIsSuccess(false)
+                ->addError(
+                    (new CheckoutRestApiErrorTransfer())
+                        ->setErrorCode(Response::HTTP_UNPROCESSABLE_ENTITY)
+                        ->setMessage(CheckoutRestApiConfig::ERROR_MESSAGE_CART_NOT_FOUND)
+                );
+        }
 
-        $currentQuoteTransfer->setBillingAddress($quoteTransfer->getBillingAddress());
-        $currentQuoteTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
-        $currentQuoteTransfer->setPayment($quoteTransfer->getPayment());
-        $currentQuoteTransfer->setShipment($quoteTransfer->getShipment());
-        $currentQuoteTransfer->setCustomer($quoteTransfer->getCustomer());
+        $currentQuoteTransfer = $this->mergeSavedQuoteWithIncomingQuote($quoteTransfer, $currentQuoteTransfer);
 
-        $currentQuoteTransfer = $this->quoteCustomerExpander->expandQuoteWithCustomerData($currentQuoteTransfer);
-
-        return (new CheckoutDataTransfer())
+        $checkoutDataTransfer = (new CheckoutDataTransfer())
             ->setShipmentMethods($this->getShipmentMethodsTransfer($currentQuoteTransfer))
             ->setPaymentMethods($this->getPaymentMethodsTransfer($currentQuoteTransfer))
             ->setAddresses($this->getAddressesTransfer($currentQuoteTransfer));
+
+        return (new CheckoutDataResponseTransfer())
+                ->setIsSuccess(true)
+                ->setCheckoutData($checkoutDataTransfer);
     }
 
     /**
@@ -129,5 +139,23 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         }
 
         return $this->customerFacade->getAddresses($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $currentQuoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function mergeSavedQuoteWithIncomingQuote(QuoteTransfer $quoteTransfer, QuoteTransfer $currentQuoteTransfer): QuoteTransfer
+    {
+        $currentQuoteTransfer->setBillingAddress($quoteTransfer->getBillingAddress());
+        $currentQuoteTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
+        $currentQuoteTransfer->setPayment($quoteTransfer->getPayment());
+        $currentQuoteTransfer->setShipment($quoteTransfer->getShipment());
+        $currentQuoteTransfer->setCustomer($quoteTransfer->getCustomer());
+
+        $currentQuoteTransfer = $this->quoteCustomerExpander->expandQuoteWithCustomerData($currentQuoteTransfer);
+        return $currentQuoteTransfer;
     }
 }
