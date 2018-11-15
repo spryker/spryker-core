@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
@@ -56,9 +57,26 @@ class EditController extends AbstractController
             ->getLocaleFacade()
             ->getLocaleCollection();
 
+        $merchantRelationshipTransfer = $this->getFactory()
+            ->getMerchantRelationshipFacade()
+            ->getMerchantRelationshipById(
+                $this->createMerchantRelationshipTransfer($idMerchantRelationship)
+            );
+
+        $companyBusinessUnit = $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit();
+
+        $companyBusinessUnit->setCompany(
+            $this->getFactory()
+                ->getCompanyFacade()
+                ->getCompanyById(
+                    $this->createCompanyTransfer($companyBusinessUnit->getFkCompany())
+                )
+        );
+
         return $this->viewResponse([
             'localeCollection' => $localeCollection,
             'form' => $thresholdForm->createView(),
+            'merchantRelationship' => $merchantRelationshipTransfer,
         ]);
     }
 
@@ -164,8 +182,27 @@ class EditController extends AbstractController
             ->setIdMerchantRelationshipSalesOrderThreshold($idMerchantRelationshipSalesOrderThreshold)
             ->setSalesOrderThresholdValue(new SalesOrderThresholdValueTransfer())
             ->setMerchantRelationship(
-                (new MerchantRelationshipTransfer())
-                ->setIdMerchantRelationship($idMerchantRelationship)
+                $this->createMerchantRelationshipTransfer($idMerchantRelationship)
             );
+    }
+
+    /**
+     * @param int $idMerchantRelationship
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    protected function createMerchantRelationshipTransfer(int $idMerchantRelationship): MerchantRelationshipTransfer
+    {
+        return (new MerchantRelationshipTransfer())->setIdMerchantRelationship($idMerchantRelationship);
+    }
+
+    /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    protected function createCompanyTransfer(int $idCompany): CompanyTransfer
+    {
+        return (new CompanyTransfer())->setIdCompany($idCompany);
     }
 }
