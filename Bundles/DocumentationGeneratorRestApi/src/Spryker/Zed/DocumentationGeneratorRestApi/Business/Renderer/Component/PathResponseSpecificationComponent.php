@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
-use Generated\Shared\Transfer\OpenApiSpecificationPathResponseComponentTransfer;
+use Generated\Shared\Transfer\PathResponseComponentTransfer;
 
 /**
  * Specification:
@@ -18,21 +18,20 @@ class PathResponseSpecificationComponent implements PathResponseSpecificationCom
 {
     protected const KEY_APPLICATION_JSON = 'application/json';
     protected const KEY_CONTENT = 'content';
-    protected const KEY_DESCRIPTION = 'description';
     protected const KEY_REF = '$ref';
     protected const KEY_SCHEMA = 'schema';
 
     /**
-     * @var \Generated\Shared\Transfer\OpenApiSpecificationPathResponseComponentTransfer $pathResponseComponentTransfer
+     * @var \Generated\Shared\Transfer\PathResponseComponentTransfer $pathResponseComponentTransfer
      */
     protected $pathResponseComponentTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathResponseComponentTransfer $pathResponseComponentTransfer
+     * @param \Generated\Shared\Transfer\PathResponseComponentTransfer $pathResponseComponentTransfer
      *
      * @return void
      */
-    public function setPathResponseComponentTransfer(OpenApiSpecificationPathResponseComponentTransfer $pathResponseComponentTransfer): void
+    public function setPathResponseComponentTransfer(PathResponseComponentTransfer $pathResponseComponentTransfer): void
     {
         $this->pathResponseComponentTransfer = $pathResponseComponentTransfer;
     }
@@ -46,7 +45,7 @@ class PathResponseSpecificationComponent implements PathResponseSpecificationCom
             return [];
         }
 
-        $result[static::KEY_DESCRIPTION] = $this->pathResponseComponentTransfer->getDescription();
+        $result[PathResponseComponentTransfer::DESCRIPTION] = $this->pathResponseComponentTransfer->getDescription();
         if ($this->pathResponseComponentTransfer->getJsonSchemaRef()) {
             $result[static::KEY_CONTENT][static::KEY_APPLICATION_JSON][static::KEY_SCHEMA][static::KEY_REF] = $this->pathResponseComponentTransfer->getJsonSchemaRef();
         }

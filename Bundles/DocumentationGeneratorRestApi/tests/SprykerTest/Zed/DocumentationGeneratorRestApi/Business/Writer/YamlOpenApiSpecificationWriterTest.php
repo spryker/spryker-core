@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Writer;
 
 use Codeception\Test\Unit;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
-use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Fixtures\GlueAnnotationAnalyzerExpectedResult;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -27,7 +26,12 @@ class YamlOpenApiSpecificationWriterTest extends Unit
     protected const GENERATED_FILE_NAME_PATTERN = '*.schema.yml';
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\OpenApiSpecificationWriterInterface
+     * @var \SprykerTest\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\DocumentationWriterInterface
      */
     protected $yamlWriter;
 
@@ -52,11 +56,11 @@ class YamlOpenApiSpecificationWriterTest extends Unit
      */
     public function testWriteShouldCreateAFile(): void
     {
-        $data = GlueAnnotationAnalyzerExpectedResult::getTestCreateRestApiDocumentationFromPluginsExpectedResult();
+        $data = $this->tester->getRestApiDocumentationFromPluginsExpectedResult();
         $this->yamlWriter->write($data);
 
         $finder = new Finder();
-        $finder->in($this->config->getGeneratedFileTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
+        $finder->in($this->config->getGeneratedFileOutputDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
         $this->assertCount(1, $finder);
     }
 
@@ -66,7 +70,7 @@ class YamlOpenApiSpecificationWriterTest extends Unit
     protected function tearDown(): void
     {
         $finder = new Finder();
-        $finder->in($this->config->getGeneratedFileTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
+        $finder->in($this->config->getGeneratedFileOutputDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
         if ($finder->count() > 0) {
             foreach ($finder as $fileInfo) {
                 unlink($fileInfo->getPathname());

@@ -18,17 +18,17 @@ class AbstractProductsResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getResourceById": {
      *          "summary": [
-     *              "Retrieve product abstract data."
+     *              "Retrieves product abstract by id."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Abstract product sku is not specified.",
-     *              "404": "Abstract product is not found."
+     *              "400": "Abstract product id is not specified.",
+     *              "404": "Abstract product not found."
      *          }
      *     }
      * })

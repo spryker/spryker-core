@@ -21,7 +21,7 @@ class WishlistItemsResourceController extends AbstractController
      * @Glue({
      *     "delete": {
      *          "summary": [
-     *              "Remove item from the wishlist."
+     *              "Removes item from the wishlist."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
@@ -57,7 +57,7 @@ class WishlistItemsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Can't add an item.",
-     *              "404": "Can't find wishlist."
+     *              "404": "Wishlist not found."
      *          }
      *     }
      * })

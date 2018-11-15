@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor;
 
-use Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer;
+use Generated\Shared\Transfer\AnnotationTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 
-interface RestApiMethodProcessorInterface
+interface HttpMethodProcessorInterface
 {
     /**
      * @return array
@@ -32,24 +32,7 @@ interface RestApiMethodProcessorInterface
      * @param string $resourcePath
      * @param bool $isProtected
      * @param string $idResource
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
-     *
-     * @return void
-     */
-    public function addGetResourcePath(
-        ResourceRoutePluginInterface $plugin,
-        string $resourcePath,
-        bool $isProtected,
-        string $idResource,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
-    ): void;
-
-    /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param string $resourcePath
-     * @param bool $isProtected
-     * @param string $idResource
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
@@ -58,7 +41,7 @@ interface RestApiMethodProcessorInterface
         string $resourcePath,
         bool $isProtected,
         string $idResource,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        ?AnnotationTransfer $annotationTransfer
     ): void;
 
     /**
@@ -66,7 +49,7 @@ interface RestApiMethodProcessorInterface
      * @param string $resourcePath
      * @param bool $isProtected
      * @param string $idResource
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
@@ -75,14 +58,14 @@ interface RestApiMethodProcessorInterface
         string $resourcePath,
         bool $isProtected,
         string $idResource,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        ?AnnotationTransfer $annotationTransfer
     ): void;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
      * @param bool $isProtected
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
@@ -90,14 +73,14 @@ interface RestApiMethodProcessorInterface
         ResourceRoutePluginInterface $plugin,
         string $resourcePath,
         bool $isProtected,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        ?AnnotationTransfer $annotationTransfer
     ): void;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
      * @param bool $isProtected
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
@@ -105,14 +88,14 @@ interface RestApiMethodProcessorInterface
         ResourceRoutePluginInterface $plugin,
         string $resourcePath,
         bool $isProtected,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        ?AnnotationTransfer $annotationTransfer
     ): void;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
      * @param bool $isProtected
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
@@ -120,6 +103,6 @@ interface RestApiMethodProcessorInterface
         ResourceRoutePluginInterface $plugin,
         string $resourcePath,
         bool $isProtected,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        ?AnnotationTransfer $annotationTransfer
     ): void;
 }

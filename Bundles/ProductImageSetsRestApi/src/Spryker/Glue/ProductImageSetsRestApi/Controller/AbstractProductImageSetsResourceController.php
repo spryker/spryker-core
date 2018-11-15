@@ -18,17 +18,17 @@ class AbstractProductImageSetsResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getCollection": {
      *          "summary": [
-     *              "Retrieve abstract product's image sets."
+     *              "Retrieves abstract product image sets."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Abstract product sku is not specified.",
-     *              "404": "Abstract product image sets are not found."
+     *              "400": "Abstract product id is not specified.",
+     *              "404": "Abstract product image sets not found."
      *          }
      *     }
      * })

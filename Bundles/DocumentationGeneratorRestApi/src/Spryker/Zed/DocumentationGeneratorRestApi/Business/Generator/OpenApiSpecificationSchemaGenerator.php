@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
-use Generated\Shared\Transfer\OpenApiSpecificationSchemaDataTransfer;
-use Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\SchemaDataTransfer;
+use Generated\Shared\Transfer\SchemaPropertyTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
@@ -17,7 +17,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransfer
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererInterface;
 
-class OpenApiSpecificationSchemaGenerator implements OpenApiSpecificationSchemaGeneratorInterface
+class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
 {
     protected const KEY_ATTRIBUTES = 'attributes';
     protected const KEY_DATA = 'data';
@@ -434,9 +434,9 @@ class OpenApiSpecificationSchemaGenerator implements OpenApiSpecificationSchemaG
      * @param string $metadataKey
      * @param array $metadataValue
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyTransfer
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    protected function createSchemaPropertyTransfer(string $metadataKey, array $metadataValue): OpenApiSpecificationSchemaPropertyTransfer
+    protected function createSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer
     {
         if (class_exists($metadataValue[static::KEY_TYPE])) {
             return $this->createObjectSchemaTypeTransfer($metadataKey, $metadataValue);
@@ -449,9 +449,9 @@ class OpenApiSpecificationSchemaGenerator implements OpenApiSpecificationSchemaG
      * @param string $key
      * @param string $type
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyTransfer
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    protected function createScalarSchemaTypeTransfer(string $key, string $type): OpenApiSpecificationSchemaPropertyTransfer
+    protected function createScalarSchemaTypeTransfer(string $key, string $type): SchemaPropertyTransfer
     {
         if (substr($type, -2) === '[]') {
             return $this->createArrayOfTypesPropertyTransfer($key, $this->mapScalarSchemaType(substr($type, 0, -2)));
@@ -478,9 +478,9 @@ class OpenApiSpecificationSchemaGenerator implements OpenApiSpecificationSchemaG
      * @param string $key
      * @param array $objectMetadata
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyTransfer
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    protected function createObjectSchemaTypeTransfer(string $key, array $objectMetadata): OpenApiSpecificationSchemaPropertyTransfer
+    protected function createObjectSchemaTypeTransfer(string $key, array $objectMetadata): SchemaPropertyTransfer
     {
         $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($objectMetadata[static::KEY_TYPE]);
         $this->addResponseDataAttributesSchemaFromTransfer(new $objectMetadata[static::KEY_TYPE](), $schemaName);
@@ -495,11 +495,11 @@ class OpenApiSpecificationSchemaGenerator implements OpenApiSpecificationSchemaG
     /**
      * @param string $name
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
-    public function createSchemaDataTransfer(string $name): OpenApiSpecificationSchemaDataTransfer
+    public function createSchemaDataTransfer(string $name): SchemaDataTransfer
     {
-        $schemaData = new OpenApiSpecificationSchemaDataTransfer();
+        $schemaData = new SchemaDataTransfer();
         $schemaData->setName($name);
 
         return $schemaData;
@@ -509,11 +509,11 @@ class OpenApiSpecificationSchemaGenerator implements OpenApiSpecificationSchemaG
      * @param string $name
      * @param string $type
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyTransfer
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createTypePropertyTransfer(string $name, string $type): OpenApiSpecificationSchemaPropertyTransfer
+    public function createTypePropertyTransfer(string $name, string $type): SchemaPropertyTransfer
     {
-        $typeProperty = new OpenApiSpecificationSchemaPropertyTransfer();
+        $typeProperty = new SchemaPropertyTransfer();
         $typeProperty->setName($name);
         $typeProperty->setType($type);
 
@@ -524,11 +524,11 @@ class OpenApiSpecificationSchemaGenerator implements OpenApiSpecificationSchemaG
      * @param string $name
      * @param string $ref
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyTransfer
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createReferencePropertyTransfer(string $name, string $ref): OpenApiSpecificationSchemaPropertyTransfer
+    public function createReferencePropertyTransfer(string $name, string $ref): SchemaPropertyTransfer
     {
-        $referenceProperty = new OpenApiSpecificationSchemaPropertyTransfer();
+        $referenceProperty = new SchemaPropertyTransfer();
         $referenceProperty->setName($name);
         $referenceProperty->setReference(sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref));
 
@@ -539,11 +539,11 @@ class OpenApiSpecificationSchemaGenerator implements OpenApiSpecificationSchemaG
      * @param string $name
      * @param string $itemsRef
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyTransfer
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createArrayOfObjectsPropertyTransfer(string $name, string $itemsRef): OpenApiSpecificationSchemaPropertyTransfer
+    public function createArrayOfObjectsPropertyTransfer(string $name, string $itemsRef): SchemaPropertyTransfer
     {
-        $arrayProperty = new OpenApiSpecificationSchemaPropertyTransfer();
+        $arrayProperty = new SchemaPropertyTransfer();
         $arrayProperty->setName($name);
         $arrayProperty->setItemsReference(sprintf(static::PATTERN_SCHEMA_REFERENCE, $itemsRef));
 
@@ -554,11 +554,11 @@ class OpenApiSpecificationSchemaGenerator implements OpenApiSpecificationSchemaG
      * @param string $name
      * @param string $itemsType
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyTransfer
+     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createArrayOfTypesPropertyTransfer(string $name, string $itemsType): OpenApiSpecificationSchemaPropertyTransfer
+    public function createArrayOfTypesPropertyTransfer(string $name, string $itemsType): SchemaPropertyTransfer
     {
-        $arrayProperty = new OpenApiSpecificationSchemaPropertyTransfer();
+        $arrayProperty = new SchemaPropertyTransfer();
         $arrayProperty->setName($name);
         $arrayProperty->setType($itemsType);
 
@@ -566,11 +566,11 @@ class OpenApiSpecificationSchemaGenerator implements OpenApiSpecificationSchemaG
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaDataTransfer $schemaData
+     * @param \Generated\Shared\Transfer\SchemaDataTransfer $schemaData
      *
      * @return void
      */
-    protected function addSchemaData(OpenApiSpecificationSchemaDataTransfer $schemaData): void
+    protected function addSchemaData(SchemaDataTransfer $schemaData): void
     {
         $this->schemas = array_replace_recursive($this->schemas, $this->schemaRenderer->render($schemaData));
     }

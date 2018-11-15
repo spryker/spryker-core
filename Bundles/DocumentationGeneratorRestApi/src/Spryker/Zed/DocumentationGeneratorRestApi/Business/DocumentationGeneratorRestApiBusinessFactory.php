@@ -18,16 +18,16 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransfer
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinder;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationGenerator;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\DocumentationGenerator;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\DocumentationGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGenerator;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSchemaGenerator;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSchemaGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGenerator;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGeneratorInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\RestApiMethodProcessor;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\RestApiMethodProcessorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessor;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponent;
@@ -48,8 +48,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRenderer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRenderer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRendererInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\OpenApiSpecificationWriterInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\YamlOpenApiSpecificationWriter;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\DocumentationWriterInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\YamlOpenApiDocumentationWriter;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFilesystemInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFinderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToTextInflectorInterface;
@@ -64,20 +64,20 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationGeneratorInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\DocumentationGeneratorInterface
      */
-    public function createOpenApiSpecificationGenerator(): OpenApiSpecificationGeneratorInterface
+    public function createDocumentationGenerator(): DocumentationGeneratorInterface
     {
-        return new OpenApiSpecificationGenerator(
+        return new DocumentationGenerator(
             $this->createResourcePluginAnalyzer(),
             $this->createYamlOpenApiSpecificationWriter()
         );
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSchemaGeneratorInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface
      */
-    public function createOpenApiSpecificationSchemaGenerator(): OpenApiSpecificationSchemaGeneratorInterface
+    public function createOpenApiSpecificationSchemaGenerator(): SchemaGeneratorInterface
     {
         return new OpenApiSpecificationSchemaGenerator(
             $this->createResourceRelationshipsPluginAnalyzer(),
@@ -87,27 +87,27 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGeneratorInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface
      */
-    public function createOpenApiSpecificationSecuritySchemeGenerator(): OpenApiSpecificationSecuritySchemeGeneratorInterface
+    public function createOpenApiSpecificationSecuritySchemeGenerator(): SecuritySchemeGeneratorInterface
     {
         return new OpenApiSpecificationSecuritySchemeGenerator($this->createSecuritySchemeRenderer());
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGeneratorInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface
      */
-    public function createOpenApiSpecificationPathGenerator(): OpenApiSpecificationPathGeneratorInterface
+    public function createOpenApiSpecificationPathGenerator(): PathGeneratorInterface
     {
         return new OpenApiSpecificationPathGenerator($this->createPathMethodRenderer());
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\OpenApiSpecificationWriterInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\DocumentationWriterInterface
      */
-    public function createYamlOpenApiSpecificationWriter(): OpenApiSpecificationWriterInterface
+    public function createYamlOpenApiSpecificationWriter(): DocumentationWriterInterface
     {
-        return new YamlOpenApiSpecificationWriter(
+        return new YamlOpenApiDocumentationWriter(
             $this->getConfig(),
             $this->getYamlDumper(),
             $this->getFilesystem()
@@ -132,7 +132,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     {
         return new ResourcePluginAnalyzer(
             $this->createRestApiMethodProcessor(),
-            $this->getResourceRoutesPluginsProviderPlugins(),
+            $this->getResourceRoutesPluginProviderPlugins(),
             $this->createGlueAnnotationAnalyzer(),
             $this->getTextInflector()
         );
@@ -143,7 +143,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
      */
     public function createResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
     {
-        return new ResourceRelationshipsPluginAnalyzer($this->getResourceRelationshipsCollectionProviderPlugin());
+        return new ResourceRelationshipsPluginAnalyzer($this->getResourceRelationshipCollectionProviderPlugin());
     }
 
     /**
@@ -155,11 +155,11 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\RestApiMethodProcessorInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface
      */
-    public function createRestApiMethodProcessor(): RestApiMethodProcessorInterface
+    public function createRestApiMethodProcessor(): HttpMethodProcessorInterface
     {
-        return new RestApiMethodProcessor(
+        return new HttpMethodProcessor(
             $this->createOpenApiSpecificationPathGenerator(),
             $this->createOpenApiSpecificationSchemaGenerator(),
             $this->createOpenApiSpecificationSecuritySchemeGenerator()
@@ -317,16 +317,16 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     /**
      * @return \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[]
      */
-    public function getResourceRoutesPluginsProviderPlugins(): array
+    public function getResourceRoutesPluginProviderPlugins(): array
     {
-        return $this->getProvidedDependency(DocumentationGeneratorRestApiDependencyProvider::PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS);
+        return $this->getProvidedDependency(DocumentationGeneratorRestApiDependencyProvider::PLUGIN_RESOURCE_ROUTE_PLUGIN_PROVIDERS);
     }
 
     /**
      * @return \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[]
      */
-    public function getResourceRelationshipsCollectionProviderPlugin(): array
+    public function getResourceRelationshipCollectionProviderPlugin(): array
     {
-        return $this->getProvidedDependency(DocumentationGeneratorRestApiDependencyProvider::PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER);
+        return $this->getProvidedDependency(DocumentationGeneratorRestApiDependencyProvider::PLUGIN_RESOURCE_RELATIONSHIP_COLLECTION_PROVIDER);
     }
 }

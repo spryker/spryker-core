@@ -18,17 +18,17 @@ class ConcreteProductPricesResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getCollection": {
      *          "summary": [
-     *              "Retrieve prices of concrete product."
+     *              "Retrieves concrete product prices."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Concrete product sku is not specified.",
-     *              "404": "Concrete product prices are not found."
+     *              "400": "Concrete product id is not specified.",
+     *              "404": "Concrete product prices not found."
      *          }
      *     }
      * })

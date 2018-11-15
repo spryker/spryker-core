@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer;
 
-use Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer;
-use Generated\Shared\Transfer\OpenApiSpecificationSchemaDataTransfer;
-use Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyComponentTransfer;
-use Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyTransfer;
+use Generated\Shared\Transfer\SchemaComponentTransfer;
+use Generated\Shared\Transfer\SchemaDataTransfer;
+use Generated\Shared\Transfer\SchemaPropertyComponentTransfer;
+use Generated\Shared\Transfer\SchemaPropertyTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface;
 
@@ -39,13 +39,13 @@ class SchemaRenderer implements SchemaRendererInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaDataTransfer $schemaDataTransfer
+     * @param \Generated\Shared\Transfer\SchemaDataTransfer $schemaDataTransfer
      *
      * @return array
      */
-    public function render(OpenApiSpecificationSchemaDataTransfer $schemaDataTransfer): array
+    public function render(SchemaDataTransfer $schemaDataTransfer): array
     {
-        $schemaComponentTransfer = new OpenApiSpecificationSchemaComponentTransfer();
+        $schemaComponentTransfer = new SchemaComponentTransfer();
         $schemaComponentTransfer->setName($schemaDataTransfer->getName());
         foreach ($schemaDataTransfer->getProperties() as $property) {
             $this->addSchemaProperty($schemaComponentTransfer, $property);
@@ -60,14 +60,14 @@ class SchemaRenderer implements SchemaRendererInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer $schemaComponent
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyTransfer $property
+     * @param \Generated\Shared\Transfer\SchemaComponentTransfer $schemaComponent
+     * @param \Generated\Shared\Transfer\SchemaPropertyTransfer $property
      *
      * @return void
      */
-    protected function addSchemaProperty(OpenApiSpecificationSchemaComponentTransfer $schemaComponent, OpenApiSpecificationSchemaPropertyTransfer $property): void
+    protected function addSchemaProperty(SchemaComponentTransfer $schemaComponent, SchemaPropertyTransfer $property): void
     {
-        $schemaPropertyComponentTransfer = new OpenApiSpecificationSchemaPropertyComponentTransfer();
+        $schemaPropertyComponentTransfer = new SchemaPropertyComponentTransfer();
         $schemaPropertyComponentTransfer->setName($property->getName());
         if ($property->getType()) {
             $schemaPropertyComponentTransfer->setType($property->getType());

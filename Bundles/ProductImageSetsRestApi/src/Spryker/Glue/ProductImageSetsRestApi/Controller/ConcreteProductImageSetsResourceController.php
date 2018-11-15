@@ -18,17 +18,17 @@ class ConcreteProductImageSetsResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getCollection": {
      *          "summary": [
-     *              "Retrieve concrete product's image sets."
+     *              "Retrieves concrete product image sets."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Concrete product sku is not specified.",
-     *              "404": "Concrete product image sets are not found."
+     *              "400": "Concrete product id is not specified.",
+     *              "404": "Concrete product image sets not found."
      *          }
      *     }
      * })

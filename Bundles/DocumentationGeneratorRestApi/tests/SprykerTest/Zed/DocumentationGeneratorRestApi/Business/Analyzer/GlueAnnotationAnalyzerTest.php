@@ -70,22 +70,21 @@ class GlueAnnotationAnalyzerTest extends Unit
         );
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
 
-        $this->assertNotEmpty($parameters->getGetResource());
+        $this->assertNotEmpty($parameters->getGetResourceById());
         $this->assertNotEmpty($parameters->getPost());
         $this->assertEmpty($parameters->getPatch());
         $this->assertEmpty($parameters->getGetCollection());
-        $this->assertEmpty($parameters->getGetResourceById());
         $this->assertEmpty($parameters->getDelete());
-        $this->assertEquals([static::SUMMARY], $parameters->getGetResource()->getSummary());
-        $this->assertNotEmpty($parameters->getGetResource()->getParameters());
-        $this->assertEquals(static::HEADER_ACCEPT_LANGUAGE, $parameters->getGetResource()->getParameters()[0]->getName());
-        $this->assertNotEmpty($parameters->getGetResource()->getResponses());
+        $this->assertEquals([static::SUMMARY], $parameters->getGetResourceById()->getSummary());
+        $this->assertNotEmpty($parameters->getGetResourceById()->getParameters());
+        $this->assertEquals(static::HEADER_ACCEPT_LANGUAGE, $parameters->getGetResourceById()->getParameters()[0]->getName());
+        $this->assertNotEmpty($parameters->getGetResourceById()->getResponses());
         $this->assertArraySubset([
             static::KEY_RESPONSE_BAD_REQUEST => static::VALUE_RESPONSE_BAD_REQUEST,
             static::KEY_RESPONSE_NOT_FOUND => static::VALUE_RESPONSE_NOT_FOUND,
-        ], $parameters->getGetResource()->getResponses());
-        $this->assertNotEmpty($parameters->getPost()->getResponseClass());
-        $this->assertEquals(static::ALTERNATIVE_RESPONSE_CLASS, $parameters->getPost()->getResponseClass());
+        ], $parameters->getGetResourceById()->getResponses());
+        $this->assertNotEmpty($parameters->getPost()->getResponseAttributesClassName());
+        $this->assertEquals(static::ALTERNATIVE_RESPONSE_CLASS, $parameters->getPost()->getResponseAttributesClassName());
         $this->assertArraySubset([
             static::KEY_RESPONSE_BAD_REQUEST => static::VALUE_RESPONSE_BAD_REQUEST,
             static::KEY_RESPONSE_SERVER_ERROR => static::VALUE_RESPONSE_SERVER_ERROR,
@@ -118,7 +117,6 @@ class GlueAnnotationAnalyzerTest extends Unit
 
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
 
-        $this->assertEmpty($parameters->getGetResource());
         $this->assertEmpty($parameters->getPost());
         $this->assertEmpty($parameters->getPatch());
         $this->assertEmpty($parameters->getGetCollection());
@@ -138,7 +136,6 @@ class GlueAnnotationAnalyzerTest extends Unit
 
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
 
-        $this->assertEmpty($parameters->getGetResource());
         $this->assertEmpty($parameters->getPost());
         $this->assertEmpty($parameters->getPatch());
         $this->assertEmpty($parameters->getGetCollection());

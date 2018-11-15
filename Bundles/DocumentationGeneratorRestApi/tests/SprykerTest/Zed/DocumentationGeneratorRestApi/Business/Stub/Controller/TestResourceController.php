@@ -11,7 +11,7 @@ class TestResourceController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getResourceById": {
      *          "summary": [
      *              "Summary example"
      *          ],
@@ -35,7 +35,7 @@ class TestResourceController
     /**
      * @Glue({
      *     "post": {
-     *          "responseClass": "SprykerTest\\Zed\\DocumentationGeneratorRestApi\\Business\\Stub\\RestTestAlternativeAttributesTransfer",
+     *          "responseAttributesClassName": "SprykerTest\\Zed\\DocumentationGeneratorRestApi\\Business\\Stub\\RestTestAlternativeAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "500": "Server Error"

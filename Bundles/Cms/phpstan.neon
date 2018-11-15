@@ -1,8 +1,3 @@
-Method SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzerTest::getGlueControllerFinderMock()
- should return
- PHPUnit\Framework\MockObject\MockObject&Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface
- but returns PHPUnit\Framework\MockObject\MockObject
-
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
     ignoreErrors:

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
-use Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer;
+use Generated\Shared\Transfer\PathAnnotationsTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidAnnotationFormatException;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface;
@@ -17,19 +17,18 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGe
  * Specification
  *  - Parses a .php file and checks if it contains a PHPDock annotation in specific format of Glue annotations.
  *  - Glue annotation start with @Glue tag and all the parameters are written inside brackets in JSON format, e.g.:
- *  - @Glue("gerResource": {"summary": "Some endpoint summary"}}) will define summary for endpoint's GET method.
+ *  - @Glue("getResourceById": {"summary": ["Some endpoint summary"]}}) will define summary for endpoint's GET method.
  *  - All parameters should start with defining the method they're related to.
  *  - Method could be one of the following:
- *      - getResource - GET method, that returns exactly one resource and doesn't contains id in path (e.g. /search);
- *      - getResourceById - GET method, that returns exactly one resource and should contain id in path (e.g. /wishlists/{wishlistId});
- *      - getCollection - GET method, that returns collection of resources (e.g. /wishlists);
+ *      - getResourceById - GET method, that returns exactly one resource and should contain id in path;
+ *      - getCollection - GET method, that returns collection of resources;
  *      - post, patch, delete - respectively POST, PATCH and DELETE methods representation.
  *  - Method's parameters may consist of:
- *      - "summary" - method's summary - array of strings;
- *      - "headers" - additional headers, that can be passed with request - array of strings;
- *      - "responseClass" - defines FQCN of transfer, that represents response object - string;
- *      - "isEmptyResponse" - defines is endpoint doesn't have a response body data (e.g. /customer-forgotten-password)
- *      - "responses" - defines all possible error responses, in format "code": "message" - JSON object
+ *      - "summary" - method's summary;
+ *      - "parameters" - additional parameters, that can be passed with request in query, header, path or cookie;
+ *      - "responseAttributesClassName" - defines FQCN of transfer, that represents response object;
+ *      - "isEmptyResponse" - defines is endpoint doesn't have a response body data (e.g. return 204 HTTP status code)
+ *      - "responses" - JSON object that contain list of possible errors in format "code": "message"
  */
 class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
 {
@@ -59,13 +58,13 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return \Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer
+     * @return \Generated\Shared\Transfer\PathAnnotationsTransfer
      */
-    public function getResourceParametersFromPlugin(ResourceRoutePluginInterface $plugin): RestApiDocumentationPathAnnotationsTransfer
+    public function getResourceParametersFromPlugin(ResourceRoutePluginInterface $plugin): PathAnnotationsTransfer
     {
         $glueControllerFiles = $this->glueControllerFinder->getGlueControllerFilesFromPlugin($plugin);
 
-        $pathAnnotationsTransfer = new RestApiDocumentationPathAnnotationsTransfer();
+        $pathAnnotationsTransfer = new PathAnnotationsTransfer();
         $parameters = [];
         foreach ($glueControllerFiles as $file) {
             $tokens = token_get_all(file_get_contents($file));
@@ -93,9 +92,9 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
             if ($phpToken[0] !== T_DOC_COMMENT) {
                 continue;
             }
-            $annotationsParsed = $this->getParametersFromDocComment($phpToken[1]);
+            $annotationsParsed = $this->getDocCommentParameters($phpToken[1]);
             if ($annotationsParsed) {
-                $result = $this->getDataFromAnnotationsParsed($annotationsParsed, $result);
+                $result = $this->getDataFromParsedAnnotations($annotationsParsed, $result);
             }
         }
 
@@ -107,7 +106,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
      *
      * @return array|null
      */
-    protected function getParametersFromDocComment(string $comment): ?array
+    protected function getDocCommentParameters(string $comment): ?array
     {
         if (!preg_match_all(static::PATTERN_REGEX_GLUE_ANNOTATION, $comment, $matches)) {
             return null;
@@ -152,7 +151,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
      *
      * @return array
      */
-    protected function getDataFromAnnotationsParsed(array $annotationsParsed, array $result): array
+    protected function getDataFromParsedAnnotations(array $annotationsParsed, array $result): array
     {
         foreach ($annotationsParsed as $annotationParsed) {
             foreach ($annotationParsed as $method => $values) {

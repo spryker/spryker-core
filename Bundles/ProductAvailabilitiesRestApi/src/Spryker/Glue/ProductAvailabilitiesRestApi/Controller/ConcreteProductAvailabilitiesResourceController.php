@@ -17,17 +17,17 @@ class ConcreteProductAvailabilitiesResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getCollection": {
      *          "summary": [
-     *              "Retrieve Concrete product availability data."
+     *              "Retrieves concrete product availability data for given product id."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Concrete product sku is not specified.",
-     *              "404": "Concrete product availability is not found."
+     *              "400": "Concrete product id is not specified.",
+     *              "404": "Concrete product availability not found."
      *          }
      *     }
      * })

@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer;
 
-use Generated\Shared\Transfer\OpenApiSpecificationSchemaDataTransfer;
+use Generated\Shared\Transfer\SchemaDataTransfer;
 
 interface SchemaRendererInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaDataTransfer $schemaDataTransfer
+     * @param \Generated\Shared\Transfer\SchemaDataTransfer $schemaDataTransfer
      *
      * @return array
      */
-    public function render(OpenApiSpecificationSchemaDataTransfer $schemaDataTransfer): array;
+    public function render(SchemaDataTransfer $schemaDataTransfer): array;
 }

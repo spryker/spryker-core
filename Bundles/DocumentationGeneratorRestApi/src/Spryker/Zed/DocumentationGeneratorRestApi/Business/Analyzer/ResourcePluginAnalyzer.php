@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
-use Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer;
-use Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer;
+use Generated\Shared\Transfer\AnnotationTransfer;
+use Generated\Shared\Transfer\PathAnnotationsTransfer;
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRouteCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\RestApiMethodProcessorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToTextInflectorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,9 +30,9 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     protected const PATTERN_PATH_ID = '{%sId}';
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\RestApiMethodProcessorInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface
      */
-    protected $methodProcessor;
+    protected $httpMethodProcessor;
 
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
@@ -55,18 +55,18 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     protected $textInflector;
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\RestApiMethodProcessorInterface $methodProcessor
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface $httpMethodProcessor
      * @param \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToTextInflectorInterface $textInflector
      */
     public function __construct(
-        RestApiMethodProcessorInterface $methodProcessor,
+        HttpMethodProcessorInterface $httpMethodProcessor,
         array $resourceRoutesPluginsProviderPlugins,
         GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser,
         DocumentationGeneratorRestApiToTextInflectorInterface $textInflector
     ) {
-        $this->methodProcessor = $methodProcessor;
+        $this->httpMethodProcessor = $httpMethodProcessor;
         $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
         $this->glueAnnotationsAnalyser = $glueAnnotationsAnalyser;
         $this->textInflector = $textInflector;
@@ -92,28 +92,23 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
         }
 
         return [
-            static::KEY_PATHS => $this->methodProcessor->getGeneratedPaths(),
-            static::KEY_SCHEMAS => $this->methodProcessor->getGeneratedSchemas(),
-            static::KEY_SECURITY_SCHEMES => $this->methodProcessor->getGeneratedSecuritySchemes(),
+            static::KEY_PATHS => $this->httpMethodProcessor->getGeneratedPaths(),
+            static::KEY_SCHEMAS => $this->httpMethodProcessor->getGeneratedSchemas(),
+            static::KEY_SECURITY_SCHEMES => $this->httpMethodProcessor->getGeneratedSecuritySchemes(),
         ];
     }
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
-     * @param \Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer $pathAnnotationsTransfer
+     * @param \Generated\Shared\Transfer\PathAnnotationsTransfer $pathAnnotationsTransfer
      *
      * @return void
      */
-    protected function processMethods(ResourceRoutePluginInterface $plugin, string $resourcePath, RestApiDocumentationPathAnnotationsTransfer $pathAnnotationsTransfer): void
+    protected function processMethods(ResourceRoutePluginInterface $plugin, string $resourcePath, PathAnnotationsTransfer $pathAnnotationsTransfer): void
     {
         $this->processGetResourceByIdPath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetResourceById());
         $this->processGetResourceCollectionPath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetCollection());
-        if ($pathAnnotationsTransfer->getGetResource()
-            || ($pathAnnotationsTransfer->getGetResourceById() === null && $pathAnnotationsTransfer->getGetCollection() === null)
-        ) {
-            $this->processGetResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetResource());
-        }
         $this->processPostResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getPost());
         $this->processPatchResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getPatch());
         $this->processDeleteResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getDelete());
@@ -122,39 +117,17 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
-    protected function processGetResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
-    {
-        if (!$this->resourceRouteCollection->has(Request::METHOD_GET)) {
-            return;
-        }
-
-        $this->methodProcessor->addGetResourcePath(
-            $plugin,
-            $resourcePath,
-            $this->resourceRouteCollection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED],
-            $this->getResourceIdFromResourceType($plugin->getResourceType()),
-            $annotationTransfer
-        );
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param string $resourcePath
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
-     *
-     * @return void
-     */
-    protected function processGetResourceByIdPath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
+    protected function processGetResourceByIdPath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?AnnotationTransfer $annotationTransfer): void
     {
         if (!$annotationTransfer || !$this->resourceRouteCollection->has(Request::METHOD_GET)) {
             return;
         }
 
-        $this->methodProcessor->addGetResourceByIdPath(
+        $this->httpMethodProcessor->addGetResourceByIdPath(
             $plugin,
             $resourcePath,
             $this->resourceRouteCollection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED],
@@ -166,17 +139,17 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
-    protected function processGetResourceCollectionPath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
+    protected function processGetResourceCollectionPath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?AnnotationTransfer $annotationTransfer): void
     {
         if (!$annotationTransfer || !$this->resourceRouteCollection->has(Request::METHOD_GET)) {
             return;
         }
 
-        $this->methodProcessor->addGetResourceCollectionPath(
+        $this->httpMethodProcessor->addGetResourceCollectionPath(
             $plugin,
             $resourcePath,
             $this->resourceRouteCollection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED],
@@ -188,17 +161,17 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
-    protected function processPostResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
+    protected function processPostResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?AnnotationTransfer $annotationTransfer): void
     {
         if (!$this->resourceRouteCollection->has(Request::METHOD_POST)) {
             return;
         }
 
-        $this->methodProcessor->addPostResourcePath(
+        $this->httpMethodProcessor->addPostResourcePath(
             $plugin,
             $resourcePath,
             $this->resourceRouteCollection->get(Request::METHOD_POST)[static::KEY_IS_PROTECTED],
@@ -209,17 +182,17 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
-    protected function processPatchResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
+    protected function processPatchResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?AnnotationTransfer $annotationTransfer): void
     {
         if (!$this->resourceRouteCollection->has(Request::METHOD_PATCH)) {
             return;
         }
 
-        $this->methodProcessor->addPatchResourcePath(
+        $this->httpMethodProcessor->addPatchResourcePath(
             $plugin,
             $resourcePath . '/' . $this->getResourceIdFromResourceType($plugin->getResourceType()),
             $this->resourceRouteCollection->get(Request::METHOD_PATCH)[static::KEY_IS_PROTECTED],
@@ -230,17 +203,17 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
-    protected function processDeleteResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?RestApiDocumentationAnnotationTransfer $annotationTransfer): void
+    protected function processDeleteResourcePath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?AnnotationTransfer $annotationTransfer): void
     {
         if (!$this->resourceRouteCollection->has(Request::METHOD_DELETE)) {
             return;
         }
 
-        $this->methodProcessor->addDeleteResourcePath(
+        $this->httpMethodProcessor->addDeleteResourcePath(
             $plugin,
             $resourcePath . '/' . $this->getResourceIdFromResourceType($plugin->getResourceType()),
             $this->resourceRouteCollection->get(Request::METHOD_DELETE)[static::KEY_IS_PROTECTED],

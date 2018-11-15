@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer;
 
-use Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfer;
-use Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeTransfer;
+use Generated\Shared\Transfer\SecuritySchemeComponentTransfer;
+use Generated\Shared\Transfer\SecuritySchemeTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SecuritySchemeSpecificationComponentInterface;
 
 class SecuritySchemeRenderer implements SecuritySchemeRendererInterface
@@ -27,13 +27,13 @@ class SecuritySchemeRenderer implements SecuritySchemeRendererInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeTransfer $securitySchemeTransfer
+     * @param \Generated\Shared\Transfer\SecuritySchemeTransfer $securitySchemeTransfer
      *
      * @return array
      */
-    public function render(OpenApiSpecificationSecuritySchemeTransfer $securitySchemeTransfer): array
+    public function render(SecuritySchemeTransfer $securitySchemeTransfer): array
     {
-        $securitySchemeComponentTransfer = new OpenApiSpecificationSecuritySchemeComponentTransfer();
+        $securitySchemeComponentTransfer = new SecuritySchemeComponentTransfer();
         $securitySchemeComponentTransfer->setName($securitySchemeTransfer->getName());
         $securitySchemeComponentTransfer->setType($securitySchemeTransfer->getType());
         $securitySchemeComponentTransfer->setScheme($securitySchemeTransfer->getScheme());

@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
-use Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeTransfer;
+use Generated\Shared\Transfer\SecuritySchemeTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRendererInterface;
 
-class OpenApiSpecificationSecuritySchemeGenerator implements OpenApiSpecificationSecuritySchemeGeneratorInterface
+class OpenApiSpecificationSecuritySchemeGenerator implements SecuritySchemeGeneratorInterface
 {
     protected const DEFAULT_BEARER_AUTH_SCHEME_NAME = 'BearerAuth';
     protected const DEFAULT_BEARER_AUTH_SCHEME_TYPE = 'http';
@@ -73,11 +73,11 @@ class OpenApiSpecificationSecuritySchemeGenerator implements OpenApiSpecificatio
      * @param string $type
      * @param string $scheme
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeTransfer
+     * @return \Generated\Shared\Transfer\SecuritySchemeTransfer
      */
-    protected function createSecurityScheme(string $name, string $type, string $scheme): OpenApiSpecificationSecuritySchemeTransfer
+    protected function createSecurityScheme(string $name, string $type, string $scheme): SecuritySchemeTransfer
     {
-        $securityScheme = new OpenApiSpecificationSecuritySchemeTransfer();
+        $securityScheme = new SecuritySchemeTransfer();
         $securityScheme->setName($name);
         $securityScheme->setType($type);
         $securityScheme->setScheme($scheme);
@@ -86,11 +86,11 @@ class OpenApiSpecificationSecuritySchemeGenerator implements OpenApiSpecificatio
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeTransfer $securityScheme
+     * @param \Generated\Shared\Transfer\SecuritySchemeTransfer $securityScheme
      *
      * @return void
      */
-    protected function addSecurityScheme(OpenApiSpecificationSecuritySchemeTransfer $securityScheme): void
+    protected function addSecurityScheme(SecuritySchemeTransfer $securityScheme): void
     {
         $this->securitySchemes = array_replace_recursive($this->securitySchemes, $this->securitySchemeRenderer->render($securityScheme));
     }

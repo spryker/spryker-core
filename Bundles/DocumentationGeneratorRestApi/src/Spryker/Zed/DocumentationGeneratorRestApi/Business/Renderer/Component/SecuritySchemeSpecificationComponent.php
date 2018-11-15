@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
-use Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfer;
+use Generated\Shared\Transfer\SecuritySchemeComponentTransfer;
 
 /**
  * Specification:
@@ -16,21 +16,17 @@ use Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfe
  */
 class SecuritySchemeSpecificationComponent implements SecuritySchemeSpecificationComponentInterface
 {
-    protected const KEY_TYPE = 'type';
-    protected const KEY_SCHEME = 'scheme';
-    protected const KEY_IN = 'in';
-
     /**
-     * @var \Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfer $securitySchemeComponentTransfer
+     * @var \Generated\Shared\Transfer\SecuritySchemeComponentTransfer $securitySchemeComponentTransfer
      */
     protected $securitySchemeComponentTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfer $securitySchemeComponentTransfer
+     * @param \Generated\Shared\Transfer\SecuritySchemeComponentTransfer $securitySchemeComponentTransfer
      *
      * @return void
      */
-    public function setSecuritySchemeComponentTransfer(OpenApiSpecificationSecuritySchemeComponentTransfer $securitySchemeComponentTransfer): void
+    public function setSecuritySchemeComponentTransfer(SecuritySchemeComponentTransfer $securitySchemeComponentTransfer): void
     {
         $this->securitySchemeComponentTransfer = $securitySchemeComponentTransfer;
     }
@@ -44,8 +40,8 @@ class SecuritySchemeSpecificationComponent implements SecuritySchemeSpecificatio
             return [];
         }
 
-        $securitySchemaData[$this->securitySchemeComponentTransfer->getName()][static::KEY_TYPE] = $this->securitySchemeComponentTransfer->getType();
-        $securitySchemaData[$this->securitySchemeComponentTransfer->getName()][static::KEY_SCHEME] = $this->securitySchemeComponentTransfer->getScheme();
+        $securitySchemaData[$this->securitySchemeComponentTransfer->getName()][SecuritySchemeComponentTransfer::TYPE] = $this->securitySchemeComponentTransfer->getType();
+        $securitySchemaData[$this->securitySchemeComponentTransfer->getName()][SecuritySchemeComponentTransfer::SCHEME] = $this->securitySchemeComponentTransfer->getScheme();
 
         return $securitySchemaData;
     }

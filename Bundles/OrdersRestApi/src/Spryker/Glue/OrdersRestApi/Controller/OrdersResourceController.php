@@ -20,22 +20,24 @@ class OrdersResourceController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Get order by reference."
+     *              "Retrieves order by id."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
-     *              "404": "Can not find order by the given order reference."
+     *              "404": "Order not found."
      *          }
      *     },
      *     "getCollection": {
      *          "summary": [
-     *              "Get collection of orders."
+     *              "Retrieves list of orders."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ]
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *     }
      * })
      *

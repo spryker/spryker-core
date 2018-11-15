@@ -21,12 +21,13 @@ class CustomerPasswordResourceController extends AbstractController
      * @Glue({
      *     "patch": {
      *          "summary": [
-     *              "Update customer password."
+     *              "Updates customer password."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
+     *          "isEmptyResponse": true,
      *          "responses": {
      *              "400": "Passwords don't match.",
      *              "404": "Customer not found.",

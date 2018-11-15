@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
-use Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfer;
+use Generated\Shared\Transfer\SecuritySchemeComponentTransfer;
 
 interface SecuritySchemeSpecificationComponentInterface extends SpecificationComponentInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeComponentTransfer $securitySchemeComponentTransfer
+     * @param \Generated\Shared\Transfer\SecuritySchemeComponentTransfer $securitySchemeComponentTransfer
      *
      * @return void
      */
-    public function setSecuritySchemeComponentTransfer(OpenApiSpecificationSecuritySchemeComponentTransfer $securitySchemeComponentTransfer): void;
+    public function setSecuritySchemeComponentTransfer(SecuritySchemeComponentTransfer $securitySchemeComponentTransfer): void;
 }

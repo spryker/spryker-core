@@ -12,7 +12,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationG
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToYamlDumperInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig;
 
-class YamlOpenApiSpecificationWriter implements OpenApiSpecificationWriterInterface
+class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
 {
     protected const GENERATED_FILE_POSTFIX = '.schema.yml';
 
@@ -120,9 +120,9 @@ class YamlOpenApiSpecificationWriter implements OpenApiSpecificationWriterInterf
      */
     protected function resolveGeneratedFileName(): string
     {
-        return $this->documentationGeneratorRestApiConfig->getGeneratedFileTargetDirectory()
+        return $this->documentationGeneratorRestApiConfig->getGeneratedFileOutputDirectory()
             . DIRECTORY_SEPARATOR
-            . $this->documentationGeneratorRestApiConfig->getGeneratedFileNamePrefix()
+            . $this->documentationGeneratorRestApiConfig->getGeneratedFilePrefix()
             . static::GENERATED_FILE_POSTFIX;
     }
 }

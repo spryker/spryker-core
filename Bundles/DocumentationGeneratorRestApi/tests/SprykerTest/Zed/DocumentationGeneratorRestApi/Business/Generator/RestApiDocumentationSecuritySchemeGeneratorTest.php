@@ -25,7 +25,7 @@ class RestApiDocumentationSecuritySchemeGeneratorTest extends Unit
     protected const BEARER_AUTH = 'BearerAuth';
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGeneratorInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface
      */
     protected $securitySchemeGenerator;
 

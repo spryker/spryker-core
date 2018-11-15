@@ -11,11 +11,13 @@ interface DocumentationGeneratorRestApiFacadeInterface
 {
     /**
      * Specification:
-     *  - Generates Open API specification file in YAML format
+     *  - Generates documentation for enabled resources.
+     *  - Documentation is generated in OpenAPI Specification format.
+     *  - Saves documentation to .yml file.
      *
      * @api
      *
      * @return void
      */
-    public function generateOpenApiSpecification(): void;
+    public function generateDocumentation(): void;
 }

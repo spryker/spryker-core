@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor;
 
-use Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer;
-use Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer;
-use Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer;
+use Generated\Shared\Transfer\AnnotationTransfer;
+use Generated\Shared\Transfer\PathMethodDataTransfer;
+use Generated\Shared\Transfer\PathSchemaDataTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGeneratorInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSchemaGeneratorInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface;
 
-class RestApiMethodProcessor implements RestApiMethodProcessorInterface
+class HttpMethodProcessor implements HttpMethodProcessorInterface
 {
     protected const PATTERN_SUMMARY_GET_RESOURCE = 'Get %s';
     protected const PATTERN_SUMMARY_GET_COLLECTION = 'Get collection of %s';
@@ -24,29 +24,29 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
     protected const PATTERN_SUMMARY_DELETE_RESOURCE = 'Delete %s';
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGeneratorInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface
      */
     protected $pathGenerator;
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSchemaGeneratorInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface
      */
     protected $schemaGenerator;
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGeneratorInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface
      */
     protected $securitySchemeGenerator;
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGeneratorInterface $pathGenerator
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSchemaGeneratorInterface $schemaGenerator
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGeneratorInterface $securitySchemeGenerator
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface $pathGenerator
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface $schemaGenerator
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface $securitySchemeGenerator
      */
     public function __construct(
-        OpenApiSpecificationPathGeneratorInterface $pathGenerator,
-        OpenApiSpecificationSchemaGeneratorInterface $schemaGenerator,
-        OpenApiSpecificationSecuritySchemeGeneratorInterface $securitySchemeGenerator
+        PathGeneratorInterface $pathGenerator,
+        SchemaGeneratorInterface $schemaGenerator,
+        SecuritySchemeGeneratorInterface $securitySchemeGenerator
     ) {
         $this->pathGenerator = $pathGenerator;
         $this->schemaGenerator = $schemaGenerator;
@@ -82,35 +82,7 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      * @param string $resourcePath
      * @param bool $isProtected
      * @param string $idResource
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
-     *
-     * @return void
-     */
-    public function addGetResourcePath(
-        ResourceRoutePluginInterface $plugin,
-        string $resourcePath,
-        bool $isProtected,
-        string $idResource,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
-    ): void {
-        $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $pathDataTransfer = $this->createPathDataTransfer(
-            $plugin->getResourceType(),
-            $resourcePath,
-            $isProtected,
-            $errorSchema,
-            $annotationTransfer
-        );
-
-        $this->addGetResource($plugin, $pathDataTransfer, $annotationTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param string $resourcePath
-     * @param bool $isProtected
-     * @param string $idResource
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
@@ -119,7 +91,7 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
         string $resourcePath,
         bool $isProtected,
         string $idResource,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        ?AnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $pathDataTransfer = $this->createPathDataTransfer(
@@ -138,7 +110,7 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      * @param string $resourcePath
      * @param bool $isProtected
      * @param string $idResource
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
@@ -147,7 +119,7 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
         string $resourcePath,
         bool $isProtected,
         string $idResource,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        ?AnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $pathDataTransfer = $this->createPathDataTransfer(
@@ -165,7 +137,7 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
      * @param bool $isProtected
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
@@ -173,7 +145,7 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
         ResourceRoutePluginInterface $plugin,
         string $resourcePath,
         bool $isProtected,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        ?AnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->findResponseResourceSchema($plugin, $annotationTransfer);
@@ -200,7 +172,7 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
      * @param bool $isProtected
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
@@ -208,7 +180,7 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
         ResourceRoutePluginInterface $plugin,
         string $resourcePath,
         bool $isProtected,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        ?AnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->findResponseResourceSchema($plugin, $annotationTransfer);
@@ -235,7 +207,7 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
      * @param bool $isProtected
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
@@ -243,7 +215,7 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
         ResourceRoutePluginInterface $plugin,
         string $resourcePath,
         bool $isProtected,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        ?AnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
 
@@ -266,15 +238,15 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer $pathMethodDataTransfer
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\PathMethodDataTransfer $pathMethodDataTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
     protected function addGetCollectionPath(
         ResourceRoutePluginInterface $plugin,
-        OpenApiSpecificationPathMethodDataTransfer $pathMethodDataTransfer,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        PathMethodDataTransfer $pathMethodDataTransfer,
+        ?AnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->findResponseCollectionSchema($plugin, $annotationTransfer);
@@ -290,15 +262,15 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer $pathMethodDataTransfer
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\PathMethodDataTransfer $pathMethodDataTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
     protected function addGetResource(
         ResourceRoutePluginInterface $plugin,
-        OpenApiSpecificationPathMethodDataTransfer $pathMethodDataTransfer,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        PathMethodDataTransfer $pathMethodDataTransfer,
+        ?AnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->findResponseResourceSchema($plugin, $annotationTransfer);
@@ -314,17 +286,17 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer $pathMethodDataTransfer
+     * @param \Generated\Shared\Transfer\PathMethodDataTransfer $pathMethodDataTransfer
      * @param string $idResource
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return void
      */
     protected function addGetResourceById(
         ResourceRoutePluginInterface $plugin,
-        OpenApiSpecificationPathMethodDataTransfer $pathMethodDataTransfer,
+        PathMethodDataTransfer $pathMethodDataTransfer,
         string $idResource,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
+        ?AnnotationTransfer $annotationTransfer
     ): void {
         $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
         $responseSchema = $this->findResponseResourceSchema($plugin, $annotationTransfer);
@@ -343,19 +315,19 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
      * @param string $resource
      * @param string $path
      * @param bool $isProtected
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer $errorSchema
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\PathSchemaDataTransfer $errorSchema
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer
+     * @return \Generated\Shared\Transfer\PathMethodDataTransfer
      */
     protected function createPathDataTransfer(
         string $resource,
         string $path,
         bool $isProtected,
-        OpenApiSpecificationPathSchemaDataTransfer $errorSchema,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
-    ): OpenApiSpecificationPathMethodDataTransfer {
-        $pathDataTransfer = new OpenApiSpecificationPathMethodDataTransfer();
+        PathSchemaDataTransfer $errorSchema,
+        ?AnnotationTransfer $annotationTransfer
+    ): PathMethodDataTransfer {
+        $pathDataTransfer = new PathMethodDataTransfer();
         $pathDataTransfer->setResource($resource);
         $pathDataTransfer->setPath($path);
         $pathDataTransfer->setIsProtected($isProtected);
@@ -371,11 +343,11 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
     /**
      * @param string $schemaRef
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\PathSchemaDataTransfer
      */
-    protected function createPathSchemaDataTransfer(string $schemaRef): OpenApiSpecificationPathSchemaDataTransfer
+    protected function createPathSchemaDataTransfer(string $schemaRef): PathSchemaDataTransfer
     {
-        $schemaDataTransfer = new OpenApiSpecificationPathSchemaDataTransfer();
+        $schemaDataTransfer = new PathSchemaDataTransfer();
         $schemaDataTransfer->setSchemaReference($schemaRef);
 
         return $schemaDataTransfer;
@@ -394,14 +366,14 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer|null
+     * @return \Generated\Shared\Transfer\PathSchemaDataTransfer|null
      */
     protected function findResponseResourceSchema(
         ResourceRoutePluginInterface $plugin,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
-    ): ?OpenApiSpecificationPathSchemaDataTransfer {
+        ?AnnotationTransfer $annotationTransfer
+    ): ?PathSchemaDataTransfer {
         if (!$annotationTransfer) {
             return $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin));
         }
@@ -411,20 +383,20 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
         }
 
         return $this->createPathSchemaDataTransfer(
-            $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin, $annotationTransfer->getResponseClass())
+            $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin, $annotationTransfer->getResponseAttributesClassName())
         );
     }
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param \Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer|null
+     * @return \Generated\Shared\Transfer\PathSchemaDataTransfer|null
      */
     protected function findResponseCollectionSchema(
         ResourceRoutePluginInterface $plugin,
-        ?RestApiDocumentationAnnotationTransfer $annotationTransfer
-    ): ?OpenApiSpecificationPathSchemaDataTransfer {
+        ?AnnotationTransfer $annotationTransfer
+    ): ?PathSchemaDataTransfer {
         if (!$annotationTransfer) {
             return $this->createPathSchemaDataTransfer($this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin));
         }
@@ -434,20 +406,20 @@ class RestApiMethodProcessor implements RestApiMethodProcessorInterface
         }
 
         return $this->createPathSchemaDataTransfer(
-            $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin, $annotationTransfer->getResponseClass())
+            $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin, $annotationTransfer->getResponseAttributesClassName())
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer $pathMethodDataTransfer
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer $errorSchemaDataTransfer
+     * @param \Generated\Shared\Transfer\PathMethodDataTransfer $pathMethodDataTransfer
+     * @param \Generated\Shared\Transfer\PathSchemaDataTransfer $errorSchemaDataTransfer
      * @param array $responses
      *
      * @return void
      */
     protected function addResponsesToPathData(
-        OpenApiSpecificationPathMethodDataTransfer $pathMethodDataTransfer,
-        OpenApiSpecificationPathSchemaDataTransfer $errorSchemaDataTransfer,
+        PathMethodDataTransfer $pathMethodDataTransfer,
+        PathSchemaDataTransfer $errorSchemaDataTransfer,
         array $responses
     ): void {
         foreach ($responses as $code => $description) {

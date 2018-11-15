@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer;
 
-use Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeTransfer;
+use Generated\Shared\Transfer\SecuritySchemeTransfer;
 
 interface SecuritySchemeRendererInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationSecuritySchemeTransfer $securitySchemeTransfer
+     * @param \Generated\Shared\Transfer\SecuritySchemeTransfer $securitySchemeTransfer
      *
      * @return array
      */
-    public function render(OpenApiSpecificationSecuritySchemeTransfer $securitySchemeTransfer): array;
+    public function render(SecuritySchemeTransfer $securitySchemeTransfer): array;
 }

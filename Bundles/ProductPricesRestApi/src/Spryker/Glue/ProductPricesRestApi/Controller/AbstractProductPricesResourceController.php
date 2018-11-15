@@ -18,17 +18,17 @@ class AbstractProductPricesResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getCollection": {
      *          "summary": [
-     *              "Retrieve prices of abstract products."
+     *              "Retrieves abstract product prices."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Abstract product sku is not specified.",
-     *              "404": "Abstract product prices are not found."
+     *              "400": "Abstract product id is not specified.",
+     *              "404": "Abstract product prices not found."
      *          }
      *     }
      * })

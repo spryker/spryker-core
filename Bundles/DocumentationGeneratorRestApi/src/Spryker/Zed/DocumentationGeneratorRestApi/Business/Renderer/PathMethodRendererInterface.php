@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer;
 
-use Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer;
+use Generated\Shared\Transfer\PathMethodDataTransfer;
 
 interface PathMethodRendererInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer $pathMethodDataTransfer
+     * @param \Generated\Shared\Transfer\PathMethodDataTransfer $pathMethodDataTransfer
      *
      * @return array
      */
-    public function render(OpenApiSpecificationPathMethodDataTransfer $pathMethodDataTransfer): array;
+    public function render(PathMethodDataTransfer $pathMethodDataTransfer): array;
 }

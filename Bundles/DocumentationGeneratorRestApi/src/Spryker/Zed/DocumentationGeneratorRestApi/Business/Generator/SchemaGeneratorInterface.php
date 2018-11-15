@@ -9,7 +9,7 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 
-interface OpenApiSpecificationSchemaGeneratorInterface
+interface SchemaGeneratorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin

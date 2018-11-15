@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
-use Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer;
+use Generated\Shared\Transfer\PathParameterComponentTransfer;
 
 /**
  * Specification:
@@ -18,26 +18,20 @@ use Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer
  */
 class PathParameterSpecificationComponent implements PathParameterSpecificationComponentInterface
 {
-    protected const KEY_DESCRIPTION = 'description';
-    protected const KEY_DEPRECATED = 'deprecated';
-    protected const KEY_ALLOW_EMPTY_VALUE = 'allowEmptyValue';
-    protected const KEY_IN = 'in';
-    protected const KEY_NAME = 'name';
-    protected const KEY_REQUIRED = 'required';
     protected const KEY_SCHEMA = 'schema';
     protected const KEY_TYPE = 'type';
 
     /**
-     * @var \Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer $pathParameterComponentTransfer
+     * @var \Generated\Shared\Transfer\PathParameterComponentTransfer $pathParameterComponentTransfer
      */
     protected $pathParameterComponentTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer $pathParameterComponentTransfer
+     * @param \Generated\Shared\Transfer\PathParameterComponentTransfer $pathParameterComponentTransfer
      *
      * @return void
      */
-    public function setPathParameterComponentTransfer(OpenApiSpecificationPathParameterComponentTransfer $pathParameterComponentTransfer): void
+    public function setPathParameterComponentTransfer(PathParameterComponentTransfer $pathParameterComponentTransfer): void
     {
         $this->pathParameterComponentTransfer = $pathParameterComponentTransfer;
     }
@@ -52,17 +46,17 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
             return $result;
         }
 
-        $result[static::KEY_NAME] = $this->pathParameterComponentTransfer->getName();
-        $result[static::KEY_IN] = $this->pathParameterComponentTransfer->getIn();
-        $result[static::KEY_REQUIRED] = $this->pathParameterComponentTransfer->getRequired();
+        $result[PathParameterComponentTransfer::NAME] = $this->pathParameterComponentTransfer->getName();
+        $result[PathParameterComponentTransfer::IN] = $this->pathParameterComponentTransfer->getIn();
+        $result[PathParameterComponentTransfer::REQUIRED] = $this->pathParameterComponentTransfer->getRequired();
         if ($this->pathParameterComponentTransfer->getDescription()) {
-            $result[static::KEY_DESCRIPTION] = $this->pathParameterComponentTransfer->getDescription();
+            $result[PathParameterComponentTransfer::DESCRIPTION] = $this->pathParameterComponentTransfer->getDescription();
         }
         if ($this->pathParameterComponentTransfer->getDeprecated() !== null) {
-            $result[static::KEY_DEPRECATED] = $this->pathParameterComponentTransfer->getDeprecated();
+            $result[PathParameterComponentTransfer::DEPRECATED] = $this->pathParameterComponentTransfer->getDeprecated();
         }
         if ($this->pathParameterComponentTransfer->getAllowEmptyValue() !== null) {
-            $result[static::KEY_ALLOW_EMPTY_VALUE] = $this->pathParameterComponentTransfer->getAllowEmptyValue();
+            $result[PathParameterComponentTransfer::ALLOW_EMPTY_VALUE] = $this->pathParameterComponentTransfer->getAllowEmptyValue();
         }
 
         $result[static::KEY_SCHEMA] = [

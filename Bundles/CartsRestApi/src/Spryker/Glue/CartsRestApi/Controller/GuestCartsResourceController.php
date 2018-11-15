@@ -19,19 +19,27 @@ class GuestCartsResourceController extends AbstractController
     /**
      * @Glue({
      *      "getResourceById": {
+     *          "summary": [
+     *              "Retrieves a guest cart by id."
+     *          ],
      *          "parameters": [{
      *              "name": "X-Anonymous-Customer-Unique-Id",
      *              "in": "header",
      *              "required": true
      *          }],
      *          "responses": {
-     *              "404": "Cart with given uuid not found."
+     *              "404": "Cart not found."
      *          }
      *     },
-     *     "getResource": {
-     *          "headers": [
-     *              "X-Anonymous-Customer-Unique-Id"
-     *          ]
+     *     "getCollection": {
+     *           "summary": [
+     *              "Retrieves list of customer's guest carts."
+     *          ],
+     *          "parameters": [{
+     *              "name": "X-Anonymous-Customer-Unique-Id",
+     *              "in": "header",
+     *              "required": true
+     *          }],
      *     }
      * })
      *

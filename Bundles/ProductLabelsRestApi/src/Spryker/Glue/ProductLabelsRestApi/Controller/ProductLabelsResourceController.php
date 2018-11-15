@@ -18,17 +18,17 @@ class ProductLabelsResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getResourceById": {
      *          "summary": [
-     *              "Retrieve abstract product's image sets."
+     *              "Retrieves abstract product labels by id."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Product label id is missing.",
-     *              "404": "Product label is not found."
+     *              "400": "Product label id is not specified.",
+     *              "404": "Product label not found."
      *          }
      *     }
      * })

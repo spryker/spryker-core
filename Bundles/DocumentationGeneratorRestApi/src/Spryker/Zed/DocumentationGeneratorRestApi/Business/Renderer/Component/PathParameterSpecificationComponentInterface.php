@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
-use Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer;
+use Generated\Shared\Transfer\PathParameterComponentTransfer;
 
 interface PathParameterSpecificationComponentInterface extends SpecificationComponentInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer $pathParameterComponentTransfer
+     * @param \Generated\Shared\Transfer\PathParameterComponentTransfer $pathParameterComponentTransfer
      *
      * @return void
      */
-    public function setPathParameterComponentTransfer(OpenApiSpecificationPathParameterComponentTransfer $pathParameterComponentTransfer): void;
+    public function setPathParameterComponentTransfer(PathParameterComponentTransfer $pathParameterComponentTransfer): void;
 }

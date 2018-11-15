@@ -19,8 +19,8 @@ use Spryker\Zed\Kernel\Container;
 class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    public const PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS = 'PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS';
-    public const PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER = 'PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER';
+    public const PLUGIN_RESOURCE_ROUTE_PLUGIN_PROVIDERS = 'PLUGIN_RESOURCE_ROUTE_PLUGIN_PROVIDERS';
+    public const PLUGIN_RESOURCE_RELATIONSHIP_COLLECTION_PROVIDER = 'PLUGIN_RESOURCE_RELATIONSHIP_COLLECTION_PROVIDER';
     public const COLLECTION_RESOURCE_ROUTE = 'COLLECTION_RESOURCE_ROUTE';
     public const YAML_DUMPER = 'YAML_DUMPER';
     public const FILESYSTEM = 'FILESYSTEM';
@@ -40,8 +40,8 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
         $container = $this->addFinder($container);
         $container = $this->addTextInflector($container);
         $container = $this->addResourceRouteCollection($container);
-        $container = $this->addResourceRoutePluginsProviderPlugins($container);
-        $container = $this->addResourceRelationshipsCollectionProviderPlugin($container);
+        $container = $this->addResourceRoutePluginProviderPlugins($container);
+        $container = $this->addResourceRelationshipCollectionProviderPlugin($container);
 
         return $container;
     }
@@ -123,9 +123,9 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addResourceRoutePluginsProviderPlugins(Container $container): Container
+    protected function addResourceRoutePluginProviderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS] = function () {
+        $container[static::PLUGIN_RESOURCE_ROUTE_PLUGIN_PROVIDERS] = function () {
             return $this->getResourceRoutePluginsProviderPlugins();
         };
 
@@ -159,10 +159,10 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addResourceRelationshipsCollectionProviderPlugin(Container $container): Container
+    protected function addResourceRelationshipCollectionProviderPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER] = function () {
-            return $this->getResourceRelationshipsCollectionProviderPlugins();
+        $container[static::PLUGIN_RESOURCE_RELATIONSHIP_COLLECTION_PROVIDER] = function () {
+            return $this->getResourceRelationshipCollectionProviderPlugins();
         };
 
         return $container;
@@ -171,7 +171,7 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
     /**
      * @return \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[]
      */
-    protected function getResourceRelationshipsCollectionProviderPlugins(): array
+    protected function getResourceRelationshipCollectionProviderPlugins(): array
     {
         return [];
     }

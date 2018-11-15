@@ -19,20 +19,20 @@ class CustomerResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getResourceById": {
      *          "summary": [
-     *              "Retrieve customer data."
+     *              "Retrieves customer data."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Customer reference is missing.",
+     *              "400": "Customer id is not specified.",
      *              "403": "Unauthorized request.",
      *              "404": "Customer not found."
      *          }
-     *     }
+     *     },
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -50,15 +50,15 @@ class CustomerResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Create customer."
+     *              "Creates customer."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "422": "Expected response to a valid request.",
-     *              "500": "Internal server error."
+     *              "400": "Terms and Conditions was not accepted.",
+     *              "422": "Customer with this email already exists."
      *          }
      *     }
      * })
@@ -79,16 +79,16 @@ class CustomerResourceController extends AbstractController
      * @Glue({
      *     "patch": {
      *          "summary": [
-     *              "Update customer data."
+     *              "Updates customer data."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
      *              "400": "Failed to save customer.",
      *              "403": "Unauthorized request.",
      *              "404": "Customer not found.",
-     *              "500": "Internal server error."
      *          }
      *     }
      * })
@@ -109,13 +109,14 @@ class CustomerResourceController extends AbstractController
      * @Glue({
      *     "delete": {
      *          "summary": [
-     *              "Anonymize customers."
+     *              "Anonymizes customers."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
-     *              "400": "Customer reference is missing.",
+     *              "400": "Customer id is not specified.",
      *              "403": "Unauthorized request.",
      *              "404": "Customer not found."
      *          }

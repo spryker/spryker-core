@@ -11,7 +11,7 @@ class TestResourceWithInvalidAnnotationsController
 {
     /**
      * @Glue(
-     *     "getResource": {
+     *     "getResourceById": {
      *          "summary": [
      *              "Summary example"
      *          ],
@@ -35,7 +35,7 @@ class TestResourceWithInvalidAnnotationsController
     /**
      * @Glue({
      *     "post": {
-     *          "responseClass": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "500": "Server Error",

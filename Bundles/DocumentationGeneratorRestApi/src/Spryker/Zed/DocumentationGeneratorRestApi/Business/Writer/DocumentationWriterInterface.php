@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer;
 
-interface OpenApiSpecificationWriterInterface
+interface DocumentationWriterInterface
 {
     /**
      * @param array $data

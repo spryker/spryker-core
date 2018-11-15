@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Processor;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\RestApiDocumentationAnnotationTransfer;
+use Generated\Shared\Transfer\AnnotationTransfer;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
 
@@ -19,10 +19,10 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResou
  * @group DocumentationGeneratorRestApi
  * @group Business
  * @group Processor
- * @group RestApiMethodProcessorTest
+ * @group HttpMethodProcessorTest
  * Add your own group annotations below this line
  */
-class RestApiMethodProcessorTest extends Unit
+class HttpMethodProcessorTest extends Unit
 {
     protected const RESOURCE_PATH = '/test-resource';
     protected const RESOURCE_ID = '{testResourceId}';
@@ -36,7 +36,7 @@ class RestApiMethodProcessorTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\RestApiMethodProcessorInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface
      */
     protected $methodProcessor;
 
@@ -48,54 +48,6 @@ class RestApiMethodProcessorTest extends Unit
         parent::setUp();
 
         $this->methodProcessor = (new DocumentationGeneratorRestApiTestFactory())->createRestApiMethodProcessor();
-    }
-
-    /**
-     * @return void
-     */
-    public function testAddGetResourcePathWithoutAnnotationsShouldAddGetResourceToPathsWithDefaultValues(): void
-    {
-        $this->methodProcessor->addGetResourcePath(
-            new TestResourceRoutePlugin(),
-            static::RESOURCE_PATH,
-            false,
-            static::RESOURCE_ID,
-            null
-        );
-
-        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
-
-        $this->assertNotEmpty($generatedPaths);
-        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset($this->tester->getMethodProcessorGetResourcePathWithoutAnnotationsExpectedData(), $generatedPaths);
-    }
-
-    /**
-     * @return void
-     */
-    public function testAddGetResourcePathWithAnnotationsShouldAddGetResourceToPaths(): void
-    {
-        $annotationTransfer = (new RestApiDocumentationAnnotationTransfer())
-            ->setSummary([static::SUMMARY])
-            ->addParameter($this->tester->getAcceptLanguageHeaderPathParameterComponent())
-            ->setResponses([
-                '400' => static::BAD_REQUEST_RESPONSE_DESCRIPTION,
-                '404' => static::NOT_FOUND_RESPONSE_DESCRIPTION,
-            ]);
-
-        $this->methodProcessor->addGetResourcePath(
-            new TestResourceRoutePlugin(),
-            static::RESOURCE_PATH,
-            false,
-            static::RESOURCE_ID,
-            $annotationTransfer
-        );
-
-        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
-
-        $this->assertNotEmpty($generatedPaths);
-        $this->assertArrayHasKey(static::RESOURCE_PATH, $generatedPaths);
-        $this->assertArraySubset($this->tester->getMethodProcessorGetResourcePathWithAnnotationsExpectedData(), $generatedPaths);
     }
 
     /**
@@ -128,7 +80,7 @@ class RestApiMethodProcessorTest extends Unit
             static::RESOURCE_PATH,
             false,
             static::RESOURCE_ID,
-            (new RestApiDocumentationAnnotationTransfer())->setIsEmptyResponse(true)
+            (new AnnotationTransfer())->setIsEmptyResponse(true)
         );
 
         $generatedPaths = $this->methodProcessor->getGeneratedPaths();
@@ -148,7 +100,7 @@ class RestApiMethodProcessorTest extends Unit
             static::RESOURCE_PATH,
             false,
             static::RESOURCE_ID,
-            (new RestApiDocumentationAnnotationTransfer())->setSummary([static::SUMMARY])
+            (new AnnotationTransfer())->setSummary([static::SUMMARY])
         );
 
         $generatedPaths = $this->methodProcessor->getGeneratedPaths();
@@ -224,7 +176,7 @@ class RestApiMethodProcessorTest extends Unit
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
-            (new RestApiDocumentationAnnotationTransfer())->setIsEmptyResponse(true)
+            (new AnnotationTransfer())->setIsEmptyResponse(true)
         );
 
         $generatedPaths = $this->methodProcessor->getGeneratedPaths();

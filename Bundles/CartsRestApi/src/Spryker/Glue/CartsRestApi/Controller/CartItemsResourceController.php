@@ -28,7 +28,8 @@ class CartItemsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "404": "Cart or item is not found.",
+     *              "400": "Cart id is missing.",
+     *              "404": "Cart not found.",
      *              "422": "Errors appeared during item creation."
      *          }
      *     }
@@ -53,14 +54,16 @@ class CartItemsResourceController extends AbstractController
      * @Glue({
      *     "patch": {
      *          "summary": [
-     *              "Update cart item quantity."
+     *              "Updates cart item quantity."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "404": "Cart or item is not found."
+     *              "400": "Cart id or item id is not specified.",
+     *              "404": "Cart or item is not found.",
+     *              "422": "Errors appeared during item update."
      *          }
      *     }
      * })
@@ -84,7 +87,7 @@ class CartItemsResourceController extends AbstractController
      * @Glue({
      *     "delete": {
      *          "summary": [
-     *              "Remove item from the cart."
+     *              "Removes item from the cart."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",

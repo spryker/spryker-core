@@ -49,7 +49,7 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSchemaGeneratorInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface
      */
     protected $schemaGenerator;
 

@@ -20,15 +20,18 @@ class GuestCartItemsResourceController extends AbstractController
     /**
      * @Glue({
      *      "post": {
+     *          "summary": [
+     *              "Adds an item to the guest cart."
+     *          ],
      *          "parameters": [{
      *              "name": "X-Anonymous-Customer-Unique-Id",
      *              "in": "header",
      *              "required": true
      *          }],
-     *          "responseClass": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
-     *              "404": "Cart with given uuid not found.",
-     *              "422": "Product \"{sku}\" not found"
+     *              "404": "Cart not found.",
+     *              "422": "Product not found."
      *          }
      *     }
      * })
@@ -48,16 +51,19 @@ class GuestCartItemsResourceController extends AbstractController
     /**
      * @Glue({
      *      "patch": {
+     *          "summary": [
+     *              "Updates guest cart item quantity."
+     *          ],
      *          "parameters": [{
      *              "name": "X-Anonymous-Customer-Unique-Id",
      *              "in": "header",
      *              "required": true
      *          }],
-     *          "responseClass": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
-     *              "400": "Cart uuid or item group key is not specified.",
-     *              "404": "Item with the given group key not found in the cart.",
-     *              "422": "Product \"{sku}\" not found"
+     *              "400": "Cart id or item id is not specified.",
+     *              "404": "Item with the given id not found in the cart.",
+     *              "422": "Product not found."
      *          }
      *     }
      * })
@@ -77,15 +83,18 @@ class GuestCartItemsResourceController extends AbstractController
     /**
      * @Glue({
      *      "delete": {
+     *          "summary": [
+     *              "Removes item from guest cart."
+     *          ],
      *          "parameters": [{
      *              "name": "X-Anonymous-Customer-Unique-Id",
      *              "in": "header",
      *              "required": true
      *          }],
-     *          "responseClass": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
-     *              "400": "Cart uuid or item group key is not specified.",
-     *              "404": "Item with the given group key not found in the cart.",
+     *              "400": "Cart id or item id is not specified.",
+     *              "404": "Item with the given id not found in the cart.",
      *              "422": "Cart item could not be deleted."
      *          }
      *     }

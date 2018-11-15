@@ -21,10 +21,10 @@ class DocumentationGeneratorRestApiFacade extends AbstractFacade implements Docu
      *
      * @return void
      */
-    public function generateOpenApiSpecification(): void
+    public function generateDocumentation(): void
     {
         $this->getFactory()
-            ->createOpenApiSpecificationGenerator()
-            ->generateOpenApiSpecification();
+            ->createDocumentationGenerator()
+            ->generateDocumentation();
     }
 }

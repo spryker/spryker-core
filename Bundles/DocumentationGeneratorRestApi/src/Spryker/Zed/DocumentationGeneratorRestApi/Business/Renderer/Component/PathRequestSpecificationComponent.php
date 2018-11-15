@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
-use Generated\Shared\Transfer\OpenApiSpecificationPathRequestComponentTransfer;
+use Generated\Shared\Transfer\PathRequestComponentTransfer;
 
 /**
  * Specification:
@@ -18,22 +18,20 @@ class PathRequestSpecificationComponent implements PathRequestSpecificationCompo
 {
     protected const KEY_APPLICATION_JSON = 'application/json';
     protected const KEY_CONTENT = 'content';
-    protected const KEY_DESCRIPTION = 'description';
     protected const KEY_REF = '$ref';
-    protected const KEY_REQUIRED = 'required';
     protected const KEY_SCHEMA = 'schema';
 
     /**
-     * @var \Generated\Shared\Transfer\OpenApiSpecificationPathRequestComponentTransfer $pathRequestComponentTransfer
+     * @var \Generated\Shared\Transfer\PathRequestComponentTransfer $pathRequestComponentTransfer
      */
     protected $pathRequestComponentTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationPathRequestComponentTransfer $pathRequestComponentTransfer
+     * @param \Generated\Shared\Transfer\PathRequestComponentTransfer $pathRequestComponentTransfer
      *
      * @return void
      */
-    public function setPathRequestComponentTransfer(OpenApiSpecificationPathRequestComponentTransfer $pathRequestComponentTransfer): void
+    public function setPathRequestComponentTransfer(PathRequestComponentTransfer $pathRequestComponentTransfer): void
     {
         $this->pathRequestComponentTransfer = $pathRequestComponentTransfer;
     }
@@ -48,8 +46,8 @@ class PathRequestSpecificationComponent implements PathRequestSpecificationCompo
             return $result;
         }
 
-        $result[static::KEY_DESCRIPTION] = $this->pathRequestComponentTransfer->getDescription();
-        $result[static::KEY_REQUIRED] = $this->pathRequestComponentTransfer->getRequired();
+        $result[PathRequestComponentTransfer::DESCRIPTION] = $this->pathRequestComponentTransfer->getDescription();
+        $result[PathRequestComponentTransfer::REQUIRED] = $this->pathRequestComponentTransfer->getRequired();
         if ($this->pathRequestComponentTransfer->getJsonSchemaRef()) {
             $result[static::KEY_CONTENT][static::KEY_APPLICATION_JSON][static::KEY_SCHEMA][static::KEY_REF] = $this->pathRequestComponentTransfer->getJsonSchemaRef();
         }

@@ -18,9 +18,18 @@ class StoresResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getResourceById": {
      *          "summary": [
-     *              "Retrieve current store data."
+     *              "Retrieves current store data."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }]
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves current store data."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",

@@ -21,23 +21,24 @@ class WishlistsResourceController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieve wishlist data."
+     *              "Retrieves wishlist data by id."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "404": "Wishlist was not found."
+     *              "404": "Wishlist not found."
      *          }
      *     },
      *     "getCollection": {
      *          "summary": [
-     *              "Retrieve all customer's wishlists."
+     *              "Retrieves all customer wishlists."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ]
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *     }
      * })
      *
@@ -56,15 +57,14 @@ class WishlistsResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Create wishlist."
+     *              "Creates wishlist."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "A wishlist with the same name already exists.",
-     *              "500": "Internal server error."
+     *              "400": "Wishlist with the same name already exists."
      *          }
      *     }
      * })
@@ -85,7 +85,7 @@ class WishlistsResourceController extends AbstractController
      * @Glue({
      *     "patch": {
      *          "summary": [
-     *              "Delete customer's wishlist."
+     *              "Deletes customer wishlist."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
@@ -93,8 +93,7 @@ class WishlistsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "A wishlist with the same name already exists.",
-     *              "404": "Can't find wishlist.",
-     *              "500": "Internal server error."
+     *              "404": "Wishlist not found."
      *          }
      *     }
      * })
@@ -115,14 +114,14 @@ class WishlistsResourceController extends AbstractController
      * @Glue({
      *     "delete": {
      *          "summary": [
-     *              "Anonymize customers."
+     *              "Removes customer's wishlist."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "404": "Can't find wishlist."
+     *              "404": "Wishlist not found."
      *          }
      *     }
      * })

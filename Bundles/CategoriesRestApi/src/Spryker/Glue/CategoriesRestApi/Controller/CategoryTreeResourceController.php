@@ -18,9 +18,9 @@ class CategoryTreeResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getCollection": {
      *          "summary": [
-     *              "Retrieve category tree for specified locale."
+     *              "Retrieves category tree for specified locale."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",

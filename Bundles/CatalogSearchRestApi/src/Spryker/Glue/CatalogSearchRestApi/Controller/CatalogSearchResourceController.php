@@ -17,7 +17,7 @@ class CatalogSearchResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getCollection": {
      *          "summary": [
      *              "Catalog search."
      *          ],
@@ -29,18 +29,24 @@ class CatalogSearchResourceController extends AbstractController
      *              {
      *                  "name": "q",
      *                  "in": "query",
-     *                  "description": "Search query compatible with elastic search",
+     *                  "description": "Search query compatible with elastic search.",
      *                  "required": true
      *              },
      *              {
      *                  "name": "currency",
      *                  "in": "query",
-     *                  "description": "Currency code to process request with",
+     *                  "description": "Currency code to process request with.",
+     *                  "required": true
+     *              },
+     *              {
+     *                  "name": "priceMode",
+     *                  "in": "query",
+     *                  "description": "Price mode to process request with.",
      *                  "required": true
      *              }
      *          ],
      *          "responses": {
-     *              "400": "Invalid currency."
+     *              "400": "Invalid currency or price mode."
      *          }
      *     }
      * })

@@ -35,7 +35,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGeneratorInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface
      */
     protected $pathGenerator;
 

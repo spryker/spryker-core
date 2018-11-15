@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
-use Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyComponentTransfer;
+use Generated\Shared\Transfer\SchemaPropertyComponentTransfer;
 
 /**
  * Specification:
@@ -16,21 +16,20 @@ use Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyComponentTransfe
  */
 class SchemaPropertySpecificationComponent implements SchemaPropertySpecificationComponentInterface
 {
-    protected const KEY_TYPE = 'type';
     protected const KEY_REF = '$ref';
     protected const KEY_ITEMS = 'items';
 
     /**
-     * @var \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyComponentTransfer $schemaPropertyComponentTransfer
+     * @var \Generated\Shared\Transfer\SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer
      */
     protected $schemaPropertyComponentTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaPropertyComponentTransfer $schemaPropertyComponentTransfer
+     * @param \Generated\Shared\Transfer\SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer
      *
      * @return void
      */
-    public function setSchemaPropertyComponentTransfer(OpenApiSpecificationSchemaPropertyComponentTransfer $schemaPropertyComponentTransfer): void
+    public function setSchemaPropertyComponentTransfer(SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer): void
     {
         $this->schemaPropertyComponentTransfer = $schemaPropertyComponentTransfer;
     }
@@ -46,7 +45,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
         }
 
         if ($this->schemaPropertyComponentTransfer->getType()) {
-            $property[static::KEY_TYPE] = $this->schemaPropertyComponentTransfer->getType();
+            $property[SchemaPropertyComponentTransfer::TYPE] = $this->schemaPropertyComponentTransfer->getType();
         }
         if ($this->schemaPropertyComponentTransfer->getSchemaReference()) {
             $property[static::KEY_REF] = $this->schemaPropertyComponentTransfer->getSchemaReference();

@@ -8,10 +8,9 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer;
-use Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer;
-use Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer;
-use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Fixtures\GlueAnnotationAnalyzerExpectedResult;
+use Generated\Shared\Transfer\PathMethodDataTransfer;
+use Generated\Shared\Transfer\PathParameterComponentTransfer;
+use Generated\Shared\Transfer\PathSchemaDataTransfer;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternativeAttributesTransfer;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttributesTransfer;
 
@@ -134,15 +133,15 @@ class DocumentationGeneratorRestApiTester extends Actor
      */
     public function getRestApiDocumentationFromPluginsExpectedResult(): array
     {
-        return GlueAnnotationAnalyzerExpectedResult::getTestCreateRestApiDocumentationFromPluginsExpectedResult();
+        return json_decode(file_get_contents(__DIR__ . '/../Business/Fixtures/glue_annotation_analyzer_expected_result.json'), true);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer
+     * @return \Generated\Shared\Transfer\PathMethodDataTransfer
      */
-    public function getPathMethodDataTransferForGetMethod(): OpenApiSpecificationPathMethodDataTransfer
+    public function getPathMethodDataTransferForGetMethod(): PathMethodDataTransfer
     {
-        return (new OpenApiSpecificationPathMethodDataTransfer())
+        return (new PathMethodDataTransfer())
             ->setSummary([static::TEST_SUMMARY])
             ->setResource(static::TEST_RESOURCE)
             ->setPath(static::TEST_PATH)
@@ -154,11 +153,11 @@ class DocumentationGeneratorRestApiTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer
+     * @return \Generated\Shared\Transfer\PathMethodDataTransfer
      */
-    public function getPathMethodDataTransferForPostMethod(): OpenApiSpecificationPathMethodDataTransfer
+    public function getPathMethodDataTransferForPostMethod(): PathMethodDataTransfer
     {
-        return (new OpenApiSpecificationPathMethodDataTransfer())
+        return (new PathMethodDataTransfer())
             ->setSummary([static::TEST_SUMMARY])
             ->setResource(static::TEST_RESOURCE)
             ->setPath(static::TEST_PATH)
@@ -168,11 +167,11 @@ class DocumentationGeneratorRestApiTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer
+     * @return \Generated\Shared\Transfer\PathMethodDataTransfer
      */
-    public function getPathMethodDataTransferForPatchMethod(): OpenApiSpecificationPathMethodDataTransfer
+    public function getPathMethodDataTransferForPatchMethod(): PathMethodDataTransfer
     {
-        return (new OpenApiSpecificationPathMethodDataTransfer())
+        return (new PathMethodDataTransfer())
             ->setSummary([static::TEST_SUMMARY])
             ->setResource(static::TEST_RESOURCE)
             ->setPath(static::TEST_PATH_WITH_ID)
@@ -182,11 +181,11 @@ class DocumentationGeneratorRestApiTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathMethodDataTransfer
+     * @return \Generated\Shared\Transfer\PathMethodDataTransfer
      */
-    public function getPathMethodDataTransferForDeleteMethod(): OpenApiSpecificationPathMethodDataTransfer
+    public function getPathMethodDataTransferForDeleteMethod(): PathMethodDataTransfer
     {
-        return (new OpenApiSpecificationPathMethodDataTransfer())
+        return (new PathMethodDataTransfer())
             ->setSummary([static::TEST_SUMMARY])
             ->setResource(static::TEST_RESOURCE)
             ->setPath(static::TEST_PATH_WITH_ID)
@@ -195,20 +194,20 @@ class DocumentationGeneratorRestApiTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\PathSchemaDataTransfer
      */
-    public function getRequestSchemaDataTransfer(): OpenApiSpecificationPathSchemaDataTransfer
+    public function getRequestSchemaDataTransfer(): PathSchemaDataTransfer
     {
-        return (new OpenApiSpecificationPathSchemaDataTransfer())
+        return (new PathSchemaDataTransfer())
             ->setSchemaReference(static::SCHEMA_REF_REST_REQUEST);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\PathSchemaDataTransfer
      */
-    public function getErrorSchemaDataTransfer(): OpenApiSpecificationPathSchemaDataTransfer
+    public function getErrorSchemaDataTransfer(): PathSchemaDataTransfer
     {
-        return (new OpenApiSpecificationPathSchemaDataTransfer())
+        return (new PathSchemaDataTransfer())
             ->setCode(static::RESPONSE_CODE_DEFAULT)
             ->setDescription(static::RESPONSE_DESCRIPTION_DEFAULT)
             ->setSchemaReference(static::SCHEMA_REF_REST_ERROR_MESSAGE);
@@ -217,44 +216,44 @@ class DocumentationGeneratorRestApiTester extends Actor
     /**
      * @param int $code
      *
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\PathSchemaDataTransfer
      */
-    public function getResponseSchemaDataTransfer(int $code): OpenApiSpecificationPathSchemaDataTransfer
+    public function getResponseSchemaDataTransfer(int $code): PathSchemaDataTransfer
     {
-        return (new OpenApiSpecificationPathSchemaDataTransfer())
+        return (new PathSchemaDataTransfer())
             ->setCode($code)
             ->setDescription(static::RESPONSE_DESCRIPTION_SUCCESS)
             ->setSchemaReference(static::SCHEMA_REF_REST_RESPONSE);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\PathSchemaDataTransfer
      */
-    public function getNotFoundResponseSchema(): OpenApiSpecificationPathSchemaDataTransfer
+    public function getNotFoundResponseSchema(): PathSchemaDataTransfer
     {
-        return (new OpenApiSpecificationPathSchemaDataTransfer())
+        return (new PathSchemaDataTransfer())
             ->setCode(static::RESPONSE_CODE_NOT_FOUND)
             ->setDescription(static::RESPONSE_DESCRIPTION_NOT_FOUND)
             ->setSchemaReference(static::SCHEMA_REF_REST_ERROR_MESSAGE);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\PathSchemaDataTransfer
      */
-    public function getBadRequestResponseSchema(): OpenApiSpecificationPathSchemaDataTransfer
+    public function getBadRequestResponseSchema(): PathSchemaDataTransfer
     {
-        return (new OpenApiSpecificationPathSchemaDataTransfer())
+        return (new PathSchemaDataTransfer())
             ->setCode(static::RESPONSE_CODE_BAD_REQUEST)
             ->setDescription(static::RESPONSE_DESCRIPTION_BAD_REQUEST)
             ->setSchemaReference(static::SCHEMA_REF_REST_ERROR_MESSAGE);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OpenApiSpecificationPathParameterComponentTransfer
+     * @return \Generated\Shared\Transfer\PathParameterComponentTransfer
      */
-    public function getAcceptLanguageHeaderPathParameterComponent(): OpenApiSpecificationPathParameterComponentTransfer
+    public function getAcceptLanguageHeaderPathParameterComponent(): PathParameterComponentTransfer
     {
-        return (new OpenApiSpecificationPathParameterComponentTransfer())
+        return (new PathParameterComponentTransfer())
             ->setName(static::HEADER_ACCEPT_LANGUAGE)
             ->setIn(static::PARAMETER_IN_HEADER);
     }
@@ -935,7 +934,7 @@ class DocumentationGeneratorRestApiTester extends Actor
                         'test-resource',
                     ],
                     'responses' => [
-                        '200' => [
+                        '204' => [
                             'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
                         ],
                         'default' => [
@@ -1145,7 +1144,7 @@ class DocumentationGeneratorRestApiTester extends Actor
                         ],
                     ],
                     'responses' => [
-                        '201' => [
+                        '204' => [
                             'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
                         ],
                         'default' => [

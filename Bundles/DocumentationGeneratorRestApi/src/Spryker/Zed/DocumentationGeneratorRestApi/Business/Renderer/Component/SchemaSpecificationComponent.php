@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
-use Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer;
+use Generated\Shared\Transfer\SchemaComponentTransfer;
 
 /**
  * Specification:
@@ -16,20 +16,17 @@ use Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer;
  */
 class SchemaSpecificationComponent implements SchemaSpecificationComponentInterface
 {
-    protected const KEY_PROPERTIES = 'properties';
-    protected const KEY_REQUIRED = 'required';
-
     /**
-     * @var \Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer $schemaComponentTransfer
+     * @var \Generated\Shared\Transfer\SchemaComponentTransfer $schemaComponentTransfer
      */
     protected $schemaComponentTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\OpenApiSpecificationSchemaComponentTransfer $schemaComponentTransfer
+     * @param \Generated\Shared\Transfer\SchemaComponentTransfer $schemaComponentTransfer
      *
      * @return void
      */
-    public function setSchemaComponentTransfer(OpenApiSpecificationSchemaComponentTransfer $schemaComponentTransfer): void
+    public function setSchemaComponentTransfer(SchemaComponentTransfer $schemaComponentTransfer): void
     {
         $this->schemaComponentTransfer = $schemaComponentTransfer;
     }
@@ -43,9 +40,9 @@ class SchemaSpecificationComponent implements SchemaSpecificationComponentInterf
             return [];
         }
 
-        $schemaData[$this->schemaComponentTransfer->getName()][static::KEY_PROPERTIES] = array_merge(...$this->schemaComponentTransfer->getProperties());
+        $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::PROPERTIES] = array_merge(...$this->schemaComponentTransfer->getProperties());
         if ($this->schemaComponentTransfer->getRequired()) {
-            $schemaData[$this->schemaComponentTransfer->getName()][static::KEY_REQUIRED] = $this->schemaComponentTransfer->getRequired();
+            $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::REQUIRED] = $this->schemaComponentTransfer->getRequired();
         }
 
         return $schemaData;

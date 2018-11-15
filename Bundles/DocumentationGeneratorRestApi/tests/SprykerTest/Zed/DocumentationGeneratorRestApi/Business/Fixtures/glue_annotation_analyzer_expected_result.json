@@ -1,54 +1,6 @@
 {
   "paths": {
     "\/test-resource-with-all-methods": {
-      "get": {
-        "summary": "getResource summary",
-        "tags": [
-          "test-resource-with-all-methods"
-        ],
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Expected response to a valid request.",
-            "content": {
-              "application\/json": {
-                "schema": {
-                  "$ref": "#\/components\/schemas\/RestTestResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Item not found",
-            "content": {
-              "application\/json": {
-                "schema": {
-                  "$ref": "#\/components\/schemas\/RestErrorMessage"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Expected response to a bad request.",
-            "content": {
-              "application\/json": {
-                "schema": {
-                  "$ref": "#\/components\/schemas\/RestErrorMessage"
-                }
-              }
-            }
-          }
-        }
-      },
       "post": {
         "summary": "post summary",
         "tags": [
@@ -115,6 +67,63 @@
       }
     },
     "\/test-resource-with-all-methods\/{testResourceWithAllMethodId}": {
+      "get": {
+        "summary": "getResource summary",
+        "tags": [
+          "test-resource-with-all-methods"
+        ],
+        "parameters": [
+          {
+            "name": "testResourceWithAllMethodId",
+            "in": "path",
+            "required": true,
+            "description": "Id of test resource with all method.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestTestResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Expected response to a bad request.",
+            "content": {
+              "application\/json": {
+                "schema": {
+                  "$ref": "#\/components\/schemas\/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
       "patch": {
         "summary": "patch summary",
         "tags": [

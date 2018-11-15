@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
-interface OpenApiSpecificationGeneratorInterface
+interface DocumentationGeneratorInterface
 {
     /**
      * @return void
      */
-    public function generateOpenApiSpecification(): void;
+    public function generateDocumentation(): void;
 }

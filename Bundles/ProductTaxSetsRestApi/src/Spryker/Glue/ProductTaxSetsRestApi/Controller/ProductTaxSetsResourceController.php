@@ -18,17 +18,17 @@ class ProductTaxSetsResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getCollection": {
      *          "summary": [
-     *              "Retrieve tax set for abstract product."
+     *              "Retrieves abstract product tax sets."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Abstract product sku is not specified.",
-     *              "404": "Abstract product tax sets are not found."
+     *              "400": "Abstract product id is not specified.",
+     *              "404": "Abstract product tax sets not found."
      *          }
      *     }
      * })

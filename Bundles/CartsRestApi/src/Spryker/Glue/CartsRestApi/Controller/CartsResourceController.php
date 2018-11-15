@@ -21,23 +21,24 @@ class CartsResourceController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieve a cart."
+     *              "Retrieves a cart by id."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "404": "Cart was not found."
+     *              "404": "Cart not found."
      *          }
      *     },
      *     "getCollection": {
      *          "summary": [
-     *              "Retrieve list of all customer's carts."
+     *              "Retrieves list of all customer's carts."
      *          ],
-     *          "headers": [
-     *              "Accept-Language"
-     *          ]
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *     }
      * })
      *
@@ -60,14 +61,14 @@ class CartsResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Create cart."
+     *              "Creates a cart."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "500": "Can not create a cart."
+     *              "422": "Customer already has a cart."
      *          }
      *     }
      * })
@@ -86,14 +87,16 @@ class CartsResourceController extends AbstractController
      * @Glue({
      *     "delete": {
      *          "summary": [
-     *              "Delete cart by id."
+     *              "Deletes cart by id."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "500": "Can not delete a cart."
+     *              "400": "Cart id is missing.",
+     *              "404": "Cart not found.",
+     *              "422": "Cart could not be deleted."
      *          }
      *     }
      * })

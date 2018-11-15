@@ -11,7 +11,7 @@ class TestResourceWithAllMethodsController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getResourceById": {
      *          "summary": [
      *              "getResource summary"
      *          ],

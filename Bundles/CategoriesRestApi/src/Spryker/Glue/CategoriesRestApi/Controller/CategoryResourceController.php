@@ -18,9 +18,9 @@ class CategoryResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResource": {
+     *     "getResourceById": {
      *          "summary": [
-     *              "Retrieve a category node."
+     *              "Retrieves a category node by id."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",

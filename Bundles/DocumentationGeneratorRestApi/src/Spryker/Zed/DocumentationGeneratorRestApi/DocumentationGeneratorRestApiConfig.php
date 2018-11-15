@@ -13,8 +13,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
 {
-    public const GENERATED_FILE_TARGET_DIRECTORY = APPLICATION_SOURCE_DIR . '/Generated/Glue/Specification/';
-    public const GENERATED_FILE_NAME_PREFIX = 'spryker_rest_api';
+    public const GENERATED_FILE_OUTPUT_DIRECTORY = APPLICATION_SOURCE_DIR . '/Generated/Glue/Specification/';
+    public const GENERATED_FILE_PREFIX = 'spryker_rest_api';
 
     public const REST_API_DOCUMENTATION_INFO_VERSION = '1.0.0';
     public const REST_API_DOCUMENTATION_INFO_TITLE = 'Spryker API';
@@ -26,17 +26,17 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getGeneratedFileTargetDirectory(): string
+    public function getGeneratedFileOutputDirectory(): string
     {
-        return static::GENERATED_FILE_TARGET_DIRECTORY;
+        return static::GENERATED_FILE_OUTPUT_DIRECTORY;
     }
 
     /**
      * @return string
      */
-    public function getGeneratedFileNamePrefix(): string
+    public function getGeneratedFilePrefix(): string
     {
-        return static::GENERATED_FILE_NAME_PREFIX;
+        return static::GENERATED_FILE_PREFIX;
     }
 
     /**
