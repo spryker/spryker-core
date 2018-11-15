@@ -9,10 +9,12 @@ namespace Spryker\Zed\CheckoutRestApi\Business;
 
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\CheckoutDataReader;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\CheckoutDataReaderInterface;
+use Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\Customer\QuoteCustomerExpander;
+use Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\Customer\QuoteCustomerExpanderInterface;
+use Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\RestCheckoutRequestMapper;
+use Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\RestCheckoutRequestMapperInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessor;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessorInterface;
-use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpander;
-use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface;
 use Spryker\Zed\CheckoutRestApi\CheckoutRestApiDependencyProvider;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface;
@@ -38,7 +40,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getShipmentFacade(),
             $this->getPaymentFacade(),
             $this->getCustomerFacade(),
-            $this->createQuoteCustomerExpander()
+            $this->getQuoteMappingPlugins()
         );
     }
 
@@ -52,16 +54,24 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getCartsRestApiFacade(),
             $this->getCheckoutFacade(),
             $this->getQuoteFacade(),
-            $this->createQuoteCustomerExpander()
+            $this->getQuoteMappingPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface
+     * @return \Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\Customer\QuoteCustomerExpanderInterface
      */
     public function createQuoteCustomerExpander(): QuoteCustomerExpanderInterface
     {
         return new QuoteCustomerExpander($this->getCustomerFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\RestCheckoutRequestMapperInterface
+     */
+    public function createRestCheckoutRequestMapper(): RestCheckoutRequestMapperInterface
+    {
+        return new RestCheckoutRequestMapper();
     }
 
     /**
@@ -118,5 +128,13 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function getShipmentFacade(): CheckoutRestApiToShipmentFacadeInterface
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::FACADE_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMappingPluginInterface[]
+     */
+    public function getQuoteMappingPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGIN_QUOTE_MAPPING);
     }
 }

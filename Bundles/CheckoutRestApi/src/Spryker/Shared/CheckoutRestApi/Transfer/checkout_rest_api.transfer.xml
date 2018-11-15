@@ -18,6 +18,7 @@
         <property name="isSuccess" type="bool" />
         <property name="errors" type="CheckoutRestApiError[]" singular="error" />
         <property name="checkoutData" type="CheckoutData"/>
+        <property name="cart" type="Quote"/>
     </transfer>
 
     <transfer name="RestCheckoutRequestAttributes">
@@ -38,6 +39,8 @@
         <property name="salutation" type="string" />
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
+        <property name="idCustomer" type="int" />
+        <property name="customerReference" type="string" />
     </transfer>
 
     <transfer name="RestAddress">

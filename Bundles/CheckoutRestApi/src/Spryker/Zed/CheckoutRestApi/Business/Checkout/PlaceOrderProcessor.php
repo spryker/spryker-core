@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface;
@@ -44,71 +44,67 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     protected $quoteFacade;
 
     /**
-     * @var \Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface
+     * @var array
      */
-    protected $quoteCustomerExpander;
+    protected $quoteMappingPlugins;
 
     /**
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\CheckoutRestApi\Business\Customer\QuoteCustomerExpanderInterface $quoteCustomerExpander
+     * @param array $quoteMappingPlugins
      */
     public function __construct(
         CheckoutRestApiToCartFacadeInterface $cartFacade,
         CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade,
         CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade,
         CheckoutRestApiToQuoteFacadeInterface $quoteFacade,
-        QuoteCustomerExpanderInterface $quoteCustomerExpander
+        array $quoteMappingPlugins
     ) {
         $this->cartFacade = $cartFacade;
         $this->cartsRestApiFacade = $cartsRestApiFacade;
         $this->checkoutFacade = $checkoutFacade;
         $this->quoteFacade = $quoteFacade;
-        $this->quoteCustomerExpander = $quoteCustomerExpander;
+        $this->quoteMappingPlugins = $quoteMappingPlugins;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function placeOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutResponseTransfer
     {
-        $currentQuoteTransfer = $this->cartsRestApiFacade
-            ->findQuoteByUuid(
-                $quoteTransfer->getUuid(),
-                (new QuoteCriteriaFilterTransfer())->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference())
-            );
+        $quoteTransfer = $this->findCustomerQuote($restCheckoutRequestAttributesTransfer);
 
-        if (!$currentQuoteTransfer) {
-            return (new CheckoutResponseTransfer())
-                ->setIsSuccess(false)
-                ->addError(
-                    (new CheckoutErrorTransfer())
-                        ->setErrorCode(Response::HTTP_UNPROCESSABLE_ENTITY)
-                        ->setMessage(CheckoutRestApiConfig::ERROR_MESSAGE_CART_NOT_FOUND)
-                );
+        if ($quoteTransfer === null) {
+            return $this->createCartNotFoundErrorResponse();
         }
 
-        $currentQuoteTransfer = $this->mergeSavedQuoteWithIncomingQuote($currentQuoteTransfer, $quoteTransfer);
+        if ($quoteTransfer->getItems()->count() === 0) {
+            return $this->createCartIsEmptyErrorResponse();
+        }
 
-        $paymentTransfer = $currentQuoteTransfer->getPayment();
+        foreach ($this->quoteMappingPlugins as $quoteMappingPlugin) {
+            $quoteTransfer = $quoteMappingPlugin->mapRestRequestToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+        }
 
-        $quoteResponseTransfer = $this->cartFacade->validateQuote($currentQuoteTransfer);
+        $paymentTransfer = $quoteTransfer->getPayment();
+
+        $quoteResponseTransfer = $this->cartFacade->validateQuote($quoteTransfer);
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
         }
 
-        $currentQuoteTransfer = $this->restorePaymentInQuote($quoteResponseTransfer->getQuoteTransfer(), $paymentTransfer);
+        $quoteTransfer = $this->restorePaymentInQuote($quoteResponseTransfer->getQuoteTransfer(), $paymentTransfer);
 
-        $checkoutResponseTransfer = $this->checkoutFacade->placeOrder($currentQuoteTransfer);
+        $checkoutResponseTransfer = $this->checkoutFacade->placeOrder($quoteTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
             return $checkoutResponseTransfer;
         }
 
-        $quoteResponseTransfer = $this->quoteFacade->deleteQuote($currentQuoteTransfer);
+        $quoteResponseTransfer = $this->quoteFacade->deleteQuote($quoteTransfer);
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
         }
@@ -126,6 +122,25 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     {
         $paymentTransfer->setAmount($quoteTransfer->getTotals()->getPriceToPay());
         $quoteTransfer->setPayment($paymentTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    protected function findCustomerQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
+    {
+        $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
+            ->setCustomerReference($restCheckoutRequestAttributesTransfer->getCart()->getCustomer()->getCustomerReference());
+
+        $quoteTransfer = $this->cartsRestApiFacade
+            ->findQuoteByUuid(
+                $restCheckoutRequestAttributesTransfer->getCart()->getId(),
+                $quoteCriteriaFilterTransfer
+            );
 
         return $quoteTransfer;
     }
@@ -150,21 +165,30 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $incomingQuoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    protected function mergeSavedQuoteWithIncomingQuote(QuoteTransfer $quoteTransfer, QuoteTransfer $incomingQuoteTransfer): QuoteTransfer
+    protected function createCartNotFoundErrorResponse(): CheckoutResponseTransfer
     {
-        $quoteTransfer->setBillingAddress($incomingQuoteTransfer->getBillingAddress());
-        $quoteTransfer->setShippingAddress($incomingQuoteTransfer->getShippingAddress());
-        $quoteTransfer->setPayment($incomingQuoteTransfer->getPayment());
-        $quoteTransfer->setShipment($incomingQuoteTransfer->getShipment());
-        $quoteTransfer->setCustomer($incomingQuoteTransfer->getCustomer());
+        return (new CheckoutResponseTransfer())
+            ->setIsSuccess(false)
+            ->addError(
+                (new CheckoutErrorTransfer())
+                    ->setErrorCode(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setMessage(CheckoutRestApiConfig::ERROR_MESSAGE_CART_NOT_FOUND)
+            );
+    }
 
-        $quoteTransfer = $this->quoteCustomerExpander->expandQuoteWithCustomerData($quoteTransfer);
-
-        return $quoteTransfer;
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function createCartIsEmptyErrorResponse(): CheckoutResponseTransfer
+    {
+        return (new CheckoutResponseTransfer())
+            ->setIsSuccess(false)
+            ->addError(
+                (new CheckoutErrorTransfer())
+                    ->setErrorCode(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setMessage(CheckoutRestApiConfig::ERROR_MESSAGE_CART_IS_EMPTY)
+            );
     }
 }

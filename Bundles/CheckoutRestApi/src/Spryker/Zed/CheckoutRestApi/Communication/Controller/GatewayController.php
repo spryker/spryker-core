@@ -9,7 +9,7 @@ namespace Spryker\Zed\CheckoutRestApi\Communication\Controller;
 
 use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -18,22 +18,22 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutDataResponseTransfer
      */
-    public function getCheckoutDataAction(QuoteTransfer $quoteTransfer): CheckoutDataResponseTransfer
+    public function getCheckoutDataAction(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutDataResponseTransfer
     {
-        return $this->getFacade()->getCheckoutData($quoteTransfer);
+        return $this->getFacade()->getCheckoutData($restCheckoutRequestAttributesTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function placeOrderAction(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    public function placeOrderAction(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutResponseTransfer
     {
-        return $this->getFacade()->placeOrder($quoteTransfer);
+        return $this->getFacade()->placeOrder($restCheckoutRequestAttributesTransfer);
     }
 }

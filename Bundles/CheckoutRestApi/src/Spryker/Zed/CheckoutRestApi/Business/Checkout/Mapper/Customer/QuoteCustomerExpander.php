@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CheckoutRestApi\Business\Customer;
+namespace Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\Customer;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface;
 
 class QuoteCustomerExpander implements QuoteCustomerExpanderInterface
@@ -28,13 +29,16 @@ class QuoteCustomerExpander implements QuoteCustomerExpanderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expandQuoteWithCustomerData(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        $customerTransfer = $quoteTransfer->getCustomer();
+    public function expandQuoteWithCustomerData(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        $customerTransfer = $restCheckoutRequestAttributesTransfer->getCart()->getCustomer();
 
         if ($customerTransfer === null
             || $customerTransfer->getCustomerReference() === null

@@ -9,9 +9,9 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\Checkout;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
+use Generated\Shared\Transfer\RestCustomerTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
@@ -70,12 +70,11 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      */
     public function placeOrder(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
     {
-        $quoteTransfer = $this->checkoutDataMapper
-            ->mapRestCheckoutRequestAttributesTransferToQuoteTransfer($restCheckoutRequestAttributesTransfer);
-
-        $quoteTransfer->setCustomer($this->getCustomerTransferFromRequest($restRequest, $restCheckoutRequestAttributesTransfer));
-
-        $checkoutResponseTransfer = $this->checkoutRestApiClient->placeOrder($quoteTransfer);
+        $restCheckoutRequestAttributesTransfer->getCart()
+            ->setCustomer(
+                $this->getCustomerTransferFromRequest($restRequest, $restCheckoutRequestAttributesTransfer)
+            );
+        $checkoutResponseTransfer = $this->checkoutRestApiClient->placeOrder($restCheckoutRequestAttributesTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
             return $this->createPlaceOrderFailedErrorResponse($checkoutResponseTransfer->getErrors(), $restRequest->getMetadata()->getLocale());
         }
@@ -87,25 +86,25 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\RestCustomerTransfer
      */
     protected function getCustomerTransferFromRequest(
         RestRequestInterface $restRequest,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): CustomerTransfer {
-        $customerTransfer = new CustomerTransfer();
+    ): RestCustomerTransfer {
+        $restCustomerTransfer = new RestCustomerTransfer();
         if ($restRequest->getUser()->getSurrogateIdentifier()) {
-            return $customerTransfer->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+            return $restCustomerTransfer->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
                 ->setIdCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
         }
 
         $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
 
         if (!$restQuoteRequestTransfer || !$restQuoteRequestTransfer->getCustomer()) {
-            return $customerTransfer;
+            return $restCustomerTransfer;
         }
 
-        return $customerTransfer->fromArray(
+        return $restCustomerTransfer->fromArray(
             $restQuoteRequestTransfer->getCustomer()->toArray(),
             true
         )

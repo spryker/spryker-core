@@ -12,4 +12,5 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CheckoutRestApiConfig extends AbstractBundleConfig
 {
     public const ERROR_MESSAGE_CART_NOT_FOUND = 'Cart not found.';
+    public const ERROR_MESSAGE_CART_IS_EMPTY = 'Cart is empty.';
 }

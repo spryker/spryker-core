@@ -9,7 +9,7 @@ namespace Spryker\Client\CheckoutRestApi;
 
 use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -22,13 +22,13 @@ class CheckoutRestApiClient extends AbstractClient implements CheckoutRestApiCli
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutDataResponseTransfer
      */
-    public function getCheckoutData(QuoteTransfer $quoteTransfer): CheckoutDataResponseTransfer
+    public function getCheckoutData(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutDataResponseTransfer
     {
-        return $this->getFactory()->createCheckoutRestApiZedStub()->getCheckoutData($quoteTransfer);
+        return $this->getFactory()->createCheckoutRestApiZedStub()->getCheckoutData($restCheckoutRequestAttributesTransfer);
     }
 
     /**
@@ -36,12 +36,12 @@ class CheckoutRestApiClient extends AbstractClient implements CheckoutRestApiCli
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function placeOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutResponseTransfer
     {
-        return $this->getFactory()->createCheckoutRestApiZedStub()->placeOrder($quoteTransfer);
+        return $this->getFactory()->createCheckoutRestApiZedStub()->placeOrder($restCheckoutRequestAttributesTransfer);
     }
 }
