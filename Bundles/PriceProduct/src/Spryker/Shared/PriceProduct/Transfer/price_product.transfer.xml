@@ -18,7 +18,13 @@
     </transfer>
 
     <transfer name="MoneyValue">
+        <property name="priceData" type="string" />
         <property name="priceDataChecksum" type="string" />
+        <property name="fkCurrency" type="int" />
+        <property name="fkStore"  type="int"/>
+        <property name="currency" type="Currency" />
+        <property name="netAmount" type="int" />
+        <property name="grossAmount" type="int" />
     </transfer>
 
     <transfer name="PriceProductDimension">
