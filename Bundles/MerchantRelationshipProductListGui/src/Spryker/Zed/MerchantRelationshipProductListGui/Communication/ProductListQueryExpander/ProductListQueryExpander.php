@@ -5,15 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantRelationshipProductListGui\Persistence\Propel\ProductListQueryExpander;
+namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\ProductListQueryExpander;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
-use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
-use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
-use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
-use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\MerchantRelationshipProductListGui\Persistence\MerchantRelationshipProductListGuiRepositoryInterface;
 
 class ProductListQueryExpander implements ProductListQueryExpanderInterface
@@ -30,8 +25,8 @@ class ProductListQueryExpander implements ProductListQueryExpanderInterface
             ->addJoin($this->createMerchantJoin())
             ->addJoin($this->createCompanyBusinessUnitJoin())
             ->setWithColumns([
-                SpyMerchantTableMap::COL_NAME => MerchantRelationshipProductListGuiRepositoryInterface::COL_MERCHANT_NAME_ALIAS,
-                SpyCompanyBusinessUnitTableMap::COL_NAME => MerchantRelationshipProductListGuiRepositoryInterface::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS,
+                MerchantRelationshipProductListGuiRepositoryInterface::COL_MERCHANT_NAME => MerchantRelationshipProductListGuiRepositoryInterface::COL_MERCHANT_NAME_ALIAS,
+                MerchantRelationshipProductListGuiRepositoryInterface::COL_COMPANY_BUSINESS_UNIT_NAME => MerchantRelationshipProductListGuiRepositoryInterface::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS,
             ]);
     }
 
@@ -44,9 +39,9 @@ class ProductListQueryExpander implements ProductListQueryExpanderInterface
     protected function createMerchantRelationshipJoin(): QueryJoinTransfer
     {
         return (new QueryJoinTransfer())
-            ->setLeft([SpyProductListTableMap::COL_FK_MERCHANT_RELATIONSHIP])
-            ->setRight([SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP])
-            ->setJoinType(Criteria::LEFT_JOIN);
+            ->setLeft([MerchantRelationshipProductListGuiRepositoryInterface::COL_FK_MERCHANT_RELATIONSHIP])
+            ->setRight([MerchantRelationshipProductListGuiRepositoryInterface::COL_ID_MERCHANT_RELATIONSHIP])
+            ->setJoinType(MerchantRelationshipProductListGuiRepositoryInterface::LEFT_JOIN);
     }
 
     /**
@@ -58,9 +53,9 @@ class ProductListQueryExpander implements ProductListQueryExpanderInterface
     protected function createMerchantJoin(): QueryJoinTransfer
     {
         return (new QueryJoinTransfer())
-            ->setLeft([SpyMerchantRelationshipTableMap::COL_FK_MERCHANT])
-            ->setRight([SpyMerchantTableMap::COL_ID_MERCHANT])
-            ->setJoinType(Criteria::LEFT_JOIN);
+            ->setLeft([MerchantRelationshipProductListGuiRepositoryInterface::COL_FK_MERCHANT])
+            ->setRight([MerchantRelationshipProductListGuiRepositoryInterface::COL_ID_MERCHANT])
+            ->setJoinType(MerchantRelationshipProductListGuiRepositoryInterface::LEFT_JOIN);
     }
 
     /**
@@ -72,8 +67,8 @@ class ProductListQueryExpander implements ProductListQueryExpanderInterface
     protected function createCompanyBusinessUnitJoin(): QueryJoinTransfer
     {
         return (new QueryJoinTransfer())
-            ->setLeft([SpyMerchantRelationshipTableMap::COL_FK_COMPANY_BUSINESS_UNIT])
-            ->setRight([SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT])
-            ->setJoinType(Criteria::LEFT_JOIN);
+            ->setLeft([MerchantRelationshipProductListGuiRepositoryInterface::COL_FK_COMPANY_BUSINESS_UNIT])
+            ->setRight([MerchantRelationshipProductListGuiRepositoryInterface::COL_ID_COMPANY_BUSINESS_UNIT])
+            ->setJoinType(MerchantRelationshipProductListGuiRepositoryInterface::LEFT_JOIN);
     }
 }
