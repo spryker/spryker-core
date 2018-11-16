@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductAlternativeProductLabelConnectorConfig extends AbstractBundleConfig
 {
     protected const PRODUCT_ALTERNATIVES_LABEL_NAME = 'Alternatives available';
+    protected const PRODUCT_ALTERNATIVES_LABEL_FRONT_END_REFERENCE = 'alternatives';
 
     /**
      * @return string
@@ -19,5 +20,13 @@ class ProductAlternativeProductLabelConnectorConfig extends AbstractBundleConfig
     public function getProductAlternativesLabelName(): string
     {
         return static::PRODUCT_ALTERNATIVES_LABEL_NAME;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductAlternativesLabelFrontEndReference(): string
+    {
+        return static::PRODUCT_ALTERNATIVES_LABEL_FRONT_END_REFERENCE;
     }
 }
