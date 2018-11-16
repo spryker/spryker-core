@@ -11,11 +11,12 @@ use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
-use Generated\Shared\Transfer\RestCustomerTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerExpanderInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -39,18 +40,34 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $checkoutRestApiClient;
 
     /**
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidatorInterface
+     */
+    protected $customerValidator;
+
+    /**
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerExpanderInterface
+     */
+    protected $customerExpander;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidatorInterface $customerValidator
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerExpanderInterface $customerExpander
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CheckoutRestApiClientInterface $checkoutRestApiClient,
-        CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
+        CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient,
+        CustomerValidatorInterface $customerValidator,
+        CustomerExpanderInterface $customerExpander
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
+        $this->customerValidator = $customerValidator;
+        $this->customerExpander = $customerExpander;
     }
 
     /**
@@ -61,80 +78,22 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      */
     public function placeOrder(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
     {
-        $restCheckoutRequestAttributesTransfer->getCart()
-            ->setCustomer(
-                $this->getCustomerTransferFromRequest($restRequest, $restCheckoutRequestAttributesTransfer)
-            );
+        $customerValidationError = $this->customerValidator->validate($restRequest);
+        if ($customerValidationError !== null) {
+            return $this->restResourceBuilder
+                ->createRestResponse()
+                ->addError($customerValidationError);
+        }
+
+        $restCustomerTransfer = $this->customerExpander->getCustomerTransferFromRequest($restRequest, $restCheckoutRequestAttributesTransfer);
+        $restCheckoutRequestAttributesTransfer->getCart()->setCustomer($restCustomerTransfer);
+
         $checkoutResponseTransfer = $this->checkoutRestApiClient->placeOrder($restCheckoutRequestAttributesTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
             return $this->createPlaceOrderFailedErrorResponse($checkoutResponseTransfer->getErrors(), $restRequest->getMetadata()->getLocale());
         }
 
         return $this->createOrderPlacedResponse($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestCustomerTransfer
-     */
-    protected function getCustomerTransferFromRequest(
-        RestRequestInterface $restRequest,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): RestCustomerTransfer {
-        $restCustomerTransfer = new RestCustomerTransfer();
-        if ($restRequest->getUser()->getSurrogateIdentifier()) {
-            return $restCustomerTransfer->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-                ->setIdCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
-        }
-
-        $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
-
-        if (!$restQuoteRequestTransfer || !$restQuoteRequestTransfer->getCustomer()) {
-            return $restCustomerTransfer;
-        }
-
-        return $restCustomerTransfer->fromArray(
-            $restQuoteRequestTransfer->getCustomer()->toArray(),
-            true
-        )
-            ->setCustomerReference(null)
-            ->setIdCustomer(null);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCartNotFoundErrorResponse(): RestResponseInterface
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        $restResponse->addError(
-            (new RestErrorMessageTransfer())
-                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND)
-        );
-
-        return $restResponse;
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCartIsEmptyErrorResponse(): RestResponseInterface
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        $restResponse->addError(
-            (new RestErrorMessageTransfer())
-                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_IS_EMPTY)
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAIL_CART_IS_EMPTY)
-        );
-
-        return $restResponse;
     }
 
     /**

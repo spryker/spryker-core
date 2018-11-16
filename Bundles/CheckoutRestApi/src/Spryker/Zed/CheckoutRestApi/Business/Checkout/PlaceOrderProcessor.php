@@ -133,16 +133,22 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      */
     protected function findCustomerQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
     {
+        if (!$restCheckoutRequestAttributesTransfer->getCart()
+            || !$restCheckoutRequestAttributesTransfer->getCart()->getCustomer()
+            || !$restCheckoutRequestAttributesTransfer->getCart()->getCustomer()->getCustomerReference()) {
+            return null;
+        }
+
         $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
             ->setCustomerReference($restCheckoutRequestAttributesTransfer->getCart()->getCustomer()->getCustomerReference());
 
-        $quoteTransfer = $this->cartsRestApiFacade
+        $quoteResponseTransfer = $this->cartsRestApiFacade
             ->findQuoteByUuid(
                 $restCheckoutRequestAttributesTransfer->getCart()->getId(),
                 $quoteCriteriaFilterTransfer
             );
 
-        return $quoteTransfer;
+        return $quoteResponseTransfer->getQuoteTransfer();
     }
 
     /**

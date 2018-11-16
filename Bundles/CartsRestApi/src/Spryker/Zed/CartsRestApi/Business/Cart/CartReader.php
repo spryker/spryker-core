@@ -9,7 +9,7 @@ namespace Spryker\Zed\CartsRestApi\Business\Cart;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 
 class CartReader implements CartReaderInterface
@@ -31,18 +31,22 @@ class CartReader implements CartReaderInterface
      * @param string $uuid
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer
+    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteResponseTransfer
     {
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+
         $quoteCollection = $this->quoteCollectionReaderPlugin->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
         foreach ($quoteCollection->getQuotes() as $quoteTransfer) {
             if ($quoteTransfer->getUuid() === $uuid) {
-                return $quoteTransfer;
+                return $quoteResponseTransfer
+                    ->setIsSuccessful(true)
+                    ->setQuoteTransfer($quoteTransfer);
             }
         }
 
-        return null;
+        return $quoteResponseTransfer->setIsSuccessful(true);
     }
 
     /**

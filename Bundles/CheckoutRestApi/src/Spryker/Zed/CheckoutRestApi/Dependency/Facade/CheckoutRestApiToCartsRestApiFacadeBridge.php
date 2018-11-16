@@ -9,7 +9,7 @@ namespace Spryker\Zed\CheckoutRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 class CheckoutRestApiToCartsRestApiFacadeBridge implements CheckoutRestApiToCartsRestApiFacadeInterface
 {
@@ -30,9 +30,9 @@ class CheckoutRestApiToCartsRestApiFacadeBridge implements CheckoutRestApiToCart
      * @param string $uuid
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer
+    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteResponseTransfer
     {
         return $this->cartsRestApiFacade->findQuoteByUuid($uuid, $quoteCriteriaFilterTransfer);
     }

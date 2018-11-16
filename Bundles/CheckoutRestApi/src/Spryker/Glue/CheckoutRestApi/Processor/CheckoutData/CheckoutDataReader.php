@@ -10,10 +10,11 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData;
 use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Generated\Shared\Transfer\RestCustomerTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
+use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerExpanderInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -37,18 +38,34 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $restResourceBuilder;
 
     /**
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidatorInterface
+     */
+    protected $customerValidator;
+
+    /**
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerExpanderInterface
+     */
+    protected $customerExpander;
+
+    /**
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface $checkoutDataMapper
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidatorInterface $customerValidator
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerExpanderInterface $customerExpander
      */
     public function __construct(
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        CheckoutDataMapperInterface $checkoutDataMapper
+        CheckoutDataMapperInterface $checkoutDataMapper,
+        CustomerValidatorInterface $customerValidator,
+        CustomerExpanderInterface $customerExpander
     ) {
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutDataMapper = $checkoutDataMapper;
+        $this->customerValidator = $customerValidator;
+        $this->customerExpander = $customerExpander;
     }
 
     /**
@@ -59,11 +76,17 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     public function getCheckoutData(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
     {
-        $restCheckoutRequestAttributesTransfer->getCart()
-            ->setCustomer($this->getCustomerTransferFromRequest($restRequest, $restCheckoutRequestAttributesTransfer));
+        $customerValidationError = $this->customerValidator->validate($restRequest);
+        if ($customerValidationError !== null) {
+            return $this->restResourceBuilder
+                ->createRestResponse()
+                ->addError($customerValidationError);
+        }
+
+        $restCustomerTransfer = $this->customerExpander->getCustomerTransferFromRequest($restRequest, $restCheckoutRequestAttributesTransfer);
+        $restCheckoutRequestAttributesTransfer->getCart()->setCustomer($restCustomerTransfer);
 
         $checkoutDataResponseTransfer = $this->checkoutRestApiClient->getCheckoutData($restCheckoutRequestAttributesTransfer);
-
         if (!$checkoutDataResponseTransfer->getIsSuccess()) {
             return $this->createCheckoutDataErrorResponse($checkoutDataResponseTransfer);
         }
@@ -96,23 +119,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCartNotFoundErrorResponse(): RestResponseInterface
-    {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
-            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND);
-
-        $restResponse = $this->restResourceBuilder
-            ->createRestResponse()
-            ->addError($restErrorMessageTransfer);
-
-        return $restResponse;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CheckoutDataResponseTransfer $checkoutDataResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -130,35 +136,5 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         }
 
         return $restResponse;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestCustomerTransfer
-     */
-    protected function getCustomerTransferFromRequest(
-        RestRequestInterface $restRequest,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): RestCustomerTransfer {
-        $restCustomerTransfer = new RestCustomerTransfer();
-        if ($restRequest->getUser()->getSurrogateIdentifier()) {
-            return $restCustomerTransfer->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-                ->setIdCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
-        }
-
-        $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
-
-        if (!$restQuoteRequestTransfer || !$restQuoteRequestTransfer->getCustomer()) {
-            return $restCustomerTransfer;
-        }
-
-        return $restCustomerTransfer->fromArray(
-            $restQuoteRequestTransfer->getCustomer()->toArray(),
-            true
-        )
-            ->setCustomerReference(null)
-            ->setIdCustomer(null);
     }
 }

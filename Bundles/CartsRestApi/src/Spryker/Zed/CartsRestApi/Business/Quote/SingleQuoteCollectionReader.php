@@ -40,8 +40,8 @@ class SingleQuoteCollectionReader implements SingleQuoteCollectionReaderInterfac
             return $quoteCollectionTransfer;
         }
 
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference());
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference());
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByCustomer($customerTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {

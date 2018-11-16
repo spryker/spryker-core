@@ -10,7 +10,7 @@ namespace Spryker\Client\CartsRestApi;
 use Generated\Shared\Transfer\QuoteByIdCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -26,9 +26,9 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
      * @param string $uuid
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): ?QuoteTransfer
+    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createCartsRestApiZedStub()

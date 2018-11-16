@@ -62,8 +62,7 @@ class CheckoutRestApiFacade extends AbstractFacade implements CheckoutRestApiFac
     }
 
     /**
-     * Specification:
-     * - Maps rest request payment information to quote.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -78,8 +77,7 @@ class CheckoutRestApiFacade extends AbstractFacade implements CheckoutRestApiFac
     }
 
     /**
-     * Specification:
-     * - Maps rest request billing and shipping information to quote.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -94,6 +92,8 @@ class CheckoutRestApiFacade extends AbstractFacade implements CheckoutRestApiFac
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
