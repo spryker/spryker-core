@@ -22,5 +22,5 @@ interface CustomerAccessStorageRepositoryInterface
     /**
      * @return array
      */
-    public function findAllCustomerAccessStorageEntities();
+    public function findAllCustomerAccessStorageEntities(): array;
 }

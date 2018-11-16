@@ -32,7 +32,7 @@ class CustomerAccessStorageRepository extends AbstractRepository implements Cust
     /**
      * @return \Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage[]
      */
-    public function findAllCustomerAccessStorageEntities()
+    public function findAllCustomerAccessStorageEntities(): array
     {
         $entities = $this->getFactory()
             ->createCustomerAccessStorageQuery()

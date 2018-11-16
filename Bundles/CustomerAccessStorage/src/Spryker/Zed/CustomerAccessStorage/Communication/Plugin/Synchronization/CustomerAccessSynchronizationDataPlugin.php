@@ -89,16 +89,16 @@ class CustomerAccessSynchronizationDataPlugin extends AbstractPlugin implements 
      */
     public function getData(array $ids = [])
     {
-        $spyCustomerAccessStorageEntities = $this->findSpyCustomerAccessStorageEntities();
+        $customerAccessStorageEntities = $this->findCustomerAccessStorageEntities();
 
         $synchronizationDataTransfers = [];
 
-        foreach ($spyCustomerAccessStorageEntities as $spyCustomerAccessStorageEntity) {
+        foreach ($customerAccessStorageEntities as $customerAccessStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
             /** @var string $data */
-            $data = $spyCustomerAccessStorageEntity->getData();
+            $data = $customerAccessStorageEntity->getData();
             $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($spyCustomerAccessStorageEntity->getKey());
+            $synchronizationDataTransfer->setKey($customerAccessStorageEntity->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
@@ -108,7 +108,7 @@ class CustomerAccessSynchronizationDataPlugin extends AbstractPlugin implements 
     /**
      * @return \Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage[]
      */
-    protected function findSpyCustomerAccessStorageEntities(): array
+    protected function findCustomerAccessStorageEntities(): array
     {
         return $this->getRepository()->findAllCustomerAccessStorageEntities();
     }
