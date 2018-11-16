@@ -42,6 +42,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  */
 class ProductFormAdd extends AbstractType
 {
@@ -296,7 +297,6 @@ class ProductFormAdd extends AbstractType
                         'callback' => function ($sku, ExecutionContextInterface $context) {
                             $form = $context->getRoot();
                             $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-                            $sku = $this->getFactory()->getUtilTextService()->generateSlug($sku);
 
                             $skuCount = $this->getFactory()->getProductQueryContainer()
                                 ->queryProduct()

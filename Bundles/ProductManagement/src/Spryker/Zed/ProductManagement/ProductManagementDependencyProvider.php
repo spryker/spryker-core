@@ -27,10 +27,12 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreBrid
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingBridge;
-use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextBridge;
 use Spryker\Zed\ProductManagement\Exception\MissingMoneyTypePluginException;
 use Spryker\Zed\ProductManagement\Exception\MissingStoreRelationFormTypePluginException;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
+ */
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const STORE = 'STORE';
@@ -50,7 +52,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
 
-    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
@@ -88,10 +89,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[static::FACADE_TOUCH] = function (Container $container) {
             return new ProductManagementToTouchBridge($container->getLocator()->touch()->facade());
-        };
-
-        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
-            return new ProductManagementToUtilTextBridge($container->getLocator()->utilText()->service());
         };
 
         $container[static::FACADE_TAX] = function (Container $container) {
@@ -158,10 +155,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[static::FACADE_TOUCH] = function (Container $container) {
             return new ProductManagementToTouchBridge($container->getLocator()->touch()->facade());
-        };
-
-        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
-            return new ProductManagementToUtilTextBridge($container->getLocator()->utilText()->service());
         };
 
         $container[static::FACADE_TAX] = function (Container $container) {

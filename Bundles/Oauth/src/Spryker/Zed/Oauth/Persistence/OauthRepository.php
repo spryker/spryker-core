@@ -50,7 +50,7 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
      *
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
-    public function findScopesByIdentifiers(array $customerScopes): array
+    public function getScopesByIdentifiers(array $customerScopes): array
     {
         $spyOauthScopeEntities = $this->getFactory()
             ->createScopeQuery()

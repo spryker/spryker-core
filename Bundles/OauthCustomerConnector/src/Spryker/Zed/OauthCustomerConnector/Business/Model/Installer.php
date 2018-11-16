@@ -42,7 +42,7 @@ class Installer implements InstallerInterface
     public function install(): void
     {
         $customerScopes = $this->oauthCustomerConnectorConfig->getCustomerScopes();
-        $oauthScopesTransfers = $this->findScopesByIdentifiers($customerScopes);
+        $oauthScopesTransfers = $this->getScopesByIdentifiers($customerScopes);
 
         foreach ($customerScopes as $customerScope) {
             if (!$this->isExistOauthScope($customerScope, $oauthScopesTransfers)) {
@@ -74,10 +74,10 @@ class Installer implements InstallerInterface
      *
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
      */
-    protected function findScopesByIdentifiers(array $customerScopes): array
+    protected function getScopesByIdentifiers(array $customerScopes): array
     {
         $oauthScopesTransfersWithIdentifierKeys = [];
-        $oauthScopesTransfers = $this->oauthFacade->findScopesByIdentifiers($customerScopes);
+        $oauthScopesTransfers = $this->oauthFacade->getScopesByIdentifiers($customerScopes);
 
         foreach ($oauthScopesTransfers as $oauthScopeTransfer) {
             $oauthScopesIdentifier = $oauthScopeTransfer->getIdentifier();

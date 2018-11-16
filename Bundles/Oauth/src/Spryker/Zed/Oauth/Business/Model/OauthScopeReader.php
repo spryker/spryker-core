@@ -50,8 +50,8 @@ class OauthScopeReader implements OauthScopeReaderInterface
      *
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
-    public function findScopesByIdentifiers(array $customerScopes): array
+    public function getScopesByIdentifiers(array $customerScopes): array
     {
-        return $this->repository->findScopesByIdentifiers($customerScopes);
+        return $this->repository->getScopesByIdentifiers($customerScopes);
     }
 }

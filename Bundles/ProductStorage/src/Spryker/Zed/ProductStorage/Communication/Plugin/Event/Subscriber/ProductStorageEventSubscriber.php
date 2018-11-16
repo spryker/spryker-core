@@ -26,6 +26,8 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 /**
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  */
 class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

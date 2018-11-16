@@ -70,8 +70,8 @@ class OauthCustomerConnectorToOauthFacadeBridge implements OauthCustomerConnecto
      *
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
-    public function findScopesByIdentifiers(array $customerScopes): array
+    public function getScopesByIdentifiers(array $customerScopes): array
     {
-        return $this->oauthFacade->findScopesByIdentifiers($customerScopes);
+        return $this->oauthFacade->getScopesByIdentifiers($customerScopes);
     }
 }

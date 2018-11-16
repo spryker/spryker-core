@@ -183,6 +183,32 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testFindScopesByIdentifiers(): void
+    {
+        $identifiers = ['identifier', 'test_identifier'];
+
+        $this->getOauthFacade()->saveScope(
+            (new OauthScopeTransfer())
+            ->setIdentifier($identifiers[0])
+            ->setDescription('scope')
+        );
+
+        $this->getOauthFacade()->saveScope(
+            (new OauthScopeTransfer())
+                ->setIdentifier($identifiers[1])
+                ->setDescription('test scope')
+        );
+
+        $oauthScopeTransfers = $this->getOauthFacade()->getScopesByIdentifiers($identifiers);
+
+        foreach ($oauthScopeTransfers as $oauthScopeTransfer) {
+            $this->assertNotEmpty($oauthScopeTransfer->getIdOauthScope());
+        }
+    }
+
+    /**
+     * @return void
+     */
     protected function setUserProviderPluginMock(): void
     {
         $userProviderPluginMock = $this->getMockBuilder(OauthUserProviderPluginInterface::class)

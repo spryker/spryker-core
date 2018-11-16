@@ -45,5 +45,5 @@ interface OauthCustomerConnectorToOauthFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
-    public function findScopesByIdentifiers(array $customerScopes): array;
+    public function getScopesByIdentifiers(array $customerScopes): array;
 }

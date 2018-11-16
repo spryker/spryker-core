@@ -116,8 +116,8 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
-    public function findScopesByIdentifiers(array $customerScopes): array
+    public function getScopesByIdentifiers(array $customerScopes): array
     {
-        return $this->getFactory()->createOauthScopeReader()->findScopesByIdentifiers($customerScopes);
+        return $this->getFactory()->createOauthScopeReader()->getScopesByIdentifiers($customerScopes);
     }
 }
