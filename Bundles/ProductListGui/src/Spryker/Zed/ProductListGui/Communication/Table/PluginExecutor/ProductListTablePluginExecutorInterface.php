@@ -27,9 +27,11 @@ interface ProductListTablePluginExecutorInterface
     public function executeTableConfigExpanderPlugins(TableConfiguration $config): TableConfiguration;
 
     /**
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
+     *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    public function executeTableQueryExpanderPlugins(): QueryCriteriaTransfer;
+    public function executeTableQueryCriteriaExpanderPlugins(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer;
 
     /**
      * @return array

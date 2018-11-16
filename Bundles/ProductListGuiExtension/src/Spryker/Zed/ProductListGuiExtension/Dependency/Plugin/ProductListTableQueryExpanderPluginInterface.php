@@ -21,5 +21,5 @@ interface ProductListTableQueryExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    public function expandProductListQuery(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer;
+    public function expandProductListQueryCriteria(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer;
 }

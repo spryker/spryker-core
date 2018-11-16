@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductListGui\Communication\Table;
 
 use Generated\Shared\Transfer\QueryJoinTransfer;
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -186,7 +187,16 @@ class ProductListTable extends AbstractTable
      */
     protected function expandQuery(): void
     {
-        $queryCriteriaTransfer = $this->productListTablePluginExecutor->executeTableQueryExpanderPlugins();
+        $queryCriteriaTransfer = $this->productListTablePluginExecutor
+            ->executeTableQueryCriteriaExpanderPlugins(new QueryCriteriaTransfer());
+
+        foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
+            $this->productListQuery->withColumn($field, $value);
+        }
+
+        if (!$queryCriteriaTransfer->getJoins()) {
+            return;
+        }
 
         foreach ($queryCriteriaTransfer->getJoins() as $queryJoinTransfer) {
             if ($queryJoinTransfer->getRelation()) {
@@ -196,10 +206,6 @@ class ProductListTable extends AbstractTable
             }
 
             $this->expandQueryWithoutRelation($queryJoinTransfer);
-        }
-
-        foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
-            $this->productListQuery->withColumn($field, $value);
         }
     }
 

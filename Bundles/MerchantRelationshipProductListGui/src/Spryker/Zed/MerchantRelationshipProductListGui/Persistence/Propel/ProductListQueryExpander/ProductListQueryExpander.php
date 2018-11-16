@@ -19,8 +19,6 @@ use Spryker\Zed\MerchantRelationshipProductListGui\Persistence\MerchantRelations
 class ProductListQueryExpander implements ProductListQueryExpanderInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
@@ -38,6 +36,9 @@ class ProductListQueryExpander implements ProductListQueryExpanderInterface
     }
 
     /**
+     * @module ProductList
+     * @module MerchantRelationship
+     *
      * @return \Generated\Shared\Transfer\QueryJoinTransfer
      */
     protected function createMerchantRelationshipJoin(): QueryJoinTransfer
@@ -49,6 +50,9 @@ class ProductListQueryExpander implements ProductListQueryExpanderInterface
     }
 
     /**
+     * @module MerchantRelationship
+     * @module Merchant
+     *
      * @return \Generated\Shared\Transfer\QueryJoinTransfer
      */
     protected function createMerchantJoin(): QueryJoinTransfer
@@ -60,6 +64,9 @@ class ProductListQueryExpander implements ProductListQueryExpanderInterface
     }
 
     /**
+     * @module CompanyBusinessUnit
+     * @module MerchantRelationship
+     *
      * @return \Generated\Shared\Transfer\QueryJoinTransfer
      */
     protected function createCompanyBusinessUnitJoin(): QueryJoinTransfer

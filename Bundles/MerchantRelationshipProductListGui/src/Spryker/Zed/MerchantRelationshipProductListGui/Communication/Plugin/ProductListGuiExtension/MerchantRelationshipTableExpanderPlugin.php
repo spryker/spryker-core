@@ -8,9 +8,6 @@
 namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\Plugin\ProductListGuiExtension;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
-use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
-use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
-use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantRelationshipProductListGui\Persistence\MerchantRelationshipProductListGuiRepositoryInterface;
@@ -25,16 +22,15 @@ use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryE
  */
 class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements ProductListTableConfigExpanderPluginInterface, ProductListTableQueryExpanderPluginInterface, ProductListTableDataExpanderPluginInterface, ProductListTableHeaderExpanderPluginInterface
 {
-    protected const COL_MERCHANT_NAME_ALIAS = MerchantRelationshipProductListGuiRepositoryInterface::COL_MERCHANT_NAME_ALIAS;
-    protected const COL_BUSINESS_UNIT_OWNER_NAME_ALIAS = MerchantRelationshipProductListGuiRepositoryInterface::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS;
-
     protected const HEADER_MERCHANT_RELATION_ID = 'ID Merchant Relation';
     protected const HEADER_MERCHANT_NAME = 'Merchant Name';
     protected const HEADER_BUSINESS_UNIT_OWNER_NAME = 'Business Unit Owner Name';
 
-    protected const COL_FK_MERCHANT_RELATIONSHIP = SpyProductListTableMap::COL_FK_MERCHANT_RELATIONSHIP;
-    protected const COL_MERCHANT_NAME = SpyMerchantTableMap::COL_NAME;
-    protected const COL_COMPANY_BUSINESS_UNIT_NAME = SpyCompanyBusinessUnitTableMap::COL_NAME;
+    protected const COL_MERCHANT_NAME_ALIAS = MerchantRelationshipProductListGuiRepositoryInterface::COL_MERCHANT_NAME_ALIAS;
+    protected const COL_BUSINESS_UNIT_OWNER_NAME_ALIAS = MerchantRelationshipProductListGuiRepositoryInterface::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS;
+    protected const COL_FK_MERCHANT_RELATIONSHIP = MerchantRelationshipProductListGuiRepositoryInterface::COL_FK_MERCHANT_RELATIONSHIP;
+    protected const COL_MERCHANT_NAME = MerchantRelationshipProductListGuiRepositoryInterface::COL_MERCHANT_NAME;
+    protected const COL_COMPANY_BUSINESS_UNIT_NAME = MerchantRelationshipProductListGuiRepositoryInterface::COL_COMPANY_BUSINESS_UNIT_NAME;
 
     /**
      * {@inheritdoc}
@@ -61,7 +57,7 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    public function expandProductListQuery(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
+    public function expandProductListQueryCriteria(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
     {
         return $this
             ->getFactory()

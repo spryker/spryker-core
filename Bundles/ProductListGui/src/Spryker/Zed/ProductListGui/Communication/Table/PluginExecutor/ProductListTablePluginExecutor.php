@@ -88,14 +88,14 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
+     *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    public function executeTableQueryExpanderPlugins(): QueryCriteriaTransfer
+    public function executeTableQueryCriteriaExpanderPlugins(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
     {
-        $queryCriteriaTransfer = new QueryCriteriaTransfer();
-
         foreach ($this->productListTableQueryExpanderPlugins as $productListTableQueryExpanderPlugin) {
-            $queryCriteriaTransfer = $productListTableQueryExpanderPlugin->expandProductListQuery($queryCriteriaTransfer);
+            $queryCriteriaTransfer = $productListTableQueryExpanderPlugin->expandProductListQueryCriteria($queryCriteriaTransfer);
         }
 
         return $queryCriteriaTransfer;
