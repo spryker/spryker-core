@@ -9,7 +9,6 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Controller;
 
 use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,8 +18,8 @@ class CreateCompanyUserController extends AbstractController
 {
     protected const PARAM_REDIRECT_URL = 'redirect-url';
 
-    protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Company user has been created.';
-    protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Company user has not been created.';
+    protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Company user has been attached to business unit.';
+    protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Company user has not been attached to business unit.';
 
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
@@ -31,14 +30,14 @@ class CreateCompanyUserController extends AbstractController
      */
     public function attachCustomerAction(Request $request)
     {
-        $idCompanyUser = $this->castId($request->query->get(BusinessOnBehalfGuiConfig::PARAM_ID_CUSTOMER));
-        $idCompany = $this->castId($request->query->get(BusinessOnBehalfGuiConfig::PARAM_ID_COMPANY));
+        $idCompanyUser = $this->castId($request->query->get(BusinessOnBehalfGuiConfig::PARAM_ID_COMPANY_USER));
         $dataProvider = $this->getFactory()->createCustomerCompanyAttachFormDataProvider();
+        $companyUserTransfer = $dataProvider->getData($idCompanyUser);
 
         $form = $this->getFactory()
             ->getCustomerBusinessUnitAttachForm(
-                $dataProvider->getData($idCompanyUser, $idCompany),
-                $dataProvider->getOptions()
+                $companyUserTransfer,
+                $dataProvider->getOptions($companyUserTransfer)
             )
             ->handleRequest($request);
 
@@ -60,32 +59,5 @@ class CreateCompanyUserController extends AbstractController
         return $this->viewResponse([
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $companyUserForm
-     * @param string $redirectUrl
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function createCompanyUser(FormInterface $companyUserForm, string $redirectUrl)
-    {
-        /** @var \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer */
-        $companyUserTransfer = $companyUserForm->getData();
-        $companyResponseTransfer = $this->getFactory()
-            ->getCompanyUserFacade()
-            ->create($companyUserTransfer);
-
-        if (!$companyResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_CREATE);
-
-            return $this->viewResponse([
-                'form' => $companyUserForm->createView(),
-            ]);
-        }
-
-        $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
-
-        return $this->redirectResponse($redirectUrl);
     }
 }

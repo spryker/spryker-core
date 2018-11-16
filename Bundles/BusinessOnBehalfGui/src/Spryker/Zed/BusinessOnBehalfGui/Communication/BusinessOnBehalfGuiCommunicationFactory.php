@@ -11,7 +11,10 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiDependencyProvider;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\CustomerBusinessUnitAttachForm;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\DataProvider\CustomerBusinessUnitAttachFormDataProvider;
+use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyFacadeInterface;
+use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyRoleFacadeInterface;
+use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCustomerFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
@@ -35,8 +38,9 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createCustomerCompanyAttachFormDataProvider(): CustomerBusinessUnitAttachFormDataProvider
     {
         return new CustomerBusinessUnitAttachFormDataProvider(
-            $this->getCompanyFacade(),
-            $this->getCustomerFacade()
+            $this->getCompanyBusinessUnitFacade(),
+            $this->getCompanyRoleFacade(),
+            $this->getCompanyUserFacade()
         );
     }
 
@@ -54,6 +58,30 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getCustomerFacade(): BusinessOnBehalfGuiToCustomerFacadeInterface
     {
         return $this->getProvidedDependency(BusinessOnBehalfGuiDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface
+     */
+    public function getCompanyUserFacade(): BusinessOnBehalfGuiToCompanyUserFacadeInterface
+    {
+        return $this->getProvidedDependency(BusinessOnBehalfGuiDependencyProvider::FACADE_COMPANY_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyRoleFacadeInterface
+     */
+    public function getCompanyRoleFacade(): BusinessOnBehalfGuiToCompanyRoleFacadeInterface
+    {
+        return $this->getProvidedDependency(BusinessOnBehalfGuiDependencyProvider::FACADE_COMPANY_ROLE);
+    }
+
+    /**
+     * @return \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface
+     */
+    public function getCompanyBusinessUnitFacade(): BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface
+    {
+        return $this->getProvidedDependency(BusinessOnBehalfGuiDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
     }
 
     /**
