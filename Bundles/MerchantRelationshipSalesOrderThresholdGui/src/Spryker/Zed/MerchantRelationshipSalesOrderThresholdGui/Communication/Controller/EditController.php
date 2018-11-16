@@ -53,6 +53,19 @@ class EditController extends AbstractController
             return $this->handleFormSubmission($request, $thresholdForm, $idMerchantRelationship);
         }
 
+        $viewData = $this->executeIndexAction($idMerchantRelationship, $thresholdForm);
+
+        return $this->viewResponse($viewData);
+    }
+
+    /**
+     * @param int $idMerchantRelationship
+     * @param \Symfony\Component\Form\FormInterface $thresholdForm
+     *
+     * @return array
+     */
+    protected function executeIndexAction(int $idMerchantRelationship, FormInterface $thresholdForm): array
+    {
         $localeCollection = $this->getFactory()
             ->getLocaleFacade()
             ->getLocaleCollection();
@@ -73,11 +86,13 @@ class EditController extends AbstractController
                 )
         );
 
-        return $this->viewResponse([
+        $merchantRelationshipTransfer->setOwnerCompanyBusinessUnit($companyBusinessUnit);
+
+        return [
             'localeCollection' => $localeCollection,
             'form' => $thresholdForm->createView(),
             'merchantRelationship' => $merchantRelationshipTransfer,
-        ]);
+        ];
     }
 
     /**
