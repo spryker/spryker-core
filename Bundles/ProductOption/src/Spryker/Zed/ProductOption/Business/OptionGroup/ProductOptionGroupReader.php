@@ -220,8 +220,10 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
      */
     protected function findProductOptionGroupEntityWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup): ?SpyProductOptionGroup
     {
-        return $this->productOptionQueryContainer
+        $productOptionGroupCollection = $this->productOptionQueryContainer
             ->queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
-            ->findOne();
+            ->find();
+
+        return $productOptionGroupCollection->getFirst();
     }
 }
