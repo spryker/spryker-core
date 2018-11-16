@@ -10,6 +10,7 @@ namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 use Exception;
 use PHPMD\RuleSetFactory;
 use PHPMD\TextUI\CommandLineOptions;
+use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
 use Zend\Config\Reader\ReaderInterface;
@@ -19,6 +20,9 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     public const OPTION_PRIORITY = 'priority';
     public const OPTION_STRICT = 'strict';
     public const OPTION_DRY_RUN = 'dry-run';
+
+    protected const SOURCE_FOLDER_NAME = 'src';
+    protected const OPTION_MODULE = 'module';
 
     /**
      * @var string
@@ -36,15 +40,26 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected $defaultPriority;
 
     /**
+     * @var \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface
+     */
+    protected $configurationBuilder;
+
+    /**
      * @param \Zend\Config\Reader\ReaderInterface $xmlReader
      * @param string $command
      * @param int $defaultPriority
+     * @param \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface $configurationBuilder
      */
-    public function __construct(ReaderInterface $xmlReader, $command, $defaultPriority)
-    {
+    public function __construct(
+        ReaderInterface $xmlReader,
+        $command,
+        $defaultPriority,
+        SnifferConfigurationBuilderInterface $configurationBuilder
+    ) {
         $this->xmlReader = $xmlReader;
         $this->command = $command;
         $this->defaultPriority = $defaultPriority;
+        $this->configurationBuilder = $configurationBuilder;
     }
 
     /**
@@ -92,6 +107,16 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     public function run($directory, array $options = [])
     {
+        $options = $this->configurationBuilder->getConfiguration($directory, $options);
+
+        if ($options === []) {
+            return $this->formatResult($options);
+        }
+
+        if ($this->isCoreModule($options)) {
+            $directory = $this->addSourcePathForCoreModulePath($directory);
+        }
+
         $output = $this->runCommand($directory, $options);
         $results = $this->xmlReader->fromString($output);
 
@@ -227,5 +252,31 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             }
         }
         return $fileViolations;
+    }
+
+    /**
+     * @param string $directory
+     *
+     * @return string
+     */
+    protected function addSourcePathForCoreModulePath(string $directory): string
+    {
+        return $directory . static::SOURCE_FOLDER_NAME . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return bool
+     */
+    protected function isCoreModule(array $options): bool
+    {
+        if (!isset($options[static::OPTION_MODULE])) {
+            return false;
+        }
+
+        $module = $options[static::OPTION_MODULE];
+
+        return mb_strpos($module, '.') !== false;
     }
 }
