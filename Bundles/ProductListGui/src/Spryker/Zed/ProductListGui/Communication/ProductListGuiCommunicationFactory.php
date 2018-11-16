@@ -77,7 +77,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ProductListTablePluginExecutor(
             $this->getProductListTableActionExpanderPlugins(),
             $this->getProductListTableConfigExpanderPlugins(),
-            $this->getProductListTableQueryExpanderPlugins(),
+            $this->getProductListTableQueryCriteriaExpanderPlugins(),
             $this->getProductListTableDataExpanderPlugins(),
             $this->getProductListTableHeaderExpanderPlugins()
         );
@@ -255,9 +255,9 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryExpanderPluginInterface[]
      */
-    public function getProductListTableQueryExpanderPlugins(): array
+    public function getProductListTableQueryCriteriaExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_TABLE_QUERY_EXPANDER);
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_TABLE_QUERY_CRITERIA_EXPANDER);
     }
 
     /**

@@ -34,7 +34,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGINS_PRODUCT_LIST_TABLE_ACTION_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_ACTION_EXPANDER';
     public const PLUGINS_PRODUCT_LIST_TABLE_CONFIG_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_CONFIG_EXPANDER';
-    public const PLUGINS_PRODUCT_LIST_TABLE_QUERY_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_QUERY_EXPANDER';
+    public const PLUGINS_PRODUCT_LIST_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_QUERY_CRITERIA_EXPANDER';
     public const PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
     public const PLUGINS_PRODUCT_LIST_TABLE_HEADER_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
 
@@ -61,7 +61,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addProductListTableActionExpanderPlugins($container);
         $container = $this->addProductListTableConfigExpanderPlugins($container);
-        $container = $this->addProductListTableQueryExpanderPlugins($container);
+        $container = $this->addProductListTableQueryCriteriaExpanderPlugins($container);
         $container = $this->addProductListTableDataExpanderPlugins($container);
         $container = $this->addProductListTableHeaderExpanderPlugins($container);
         $container = $this->addProductListOwnerTypeFormExpanderPlugins($container);
@@ -202,10 +202,10 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductListTableQueryExpanderPlugins(Container $container): Container
+    protected function addProductListTableQueryCriteriaExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_TABLE_QUERY_EXPANDER] = function () {
-            return $this->getProductListTableQueryExpanderPlugins();
+        $container[static::PLUGINS_PRODUCT_LIST_TABLE_QUERY_CRITERIA_EXPANDER] = function () {
+            return $this->getProductListTableQueryCriteriaExpanderPlugins();
         };
 
         return $container;
@@ -280,7 +280,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryExpanderPluginInterface[]
      */
-    protected function getProductListTableQueryExpanderPlugins(): array
+    protected function getProductListTableQueryCriteriaExpanderPlugins(): array
     {
         return [];
     }
