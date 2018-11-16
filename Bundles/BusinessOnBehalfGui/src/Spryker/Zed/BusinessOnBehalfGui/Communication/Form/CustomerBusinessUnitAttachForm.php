@@ -76,8 +76,6 @@ class CustomerBusinessUnitAttachForm extends AbstractType
         $this->addCompanyBusinessUnitCollectionField($builder, $options);
         $this->addCompanyRoleCollectionField($builder, $options);
         $this->addFkCompanyField($builder);
-
-        //$this->executeCustomerBusinessUnitAttachExpanderPlugins($builder);
     }
 
     /**
@@ -95,9 +93,6 @@ class CustomerBusinessUnitAttachForm extends AbstractType
             'choice_attr' => $options[static::OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES],
             'choices_as_values' => true,
             'required' => true,
-            /*'attr' => [
-                'template_path' => $this->getTemplatePath(),
-            ],*/
         ]);
 
         return $this;
@@ -189,20 +184,6 @@ class CustomerBusinessUnitAttachForm extends AbstractType
 
             return $companyRoleCollectionTransfer;
         };
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function executeCustomerBusinessUnitAttachExpanderPlugins(FormBuilderInterface $builder): self
-    {
-        foreach ($this->getFactory()->getCompanyUserAttachCustomerFormExpanderPlugins() as $attachCustomerFormExpanderPlugin) {
-            $builder = $attachCustomerFormExpanderPlugin->expand($builder);
-        }
-
-        return $this;
     }
 
     /**

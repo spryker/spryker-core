@@ -25,14 +25,6 @@ use Symfony\Component\Form\FormInterface;
 class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserAttachCustomerFormExpanderPluginInterface[]
-     */
-    public function getCompanyUserAttachCustomerFormExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(BusinessOnBehalfGuiDependencyProvider::PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER);
-    }
-
-    /**
      * @return \Spryker\Zed\BusinessOnBehalfGui\Communication\Form\DataProvider\CustomerBusinessUnitAttachFormDataProvider
      */
     public function createCustomerCompanyAttachFormDataProvider(): CustomerBusinessUnitAttachFormDataProvider
