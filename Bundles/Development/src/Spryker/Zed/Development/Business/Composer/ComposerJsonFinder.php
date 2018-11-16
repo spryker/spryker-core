@@ -15,7 +15,6 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
 {
     protected const PRESERVE_ITERATOR_KEYS = false;
     protected const COMPOSER_JSON_FILE_NAME = 'composer.json';
-    protected const DEPTH_FOR_JSON_FILE_FINDER = '< 1';
 
     /**
      * @var \Symfony\Component\Finder\Finder
@@ -41,7 +40,7 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
         $currentFinderInstance
             ->in($module->getPath())
             ->name(static::COMPOSER_JSON_FILE_NAME)
-            ->depth(static::DEPTH_FOR_JSON_FILE_FINDER);
+            ->depth('< 1');
 
         if (!$currentFinderInstance->hasResults()) {
             return null;
