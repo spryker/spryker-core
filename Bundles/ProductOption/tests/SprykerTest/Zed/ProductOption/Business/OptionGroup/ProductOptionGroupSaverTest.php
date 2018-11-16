@@ -98,7 +98,7 @@ class ProductOptionGroupSaverTest extends MockProvider
             ->method('save')
             ->willReturn(1);
 
-        $productOptionGroupSaverMock->method('getOptionGroupById')
+        $productOptionGroupSaverMock->method('findOptionGroupEntityById')
             ->willReturn($productOptionGroupEntityMock);
 
         $isActivated = $productOptionGroupSaverMock->toggleOptionActive(1, 1);
@@ -115,7 +115,7 @@ class ProductOptionGroupSaverTest extends MockProvider
 
         $productOptionGroupSaverMock = $this->createProductOptionGroupSaver();
 
-        $productOptionGroupSaverMock->method('getOptionGroupById')
+        $productOptionGroupSaverMock->method('findOptionGroupEntityById')
             ->willReturn(null);
 
         $productOptionGroupSaverMock->toggleOptionActive(1, 1);
@@ -167,8 +167,8 @@ class ProductOptionGroupSaverTest extends MockProvider
                 $productOptionValueSaverMock,
             ])
             ->setMethods([
-                'getProductAbstractBySku',
-                'getOptionGroupById',
+                'findProductAbstractEntityBySku',
+                'findOptionGroupEntityById',
                 'getProductOptionValueById',
                 'createProductOptionGroupEntity',
             ])

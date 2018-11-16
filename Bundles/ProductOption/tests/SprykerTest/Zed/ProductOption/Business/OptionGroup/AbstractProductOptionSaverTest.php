@@ -45,11 +45,11 @@ class AbstractProductOptionSaverTest extends MockProvider
         $productOptionGroupEntityMock->method('save')->willReturn(1);
 
         $productOptionGroupSaverMock->expects($this->once())
-            ->method('getOptionGroupById')
+            ->method('findOptionGroupEntityById')
             ->willReturn($productOptionGroupEntityMock);
 
         $productOptionGroupSaverMock->expects($this->once())
-            ->method('getProductAbstractBySku')
+            ->method('findProductAbstractEntityBySku')
             ->willReturn(new SpyProductAbstract());
 
         $isUpdated = $productOptionGroupSaverMock->addProductAbstractToProductOptionGroup('123', 1);
@@ -67,7 +67,7 @@ class AbstractProductOptionSaverTest extends MockProvider
         $productOptionGroupSaverMock = $this->createAbstractProductOptionSaver();
 
         $productOptionGroupSaverMock->expects($this->once())
-            ->method('getOptionGroupById')
+            ->method('findOptionGroupEntityById')
             ->willReturn(null);
 
         $productOptionGroupSaverMock->addProductAbstractToProductOptionGroup('123', 1);
@@ -84,7 +84,7 @@ class AbstractProductOptionSaverTest extends MockProvider
 
         $productOptionGroupSaverMock = $this->createAbstractProductOptionSaver();
         $productOptionGroupSaverMock->expects($this->once())
-            ->method('getOptionGroupById')
+            ->method('findOptionGroupEntityById')
             ->willReturn($productOptionGroupEntityMock);
 
         $productOptionGroupSaverMock->addProductAbstractToProductOptionGroup('123', 1);
@@ -121,8 +121,8 @@ class AbstractProductOptionSaverTest extends MockProvider
                 $eventFacadeMock,
             ])
             ->setMethods([
-                'getProductAbstractBySku',
-                'getOptionGroupById',
+                'findProductAbstractEntityBySku',
+                'findOptionGroupEntityById',
             ])
             ->getMock();
     }
