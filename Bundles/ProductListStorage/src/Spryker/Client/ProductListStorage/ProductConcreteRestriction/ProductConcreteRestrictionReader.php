@@ -55,6 +55,21 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
         $customerWhitelistIds = $customer->getCustomerProductListCollection()->getWhitelistIds() ?: [];
         $customerBlacklistIds = $customer->getCustomerProductListCollection()->getBlacklistIds() ?: [];
 
+        return $this->checkIfProductConcreteIsRestricted($idProduct, $customerWhitelistIds, $customerBlacklistIds);
+    }
+
+    /**
+     * @param int $idProduct
+     * @param int[] $customerWhitelistIds
+     * @param int[] $customerBlacklistIds
+     *
+     * @return bool
+     */
+    protected function checkIfProductConcreteIsRestricted(
+        int $idProduct,
+        array $customerWhitelistIds,
+        array $customerBlacklistIds
+    ): bool {
         $productListProductConcreteStorageTransfer = $this->productListProductConcreteStorageReader->findProductConcreteProductListStorage($idProduct);
 
         $isProductRestrictedInBlackList = $this->checkIfProductConcreteRestrictedInBlacklist($productListProductConcreteStorageTransfer, $customerBlacklistIds);
