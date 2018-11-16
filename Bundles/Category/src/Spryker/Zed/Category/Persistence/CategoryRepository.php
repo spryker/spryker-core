@@ -129,7 +129,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->useNodeQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkCategory($idCategory)
             ->endUse()
-            ->leftJoinAttribute()
+            ->leftJoinWithAttribute()
             ->useAttributeQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkCategory($idCategory)
             ->endUse()
