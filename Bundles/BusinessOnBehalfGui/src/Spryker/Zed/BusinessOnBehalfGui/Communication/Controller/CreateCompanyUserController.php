@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +22,7 @@ class CreateCompanyUserController extends AbstractController
 
     protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Company user has been attached to business unit.';
     protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Company user has not been attached to business unit.';
+    protected const MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED = 'Company user already attached to this business unit.';
 
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
@@ -43,21 +46,47 @@ class CreateCompanyUserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $companyUserTransfer = $form->getData();
-            $companyUserResponseTransfer = $this->getFactory()
-                ->getCompanyUserFacade()
-                ->create($companyUserTransfer);
 
-            if (!$companyUserResponseTransfer->getIsSuccessful()) {
-                $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_CREATE);
+            if ($this->checkRelationBetweenCompanyUserAndBusinessUnit($companyUserTransfer)) {
+                $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED);
             } else {
-                $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
+                $companyUserResponseTransfer = $this->getFactory()
+                    ->getCompanyUserFacade()
+                    ->create($companyUserTransfer);
 
-                return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+                if (!$companyUserResponseTransfer->getIsSuccessful()) {
+                    $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_CREATE);
+                } else {
+                    $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
+
+                    return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+                }
             }
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return bool
+     */
+    protected function checkRelationBetweenCompanyUserAndBusinessUnit(CompanyUserTransfer $companyUserTransfer)
+    {
+        $companyUserCollection = $this->getFactory()->getCompanyUserFacade()->getCompanyUserCollection(
+            (new CompanyUserCriteriaFilterTransfer())->setIdCompany($companyUserTransfer->getFkCompany())
+        );
+
+        foreach ($companyUserCollection->getCompanyUsers() as $companyUser) {
+            if ($companyUser->getFkCompanyBusinessUnit() === $companyUserTransfer->getFkCompanyBusinessUnit() &&
+                $companyUser->getFkCustomer() === $companyUserTransfer->getFkCustomer()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
