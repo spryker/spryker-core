@@ -22,6 +22,8 @@ class EditController extends AbstractController
     public const MESSAGE_CUSTOMER_UPDATE_ERROR = 'Customer was not updated.';
     public const MESSAGE_CUSTOMER_UPDATE_SUCCESS = 'Customer was updated successfully.';
 
+    protected const URL_REDIRECT_CUSTOMER_NOT_EXISTS = '/customer';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -37,7 +39,7 @@ class EditController extends AbstractController
         if (!$formData) {
             $this->addErrorMessage(sprintf('Customer with id %s doesn\'t exist', $idCustomer));
 
-            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
+            return $this->redirectResponse(static::URL_REDIRECT_CUSTOMER_NOT_EXISTS);
         }
 
         $form = $this->getFactory()
