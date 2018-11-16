@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\EventListener\SaveSessionListener;
 
 /**
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  */
 class ApplicationCommunicationFactory extends AbstractCommunicationFactory
 {

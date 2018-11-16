@@ -11,6 +11,9 @@ use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
+/**
+ * @method \Spryker\Yves\Twig\TwigConfig getConfig()
+ */
 class TwigDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_TEXT = 'util text service';

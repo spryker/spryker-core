@@ -13,6 +13,9 @@ use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToLocaleBridge;
 use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToProductBridge;
 use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToTouchBridge;
 
+/**
+ * @method \Spryker\Zed\ProductReview\ProductReviewConfig getConfig()
+ */
 class ProductReviewDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_TOUCH = 'FACADE_TOUCH';
