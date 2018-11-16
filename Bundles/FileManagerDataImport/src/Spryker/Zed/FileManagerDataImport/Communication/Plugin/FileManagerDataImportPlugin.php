@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\FileManagerDataImport\Business\FileManagerDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\FileManagerDataImport\FileManagerDataImportConfig getConfig()
  */
 class FileManagerDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

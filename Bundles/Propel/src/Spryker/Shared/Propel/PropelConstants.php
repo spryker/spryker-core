@@ -127,4 +127,12 @@ interface PropelConstants
      * @api
      */
     public const SCHEMA_FILE_PATH_PATTERN = 'SCHEMA_FILE_PATH_PATTERN';
+
+    /**
+     * Specification:
+     * - Path to log file.
+     *
+     * @api
+     */
+    public const LOG_FILE_PATH = 'PROPEL:LOG_FILE_PATH';
 }
