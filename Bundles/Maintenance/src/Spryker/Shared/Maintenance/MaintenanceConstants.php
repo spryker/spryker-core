@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Maintenance;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface MaintenanceConstants
 {
 }

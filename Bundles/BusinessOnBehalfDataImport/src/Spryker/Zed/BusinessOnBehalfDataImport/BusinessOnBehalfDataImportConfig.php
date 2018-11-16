@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\BusinessOnBehalfDataImport;
@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class BusinessOnBehalfDataImportConfig extends DataImportConfig
 {
-    public const IMPORT_TYPE_COMPANY_USER = 'company-user';
+    public const IMPORT_TYPE_COMPANY_USER = 'company-user-on-behalf';
     protected const IMPORT_FILE = 'company_user.csv';
 
     /**

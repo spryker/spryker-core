@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -14,7 +14,7 @@ interface RestRequestInterface
     /**
      * @param string $type
      *
-     * @return null|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
     public function findParentResourceByType(string $type): ?RestResourceInterface;
 
@@ -114,4 +114,23 @@ interface RestRequestInterface
      * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface[]
      */
     public function getFiltersByResource(string $resource): array;
+
+    /**
+     * @return array|null
+     */
+    public function getAttributesDataFromRequest(): ?array;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
+     *
+     * @return void
+     */
+    public function setPage(PageInterface $page): void;
+
+    /**
+     * @param string[] $excludeParams
+     *
+     * @return string
+     */
+    public function getQueryString(array $excludeParams = []): string;
 }

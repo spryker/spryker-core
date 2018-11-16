@@ -14,6 +14,7 @@ interface ProductQuantityFacadeInterface
 {
     /**
      * Specification:
+     * - Checks if the quantity is positive.
      * - Validates product quantities if they fulfill all quantity restriction rules during item addition.
      *
      * @api
@@ -47,4 +48,14 @@ interface ProductQuantityFacadeInterface
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
     public function findProductQuantityTransfersByProductIds(array $productIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves all product quantity transfers.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findProductQuantityTransfers(): array;
 }

@@ -13,6 +13,9 @@ use Spryker\Zed\Offer\OfferDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Offer\OfferConfig getConfig()
+ * @method \Spryker\Zed\Offer\Persistence\OfferEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Offer\Persistence\OfferRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Offer\Business\OfferFacadeInterface getFacade()
  */
 class OfferCommunicationFactory extends AbstractCommunicationFactory
 {

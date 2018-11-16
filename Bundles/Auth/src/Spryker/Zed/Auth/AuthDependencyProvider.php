@@ -11,11 +11,14 @@ use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Auth\AuthConfig getConfig()
+ */
 class AuthDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_USER = 'facade user';
-    const PASSWORD_RESET_SENDER = 'Password reset sender';
-    const CLIENT_SESSION = 'session client';
+    public const FACADE_USER = 'facade user';
+    public const PASSWORD_RESET_SENDER = 'Password reset sender';
+    public const CLIENT_SESSION = 'session client';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

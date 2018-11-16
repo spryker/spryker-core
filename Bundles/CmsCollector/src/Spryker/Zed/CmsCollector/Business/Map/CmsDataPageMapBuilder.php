@@ -22,10 +22,10 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
  */
 class CmsDataPageMapBuilder implements PageMapInterface
 {
-    const TYPE_CMS_PAGE = 'cms_page';
-    const TYPE = 'type';
-    const ID_CMS_PAGE = 'id_cms_page';
-    const NAME = 'name';
+    public const TYPE_CMS_PAGE = 'cms_page';
+    public const TYPE = 'type';
+    public const ID_CMS_PAGE = 'id_cms_page';
+    public const NAME = 'name';
 
     /**
      * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface

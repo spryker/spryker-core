@@ -17,8 +17,13 @@
         <property name="priceDimension" type="PriceProductDimension" />
     </transfer>
 
+    <transfer name="MoneyValue">
+        <property name="priceDataChecksum" type="string" />
+    </transfer>
+
     <transfer name="PriceProductDimension">
         <property name="type" type="string" />
+        <property name="name" type="string" />
         <property name="idPriceProductDefault" type="int" />
     </transfer>
 
@@ -49,6 +54,7 @@
         <property name="priceDimension" type="PriceProductDimension" />
         <property name="sku" type="string" />
         <property name="quote" type="Quote" />
+        <property name="quantity" type="int" />
     </transfer>
 
     <transfer name="PriceProductCriteria">
@@ -58,6 +64,7 @@
         <property name="priceType" type="string" />
         <property name="priceDimension" type="PriceProductDimension" />
         <property name="quote" type="Quote" />
+        <property name="quantity" type="int" />
     </transfer>
 
     <transfer name="CurrentProductPrice">

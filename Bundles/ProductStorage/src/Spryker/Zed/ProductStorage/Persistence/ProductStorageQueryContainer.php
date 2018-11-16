@@ -69,6 +69,7 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
                 ->joinWithSpyProductAbstract()
             ->endUse()
             ->filterByFkProduct_In($productIds)
+            ->orderByFkLocale(Criteria::DESC)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         $query
@@ -166,6 +167,34 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     /**
      * @api
      *
+     * @param array $productAbstractIds
+     * @param array $localeIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryConcreteProductBulk(array $productAbstractIds, array $localeIds)
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct()
+            ->select([
+                SpyProductTableMap::COL_ID_PRODUCT,
+                SpyProductTableMap::COL_ATTRIBUTES,
+                SpyProductTableMap::COL_SKU,
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+            ])
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES, 'localized_attributes')
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, 'fk_locale')
+            ->useSpyProductLocalizedAttributesQuery()
+                ->filterByFkLocale_In($localeIds)
+            ->endUse()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->filterByIsActive(true);
+    }
+
+    /**
+     * @api
+     *
      * @param array $attributeKeys
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -194,5 +223,17 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
             ->queryProduct()
             ->select(SpyProductTableMap::COL_ID_PRODUCT)
             ->filterByFkProductAbstract_In($productAbstractIds);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProducts()
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct();
     }
 }

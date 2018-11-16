@@ -10,15 +10,21 @@ namespace Spryker\Client\CategoryStorage;
 interface CategoryStorageClientInterface
 {
     /**
+     * Specification:
+     *  - Return category node storage data by locale name.
+     *
      * @api
      *
      * @param string $locale
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
     public function getCategories($locale);
 
     /**
+     * Specification:
+     *  - Return category node storage data by id category node and locale name.
+     *
      * @api
      *
      * @param int $idCategoryNode

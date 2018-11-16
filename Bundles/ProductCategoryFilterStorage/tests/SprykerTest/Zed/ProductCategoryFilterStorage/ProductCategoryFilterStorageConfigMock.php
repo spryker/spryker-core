@@ -14,7 +14,7 @@ class ProductCategoryFilterStorageConfigMock extends ProductCategoryFilterStorag
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return false;
     }

@@ -48,7 +48,7 @@ class MoneyBuilder implements MoneyBuilderInterface
 
     /**
      * @param int $amount
-     * @param null|string $isoCode
+     * @param string|null $isoCode
      *
      * @throws \Spryker\Shared\Money\Exception\InvalidAmountArgumentException
      *
@@ -68,7 +68,7 @@ class MoneyBuilder implements MoneyBuilderInterface
 
     /**
      * @param float $amount
-     * @param null|string $isoCode
+     * @param string|null $isoCode
      *
      * @throws \Spryker\Shared\Money\Exception\InvalidAmountArgumentException
      *
@@ -88,7 +88,7 @@ class MoneyBuilder implements MoneyBuilderInterface
 
     /**
      * @param string $amount
-     * @param null|string $isoCode
+     * @param string|null $isoCode
      *
      * @throws \Spryker\Shared\Money\Exception\InvalidAmountArgumentException
      *

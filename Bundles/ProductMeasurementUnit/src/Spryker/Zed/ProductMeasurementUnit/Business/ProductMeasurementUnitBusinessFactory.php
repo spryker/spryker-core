@@ -12,13 +12,20 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnit
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstallerInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpander;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpander;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpanderInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderItemExpander;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderItemExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitGroupKeyGenerator;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitGroupKeyGeneratorInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReader;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReaderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValue;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValueInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpander;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeInterface;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface;
 use Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitDependencyProvider;
 
@@ -73,6 +80,14 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeInterface
+     */
+    public function getGlossaryFacade(): ProductMeasurementUnitToGlossaryFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderInterface
      */
     public function createCartChangeExpander(): CartChangeExpanderInterface
@@ -91,6 +106,35 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getEntityManager(),
             $this->getEventFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpanderInterface
+     */
+    public function createOrderExpander(): OrderExpanderInterface
+    {
+        return new OrderExpander(
+            $this->getRepository(),
+            $this->createProductMeasurementUnitTranslationExpander()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderItemExpanderInterface
+     */
+    public function createOrderItemExpander(): OrderItemExpanderInterface
+    {
+        return new OrderItemExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface
+     */
+    public function createProductMeasurementUnitTranslationExpander(): ProductMeasurementUnitTranslationExpanderInterface
+    {
+        return new ProductMeasurementUnitTranslationExpander(
+            $this->getGlossaryFacade()
         );
     }
 }

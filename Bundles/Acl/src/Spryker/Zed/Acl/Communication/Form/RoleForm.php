@@ -17,11 +17,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
  * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Acl\AclConfig getConfig()
  */
 class RoleForm extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_ID_ROLE = 'id_acl_role';
+    public const FIELD_NAME = 'name';
+    public const FIELD_ID_ROLE = 'id_acl_role';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

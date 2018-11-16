@@ -1,23 +1,26 @@
 {
   "name": "spryker/user",
+  "type": "library",
   "description": "User module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/gui": "^3.10.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/session": "^3.1.1",
+    "spryker/session": "^3.1.1 || ^4.0.0",
     "spryker/symfony": "^3.0.0",
+    "spryker/user-extension": "^1.0.0",
     "spryker/util-date-time": "^1.0.0",
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
+    "spryker/sales": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "suggest": {
     "spryker/installer": "If you want to use Installer plugin.",

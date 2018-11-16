@@ -16,11 +16,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
 class PostgresqlCompatibilityConsole extends Console
 {
-    const COMMAND_NAME = 'propel:pg-sql-compat';
-    const OPTION_CORE = 'core';
+    public const COMMAND_NAME = 'propel:pg-sql-compat';
+    public const OPTION_CORE = 'core';
 
     /**
      * @return void

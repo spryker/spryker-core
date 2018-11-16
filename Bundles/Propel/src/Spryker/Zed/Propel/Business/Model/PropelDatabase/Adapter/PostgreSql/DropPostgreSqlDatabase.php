@@ -10,11 +10,14 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\PostgreSql;
 use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
+use Spryker\Zed\Propel\Business\Exception\UnSupportedCharactersInConfigurationValueException;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface;
 use Symfony\Component\Process\Process;
 
 class DropPostgreSqlDatabase implements DropDatabaseInterface
 {
+    protected const SHELL_CHARACTERS_PATTERN = '/\$|`/i';
+
     /**
      * @return bool
      */
@@ -98,8 +101,8 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
             'psql -h %s -p %s -U %s -w -c "DROP DATABASE IF EXISTS \"%s\"; " %s',
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
-            Config::get(PropelConstants::ZED_DB_USERNAME),
-            Config::get(PropelConstants::ZED_DB_DATABASE),
+            $this->getConfigValue(PropelConstants::ZED_DB_USERNAME),
+            $this->getConfigValue(PropelConstants::ZED_DB_DATABASE),
             'postgres'
         );
     }
@@ -111,7 +114,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     {
         return sprintf(
             'sudo dropdb %s --if-exists',
-            Config::get(PropelConstants::ZED_DB_DATABASE)
+            $this->getConfigValue(PropelConstants::ZED_DB_DATABASE)
         );
     }
 
@@ -145,7 +148,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     {
         putenv(sprintf(
             'PGPASSWORD=%s',
-            Config::get(PropelConstants::ZED_DB_PASSWORD)
+            $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD)
         ));
     }
 
@@ -167,5 +170,25 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
         $process = new Process($command);
 
         return $process;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\UnSupportedCharactersInConfigurationValueException
+     *
+     * @return mixed
+     */
+    protected function getConfigValue(string $key)
+    {
+        $value = Config::get($key);
+        if (preg_match(static::SHELL_CHARACTERS_PATTERN, $value)) {
+            throw new UnSupportedCharactersInConfigurationValueException(sprintf(
+                'Configuration value for key "%s" contains unsupported characters (\'$\',\'`\') that is forbidden by security reason.',
+                $key
+            ));
+        }
+
+        return $value;
     }
 }

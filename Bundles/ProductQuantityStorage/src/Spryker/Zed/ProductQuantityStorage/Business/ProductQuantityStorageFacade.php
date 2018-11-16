@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductQuantityStorage\Business\ProductQuantityStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageRepositoryInterface getRepository()
  */
 class ProductQuantityStorageFacade extends AbstractFacade implements ProductQuantityStorageFacadeInterface
 {
@@ -26,5 +28,33 @@ class ProductQuantityStorageFacade extends AbstractFacade implements ProductQuan
     public function publishProductQuantity(array $productIds): void
     {
         $this->getFactory()->createProductQuantityStorageWriter()->publish($productIds);
+    }
+
+    /**
+     * Specification:
+     * - Retrieves all product quantity transfers.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findProductQuantityTransfers(): array
+    {
+        return $this->getFactory()->getProductQuantityFacade()->findProductQuantityTransfers();
+    }
+
+    /**
+     * Specification:
+     * - Retrieves product quantity transfers by product ids.
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findProductQuantityByProductIdsTransfers(array $productIds): array
+    {
+        return $this->getFactory()->getProductQuantityFacade()->findProductQuantityTransfersByProductIds($productIds);
     }
 }

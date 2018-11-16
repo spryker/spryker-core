@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductSetStorageQueryContainer extends AbstractQueryContainer implements ProductSetStorageQueryContainerInterface
 {
-    const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
+    public const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
 
     /**
      * @api
@@ -102,6 +102,23 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
             ->withColumn('DISTINCT ' . SpyProductImageSetTableMap::COL_FK_RESOURCE_PRODUCT_SET, static::FK_PRODUCT_RESOURCE_SET)
             ->select([static::FK_PRODUCT_RESOURCE_SET])
             ->addAnd(SpyProductImageSetTableMap::COL_FK_RESOURCE_PRODUCT_SET, null, ModelCriteria::NOT_EQUAL);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $productSetIds
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSetByIds($productSetIds)
+    {
+        $query = $this->getFactory()
+            ->getProductSetQueryContainer()
+            ->queryProductSet()
+            ->filterByIdProductSet_In($productSetIds);
 
         return $query;
     }

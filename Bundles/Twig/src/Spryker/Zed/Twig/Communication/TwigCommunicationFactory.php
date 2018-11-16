@@ -17,6 +17,7 @@ use Spryker\Zed\Twig\TwigDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
+ * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
  */
 class TwigCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -59,7 +60,10 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createFilesystemCacheWriter()
     {
-        return new FilesystemCacheWriter($this->getConfig()->getCacheFilePath());
+        return new FilesystemCacheWriter(
+            $this->getConfig()->getCacheFilePath(),
+            $this->getConfig()->getPermissionMode()
+        );
     }
 
     /**

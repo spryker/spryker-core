@@ -7,6 +7,15 @@
         <property name="reference" type="string"/>
         <property name="store" type="string"/>
         <property name="locale" type="string"/>
+        <property name="key" type="string"/>
+        <property name="data" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationQueueMessage">
+        <property name="key" type="string"/>
+        <property name="value" type="array"/>
+        <property name="resource" type="string"/>
+        <property name="params" type="array"/>
     </transfer>
 
 </transfers>

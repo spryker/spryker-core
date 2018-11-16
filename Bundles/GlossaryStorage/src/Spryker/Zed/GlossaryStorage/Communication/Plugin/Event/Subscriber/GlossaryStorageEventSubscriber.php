@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  */
 class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -108,6 +110,5 @@ class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     protected function addGlossaryTranslationUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE, new GlossaryTranslationStorageListener());
-        ;
     }
 }

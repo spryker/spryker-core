@@ -2,14 +2,12 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\MerchantRelationshipDataImport\Helper;
 
 use Codeception\Module;
-use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
-use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -17,23 +15,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 class MerchantRelationshipDataImportHelper extends Module
 {
     use LocatorHelperTrait;
-
-    /**
-     * @return void
-     */
-    public function ensureDatabaseTableIsEmpty(): void
-    {
-        $this->getMerchantRelationshipQuery()->deleteAll();
-    }
-
-    /**
-     * @return void
-     */
-    public function ensureRelatedDataIsNotExists(): void
-    {
-        $this->getMerchantQuery()->deleteAll();
-        $this->getCompanyBusinessUnitQuery()->deleteAll();
-    }
 
     /**
      * @return void
@@ -59,22 +40,6 @@ class MerchantRelationshipDataImportHelper extends Module
     protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
     {
         return SpyMerchantRelationshipQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
-     */
-    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
-    {
-        return SpyCompanyBusinessUnitQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
-     */
-    protected function getMerchantQuery(): SpyMerchantQuery
-    {
-        return SpyMerchantQuery::create();
     }
 
     /**

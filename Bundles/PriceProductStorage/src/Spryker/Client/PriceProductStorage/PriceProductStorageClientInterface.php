@@ -17,7 +17,7 @@ interface PriceProductStorageClientInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getPriceProductAbstractTransfers(int $idProductAbstract): array;
 
@@ -29,7 +29,22 @@ interface PriceProductStorageClientInterface
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getPriceProductConcreteTransfers(int $idProductConcrete): array;
+
+    /**
+     * Specification:
+     *  - Returns a resolved concrete product price from storage.
+     *  - Returns product concrete price data if it exists.
+     *  - Returns product abstract price data otherwise.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getResolvedPriceProductConcreteTransfers(int $idProductConcrete, int $idProductAbstract): array;
 }

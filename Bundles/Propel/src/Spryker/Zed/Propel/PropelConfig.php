@@ -14,8 +14,10 @@ use Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException;
 
 class PropelConfig extends AbstractBundleConfig
 {
-    const DB_ENGINE_MYSQL = 'mysql';
-    const DB_ENGINE_PGSQL = 'pgsql';
+    public const DB_ENGINE_MYSQL = 'mysql';
+    public const DB_ENGINE_PGSQL = 'pgsql';
+
+    public const POSTGRES_INDEX_NAME_MAX_LENGTH = 63;
 
     /**
      * @return string
@@ -56,14 +58,16 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * First load the core file if present and then override it with the one from project
+     *
      * @return array
      */
     public function getPropelSchemaPathPatterns()
     {
-        return array_merge(
+        return array_unique(array_merge(
             $this->getCorePropelSchemaPathPatterns(),
             $this->getProjectPropelSchemaPathPatterns()
-        );
+        ));
     }
 
     /**
@@ -71,7 +75,7 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getCorePropelSchemaPathPatterns()
     {
-        return [];
+        return [APPLICATION_VENDOR_DIR . '/*/*/src/*/Zed/*/Persistence/Propel/Schema/'];
     }
 
     /**
@@ -79,17 +83,7 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getProjectPropelSchemaPathPatterns()
     {
-        return glob($this->get(PropelConstants::SCHEMA_FILE_PATH_PATTERN, $this->getSchemaPathPattern()));
-    }
-
-    /**
-     * @deprecated Only needed for BC reasons. Use PropelConstants::SCHEMA_FILE_PATH_PATTERN to define the path instead.
-     *
-     * @return string
-     */
-    private function getSchemaPathPattern()
-    {
-        return APPLICATION_VENDOR_DIR . '/*/*/src/*/Zed/*/Persistence/Propel/Schema/';
+        return [APPLICATION_SOURCE_DIR . '/*/Zed/*/Persistence/Propel/Schema/'];
     }
 
     /**
@@ -97,7 +91,9 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getLogPath()
     {
-        return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/logs/ZED/propel.log';
+        $defaultPath = APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/logs/ZED/propel.log';
+
+        return $this->get(PropelConstants::LOG_FILE_PATH, $defaultPath);
     }
 
     /**
@@ -131,5 +127,20 @@ class PropelConfig extends AbstractBundleConfig
     public function getWhitelistForAllowedAttributeValueChanges()
     {
         return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getTableElementHierarchy(): array
+    {
+        return [
+            'column',
+            'foreign-key',
+            'index',
+            'unique',
+            'id-method-parameter',
+            'behavior',
+        ];
     }
 }

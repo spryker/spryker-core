@@ -14,8 +14,16 @@ class GlossaryStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGlossarySynchronizationPoolName(): ?string
+    {
+        return null;
     }
 }

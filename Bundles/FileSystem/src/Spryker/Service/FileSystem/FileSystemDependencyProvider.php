@@ -13,11 +13,14 @@ use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemWriterPlugin;
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
+/**
+ * @method \Spryker\Service\FileSystem\FileSystemConfig getConfig()
+ */
 class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGIN_READER = 'plugin reader';
-    const PLUGIN_WRITER = 'plugin writer';
-    const PLUGIN_STREAM = 'plugin stream';
+    public const PLUGIN_READER = 'plugin reader';
+    public const PLUGIN_WRITER = 'plugin writer';
+    public const PLUGIN_STREAM = 'plugin stream';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container

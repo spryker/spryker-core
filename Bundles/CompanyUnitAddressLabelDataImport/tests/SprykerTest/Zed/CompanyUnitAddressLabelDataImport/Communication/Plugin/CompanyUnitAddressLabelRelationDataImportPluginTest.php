@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\CompanyUnitAddressLabelDataImport\Communication\Plugin;
@@ -38,6 +38,8 @@ class CompanyUnitAddressLabelRelationDataImportPluginTest extends Unit
     public function testImportImportsCompanyUnitAddressLabelRelation(): void
     {
         $this->tester->ensureRelationTableIsEmpty();
+        $this->tester->ensureCompanyUnitAddressWithKeyDoesNotExist('spryker-address-1');
+        $this->tester->ensureCompanyUnitAddressWithKeyDoesNotExist('spryker-address-2');
         $this->tester->haveCompanyUnitAddress(['key' => 'spryker-address-1']);
         $this->tester->haveCompanyUnitAddress(['key' => 'spryker-address-2']);
 

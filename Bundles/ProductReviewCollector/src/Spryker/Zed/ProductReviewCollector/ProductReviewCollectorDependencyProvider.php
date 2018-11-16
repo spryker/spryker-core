@@ -13,17 +13,20 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToCollectorBridge;
 use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToSearchBridge;
 
+/**
+ * @method \Spryker\Zed\ProductReviewCollector\ProductReviewCollectorConfig getConfig()
+ */
 class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const STORE = 'STORE';
+    public const STORE = 'STORE';
 
-    const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
-    const FACADE_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
-    const FACADE_SEARCH = 'FACADE_SEARCH';
+    public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    public const FACADE_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
+    public const FACADE_SEARCH = 'FACADE_SEARCH';
 
-    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
-    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+    public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

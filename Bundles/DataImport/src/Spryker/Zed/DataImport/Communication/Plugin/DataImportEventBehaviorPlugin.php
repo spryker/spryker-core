@@ -15,10 +15,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\DataImport\Business\DataImportFacadeInterface getFacade()
  * @method \Spryker\Zed\DataImport\Communication\DataImportCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DataImport\DataImportConfig getConfig()
  */
 class DataImportEventBehaviorPlugin extends AbstractPlugin implements DataImportBeforeImportHookInterface, DataImportAfterImportHookInterface
 {
     /**
+     * @api
+     *
      * @return void
      */
     public function beforeImport()
@@ -27,6 +30,8 @@ class DataImportEventBehaviorPlugin extends AbstractPlugin implements DataImport
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function afterImport()

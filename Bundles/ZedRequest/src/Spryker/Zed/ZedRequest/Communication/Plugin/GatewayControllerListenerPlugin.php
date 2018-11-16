@@ -23,10 +23,13 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 /**
  * @method \Spryker\Zed\ZedRequest\Communication\ZedRequestCommunicationFactory getFactory()
  * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
+ * @method \Spryker\Zed\ZedRequest\ZedRequestConfig getConfig()
  */
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
      * @return callable|null
@@ -81,10 +84,11 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     /**
      * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
-     * @return null|\Generated\Shared\Transfer\LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
      */
     protected function getLocaleMetaTransfer(Request $request)
     {
+        /** @var \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer */
         $localeTransfer = $request->getMetaTransfer('locale');
 
         return $localeTransfer;
@@ -106,10 +110,11 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     /**
      * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
-     * @return null|\Generated\Shared\Transfer\CurrencyTransfer
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
      */
     protected function getCurrencyMetaTransfer(Request $request)
     {
+        /** @var \Generated\Shared\Transfer\CurrencyTransfer|null $currencyTransfer */
         $currencyTransfer = $request->getMetaTransfer('currency');
 
         return $currencyTransfer;
@@ -134,7 +139,6 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             throw new LogicException('Only one transfer object can be received in yves-action');
         }
 
-        /** @var \ReflectionParameter $parameter */
         $parameter = array_shift($parameters);
         if ($parameter) {
             $class = $parameter->getClass();
@@ -192,6 +196,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     {
         $messengerFacade = $this->getFactory()->getMessengerFacade();
 
+        /** @var \Generated\Shared\Transfer\FlashMessagesTransfer|null $messagesTransfer */
         $messagesTransfer = $messengerFacade->getStoredMessages();
         if ($messagesTransfer === null) {
             return;

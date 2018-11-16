@@ -11,11 +11,14 @@ use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\StateMachine\StateMachineConfig getConfig()
+ */
 class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGINS_STATE_MACHINE_HANDLERS = 'PLUGINS_STATE_MACHINE_HANDLERS';
-    const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
-    const SERVICE_NETWORK = 'util network service';
+    public const PLUGINS_STATE_MACHINE_HANDLERS = 'PLUGINS_STATE_MACHINE_HANDLERS';
+    public const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
+    public const SERVICE_NETWORK = 'util network service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

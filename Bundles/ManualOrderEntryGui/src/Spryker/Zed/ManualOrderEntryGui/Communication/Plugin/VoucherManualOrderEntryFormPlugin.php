@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiConfig getConfig()
  */
 class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
@@ -26,6 +27,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     protected const MESSAGE_SUCCESS = 'Voucher code \'%s\' has been applied';
 
     /**
+     * @api
+     *
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface
      */
     protected $messengerFacade;
@@ -36,6 +39,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -44,6 +49,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -55,6 +62,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -89,6 +98,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -99,6 +110,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

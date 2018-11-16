@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config>
+    <dashboard>
+        <label>Dashboard</label>
+        <title>Dashboard</title>
+        <icon>fa fa-area-chart</icon>
+        <bundle>dashboard</bundle>
+        <controller>index</controller>
+        <action>index</action>
+    </dashboard>
+</config>

@@ -13,11 +13,14 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Intl\Intl;
 
+/**
+ * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
+ */
 class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_STORE = 'STORE_FACADE';
+    public const FACADE_STORE = 'STORE_FACADE';
 
-    const INTERNATIONALIZATION = 'internationalization';
+    public const INTERNATIONALIZATION = 'internationalization';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

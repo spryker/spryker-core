@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductLabel\Persistence\Propel;
 
 use Orm\Zed\ProductLabel\Persistence\Base\SpyProductLabel as BaseSpyProductLabel;
 
+/**
+ * @deprecated Please use AbstractSpyProductLabel instead.
+ */
 class SpyProductLabel extends BaseSpyProductLabel
 {
 }

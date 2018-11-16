@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class ReSortController extends AbstractController
 {
@@ -58,7 +60,7 @@ class ReSortController extends AbstractController
     public function saveAction(Request $request)
     {
         $categoryNodesToReorder = (array)json_decode($request->request->get('nodes'), true);
-        $positionCursor = (count($categoryNodesToReorder) - 1);
+        $positionCursor = count($categoryNodesToReorder);
 
         foreach ($categoryNodesToReorder as $index => $nodeData) {
             $idCategoryNode = $this->castId($nodeData['id']);

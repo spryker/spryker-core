@@ -22,4 +22,9 @@ interface ProductQuantityReaderInterface
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
     public function findProductQuantityTransfersByProductIds(array $productIds): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findProductQuantityTransfers(): array;
 }

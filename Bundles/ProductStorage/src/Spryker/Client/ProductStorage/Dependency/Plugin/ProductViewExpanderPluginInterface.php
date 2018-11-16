@@ -7,21 +7,11 @@
 
 namespace Spryker\Client\ProductStorage\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface as SprykerProductViewExpanderPluginInterface;
 
-interface ProductViewExpanderPluginInterface
+/**
+ * @deprecated Use \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface instead.
+ */
+interface ProductViewExpanderPluginInterface extends SprykerProductViewExpanderPluginInterface
 {
-    /**
-     * Specification:
-     * - Expands and returns the provided ProductView transfer objects.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productData
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName);
 }

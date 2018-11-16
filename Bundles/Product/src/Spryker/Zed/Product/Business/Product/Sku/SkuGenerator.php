@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -12,9 +13,10 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
 
 class SkuGenerator implements SkuGeneratorInterface
 {
-    const SKU_ABSTRACT_SEPARATOR = '-';
-    const SKU_TYPE_SEPARATOR = '-';
-    const SKU_VALUE_SEPARATOR = '_';
+    public const SKU_ABSTRACT_SEPARATOR = '-';
+    public const SKU_TYPE_SEPARATOR = '-';
+    public const SKU_VALUE_SEPARATOR = '_';
+    public const SKU_MAX_LENGTH = 255;
 
     /**
      * @var \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface
@@ -22,11 +24,18 @@ class SkuGenerator implements SkuGeneratorInterface
     protected $utilTextService;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface $utilTextService
+     * @var \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGeneratorInterface
      */
-    public function __construct(ProductToUtilTextInterface $utilTextService)
+    protected $skuIncrementGenerator;
+
+    /**
+     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface $utilTextService
+     * @param \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGeneratorInterface $skuIncrementGenerator
+     */
+    public function __construct(ProductToUtilTextInterface $utilTextService, SkuIncrementGeneratorInterface $skuIncrementGenerator)
     {
         $this->utilTextService = $utilTextService;
+        $this->skuIncrementGenerator = $skuIncrementGenerator;
     }
 
     /**
@@ -50,6 +59,11 @@ class SkuGenerator implements SkuGeneratorInterface
         ProductConcreteTransfer $productConcreteTransfer
     ) {
         $concreteSku = $this->generateConcreteSkuFromAttributes($productConcreteTransfer->getAttributes());
+
+        if ($concreteSku === '') {
+            $concreteSku = $this->addSkuIncrementValue($productAbstractTransfer->getIdProductAbstract());
+        }
+
         $concreteSku = $this->formatConcreteSku($productAbstractTransfer->getSku(), $concreteSku);
 
         return $concreteSku;
@@ -86,12 +100,19 @@ class SkuGenerator implements SkuGeneratorInterface
      */
     protected function formatConcreteSku($abstractSku, $concreteSku)
     {
-        return $this->sanitizeSku(sprintf(
+        $formattedSku = $this->sanitizeSku(sprintf(
             '%s%s%s',
             $abstractSku,
             static::SKU_ABSTRACT_SEPARATOR,
             $concreteSku
         ));
+        $formattedSku = substr($formattedSku, 0, static::SKU_MAX_LENGTH);
+        $formattedSku = rtrim($formattedSku, implode('', [
+            static::SKU_TYPE_SEPARATOR,
+            static::SKU_VALUE_SEPARATOR,
+        ]));
+
+        return $formattedSku;
     }
 
     /**
@@ -107,5 +128,15 @@ class SkuGenerator implements SkuGeneratorInterface
         }
 
         return rtrim($sku, static::SKU_VALUE_SEPARATOR);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return string
+     */
+    protected function addSkuIncrementValue(int $idProductAbstract): string
+    {
+        return $this->skuIncrementGenerator->generateProductConcreteSkuIncrement($idProductAbstract);
     }
 }

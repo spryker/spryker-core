@@ -14,10 +14,14 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 /**
  * @method \Spryker\Zed\Nopayment\Communication\NopaymentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Nopayment\Business\NopaymentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Nopayment\NopaymentConfig getConfig()
+ * @method \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface getQueryContainer()
  */
 class NopaymentConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return bool

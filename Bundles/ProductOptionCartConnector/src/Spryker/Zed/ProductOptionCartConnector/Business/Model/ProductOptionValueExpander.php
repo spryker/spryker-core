@@ -86,11 +86,13 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     {
         if ($priceMode === $this->getGrossPriceModeIdentifier()) {
             $productOptionTransfer->setUnitNetPrice(0);
+            $productOptionTransfer->setSumNetPrice(0);
 
             return;
         }
 
         $productOptionTransfer->setUnitGrossPrice(0);
+        $productOptionTransfer->setSumGrossPrice(0);
     }
 
     /**

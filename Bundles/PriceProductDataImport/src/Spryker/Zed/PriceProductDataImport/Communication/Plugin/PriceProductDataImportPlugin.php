@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\PriceProductDataImport\Communication\Plugin;
@@ -14,10 +14,13 @@ use Spryker\Zed\PriceProductDataImport\PriceProductDataImportConfig;
 
 /**
  * @method \Spryker\Zed\CompanyDataImport\Business\CompanyDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\PriceProductDataImport\PriceProductDataImportConfig getConfig()
  */
 class PriceProductDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -28,6 +31,8 @@ class PriceProductDataImportPlugin extends AbstractPlugin implements DataImportP
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getImportType()

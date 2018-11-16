@@ -65,9 +65,9 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @param array $productAbstractIds
      *
-     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
-    public function queryProductLabelProductAbstractByIds(array $productAbstractIds)
+    public function queryProductLabelProductAbstractByProductAbstractIds(array $productAbstractIds)
     {
         return $this->getFactory()
             ->getProductLabelQuery()
@@ -76,6 +76,36 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
             ->joinWithSpyProductLabel()
             ->orderBy(SpyProductLabelTableMap::COL_POSITION)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $productLabelProductAbstractIds
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryProductLabelProductAbstractByIds(array $productLabelProductAbstractIds)
+    {
+        return $this->getFactory()
+            ->getProductLabelQuery()
+            ->queryAllProductLabelProductAbstractRelations()
+            ->filterByIdProductLabelProductAbstract_In($productLabelProductAbstractIds)
+            ->joinWithSpyProductLabel()
+            ->orderBy(SpyProductLabelTableMap::COL_POSITION)
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryProductLabelProductAbstract()
+    {
+        return $this->getFactory()
+            ->getProductLabelQuery()
+            ->queryAllProductLabelProductAbstractRelations();
     }
 
     /**

@@ -10,6 +10,9 @@ namespace Spryker\Zed\CartNote\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Zed\CartNote\Business\CartNoteFacadeInterface getFacade()
+ */
 class SalesController extends AbstractController
 {
     /**

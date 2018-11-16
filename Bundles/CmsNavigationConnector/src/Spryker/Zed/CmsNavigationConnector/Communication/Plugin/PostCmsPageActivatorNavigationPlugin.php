@@ -14,10 +14,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CmsNavigationConnector\Business\CmsNavigationConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsNavigationConnector\Communication\CmsNavigationConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsNavigationConnector\CmsNavigationConnectorConfig getConfig()
  */
 class PostCmsPageActivatorNavigationPlugin extends AbstractPlugin implements PostCmsPageActivatorPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
      * @return void

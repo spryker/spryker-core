@@ -12,11 +12,12 @@ use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Synchronization\SynchronizationConfig getConfig()
+ * @method \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface getFacade()
  */
 class SynchronizationCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface
+     * @return \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface
      */
     public function getUtilEncodingService()
     {

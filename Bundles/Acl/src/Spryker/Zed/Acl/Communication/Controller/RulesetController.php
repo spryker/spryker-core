@@ -14,10 +14,11 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 /**
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
  * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  */
 class RulesetController extends AbstractController
 {
-    const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
+    public const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

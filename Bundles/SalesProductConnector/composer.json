@@ -1,5 +1,6 @@
 {
   "name": "spryker/sales-product-connector",
+  "type": "library",
   "description": "SalesProductConnector module",
   "license": "proprietary",
   "require": {
@@ -13,7 +14,6 @@
   "require-dev": {
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

@@ -11,9 +11,12 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductGroup\Dependency\Facade\ProductGroupToTouchBridge;
 
+/**
+ * @method \Spryker\Zed\ProductGroup\ProductGroupConfig getConfig()
+ */
 class ProductGroupDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

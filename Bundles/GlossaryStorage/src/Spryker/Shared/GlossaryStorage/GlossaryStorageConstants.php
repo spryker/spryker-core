@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\GlossaryStorage;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 class GlossaryStorageConstants
 {
     /**
@@ -15,7 +18,7 @@ class GlossaryStorageConstants
      *
      * @api
      */
-    const SYNC_STORAGE_QUEUE = 'sync.storage.translation';
+    public const SYNC_STORAGE_QUEUE = 'sync.storage.translation';
 
     /**
      * Specification:
@@ -23,7 +26,7 @@ class GlossaryStorageConstants
      *
      * @api
      */
-    const SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.translation.error';
+    public const SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.translation.error';
 
     /**
      * Specification:
@@ -31,5 +34,5 @@ class GlossaryStorageConstants
      *
      * @api
      */
-    const RESOURCE_NAME = 'translation';
+    public const RESOURCE_NAME = 'translation';
 }

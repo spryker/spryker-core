@@ -26,6 +26,7 @@ use Spryker\Zed\Ratepay\RatepayDependencyProvider;
 /**
  * @method \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Ratepay\RatepayConfig getConfig()
+ * @method \Spryker\Zed\Ratepay\Business\RatepayFacadeInterface getFacade()
  */
 class RatepayCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -181,7 +182,7 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setIdSalesOrderItem($orderItemEntity->getIdSalesOrderItem());
-        $itemTransfer->setUnitGrossPrice($orderItemEntity->getGrossPrice());
+        $itemTransfer->setUnitGrossPrice((int)round($orderItemEntity->getGrossPrice() / $orderItemEntity->getQuantity()));
         $itemTransfer->setQuantity($orderItemEntity->getQuantity());
 
         return $itemTransfer;

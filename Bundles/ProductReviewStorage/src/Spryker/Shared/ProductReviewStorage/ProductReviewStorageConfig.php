@@ -13,9 +13,25 @@ class ProductReviewStorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
+     * - Queue name as used for processing price messages
+     *
+     * @api
+     */
+    public const PRODUCT_ABSTRACT_REVIEW_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing price messages
+     *
+     * @api
+     */
+    public const PRODUCT_ABSTRACT_REVIEW_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+
+    /**
+     * Specification:
      * - Resource name, this will use for key generating
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_REVIEW_RESOURCE_NAME = 'product_abstract_review';
+    public const PRODUCT_ABSTRACT_REVIEW_RESOURCE_NAME = 'product_abstract_review';
 }

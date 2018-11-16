@@ -10,12 +10,15 @@ namespace Spryker\Yves\Log;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
+/**
+ * @method \Spryker\Yves\Log\LogConfig getConfig()
+ */
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_QUEUE = 'queue client';
+    public const CLIENT_QUEUE = 'queue client';
 
-    const LOG_PROCESSORS = 'LOG_PROCESSORS';
-    const LOG_HANDLERS = 'LOG_HANDLERS';
+    public const LOG_PROCESSORS = 'LOG_PROCESSORS';
+    public const LOG_HANDLERS = 'LOG_HANDLERS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

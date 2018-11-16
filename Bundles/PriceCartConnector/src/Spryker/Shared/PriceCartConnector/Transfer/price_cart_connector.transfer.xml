@@ -5,6 +5,7 @@
 
     <transfer name="Item">
         <property name="id" type="int" />
+        <property name="priceProduct" type="PriceProduct" />
         <property name="unitGrossPrice" type="int" />
         <property name="forcedUnitGrossPrice" type="bool" deprecated="Will be removed with a next major release" />
         <property name="sumGrossPrice" type="int" />
@@ -16,5 +17,12 @@
         <property name="originUnitNetPrice" type="int" />
     </transfer>
 
-</transfers>
+    <transfer name="Quote">
+        <property name="store" type="Store" />
+    </transfer>
 
+    <transfer name="Store">
+        <property name="name" type="string" />
+    </transfer>
+
+</transfers>

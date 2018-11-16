@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductQuantity\Business\ProductQuantityBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductQuantity\Persistence\ProductQuantityEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductQuantity\Persistence\ProductQuantityRepositoryInterface getRepository()
  */
 class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFacadeInterface
 {
@@ -62,5 +64,19 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
         return $this->getFactory()
             ->createProductQuantityReader()
             ->findProductQuantityTransfersByProductIds($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findProductQuantityTransfers(): array
+    {
+        return $this->getFactory()
+            ->createProductQuantityReader()
+            ->findProductQuantityTransfers();
     }
 }

@@ -7,11 +7,24 @@
 
 namespace Spryker\Shared\WebProfiler;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface WebProfilerConstants
 {
     /**
      * Specification:
      * - Enable/disable web profiler.
+     *
+     * @api
      */
-    const ENABLE_WEB_PROFILER = 'WEBPROFILER:ENABLE_WEB_PROFILER';
+    public const ENABLE_WEB_PROFILER = 'WEBPROFILER:ENABLE_WEB_PROFILER';
+
+    /**
+     * Specification:
+     * - Path to profiler cache directory.
+     *
+     * @api
+     */
+    public const PROFILER_CACHE_DIRECTORY = 'WEBPROFILER:PROFILER_CACHE_DIRECTORY';
 }

@@ -1,0 +1,4 @@
+merchant_relation_key,store,currency,threshold_type_key,threshold,fee,message_glossary_key
+mr-test-001,DE,EUR,hard-minimum-threshold,800,,test_glossary_key
+mr-test-002,DE,EUR,soft-minimum-threshold-flexible-fee,500,12%,
+mr-test-003,DE,EUR,soft-minimum-threshold-fixed-fee,400,77,

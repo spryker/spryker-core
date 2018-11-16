@@ -63,8 +63,8 @@ use SprykerTest\Zed\ProductPageSearch\ProductPageSearchConfigMock;
  */
 class ProductPageSearchListenerTest extends Unit
 {
-    const NUMBER_OF_LOCALES = 2;
-    const NUMBER_OF_STORES = 3;
+    public const NUMBER_OF_LOCALES = 2;
+    public const NUMBER_OF_STORES = 3;
 
     /**
      * @throws \PHPUnit\Framework\SkippedTestError
@@ -458,6 +458,6 @@ class ProductPageSearchListenerTest extends Unit
         $this->assertNotNull($productPageSearchEntity);
         $data = $productPageSearchEntity->getStructuredData();
         $encodedData = json_decode($data, true);
-        $this->assertSame('/de/canon-ixus-160-001', $encodedData['url']);
+        $this->assertSame('/de/canon-ixus-160-1', $encodedData['url']);
     }
 }

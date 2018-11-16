@@ -8,6 +8,8 @@
 namespace Spryker\Client\MultiCart\Zed;
 
 use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientInterface;
@@ -49,6 +51,22 @@ class MultiCartZedStub implements MultiCartZedStubInterface
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call('/multi-cart/gateway/duplicate-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call(
+            '/multi-cart/gateway/get-quote-collection-by-criteria',
+            $quoteCriteriaFilterTransfer
+        );
 
         return $quoteResponseTransfer;
     }

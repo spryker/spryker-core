@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -12,10 +13,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class GenerateIdeAutoCompletionConsole extends Console
 {
-    const COMMAND_NAME = 'dev:ide:generate-auto-completion';
+    public const COMMAND_NAME = 'dev:ide:generate-auto-completion';
 
     /**
      * @return void
@@ -45,6 +47,10 @@ class GenerateIdeAutoCompletionConsole extends Console
         ];
 
         foreach ($dependingCommands as $commandName) {
+            if (!$this->getApplication()->has($commandName)) {
+                $this->showCommandNotFoundMessage($commandName);
+                continue;
+            }
             $this->runDependingCommand($commandName);
 
             if ($this->hasError()) {
@@ -53,5 +59,17 @@ class GenerateIdeAutoCompletionConsole extends Console
         }
 
         return $this->getLastExitCode();
+    }
+
+    /**
+     * @param string $commandName
+     *
+     * @return void
+     */
+    protected function showCommandNotFoundMessage(string $commandName): void
+    {
+        $message = "Can not find $commandName in your project." . PHP_EOL;
+        $message .= "You can fix this by adding the missing command to your project ConsoleDependencyProvider.";
+        $this->output->writeln("<comment>$message</comment>");
     }
 }

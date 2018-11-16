@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Newsletter\Business\NewsletterFacadeInterface getFacade()
  * @method \Spryker\Zed\Newsletter\Business\NewsletterFacadeInterface getQueryContainer()
  * @method \Spryker\Zed\Newsletter\Communication\NewsletterCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Newsletter\NewsletterConfig getConfig()
  */
 class CustomerUnsubscribePlugin extends AbstractPlugin implements CustomerAnonymizerPluginInterface
 {
@@ -27,6 +28,8 @@ class CustomerUnsubscribePlugin extends AbstractPlugin implements CustomerAnonym
     protected $newsletterTypes;
 
     /**
+     * @api
+     *
      * @param array $newsletterTypes
      */
     public function __construct(array $newsletterTypes)
@@ -36,6 +39,8 @@ class CustomerUnsubscribePlugin extends AbstractPlugin implements CustomerAnonym
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *

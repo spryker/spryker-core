@@ -17,9 +17,19 @@ interface ProductMeasurementUnitStorageRepositoryInterface
     public function findProductMeasurementUnitStorageEntities(array $productMeasurementUnitIds): array;
 
     /**
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     */
+    public function findAllProductMeasurementUnitStorageEntities(): array;
+
+    /**
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
      */
     public function findProductConcreteMeasurementUnitStorageEntities(array $productIds): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
+     */
+    public function findAllProductConcreteMeasurementUnitStorageEntities(): array;
 }

@@ -14,8 +14,8 @@ use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyInjectorResolver extends AbstractClassResolver
 {
-    const CLASS_NAME_PATTERN = '\\%1$s\\Yves\\%2$s%3$s\\Dependency\\Injector\\%4$sDependencyInjector';
-    const KEY_FROM_BUNDLE = '%fromBundle%';
+    public const CLASS_NAME_PATTERN = '\\%1$s\\Yves\\%2$s%3$s\\Dependency\\Injector\\%4$sDependencyInjector';
+    public const KEY_FROM_BUNDLE = '%fromBundle%';
 
     /**
      * @var string
@@ -50,11 +50,14 @@ class DependencyInjectorResolver extends AbstractClassResolver
     }
 
     /**
-     * @return object|\Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface
+     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface
      */
     protected function getResolvedClassInstance()
     {
-        return parent::getResolvedClassInstance();
+        /** @var \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface $dependencyInjector */
+        $dependencyInjector = parent::getResolvedClassInstance();
+
+        return $dependencyInjector;
     }
 
     /**

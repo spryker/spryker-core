@@ -25,6 +25,7 @@ use Spryker\Zed\Log\LogDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Log\LogConfig getConfig()
+ * @method \Spryker\Zed\Log\Business\LogFacadeInterface getFacade()
  */
 class LogCommunicationFactory extends AbstractCommunicationFactory
 {

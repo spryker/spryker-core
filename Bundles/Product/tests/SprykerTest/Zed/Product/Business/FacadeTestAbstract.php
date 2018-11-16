@@ -37,28 +37,28 @@ use Spryker\Zed\Url\Business\UrlFacade;
  */
 class FacadeTestAbstract extends Unit
 {
-    const PRODUCT_ABSTRACT_NAME = [
+    public const PRODUCT_ABSTRACT_NAME = [
         'en_US' => 'Product name en_US',
         'de_DE' => 'Product name de_DE',
     ];
 
-    const PRODUCT_CONCRETE_NAME = [
+    public const PRODUCT_CONCRETE_NAME = [
         'en_US' => 'Product concrete name en_US',
         'de_DE' => 'Product concrete name de_DE',
     ];
 
-    const UPDATED_PRODUCT_ABSTRACT_NAME = [
+    public const UPDATED_PRODUCT_ABSTRACT_NAME = [
         'en_US' => 'Updated Product name en_US',
         'de_DE' => 'Updated Product name de_DE',
     ];
 
-    const UPDATED_PRODUCT_CONCRETE_NAME = [
+    public const UPDATED_PRODUCT_CONCRETE_NAME = [
         'en_US' => 'Updated Product concrete name en_US',
         'de_DE' => 'Updated Product concrete name de_DE',
     ];
 
-    const ABSTRACT_SKU = 'foo';
-    const CONCRETE_SKU = 'foo-concrete';
+    public const ABSTRACT_SKU = 'foo';
+    public const CONCRETE_SKU = 'foo-concrete';
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer[]
@@ -268,7 +268,7 @@ class FacadeTestAbstract extends Unit
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
      */
     protected function getProductAbstractEntityById($idProductAbstract)
     {
@@ -281,7 +281,7 @@ class FacadeTestAbstract extends Unit
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     * @return \Orm\Zed\Product\Persistence\SpyProduct|null
      */
     protected function getProductConcreteEntityByAbstractId($idProductAbstract)
     {

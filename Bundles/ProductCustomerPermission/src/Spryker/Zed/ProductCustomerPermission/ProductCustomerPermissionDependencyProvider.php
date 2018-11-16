@@ -13,11 +13,15 @@ use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermi
 use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToProductFacadeBridge;
 use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToTouchFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionConfig getConfig()
+ */
 class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

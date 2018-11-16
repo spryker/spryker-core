@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ProductPackagingUnitDataImport\Communication\Plugin\DataImport;
@@ -15,10 +15,13 @@ use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportCon
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitDataImport\Business\ProductPackagingUnitDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig getConfig()
  */
 class ProductPackagingUnitTypeDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -30,6 +33,8 @@ class ProductPackagingUnitTypeDataImportPlugin extends AbstractPlugin implements
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getImportType(): string

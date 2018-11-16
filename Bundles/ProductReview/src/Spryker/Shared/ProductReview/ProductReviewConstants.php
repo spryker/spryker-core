@@ -7,7 +7,10 @@
 
 namespace Spryker\Shared\ProductReview;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ProductReviewConstants
 {
-    const SEARCH_SORT_FIELD_CREATED_AT = 'created-at';
+    public const SEARCH_SORT_FIELD_CREATED_AT = 'created-at';
 }

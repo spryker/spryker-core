@@ -61,6 +61,21 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
+     *  - Searches for persisted price in database by given price filter transfer.
+     *  - If currency not set it will use default store currency.
+     *  - If store not set it will use default store.
+     *  - If product price type is not set it will use default.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function findPriceProductFor(PriceProductFilterTransfer $priceFilterTransfer): ?PriceProductTransfer;
+
+    /**
+     * Specification:
      * - Creates a new price type entity and persists it in database.
      * - Returns the ID of the persisted type.
      *
@@ -78,6 +93,7 @@ interface PriceProductFacadeInterface
      * - If the price type is not defined, then the default price type will be used.
      * - The product to assign can be either concrete or abstract, depending on the provided IDs.
      * - If the product doesn't have price, it throws exception.
+     * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency with regenerated PriceDataChecksum.
      * - Touches product.
      *
      * @api
@@ -133,6 +149,7 @@ interface PriceProductFacadeInterface
      * - If the price type is not defined, then the default price type will be used.
      * - The product to assign can be either concrete or abstract, depending on the provided IDs.
      * - If the product already has price, it throws exception.
+     * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency with regenerated PriceDataChecksum.
      * - Touches product.
      *
      * @api
@@ -174,6 +191,8 @@ interface PriceProductFacadeInterface
      * Specification:
      * - Create new product price entities if they doesn't exists by abstract product id and price type.
      * - Updates the price of product price entities if they exists by abstract product id and price type.
+     * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency with regenerated PriceDataChecksum.
+     * - Executes PriceDimensionAbstractSaverPluginInterface plugin stack after saving.
      * - If price type wasn't explicitly specified, then the default price type will be used.
      *
      * @api
@@ -188,6 +207,8 @@ interface PriceProductFacadeInterface
      * Specification:
      * - Create new product price entities if they doesn't exists by concrete product id and price type.
      * - Updates the price of product price entities if they exists by concrete product id and price type.
+     * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency with regenerated PriceDataChecksum.
+     * - Executes PriceDimensionConcreteSaverPluginInterface plugin stack after saving.
      * - If price type wasn't explicitly specified, then the default price type will be used.
      *
      * @api
@@ -203,6 +224,7 @@ interface PriceProductFacadeInterface
      * - Reads abstract and concrete product prices from database.
      * - Concrete prices overwrites abstracts for matching price types.
      * - The provided SKU can represent both abstract or concrete product.
+     * - Extracts additional prices array from price data
      *
      * @api
      *
@@ -261,6 +283,10 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Reads abstract product prices from database.
+     * - Filters results by price type name when provided in criteria.
+     * - Filters results by store when provided in criteria.
+     * - Filters results by currency when provided in criteria.
+     * - Extracts additional prices array from price data.
      *
      * @api
      *
@@ -277,7 +303,11 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Reads abstract and concrete product prices from database.
+     * - Filters results by price type name when provided in criteria.
+     * - Filters results by store when provided in criteria.
+     * - Filters results by currency when provided in criteria.
      * - Concrete prices overwrites abstracts for matching price types.
+     * - Extracts additional prices array from price data.
      *
      * @api
      *
@@ -298,6 +328,7 @@ interface PriceProductFacadeInterface
      * - Reads the persisted price for the given abstract product id for the given price type.
      * - If price type is not provided, then the default price type will be used.
      * - Returns a hydrated PriceProductTransfer if the price exists, null otherwise.
+     * - Extracts additional prices array from price data
      *
      * @api
      *
@@ -332,7 +363,9 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
+     *  - Creates new spy_price_product record if it not exists.
      *  - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency.
+     *  - Regenerates spy_price_product_store PriceDataChecksum before save.
      *
      * @api
      *
@@ -351,4 +384,85 @@ interface PriceProductFacadeInterface
      * @return void
      */
     public function deleteOrphanPriceProductStoreEntities(): void;
+
+    /**
+     * Specification:
+     * - Reads abstract product prices from database.
+     * - Filters results by price type name when provided in criteria.
+     * - Filters results by store when provided in criteria.
+     * - Filters results by currency when provided in criteria.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtraction(
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array;
+
+    /**
+     * Specification:
+     * - Reads abstract product prices from database.
+     * - Expands each price transfer via array of PriceProductDimensionExpanderStrategyPluginInterface.
+     *
+     * @api
+     *
+     * @param array $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $idProductAbstract): array;
+
+    /**
+     * Specification:
+     * - Builds price criteria object from filter:
+     * - Filters results by price type name when provided in criteria.
+     * - Filters results by store when provided in criteria.
+     * - Filters results by currency when provided in criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
+     */
+    public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductCriteriaTransfer;
+
+    /**
+     * Specification:
+     * - Reads abstract and concrete product prices from database.
+     * - Filters results by price type name when provided in criteria.
+     * - Filters results by store when provided in criteria.
+     * - Filters results by currency when provided in criteria.
+     * - Concrete prices overwrites abstracts for matching price types.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePricesWithoutPriceExtraction(
+        int $idProductConcrete,
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array;
+
+    /**
+     * Specification:
+     * - Reads information about id product abstract based on product concrete id or sku
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int|null
+     */
+    public function findIdProductAbstractForPriceProduct(PriceProductTransfer $priceProductTransfer): ?int;
 }

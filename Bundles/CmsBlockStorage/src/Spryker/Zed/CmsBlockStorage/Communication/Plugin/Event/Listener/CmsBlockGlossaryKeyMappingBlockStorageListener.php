@@ -17,6 +17,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\CmsBlockStorage\Communication\CmsBlockStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsBlockStorage\CmsBlockStorageConfig getConfig()
  */
 class CmsBlockGlossaryKeyMappingBlockStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

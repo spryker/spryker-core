@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface;
+use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientInterface;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface;
-use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class QuoteDeleter implements QuoteDeleterInterface
 {
@@ -33,7 +33,7 @@ class QuoteDeleter implements QuoteDeleterInterface
     protected $quoteUpdatePluginExecutor;
 
     /**
-     * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     * @var \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientInterface
      */
     protected $zedRequestClient;
 
@@ -43,17 +43,15 @@ class QuoteDeleter implements QuoteDeleterInterface
     protected $customerClient;
 
     /**
-     * QuoteDeleter constructor.
-     *
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface $quoteClient
-     * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestClient
+     * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientInterface $customerClient
      * @param \Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface $persistentCartStub
      * @param \Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface $quoteUpdatePluginExecutor
      */
     public function __construct(
         PersistentCartToQuoteClientInterface $quoteClient,
-        ZedRequestClientInterface $zedRequestClient,
+        PersistentCartToZedRequestClientInterface $zedRequestClient,
         PersistentCartToCustomerClientInterface $customerClient,
         PersistentCartStubInterface $persistentCartStub,
         QuoteUpdatePluginExecutorInterface $quoteUpdatePluginExecutor
@@ -74,9 +72,9 @@ class QuoteDeleter implements QuoteDeleterInterface
     {
         $quoteTransfer->setCustomer($this->customerClient->getCustomer());
         $quoteResponseTransfer = $this->persistentCartStub->deleteQuote($quoteTransfer);
-        $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
-        if ($this->quoteClient->getQuote()->getIdQuote() === $quoteTransfer->getIdQuote()) {
+        $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
+        if ($quoteResponseTransfer->getIsSuccessful() && $this->quoteClient->getQuote()->getIdQuote() === $quoteTransfer->getIdQuote()) {
             $this->quoteClient->setQuote(new QuoteTransfer());
         }
 

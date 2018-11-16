@@ -2,8 +2,9 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
+
 namespace Spryker\Zed\PriceProductDataImport;
 
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
@@ -11,10 +12,14 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductDataImport\Dependency\Facade\PriceProductDataImportToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductDataImport\Dependency\Service\PriceProductDataImportToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\PriceProductDataImport\PriceProductDataImportConfig getConfig()
+ */
 class PriceProductDataImportDependencyProvider extends DataImportDependencyProvider
 {
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

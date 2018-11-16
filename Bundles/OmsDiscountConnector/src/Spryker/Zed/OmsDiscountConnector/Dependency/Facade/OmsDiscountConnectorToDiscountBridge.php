@@ -10,7 +10,7 @@ namespace Spryker\Zed\OmsDiscountConnector\Dependency\Facade;
 class OmsDiscountConnectorToDiscountBridge implements OmsDiscountConnectorToDiscountInterface
 {
     /**
-     * @var \Spryker\Zed\Discount\Business\DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
     protected $discountFacade;
 
@@ -23,9 +23,9 @@ class OmsDiscountConnectorToDiscountBridge implements OmsDiscountConnectorToDisc
     }
 
     /**
-     * @param array $codes
+     * @param string[] $codes
      *
-     * @return bool
+     * @return int
      */
     public function releaseUsedVoucherCodes(array $codes)
     {

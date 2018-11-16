@@ -7,11 +7,12 @@
 
 namespace SprykerTest\Zed\Product\Business\Product\Sku;
 
-use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
+use Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGenerator;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
+use SprykerTest\Zed\Product\Business\FacadeTestAbstract;
 
 /**
  * Auto-generated group annotations
@@ -24,7 +25,7 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
  * @group SkuGeneratorTest
  * Add your own group annotations below this line
  */
-class SkuGeneratorTest extends Unit
+class SkuGeneratorTest extends FacadeTestAbstract
 {
     /**
      * @return void
@@ -63,11 +64,43 @@ class SkuGeneratorTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGenerateProductConcreteSkuWithManyAttributesShouldTruncatesToMaxSkuLength(): void
+    {
+        $skuGenerator = $this->createSkuGenerator();
+
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setSku('Long Sku');
+
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setAttributes([
+            'color' => 'blue',
+            'flash_memory' => '4GB',
+            'form_factor' => 'Bar',
+            'internal_memory' => '32GB',
+            'internal_storage_capacity' => '1526MB',
+            'os_installed' => 'Android',
+            'processor_cache' => '4MB',
+            'processor_frequency' => '1.6GHz',
+            'series' => 'Ace2',
+            'storage_capacity' => '128GB',
+            'storage_media' => 'SSD',
+            'total-megapixels' => '16.1MP',
+            'total_storage_capacity' => '128GB',
+        ]);
+
+        $formattedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
+
+        $this->assertTrue(strlen($formattedSku) <= SkuGenerator::SKU_MAX_LENGTH);
+    }
+
+    /**
      * @return \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface
      */
     protected function createSkuGenerator()
     {
-        return new SkuGenerator($this->createUtilTextServiceMock());
+        return new SkuGenerator($this->createUtilTextServiceMock(), $this->createSkuIncrementGeneratorMock());
     }
 
     /**
@@ -76,5 +109,13 @@ class SkuGeneratorTest extends Unit
     protected function createUtilTextServiceMock()
     {
         return $this->getMockBuilder(ProductToUtilTextInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGenerator
+     */
+    protected function createSkuIncrementGeneratorMock()
+    {
+        return new SkuIncrementGenerator($this->productConcreteManager);
     }
 }

@@ -30,13 +30,13 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
  */
 class SwiftMailerTest extends Unit
 {
-    const SUBJECT = 'subject';
-    const FROM_EMAIL = 'from@email.com';
-    const FROM_NAME = 'fromName';
-    const TO_EMAIL = 'to@email.com';
-    const TO_NAME = 'toName';
-    const HTML_MAIL_CONTENT = 'html mail content';
-    const TEXT_MAIL_CONTENT = 'text mail content';
+    public const SUBJECT = 'subject';
+    public const FROM_EMAIL = 'from@email.com';
+    public const FROM_NAME = 'fromName';
+    public const TO_EMAIL = 'to@email.com';
+    public const TO_NAME = 'toName';
+    public const HTML_MAIL_CONTENT = 'html mail content';
+    public const TEXT_MAIL_CONTENT = 'text mail content';
 
     /**
      * @return void

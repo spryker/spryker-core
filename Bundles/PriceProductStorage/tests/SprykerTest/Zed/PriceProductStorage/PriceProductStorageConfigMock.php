@@ -14,7 +14,7 @@ class PriceProductStorageConfigMock extends PriceProductStorageConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return false;
     }

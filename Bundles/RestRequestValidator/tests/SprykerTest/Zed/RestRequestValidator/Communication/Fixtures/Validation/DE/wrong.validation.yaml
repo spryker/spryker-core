@@ -1,0 +1,17 @@
+endpoint:
+  post:
+    emailField:
+    stringField:
+    - NotExistentConstraint
+    - Regex:
+        pattern: '/\w{7}/'
+    integerField:
+    - Regex:
+        pattern: '/\d{15}/'
+  patch:
+    booleanField:
+    - IsTrue
+    - Required
+  get:
+    dateField:
+    - Date

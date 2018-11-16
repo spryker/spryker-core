@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Customer\PageObject;
 
 class CustomerListPage
 {
-    const URL = '/customer';
+    public const URL = '/customer';
 
-    const SELECTOR_TABLE = '.dataTables_wrapper';
+    public const SELECTOR_TABLE = '.dataTables_wrapper';
 }
