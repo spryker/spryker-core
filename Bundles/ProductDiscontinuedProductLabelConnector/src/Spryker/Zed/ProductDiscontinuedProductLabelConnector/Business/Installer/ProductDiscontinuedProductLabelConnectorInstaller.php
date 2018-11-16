@@ -77,6 +77,7 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
         $productLabelTransfer = $this->productLabelFacade->findLabelByLabelName($this->config->getProductDiscontinueLabelName());
 
         if ($productLabelTransfer) {
+            $productLabelTransfer->setFrontEndReference($this->config->getProductDiscontinueLabelFrontEndReference());
             $this->addDataToProductLabelTransfer($productLabelTransfer);
             $this->productLabelFacade->updateLabel($productLabelTransfer);
         }
