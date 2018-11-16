@@ -98,7 +98,7 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @deprecated use `ViewController::findCustomer()` instead.
+     * @deprecated Use ViewController::findCustomer() instead.
      *
      * @param int $idCustomer
      *
