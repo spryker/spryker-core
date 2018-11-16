@@ -121,8 +121,8 @@ class CodeArchitectureSnifferConsole extends Console
                 return false;
             }
 
-            $output->writeln($path, OutputInterface::VERBOSITY_VERBOSE);
             $violations = $this->getFacade()->runArchitectureSniffer($path, $this->input->getOptions());
+            $output->writeln($path, $violations ? OutputInterface::VERBOSITY_QUIET : OutputInterface::VERBOSITY_VERBOSE);
             $countCurrent = $this->displayViolations($output, $violations);
             $this->displayViolationsCountMessage($output, $countCurrent);
             $count += $countCurrent;
