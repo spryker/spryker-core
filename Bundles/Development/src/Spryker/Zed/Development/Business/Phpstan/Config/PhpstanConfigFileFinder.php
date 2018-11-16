@@ -13,7 +13,6 @@ use Symfony\Component\Finder\Finder;
 
 class PhpstanConfigFileFinder implements PhpstanConfigFileFinderInterface
 {
-    protected const DEPTH_FOR_CONFIG_FILE_FINDER = '== 0';
     protected const PRESERVE_ITERATOR_KEYS = false;
 
     /**
@@ -78,6 +77,6 @@ class PhpstanConfigFileFinder implements PhpstanConfigFileFinderInterface
     {
         $this->finder = $this->finder::create()
             ->name($this->config->getPhpstanConfigFilename())
-            ->depth(static::DEPTH_FOR_CONFIG_FILE_FINDER);
+            ->depth('== 0');
     }
 }
