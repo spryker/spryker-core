@@ -11,6 +11,9 @@ use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\AuthRestApi\AuthRestApiConfig getConfig()
+ */
 class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_OAUTH = 'CLIENT_OAUTH';

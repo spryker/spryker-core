@@ -16,6 +16,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
+ * @method \Spryker\Zed\ZedRequest\Communication\ZedRequestCommunicationFactory getFactory()
  */
 class TransferController extends AbstractController
 {

@@ -11,6 +11,9 @@ use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
+ */
 class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUOTE_CALCULATOR_PLUGIN_STACK = 'quote calculator plugin stack';

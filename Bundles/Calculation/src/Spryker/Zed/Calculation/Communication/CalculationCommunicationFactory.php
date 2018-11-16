@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
+ * @method \Spryker\Zed\Calculation\Business\CalculationFacadeInterface getFacade()
  */
 class CalculationCommunicationFactory extends AbstractCommunicationFactory
 {

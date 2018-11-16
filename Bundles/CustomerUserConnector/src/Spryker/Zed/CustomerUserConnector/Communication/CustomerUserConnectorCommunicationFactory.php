@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\CustomerUserConnector\CustomerUserConnectorConfig getConfig()
+ * @method \Spryker\Zed\CustomerUserConnector\Business\CustomerUserConnectorFacadeInterface getFacade()
  */
 class CustomerUserConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
