@@ -106,11 +106,6 @@
         <property name="application" type="Application"/>
     </transfer>
 
-    <transfer name="PackageFilter">
-        <property name="organizationName" type="string"/>
-        <property name="packageName" type="string"/>
-    </transfer>
-
     <transfer name="Package">
         <property name="composerName" type="string"/>
         <property name="organizationName" type="string"/>
