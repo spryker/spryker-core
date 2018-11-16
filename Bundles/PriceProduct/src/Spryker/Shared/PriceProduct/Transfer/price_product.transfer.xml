@@ -27,6 +27,11 @@
         <property name="grossAmount" type="int" />
     </transfer>
 
+    <transfer name="Currency">
+        <property name="idCurrency" type="int" />
+        <property name="code" type="string" />
+    </transfer>
+
     <transfer name="PriceProductDimension">
         <property name="type" type="string" />
         <property name="name" type="string" />
