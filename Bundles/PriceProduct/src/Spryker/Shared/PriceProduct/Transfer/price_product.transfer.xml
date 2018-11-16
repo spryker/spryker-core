@@ -18,6 +18,7 @@
     </transfer>
 
     <transfer name="MoneyValue">
+        <property name="idEntity" type="int" />
         <property name="priceData" type="string" />
         <property name="priceDataChecksum" type="string" />
         <property name="fkCurrency" type="int" />
