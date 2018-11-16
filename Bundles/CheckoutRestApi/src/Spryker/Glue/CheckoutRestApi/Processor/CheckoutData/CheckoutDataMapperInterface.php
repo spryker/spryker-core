@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData;
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
@@ -24,13 +23,4 @@ interface CheckoutDataMapperInterface
         CheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): QuoteTransfer;
 }

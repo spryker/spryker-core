@@ -15,8 +15,6 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
-    protected const EXCEPTION_MESSAGE_READER_NOT_IMPLEMENTED = 'Reader not implemented on project level';
-
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *

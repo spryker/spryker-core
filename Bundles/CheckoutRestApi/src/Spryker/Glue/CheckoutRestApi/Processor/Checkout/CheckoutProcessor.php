@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
-use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -30,11 +29,6 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface
-     */
-    protected $checkoutDataMapper;
-
-    /**
      * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface
      */
     protected $glossaryStorageClient;
@@ -46,18 +40,15 @@ class CheckoutProcessor implements CheckoutProcessorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface $checkoutDataMapper
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        CheckoutDataMapperInterface $checkoutDataMapper,
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->checkoutDataMapper = $checkoutDataMapper;
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
     }

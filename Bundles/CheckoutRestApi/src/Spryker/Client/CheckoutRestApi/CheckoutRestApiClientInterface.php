@@ -15,7 +15,7 @@ interface CheckoutRestApiClientInterface
 {
     /**
      * Specification:
-     * - Provides checkout data based on data passed in QuoteTransfer.
+     * - Provides checkout data based on data passed in RestCheckoutRequestAttributesTransfer.
      * - Checkout data will include available shipping methods, available payment methods and available customer addresses.
      *
      * @api

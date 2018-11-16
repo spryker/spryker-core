@@ -109,7 +109,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
                 (new RestErrorMessageTransfer())
                     ->setCode(RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID)
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setDetail(str_replace(['][', '[', ']'], ['.', '', ''], $validationError->getPropertyPath()) . ' => ' . $validationError->getMessage())
+                    ->setDetail($this->getFormattedErrorMessage($validationError))
             );
         }
 
@@ -124,5 +124,15 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function isRequestRequireValidation(RestRequestInterface $restRequest): bool
     {
         return in_array($restRequest->getMetadata()->getMethod(), $this->config->getHttpMethodsThatRequireValidation());
+    }
+
+    /**
+     * @param \Symfony\Component\Validator\ConstraintViolationInterface $validationError
+     *
+     * @return string
+     */
+    protected function getFormattedErrorMessage($validationError): string
+    {
+        return str_replace(['][', '[', ']'], ['.', '', ''], $validationError->getPropertyPath()) . ' => ' . $validationError->getMessage();
     }
 }

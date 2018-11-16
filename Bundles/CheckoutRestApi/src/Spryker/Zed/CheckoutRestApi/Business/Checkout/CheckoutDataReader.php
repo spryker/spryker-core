@@ -55,7 +55,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface $paymentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface $customerFacade
-     * @param array $quoteMappingPlugins
+     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMappingPluginInterface[] $quoteMappingPlugins
      */
     public function __construct(
         CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade,
@@ -148,6 +148,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
                 $restCheckoutRequestAttributesTransfer->getCart()->getId(),
                 $quoteCriteriaFilterTransfer
             );
+
         return $quoteTransfer;
     }
 

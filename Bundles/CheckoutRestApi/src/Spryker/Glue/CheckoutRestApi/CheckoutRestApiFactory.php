@@ -49,7 +49,6 @@ class CheckoutRestApiFactory extends AbstractFactory
     {
         return new CheckoutProcessor(
             $this->getResourceBuilder(),
-            $this->createCheckoutDataMapper(),
             $this->getClient(),
             $this->getGlossaryStorageClient()
         );

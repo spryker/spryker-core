@@ -11,7 +11,7 @@
 
     <transfer name="CheckoutRestApiError">
         <property name="errorCode" type="int"/>
-        <property name="message" type="string"/>CheckoutDataReader.php
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="CheckoutDataResponse">

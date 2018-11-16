@@ -43,7 +43,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     public function getSingleQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
         return $this->getFactory()
-            ->createQuoteCollectionReader()
+            ->createSingleQuoteCollectionReader()
             ->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
     }
 

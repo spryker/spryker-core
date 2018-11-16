@@ -44,7 +44,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     protected $quoteFacade;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMappingPluginInterface[]
      */
     protected $quoteMappingPlugins;
 
@@ -53,7 +53,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface $quoteFacade
-     * @param array $quoteMappingPlugins
+     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMappingPluginInterface[] $quoteMappingPlugins
      */
     public function __construct(
         CheckoutRestApiToCartFacadeInterface $cartFacade,

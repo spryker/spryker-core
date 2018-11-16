@@ -16,7 +16,7 @@ interface CheckoutRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Provides checkout data based on data passed in QuoteTransfer.
+     * - Provides checkout data based on data passed in RestCheckoutRequestAttributesTransfer.
      * - Checkout data will include available shipping methods, available payment methods and available customer addresses.
      *
      * @api
@@ -82,6 +82,9 @@ interface CheckoutRestApiFacadeInterface
     public function mapAddressesToQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
+     * Specification:
+     * - Maps rest request customer information to quote.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer

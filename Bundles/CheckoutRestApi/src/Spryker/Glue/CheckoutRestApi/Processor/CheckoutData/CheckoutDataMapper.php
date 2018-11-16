@@ -7,15 +7,12 @@
 
 namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodTransfer;
 use Generated\Shared\Transfer\RestShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 
 class CheckoutDataMapper implements CheckoutDataMapperInterface
@@ -59,23 +56,6 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         );
 
         return $restCheckoutDataResponseAttributesTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapRestCheckoutRequestAttributesTransferToQuoteTransfer(
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): QuoteTransfer {
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer = $this->mapRestAddressTransfersToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
-        $quoteTransfer = $this->mapPaymentsToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
-        $quoteTransfer = $this->mapRestShipmentTransferToQuoteTransfer($quoteTransfer, $restCheckoutRequestAttributesTransfer);
-        $quoteTransfer->setUuid($restCheckoutRequestAttributesTransfer->getCart()->getId());
-
-        return $quoteTransfer;
     }
 
     /**
@@ -141,77 +121,5 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         }
 
         return $restCheckoutDataResponseAttributesTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function mapRestAddressTransfersToQuoteTransfer(
-        QuoteTransfer $quoteTransfer,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): QuoteTransfer {
-        $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
-        if ($restQuoteRequestTransfer->getBillingAddress() !== null) {
-            $billingAddress = (new AddressTransfer())
-                ->fromArray($restQuoteRequestTransfer->getBillingAddress()->toArray(), true)
-                ->setUuid($restQuoteRequestTransfer->getBillingAddress()->getId());
-            $quoteTransfer->setBillingAddress($billingAddress);
-        }
-
-        if ($restQuoteRequestTransfer->getShippingAddress() !== null) {
-            $shippingAddress = (new AddressTransfer())
-                ->fromArray($restQuoteRequestTransfer->getShippingAddress()->toArray(), true)
-                ->setUuid($restQuoteRequestTransfer->getShippingAddress()->getId());
-            $quoteTransfer->setShippingAddress($shippingAddress);
-        }
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function mapPaymentsToQuoteTransfer(
-        QuoteTransfer $quoteTransfer,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): QuoteTransfer {
-        foreach ($restCheckoutRequestAttributesTransfer->getCart()->getPayments() as $paymentTransfer) {
-            $quoteTransfer->setPayment($paymentTransfer);
-        }
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function mapRestShipmentTransferToQuoteTransfer(
-        QuoteTransfer $quoteTransfer,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): QuoteTransfer {
-        if ($restCheckoutRequestAttributesTransfer->getCart()->getShipment() !== null) {
-            $quoteTransfer->setShipment(
-                (new ShipmentTransfer())->fromArray(
-                    $restCheckoutRequestAttributesTransfer->getCart()->getShipment()->toArray()
-                )
-            );
-
-            if ($quoteTransfer->getShipment()->getMethod() !== null) {
-                $quoteTransfer->getShipment()->getMethod()->setIdShipmentMethod(
-                    $restCheckoutRequestAttributesTransfer->getCart()->getShipment()->getMethod()->getId()
-                );
-            }
-        }
-
-        return $quoteTransfer;
     }
 }

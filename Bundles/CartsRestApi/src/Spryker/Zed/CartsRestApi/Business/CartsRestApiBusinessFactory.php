@@ -37,7 +37,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\Quote\SingleQuoteCollectionReaderInterface
      */
-    public function createQuoteCollectionReader(): SingleQuoteCollectionReaderInterface
+    public function createSingleQuoteCollectionReader(): SingleQuoteCollectionReaderInterface
     {
         return new SingleQuoteCollectionReader($this->getQuoteFacade());
     }
