@@ -38,23 +38,21 @@ class QuoteCustomerExpander implements QuoteCustomerExpanderInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        $customerTransfer = $restCheckoutRequestAttributesTransfer->getCart()->getCustomer();
+        $restCustomerTransfer = $restCheckoutRequestAttributesTransfer->getCart()->getCustomer();
 
-        if ($customerTransfer === null
-            || $customerTransfer->getCustomerReference() === null
-            || $customerTransfer->getIdCustomer() === null) {
-            return $quoteTransfer;
+        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($restCustomerTransfer->getCustomerReference());
+
+        if ($customerResponseTransfer->getHasCustomer() === false) {
+            $customerTransfer = (new CustomerTransfer())
+                ->fromArray($restCustomerTransfer->toArray(), true)
+                ->setIsGuest(true);
+
+            return $quoteTransfer->setCustomer($customerTransfer);
         }
 
-        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($customerTransfer->getCustomerReference());
-
-        if (!$customerResponseTransfer->getIsSuccess()) {
-            return $quoteTransfer;
-        }
-
-        $quoteTransfer->setCustomer(
-            $customerResponseTransfer->getCustomerTransfer()
-        );
+        $quoteTransfer
+            ->setCustomerReference($customerResponseTransfer->getCustomerTransfer()->getCustomerReference())
+            ->setCustomer($customerResponseTransfer->getCustomerTransfer());
 
         $quoteTransfer = $this->expandQuoteWithCustomerAddresses(
             $quoteTransfer,
