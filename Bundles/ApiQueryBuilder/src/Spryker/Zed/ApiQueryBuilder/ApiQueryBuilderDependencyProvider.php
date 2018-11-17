@@ -13,12 +13,15 @@ use Spryker\Zed\ApiQueryBuilder\Dependency\Service\ApiQueryBuilderToUtilEncoding
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\ApiQueryBuilder\ApiQueryBuilderConfig getConfig()
+ */
 class ApiQueryBuilderDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
-    const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'QUERY_CONTAINER_PROPEL_QUERY_BUILDER';
+    public const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
+    public const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'QUERY_CONTAINER_PROPEL_QUERY_BUILDER';
 
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

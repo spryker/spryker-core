@@ -15,11 +15,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @deprecated Use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole instead.
  *
  * @method \Spryker\Zed\Cache\Business\CacheFacadeInterface getFacade()
+ * @method \Spryker\Zed\Cache\Communication\CacheCommunicationFactory getFactory()
  */
 class DeleteAllCachesConsole extends Console
 {
-    const COMMAND_NAME = 'cache:delete-all';
-    const DESCRIPTION = 'Deletes all cache files from /data/{Store}/cache for all stores';
+    public const COMMAND_NAME = 'cache:delete-all';
+    public const DESCRIPTION = 'Deletes all cache files from /data/{Store}/cache for all stores';
 
     /**
      * @return void

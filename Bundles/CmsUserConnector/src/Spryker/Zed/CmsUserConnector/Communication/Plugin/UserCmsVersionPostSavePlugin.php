@@ -13,10 +13,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CmsUserConnector\Business\CmsUserConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsUserConnector\CmsUserConnectorConfig getConfig()
  */
 class UserCmsVersionPostSavePlugin extends AbstractPlugin implements CmsVersionPostSavePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer

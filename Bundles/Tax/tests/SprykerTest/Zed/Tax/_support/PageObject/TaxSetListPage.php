@@ -9,6 +9,6 @@ namespace SprykerTest\Zed\Tax\PageObject;
 
 class TaxSetListPage
 {
-    const URL = '/tax/set/list';
-    const DATA_TABLE_URL = '/tax/set/listTable';
+    public const URL = '/tax/set/list';
+    public const DATA_TABLE_URL = '/tax/set/listTable';
 }

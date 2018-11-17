@@ -113,7 +113,7 @@ class TransferObjectFormatter extends ArrayFormatter
     {
         $entityTransferName = '\Generated\Shared\Transfer\\' . $entityName . 'EntityTransfer';
 
-        $entityTransfer = new $entityTransferName;
+        $entityTransfer = new $entityTransferName();
         $entityTransfer->fromArray($rowArray, true);
 
         return $entityTransfer;

@@ -22,8 +22,8 @@ use Spryker\Yves\Kernel\Container;
  */
 class ContainerTest extends Unit
 {
-    const TEST_VALUE = 'foo';
-    const TEST_KEY = 'test.value';
+    public const TEST_VALUE = 'foo';
+    public const TEST_KEY = 'test.value';
 
     /**
      * @return void

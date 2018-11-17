@@ -15,7 +15,7 @@ interface ProductCategoryFilterEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_CATEGORY_FILTER_CREATE = 'Entity.spy_product_category_filter.create';
+    public const ENTITY_SPY_PRODUCT_CATEGORY_FILTER_CREATE = 'Entity.spy_product_category_filter.create';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface ProductCategoryFilterEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_CATEGORY_FILTER_UPDATE = 'Entity.spy_product_category_filter.update';
+    public const ENTITY_SPY_PRODUCT_CATEGORY_FILTER_UPDATE = 'Entity.spy_product_category_filter.update';
 
     /**
      * Specification
@@ -31,5 +31,5 @@ interface ProductCategoryFilterEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_CATEGORY_FILTER_DELETE = 'Entity.spy_product_category_filter.delete';
+    public const ENTITY_SPY_PRODUCT_CATEGORY_FILTER_DELETE = 'Entity.spy_product_category_filter.delete';
 }

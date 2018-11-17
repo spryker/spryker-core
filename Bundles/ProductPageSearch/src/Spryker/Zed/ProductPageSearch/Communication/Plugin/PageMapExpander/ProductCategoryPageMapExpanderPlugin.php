@@ -18,10 +18,11 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  */
 class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {
-    const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
+    public const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
 
     /**
      * @var array
@@ -34,6 +35,8 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
     protected static $categoryName;
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $productData

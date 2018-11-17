@@ -16,12 +16,15 @@ use Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPlu
 /**
  * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DummyPayment\DummyPaymentConfig getConfig()
  */
 class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements PaymentSubFormPluginInterface
 {
-    const PAYMENT_PROVIDER = 'DummyPayment';
+    public const PAYMENT_PROVIDER = 'DummyPayment';
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
      */
     public function createSubForm(): AbstractType
@@ -30,6 +33,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPropertyPath(): string
@@ -38,6 +43,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -46,6 +53,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPaymentProvider(): string
@@ -54,6 +63,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPaymentMethod(): string
@@ -62,6 +73,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -72,6 +85,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array

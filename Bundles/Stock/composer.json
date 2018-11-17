@@ -1,5 +1,6 @@
 {
   "name": "spryker/stock",
+  "type": "library",
   "description": "Stock module",
   "license": "proprietary",
   "require": {
@@ -11,9 +12,7 @@
     "spryker/touch": "^3.0.0 || ^4.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {

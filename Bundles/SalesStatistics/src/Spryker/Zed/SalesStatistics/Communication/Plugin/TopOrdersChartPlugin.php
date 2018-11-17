@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\SalesStatistics\Communication\SalesStatisticsCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesStatistics\SalesStatisticsConfig getConfig()
  */
 class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
 {
@@ -27,6 +28,8 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     ];
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -35,6 +38,8 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     }
 
     /**
+     * @api
+     *
      * @param string|null $dataIdentifier
      *
      * @return \Generated\Shared\Transfer\ChartDataTransfer
@@ -54,6 +59,8 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function render(): string

@@ -304,7 +304,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
      */
     protected function getProductAbstractEntityById($idProductAbstract)
     {
@@ -318,7 +318,7 @@ class AbstractManagementTest extends FacadeTestAbstract
      * @param string $touchType
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouch
+     * @return \Orm\Zed\Touch\Persistence\SpyTouch|null
      */
     protected function getProductTouchEntity($touchType, $idProductAbstract)
     {

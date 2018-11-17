@@ -79,9 +79,11 @@ class TaxReader implements TaxReaderInterface
         $taxRateTransfer = new TaxRateTransfer();
         $taxRateTransfer->fromArray($taxRateEntity->toArray());
 
-        if ($taxRateEntity->getCountry()) {
+        /** @var \Orm\Zed\Country\Persistence\SpyCountry|null $countryEntity */
+        $countryEntity = $taxRateEntity->getCountry();
+        if ($countryEntity) {
             $countryTransfer = new CountryTransfer();
-            $countryTransfer->fromArray($taxRateEntity->getCountry()->toArray(), true);
+            $countryTransfer->fromArray($countryEntity->toArray(), true);
             $taxRateTransfer->setCountry($countryTransfer);
         }
 
@@ -139,9 +141,11 @@ class TaxReader implements TaxReaderInterface
             $taxRateTransfer = new TaxRateTransfer();
             $taxRateTransfer->fromArray($taxRateEntity->toArray());
 
-            if ($taxRateEntity->getCountry()) {
+            /** @var \Orm\Zed\Country\Persistence\SpyCountry|null $countryEntity */
+            $countryEntity = $taxRateEntity->getCountry();
+            if ($countryEntity) {
                 $countryTransfer = new CountryTransfer();
-                $countryTransfer->fromArray($taxRateEntity->getCountry()->toArray(), true);
+                $countryTransfer->fromArray($countryEntity->toArray(), true);
                 $taxRateTransfer->setCountry($countryTransfer);
             }
 
@@ -182,5 +186,25 @@ class TaxReader implements TaxReaderInterface
     public function taxSetWithSameNameAndIdExists(string $name, int $idTaxSet): bool
     {
         return !$this->taxRepository->isTaxSetNameAndIdUnique($name, $idTaxSet);
+    }
+
+    /**
+     * @param int $idTaxRate
+     *
+     * @return \Generated\Shared\Transfer\TaxRateTransfer|null
+     */
+    public function findTaxRate(int $idTaxRate): ?TaxRateTransfer
+    {
+        return $this->taxRepository->findTaxRate($idTaxRate);
+    }
+
+    /**
+     * @param int $idTaxSet
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    public function findTaxSet(int $idTaxSet): ?TaxSetTransfer
+    {
+        return $this->taxRepository->findTaxSet($idTaxSet);
     }
 }

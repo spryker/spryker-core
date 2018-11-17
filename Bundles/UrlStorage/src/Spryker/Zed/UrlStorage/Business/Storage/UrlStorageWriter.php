@@ -17,10 +17,10 @@ use Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface;
 
 class UrlStorageWriter implements UrlStorageWriterInterface
 {
-    const FK_URL = 'fkUrl';
+    public const FK_URL = 'fkUrl';
 
-    const RESOURCE_TYPE = 'type';
-    const RESOURCE_VALUE = 'value';
+    public const RESOURCE_TYPE = 'type';
+    public const RESOURCE_VALUE = 'value';
 
     /**
      * @var \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface
@@ -85,21 +85,9 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     protected function storeData(array $urlStorageTransfers, array $urlStorageEntities)
     {
         foreach ($urlStorageTransfers as $urlStorageTransfer) {
-            $idUrl = $urlStorageTransfer->getIdUrl();
-            if (isset($urlStorageEntities[$idUrl])) {
-                if ($urlStorageEntities[$idUrl]->getUrl() === $urlStorageTransfer->getUrl()) {
-                    $this->storeDataSet($urlStorageTransfer, $urlStorageEntities[$idUrl]);
+            $urlStorageEntity = $urlStorageEntities[$urlStorageTransfer->getIdUrl()] ?? null;
 
-                    continue;
-                }
-
-                $this->storeDataSet($urlStorageTransfer);
-                $urlStorageEntities[$idUrl]->delete();
-
-                continue;
-            }
-
-            $this->storeDataSet($urlStorageTransfer);
+            $this->storeDataSet($urlStorageTransfer, $urlStorageEntity);
         }
     }
 

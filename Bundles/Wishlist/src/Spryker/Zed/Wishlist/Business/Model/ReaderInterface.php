@@ -42,7 +42,7 @@ interface ReaderInterface
      *
      * @throws \Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException
      *
-     * @return \Orm\Zed\Wishlist\Persistence\Base\SpyWishlist
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlist
      */
     public function getWishlistEntityByCustomerIdAndWishlistName($idCustomer, $name);
 

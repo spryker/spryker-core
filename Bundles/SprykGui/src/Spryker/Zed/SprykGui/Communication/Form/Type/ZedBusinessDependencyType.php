@@ -22,14 +22,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\SprykGui\SprykGuiConfig getConfig()
+ * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
  */
 class ZedBusinessDependencyType extends AbstractType
 {
     protected const MODULE = 'module';
     protected const SPRYK = 'spryk';
 
-    /**w
-     *
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void

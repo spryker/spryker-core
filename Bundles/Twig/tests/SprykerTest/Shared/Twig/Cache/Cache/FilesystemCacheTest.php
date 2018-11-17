@@ -25,14 +25,14 @@ use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
  */
 class FilesystemCacheTest extends Unit
 {
-    const EXISTING_CACHE_KEY = 'key';
-    const EXISTING_CACHE_VALUE = 'value';
+    public const EXISTING_CACHE_KEY = 'key';
+    public const EXISTING_CACHE_VALUE = 'value';
 
-    const NEW_CACHE_KEY = 'new key';
-    const NEW_CACHE_VALUE = 'new value';
+    public const NEW_CACHE_KEY = 'new key';
+    public const NEW_CACHE_VALUE = 'new value';
 
-    const NOT_EXISTING_CACHE_KEY = 'not existing key';
-    const INVALID_CACHE_KEY = 'invalid value';
+    public const NOT_EXISTING_CACHE_KEY = 'not existing key';
+    public const INVALID_CACHE_KEY = 'invalid value';
 
     /**
      * @return void
@@ -234,9 +234,9 @@ TXT
     /**
      * @param string $pathToCacheFile
      *
-     * @return \Spryker\Shared\Twig\CacheLoader\FilesystemCacheLoader
+     * @return \Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader
      */
-    protected function getFilesystemCacheLoader($pathToCacheFile)
+    protected function getFilesystemCacheLoader(string $pathToCacheFile)
     {
         return new FilesystemCacheLoader($pathToCacheFile);
     }
@@ -246,8 +246,8 @@ TXT
      *
      * @return \Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter
      */
-    protected function getFilesystemCacheWriter($pathToCacheFile)
+    protected function getFilesystemCacheWriter(string $pathToCacheFile)
     {
-        return new FilesystemCacheWriter($pathToCacheFile);
+        return new FilesystemCacheWriter($pathToCacheFile, 0777);
     }
 }

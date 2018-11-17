@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Response;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -53,9 +54,12 @@ class ResponseBuilder implements ResponseBuilderInterface
         RestResponseInterface $restResponse,
         RestRequestInterface $restRequest
     ): array {
+        $response = [];
+
         if (count($restResponse->getResources()) === 0) {
             $response[RestResponseInterface::RESPONSE_DATA] = [];
             $response[RestResponseInterface::RESPONSE_LINKS] = $this->buildCollectionLink($restRequest);
+
             return $response;
         }
 
@@ -68,7 +72,8 @@ class ResponseBuilder implements ResponseBuilderInterface
         );
 
         $data = $this->resourcesToArray($restResponse->getResources(), $restRequest);
-        if (count($data) === 1) {
+
+        if ($this->isSingleObjectRequest($restRequest, $data)) {
             $response[RestResponseInterface::RESPONSE_DATA] = $data[0];
         } else {
             $response[RestResponseInterface::RESPONSE_DATA] = $data;
@@ -89,6 +94,20 @@ class ResponseBuilder implements ResponseBuilderInterface
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param array $data
+     *
+     * @return bool
+     */
+    protected function isSingleObjectRequest(RestRequestInterface $restRequest, array $data): bool
+    {
+        $id = $restRequest->getResource()->getId();
+        $method = $restRequest->getMetadata()->getMethod();
+
+        return count($data) === 1 && ($id || $method === Request::METHOD_POST);
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -97,13 +116,14 @@ class ResponseBuilder implements ResponseBuilderInterface
     protected function resourcesToArray(array $resources, RestRequestInterface $restRequest): array
     {
         $data = [];
+
         foreach ($resources as $resource) {
-            if (!$resource->hasLink('self')) {
+            if (!$resource->hasLink(RestLinkInterface::LINK_SELF)) {
                 $link = $resource->getType();
                 if ($resource->getId()) {
                     $link .= '/' . $resource->getId();
                 }
-                $resource->addLink('self', $link);
+                $resource->addLink(RestLinkInterface::LINK_SELF, $link);
             }
             $data[] = $this->resourceToArray(
                 $resource,
@@ -111,6 +131,7 @@ class ResponseBuilder implements ResponseBuilderInterface
                 $restRequest
             );
         }
+
         return $data;
     }
 
@@ -153,15 +174,17 @@ class ResponseBuilder implements ResponseBuilderInterface
     protected function formatLinks(array $links): array
     {
         $formattedLinks = [];
+
         foreach ($links as $key => $link) {
-            if (\is_array($link)) {
-                $link['href'] = $this->domainName . '/' . $link['href'];
-                $formattedLinks[$key] = $link;
+            if (is_array($link)) {
+                $formattedLinks[$key] = $this->domainName . '/' . $link[$key];
+
                 continue;
             }
 
             $formattedLinks[$key] = $this->domainName . '/' . $link;
         }
+
         return $formattedLinks;
     }
 
@@ -174,11 +197,24 @@ class ResponseBuilder implements ResponseBuilderInterface
     {
         $method = $restRequest->getMetadata()->getMethod();
         $idResource = $restRequest->getResource()->getId();
+
         if ($method === Request::METHOD_GET && $idResource === null) {
+            $linkParts = [];
+            foreach ($restRequest->getParentResources() as $parentResource) {
+                $linkParts[] = $parentResource->getType();
+                $linkParts[] = $parentResource->getId();
+            }
+            $linkParts[] = $restRequest->getResource()->getType();
+            $queryString = $restRequest->getQueryString();
+            if (strlen($queryString)) {
+                $queryString = '?' . $queryString;
+            }
+
             return $this->formatLinks([
-                'self' => $restRequest->getResource()->getType(),
+                RestLinkInterface::LINK_SELF => implode('/', $linkParts) . $queryString,
             ]);
         }
+
         return [];
     }
 }

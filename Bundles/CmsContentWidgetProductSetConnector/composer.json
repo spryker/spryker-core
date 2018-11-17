@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-content-widget-product-set-connector",
+  "type": "library",
   "description": "CmsContentWidgetProductSetConnector module",
   "license": "proprietary",
   "require": {
@@ -13,7 +14,6 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
   },

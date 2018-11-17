@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -33,11 +34,17 @@ class TaxSetFormDataProvider
     }
 
     /**
+     * @param int|null $idTaxSet
+     *
      * @return \Generated\Shared\Transfer\TaxSetTransfer|null
      */
-    public function getData()
+    public function getData(?int $idTaxSet = null)
     {
-        return $this->taxSetTransfer;
+        if ($idTaxSet === null) {
+            return $this->taxSetTransfer;
+        }
+
+        return $this->taxFacade->findTaxSet($idTaxSet);
     }
 
     /**

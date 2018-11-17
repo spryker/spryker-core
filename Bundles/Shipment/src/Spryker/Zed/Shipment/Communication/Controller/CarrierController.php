@@ -14,10 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  */
 class CarrierController extends AbstractController
 {
-    const MESSAGE_CARRIER_CREATE_SUCCESS = 'Carrier was created successfully.';
+    public const MESSAGE_CARRIER_CREATE_SUCCESS = 'Carrier was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

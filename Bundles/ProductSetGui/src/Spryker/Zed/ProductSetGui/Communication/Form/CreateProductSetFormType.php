@@ -18,13 +18,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSetGui\ProductSetGuiConfig getConfig()
  */
 class CreateProductSetFormType extends AbstractType
 {
-    const FIELD_GENERAL_FORM = 'general_form';
-    const FIELD_SEO_FORM = 'seo_form';
-    const FIELD_IMAGES_FORM = 'images_form';
-    const FIELD_PRODUCTS_FORM = 'products_form';
+    public const FIELD_GENERAL_FORM = 'general_form';
+    public const FIELD_SEO_FORM = 'seo_form';
+    public const FIELD_IMAGES_FORM = 'images_form';
+    public const FIELD_PRODUCTS_FORM = 'products_form';
 
     /**
      * @return string

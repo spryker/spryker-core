@@ -44,6 +44,12 @@ class FormDataNormalizer implements FormDataNormalizerInterface
                 continue;
             }
 
+            if ($key === 'dependentModule' && $value instanceof ModuleTransfer) {
+                $normalizedData['dependentModule'] = $value->getName();
+
+                continue;
+            }
+
             if ($value instanceof ModuleTransfer) {
                 $normalizedData['module'] = $value->getName();
                 $normalizedData['organization'] = $value->getOrganization()->getName();
@@ -57,7 +63,7 @@ class FormDataNormalizer implements FormDataNormalizerInterface
             }
 
             if ($value instanceof ClassInformationTransfer) {
-                $value = $value->getName();
+                $value = $value->getFullyQualifiedClassName();
             }
 
             if ($value instanceof ArgumentCollectionTransfer) {

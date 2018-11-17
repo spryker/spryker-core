@@ -144,7 +144,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder|null
      */
     protected function getSalesOrderByIdSalesOrder($idSalesOrder)
     {

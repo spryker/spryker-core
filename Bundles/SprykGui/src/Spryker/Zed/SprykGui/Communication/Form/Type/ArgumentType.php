@@ -17,10 +17,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\SprykGui\SprykGuiConfig getConfig()
+ * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
  */
 class ArgumentType extends AbstractType
 {
-    const ARGUMENT_CHOICES = 'argumentChoices';
+    public const ARGUMENT_CHOICES = 'argumentChoices';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

@@ -15,13 +15,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class ModuleCreateConsole extends Console
 {
-    const COMMAND_NAME = 'dev:module:create';
-    const ARGUMENT_MODULE = 'module';
-    const ARGUMENT_FILE = 'file';
-    const OPTION_FORCE = 'force';
+    public const COMMAND_NAME = 'dev:module:create';
+    public const ARGUMENT_MODULE = 'module';
+    public const ARGUMENT_FILE = 'file';
+    public const OPTION_FORCE = 'force';
 
     /**
      * @return void

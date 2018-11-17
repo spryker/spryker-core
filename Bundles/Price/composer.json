@@ -1,5 +1,6 @@
 {
   "name": "spryker/price",
+  "type": "library",
   "description": "Price module",
   "license": "proprietary",
   "require": {
@@ -10,11 +11,7 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/installer": "*",
-    "spryker/propel": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {

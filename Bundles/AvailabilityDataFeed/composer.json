@@ -1,5 +1,6 @@
 {
   "name": "spryker/availability-data-feed",
+  "type": "library",
   "description": "AvailabilityDataFeed module",
   "license": "proprietary",
   "require": {
@@ -10,11 +11,8 @@
   },
   "require-dev": {
     "spryker/availability": "^5.0.0 || ^6.0.0",
-    "spryker/code-sniffer": "*",
     "spryker/locale": "^3.0.0",
     "spryker/propel": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
   "autoload": {

@@ -13,11 +13,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
  */
 class CheckTimeoutConsole extends Console
 {
-    const COMMAND_NAME = 'oms:check-timeout';
-    const COMMAND_DESCRIPTION = 'Check timeouts';
+    public const COMMAND_NAME = 'oms:check-timeout';
+    public const COMMAND_DESCRIPTION = 'Check timeouts';
 
     /**
      * @return void

@@ -14,12 +14,15 @@ use Symfony\Component\Finder\Finder;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 
+/**
+ * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
+ */
 class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGIN_GRAPH = 'graph plugin';
-    const FINDER = 'finder';
-    const TWIG_ENVIRONMENT = 'twig environment';
-    const TWIG_LOADER_FILESYSTEM = 'twig loader filesystem';
+    public const PLUGIN_GRAPH = 'graph plugin';
+    public const FINDER = 'finder';
+    public const TWIG_ENVIRONMENT = 'twig environment';
+    public const TWIG_LOADER_FILESYSTEM = 'twig loader filesystem';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

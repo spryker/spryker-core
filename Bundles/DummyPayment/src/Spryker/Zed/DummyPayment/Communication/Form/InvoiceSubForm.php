@@ -17,13 +17,18 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\DummyPayment\DummyPaymentConfig getConfig()
+ * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
+ * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
+ */
 class InvoiceSubForm extends AbstractType
 {
-    const PAYMENT_METHOD = 'invoice';
-    const FIELD_DATE_OF_BIRTH = 'date_of_birth';
-    const MIN_BIRTHDAY_DATE_STRING = '-18 years';
+    public const PAYMENT_METHOD = 'invoice';
+    public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+    public const MIN_BIRTHDAY_DATE_STRING = '-18 years';
 
-    const OPTIONS_FIELD_NAME = 'select_options';
+    public const OPTIONS_FIELD_NAME = 'select_options';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

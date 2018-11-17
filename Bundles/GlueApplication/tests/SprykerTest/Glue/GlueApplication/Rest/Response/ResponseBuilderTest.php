@@ -51,7 +51,7 @@ class ResponseBuilderTest extends Unit
         $resource = $restResponseBuilder->createRestResource('tests', 1);
         $restResponse->addResource($resource);
 
-        $restRequest = (new RestRequest)->createRestRequest();
+        $restRequest = (new RestRequest())->createRestRequest();
 
         $response = $responseBuilder->buildResponse($restResponse, $restRequest);
 

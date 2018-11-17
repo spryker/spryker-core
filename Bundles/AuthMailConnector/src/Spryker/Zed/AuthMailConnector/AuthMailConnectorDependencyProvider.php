@@ -11,9 +11,12 @@ use Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailBridg
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig getConfig()
+ */
 class AuthMailConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_MAIL = 'mail facade';
+    public const FACADE_MAIL = 'mail facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

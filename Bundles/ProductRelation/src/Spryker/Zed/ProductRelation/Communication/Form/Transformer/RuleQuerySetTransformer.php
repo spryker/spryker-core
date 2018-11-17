@@ -47,7 +47,7 @@ class RuleQuerySetTransformer implements DataTransformerInterface
      * By convention, transform() should return an empty string if NULL is
      * passed.
      *
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleQuerySetTransfer The value in the original representation
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer|null $ruleQuerySetTransfer The value in the original representation
      *
      * @return mixed|null The value in the transformed representation
      */

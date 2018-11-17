@@ -1,5 +1,6 @@
 {
   "name": "spryker/category-page-search",
+  "type": "library",
   "description": "CategoryPageSearch module",
   "license": "proprietary",
   "require": {
@@ -15,7 +16,12 @@
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
-    "spryker/event": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
+    "spryker/event": "*",
+    "spryker/propel": "*",
+    "spryker/propel-query-builder": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"

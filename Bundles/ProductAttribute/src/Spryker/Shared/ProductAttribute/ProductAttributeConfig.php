@@ -11,5 +11,5 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class ProductAttributeConfig extends AbstractBundleConfig
 {
-    const PRODUCT_ATTRIBUTE_GLOSSARY_PREFIX = 'product.attribute.';
+    public const PRODUCT_ATTRIBUTE_GLOSSARY_PREFIX = 'product.attribute.';
 }

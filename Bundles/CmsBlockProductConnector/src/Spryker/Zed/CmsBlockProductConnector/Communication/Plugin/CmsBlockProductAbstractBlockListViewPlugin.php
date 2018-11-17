@@ -13,10 +13,14 @@ use Spryker\Zed\ProductManagement\Communication\Plugin\ProductAbstractViewPlugin
 /**
  * @method \Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsBlockProductConnector\Communication\CmsBlockProductConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorConfig getConfig()
+ * @method \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface getQueryContainer()
  */
 class CmsBlockProductAbstractBlockListViewPlugin extends AbstractPlugin implements ProductAbstractViewPluginInterface
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -25,6 +29,8 @@ class CmsBlockProductAbstractBlockListViewPlugin extends AbstractPlugin implemen
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return string[]

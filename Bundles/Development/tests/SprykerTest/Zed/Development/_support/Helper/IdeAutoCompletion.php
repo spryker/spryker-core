@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -11,7 +12,7 @@ use Codeception\TestInterface;
 
 class IdeAutoCompletion extends Module
 {
-    const TEST_TARGET_DIRECTORY = '/tmp/development-ide-auto-completion-test/';
+    public const TEST_TARGET_DIRECTORY = '/tmp/development-ide-auto-completion-test/';
 
     /**
      * @param \Codeception\TestInterface $test

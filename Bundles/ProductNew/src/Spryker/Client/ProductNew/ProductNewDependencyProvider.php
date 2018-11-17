@@ -14,14 +14,17 @@ use Spryker\Client\ProductNew\Dependency\Client\ProductNewToSearchClientBridge;
 use Spryker\Client\ProductNew\Plugin\Elasticsearch\Query\NewProductsQueryPlugin;
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @method \Spryker\Client\ProductNew\ProductNewConfig getConfig()
+ */
 class ProductNewDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_SEARCH = 'CLIENT_SEARCH';
-    const CLIENT_PRODUCT_LABEL_STORAGE = 'CLIENT_PRODUCT_LABEL_STORAGE';
-    const STORE = 'STORE';
-    const NEW_PRODUCTS_QUERY_PLUGIN = 'NEW_PRODUCTS_QUERY_PLUGIN';
-    const NEW_PRODUCTS_QUERY_EXPANDER_PLUGINS = 'NEW_PRODUCTS_QUERY_EXPANDER_PLUGINS';
-    const NEW_PRODUCTS_RESULT_FORMATTER_PLUGINS = 'NEW_PRODUCTS_RESULT_FORMATTER_PLUGINS';
+    public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+    public const CLIENT_PRODUCT_LABEL_STORAGE = 'CLIENT_PRODUCT_LABEL_STORAGE';
+    public const STORE = 'STORE';
+    public const NEW_PRODUCTS_QUERY_PLUGIN = 'NEW_PRODUCTS_QUERY_PLUGIN';
+    public const NEW_PRODUCTS_QUERY_EXPANDER_PLUGINS = 'NEW_PRODUCTS_QUERY_EXPANDER_PLUGINS';
+    public const NEW_PRODUCTS_RESULT_FORMATTER_PLUGINS = 'NEW_PRODUCTS_RESULT_FORMATTER_PLUGINS';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

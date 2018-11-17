@@ -20,9 +20,11 @@ use Twig_SimpleFunction;
  */
 abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigChartFunctionPluginInterface
 {
-    const TWIG_FUNCTION_NAME = 'chart';
+    public const TWIG_FUNCTION_NAME = 'chart';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -31,6 +33,8 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     }
 
     /**
+     * @api
+     *
      * @return \Twig_SimpleFunction[]
      */
     public function getChartFunctions(): array
@@ -45,6 +49,8 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     }
 
     /**
+     * @api
+     *
      * @param \Twig_Environment $twig
      * @param string $chartPluginName
      * @param string|null $dataIdentifier

@@ -67,7 +67,7 @@ class FactoryInfoFinder implements FactoryInfoFinderInterface
             return $classInformationTransfer;
         }
 
-        $classInformationTransfer->setName($className);
+        $classInformationTransfer->setFullyQualifiedClassName($className);
 
         foreach ($reflectedClass->getMethods() as $method) {
             if ($this->shouldIgnore($method)) {

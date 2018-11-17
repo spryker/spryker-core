@@ -15,11 +15,14 @@ use Spryker\Zed\MerchantRelationshipProductListDataImport\MerchantRelationshipPr
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductListDataImport\Business\MerchantRelationshipProductListDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantRelationshipProductListDataImport\MerchantRelationshipProductListDataImportConfig getConfig()
  */
 class MerchantRelationshipProductListDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
@@ -32,6 +35,8 @@ class MerchantRelationshipProductListDataImportPlugin extends AbstractPlugin imp
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @return string
      */

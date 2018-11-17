@@ -15,17 +15,19 @@ class CategoryConfig extends AbstractBundleConfig
     /**
      * Default available template for category
      */
-    const CATEGORY_TEMPLATE_DEFAULT = 'Catalog (default)';
+    public const CATEGORY_TEMPLATE_DEFAULT = 'Catalog (default)';
 
     /**
      * Used as `item_type` for touch mechanism.
      */
-    const RESOURCE_TYPE_CATEGORY_NODE = SharedCategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
+    public const RESOURCE_TYPE_CATEGORY_NODE = SharedCategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
 
     /**
      * Used as `item_type` for touch mechanism.
      */
-    const RESOURCE_TYPE_NAVIGATION = SharedCategoryConfig::RESOURCE_TYPE_NAVIGATION;
+    public const RESOURCE_TYPE_NAVIGATION = SharedCategoryConfig::RESOURCE_TYPE_NAVIGATION;
+
+    protected const REDIRECT_URL_DEFAULT = '/category/root';
 
     /**
      * @return array
@@ -35,5 +37,13 @@ class CategoryConfig extends AbstractBundleConfig
         return [
             static::CATEGORY_TEMPLATE_DEFAULT => '',
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultRedirectUrl(): string
+    {
+        return static::REDIRECT_URL_DEFAULT;
     }
 }

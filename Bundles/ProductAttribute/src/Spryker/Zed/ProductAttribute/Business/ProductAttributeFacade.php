@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory getFactory()
  * @method \Spryker\Zed\ProductAttribute\ProductAttributeConfig getConfig()
+ * @method \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeRepositoryInterface getRepository()
  */
 class ProductAttributeFacade extends AbstractFacade implements ProductAttributeFacadeInterface
 {
@@ -326,5 +327,21 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
         return $this->getFactory()
             ->createAttributeReader()
             ->getProductAttributeCollection();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createSuperAttributeReader()
+            ->getUniqueSuperAttributesFromConcreteProducts($productConcreteTransfers);
     }
 }

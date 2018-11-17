@@ -9,5 +9,5 @@ namespace SprykerTest\Zed\Tax\PageObject;
 
 class TaxSetEditPage
 {
-    const URL = '/tax/set/edit';
+    public const URL = '/tax/set/edit';
 }

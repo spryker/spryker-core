@@ -46,7 +46,7 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
      */
     public function testCalculateRefundShouldIncludeExpenseWhenLastItemOfOrderShouldBeRefunded()
     {
-        $refundCalculationPlugin = new ExpenseRefundCalculator;
+        $refundCalculationPlugin = new ExpenseRefundCalculator();
         $orderTransfer = $this->getOrderTransferWithRefundedItem();
         $salesOrderItems = [
             $this->getSalesOrderItemTwo(),

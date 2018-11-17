@@ -20,7 +20,7 @@ use Twig_SimpleFunction;
  */
 class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const FUNCTION_RENDER_LANGUAGE_SWITCHER = 'render_language_switcher';
+    public const FUNCTION_RENDER_LANGUAGE_SWITCHER = 'render_language_switcher';
 
     /**
      * @param \Silex\Application $app

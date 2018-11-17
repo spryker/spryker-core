@@ -1,5 +1,6 @@
 {
   "name": "spryker/file-manager-gui",
+  "type": "library",
   "description": "FileManagerGui module",
   "license": "proprietary",
   "require": {
