@@ -17,11 +17,11 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeG
 
 class HttpMethodProcessor implements HttpMethodProcessorInterface
 {
-    protected const PATTERN_SUMMARY_GET_RESOURCE = 'Get %s';
-    protected const PATTERN_SUMMARY_GET_COLLECTION = 'Get collection of %s';
-    protected const PATTERN_SUMMARY_POST_RESOURCE = 'Create %s';
-    protected const PATTERN_SUMMARY_PATCH_RESOURCE = 'Update %s';
-    protected const PATTERN_SUMMARY_DELETE_RESOURCE = 'Delete %s';
+    protected const PATTERN_SUMMARY_GET_RESOURCE = 'Get %s.';
+    protected const PATTERN_SUMMARY_GET_COLLECTION = 'Get collection of %s.';
+    protected const PATTERN_SUMMARY_POST_RESOURCE = 'Create %s.';
+    protected const PATTERN_SUMMARY_PATCH_RESOURCE = 'Update %s.';
+    protected const PATTERN_SUMMARY_DELETE_RESOURCE = 'Delete %s.';
 
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface
@@ -254,30 +254,6 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary(
                 $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_COLLECTION, $pathMethodDataTransfer->getResource())
-            );
-        }
-
-        $this->pathGenerator->addGetPath($pathMethodDataTransfer, $errorSchema, $responseSchema);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param \Generated\Shared\Transfer\PathMethodDataTransfer $pathMethodDataTransfer
-     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
-     *
-     * @return void
-     */
-    protected function addGetResource(
-        ResourceRoutePluginInterface $plugin,
-        PathMethodDataTransfer $pathMethodDataTransfer,
-        ?AnnotationTransfer $annotationTransfer
-    ): void {
-        $errorSchema = $this->createPathSchemaDataTransfer($this->schemaGenerator->getRestErrorSchemaData());
-        $responseSchema = $this->findResponseResourceSchema($plugin, $annotationTransfer);
-
-        if (!$pathMethodDataTransfer->getSummary()) {
-            $pathMethodDataTransfer->setSummary(
-                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource())
             );
         }
 

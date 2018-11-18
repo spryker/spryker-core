@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\PathParameterComponentTransfer;
  * Specification:
  *  - This component describes a single operation parameter.
  *  - It covers Parameter Object in OpenAPI specification format (see https://swagger.io/specification/#parameterObject)
- *
- * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class PathParameterSpecificationComponent implements PathParameterSpecificationComponentInterface
 {

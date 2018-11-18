@@ -17,8 +17,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGe
  * Specification
  *  - Parses a .php file and checks if it contains a PHPDock annotation in specific format of Glue annotations.
  *  - Glue annotation start with @Glue tag and all the parameters are written inside brackets in JSON format, e.g.:
- *  - @Glue("getResourceById": {"summary": ["Some endpoint summary"]}}) will define summary for endpoint's GET method.
- *  - All parameters should start with defining the method they're related to.
+ *  - @Glue({"getResourceById": {"summary": ["Some endpoint summary"]}}) will define summary for endpoint's GET method.
+ *  - All paHttpMethodProcessorrameters should start with defining the method they're related to.
  *  - Method could be one of the following:
  *      - getResourceById - GET method, that returns exactly one resource and should contain id in path;
  *      - getCollection - GET method, that returns collection of resources;

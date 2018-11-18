@@ -37,8 +37,7 @@ class TestResourceWithInvalidAnnotationsController
      *     "post": {
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {
-     *              "400": "Bad Request",
-     *              "500": "Server Error",
+     *              "400": "Bad Request"
      *          }
      *     }
      * })

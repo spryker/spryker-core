@@ -43,16 +43,6 @@
               }
             }
           },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application\/json": {
-                "schema": {
-                  "$ref": "#\/components\/schemas\/RestErrorMessage"
-                }
-              }
-            }
-          },
           "default": {
             "description": "Expected response to a bad request.",
             "content": {
@@ -177,16 +167,6 @@
               }
             }
           },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application\/json": {
-                "schema": {
-                  "$ref": "#\/components\/schemas\/RestErrorMessage"
-                }
-              }
-            }
-          },
           "default": {
             "description": "Expected response to a bad request.",
             "content": {
@@ -226,16 +206,6 @@
           },
           "404": {
             "description": "Item not found",
-            "content": {
-              "application\/json": {
-                "schema": {
-                  "$ref": "#\/components\/schemas\/RestErrorMessage"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
             "content": {
               "application\/json": {
                 "schema": {
@@ -328,7 +298,7 @@
     },
     "\/test-resource-with-get-resource-by-id\/{testResourceWithGetResourceByIdId}\/test-resource-with-empty-annotations": {
       "post": {
-        "summary": "Create test resource with empty annotations",
+        "summary": "Create test resource with empty annotations.",
         "tags": [
           "test-resource-with-empty-annotations"
         ],

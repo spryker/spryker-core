@@ -62,7 +62,7 @@ class CartItemsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Cart id or item id is not specified.",
-     *              "404": "Cart or item is not found.",
+     *              "404": "Cart or item not found.",
      *              "422": "Errors appeared during item update."
      *          }
      *     }

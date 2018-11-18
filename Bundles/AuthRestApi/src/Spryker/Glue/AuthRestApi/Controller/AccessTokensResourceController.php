@@ -21,7 +21,7 @@ class AccessTokensResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Create access token for user."
+     *              "Creates access token for user."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",

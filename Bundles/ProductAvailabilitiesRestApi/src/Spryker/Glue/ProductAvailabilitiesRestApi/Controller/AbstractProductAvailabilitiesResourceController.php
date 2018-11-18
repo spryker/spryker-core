@@ -19,7 +19,7 @@ class AbstractProductAvailabilitiesResourceController extends AbstractController
      * @Glue({
      *     "getCollection": {
      *          "summary": [
-     *              "Retrieves abstract product availabilities data for given product id."
+     *              "Retrieves abstract product availabilities."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",

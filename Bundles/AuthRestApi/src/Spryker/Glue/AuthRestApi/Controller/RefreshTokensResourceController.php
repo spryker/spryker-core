@@ -20,7 +20,7 @@ class RefreshTokensResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Refresh customer's auth token."
+     *              "Refreshes customer's auth token."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",

@@ -38,8 +38,7 @@ class TestResourceWithAllMethodsController
      *              "post summary"
      *          ],
      *          "responses": {
-     *              "400": "Bad Request",
-     *              "500": "Server Error"
+     *              "400": "Bad Request"
      *          }
      *     }
      * })
@@ -57,8 +56,7 @@ class TestResourceWithAllMethodsController
      *              "patch summary"
      *          ],
      *          "responses": {
-     *              "404": "Item not found",
-     *              "500": "Server Error"
+     *              "404": "Item not found"
      *          }
      *     }
      * })
@@ -76,8 +74,7 @@ class TestResourceWithAllMethodsController
      *              "patch summary"
      *          ],
      *          "responses": {
-     *              "404": "Item not found",
-     *              "500": "Server Error"
+     *              "404": "Item not found"
      *          }
      *     }
      * })

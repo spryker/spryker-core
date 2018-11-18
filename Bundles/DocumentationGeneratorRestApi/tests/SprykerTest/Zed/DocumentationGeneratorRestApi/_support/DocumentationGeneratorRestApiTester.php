@@ -63,11 +63,11 @@ class DocumentationGeneratorRestApiTester extends Actor
     protected const RESPONSE_DESCRIPTION_SUCCESS = 'Expected response to a valid request.';
 
     protected const TEST_RESOURCE_ID_WITH_BRACKETS = '{testResourceId}';
-    protected const DEFAULT_GET_RESOURCE_SUMMARY = 'Get test resource';
-    protected const DEFAULT_GET_COLLECTION_SUMMARY = 'Get collection of test resource';
-    protected const DEFAULT_DELETE_SUMMARY = 'Delete test resource';
-    protected const DEFAULT_PATCH_SUMMARY = 'Update test resource';
-    protected const DEFAULT_POST_SUMMARY = 'Create test resource';
+    protected const DEFAULT_GET_RESOURCE_SUMMARY = 'Get test resource.';
+    protected const DEFAULT_GET_COLLECTION_SUMMARY = 'Get collection of test resource.';
+    protected const DEFAULT_DELETE_SUMMARY = 'Delete test resource.';
+    protected const DEFAULT_PATCH_SUMMARY = 'Update test resource.';
+    protected const DEFAULT_POST_SUMMARY = 'Create test resource.';
     protected const SUCCESSFUL_RESPONSE_DESCRIPTION = 'Expected response to a valid request.';
     protected const DEFAULT_RESPONSE_DESCRIPTION = 'Expected response to a bad request.';
     protected const DEFAULT_REQUEST_DESCRIPTION = 'Expected request body.';

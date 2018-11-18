@@ -114,7 +114,7 @@ class WishlistsResourceController extends AbstractController
      * @Glue({
      *     "delete": {
      *          "summary": [
-     *              "Removes customer's wishlist."
+     *              "Removes customer wishlist."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",

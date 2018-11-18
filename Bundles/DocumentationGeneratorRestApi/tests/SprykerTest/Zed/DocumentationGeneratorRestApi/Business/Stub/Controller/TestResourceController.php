@@ -37,8 +37,7 @@ class TestResourceController
      *     "post": {
      *          "responseAttributesClassName": "SprykerTest\\Zed\\DocumentationGeneratorRestApi\\Business\\Stub\\RestTestAlternativeAttributesTransfer",
      *          "responses": {
-     *              "400": "Bad Request",
-     *              "500": "Server Error"
+     *              "400": "Bad Request"
      *          }
      *     }
      * })

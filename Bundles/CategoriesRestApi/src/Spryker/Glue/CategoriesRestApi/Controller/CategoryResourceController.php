@@ -28,7 +28,7 @@ class CategoryResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Category node id has not been specified or invalid.",
-     *              "404": "Can't find category node with the given id."
+     *              "404": "Category node not found."
      *          }
      *     }
      * })

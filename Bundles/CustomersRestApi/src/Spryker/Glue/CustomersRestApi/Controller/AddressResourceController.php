@@ -98,7 +98,7 @@ class AddressResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Customer not found or address id is not specified.",
+     *              "400": "Address id is not specified.",
      *              "403": "Unauthorized request.",
      *          }
      *     }
@@ -120,14 +120,14 @@ class AddressResourceController extends AbstractController
      * @Glue({
      *     "delete": {
      *          "summary": [
-     *              "Deletes customer's address."
+     *              "Deletes customer address."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
-     *          "responses": {
-     *              "400": "Customer not found or address id is not specified.",
+     *          "responses": {CustomerPasswordResourceController.php
+     *              "400": "Address id is not specified.",
      *              "403": "Unauthorized request.",
      *              "404": "Address not found."
      *          }

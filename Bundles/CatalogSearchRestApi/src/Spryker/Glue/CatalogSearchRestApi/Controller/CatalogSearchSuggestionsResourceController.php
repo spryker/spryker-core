@@ -29,20 +29,18 @@ class CatalogSearchSuggestionsResourceController extends AbstractController
      *              {
      *                  "name": "q",
      *                  "in": "query",
-     *                  "description": "Search query compatible with elastic search.",
+     *                  "description": "Search query string.",
      *                  "required": true
      *              },
      *              {
      *                  "name": "currency",
      *                  "in": "query",
      *                  "description": "Currency code to process request with.",
-     *                  "required": true
      *              },
      *              {
      *                  "name": "priceMode",
      *                  "in": "query",
      *                  "description": "Price mode to process request with.",
-     *                  "required": true
      *              }
      *          ],
      *          "responses": {

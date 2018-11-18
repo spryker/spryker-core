@@ -39,10 +39,8 @@ class GlueAnnotationAnalyzerTest extends Unit
     protected const HEADER_ACCEPT_LANGUAGE = 'Accept-Language';
     protected const KEY_RESPONSE_BAD_REQUEST = 400;
     protected const KEY_RESPONSE_NOT_FOUND = 404;
-    protected const KEY_RESPONSE_SERVER_ERROR = 500;
     protected const VALUE_RESPONSE_BAD_REQUEST = 'Bad Request';
     protected const VALUE_RESPONSE_NOT_FOUND = 'Item not found';
-    protected const VALUE_RESPONSE_SERVER_ERROR = 'Server Error';
 
     /**
      * @var \SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory
@@ -87,7 +85,6 @@ class GlueAnnotationAnalyzerTest extends Unit
         $this->assertEquals(static::ALTERNATIVE_RESPONSE_CLASS, $parameters->getPost()->getResponseAttributesClassName());
         $this->assertArraySubset([
             static::KEY_RESPONSE_BAD_REQUEST => static::VALUE_RESPONSE_BAD_REQUEST,
-            static::KEY_RESPONSE_SERVER_ERROR => static::VALUE_RESPONSE_SERVER_ERROR,
         ], $parameters->getPost()->getResponses());
     }
 
