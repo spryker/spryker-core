@@ -53,7 +53,7 @@ interface PriceProductStorageClientInterface
 
     /**
      * Specification:
-     * - Retrieves the provided item specific price.
+     * - Retrieves the provided filter specific item price.
      * - Uses product concrete prices when available.
      * - Uses product abstract prices as fall back.
      *
