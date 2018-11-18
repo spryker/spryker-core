@@ -84,6 +84,7 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
                 ->setQuantity($priceProductFilterTransfer->getQuantity())
         );
 
+        // In case no $priceProductTransfers are provided for price resolving, the quantity is not copied in the result but required in the further process
         if ($currentProductPriceTransfer->getQuantity() === null) {
             $currentProductPriceTransfer->setQuantity($priceProductFilterTransfer->getQuantity());
         }
