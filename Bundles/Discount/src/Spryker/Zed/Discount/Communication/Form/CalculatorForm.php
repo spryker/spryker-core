@@ -76,8 +76,8 @@ class CalculatorForm extends AbstractType
             'validation_groups' => function (FormInterface $form) {
                 return [
                     Constraint::DEFAULT_GROUP,
-                    $form->getData() !== null ? $form->getData()->getCollectorStrategyType() : false,
-                    $form->getData() !== null ? $this->getCalculatorInputType($form->getData()->getCalculatorPlugin()) : false,
+                    $form->getData() ? $form->getData()->getCollectorStrategyType() : false,
+                    $form->getData() ? $this->getCalculatorInputType($form->getData()->getCalculatorPlugin()) : false,
                 ];
             },
         ]);
