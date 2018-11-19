@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\SynchronizationExtension\Dependency\Plugin;
 
-interface SynchronizationDataChunkableRepositoryPluginInterface extends SynchronizationDataPluginInterface
+interface SynchronizationDataBulkRepositoryPluginInterface extends SynchronizationDataPluginInterface
 {
     /**
      * Specification:
-     *  - Returns SynchronizationDataTransfer[] of size according to provided offset and limit
+     *  - Returns SynchronizationDataTransfer[] of size according to provided offset and limit.
      *
      * @api
      *

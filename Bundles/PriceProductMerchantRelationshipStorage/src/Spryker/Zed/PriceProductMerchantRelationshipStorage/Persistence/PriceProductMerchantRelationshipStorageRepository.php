@@ -153,7 +153,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     {
         return $priceProductStoreQuery
             ->usePriceProductQuery()
-                ->innerJoinProduct()
+            ->innerJoinProduct()
             ->endUse();
     }
 
@@ -166,7 +166,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     {
         return $priceProductStoreQuery
             ->usePriceProductQuery()
-                ->innerJoinSpyProductAbstract()
+            ->innerJoinSpyProductAbstract()
             ->endUse();
     }
 
@@ -331,6 +331,22 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         return $this->getFactory()
             ->createPriceProductAbstractMerchantRelationshipStorageQuery()
             ->filterByIdPriceProductAbstractMerchantRelationshipStorage_In($priceProductAbstractMerchantRelationshipStorageEntityIds)
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function findPriceProductConcreteMerchantRelationshipStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array
+    {
+        return $this->getFactory()
+            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
+            ->offset($offset)
+            ->limit($limit)
             ->find()
             ->getArrayCopy();
     }
