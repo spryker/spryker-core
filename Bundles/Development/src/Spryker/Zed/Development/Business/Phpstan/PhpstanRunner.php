@@ -267,11 +267,11 @@ class PhpstanRunner implements PhpstanRunnerInterface
         }
 
         if ($moduleConfigFile) {
-            return $moduleConfigFile->getPath();
+            return $moduleConfigFile->getPath() . DIRECTORY_SEPARATOR;
         }
 
         if ($vendorConfigFile) {
-            return $vendorConfigFile->getPath();
+            return $vendorConfigFile->getPath() . DIRECTORY_SEPARATOR;
         }
 
         return $this->config->getPathToRoot();
