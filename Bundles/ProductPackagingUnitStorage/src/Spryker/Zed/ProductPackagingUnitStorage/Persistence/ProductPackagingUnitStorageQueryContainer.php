@@ -13,7 +13,7 @@ use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingS
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface;
-use Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStoragePersistenceFactory
+use Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStoragePersistenceFactory;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -21,10 +21,17 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductPackagingUnitStorageQueryContainer extends AbstractQueryContainer implements ProductPackagingUnitStorageQueryContainerInterface
 {
-    public function queryProductAbstractPackagingStorageEntitiesByProductAbstractIds(array $productAbstractIds): AvailabilityStoragePersistenceFactory
+    /**
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorageQuery
+     */
+    public function queryProductAbstractPackagingStorageEntitiesByProductAbstractIds(array $productAbstractIds): SpyProductAbstractPackagingStorageQuery
     {
         return $this->getFactory()
             ->createSpyProductAbstractPackagingStorageQuery()
-            ->filterByFkProductAbstract($productAbstractIds);
+            ->filterByFkProductAbstract_In($productAbstractIds);
     }
 }

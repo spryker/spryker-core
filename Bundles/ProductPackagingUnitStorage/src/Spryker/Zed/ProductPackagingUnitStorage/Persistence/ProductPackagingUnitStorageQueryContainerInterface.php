@@ -15,9 +15,9 @@ interface ProductPackagingUnitStorageQueryContainerInterface extends QueryContai
     /**
      * @api
      *
-     * @param array productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorageQuery
      */
-    public function queryProductAbstractPackagingStorageEntitiesByProductAbstractIds(array $productAbstractIds): AvailabilityStoragePersistenceFactory;
+    public function queryProductAbstractPackagingStorageEntitiesByProductAbstractIds(array $productAbstractIds): SpyProductAbstractPackagingStorageQuery;
 }

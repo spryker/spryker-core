@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchroni
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
+use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
 
@@ -40,7 +41,7 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
      */
     public function queryData($ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryAvailabilityStorageByAvailabilityAbstractIds($ids);
+        $query = $this->getQueryContainer()->queryProductAbstractPackagingStorageEntitiesByProductAbstractIds($ids);
 
         if (empty($ids)) {
             $query->clear();
