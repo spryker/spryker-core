@@ -98,7 +98,7 @@ class ProductDiscontinuedSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
      */
