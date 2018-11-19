@@ -82,9 +82,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         $resourceIdentifier = $restRequest->getResource()->getId();
 
         if (empty($resourceIdentifier)) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setStatus(Response::HTTP_BAD_REQUEST);
-            return $response->addError($restErrorTransfer);
+            return $this->addAbstractSkuNotSpecifiedError($response);
         }
 
         $abstractProductData = $this->productStorageClient
@@ -95,12 +93,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             );
 
         if (!$abstractProductData) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT);
-
-            return $response->addError($restErrorTransfer);
+            return $this->addAbstractProductNotFoundError($response);
         }
 
         $restAbstractProductsAttributesTransfer = $this->abstractProductsResourceMapper
@@ -169,5 +162,35 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         }
 
         return $restResource;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addAbstractSkuNotSpecifiedError(RestResponseInterface $response): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED);
+
+        return $response->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addAbstractProductNotFoundError(RestResponseInterface $response): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT);
+
+        return $response->addError($restErrorTransfer);
     }
 }
