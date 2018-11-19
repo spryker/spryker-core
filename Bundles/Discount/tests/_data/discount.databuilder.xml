@@ -10,6 +10,7 @@
         <property name="isActive" type="string" dataBuilderRule="=true" />
         <property name="validFrom" type="string" dataBuilderRule="=2016-01-01" />
         <property name="validTo" type="string" dataBuilderRule="time('Y-m-d', '+10 years')" />
+        <property name="minimumItemAmount" type="int" dataBuilderRule="=1"/>
     </transfer>
 
     <transfer name="CalculatedDiscount">
