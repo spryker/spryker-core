@@ -194,11 +194,16 @@ class ProductListTable extends AbstractTable
             $this->productListQuery->withColumn($field, $value);
         }
 
-        if (!$queryCriteriaTransfer->getJoins()) {
+        /**
+         * @var \ArrayObject|\Generated\Shared\Transfer\QueryJoinTransfer[]|null
+         */
+        $queryCriteriaTransferJoins = $queryCriteriaTransfer->getJoins();
+
+        if (!$queryCriteriaTransferJoins) {
             return;
         }
 
-        foreach ($queryCriteriaTransfer->getJoins() as $queryJoinTransfer) {
+        foreach ($queryCriteriaTransferJoins as $queryJoinTransfer) {
             if ($queryJoinTransfer->getRelation()) {
                 $this->expandQueryWithRelation($queryJoinTransfer);
 
