@@ -44,7 +44,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     public function testRestResponseAttributesIsInstanceOfRestSearchSuggestionsAttributesTransfer(): void
     {
         $mapper = $this->getMapper();
-        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsResponseAttributesTransferToRestAttributesTransfer([], static::REQUESTED_CURRENCY);
+        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsToRestAttributesTransfer([], static::REQUESTED_CURRENCY);
 
         $this->assertInstanceOf(RestCatalogSearchSuggestionsAttributesTransfer::class, $restCatalogSearchSuggestionsAttributes);
     }
@@ -55,7 +55,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     public function testEmptySearchSuggestionsResponseWillMapEmptyAttributes(): void
     {
         $mapper = $this->getMapper();
-        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsResponseAttributesTransferToRestAttributesTransfer([], static::REQUESTED_CURRENCY);
+        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsToRestAttributesTransfer([], static::REQUESTED_CURRENCY);
 
         $attributes = $restCatalogSearchSuggestionsAttributes;
 
@@ -79,7 +79,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
             ->addCmsPagesData()
             ->getData();
 
-        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsResponseAttributesTransferToRestAttributesTransfer(
+        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsToRestAttributesTransfer(
             $searchSuggestionsResponseDataMock,
             static::REQUESTED_CURRENCY
         );
@@ -141,7 +141,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     }
 
     /**
-     * @return \SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperTest
+     * @return $this
      */
     public function addCompletionData(): self
     {
@@ -155,7 +155,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     }
 
     /**
-     * @return \SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperTest
+     * @return $this
      */
     public function addProductsAbstractData(): self
     {
@@ -191,7 +191,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     }
 
     /**
-     * @return \SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperTest
+     * @return $this
      */
     public function addCategoriesData(): self
     {
@@ -208,7 +208,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     }
 
     /**
-     * @return \SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperTest
+     * @return $this
      */
     public function addCmsPagesData(): self
     {

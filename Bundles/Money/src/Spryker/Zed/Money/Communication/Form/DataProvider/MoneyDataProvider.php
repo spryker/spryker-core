@@ -39,6 +39,8 @@ class MoneyDataProvider
      */
     public function getMoneyCurrencyOptionsFor($moneyValueTransfer)
     {
+        $options = [];
+
         $currencyTransfer = $moneyValueTransfer->getCurrency();
         $options['divisor'] = $this->getDivisor($currencyTransfer);
         $options['scale'] = $this->getScale($currencyTransfer);

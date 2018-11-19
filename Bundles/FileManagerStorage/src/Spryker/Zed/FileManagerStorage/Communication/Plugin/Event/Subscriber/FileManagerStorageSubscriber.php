@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\FileManagerStorage\Communication\FileManagerStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\FileManagerStorage\Business\FileManagerStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\FileManagerStorage\FileManagerStorageConfig getConfig()
  */
 class FileManagerStorageSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

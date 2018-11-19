@@ -10,10 +10,12 @@ namespace Spryker\Zed\Customer\Business\Customer;
 use Exception;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
@@ -38,15 +40,26 @@ class Address implements AddressInterface
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface
+     */
+    protected $customerExpander;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface $countryFacade
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
      */
-    public function __construct(CustomerQueryContainerInterface $queryContainer, CustomerToCountryInterface $countryFacade, CustomerToLocaleInterface $localeFacade)
-    {
+    public function __construct(
+        CustomerQueryContainerInterface $queryContainer,
+        CustomerToCountryInterface $countryFacade,
+        CustomerToLocaleInterface $localeFacade,
+        CustomerExpanderInterface $customerExpander
+    ) {
         $this->queryContainer = $queryContainer;
         $this->countryFacade = $countryFacade;
         $this->localeFacade = $localeFacade;
+        $this->customerExpander = $customerExpander;
     }
 
     /**
@@ -274,19 +287,26 @@ class Address implements AddressInterface
         $addressTransfer->fromArray($entity->toArray(), true);
         $addressTransfer->setIso2Code($entity->getCountry()->getIso2Code());
 
+        $countryTransfer = new CountryTransfer();
+        $countryTransfer->fromArray($entity->getCountry()->toArray());
+
+        $addressTransfer->setCountry($countryTransfer);
+
         return $addressTransfer;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $entities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Customer\Persistence\SpyCustomerAddress[] $entities
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
     protected function entityCollectionToTransferCollection(ObjectCollection $entities)
     {
         $addressTransferCollection = new AddressesTransfer();
-        foreach ($entities->getData() as $entity) {
-            $addressTransferCollection->addAddress($this->entityToAddressTransfer($entity));
+
+        foreach ($entities as $entity) {
+            $addressTransfer = $this->entityToAddressTransfer($entity);
+            $addressTransferCollection->addAddress($addressTransfer);
         }
 
         return $addressTransferCollection;
@@ -491,6 +511,7 @@ class Address implements AddressInterface
 
         $customerTransfer = $this->entityToCustomerTransfer($customerEntity);
         $customerTransfer->setAddresses($this->getAddresses($customerTransfer));
+        $customerTransfer = $this->customerExpander->expand($customerTransfer);
 
         return $customerTransfer;
     }
@@ -523,6 +544,7 @@ class Address implements AddressInterface
 
         $customerTransfer = $this->entityToCustomerTransfer($customerEntity);
         $customerTransfer->setAddresses($this->getAddresses($customerTransfer));
+        $customerTransfer = $this->customerExpander->expand($customerTransfer);
 
         return $customerTransfer;
     }

@@ -12,12 +12,16 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface;
+use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
 class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterface
 {
     use TransactionTrait;
+
+    use PermissionAwareTrait;
 
     /**
      * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface
@@ -35,6 +39,11 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
     protected $shoppingListItemOperation;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface
+     */
+    protected $shoppingListRepository;
+
+    /**
      * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[]
      */
     protected $quoteItemExpanderPlugins;
@@ -46,6 +55,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
 
     /**
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
+     * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface $shoppingListItemOperation
      * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[] $quoteItemExpanderPlugins
@@ -53,13 +63,15 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
      */
     public function __construct(
         ShoppingListResolverInterface $shoppingListResolver,
+        ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListToPersistentCartFacadeInterface $persistentCartFacade,
         ShoppingListItemOperationInterface $shoppingListItemOperation,
         array $quoteItemExpanderPlugins,
         array $itemToShoppingListItemMapperPlugins
     ) {
-        $this->persistentCartFacade = $persistentCartFacade;
         $this->shoppingListResolver = $shoppingListResolver;
+        $this->shoppingListRepository = $shoppingListRepository;
+        $this->persistentCartFacade = $persistentCartFacade;
         $this->shoppingListItemOperation = $shoppingListItemOperation;
         $this->quoteItemExpanderPlugins = $quoteItemExpanderPlugins;
         $this->itemToShoppingListItemMapperPlugins = $itemToShoppingListItemMapperPlugins;
@@ -72,7 +84,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
      */
     public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
     {
-        $shoppingListFromCartRequestTransfer->requireShoppingListName()->requireIdQuote();
+        $shoppingListFromCartRequestTransfer->requireIdQuote()->requireCustomer();
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListFromCartRequestTransfer) {
             return $this->executeCreateShoppingListFromQuoteTransaction($shoppingListFromCartRequestTransfer);
@@ -92,14 +104,41 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
             $shoppingListFromCartRequestTransfer->getCustomer()
         );
 
-        $shoppingListTransfer = $this->shoppingListResolver->createShoppingListIfNotExists(
-            $shoppingListFromCartRequestTransfer->getCustomer()->getCustomerReference(),
-            $shoppingListFromCartRequestTransfer->getShoppingListName()
-        );
+        $shoppingListTransfer = $this->findShoppingListByShoppingListId($shoppingListFromCartRequestTransfer);
+
+        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
+            $shoppingListFromCartRequestTransfer->requireShoppingListName();
+
+            $shoppingListTransfer = $this->shoppingListResolver->createShoppingListIfNotExists(
+                $shoppingListFromCartRequestTransfer->getCustomer()->getCustomerReference(),
+                $shoppingListFromCartRequestTransfer->getShoppingListName()
+            );
+        }
 
         $itemTransferCollection = $this->getQuoteItems($quoteResponseTransfer->getQuoteTransfer());
 
         $this->createShoppingListItems($itemTransferCollection, $shoppingListTransfer);
+
+        return $shoppingListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
+     */
+    protected function findShoppingListByShoppingListId(
+        ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer
+    ): ?ShoppingListTransfer {
+        if (!$shoppingListFromCartRequestTransfer->getIdShoppingList()) {
+            return null;
+        }
+
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setIdShoppingList($shoppingListFromCartRequestTransfer->getIdShoppingList())
+            ->setIdCompanyUser($shoppingListFromCartRequestTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+
+        $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
 
         return $shoppingListTransfer;
     }
@@ -143,5 +182,27 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
 
             $this->shoppingListItemOperation->saveShoppingListItemWithoutPermissionsCheck($shoppingListItemTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return bool
+     */
+    protected function checkWritePermission(ShoppingListTransfer $shoppingListTransfer): bool
+    {
+        if (!$shoppingListTransfer->getIdShoppingList()) {
+            return true;
+        }
+
+        if (!$shoppingListTransfer->getIdCompanyUser()) {
+            return false;
+        }
+
+        return $this->can(
+            'WriteShoppingListPermissionPlugin',
+            $shoppingListTransfer->getIdCompanyUser(),
+            $shoppingListTransfer->getIdShoppingList()
+        );
     }
 }

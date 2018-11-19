@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 
 class DataImporterPublisher implements DataImporterPublisherInterface
 {
-    const CHUNK_SIZE = 20000;
+    public const CHUNK_SIZE = 20000;
 
     /**
      * @var \Spryker\Zed\Event\Business\EventFacadeInterface

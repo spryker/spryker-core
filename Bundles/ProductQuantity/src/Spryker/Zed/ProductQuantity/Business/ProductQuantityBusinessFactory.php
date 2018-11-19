@@ -16,6 +16,7 @@ use Spryker\Zed\ProductQuantity\Business\Model\Validator\ProductQuantityRestrict
 /**
  * @method \Spryker\Zed\ProductQuantity\ProductQuantityConfig getConfig()
  * @method \Spryker\Zed\ProductQuantity\Persistence\ProductQuantityRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductQuantity\Persistence\ProductQuantityEntityManagerInterface getEntityManager()
  */
 class ProductQuantityBusinessFactory extends AbstractBusinessFactory
 {
