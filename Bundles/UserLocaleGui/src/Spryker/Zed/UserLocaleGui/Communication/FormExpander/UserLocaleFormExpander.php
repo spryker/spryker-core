@@ -36,7 +36,7 @@ class UserLocaleFormExpander extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addLocaleField($builder, $options);
     }
@@ -51,7 +51,7 @@ class UserLocaleFormExpander extends AbstractType
         $builder->add(static::FIELD_FK_LOCALE, SelectType::class, [
             'label' => static::FIELD_FK_LOCALE_LABEL,
             'choices' => $options[static::OPTIONS_LOCALE],
-            'required' => false,
+            'required' => true,
         ]);
     }
 }
