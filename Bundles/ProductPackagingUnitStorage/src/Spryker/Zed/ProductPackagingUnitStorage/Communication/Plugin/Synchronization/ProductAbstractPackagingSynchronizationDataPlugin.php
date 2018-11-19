@@ -7,18 +7,17 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization;
 
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
- * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  */
-class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
 {
     /**
      * @api
@@ -28,6 +27,26 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
     public function getResourceName(): string
     {
         return ProductPackagingUnitStorageConfig::PRODUCT_ABSTRACT_PACKAGING_RESOURCE_NAME;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $ids
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
+     */
+    public function queryData($ids = []): ?ModelCriteria
+    {
+        $query = $this->getQueryContainer()->queryAvailabilityStorageByAvailabilityAbstractIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**
@@ -68,42 +87,5 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getConfig()->getProductAbstractPackagingSynchronizationPoolName();
-    }
-
-    /**
-     * @api
-     *
-     * @param int[] $ids
-     *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
-     */
-    public function getData(array $ids = [])
-    {
-        $spyProductAbstractPackagingStorageEntities = $this->findSpyProductAbstractPackagingStorageEntities($ids);
-        $synchronizationDataTransfers = [];
-        foreach ($spyProductAbstractPackagingStorageEntities as $spyProductAbstractPackagingStoragEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            /** @var string $data */
-            $data = $spyProductAbstractPackagingStoragEntity->getData();
-            $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($spyProductAbstractPackagingStoragEntity->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
-    }
-
-    /**
-     * @param array $ids
-     *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
-     */
-    protected function findSpyProductAbstractPackagingStorageEntities(array $ids = []): array
-    {
-        if (empty($ids)) {
-            return $this->getRepository()->findAllProductAbstractPackagingStorageEntities();
-        }
-
-        return $this->getRepository()->findProductAbstractPackagingStorageEntitiesByProductAbstractIds($ids);
     }
 }
