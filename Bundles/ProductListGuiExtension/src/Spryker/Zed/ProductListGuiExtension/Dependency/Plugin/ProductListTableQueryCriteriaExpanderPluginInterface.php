@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductListGuiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 
-interface ProductListTableQueryExpanderPluginInterface
+interface ProductListTableQueryCriteriaExpanderPluginInterface
 {
     /**
      * Specification:

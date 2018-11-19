@@ -23,7 +23,7 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
     protected $productListTableConfigExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryExpanderPluginInterface[]
+     * @var \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryCriteriaExpanderPluginInterface[]
      */
     protected $productListTableQueryExpanderPlugins;
 
@@ -40,7 +40,7 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
     /**
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface[] $productListTableActionExpanderPlugins
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface[] $productListTableConfigExpanderPlugins
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryExpanderPluginInterface[] $productListTableQueryExpanderPlugins
+     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryCriteriaExpanderPluginInterface[] $productListTableQueryExpanderPlugins
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface[] $productListTableDataExpanderPlugins
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableHeaderExpanderPluginInterface[] $productListTableHeaderExpanderPlugins
      */
