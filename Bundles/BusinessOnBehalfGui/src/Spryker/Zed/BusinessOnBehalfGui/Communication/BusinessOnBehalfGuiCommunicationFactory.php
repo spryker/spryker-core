@@ -98,4 +98,14 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
             $this->getCompanyUserFacade()
         );
     }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserAttachCustomerFormExpanderPluginInterface[]
+     */
+    public function getCompanyUserAttachCustomerFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(
+            BusinessOnBehalfGuiDependencyProvider::PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER
+        );
+    }
 }

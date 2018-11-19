@@ -9,9 +9,6 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
-use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\CustomerBusinessUnitAttachForm;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface;
@@ -64,14 +61,9 @@ class CustomerBusinessUnitAttachFormDataProvider
     {
         $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($idCompanyUser);
 
-        $defaultCompanyRole = $this->companyRoleFacade->findDefaultCompanyRoleByIdCompany($companyUserTransfer->getCompany()->getIdCompany());
-        $companyRoleCollectionWithDefaultCompanyRole = (new CompanyRoleCollectionTransfer())
-            ->addRole($defaultCompanyRole);
-
         return (new CompanyUserTransfer())
             ->setCustomer($companyUserTransfer->getCustomer())
             ->setCompany($companyUserTransfer->getCompany())
-            ->setCompanyRoleCollection($companyRoleCollectionWithDefaultCompanyRole)
             ->setFkCompany($companyUserTransfer->getCompany()->getIdCompany())
             ->setFkCustomer($companyUserTransfer->getCustomer()->getIdCustomer());
     }
@@ -84,13 +76,10 @@ class CustomerBusinessUnitAttachFormDataProvider
     public function getOptions(CompanyUserTransfer $companyUserTransfer): array
     {
         [$companyBusinessUnitChoicesValues, $companyBusinessUnitChoicesAttributes] = $this->prepareCompanyBusinessUnitAttributeMap($companyUserTransfer);
-        [$companyRolesChoicesValues, $companyRolesChoicesAttributes] = $this->prepareCompanyRoleAttributeMap($companyUserTransfer);
 
         return [
             CustomerBusinessUnitAttachForm::OPTION_VALUES_BUSINESS_UNITS_CHOICES => $companyBusinessUnitChoicesValues,
             CustomerBusinessUnitAttachForm::OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES => $companyBusinessUnitChoicesAttributes,
-            CustomerBusinessUnitAttachForm::OPTION_VALUES_ROLES_CHOICES => $companyRolesChoicesValues,
-            CustomerBusinessUnitAttachForm::OPTION_ATTRIBUTES_ROLES_CHOICES => $companyRolesChoicesAttributes,
             'data_class' => CompanyUserTransfer::class,
         ];
     }
@@ -130,48 +119,5 @@ class CustomerBusinessUnitAttachFormDataProvider
     protected function generateCompanyBusinessUnitName(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): string
     {
         return sprintf(static::FORMAT_NAME, $companyBusinessUnitTransfer->getName(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
-    }
-
-    /**
-     * Retrieves the list of roles for the same company.
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return array [[roleKey => idRole], [roleKey => ['data-id-company' => idCompany]]]
-     *                Where roleKey: "<idRole> - <RoleName>"
-     */
-    protected function prepareCompanyRoleAttributeMap(CompanyUserTransfer $companyUserTransfer): array
-    {
-        $values = [];
-        $attributes = [];
-        $companyRoleCollection = $this->companyRoleFacade->getCompanyRoleCollection(
-            (new CompanyRoleCriteriaFilterTransfer())->setIdCompany($companyUserTransfer->getCompany()->getIdCompany())
-        );
-
-        foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {
-            $roleKey = $this->generateCompanyRoleName($companyRoleTransfer);
-
-            $companyRoleAttributes = [static::OPTION_ATTRIBUTE_DATA => $companyRoleTransfer->getFkCompany()];
-            if ($companyRoleTransfer->getIsDefault()
-                && $companyUserTransfer->getCompanyRoleCollection() === null
-            ) {
-                $companyRoleAttributes[static::OPTION_IS_DEFAULT] = true;
-            }
-
-            $values[$roleKey] = $companyRoleTransfer->getIdCompanyRole();
-            $attributes[$roleKey] = $companyRoleAttributes;
-        }
-
-        return [$values, $attributes];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
-     *
-     * @return string
-     */
-    protected function generateCompanyRoleName(CompanyRoleTransfer $companyRoleTransfer): string
-    {
-        return sprintf(static::FORMAT_NAME, $companyRoleTransfer->getName(), $companyRoleTransfer->getIdCompanyRole());
     }
 }

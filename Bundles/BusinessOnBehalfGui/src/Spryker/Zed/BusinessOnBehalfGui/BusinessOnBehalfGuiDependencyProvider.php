@@ -26,6 +26,8 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
 
+    public const PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER = 'PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -40,6 +42,7 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addCompanyRoleFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
+        $container = $this->addCustomerBusinessUnitAttachFormExpanderPlugins($container);
 
         return $container;
     }
@@ -122,5 +125,26 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerBusinessUnitAttachFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER] = function (Container $container) {
+            return $this->getCustomerBusinessUnitAttachFormExpanderPlugins();
+        };
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserAttachCustomerFormExpanderPluginInterface[]
+     */
+    protected function getCustomerBusinessUnitAttachFormExpanderPlugins(): array
+    {
+        return [];
     }
 }
