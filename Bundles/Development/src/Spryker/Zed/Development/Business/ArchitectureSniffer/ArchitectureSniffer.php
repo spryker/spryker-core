@@ -117,6 +117,10 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             $directory = $this->addSourcePathForCoreModulePath($directory);
         }
 
+        if (!file_exists($directory)) {
+            return $this->formatResult($options);
+        }
+
         $output = $this->runCommand($directory, $options);
         $results = $this->xmlReader->fromString($output);
 
