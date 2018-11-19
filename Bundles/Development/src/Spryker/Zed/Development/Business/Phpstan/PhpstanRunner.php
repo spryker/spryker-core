@@ -270,6 +270,10 @@ class PhpstanRunner implements PhpstanRunnerInterface
             return $moduleConfigFile->getPath();
         }
 
+        if ($vendorConfigFile) {
+            return $vendorConfigFile->getPath();
+        }
+
         return $this->config->getPathToRoot();
     }
 
