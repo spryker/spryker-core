@@ -9,6 +9,7 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Controller;
 
 use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -36,34 +37,52 @@ class CreateCompanyUserController extends AbstractController
         $companyUserTransfer = $dataProvider->getData($idCompanyUser);
 
         $form = $this->getFactory()
-            ->getCustomerBusinessUnitAttachForm(
-                $companyUserTransfer,
-                $dataProvider->getOptions($companyUserTransfer)
-            )
+            ->getCustomerBusinessUnitAttachForm($companyUserTransfer, $dataProvider->getOptions($companyUserTransfer))
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $companyUserTransfer = $form->getData();
-
-            if ($this->getFactory()->createBusinessUnitChecker()->checkBusinessUnitOfCompanyUserExist($companyUserTransfer)) {
-                $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED);
-            } else {
-                $companyUserResponseTransfer = $this->getFactory()
-                    ->getCompanyUserFacade()
-                    ->create($companyUserTransfer);
-
-                if (!$companyUserResponseTransfer->getIsSuccessful()) {
-                    $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_CREATE);
-                } else {
-                    $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
-
-                    return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
-                }
-            }
+            return $this->attachCustomer($form);
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $companyUserForm
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function attachCustomer(FormInterface $companyUserForm)
+    {
+        $companyUserTransfer = $companyUserForm->getData();
+        $existsCompanyUser = $this->getFactory()
+            ->getCompanyBusinessUnitFacade()
+            ->checkCompanyUserByBusinessUnitIdCompanyUserIdExists($companyUserTransfer);
+
+        if ($existsCompanyUser) {
+            $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED);
+
+            return $this->viewResponse([
+                'form' => $companyUserForm->createView(),
+            ]);
+        }
+
+        $companyUserResponseTransfer = $this->getFactory()
+            ->getCompanyUserFacade()
+            ->create($companyUserTransfer);
+
+        if (!$companyUserResponseTransfer->getIsSuccessful()) {
+            $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_CREATE);
+        } else {
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
+
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+        }
+
+        return $this->viewResponse([
+            'form' => $companyUserForm->createView(),
         ]);
     }
 }

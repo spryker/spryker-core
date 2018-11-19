@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyBusinessUnit\Persistence;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -212,5 +213,24 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         if ($criteriaFilterTransfer->getCompanyBusinessUnitIds()) {
             $companyBusinessUnitQuery->filterByIdCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitIds());
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return bool
+     */
+    public function checkCompanyUserByBusinessUnitIdCompanyUserIdExists(CompanyUserTransfer $companyUserTransfer): bool
+    {
+        $companyUserTransfer->requireFkCustomer()
+            ->requireFkCompanyBusinessUnit();
+
+        $existsSpyCompanyUser = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByFkCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
+            ->filterByFkCustomer($companyUserTransfer->getFkCustomer())
+            ->exists();
+
+        return $existsSpyCompanyUser;
     }
 }
