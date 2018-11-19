@@ -36,7 +36,6 @@ class PriceProductDataImportPluginTest extends Unit
      */
     public function testImportImportsPriceProduct(): void
     {
-        $this->markTestSkipped('Need to fix transaction issue first.');
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
