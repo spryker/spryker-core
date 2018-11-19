@@ -118,7 +118,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         }
 
         if (!file_exists($directory)) {
-            return $this->formatResult([]);
+            return $this->formatResult($options);
         }
 
         $output = $this->runCommand($directory, $options);
