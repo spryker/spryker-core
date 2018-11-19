@@ -12,6 +12,9 @@ use Spryker\Client\CustomerAccessPermission\Dependency\Client\CustomerAccessPerm
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\CustomerAccessPermission\CustomerAccessPermissionConfig getConfig()
+ */
 class CustomerAccessPermissionDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';

@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()
  * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Country\Persistence\CountryRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Country\Business\CountryFacadeInterface getFacade()
  */
 class CountryCommunicationFactory extends AbstractCommunicationFactory
 {

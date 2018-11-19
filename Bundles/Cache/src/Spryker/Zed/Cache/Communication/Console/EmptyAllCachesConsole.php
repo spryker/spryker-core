@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Cache\Business\CacheFacadeInterface getFacade()
+ * @method \Spryker\Zed\Cache\Communication\CacheCommunicationFactory getFactory()
  */
 class EmptyAllCachesConsole extends Console
 {

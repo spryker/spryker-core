@@ -14,6 +14,9 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\Kernel\Plugin\Pimple;
 
+/**
+ * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
+ */
 class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_RESOURCE_ROUTES = 'PLUGIN_RESOURCE_ROUTES';

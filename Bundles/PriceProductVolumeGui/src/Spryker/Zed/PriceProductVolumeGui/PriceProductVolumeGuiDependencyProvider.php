@@ -14,6 +14,9 @@ use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToP
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToStoreFacadeBridge;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig getConfig()
+ */
 class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';

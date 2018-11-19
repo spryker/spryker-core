@@ -20,6 +20,7 @@
     <transfer name="RestCustomersResponseAttributes">
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
+        <property name="email" type="string" />
         <property name="gender" type="string" />
         <property name="dateOfBirth" type="string" />
         <property name="salutation" type="string" />

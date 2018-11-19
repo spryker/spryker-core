@@ -30,6 +30,9 @@ use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEnco
 use Spryker\Zed\ProductManagement\Exception\MissingMoneyTypePluginException;
 use Spryker\Zed\ProductManagement\Exception\MissingStoreRelationFormTypePluginException;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
+ */
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const STORE = 'STORE';

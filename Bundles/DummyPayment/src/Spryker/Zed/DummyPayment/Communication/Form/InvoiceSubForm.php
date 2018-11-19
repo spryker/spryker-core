@@ -17,6 +17,11 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\DummyPayment\DummyPaymentConfig getConfig()
+ * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
+ * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
+ */
 class InvoiceSubForm extends AbstractType
 {
     public const PAYMENT_METHOD = 'invoice';
