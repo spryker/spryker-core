@@ -34,7 +34,7 @@ class SetupConfigTest extends Unit
      */
     public function testGetPathForJobsPHPShouldReturnPathToJobs()
     {
-        $this->assertTrue(is_file($this->getConfig()->getPathForJobsPHP()));
+        $this->assertTrue(is_file($this->getConfig()->getCronjobsDefinitionFilePath()));
     }
 
     /**

@@ -15,6 +15,9 @@ use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCate
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig getConfig()
+ */
 class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'CMS_BLOCK_CATEGORY_CONNECTOR:FACADE_LOCALE';

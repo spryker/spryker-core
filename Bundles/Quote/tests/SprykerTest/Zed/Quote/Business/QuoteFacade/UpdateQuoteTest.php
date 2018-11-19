@@ -36,9 +36,11 @@ class UpdateQuoteTest extends Unit
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
+        $storeTransfer = $quoteTransfer->getStore();
 
         $itemTransfer = (new ItemBuilder())->build();
         $itemCollection = new ArrayObject([
@@ -52,7 +54,7 @@ class UpdateQuoteTest extends Unit
 
         // Assert
         $this->assertTrue($persistQuoteResponseTransfer->getIsSuccessful(), 'Persist quote response transfer should have ben successful.');
-        $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
+        $findQuoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
         $this->assertTrue($findQuoteResponseTransfer->getIsSuccessful(), 'Find quote response transfer should have ben successful.');
         $this->assertEquals($itemCollection, $findQuoteResponseTransfer->getQuoteTransfer()->getItems(), 'Quote response should have expected data from database.');
     }

@@ -17,6 +17,8 @@ use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface getFacade()
  */
 class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
 {

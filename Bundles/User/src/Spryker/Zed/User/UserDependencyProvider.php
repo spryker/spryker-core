@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\User\Dependency\Plugin\GroupPlugin;
 
+/**
+ * @method \Spryker\Zed\User\UserConfig getConfig()
+ */
 class UserDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_GROUP = 'group plugin';

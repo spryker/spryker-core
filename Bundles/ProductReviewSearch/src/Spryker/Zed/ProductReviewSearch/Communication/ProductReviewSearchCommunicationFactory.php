@@ -13,6 +13,8 @@ use Spryker\Zed\ProductReviewSearch\ProductReviewSearchDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductReviewSearch\ProductReviewSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductReviewSearch\Business\ProductReviewSearchFacadeInterface getFacade()
  */
 class ProductReviewSearchCommunicationFactory extends AbstractCommunicationFactory
 {

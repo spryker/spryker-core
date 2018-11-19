@@ -27,6 +27,9 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorSer
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
+ */
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_ENCODING = 'util encoding service';
