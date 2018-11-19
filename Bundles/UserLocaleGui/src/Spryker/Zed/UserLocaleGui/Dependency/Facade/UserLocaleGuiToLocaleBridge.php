@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\UserLocaleGui\Dependency\Facade;
 
-use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
-
 class UserLocaleGuiToLocaleBridge implements UserLocaleGuiToLocaleBridgeInterface
 {
     /**
@@ -19,7 +17,7 @@ class UserLocaleGuiToLocaleBridge implements UserLocaleGuiToLocaleBridgeInterfac
     /**
      * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
      */
-    public function __construct(LocaleFacadeInterface $localeFacade)
+    public function __construct($localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }
