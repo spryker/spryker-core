@@ -27,7 +27,7 @@ class SalesReclamationGuiToUtilDateTimeServiceBridge implements SalesReclamation
      *
      * @return string
      */
-    public function formatDateTime(string $date): string
+    public function formatDateTime($date)
     {
         return $this->utilDateTimeService->formatDateTime($date);
     }

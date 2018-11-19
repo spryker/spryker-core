@@ -14,5 +14,5 @@ interface SalesReclamationGuiToUtilDateTimeServiceInterface
      *
      * @return string
      */
-    public function formatDateTime(string $date): string;
+    public function formatDateTime($date);
 }
