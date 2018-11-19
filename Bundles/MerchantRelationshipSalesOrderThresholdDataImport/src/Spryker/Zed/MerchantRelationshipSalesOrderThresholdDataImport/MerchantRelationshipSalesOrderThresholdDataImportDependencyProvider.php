@@ -14,6 +14,9 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Dependency\Fac
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Dependency\Facade\MerchantRelationshipSalesOrderThresholdDataImportToMerchantRelationshipSalesOrderThresholdFacadeBridge;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Dependency\Facade\MerchantRelationshipSalesOrderThresholdDataImportToStoreFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\MerchantRelationshipSalesOrderThresholdDataImportConfig getConfig()
+ */
 class MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider extends DataImportDependencyProvider
 {
     public const FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD = 'FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD';

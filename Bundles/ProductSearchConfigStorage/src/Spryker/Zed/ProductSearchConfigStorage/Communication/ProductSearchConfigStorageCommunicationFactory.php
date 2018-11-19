@@ -13,6 +13,7 @@ use Spryker\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageDependencyP
 /**
  * @method \Spryker\Zed\ProductSearchConfigStorage\Persistence\ProductSearchConfigStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductSearchConfigStorage\Business\ProductSearchConfigStorageFacadeInterface getFacade()
  */
 class ProductSearchConfigStorageCommunicationFactory extends AbstractCommunicationFactory
 {
