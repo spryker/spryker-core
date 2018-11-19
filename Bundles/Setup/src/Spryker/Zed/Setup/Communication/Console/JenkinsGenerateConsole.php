@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
+ * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
 class JenkinsGenerateConsole extends Console
 {

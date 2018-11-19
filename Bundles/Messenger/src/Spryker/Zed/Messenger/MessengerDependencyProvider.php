@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Messenger\Communication\Plugin\TranslationPlugin;
 
+/**
+ * @method \Spryker\Zed\Messenger\MessengerConfig getConfig()
+ */
 class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SESSION = 'session';

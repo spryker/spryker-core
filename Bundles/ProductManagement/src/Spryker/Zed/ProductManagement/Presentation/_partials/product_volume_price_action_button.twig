@@ -2,12 +2,13 @@
 
 {% if volumePrices[storeName][currencyIsoCode] is defined %}
     {{ viewActionButton(
-        url(volumePrices[storeName][currencyIsoCode]['url'], {
+        urldecode(url(volumePrices[storeName][currencyIsoCode]['url'], {
             'id-product-abstract': idProductAbstract,
             'id-product-concrete': idProduct,
             'store-name': storeName,
             'currency-code': currencyIsoCode,
             'price-dimension': priceDimension,
-    }),
+        })
+    ),
     volumePrices[storeName][currencyIsoCode]['title'] | trans) }}
 {% endif %}

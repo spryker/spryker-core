@@ -19,6 +19,8 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 /**
  * @method \Spryker\Zed\CmsPageSearch\Communication\CmsPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsPageSearch\Business\CmsPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsPageSearch\CmsPageSearchConfig getConfig()
+ * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface getQueryContainer()
  */
 class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceBridge;
 
+/**
+ * @method \Spryker\Yves\Monitoring\MonitoringConfig getConfig()
+ */
 class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const MONITORING_SERVICE = 'monitoring service';

@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\ProductTaxSetsRestApi\ProductTaxSetsRestApiConfig getConfig()
+ * @method \Spryker\Zed\ProductTaxSetsRestApi\Persistence\ProductTaxSetsRestApiEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductTaxSetsRestApi\Business\ProductTaxSetsRestApiFacadeInterface getFacade()
  */
 class ProductTaxSetsRestApiCommunicationFactory extends AbstractCommunicationFactory
 {

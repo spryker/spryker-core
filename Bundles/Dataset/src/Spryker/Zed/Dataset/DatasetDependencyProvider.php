@@ -13,6 +13,9 @@ use Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
+ */
 class DatasetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
