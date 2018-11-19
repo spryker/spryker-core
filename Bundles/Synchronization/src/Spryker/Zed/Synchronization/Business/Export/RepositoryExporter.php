@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataChunkableRepositoryPluginInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
@@ -52,7 +53,7 @@ class RepositoryExporter implements ExporterInterface
     }
 
     /**
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface[] $plugins
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface[]|\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataChunkableRepositoryPluginInterface[] $plugins
      * @param int[] $ids
      *
      * @return void
@@ -60,7 +61,14 @@ class RepositoryExporter implements ExporterInterface
     public function exportSynchronizedData(array $plugins, array $ids = []): void
     {
         foreach ($plugins as $plugin) {
-            $this->exportData($ids, $plugin);
+            if ($plugin instanceof SynchronizationDataRepositoryPluginInterface) {
+                $this->exportData($ids, $plugin);
+                continue;
+            }
+
+            if ($plugin instanceof SynchronizationDataChunkableRepositoryPluginInterface) {
+                $this->exportDataWithinChunks($plugin);
+            }
         }
     }
 
@@ -82,6 +90,28 @@ class RepositoryExporter implements ExporterInterface
             $this->syncData($plugin, $chunkOfSynchronizationEntitiesTransfers);
             $offset += $this->chunkSize;
         }
+    }
+
+    /**
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataChunkableRepositoryPluginInterface $plugin
+     *
+     * @return void
+     */
+    protected function exportDataWithinChunks(SynchronizationDataChunkableRepositoryPluginInterface $plugin): void
+    {
+        $offset = 0;
+
+        do {
+            $synchronizationEntities = $plugin->getData($offset, $this->chunkSize);
+
+            if (empty($synchronizationEntities)) {
+                break;
+            }
+
+            $this->syncData($plugin, $synchronizationEntities);
+
+            $offset += $this->chunkSize;
+        } while (count($synchronizationEntities) === $this->chunkSize);
     }
 
     /**
