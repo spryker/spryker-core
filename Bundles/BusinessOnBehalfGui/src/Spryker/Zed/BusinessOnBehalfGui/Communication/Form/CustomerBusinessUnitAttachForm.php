@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -34,7 +33,6 @@ class CustomerBusinessUnitAttachForm extends AbstractType
     public const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
     protected const FIELD_COMPANY_ROLE_COLLECTION = 'company_role_collection';
 
-    public const FIELD_FK_COMPANY = 'fk_company';
     protected const TEMPLATE_PATH = '@BusinessOnBehalfGui/CreateCompanyUser/company_role.twig';
 
     /**
@@ -75,7 +73,6 @@ class CustomerBusinessUnitAttachForm extends AbstractType
     {
         $this->addCompanyBusinessUnitCollectionField($builder, $options);
         $this->addCompanyRoleCollectionField($builder, $options);
-        $this->addFkCompanyField($builder);
     }
 
     /**
@@ -192,19 +189,5 @@ class CustomerBusinessUnitAttachForm extends AbstractType
     protected function getTemplatePath(): string
     {
         return static::TEMPLATE_PATH;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addFkCompanyField(FormBuilderInterface $builder): self
-    {
-        $builder->add(static::FIELD_FK_COMPANY, HiddenType::class, [
-            'required' => true,
-        ]);
-
-        return $this;
     }
 }
