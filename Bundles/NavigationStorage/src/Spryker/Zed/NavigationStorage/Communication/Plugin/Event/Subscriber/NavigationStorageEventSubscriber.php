@@ -20,6 +20,8 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 /**
  * @method \Spryker\Zed\NavigationStorage\Communication\NavigationStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\NavigationStorage\Business\NavigationStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\NavigationStorage\NavigationStorageConfig getConfig()
+ * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface getQueryContainer()
  */
 class NavigationStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

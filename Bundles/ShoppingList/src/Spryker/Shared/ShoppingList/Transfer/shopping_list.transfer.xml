@@ -74,6 +74,7 @@
         <property name="shoppingList" type="ShoppingList"/>
         <property name="itemsCollection" type="ShoppingListItemCollection"/>
         <property name="shoppingLists" type="ShoppingListCollection" />
+        <property name="isSuccess" type="bool" />
     </transfer>
 
     <transfer name="ShoppingListAddToCartRequest">

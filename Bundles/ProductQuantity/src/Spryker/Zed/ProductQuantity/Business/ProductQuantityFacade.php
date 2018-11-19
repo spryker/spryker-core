@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductQuantity\Business\ProductQuantityBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductQuantity\Persistence\ProductQuantityEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductQuantity\Persistence\ProductQuantityRepositoryInterface getRepository()
  */
 class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFacadeInterface
 {

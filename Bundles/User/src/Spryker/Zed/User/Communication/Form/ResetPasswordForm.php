@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
  * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\User\UserConfig getConfig()
  */
 class ResetPasswordForm extends AbstractType
 {

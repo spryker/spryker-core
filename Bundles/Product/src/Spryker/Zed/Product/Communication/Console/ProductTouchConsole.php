@@ -15,6 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Product\Business\ProductFacadeInterface getFacade()
+ * @method \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Product\Persistence\ProductRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
  */
 class ProductTouchConsole extends Console
 {

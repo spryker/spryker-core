@@ -104,6 +104,7 @@ class SprykDataProvider
         $formData = [
             'spryk' => $spryk,
             'module' => $moduleTransfer,
+            'dependentModule' => $moduleTransfer,
         ];
 
         return $this->addSprykDefinitionDefaultData($formData, $spryk);

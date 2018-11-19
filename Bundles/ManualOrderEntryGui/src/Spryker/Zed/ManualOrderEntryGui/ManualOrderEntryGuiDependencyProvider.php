@@ -24,6 +24,9 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipm
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiConfig getConfig()
+ */
 class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
