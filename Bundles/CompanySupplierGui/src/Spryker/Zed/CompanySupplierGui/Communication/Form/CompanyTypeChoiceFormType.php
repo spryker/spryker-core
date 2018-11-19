@@ -14,6 +14,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\CompanySupplierGui\Communication\CompanySupplierGuiCommunicationFactory getFactory()
+ */
 class CompanyTypeChoiceFormType extends AbstractType
 {
     public const OPTION_VALUES_COMPANY_TYPE_CHOICES = 'company_type_value_options';

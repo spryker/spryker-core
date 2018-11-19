@@ -10,6 +10,7 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 
 /**
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
@@ -33,7 +34,15 @@ class GatewayController extends AbstractGatewayController
      */
     public function getOrderDetailsAction(OrderTransfer $orderTransfer)
     {
-        return $this->getFacade()->getCustomerOrder($orderTransfer);
+        try {
+            $orderTransfer = $this->getFacade()
+                ->getCustomerOrder($orderTransfer);
+        } catch (InvalidSalesOrderException $e) {
+            $orderTransfer = new OrderTransfer();
+            $this->setSuccess(false);
+        }
+
+        return $orderTransfer;
     }
 
     /**
@@ -45,6 +54,20 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()
             ->getPaginatedCustomerOrders(
+                $orderListTransfer,
+                $orderListTransfer->getIdCustomer()
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getPaginatedCustomerOrdersOverviewAction(OrderListTransfer $orderListTransfer)
+    {
+        return $this->getFacade()
+            ->getPaginatedCustomerOrdersOverview(
                 $orderListTransfer,
                 $orderListTransfer->getIdCustomer()
             );

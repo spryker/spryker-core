@@ -15,6 +15,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
 /**
  * @method \Spryker\Zed\GiftCardMailConnector\Business\GiftCardMailConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\GiftCardMailConnector\Communication\GiftCardMailConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\GiftCardMailConnector\GiftCardMailConnectorConfig getConfig()
  */
 class ShipGiftCardByEmailCommandPlugin extends AbstractPlugin implements CommandByItemInterface
 {

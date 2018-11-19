@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
+ */
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
@@ -41,6 +44,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
     public const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
     public const PLUGINS_POST_CUSTOMER_REGISTRATION = 'PLUGINS_POST_CUSTOMER_REGISTRATION';
+    public const PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER = 'PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER';
 
     public const SUB_REQUEST_HANDLER = 'SUB_REQUEST_HANDLER';
 
@@ -79,6 +83,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addSubRequestHandler($container);
+        $container = $this->provideCustomerTableActionPlugins($container);
 
         return $container;
     }
@@ -300,6 +305,28 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
      */
     protected function getPostCustomerRegistrationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function provideCustomerTableActionPlugins($container): Container
+    {
+        $container[static::PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER] = function () {
+            return $this->getCustomerTableActionExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface[]
+     */
+    protected function getCustomerTableActionExpanderPlugins(): array
     {
         return [];
     }

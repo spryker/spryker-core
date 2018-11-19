@@ -58,6 +58,8 @@ class AuthTest extends Unit
      */
     private function mockUserData()
     {
+        $data = [];
+
         $data['firstName'] = sprintf('Test-%s', rand(100, 999));
         $data['lastName'] = sprintf('LastName-%s', rand(100, 999));
         $data['username'] = sprintf('Username-%s', rand(100, 999));

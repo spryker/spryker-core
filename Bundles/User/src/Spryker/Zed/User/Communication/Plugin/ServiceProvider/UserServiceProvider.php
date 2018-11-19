@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
+ * @method \Spryker\Zed\User\UserConfig getConfig()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
  */
 class UserServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

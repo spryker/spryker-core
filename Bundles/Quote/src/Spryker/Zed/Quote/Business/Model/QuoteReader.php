@@ -9,6 +9,8 @@ namespace Spryker\Zed\Quote\Business\Model;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface;
 
 class QuoteReader implements QuoteReaderInterface
@@ -37,6 +39,8 @@ class QuoteReader implements QuoteReaderInterface
     }
 
     /**
+     * @deprecated Use findQuoteByCustomerAndStore() instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -48,14 +52,37 @@ class QuoteReader implements QuoteReaderInterface
         $quoteResponseTransfer->setIsSuccessful(false);
         $quoteTransfer = $this->quoteRepository
             ->findQuoteByCustomer($customerTransfer->getCustomerReference());
-        if (!$quoteTransfer) {
-            $quoteResponseTransfer->setIsSuccessful(false);
-            return $quoteResponseTransfer;
+
+        $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
+        if ($quoteTransfer) {
+            $quoteResponseTransfer->setCustomer($customerTransfer);
         }
 
-        $quoteResponseTransfer->setCustomer($customerTransfer);
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        $quoteResponseTransfer->setIsSuccessful(true);
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByCustomerAndStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteResponseTransfer
+    {
+        $customerTransfer->requireCustomerReference();
+        $storeTransfer->requireIdStore();
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer->setIsSuccessful(false);
+        $quoteTransfer = $this->quoteRepository
+            ->findQuoteByCustomerReferenceAndIdStore(
+                $customerTransfer->getCustomerReference(),
+                $storeTransfer->getIdStore()
+            );
+
+        $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
+        if ($quoteTransfer) {
+            $quoteResponseTransfer->setCustomer($customerTransfer);
+        }
 
         return $quoteResponseTransfer;
     }
@@ -71,6 +98,18 @@ class QuoteReader implements QuoteReaderInterface
         $quoteResponseTransfer->setIsSuccessful(false);
         $quoteTransfer = $this->quoteRepository
             ->findQuoteById($idQuote);
+
+        return $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function setQuoteResponseTransfer(QuoteResponseTransfer $quoteResponseTransfer, ?QuoteTransfer $quoteTransfer = null): QuoteResponseTransfer
+    {
         if (!$quoteTransfer) {
             $quoteResponseTransfer->setIsSuccessful(false);
             return $quoteResponseTransfer;

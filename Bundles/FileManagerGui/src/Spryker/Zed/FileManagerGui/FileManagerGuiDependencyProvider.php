@@ -15,6 +15,9 @@ use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeBri
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\FileManagerGui\FileManagerGuiConfig getConfig()
+ */
 class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_FILE_MANAGER = 'FACADE_FILE_MANAGER';

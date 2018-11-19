@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
+use Generated\Shared\Transfer\RestCatalogSearchSortAttributesTransfer;
 use Generated\Shared\Transfer\RestFacetSearchResultAttributesTransfer;
 use Generated\Shared\Transfer\RestPriceProductAttributesTransfer;
 use Generated\Shared\Transfer\RestRangeSearchResultAttributesTransfer;
@@ -22,14 +23,23 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     protected const NAME = 'facets';
 
     /**
+     * @uses \Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\SortedResultFormatterPlugin::NAME
+     */
+    protected const SORT_NAME = 'sort';
+
+    /**
      * @param array $restSearchResponse
      * @param string $currency
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
-    public function mapSearchResponseAttributesTransferToRestAttributesTransfer(array $restSearchResponse, string $currency): RestCatalogSearchAttributesTransfer
+    public function mapSearchResultToRestAttributesTransfer(array $restSearchResponse, string $currency): RestCatalogSearchAttributesTransfer
     {
         $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($restSearchResponse, true);
+        $restCatalogSearchSortAttributesTransfer = (new RestCatalogSearchSortAttributesTransfer())
+            ->fromArray($restSearchResponse[static::SORT_NAME]->toArray());
+        $restSearchAttributesTransfer->setSort($restCatalogSearchSortAttributesTransfer);
+
         $restSearchAttributesTransfer->setCurrency($currency);
         if (isset($restSearchResponse[static::NAME])) {
             $restSearchAttributesTransfer = $this->mapSearchResponseFacetTransfersToSearchAttributesTransfer(

@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints\Required;
  * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
  * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Auth\AuthConfig getConfig()
  */
 class ResetPasswordRequestForm extends AbstractType
 {

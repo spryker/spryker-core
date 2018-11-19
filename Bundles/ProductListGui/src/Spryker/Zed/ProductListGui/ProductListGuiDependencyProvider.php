@@ -17,6 +17,9 @@ use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeBr
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeBridge;
 use Spryker\Zed\ProductListGui\Dependency\Service\ProductListGuiToUtilCsvServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductListGui\ProductListGuiConfig getConfig()
+ */
 class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';

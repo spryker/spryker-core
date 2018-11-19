@@ -242,6 +242,8 @@ class TriggerTest extends StateMachineMocks
      */
     protected function createStateMachineItems()
     {
+        $items = [];
+
         $items['event'] = [];
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setProcessName(static::PROCESS_NAME);

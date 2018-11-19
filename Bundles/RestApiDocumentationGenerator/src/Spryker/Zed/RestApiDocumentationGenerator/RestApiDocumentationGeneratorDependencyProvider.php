@@ -15,6 +15,9 @@ use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumen
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyFinderAdapter;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyYamlAdapter;
 
+/**
+ * @method \Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig getConfig()
+ */
 class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS = 'PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS';

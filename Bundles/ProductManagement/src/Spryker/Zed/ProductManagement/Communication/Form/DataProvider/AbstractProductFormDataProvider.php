@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
+use ArrayObject;
 use Everon\Component\Collection\Collection;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
@@ -23,6 +27,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
@@ -90,6 +95,11 @@ class AbstractProductFormDataProvider
     protected $productImageFacade;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface
+     */
+    protected $priceProductFacade;
+
+    /**
      * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]|\Everon\Component\Collection\CollectionInterface
      */
     protected $attributeTransferCollection;
@@ -116,6 +126,7 @@ class AbstractProductFormDataProvider
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface $productImageFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
      * @param array $attributeCollection
@@ -130,6 +141,7 @@ class AbstractProductFormDataProvider
         StockQueryContainerInterface $stockQueryContainer,
         ProductManagementToProductInterface $productFacade,
         ProductManagementToProductImageInterface $productImageFacade,
+        ProductManagementToPriceProductInterface $priceProductFacade,
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
         array $attributeCollection,
@@ -142,6 +154,7 @@ class AbstractProductFormDataProvider
         $this->productQueryContainer = $productQueryContainer;
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productImageFacade = $productImageFacade;
+        $this->priceProductFacade = $priceProductFacade;
         $this->localeProvider = $localeProvider;
         $this->productFacade = $productFacade;
         $this->currentLocale = $currentLocale;
@@ -161,13 +174,13 @@ class AbstractProductFormDataProvider
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
         $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
-
         $localizedAttributeOptions = [];
         foreach ($localeCollection as $localeTransfer) {
             $localizedAttributeOptions[$localeTransfer->getLocaleName()] = $this->convertAbstractLocalizedAttributesToFormOptions($productAbstractTransfer, $localeTransfer);
         }
         $localizedAttributeOptions[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $this->convertAbstractLocalizedAttributesToFormOptions($productAbstractTransfer, null);
 
+        $formOptions = [];
         $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_SUPER] = $this->convertVariantAttributesToFormOptions($productAbstractTransfer);
         $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $localizedAttributeOptions;
 
@@ -182,14 +195,17 @@ class AbstractProductFormDataProvider
     }
 
     /**
+     * @param array|null $priceDimension
+     *
      * @return array
      */
-    protected function getDefaultFormFields()
+    protected function getDefaultFormFields(?array $priceDimension = null)
     {
         $data = [
             ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT => null,
             ProductFormAdd::FIELD_SKU => null,
             ProductFormAdd::FORM_ATTRIBUTE_SUPER => $this->getAttributeVariantDefaultFields(),
+            ProductFormAdd::FORM_PRICE_DIMENSION => $priceDimension,
         ];
 
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());
@@ -760,5 +776,61 @@ class AbstractProductFormDataProvider
         }
 
         return $url;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $formData
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function getProductAbstractPricesByPriceDimension(ProductAbstractTransfer $productAbstractTransfer, array $formData): ArrayObject
+    {
+        if (!$formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
+            return $productAbstractTransfer->getPrices();
+        }
+
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
+
+        $priceProducts = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
+            $productAbstractTransfer->getIdProductAbstract(),
+            (new PriceProductCriteriaTransfer())->setPriceDimension($priceProductDimensionTransfer)
+        );
+
+        return new ArrayObject($priceProducts);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $formData
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function getProductConcretePricesByPriceDimension(
+        ProductConcreteTransfer $productTransfer,
+        ProductAbstractTransfer $productAbstractTransfer,
+        array $formData
+    ): ArrayObject {
+
+        if (!$formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
+            return $productTransfer->getPrices();
+        }
+
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
+
+        if (!$priceProductDimensionTransfer->getType()) {
+            return $productTransfer->getPrices();
+        }
+
+        $priceProducts = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
+            $productTransfer->getIdProductConcrete(),
+            $productAbstractTransfer->getIdProductAbstract(),
+            (new PriceProductCriteriaTransfer())->setPriceDimension($priceProductDimensionTransfer)
+        );
+
+        return new ArrayObject($priceProducts);
     }
 }

@@ -8,6 +8,7 @@
     {% endfilter %}
 </div>
 
+{{ include('@ProductManagement/_partials/price_dimension_filter.twig', {priceDimensionForm: form.price_dimension}) }}
 {{ include('@ProductManagement/_partials/product_price_collection.twig', {moneyValueFormViewCollection: form.prices}) }}
 
 {{ form_row(form.tax_rate) }}
