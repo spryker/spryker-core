@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Table;
 
-use Generated\Shared\Transfer\QueryJoinTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
+use Generated\Shared\Transfer\QueryJoinTransfer;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
