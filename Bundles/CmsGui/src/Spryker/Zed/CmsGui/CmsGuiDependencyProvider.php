@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
+ */
 class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_LOCALE = 'locale facade';

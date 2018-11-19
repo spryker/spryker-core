@@ -14,6 +14,7 @@ use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageReader;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerTest\Zed\Cms\Business\CmsMocks;
 
@@ -67,12 +68,14 @@ class CmsPageReaderTest extends CmsMocks
     /**
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface|null $cmsPageMapperMock
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface|null $cmsQueryContainerMock
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface|null $localeFacadeMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageReader
      */
     protected function createCmsPageReaderMock(
         ?CmsPageMapperInterface $cmsPageMapperMock = null,
-        ?CmsQueryContainerInterface $cmsQueryContainerMock = null
+        ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
+        ?CmsToLocaleInterface $localeFacadeMock = null
     ) {
         if ($cmsPageMapperMock === null) {
             $cmsPageMapperMock = $this->createCmsPageMapperMock();
@@ -82,9 +85,16 @@ class CmsPageReaderTest extends CmsMocks
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
         }
 
+        if ($localeFacadeMock === null) {
+            $localeFacadeMock = $this->createLocaleMock();
+        }
+
+        $localeFacadeMock->method('getAvailableLocales')
+            ->willReturn($this->getAvailableLocales());
+
         return $this->getMockBuilder(CmsPageReader::class)
             ->setMethods(['findCmsPageEntity'])
-            ->setConstructorArgs([$cmsQueryContainerMock, $cmsPageMapperMock])
+            ->setConstructorArgs([$cmsQueryContainerMock, $cmsPageMapperMock, $localeFacadeMock])
             ->getMock();
     }
 
@@ -128,5 +138,16 @@ class CmsPageReaderTest extends CmsMocks
         $cmsPageEntity->addSpyCmsPageLocalizedAttributes($cmsLocalizedPageAttributesEntity);
 
         return $cmsPageEntity;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAvailableLocales(): array
+    {
+        return [
+            1 => 'en_US',
+            2 => 'de_DE',
+        ];
     }
 }

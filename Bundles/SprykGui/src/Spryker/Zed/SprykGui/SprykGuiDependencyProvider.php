@@ -11,12 +11,17 @@ use Spryker\Spryk\SprykFacade;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToDevelopmentFacadeBridge;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\SprykGui\SprykGuiConfig getConfig()
+ */
 class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SPRYK_FACADE = 'spryk facade';
-    public const PLUGIN_GRAPH = 'graph plugin';
+    public const SPRYK_FACADE = 'SPRYK_FACADE';
+    public const DEVELOPMENT_FACADE = 'DEVELOPMENT_FACADE';
+    public const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +43,7 @@ class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addSprykFacade($container);
+        $container = $this->addDevelopmentFacade($container);
         $container = $this->addGraphPlugin($container);
 
         return $container;
@@ -51,11 +57,25 @@ class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSprykFacade(Container $container): Container
     {
         $container[static::SPRYK_FACADE] = function () {
-            $sprykGuiToSprykFacadeBridge = new SprykGuiToSprykFacadeBridge(
+            return new SprykGuiToSprykFacadeBridge(
                 new SprykFacade()
             );
+        };
 
-            return $sprykGuiToSprykFacadeBridge;
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDevelopmentFacade(Container $container): Container
+    {
+        $container[static::DEVELOPMENT_FACADE] = function () use ($container) {
+            return new SprykGuiToDevelopmentFacadeBridge(
+                $container->getLocator()->development()->facade()
+            );
         };
 
         return $container;

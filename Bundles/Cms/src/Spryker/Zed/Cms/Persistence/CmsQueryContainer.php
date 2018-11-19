@@ -63,6 +63,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public const ALIAS_LOCALE_FOR_TRANSLATION = 'aliasLocaleForTranslation';
     public const ALIAS_CMS_PAGE_STORE_RELATION = 'aliasCmsPageStoreRelation';
     public const ALIAS_STORE_FOR_STORE_RELATION = 'aliasStoreForStoreRelation';
+    public const CMS_NAME = 'name';
 
     /**
      * @api
@@ -145,7 +146,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 ->filterByFkLocale($idLocale)
             ->endUse()
             ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, static::TEMPLATE_NAME)
-            ->withColumn(SpyCmsPageLocalizedAttributesTableMap::COL_NAME, 'name')
+            ->withColumn(SpyCmsPageLocalizedAttributesTableMap::COL_NAME, static::CMS_NAME)
             ->addJoin(
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE,
                 SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
@@ -155,7 +156,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->innerJoinCmsTemplate()
             ->groupBy(SpyCmsPageTableMap::COL_ID_CMS_PAGE)
             ->groupBy(static::TEMPLATE_NAME)
-            ->groupBy('name');
+            ->groupBy(static::CMS_NAME);
     }
 
     /**
@@ -200,6 +201,33 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 Criteria::LEFT_JOIN
             )
             ->withColumn(sprintf('COUNT(DISTINCT %s)', SpyCmsVersionTableMap::COL_VERSION), static::CMS_VERSION_COUNT);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryLocalizedPagesWithTemplates(): SpyCmsPageQuery
+    {
+        return $this->queryPages()
+            ->leftJoinSpyCmsPageLocalizedAttributes()
+            ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', SpyCmsPageLocalizedAttributesTableMap::COL_NAME), static::CMS_NAME)
+            ->addJoin(
+                SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+                SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
+                Criteria::LEFT_JOIN
+            )
+            ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', SpyUrlTableMap::COL_URL), static::CMS_URLS)
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, static::TEMPLATE_NAME)
+            ->leftJoinCmsTemplate()
+            ->addJoin(
+                SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+                SpyCmsVersionTableMap::COL_FK_CMS_PAGE,
+                Criteria::LEFT_JOIN
+            )
+            ->withColumn(sprintf('COUNT(DISTINCT %s)', SpyCmsVersionTableMap::COL_VERSION), static::CMS_VERSION_COUNT)
+            ->groupByIdCmsPage();
     }
 
     /**

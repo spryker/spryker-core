@@ -10,6 +10,7 @@ namespace Spryker\Zed\Cms\Business\Page;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsPageReader implements CmsPageReaderInterface
@@ -25,15 +26,23 @@ class CmsPageReader implements CmsPageReaderInterface
     protected $cmsPageMapper;
 
     /**
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface $cmsPageMapper
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        CmsPageMapperInterface $cmsPageMapper
+        CmsPageMapperInterface $cmsPageMapper,
+        CmsToLocaleFacadeInterface $localeFacade
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->cmsPageMapper = $cmsPageMapper;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -49,20 +58,38 @@ class CmsPageReader implements CmsPageReaderInterface
             return null;
         }
 
-        $cmsPageMapper = $this->cmsPageMapper;
-        $cmsPageTransfer = $cmsPageMapper->mapCmsPageTransfer($cmsPageEntity);
-        $urlLocaleMap = $cmsPageMapper->mapCmsPageUrlLocale($cmsPageEntity);
+        $cmsPageTransfer = $this->cmsPageMapper->mapCmsPageTransfer($cmsPageEntity);
 
-        foreach ($cmsPageEntity->getSpyCmsPageLocalizedAttributess() as $cmsPageLocalizedAttributesEntity) {
+        return $this->hydrateCmsPageWithLocalizedAttributes($cmsPageTransfer, $cmsPageEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    protected function hydrateCmsPageWithLocalizedAttributes(CmsPageTransfer $cmsPageTransfer, SpyCmsPage $cmsPageEntity): CmsPageTransfer
+    {
+        $availableLocales = $this->localeFacade->getAvailableLocales();
+        $urlLocaleMap = $this->cmsPageMapper->mapCmsPageUrlLocale($cmsPageEntity);
+        $localizedAttributesIdEntityMap = $this->createKeyMappingByLocalizedAttributes($cmsPageEntity);
+
+        foreach ($availableLocales as $idLocale => $localeName) {
+            $cmsPageLocalizedAttributesEntity = $this->getLocalizedAttributesByLocale(
+                $localizedAttributesIdEntityMap,
+                $idLocale
+            );
+
             $url = $this->getLocalizedUrl($urlLocaleMap, $cmsPageLocalizedAttributesEntity);
 
-            $cmsPageAttributesTransfer = $cmsPageMapper->mapCmsLocalizedAttributesTransfer(
+            $cmsPageAttributesTransfer = $this->cmsPageMapper->mapCmsLocalizedAttributesTransfer(
                 $cmsPageLocalizedAttributesEntity,
                 $url
             );
             $cmsPageTransfer->addPageAttribute($cmsPageAttributesTransfer);
 
-            $cmsCmsPageMetaAttributes = $cmsPageMapper->mapCmsPageMetaAttributes($cmsPageLocalizedAttributesEntity);
+            $cmsCmsPageMetaAttributes = $this->cmsPageMapper->mapCmsPageMetaAttributes($cmsPageLocalizedAttributesEntity);
             $cmsPageTransfer->addMetaAttribute($cmsCmsPageMetaAttributes);
         }
 
@@ -98,5 +125,35 @@ class CmsPageReader implements CmsPageReaderInterface
             $url = $urlLocaleMap[$cmsPageLocalizedAttributesEntity->getFkLocale()];
         }
         return $url;
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[]
+     */
+    protected function createKeyMappingByLocalizedAttributes(SpyCmsPage $cmsPageEntity): array
+    {
+        $localizedAttributesMap = [];
+        foreach ($cmsPageEntity->getSpyCmsPageLocalizedAttributess() as $cmsPageLocalizedAttributesEntity) {
+            $localizedAttributesMap[$cmsPageLocalizedAttributesEntity->getFkLocale()] = $cmsPageLocalizedAttributesEntity;
+        }
+
+        return $localizedAttributesMap;
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $localizedAttributesIdEntityMap
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
+     */
+    protected function getLocalizedAttributesByLocale(array $localizedAttributesIdEntityMap, int $idLocale): SpyCmsPageLocalizedAttributes
+    {
+        if (isset($localizedAttributesIdEntityMap[$idLocale])) {
+            return $localizedAttributesIdEntityMap[$idLocale];
+        }
+
+        return (new SpyCmsPageLocalizedAttributes())->setFkLocale($idLocale);
     }
 }

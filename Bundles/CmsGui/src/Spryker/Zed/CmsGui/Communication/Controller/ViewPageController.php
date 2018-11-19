@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
@@ -23,9 +22,7 @@ class ViewPageController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -38,9 +35,9 @@ class ViewPageController extends AbstractController
         $cmsLocalizedPageEntity = $this->getFactory()->getCmsQueryContainer()->queryCmsPageLocalizedAttributesByFkPage($idCmsPage)->findOne();
 
         if ($cmsVersionTransfer === null) {
-            throw new NotFoundHttpException(
-                sprintf('Cms published page with id "%d" not found.', $idCmsPage)
-            );
+            $this->addErrorMessage(sprintf('Cms page with id %s doesn\'t exist', $idCmsPage));
+
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
 
         $cmsVersionDataTransfer = $this->getFactory()->getCmsFacade()->getCmsVersionData($idCmsPage);

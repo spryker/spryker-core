@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Wishlist\Business\Model;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
@@ -24,6 +25,11 @@ class Writer implements WriterInterface
     use DatabaseTransactionHandlerTrait;
 
     public const DEFAULT_NAME = 'default';
+
+    protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'wishlist.validation.error.name.already_exists';
+    protected const ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT = 'wishlist.validation.error.name.wrong_format';
+
+    protected const WISH_LIST_NAME_VALIDATION_REGEX = '/^[ A-Za-z0-9_-]+$/';
 
     /**
      * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
@@ -102,17 +108,21 @@ class Writer implements WriterInterface
     {
         $wishlistResponseTransfer = new WishlistResponseTransfer();
 
-        if ($this->checkWishlistUniqueName($wishlistTransfer)) {
-            $wishlistResponseTransfer
-                ->setWishlist($this->createWishlist($wishlistTransfer))
-                ->setIsSuccess(true);
-        } else {
-            $wishlistResponseTransfer
+        if (!$this->checkWishlistUniqueName($wishlistTransfer)) {
+            return $wishlistResponseTransfer
                 ->setIsSuccess(false)
-                ->addError('A wishlist with the same name already exists.');
+                ->addError(static::ERROR_MESSAGE_NAME_ALREADY_EXISTS);
         }
 
-        return $wishlistResponseTransfer;
+        if (!$this->isWishListNameValid($wishlistTransfer)) {
+            return $wishlistResponseTransfer
+                ->setIsSuccess(false)
+                ->addError(static::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT);
+        }
+
+        return $wishlistResponseTransfer
+            ->setWishlist($this->createWishlist($wishlistTransfer))
+            ->setIsSuccess(true);
     }
 
     /**
@@ -154,17 +164,21 @@ class Writer implements WriterInterface
     {
         $wishlistResponseTransfer = new WishlistResponseTransfer();
 
-        if ($this->checkWishlistUniqueNameWhenUpdating($wishlistTransfer)) {
-            $wishlistResponseTransfer
-                ->setWishlist($this->updateWishlist($wishlistTransfer))
-                ->setIsSuccess(true);
-        } else {
-            $wishlistResponseTransfer
+        if (!$this->checkWishlistUniqueName($wishlistTransfer)) {
+            return $wishlistResponseTransfer
                 ->setIsSuccess(false)
-                ->addError('A wishlist with the same name already exists.');
+                ->addError(static::ERROR_MESSAGE_NAME_ALREADY_EXISTS);
         }
 
-        return $wishlistResponseTransfer;
+        if (!$this->isWishListNameValid($wishlistTransfer)) {
+            return $wishlistResponseTransfer
+                ->setIsSuccess(false)
+                ->addError(static::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT);
+        }
+
+        return $wishlistResponseTransfer
+            ->setWishlist($this->updateWishlist($wishlistTransfer))
+            ->setIsSuccess(true);
     }
 
     /**
@@ -272,7 +286,15 @@ class Writer implements WriterInterface
     {
         $this->assertWishlistItemUpdateRequest($wishlistItemTransfer);
 
-        if (!$this->preAddItemCheck($wishlistItemTransfer) || ($this->productFacade && !$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku()))) {
+        $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($wishlistItemTransfer->getSku());
+
+        if ($this->productFacade
+            && (!$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku())
+                || !$this->productFacade->isProductConcreteActive($productConcreteTransfer))) {
+            return $wishlistItemTransfer;
+        }
+
+        if (!$this->preAddItemCheck($wishlistItemTransfer)) {
             return $wishlistItemTransfer;
         }
 
@@ -477,6 +499,18 @@ class Writer implements WriterInterface
             ->filterByIdWishlist($wishlistTransfer->getIdWishlist(), Criteria::NOT_EQUAL);
 
         return $query->count() === 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return bool
+     */
+    protected function isWishListNameValid(WishlistTransfer $wishlistTransfer): bool
+    {
+        $wishlistTransfer->requireName();
+
+        return preg_match(static::WISH_LIST_NAME_VALIDATION_REGEX, $wishlistTransfer->getName());
     }
 
     /**

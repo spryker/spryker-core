@@ -59,19 +59,8 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
         $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
         $priceDimensionTransfer->requireIdMerchantRelationship();
 
-        $idPriceProductStoreBeforeUpdate = $priceProductTransfer->getMoneyValue()->getIdEntity();
-
-        $priceProductTransfer = $this->priceProductFacade->persistPriceProductStore($priceProductTransfer);
-
-        if (!$this->isPriceStoreRelationChanged($priceProductTransfer, $idPriceProductStoreBeforeUpdate)) {
-            return $priceProductTransfer;
-        }
-
-        if ($idPriceProductStoreBeforeUpdate) {
-            $this->priceProductMerchantRelationshipEntityManager->deleteByIdPriceProductStoreAndIdMerchantRelationship(
-                $idPriceProductStoreBeforeUpdate,
-                $priceDimensionTransfer->getIdMerchantRelationship()
-            );
+        if (!$priceProductTransfer->getIdPriceProduct()) {
+            $priceProductTransfer = $this->persistPriceProductStore($priceProductTransfer);
         }
 
         $priceProductMerchantRelationshipEntityTransfer = $this->getPriceProductMerchantRelationshipEntityTransfer($priceProductTransfer);
@@ -110,32 +99,39 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param int|null $idPriceProductStoreBeforeUpdate
-     *
-     * @return bool
-     */
-    protected function isPriceStoreRelationChanged(PriceProductTransfer $priceProductTransfer, ?int $idPriceProductStoreBeforeUpdate): bool
-    {
-        return !$idPriceProductStoreBeforeUpdate || $priceProductTransfer->getMoneyValue()->getIdEntity() !== $idPriceProductStoreBeforeUpdate;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer
      */
     protected function getPriceProductMerchantRelationshipEntityTransfer(PriceProductTransfer $priceProductTransfer): SpyPriceProductMerchantRelationshipEntityTransfer
     {
+        $idPriceProductMerchantRelationship = $this->priceProductMerchantRelationshipRepository
+            ->findIdByPriceProductTransfer($priceProductTransfer);
+
         $priceProductMerchantRelationshipEntityTransfer = (new SpyPriceProductMerchantRelationshipEntityTransfer())
+            ->setIdPriceProductMerchantRelationship($idPriceProductMerchantRelationship)
             ->setFkMerchantRelationship($priceProductTransfer->getPriceDimension()->getIdMerchantRelationship())
             ->setFkPriceProductStore((string)$priceProductTransfer->getMoneyValue()->getIdEntity());
 
-        if ($priceProductTransfer->getIdProductAbstract()) {
-            $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
-        } else {
+        if ($priceProductTransfer->getIdProduct()) {
             $priceProductMerchantRelationshipEntityTransfer->setFkProduct($priceProductTransfer->getIdProduct());
+
+            return $priceProductMerchantRelationshipEntityTransfer;
         }
 
+        $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
+
         return $priceProductMerchantRelationshipEntityTransfer;
+    }
+
+    /**
+     * @deprecated This functionality is duplicated if you are using PriceProduct:^2.4.0
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function persistPriceProductStore(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        return $this->priceProductFacade->persistPriceProductStore($priceProductTransfer);
     }
 }

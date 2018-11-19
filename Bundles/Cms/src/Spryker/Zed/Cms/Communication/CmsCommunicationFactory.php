@@ -23,6 +23,7 @@ use Symfony\Component\Form\FormInterface;
 /**
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
+ * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
  */
 class CmsCommunicationFactory extends AbstractCommunicationFactory
 {

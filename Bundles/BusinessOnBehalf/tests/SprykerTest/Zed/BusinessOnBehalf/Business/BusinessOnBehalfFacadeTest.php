@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 
 /**
@@ -103,19 +104,22 @@ class BusinessOnBehalfFacadeTest extends Unit
     {
         //Arrange
         $expectedCompanyUserAmount = 1;
-        $activeCompany = $this->tester->haveActiveCompany();
-        $inactiveCompany = $this->tester->haveInactiveCompany();
+        $activeness = [true, false];
+        $statuses = [
+            SpyCompanyTableMap::COL_STATUS_APPROVED,
+            SpyCompanyTableMap::COL_STATUS_PENDING,
+            SpyCompanyTableMap::COL_STATUS_DENIED,
+        ];
 
-        $seedDataWithActiveCompany = [
-            CompanyUserTransfer::FK_COMPANY => $activeCompany->getIdCompany(),
-            CompanyUserTransfer::CUSTOMER => $this->customer,
-        ];
-        $seedDataWithInactiveCompany = [
-            CompanyUserTransfer::FK_COMPANY => $inactiveCompany->getIdCompany(),
-            CompanyUserTransfer::CUSTOMER => $this->customer,
-        ];
-        $this->tester->haveCompanyUser($seedDataWithActiveCompany);
-        $this->tester->haveCompanyUser($seedDataWithInactiveCompany);
+        foreach ($activeness as $isActive) {
+            foreach ($statuses as $status) {
+                $company = $this->tester->haveCompany(['isActive' => $isActive, 'status' => $status]);
+                $this->tester->haveCompanyUser([
+                    CompanyUserTransfer::FK_COMPANY => $company->getIdCompany(),
+                    CompanyUserTransfer::CUSTOMER => $this->customer,
+                ]);
+            }
+        }
 
         //Act
         $actualCompanyUserCollection = $this->tester->getFacade()->findActiveCompanyUsersByCustomerId($this->customer);

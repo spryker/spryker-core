@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsGui\Communication;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent;
@@ -100,25 +101,20 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider
      * @param int|null $idCmsPage
+     * @param \Generated\Shared\Transfer\CmsPageTransfer|null $cmsPageTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsPageForm(CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider, $idCmsPage = null)
-    {
-        return $this->getCmsPageForm($cmsPageFormTypeDataProvider, $idCmsPage);
-    }
+    public function createCmsPageForm(
+        CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider,
+        $idCmsPage = null,
+        ?CmsPageTransfer $cmsPageTransfer = null
+    ): FormInterface {
+        $cmsPageTransfer = $cmsPageTransfer?: $cmsPageFormTypeDataProvider->getData($idCmsPage);
 
-    /**
-     * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider
-     * @param int|null $idCmsPage
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getCmsPageForm(CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider, ?int $idCmsPage = null): FormInterface
-    {
         return $this->getFormFactory()->create(
             CmsPageFormType::class,
-            $cmsPageFormTypeDataProvider->getData($idCmsPage),
+            $cmsPageTransfer,
             $cmsPageFormTypeDataProvider->getOptions()
         );
     }

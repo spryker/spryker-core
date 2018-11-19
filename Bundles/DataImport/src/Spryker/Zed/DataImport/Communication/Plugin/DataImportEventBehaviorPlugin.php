@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\DataImport\Business\DataImportFacadeInterface getFacade()
  * @method \Spryker\Zed\DataImport\Communication\DataImportCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DataImport\DataImportConfig getConfig()
  */
 class DataImportEventBehaviorPlugin extends AbstractPlugin implements DataImportBeforeImportHookInterface, DataImportAfterImportHookInterface
 {
