@@ -23,6 +23,7 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGenerato
 class RestApiDocumentationPathGeneratorTest extends Unit
 {
     protected const METHOD_PATCH = 'patch';
+    protected const METHOD_DELETE = 'delete';
     protected const TEST_PATH_WITH_ID = '/test-path/{test-resource-id}';
     protected const TEST_PATH = '/test-path';
     protected const RESPONSE_CODE_OK = 200;
@@ -96,7 +97,11 @@ class RestApiDocumentationPathGeneratorTest extends Unit
         $paths = $this->pathGenerator->getPaths();
 
         $this->assertArrayHasKey(static::TEST_PATH_WITH_ID, $paths);
-        $this->assertEquals($this->tester->getPathGeneratorExpectedPatchPathData(), $paths[static::TEST_PATH_WITH_ID]);
+        $this->assertArrayHasKey(static::METHOD_PATCH, $paths[static::TEST_PATH_WITH_ID]);
+        $this->assertArrayHasKey('summary', $paths[static::TEST_PATH_WITH_ID][static::METHOD_PATCH]);
+        $this->assertArrayHasKey('tags', $paths[static::TEST_PATH_WITH_ID][static::METHOD_PATCH]);
+        $this->assertArrayHasKey('parameters', $paths[static::TEST_PATH_WITH_ID][static::METHOD_PATCH]);
+        $this->assertArrayHasKey('responses', $paths[static::TEST_PATH_WITH_ID][static::METHOD_PATCH]);
     }
 
     /**
@@ -129,6 +134,10 @@ class RestApiDocumentationPathGeneratorTest extends Unit
         $paths = $this->pathGenerator->getPaths();
 
         $this->assertArrayHasKey(static::TEST_PATH_WITH_ID, $paths);
-        $this->assertEquals($this->tester->getPathGeneratorExpectedDeletePathData(), $paths[static::TEST_PATH_WITH_ID]);
+        $this->assertArrayHasKey(static::METHOD_DELETE, $paths[static::TEST_PATH_WITH_ID]);
+        $this->assertArrayHasKey('summary', $paths[static::TEST_PATH_WITH_ID][static::METHOD_DELETE]);
+        $this->assertArrayHasKey('tags', $paths[static::TEST_PATH_WITH_ID][static::METHOD_DELETE]);
+        $this->assertArrayHasKey('parameters', $paths[static::TEST_PATH_WITH_ID][static::METHOD_DELETE]);
+        $this->assertArrayHasKey('responses', $paths[static::TEST_PATH_WITH_ID][static::METHOD_DELETE]);
     }
 }
