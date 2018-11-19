@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinueStorageMapper;
 
-interface ProductDiscontinueStorageMapperInterface
+interface ProductDiscontinuedStorageMapperInterface
 {
     /**
      * @param \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[] $productDiscontinuedStorageEntities
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function mapProductDiscontinueStorageToSynchronizationTransfers(array $productDiscontinuedStorageEntities): array;
+    public function mapProductDiscontinuedStorageEntitiesToSynchronizationDataTransfers(array $productDiscontinuedStorageEntities): array;
 }

@@ -54,19 +54,11 @@ class ProductDiscontinuedSynchronizationDataPlugin extends AbstractPlugin implem
      */
     public function getData(array $ids = [])
     {
-        if (empty($ids)) {
-            $productDiscontinuedStorageEntities = $this->getRepository()->findAllProductDiscontinuedStorageEntities();
-
-            return $this->getFactory()
-                ->createProductDiscontinuedStorageMapper()
-                ->mapProductDiscontinueStorageToSynchronizationTransfers($productDiscontinuedStorageEntities);
-        }
-
-        $productDiscontinuedStorageEntities = $this->getRepository()->findProductDiscontinuedStorageEntitiesByIds($ids);
+        $productDiscontinuedStorageEntities = $this->findProductDiscontinuedStorageEntities($ids);
 
         return $this->getFactory()
             ->createProductDiscontinuedStorageMapper()
-            ->mapProductDiscontinueStorageToSynchronizationTransfers($productDiscontinuedStorageEntities);
+            ->mapProductDiscontinuedStorageEntitiesToSynchronizationDataTransfers($productDiscontinuedStorageEntities);
     }
 
     /**
@@ -103,5 +95,19 @@ class ProductDiscontinuedSynchronizationDataPlugin extends AbstractPlugin implem
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getProductDiscontinuedSynchronizationPoolName();
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
+     */
+    protected function findProductDiscontinuedStorageEntities(array $ids): array
+    {
+        if (empty($ids)) {
+            return $this->getRepository()->findAllProductDiscontinuedStorageEntities();
+        }
+
+        return $this->getRepository()->findProductDiscontinuedStorageEntitiesByIds($ids);
     }
 }

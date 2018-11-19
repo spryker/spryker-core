@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductDiscontinuedStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinueStorageMapper\ProductDiscontinueStorageMapper;
-use Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinueStorageMapper\ProductDiscontinueStorageMapperInterface;
+use Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinueStorageMapper\ProductDiscontinuedStorageMapper;
+use Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinueStorageMapper\ProductDiscontinuedStorageMapperInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageDependencyProvider;
 
@@ -30,10 +30,10 @@ class ProductDiscontinuedStorageCommunicationFactory extends AbstractCommunicati
     }
 
     /**
-     * @return \Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinueStorageMapper\ProductDiscontinueStorageMapperInterface
+     * @return \Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinueStorageMapper\ProductDiscontinuedStorageMapperInterface
      */
-    public function createProductDiscontinuedStorageMapper(): ProductDiscontinueStorageMapperInterface
+    public function createProductDiscontinuedStorageMapper(): ProductDiscontinuedStorageMapperInterface
     {
-        return new ProductDiscontinueStorageMapper();
+        return new ProductDiscontinuedStorageMapper();
     }
 }
