@@ -52,7 +52,7 @@ interface CompanyUserClientInterface
 
     /**
      * Specification:
-     * - Retrieves company users collection by company id.
+     * - Retrieves company users collection (except deleted) by company id.
      *
      * @api
      *

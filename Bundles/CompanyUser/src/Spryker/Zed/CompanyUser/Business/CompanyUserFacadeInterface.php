@@ -93,7 +93,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves company users collection.
+     * - Retrieves company users(except deleted) collection.
      *
      * @api
      *
