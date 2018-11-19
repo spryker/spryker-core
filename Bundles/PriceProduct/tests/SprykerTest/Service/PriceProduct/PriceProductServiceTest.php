@@ -69,10 +69,44 @@ class PriceProductServiceTest extends Unit
         $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $mergedPriceProductTransfer */
-        $mergedPriceProductTransfer = $mergedPriceProductTransfers[array_keys($mergedPriceProductTransfers)[0]];
+        $mergedPriceProductTransfer = reset($mergedPriceProductTransfers);
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer */
         $abstractPriceProductTransfer = $abstractPriceProductTransfers[0];
         $this->assertSame($concretePriceProductTransfer, $mergedPriceProductTransfer);
+        $this->assertEquals($abstractPriceProductTransfer->getMoneyValue()->getGrossAmount(), $mergedPriceProductTransfer->getMoneyValue()->getGrossAmount());
+        $this->assertEquals($abstractPriceProductTransfer->getMoneyValue()->getNetAmount(), $mergedPriceProductTransfer->getMoneyValue()->getNetAmount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMergePricesWillReturnPartialAbstractPricesOnSingleConcretePriceSet(): void
+    {
+        $priceProductService = $this->getPriceProductService();
+
+        $concretePriceProductTransfers = $this->getSinglePriceProductTransfers();
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer */
+        $concretePriceProductTransfer = $concretePriceProductTransfers[0];
+
+        $abstractPriceProductTransfers = $this->getMultiplePriceProductTransfers();
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer */
+        $abstractPriceProductTransfer = $abstractPriceProductTransfers[0];
+
+        $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
+
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $mergedPriceProductTransfer */
+        $mergedPriceProductTransfer = $mergedPriceProductTransfers[array_keys($mergedPriceProductTransfers)[0]];
+        $this->assertSame($concretePriceProductTransfer, $mergedPriceProductTransfer);
+        $this->assertEquals($concretePriceProductTransfer->getMoneyValue()->getGrossAmount(), $mergedPriceProductTransfer->getMoneyValue()->getGrossAmount());
+        $this->assertEquals($concretePriceProductTransfer->getMoneyValue()->getNetAmount(), $mergedPriceProductTransfer->getMoneyValue()->getNetAmount());
+        $this->assertNotEquals($abstractPriceProductTransfer->getMoneyValue()->getGrossAmount(), $mergedPriceProductTransfer->getMoneyValue()->getGrossAmount());
+        $this->assertNotEquals($abstractPriceProductTransfer->getMoneyValue()->getNetAmount(), $mergedPriceProductTransfer->getMoneyValue()->getNetAmount());
+
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $mergedPriceProductTransfer */
+        $mergedPriceProductTransfer = $mergedPriceProductTransfers[array_keys($mergedPriceProductTransfers)[1]];
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer */
+        $abstractPriceProductTransfer = $abstractPriceProductTransfers[1];
+        $this->assertSame($abstractPriceProductTransfer, $mergedPriceProductTransfer);
         $this->assertEquals($abstractPriceProductTransfer->getMoneyValue()->getGrossAmount(), $mergedPriceProductTransfer->getMoneyValue()->getGrossAmount());
         $this->assertEquals($abstractPriceProductTransfer->getMoneyValue()->getNetAmount(), $mergedPriceProductTransfer->getMoneyValue()->getNetAmount());
     }
@@ -98,6 +132,50 @@ class PriceProductServiceTest extends Unit
                 ->build(),
             (new PriceProductBuilder(['priceTypeName' => 'ORIGINAL']))
                 ->withMoneyValue((new MoneyValueBuilder())->withCurrency())
+                ->withPriceDimension()
+                ->withPriceType()
+                ->build(),
+        ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     */
+    protected function getSinglePriceProductTransfers(): array
+    {
+        return [
+            (new PriceProductBuilder(['priceTypeName' => 'DEFAULT']))
+                ->withMoneyValue((new MoneyValueBuilder())->withCurrency())
+                ->withPriceDimension()
+                ->withPriceType()
+                ->build(),
+        ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     */
+    protected function getMultiplePriceProductTransfers(): array
+    {
+        $chfCurrencyData = ['code' => 'CHF', 'name' => 'CHF', 'symbol' => 'CHF'];
+        return [
+            (new PriceProductBuilder(['priceTypeName' => 'DEFAULT']))
+                ->withMoneyValue((new MoneyValueBuilder())->withCurrency())
+                ->withPriceDimension()
+                ->withPriceType()
+                ->build(),
+            (new PriceProductBuilder(['priceTypeName' => 'ORIGINAL']))
+                ->withMoneyValue((new MoneyValueBuilder())->withCurrency())
+                ->withPriceDimension()
+                ->withPriceType()
+                ->build(),
+            (new PriceProductBuilder(['priceTypeName' => 'DEFAULT']))
+                ->withMoneyValue((new MoneyValueBuilder())->withCurrency($chfCurrencyData))
+                ->withPriceDimension()
+                ->withPriceType()
+                ->build(),
+            (new PriceProductBuilder(['priceTypeName' => 'ORIGINAL']))
+                ->withMoneyValue((new MoneyValueBuilder())->withCurrency($chfCurrencyData))
                 ->withPriceDimension()
                 ->withPriceType()
                 ->build(),
