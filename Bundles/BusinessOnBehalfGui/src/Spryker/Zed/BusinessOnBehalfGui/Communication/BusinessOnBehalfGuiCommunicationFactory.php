@@ -9,6 +9,8 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Communication;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiDependencyProvider;
+use Spryker\Zed\BusinessOnBehalfGui\Communication\BusinessUnitChecker\BusinessUnitChecker;
+use Spryker\Zed\BusinessOnBehalfGui\Communication\BusinessUnitChecker\BusinessUnitCheckerInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\CustomerBusinessUnitAttachForm;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\DataProvider\CustomerBusinessUnitAttachFormDataProvider;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface;
@@ -85,5 +87,15 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getCustomerBusinessUnitAttachForm(?CompanyUserTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(CustomerBusinessUnitAttachForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\BusinessOnBehalfGui\Communication\BusinessUnitChecker\BusinessUnitCheckerInterface
+     */
+    public function createBusinessUnitChecker(): BusinessUnitCheckerInterface
+    {
+        return new BusinessUnitChecker(
+            $this->getCompanyUserFacade()
+        );
     }
 }

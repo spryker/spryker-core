@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Controller;
 
-use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +45,7 @@ class CreateCompanyUserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $companyUserTransfer = $form->getData();
 
-            if ($this->checkRelationBetweenCompanyUserAndBusinessUnit($companyUserTransfer)) {
+            if ($this->getFactory()->createBusinessUnitChecker()->checkBusinessUnitOfCompanyUserExist($companyUserTransfer)) {
                 $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED);
             } else {
                 $companyUserResponseTransfer = $this->getFactory()
@@ -67,26 +65,5 @@ class CreateCompanyUserController extends AbstractController
         return $this->viewResponse([
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return bool
-     */
-    protected function checkRelationBetweenCompanyUserAndBusinessUnit(CompanyUserTransfer $companyUserTransfer)
-    {
-        $companyUserCollection = $this->getFactory()->getCompanyUserFacade()->getCompanyUserCollection(
-            (new CompanyUserCriteriaFilterTransfer())->setIdCompany($companyUserTransfer->getFkCompany())
-        );
-
-        foreach ($companyUserCollection->getCompanyUsers() as $companyUser) {
-            if ($companyUser->getFkCompanyBusinessUnit() === $companyUserTransfer->getFkCompanyBusinessUnit() &&
-                $companyUser->getFkCustomer() === $companyUserTransfer->getFkCustomer()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
