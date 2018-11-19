@@ -306,7 +306,8 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      */
     protected function getIdImageSetSubQuery(): string
     {
-        $idImageSetSubQuery = $this->getFactory()->getProductImageQueryContainer()
+        $idImageSetSubQuery = $this->getFactory()
+            ->getProductImageQueryContainer()
             ->queryProductImageSet()
             ->addSelfSelectColumns()
             ->clearSelectColumns()
