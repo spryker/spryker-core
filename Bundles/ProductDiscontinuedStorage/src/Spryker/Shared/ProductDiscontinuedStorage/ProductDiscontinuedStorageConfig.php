@@ -21,7 +21,7 @@ class ProductDiscontinuedStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Queue name as used for processing product discontinued messages
+     * - Queue name as used for processing product discontinued messages.
      *
      * @api
      */

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Synchronization;
 
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
@@ -55,23 +54,19 @@ class ProductDiscontinuedSynchronizationDataPlugin extends AbstractPlugin implem
      */
     public function getData(array $ids = [])
     {
-        $synchronizationDataTransfers = [];
-        $productDiscontinuedStorageEntities = $this->getRepository()->findProductDiscontinuedStorageEntitiesByIds($ids);
-
         if (empty($ids)) {
             $productDiscontinuedStorageEntities = $this->getRepository()->findAllProductDiscontinuedStorageEntities();
+
+            return $this->getFactory()
+                ->createProductDiscontinuedStorageMapper()
+                ->mapProductDiscontinueStorageToSynchronizationTransfers($productDiscontinuedStorageEntities);
         }
 
-        foreach ($productDiscontinuedStorageEntities as $productDiscontinuedStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            /** @var string $data */
-            $data = $productDiscontinuedStorageEntity->getData();
-            $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($productDiscontinuedStorageEntity->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
+        $productDiscontinuedStorageEntities = $this->getRepository()->findProductDiscontinuedStorageEntitiesByIds($ids);
 
-        return $synchronizationDataTransfers;
+        return $this->getFactory()
+            ->createProductDiscontinuedStorageMapper()
+            ->mapProductDiscontinueStorageToSynchronizationTransfers($productDiscontinuedStorageEntities);
     }
 
     /**
