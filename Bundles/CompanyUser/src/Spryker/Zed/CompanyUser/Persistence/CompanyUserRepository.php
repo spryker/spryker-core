@@ -88,6 +88,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     {
         $queryCompanyUser = $this->getFactory()
             ->createCompanyUserQuery()
+            ->joinWithCustomer()
             ->useCustomerQuery()
                 ->filterByAnonymizedAt(null, Criteria::ISNULL)
             ->endUse();

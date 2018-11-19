@@ -15,6 +15,9 @@ use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToF
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapter;
 use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreBridge;
 
+/**
+ * @method \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig getConfig()
+ */
 class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const ADAPTER_FINDER = 'ADAPTER_FINDER';

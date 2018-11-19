@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CmsContentWidgetProductConnector\Business\CmsContentWidgetProductConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorConfig getConfig()
+ * @method \Spryker\Zed\CmsContentWidgetProductConnector\Persistence\CmsContentWidgetProductConnectorQueryContainerInterface getQueryContainer()
  */
 class CmsProductSkuMapperPlugin extends AbstractPlugin implements CmsContentWidgetParameterMapperPluginInterface
 {

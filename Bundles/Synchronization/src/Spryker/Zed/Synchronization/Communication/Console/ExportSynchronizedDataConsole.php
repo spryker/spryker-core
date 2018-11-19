@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface getFacade()
+ * @method \Spryker\Zed\Synchronization\Communication\SynchronizationCommunicationFactory getFactory()
  */
 class ExportSynchronizedDataConsole extends Console
 {

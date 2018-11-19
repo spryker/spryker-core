@@ -12,6 +12,9 @@ use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Cart\CartConfig getConfig()
+ */
 class CartDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CALCULATION = 'calculation facade';
