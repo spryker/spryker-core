@@ -17,6 +17,9 @@ class LocaleChoiceFormDataProvider
      */
     protected $localeFacade;
 
+    /**
+     * @param \Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleBridgeInterface $localeFacade
+     */
     public function __construct(UserLocaleGuiToLocaleBridgeInterface $localeFacade)
     {
         $this->localeFacade = $localeFacade;
