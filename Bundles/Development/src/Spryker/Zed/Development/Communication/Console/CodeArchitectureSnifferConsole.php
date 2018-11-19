@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Development\Communication\Console;
 
+use Generated\Shared\Transfer\ModuleFilterTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -74,9 +77,11 @@ class CodeArchitectureSnifferConsole extends Console
         }
 
         $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
+
         if ($path) {
             $message .= ' (' . $path . ')';
         }
+
         $this->info($message);
 
         if ($isCore) {
@@ -96,55 +101,116 @@ class CodeArchitectureSnifferConsole extends Console
 
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $module
+     * @param string $moduleArgument
      * @param string $subPath
      *
      * @return bool
      */
-    protected function runForCore(OutputInterface $output, $module, $subPath)
+    protected function runForCore(OutputInterface $output, $moduleArgument, $subPath): bool
     {
-        $path = $this->getCorePath($module, $subPath);
-        if (!is_dir($path)) {
-            $output->writeln(sprintf('<error>Path not found: %s</error>', $path));
+        $moduleTransferCollection = $this->getModulesToExecute($moduleArgument);
 
-            return false;
+        $count = 0;
+
+        foreach ($moduleTransferCollection as $moduleTransfer) {
+            $path = $this->getCorePath($moduleTransfer, $subPath);
+
+            if (!is_dir($path)) {
+                $output->writeln(sprintf('<error>Path not found: %s</error>', $path));
+
+                return false;
+            }
+
+            $violations = $this->getFacade()->runArchitectureSniffer($path, $this->input->getOptions());
+            $output->writeln($path, $violations ? OutputInterface::VERBOSITY_QUIET : OutputInterface::VERBOSITY_VERBOSE);
+            $countCurrent = $this->displayViolations($output, $violations);
+            $this->displayViolationsCountMessage($output, $countCurrent);
+            $count += $countCurrent;
         }
-
-        $output->writeln($path, OutputInterface::VERBOSITY_VERBOSE);
-        $violations = $this->getFacade()->runArchitectureSniffer($path, $this->input->getOptions());
-        $count = $this->displayViolations($output, $violations);
-        $this->displayViolationsCountMessage($output, $count);
 
         return $count === 0;
     }
 
     /**
-     * @param string $module
+     * @param string $namespace
+     *
+     * @return bool
+     */
+    protected function getNamespaceIsSpryker(string $namespace): bool
+    {
+        return $namespace === static::NAMESPACE_SPRYKER || $namespace === static::NAMESPACE_SPRYKER_SHOP;
+    }
+
+    /**
+     * @param string $moduleArgument
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    protected function getModulesToExecute(string $moduleArgument): array
+    {
+        return $this->getFacade()->getModules($this->buildModuleFilterTransfer($moduleArgument));
+    }
+
+    /**
+     * @param string $moduleArgument
+     *
+     * @return \Generated\Shared\Transfer\ModuleFilterTransfer|null
+     */
+    protected function buildModuleFilterTransfer(string $moduleArgument): ?ModuleFilterTransfer
+    {
+        if (!$moduleArgument) {
+            return null;
+        }
+
+        $moduleFilterTransfer = new ModuleFilterTransfer();
+
+        if (strpos($moduleArgument, '.') === false) {
+            $moduleTransfer = new ModuleTransfer();
+            $moduleTransfer->setName($moduleArgument);
+            $moduleFilterTransfer->setModule($moduleTransfer);
+
+            return $moduleFilterTransfer;
+        }
+
+        $this->addModuleFilterDetails($moduleArgument, $moduleFilterTransfer);
+
+        return $moduleFilterTransfer;
+    }
+
+    /**
+     * @param string $moduleArgument
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleFilterTransfer
+     */
+    protected function addModuleFilterDetails(string $moduleArgument, ModuleFilterTransfer $moduleFilterTransfer): ModuleFilterTransfer
+    {
+        [$organization, $module] = explode('.', $moduleArgument);
+
+        if ($module !== '*' && $module !== 'all') {
+            $moduleTransfer = new ModuleTransfer();
+            $moduleTransfer->setName($module);
+
+            $moduleFilterTransfer->setModule($moduleTransfer);
+        }
+
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer->setName($organization);
+
+        $moduleFilterTransfer->setOrganization($organizationTransfer);
+
+        return $moduleFilterTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param string $pathSuffix
      *
-     * @return string
+     * @return string|null
      */
-    protected function getCorePath($module, $pathSuffix)
+    protected function getCorePath(ModuleTransfer $moduleTransfer, $pathSuffix): ?string
     {
-        $namespace = null;
-        if (strpos($module, '.') !== false) {
-            [$namespace, $module] = explode('.', $module, 2);
-        }
-
-        if ($namespace === static::NAMESPACE_SPRYKER && is_dir($this->getFactory()->getConfig()->getPathToCore() . $module)) {
-            return $this->buildPath($this->getFactory()->getConfig()->getPathToCore() . $module . DIRECTORY_SEPARATOR, $pathSuffix);
-        }
-
-        if ($namespace === static::NAMESPACE_SPRYKER_SHOP && is_dir($this->getFactory()->getConfig()->getPathToShop() . $module)) {
-            return $this->buildPath($this->getFactory()->getConfig()->getPathToShop() . $module . DIRECTORY_SEPARATOR, $pathSuffix);
-        }
-
-        $vendor = $this->dasherize($namespace);
-        $module = $this->dasherize($module);
-        $pathToModule = $this->getFactory()->getConfig()->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR;
-        $path = $pathToModule . $module . DIRECTORY_SEPARATOR;
-
-        return $this->buildPath($path, $pathSuffix);
+        return $this->buildPath($moduleTransfer->getPath() . DIRECTORY_SEPARATOR, $pathSuffix);
     }
 
     /**
