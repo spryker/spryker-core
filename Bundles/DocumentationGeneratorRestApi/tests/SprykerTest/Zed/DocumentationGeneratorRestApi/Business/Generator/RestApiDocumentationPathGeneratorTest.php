@@ -96,7 +96,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
         $paths = $this->pathGenerator->getPaths();
 
         $this->assertArrayHasKey(static::TEST_PATH_WITH_ID, $paths);
-        $this->assertArraySubset($this->tester->getPathGeneratorExpectedPatchPathData(), $paths[static::TEST_PATH_WITH_ID]);
+        $this->assertEquals($this->tester->getPathGeneratorExpectedPatchPathData(), $paths[static::TEST_PATH_WITH_ID]);
     }
 
     /**
@@ -129,6 +129,6 @@ class RestApiDocumentationPathGeneratorTest extends Unit
         $paths = $this->pathGenerator->getPaths();
 
         $this->assertArrayHasKey(static::TEST_PATH_WITH_ID, $paths);
-        $this->assertArraySubset($this->tester->getPathGeneratorExpectedDeletePathData(), $paths[static::TEST_PATH_WITH_ID]);
+        $this->assertEquals($this->tester->getPathGeneratorExpectedDeletePathData(), $paths[static::TEST_PATH_WITH_ID]);
     }
 }
