@@ -61,6 +61,7 @@ class DocumentationGeneratorRestApiTester extends Actor
     protected const RESPONSE_DESCRIPTION_NOT_FOUND = 'Item not found';
     protected const RESPONSE_DESCRIPTION_DEFAULT = 'Expected response to a bad request.';
     protected const RESPONSE_DESCRIPTION_SUCCESS = 'Expected response to a valid request.';
+    protected const ID_PARAMETER_DESCRIPTION = 'Id of .';
 
     protected const TEST_RESOURCE_ID_WITH_BRACKETS = '{testResourceId}';
     protected const DEFAULT_GET_RESOURCE_SUMMARY = 'Get test resource.';
@@ -388,6 +389,7 @@ class DocumentationGeneratorRestApiTester extends Actor
                         'name' => static::TEST_RESOURCE_ID,
                         'in' => static::PARAMETER_IN_PATH,
                         'required' => true,
+                        'description' => static::ID_PARAMETER_DESCRIPTION,
                         'schema' => [
                             'type' => 'string',
                         ],
@@ -443,6 +445,7 @@ class DocumentationGeneratorRestApiTester extends Actor
                         'name' => static::TEST_RESOURCE_ID,
                         'in' => static::PARAMETER_IN_PATH,
                         'required' => true,
+                        'description' => static::ID_PARAMETER_DESCRIPTION,
                         'schema' => [
                             'type' => 'string',
                         ],
