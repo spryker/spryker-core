@@ -15,6 +15,7 @@ use Spryker\Zed\MerchantRelationshipDataImport\MerchantRelationshipDataImportCon
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipDataImport\Business\MerchantRelationshipDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantRelationshipDataImport\MerchantRelationshipDataImportConfig getConfig()
  */
 class MerchantRelationshipDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

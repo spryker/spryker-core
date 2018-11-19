@@ -11,6 +11,9 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiApiToTaxProductConnectorClientBridge;
 
+/**
+ * @method \Spryker\Glue\ProductTaxSetsRestApi\ProductTaxSetsRestApiConfig getConfig()
+ */
 class ProductTaxSetsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_TAX_PRODUCT_CONNECTOR = 'CLIENT_TAX_PRODUCT_CONNECTOR';

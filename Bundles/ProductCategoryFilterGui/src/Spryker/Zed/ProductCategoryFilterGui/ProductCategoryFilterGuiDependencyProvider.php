@@ -20,6 +20,9 @@ use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCatego
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToProductCategoryQueryContainerBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Service\ProductCategoryFilterGuiToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiConfig getConfig()
+ */
 class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_CATEGORY_FILTER = 'FACADE_PRODUCT_CATEGORY_FILTER';

@@ -20,6 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
  * @method \Spryker\Zed\Store\Communication\StoreCommunicationFactory getFactory()
  * @method \Spryker\Zed\Store\StoreConfig getConfig()
+ * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
  */
 class StoreRelationToggleType extends AbstractType
 {
