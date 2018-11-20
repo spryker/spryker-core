@@ -95,22 +95,13 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
      * @param int $idProductOptionGroup
      * @param bool $isActive
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
-     *
      * @return bool
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive)
     {
-        $productOptionGroupEntity = $this->findProductOptionGroupEntityById($idProductOptionGroup);
-
-        if (!$productOptionGroupEntity) {
-            throw new ProductOptionGroupNotFoundException(
-                sprintf('Product option group with id "%d" not found', $idProductOptionGroup)
-            );
-        }
+        $productOptionGroupEntity = $this->getOptionGroupById($idProductOptionGroup);
 
         $this->touchProductOptionGroupAbstractProducts($productOptionGroupEntity);
-
         $productOptionGroupEntity->setActive($isActive);
 
         return $productOptionGroupEntity->save() > 0;
@@ -119,13 +110,23 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     /**
      * @param int $idProductOptionGroup
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
-    protected function findProductOptionGroupEntityById(int $idProductOptionGroup): ?SpyProductOptionGroup
+    protected function getOptionGroupById(int $idProductOptionGroup): SpyProductOptionGroup
     {
-        return $this->productOptionQueryContainer
+        $productOptionGroupEntity = $this->productOptionQueryContainer
             ->queryProductOptionGroupById($idProductOptionGroup)
             ->findOne();
+
+        if (!$productOptionGroupEntity) {
+            throw new ProductOptionGroupNotFoundException(
+                sprintf('Product option group with id "%d" not found', $idProductOptionGroup)
+            );
+        }
+
+        return $productOptionGroupEntity;
     }
 
     /**
@@ -157,7 +158,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     protected function getProductOptionGroupEntity(ProductOptionGroupTransfer $productOptionGroupTransfer)
     {
         if ($productOptionGroupTransfer->getIdProductOptionGroup()) {
-            return $this->findProductOptionGroupEntityById($productOptionGroupTransfer->getIdProductOptionGroup());
+            return $this->getOptionGroupById($productOptionGroupTransfer->getIdProductOptionGroup());
         }
 
         return $this->createProductOptionGroupEntity();

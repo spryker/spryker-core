@@ -132,9 +132,9 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
-    protected function getOptionGroupById(int $idProductOptionGroup): ?SpyProductOptionGroup
+    protected function getOptionGroupById(int $idProductOptionGroup): SpyProductOptionGroup
     {
         $productOptionGroupEntity = $this->productOptionQueryContainer
             ->queryProductOptionGroupById($idProductOptionGroup)
@@ -155,9 +155,9 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\AbstractProductNotFoundException
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
-    protected function getProductAbstractBySku(string $abstractSku): ?SpyProductAbstract
+    protected function getProductAbstractBySku(string $abstractSku): SpyProductAbstract
     {
         $productAbstractEntity = $this->productOptionQueryContainer
             ->queryProductAbstractBySku($abstractSku)
