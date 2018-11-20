@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
@@ -184,4 +185,13 @@ interface ProductMeasurementUnitFacadeInterface
     public function translateProductMeasurementSalesUnit(
         ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
     ): ProductMeasurementSalesUnitTransfer;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function findProductMeasurementUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array;
 }

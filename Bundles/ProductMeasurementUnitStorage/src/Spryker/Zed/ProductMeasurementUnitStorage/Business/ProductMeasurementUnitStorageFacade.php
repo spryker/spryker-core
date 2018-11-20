@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -86,5 +87,17 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     public function getSalesUnitsByIds(array $salesUnitsIds): array
     {
         return $this->getFactory()->getProductMeasurementUnitFacade()->getSalesUnitsByIds($salesUnitsIds);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findProductMeasurementUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    {
+        return $this->getFactory()->getProductMeasurementUnitFacade()->findProductMeasurementUnitTransfersByOffsetAndLimit($filterTransfer);
     }
 }

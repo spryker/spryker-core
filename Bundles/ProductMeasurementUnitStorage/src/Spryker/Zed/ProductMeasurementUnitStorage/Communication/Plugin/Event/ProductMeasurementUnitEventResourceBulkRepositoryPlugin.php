@@ -7,21 +7,20 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Event;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\ProductMeasurementUnit\Persistence\Map\SpyProductMeasurementUnitTableMap;
 use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
 
 /**
- * @deprecated Use \Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Event\ProductMeasurementUnitEventResourceBulkRepositoryPlugin instead.
- *
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Business\ProductMeasurementUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Communication\ProductMeasurementUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig getConfig()
  */
-class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
+class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -40,16 +39,16 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int $offset
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(int $offset, int $limit): array
     {
-        if (!empty($ids)) {
-            return $this->getFacade()->findProductMeasurementUnitTransfers($ids);
-        }
-        return $this->getFacade()->findAllProductMeasurementUnitTransfers();
+        $filterTranser = $this->createFilterTransfer($offset, $limit);
+
+        return $this->getFacade()->findProductMeasurementUnitTransfersByOffsetAndLimit($filterTranser);
     }
 
     /**
@@ -74,5 +73,18 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
     public function getIdColumnName(): ?string
     {
         return SpyProductMeasurementUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_UNIT;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductMeasurementUnitStorageFacadeInterface
 {
     /**
@@ -64,4 +66,13 @@ interface ProductMeasurementUnitStorageFacadeInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getSalesUnitsByIds(array $salesUnitIds): array;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findProductMeasurementUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array;
 }

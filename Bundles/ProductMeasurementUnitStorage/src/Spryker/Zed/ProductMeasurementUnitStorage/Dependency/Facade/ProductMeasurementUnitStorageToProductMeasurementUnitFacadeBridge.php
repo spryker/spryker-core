@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implements ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
 {
     /**
@@ -66,5 +68,15 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
     public function findAllProductMeasurementUnitTransfers(): array
     {
         return $this->productMeasurementUnitFacade->findAllProductMeasurementUnitTransfers();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function findProductMeasurementUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    {
+        return $this->productMeasurementUnitFacade->findProductMeasurementUnitTransfersByOffsetAndLimit($filterTransfer);
     }
 }
