@@ -32,4 +32,12 @@ interface ProductMeasurementUnitStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
      */
     public function findAllProductConcreteMeasurementUnitStorageEntities(): array;
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     */
+    public function findProductMeasurementUnitStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array;
 }
