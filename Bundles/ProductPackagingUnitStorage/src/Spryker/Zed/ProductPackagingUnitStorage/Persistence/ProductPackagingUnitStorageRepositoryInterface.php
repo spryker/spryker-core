@@ -27,4 +27,12 @@ interface ProductPackagingUnitStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function findAllProductAbstractPackagingUnitStorageEntities(): array;
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    public function findProductAbstractPackagingUnitStoragesByOffsetAndLimit(int $offset, int $limit): array;
 }

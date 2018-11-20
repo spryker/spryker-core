@@ -10,17 +10,15 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchroni
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductPackagingUnitSynchronizationDataBulkPlugin instead.
- *
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  */
-class ProductPackagingUnitSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -51,15 +49,17 @@ class ProductPackagingUnitSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int $offset
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(int $offset, int $limit): array
     {
         $synchronizationDataTransfers = [];
 
-        $productAbstractPackagingUnitTransfers = $this->getProductAbstractPackagingUnitStorageEntityTransfers($ids);
+        $productAbstractPackagingUnitTransfers = $this->getRepository()
+            ->findProductAbstractPackagingUnitStoragesByOffsetAndLimit($limit, $limit);
 
         foreach ($productAbstractPackagingUnitTransfers as $productAbstractPackagingUnitTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
@@ -69,22 +69,6 @@ class ProductPackagingUnitSynchronizationDataPlugin extends AbstractPlugin imple
         }
 
         return $synchronizationDataTransfers;
-    }
-
-    /**
-     * @param array $ids
-     *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
-     */
-    protected function getProductAbstractPackagingUnitStorageEntityTransfers(array $ids = [])
-    {
-        if (empty($ids)) {
-            return $this->getRepository()
-                ->findAllProductAbstractPackagingUnitStorageEntities();
-        }
-
-        return $this->getRepository()
-            ->findProductAbstractPackagingUnitStorageByProductAbstractIds($ids);
     }
 
     /**

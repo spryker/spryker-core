@@ -72,4 +72,20 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
 
         return $this->buildQueryFromCriteria($query)->find();
     }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    public function findProductAbstractPackagingUnitStoragesByOffsetAndLimit(int $offset, int $limit): array
+    {
+        $query = $this->getFactory()
+            ->createSpyProductAbstractPackagingStorageQuery()
+            ->offset($offset)
+            ->limit($limit);
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
 }

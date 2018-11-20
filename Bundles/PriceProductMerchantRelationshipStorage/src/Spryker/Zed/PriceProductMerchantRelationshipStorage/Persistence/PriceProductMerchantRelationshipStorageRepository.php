@@ -361,8 +361,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     {
         return $this->getFactory()
             ->createPriceProductAbstractMerchantRelationshipStorageQuery()
-            ->offset($offset)
-            ->limit($limit)
+            ->setOffset($offset)
+            ->setLimit($limit)
             ->find()
             ->getArrayCopy();
     }
