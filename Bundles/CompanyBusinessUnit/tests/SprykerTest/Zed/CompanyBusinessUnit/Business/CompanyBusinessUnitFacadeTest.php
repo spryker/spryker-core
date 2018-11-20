@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CompanyBusinessUnit\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
@@ -280,6 +281,38 @@ class CompanyBusinessUnitFacadeTest extends Test
         $this->assertNull(
             $loadedChildBusinessUnitTransfer->getFkParentCompanyBusinessUnit()
         );
+    }
+
+    /**
+     * @group Propel
+     *
+     * @return void
+     */
+    public function testCheckCompanyUserByBusinessUnitIdCompanyUserIdExistsShouldReturnTrueIfCompanyUserRelationAlreadyExists()
+    {
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        $customerTransfer = $this->tester->haveCustomer();
+
+        $nonexistentСompanyUserTransfer = (new CompanyUserBuilder())
+            ->build()
+            ->setFkCustomer($customerTransfer->getIdCustomer())
+            ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
+
+        $companyUserTransfer = $this->tester->haveCompanyUser(
+            [
+                CompanyUserTransfer::CUSTOMER => $customerTransfer,
+                CompanyUserTransfer::COMPANY_BUSINESS_UNIT => $businessUnitTransfer,
+                CompanyUserTransfer::FK_COMPANY => $businessUnitTransfer->getFkCompany(),
+                CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $businessUnitTransfer->getIdCompanyBusinessUnit(),
+                CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+            ]
+        );
+
+        $existsCompanyUser = $this->getFacade()->checkCompanyUserByBusinessUnitIdCompanyUserIdExists($nonexistentСompanyUserTransfer);
+        $this->assertFalse($existsCompanyUser);
+
+        $existsCompanyUser = $this->getFacade()->checkCompanyUserByBusinessUnitIdCompanyUserIdExists($companyUserTransfer);
+        $this->assertTrue($existsCompanyUser);
     }
 
     /**
