@@ -10,7 +10,7 @@
 {% endif %}
 <td>
     <div>
-        <a target="_blank" href="{{ url('/product-management/view', {'id-product-abstract': orderItem.idProductAbstract}) }}">
+        <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
           {{ orderItem.name }}
         </a>
     </div>
