@@ -80,12 +80,13 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function validateRequest(RestRequestInterface $restRequest, Collection $constraintCollection): ?RestErrorCollectionTransfer
     {
         $validator = $this->validationAdapter->createValidator();
-        if (!$restRequest->getAttributesDataFromRequest()) {
+        $attributesDataFromRequest = $restRequest->getAttributesDataFromRequest();
+        if (!isset($attributesDataFromRequest)) {
             return null;
         }
 
         $violations = $validator->validate(
-            $restRequest->getAttributesDataFromRequest(),
+            $attributesDataFromRequest,
             $constraintCollection
         );
 
