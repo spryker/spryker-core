@@ -10,29 +10,31 @@ namespace Spryker\Zed\ProductListStorage\Communication\Plugin\Synchronization;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ProductListStorage\ProductListStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ProductListStorage\Communication\Plugin\Synchronization\ProductConcreteProductListSynchronizationDataBulkPlugin instead.
- *
  * @method \Spryker\Zed\ProductListStorage\ProductListStorageConfig getConfig()
  * @method \Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductListStorage\Business\ProductListStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListStorage\Communication\ProductListStorageCommunicationFactory getFactory()
  */
-class ProductConcreteProductListSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class ProductAbstractProductListSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
      */
     public function getResourceName(): string
     {
-        return ProductListStorageConfig::PRODUCT_LIST_CONCRETE_RESOURCE_NAME;
+        return ProductListStorageConfig::PRODUCT_LIST_ABSTRACT_RESOURCE_NAME;
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return bool
@@ -43,6 +45,8 @@ class ProductConcreteProductListSynchronizationDataPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return array
@@ -53,60 +57,54 @@ class ProductConcreteProductListSynchronizationDataPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
      */
     public function getQueueName(): string
     {
-        return ProductListStorageConfig::PRODUCT_LIST_CONCRETE_SYNC_STORAGE_QUEUE;
+        return ProductListStorageConfig::PRODUCT_LIST_ABSTRACT_SYNC_STORAGE_QUEUE;
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string|null
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getConfig()->getProductConcreteProductListSynchronizationPoolName();
+        return $this->getConfig()->getProductAbstractProductListSynchronizationPoolName();
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param int[] $ids
+     * @param int $offset
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $ids = [])
+    public function getData(int $offset, int $limit): array
     {
-        $spyProductConcreteProductListStorageEntities = $this->findSpyProductConcreteProductListStorageEntities($ids);
+        $spyProductAbstractProductListStorageEntities = $this->getRepository()
+            ->findProductAbstractProductListStorageEntitiesByOffsetAndLimit($offset, $limit);
 
         $synchronizationDataTransfers = [];
-        foreach ($spyProductConcreteProductListStorageEntities as $spyProductConcreteProductListStorageEntity) {
+        foreach ($spyProductAbstractProductListStorageEntities as $spyProductAbstractProductListStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
             /** @var string $data */
-            $data = $spyProductConcreteProductListStorageEntity->getData();
+            $data = $spyProductAbstractProductListStorageEntity->getData();
             $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($spyProductConcreteProductListStorageEntity->getKey());
+            $synchronizationDataTransfer->setKey($spyProductAbstractProductListStorageEntity->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
         return $synchronizationDataTransfers;
-    }
-
-    /**
-     * @param array $ids
-     *
-     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
-     */
-    protected function findSpyProductConcreteProductListStorageEntities(array $ids = []): array
-    {
-        if (empty($ids)) {
-            return $this->getRepository()->findAllProductConcreteProductListStorageEntities();
-        }
-
-        return $this->getRepository()->findProductConcreteProductListStorageEntities($ids);
     }
 }

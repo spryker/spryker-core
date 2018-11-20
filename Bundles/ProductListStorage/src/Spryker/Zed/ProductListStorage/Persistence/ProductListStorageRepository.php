@@ -186,4 +186,19 @@ class ProductListStorageRepository extends AbstractRepository implements Product
             ->limit($limit)
             ->find();
     }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     */
+    public function findProductAbstractProductListStorageEntitiesByOffsetAndLimit(int $offset, int $limit): ObjectCollection
+    {
+        return $this->getFactory()
+            ->createProductAbstractProductListStorageQuery()
+            ->offset($offset)
+            ->limit($limit)
+            ->find();
+    }
 }

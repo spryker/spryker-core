@@ -70,4 +70,12 @@ interface ProductListStorageRepositoryInterface
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
      */
     public function findProductConcreteProductListStorageEntitiesByOffsetAndLimit(int $offset, int $limit): ObjectCollection;
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     */
+    public function findProductAbstractProductListStorageEntitiesByOffsetAndLimit(int $offset, int $limit): ObjectCollection;
 }
