@@ -50,7 +50,7 @@ class ProductDiscontinuedSynchronizationDataPlugin extends AbstractPlugin implem
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
     public function getData(array $ids = [])
     {
