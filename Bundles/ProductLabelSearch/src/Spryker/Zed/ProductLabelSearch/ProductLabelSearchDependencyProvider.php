@@ -15,6 +15,9 @@ use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProduct
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductPageSearchBridge;
 use Spryker\Zed\ProductLabelSearch\Dependency\Service\ProductLabelSearchToUtilSanitizeServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()
+ */
 class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';

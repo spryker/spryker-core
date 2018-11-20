@@ -173,4 +173,15 @@ interface PropelFacadeInterface
      * @return \Generated\Shared\Transfer\SchemaValidationTransfer
      */
     public function validateSchemaFiles(): SchemaValidationTransfer;
+
+    /**
+     * Specification:
+     * - Validates schema XML files.
+     * - Validates against illogical XML issues in a specific file.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SchemaValidationTransfer
+     */
+    public function validateSchemaXmlFiles(): SchemaValidationTransfer;
 }

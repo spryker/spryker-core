@@ -9,6 +9,9 @@ namespace Spryker\Zed\ShoppingListDataImport;
 
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig getConfig()
+ */
 class ShoppingListDataImportDependencyProvider extends DataImportDependencyProvider
 {
 }

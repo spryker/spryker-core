@@ -12,6 +12,9 @@ use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionCli
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig getConfig()
+ */
 class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';

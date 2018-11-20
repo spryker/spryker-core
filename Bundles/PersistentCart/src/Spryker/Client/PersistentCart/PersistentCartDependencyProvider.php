@@ -13,6 +13,9 @@ use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClie
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientBridge;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientBridge;
 
+/**
+ * @method \Spryker\Client\PersistentCart\PersistentCartConfig getConfig()
+ */
 class PersistentCartDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
