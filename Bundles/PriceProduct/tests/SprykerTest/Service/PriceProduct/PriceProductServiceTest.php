@@ -29,14 +29,18 @@ class PriceProductServiceTest extends Unit
     protected $tester;
 
     /**
+     * @dataProvider getPriceProductTransfersWithAllData
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     *
      * @return void
      */
-    public function testMergePricesWillReturnConcretePricesOnConcretePriceSet(): void
-    {
+    public function testMergePricesWillReturnConcretePricesOnConcretePriceSet(
+        array $concretePriceProductTransfers,
+        array $abstractPriceProductTransfers
+    ): void {
         $priceProductService = $this->getPriceProductService();
-
-        $concretePriceProductTransfers = $this->getPriceProductTransfers();
-        $abstractPriceProductTransfers = $this->getPriceProductTransfers();
 
         $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
 
@@ -54,46 +58,54 @@ class PriceProductServiceTest extends Unit
     }
 
     /**
+     * @dataProvider getPriceProductTransfersWithPartialConcreteData
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     *
      * @return void
      */
-    public function testMergePricesWillReturnAbstractPricesOnConcretePriceNotSet(): void
-    {
+    public function testMergePricesWillReturnAbstractPricesOnConcretePriceNotSet(
+        array $concretePriceProductTransfers,
+        array $abstractPriceProductTransfers
+    ): void {
         $priceProductService = $this->getPriceProductService();
-        $concretePriceProductTransfers = $this->getPriceProductTransfers();
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer */
         $concretePriceProductTransfer = $concretePriceProductTransfers[0];
         $concretePriceProductTransfer->getMoneyValue()->setGrossAmount(null)->setNetAmount(null);
-        $abstractPriceProductTransfers = $this->getPriceProductTransfers();
 
         $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $mergedPriceProductTransfer */
-        $mergedPriceProductTransfer = reset($mergedPriceProductTransfers);
+        $mergedPriceProductTransfer = $mergedPriceProductTransfers[array_keys($mergedPriceProductTransfers)[1]];
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer */
-        $abstractPriceProductTransfer = $abstractPriceProductTransfers[0];
-        $this->assertSame($concretePriceProductTransfer, $mergedPriceProductTransfer);
+        $abstractPriceProductTransfer = $abstractPriceProductTransfers[1];
+        $this->assertSame($abstractPriceProductTransfer, $mergedPriceProductTransfer);
         $this->assertEquals($abstractPriceProductTransfer->getMoneyValue()->getGrossAmount(), $mergedPriceProductTransfer->getMoneyValue()->getGrossAmount());
         $this->assertEquals($abstractPriceProductTransfer->getMoneyValue()->getNetAmount(), $mergedPriceProductTransfer->getMoneyValue()->getNetAmount());
     }
 
     /**
+     * @dataProvider getPriceProductTransfersWithPartialConcreteData
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     *
      * @return void
      */
-    public function testMergePricesWillReturnPartialAbstractPricesOnSingleConcretePriceSet(): void
-    {
+    public function testMergePricesWillReturnPartialAbstractPricesOnSingleConcretePriceSet(
+        array $concretePriceProductTransfers,
+        array $abstractPriceProductTransfers
+    ): void {
         $priceProductService = $this->getPriceProductService();
-
-        $concretePriceProductTransfers = $this->getSinglePriceProductTransfers();
-        /** @var \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer */
-        $concretePriceProductTransfer = $concretePriceProductTransfers[0];
-
-        $abstractPriceProductTransfers = $this->getMultiplePriceProductTransfers();
-        /** @var \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer */
-        $abstractPriceProductTransfer = $abstractPriceProductTransfers[0];
 
         $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
 
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer */
+        $concretePriceProductTransfer = $concretePriceProductTransfers[0];
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer */
+        $abstractPriceProductTransfer = $abstractPriceProductTransfers[0];
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $mergedPriceProductTransfer */
         $mergedPriceProductTransfer = $mergedPriceProductTransfers[array_keys($mergedPriceProductTransfers)[0]];
         $this->assertSame($concretePriceProductTransfer, $mergedPriceProductTransfer);
@@ -117,25 +129,6 @@ class PriceProductServiceTest extends Unit
     protected function getPriceProductService(): PriceProductServiceInterface
     {
         return $this->tester->getLocator()->priceProduct()->service();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
-     */
-    protected function getPriceProductTransfers(): array
-    {
-        return [
-            (new PriceProductBuilder(['priceTypeName' => 'DEFAULT']))
-                ->withMoneyValue((new MoneyValueBuilder())->withCurrency())
-                ->withPriceDimension()
-                ->withPriceType()
-                ->build(),
-            (new PriceProductBuilder(['priceTypeName' => 'ORIGINAL']))
-                ->withMoneyValue((new MoneyValueBuilder())->withCurrency())
-                ->withPriceDimension()
-                ->withPriceType()
-                ->build(),
-        ];
     }
 
     /**
@@ -179,6 +172,26 @@ class PriceProductServiceTest extends Unit
                 ->withPriceDimension()
                 ->withPriceType()
                 ->build(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getPriceProductTransfersWithAllData(): array
+    {
+        return [
+            [$this->getMultiplePriceProductTransfers(), $this->getMultiplePriceProductTransfers()],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getPriceProductTransfersWithPartialConcreteData(): array
+    {
+        return [
+            [$this->getSinglePriceProductTransfers(), $this->getMultiplePriceProductTransfers()],
         ];
     }
 }
