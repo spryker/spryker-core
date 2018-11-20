@@ -187,6 +187,9 @@ interface ProductMeasurementUnitFacadeInterface
     ): ProductMeasurementSalesUnitTransfer;
 
     /**
+     * Specification:
+     * - Retrieves a collection of product measurement unit entities according to provided offset and limit.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -194,4 +197,16 @@ interface ProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function findProductMeasurementUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification
+     * - Retrieves product measurement sales units according to provided offset and limit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnitsByOffsetAndLimit(FilterTransfer $filterTransfer): array;
 }

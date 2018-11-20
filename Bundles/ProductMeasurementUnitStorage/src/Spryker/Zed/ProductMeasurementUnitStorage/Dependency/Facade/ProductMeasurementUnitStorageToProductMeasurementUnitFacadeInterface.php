@@ -48,4 +48,11 @@ interface ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function findProductMeasurementUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnitsByOffsetAndLimit(FilterTransfer $filterTransfer): array;
 }

@@ -79,4 +79,14 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
     {
         return $this->productMeasurementUnitFacade->findProductMeasurementUnitTransfersByOffsetAndLimit($filterTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnitsByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    {
+        return $this->productMeasurementUnitFacade->getSalesUnitsByOffsetAndLimit($filterTransfer);
+    }
 }

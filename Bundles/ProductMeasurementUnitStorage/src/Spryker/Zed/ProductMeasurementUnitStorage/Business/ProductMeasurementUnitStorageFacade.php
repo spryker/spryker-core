@@ -100,4 +100,16 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     {
         return $this->getFactory()->getProductMeasurementUnitFacade()->findProductMeasurementUnitTransfersByOffsetAndLimit($filterTransfer);
     }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return array
+     */
+    public function getSalesUnitsByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    {
+        return $this->getFactory()->getProductMeasurementUnitFacade()->getSalesUnitsByOffsetAndLimit($filterTransfer);
+    }
 }

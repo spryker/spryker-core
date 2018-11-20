@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Spryker\Service\UtilMeasurementUnitConversion\Exception\InvalidMeasurementUnitExchangeException;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface;
@@ -100,6 +101,23 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
         $this->setDefaults($productMeasurementSalesUnitTransfer);
 
         return $productMeasurementSalesUnitTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getProductMeasurementSalesUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    {
+        $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitRepository
+            ->getProductMeasurementSalesUnitTransfersByOffsetAndLimit($filterTransfer);
+
+        foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
+            $this->setDefaults($productMeasurementSalesUnitTransfer);
+        }
+
+        return $productMeasurementSalesUnitTransfers;
     }
 
     /**

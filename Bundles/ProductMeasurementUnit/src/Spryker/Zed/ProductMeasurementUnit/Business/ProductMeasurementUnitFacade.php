@@ -242,6 +242,8 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -251,5 +253,21 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     public function findProductMeasurementUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
     {
         return $this->getRepository()->findProductMeasurementUnitTransfersByOffsetAndLimit($filterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnitsByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    {
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitReader()
+            ->getProductMeasurementSalesUnitTransfersByOffsetAndLimit($filterTransfer);
     }
 }

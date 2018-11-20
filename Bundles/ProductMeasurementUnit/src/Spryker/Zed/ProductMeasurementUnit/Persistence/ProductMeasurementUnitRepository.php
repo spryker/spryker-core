@@ -86,7 +86,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
 
         $productMeasurementSalesUnitEntityCollection = $query->find();
 
-        return $this->getMappedProductMeasurementUnitTransfers($productMeasurementSalesUnitEntityCollection);
+        return $this->getMappedProductMeasurementSalesUnitTransfers($productMeasurementSalesUnitEntityCollection);
     }
 
     /**
@@ -108,16 +108,8 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore');
 
         $productMeasurementSalesUnitEntityCollection = $query->find();
-        $productMeasurementSalesUnitTransfers = [];
-        $mapper = $this->getFactory()->createProductMeasurementUnitMapper();
-        foreach ($productMeasurementSalesUnitEntityCollection as $productMeasurementSalesUnitEntity) {
-            $productMeasurementSalesUnitTransfers[] = $mapper->mapProductMeasurementSalesUnitTransfer(
-                $productMeasurementSalesUnitEntity,
-                new ProductMeasurementSalesUnitTransfer()
-            );
-        }
 
-        return $productMeasurementSalesUnitTransfers;
+        return $this->getMappedProductMeasurementSalesUnitTransfers($productMeasurementSalesUnitEntityCollection);
     }
 
     /**
@@ -164,16 +156,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
 
         $productMeasurementUnitEntityCollection = $query->find();
 
-        $productMeasurementUnitTransfers = [];
-        $mapper = $this->getFactory()->createProductMeasurementUnitMapper();
-        foreach ($productMeasurementUnitEntityCollection as $productMeasurementUnitEntity) {
-            $productMeasurementUnitTransfers[] = $mapper->mapProductMeasurementUnitTransfer(
-                $productMeasurementUnitEntity,
-                new ProductMeasurementUnitTransfer()
-            );
-        }
-
-        return $productMeasurementUnitTransfers;
+        return $this->getMappedProductMeasurementUnitTransfers($productMeasurementUnitEntityCollection);
     }
 
     /**
@@ -234,16 +217,8 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore');
 
         $productMeasurementSalesUnitEntityCollection = $query->find();
-        $productMeasurementSalesUnitTransfers = [];
-        $mapper = $this->getFactory()->createProductMeasurementUnitMapper();
-        foreach ($productMeasurementSalesUnitEntityCollection as $productMeasurementSalesUnitEntity) {
-            $productMeasurementSalesUnitTransfers[] = $mapper->mapProductMeasurementSalesUnitTransfer(
-                $productMeasurementSalesUnitEntity,
-                new ProductMeasurementSalesUnitTransfer()
-            );
-        }
 
-        return $productMeasurementSalesUnitTransfers;
+        return $this->getMappedProductMeasurementSalesUnitTransfers($productMeasurementSalesUnitEntityCollection);
     }
 
     /**
@@ -269,9 +244,32 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getProductMeasurementSalesUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    {
+
+        $query = $this->getFactory()
+            ->createProductMeasurementSalesUnitQuery()
+            ->joinWithProductMeasurementBaseUnit()
+            ->joinWith('ProductMeasurementUnit salesUnitMeasurementUnit')
+            ->joinWith('ProductMeasurementBaseUnit.ProductMeasurementUnit baseUnitMeasurementUnit')
+            ->leftJoinWithSpyProductMeasurementSalesUnitStore()
+            ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore')
+            ->setOffset($filterTransfer->getOffset())
+            ->setLimit($filterTransfer->getLimit());
+
+        $productMeasurementSalesUnitEntityCollection = $query->find();
+
+        return $this->getMappedProductMeasurementSalesUnitTransfers($productMeasurementSalesUnitEntityCollection);
+    }
+
+    /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productMeasurementUnitEntityCollection
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     protected function getMappedProductMeasurementUnitTransfers(ObjectCollection $productMeasurementUnitEntityCollection): array
     {
@@ -286,5 +284,25 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         }
 
         return $productMeasurementUnitTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $productMeasurementSalesUnitEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    protected function getMappedProductMeasurementSalesUnitTransfers(ObjectCollection $productMeasurementSalesUnitEntityCollection)
+    {
+        $productMeasurementSalesUnitTransfers = [];
+        $mapper = $this->getFactory()->createProductMeasurementUnitMapper();
+
+        foreach ($productMeasurementSalesUnitEntityCollection as $productMeasurementSalesUnitEntity) {
+            $productMeasurementSalesUnitTransfers[] = $mapper->mapProductMeasurementSalesUnitTransfer(
+                $productMeasurementSalesUnitEntity,
+                new ProductMeasurementSalesUnitTransfer()
+            );
+        }
+
+        return $productMeasurementSalesUnitTransfers;
     }
 }

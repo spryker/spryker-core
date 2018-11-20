@@ -75,4 +75,13 @@ interface ProductMeasurementUnitStorageFacadeInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function findProductMeasurementUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return array
+     */
+    public function getSalesUnitsByOffsetAndLimit(FilterTransfer $filterTransfer): array;
 }
