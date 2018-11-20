@@ -75,10 +75,13 @@ class CalculatorForm extends AbstractType
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
                 $formData = $form->getData();
+                if (!$formData) {
+                    return [Constraint::DEFAULT_GROUP];
+                }
                 return [
                     Constraint::DEFAULT_GROUP,
-                    $formData ? $formData->getCollectorStrategyType() : false,
-                    $formData ? $this->getCalculatorInputType($formData->getCalculatorPlugin()) : false,
+                    $formData->getCollectorStrategyType(),
+                    $this->getCalculatorInputType($formData->getCalculatorPlugin())
                 ];
             },
         ]);
