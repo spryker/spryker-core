@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductListStorage\Persistence;
 
+use Propel\Runtime\Collection\ObjectCollection;
+
 interface ProductListStorageRepositoryInterface
 {
     /**
@@ -60,4 +62,12 @@ interface ProductListStorageRepositoryInterface
      * @return array
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
+     */
+    public function findProductConcreteProductListStorageEntitiesByOffsetAndLimit(int $offset, int $limit): ObjectCollection;
 }

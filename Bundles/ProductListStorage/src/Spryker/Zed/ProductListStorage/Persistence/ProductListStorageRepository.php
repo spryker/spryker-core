@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductListStorage\Persistence;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -169,5 +170,20 @@ class ProductListStorageRepository extends AbstractRepository implements Product
             ->distinct()
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
+     */
+    public function findProductConcreteProductListStorageEntitiesByOffsetAndLimit(int $offset, int $limit): ObjectCollection
+    {
+        return $this->getFactory()
+            ->createProductConcreteProductListStorageQuery()
+            ->offset($offset)
+            ->limit($limit)
+            ->find();
     }
 }
