@@ -21,7 +21,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRe
 
 class PathMethodRenderer implements PathMethodRendererInterface
 {
-    protected const PATTERN_REGEX_RESOURCE_ID = '/(?<=\{)[\w-_]+?(?=\})/';
+    protected const PATTERN_REGEX_RESOURCE_ID = '/(?<=\{)[\w\-_]+?(?=\})/';
     protected const PATTERN_REGEX_WORD_SLICE = '/(?=[A-Z])/';
     protected const PATTERN_DESCRIPTION_PATH_PARAMETER = 'Id of %s.';
 
