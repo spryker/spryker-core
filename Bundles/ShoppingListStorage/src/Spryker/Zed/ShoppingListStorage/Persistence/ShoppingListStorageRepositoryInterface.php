@@ -38,4 +38,12 @@ interface ShoppingListStorageRepositoryInterface
      * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findShoppingListCustomerStorageEntitiesByIds(array $shoppingListCustomerStorageIds): ObjectCollection;
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findShoppingListCustomerStorageEntitiesByOffsetAndLimit(int $offset, int $limit): ObjectCollection;
 }

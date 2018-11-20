@@ -10,17 +10,15 @@ namespace Spryker\Zed\ShoppingListStorage\Communication\Plugin\Synchronization;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated use \Spryker\Zed\ShoppingListStorage\Communication\Plugin\Synchronization\ShoppingListSynchronizationDataBulkPlugin instead.
- *
  * @method \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingListStorage\Communication\ShoppingListStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ShoppingListStorage\ShoppingListStorageConfig getConfig()
  */
-class ShoppingListSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class ShoppingListSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -51,14 +49,16 @@ class ShoppingListSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int $offset
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(int $offset, int $limit): array
     {
         $synchronizationDataTransfers = [];
-        $shoppingListCustomerStorageEntities = $this->getRepository()->findShoppingListCustomerStorageEntitiesByIds($ids);
+        $shoppingListCustomerStorageEntities = $this->getRepository()
+            ->findShoppingListCustomerStorageEntitiesByOffsetAndLimit($offset, $limit);
 
         foreach ($shoppingListCustomerStorageEntities as $shoppingListCustomerStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();

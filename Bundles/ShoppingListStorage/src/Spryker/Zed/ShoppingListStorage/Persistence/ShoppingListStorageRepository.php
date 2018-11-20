@@ -92,6 +92,21 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     }
 
     /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findShoppingListCustomerStorageEntitiesByOffsetAndLimit(int $offset, int $limit): ObjectCollection
+    {
+        return $this->getFactory()
+            ->createShoppingListCustomerStoragePropelQuery()
+            ->offset($offset)
+            ->limit($limit)
+            ->find();
+    }
+
+    /**
      * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery $shoppingListQuery
      *
      * @return void
