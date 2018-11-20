@@ -11,6 +11,9 @@ use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Session\SessionConfig getConfig()
+ */
 class SessionDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SESSION_CLIENT = 'SESSION_CLIENT';

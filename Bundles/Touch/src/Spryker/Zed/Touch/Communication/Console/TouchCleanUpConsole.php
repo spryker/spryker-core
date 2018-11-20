@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Touch\Business\TouchFacadeInterface getFacade()
+ * @method \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface getQueryContainer()
  */
 class TouchCleanUpConsole extends Console
 {

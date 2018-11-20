@@ -14,6 +14,7 @@ use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductReview\ProductReviewConfig getConfig()
  * @method \Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductReview\Business\ProductReviewFacadeInterface getFacade()
  */
 class ProductReviewCommunicationFactory extends AbstractCommunicationFactory
 {
