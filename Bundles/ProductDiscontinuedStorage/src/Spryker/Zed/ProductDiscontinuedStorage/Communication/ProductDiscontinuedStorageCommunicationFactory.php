@@ -14,6 +14,8 @@ use Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageDependencyP
 /**
  * @method \Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepositoryInterface getRepository()
  */
 class ProductDiscontinuedStorageCommunicationFactory extends AbstractCommunicationFactory
 {

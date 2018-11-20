@@ -15,6 +15,9 @@ use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Category\CategoryConfig getConfig()
+ */
 class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CATEGORY_QUERY_CONTAINER = 'category query container';

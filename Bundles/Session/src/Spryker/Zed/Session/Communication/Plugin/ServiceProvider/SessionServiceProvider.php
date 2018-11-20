@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
  * @method \Spryker\Zed\Session\Business\SessionFacadeInterface getFacade()
+ * @method \Spryker\Zed\Session\SessionConfig getConfig()
  */
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
