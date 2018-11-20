@@ -10,17 +10,15 @@ namespace Spryker\Zed\ProductQuantityStorage\Communication\Plugin\Synchronizatio
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ProductQuantityStorage\ProductQuantityStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ProductQuantityStorage\Communication\Plugin\Synchronization\ProductQuantitySynchronizationDataBulkPlugin instead.
- *
  * @method \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductQuantityStorage\Business\ProductQuantityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductQuantityStorage\Communication\ProductQuantityStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductQuantityStorage\ProductQuantityStorageConfig getConfig()
  */
-class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class ProductQuantitySynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -51,18 +49,16 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int $offset
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(int $offset, int $limit): array
     {
         $synchronizationDataTransfers = [];
-        $productQuantityTransfers = $this->getRepository()->findProductQuantityStorageEntitiesByProductIds($ids);
-
-        if (empty($ids)) {
-            $productQuantityTransfers = $this->getRepository()->findAllProductQuantityStorageEntities();
-        }
+        $productQuantityTransfers = $this->getRepository()
+            ->findProductQuantityStorageEntitiesByOffsetAndLimit($offset, $limit);
 
         foreach ($productQuantityTransfers as $productQuantityTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();

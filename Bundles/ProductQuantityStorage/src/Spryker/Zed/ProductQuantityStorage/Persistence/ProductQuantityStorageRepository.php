@@ -41,4 +41,20 @@ class ProductQuantityStorageRepository extends AbstractRepository implements Pro
 
         return $this->buildQueryFromCriteria($query)->find();
     }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
+     */
+    public function findProductQuantityStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array
+    {
+        $query = $this->getFactory()
+            ->createProductQuantityStorageQuery()
+            ->setOffset($offset)
+            ->setLimit($limit);
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
 }

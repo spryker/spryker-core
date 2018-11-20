@@ -20,4 +20,12 @@ interface ProductQuantityStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
      */
     public function findAllProductQuantityStorageEntities(): array;
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
+     */
+    public function findProductQuantityStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array;
 }
