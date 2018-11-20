@@ -18,7 +18,6 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
@@ -34,8 +33,8 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class ProductOptionGroupSaverTest extends MockProvider
 {
-    protected const EXISTING_ID_PRODUCT_OPTION_GROUP = 1;
-    protected const NOT_EXISTING_ID_PRODUCT_OPTION_GROUP = 0;
+    protected const ID_PRODUCT_OPTION_GROUP = 1;
+    protected const IS_ACTIVE = 1;
 
     /**
      * @return void
@@ -94,19 +93,18 @@ class ProductOptionGroupSaverTest extends MockProvider
      */
     public function testToggleActiveShouldPersistCorrectActiveFlag(): void
     {
-        $productOptionGroupSaverMock = $this->createProductOptionGroupSaver(
-            new ProductOptionQueryContainer()
-        );
+        $productOptionGroupSaverMock = $this->createProductOptionGroupSaver();
 
         $productOptionGroupEntityMock = $this->createProductOptionGroupEntityMock();
 
-        $productOptionGroupSaverMock->method('findOptionGroupEntityById')
+        $productOptionGroupEntityMock->expects($this->once())
+            ->method('save')
+            ->willReturn(1);
+
+        $productOptionGroupSaverMock->method('getOptionGroupById')
             ->willReturn($productOptionGroupEntityMock);
 
-        $isActivated = $productOptionGroupSaverMock->toggleOptionActive(
-            static::EXISTING_ID_PRODUCT_OPTION_GROUP,
-            0
-        );
+        $isActivated = $productOptionGroupSaverMock->toggleOptionActive(static::ID_PRODUCT_OPTION_GROUP, static::IS_ACTIVE);
 
         $this->assertTrue($isActivated);
     }
@@ -114,21 +112,18 @@ class ProductOptionGroupSaverTest extends MockProvider
     /**
      * @return void
      */
-    public function testToggleActiveShouldThrowExceptionWhenGroupNotFound()
+    public function testToggleActiveShouldThrowExceptionWhenGroupNotFound(): void
     {
         $this->expectException(ProductOptionGroupNotFoundException::class);
 
-        $productOptionGroupSaverMock = $this->createProductOptionGroupSaver(
-            new ProductOptionQueryContainer()
-        );
+        $productOptionGroupSaverMock = $this->createProductOptionGroupSaver();
 
-        $productOptionGroupSaverMock->method('findOptionGroupEntityById')
-            ->willReturn(null);
+        $productOptionGroupSaverMock->expects($this->once())
+            ->method('getOptionGroupById')
+            ->with(static::ID_PRODUCT_OPTION_GROUP)
+            ->willThrowException(new ProductOptionGroupNotFoundException());
 
-        $productOptionGroupSaverMock->toggleOptionActive(
-            static::NOT_EXISTING_ID_PRODUCT_OPTION_GROUP,
-            1
-        );
+        $productOptionGroupSaverMock->toggleOptionActive(static::ID_PRODUCT_OPTION_GROUP, static::IS_ACTIVE);
     }
 
     /**
@@ -177,8 +172,8 @@ class ProductOptionGroupSaverTest extends MockProvider
                 $productOptionValueSaverMock,
             ])
             ->setMethods([
-                'findProductAbstractEntityBySku',
-                'findOptionGroupEntityById',
+                'getProductAbstractBySku',
+                'getOptionGroupById',
                 'getProductOptionValueById',
                 'createProductOptionGroupEntity',
             ])
