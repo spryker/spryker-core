@@ -61,24 +61,13 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     /**
      * @param int $idProductOptionGroup
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
-     *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
     public function getProductOptionGroupById($idProductOptionGroup)
     {
-        $productOptionGroupEntity = $this->findProductOptionGroupEntityWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup);
-
-        if (!$productOptionGroupEntity) {
-            throw new ProductOptionGroupNotFoundException(
-                sprintf(
-                    'Product option group with id "%d" not found.',
-                    $idProductOptionGroup
-                )
-            );
-        }
-
-        return $this->hydrateProductOptionGroupTransfer($productOptionGroupEntity);
+        return $this->hydrateProductOptionGroupTransfer(
+            $this->getProductOptionGroupEntityWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
+        );
     }
 
     /**
@@ -228,13 +217,24 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     /**
      * @param int $idProductOptionGroup
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
-    protected function findProductOptionGroupEntityWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup): ?SpyProductOptionGroup
+    protected function getProductOptionGroupEntityWithProductOptionValuesAndProductOptionValuePricesById(int $idProductOptionGroup): SpyProductOptionGroup
     {
         $productOptionGroupCollection = $this->productOptionQueryContainer
             ->queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
             ->find();
+
+        if ($productOptionGroupCollection->count() === 0) {
+            throw new ProductOptionGroupNotFoundException(
+                sprintf(
+                    'Product option group with id "%d" not found.',
+                    $idProductOptionGroup
+                )
+            );
+        }
 
         return $productOptionGroupCollection->getFirst();
     }
