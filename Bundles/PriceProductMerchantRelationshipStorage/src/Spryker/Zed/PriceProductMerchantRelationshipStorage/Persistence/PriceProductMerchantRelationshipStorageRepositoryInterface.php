@@ -115,4 +115,12 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
      * @return array
      */
     public function findPriceProductConcreteMerchantRelationshipStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array;
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function findPriceProductAbstractMerchantRelationshipStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array;
 }

@@ -94,8 +94,7 @@ class PriceProductConcreteMerchantRelationSynchronizationDataBulkPlugin extends 
     public function getData(int $offset, int $limit): array
     {
         $data = [];
-        $priceProductConcreteMerchantRelationshipStorageEntities = $this->getFactory()
-            ->getRepository()
+        $priceProductConcreteMerchantRelationshipStorageEntities = $this->getRepository()
             ->findPriceProductConcreteMerchantRelationshipStorageEntitiesByOffsetAndLimit($offset, $limit);
 
         foreach ($priceProductConcreteMerchantRelationshipStorageEntities as $priceProductConcreteMerchantRelationshipStorageEntity) {

@@ -11,17 +11,15 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Synchronization\PriceProductConcreteMerchantRelationSynchronizationDataBulkPlugin instead.
- *
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\PriceProductMerchantRelationshipStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\PriceProductMerchantRelationshipStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig getConfig()
  */
-class PriceProductConcreteMerchantRelationSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class PriceProductAbstractMerchantRelationSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -32,7 +30,7 @@ class PriceProductConcreteMerchantRelationSynchronizationDataPlugin extends Abst
      */
     public function getResourceName(): string
     {
-        return PriceProductMerchantRelationshipStorageConstants::PRICE_PRODUCT_CONCRETE_MERCHANT_RELATIONSHIP_RESOURCE_NAME;
+        return PriceProductMerchantRelationshipStorageConstants::PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_RESOURCE_NAME;
     }
 
     /**
@@ -80,7 +78,7 @@ class PriceProductConcreteMerchantRelationSynchronizationDataPlugin extends Abst
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getConfig()->getPriceProductConcreteMerchantRelationSynchronizationPoolName();
+        return $this->getConfig()->getPriceProductAbstractMerchantRelationSynchronizationPoolName();
     }
 
     /**
@@ -88,39 +86,25 @@ class PriceProductConcreteMerchantRelationSynchronizationDataPlugin extends Abst
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int $offset
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array
      */
-    public function getData(array $ids = [])
+    public function getData(int $offset, int $limit): array
     {
         $data = [];
-        $priceProductConcreteMerchantRelationshipStorageEntities = $this->findPriceProductConcreteMerchantRelationshipStorageEntities($ids);
+        $priceProductAbstractMerchantRelationshipStorageEntities = $this->getRepository()
+            ->findPriceProductAbstractMerchantRelationshipStorageEntitiesByOffsetAndLimit($offset, $limit);
 
-        foreach ($priceProductConcreteMerchantRelationshipStorageEntities as $priceProductConcreteMerchantRelationshipStorageEntity) {
+        foreach ($priceProductAbstractMerchantRelationshipStorageEntities as $priceProductAbstractMerchantRelationshipStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($priceProductConcreteMerchantRelationshipStorageEntity->getData());
-            $synchronizationDataTransfer->setKey($priceProductConcreteMerchantRelationshipStorageEntity->getKey());
+            $synchronizationDataTransfer->setData($priceProductAbstractMerchantRelationshipStorageEntity->getData());
+            $synchronizationDataTransfer->setKey($priceProductAbstractMerchantRelationshipStorageEntity->getKey());
 
             $data[] = $synchronizationDataTransfer;
         }
 
         return $data;
-    }
-
-    /**
-     * @param array $ids
-     *
-     * @return array
-     */
-    protected function findPriceProductConcreteMerchantRelationshipStorageEntities(array $ids = [])
-    {
-        if (empty($ids)) {
-            return $this->getRepository()
-                ->findAllPriceProductConcreteMerchantRelationshipStorageEntities();
-        }
-
-        return $this->getRepository()
-            ->findPriceProductConcreteMerchantRelationshipStorageEntitiesByIds($ids);
     }
 }
