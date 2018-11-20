@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Controller;
 
+use ArrayObject;
 use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -57,24 +58,13 @@ class CreateCompanyUserController extends AbstractController
     protected function attachCustomer(FormInterface $companyUserForm)
     {
         $companyUserTransfer = $companyUserForm->getData();
-        $existsCompanyUser = $this->getFactory()
-            ->getCompanyBusinessUnitFacade()
-            ->checkCompanyUserByBusinessUnitIdCompanyUserIdExists($companyUserTransfer);
-
-        if ($existsCompanyUser) {
-            $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED);
-
-            return $this->viewResponse([
-                'form' => $companyUserForm->createView(),
-            ]);
-        }
 
         $companyUserResponseTransfer = $this->getFactory()
             ->getCompanyUserFacade()
             ->create($companyUserTransfer);
 
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_CREATE);
+            $this->handleErrorMessages($companyUserResponseTransfer->getMessages());
         } else {
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
 
@@ -84,5 +74,19 @@ class CreateCompanyUserController extends AbstractController
         return $this->viewResponse([
             'form' => $companyUserForm->createView(),
         ]);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ResponseMessageTransfer[] $errorMessageTransfers
+     *
+     * @return void
+     */
+    protected function handleErrorMessages(ArrayObject $errorMessageTransfers): void
+    {
+        foreach ($errorMessageTransfers as $errorMessageTransfer) {
+            $this->addErrorMessage($errorMessageTransfer->getText());
+        }
+
+        $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_CREATE);
     }
 }

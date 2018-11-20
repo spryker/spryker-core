@@ -33,7 +33,8 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getCustomerFacade(),
-            $this->createCompanyUserPluginExecutor()
+            $this->createCompanyUserPluginExecutor(),
+            $this->getCompanyUserPreSaveCheckPlugins()
         );
     }
 
@@ -108,5 +109,13 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     protected function getCompanyUserPreDeletePlugins(): array
     {
         return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_PRE_DELETE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSaveCheckPluginInterface[]
+     */
+    protected function getCompanyUserPreSaveCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_PRE_SAVE_CHECK);
     }
 }
