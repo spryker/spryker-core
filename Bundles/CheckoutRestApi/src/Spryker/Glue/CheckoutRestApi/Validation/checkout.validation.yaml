@@ -152,6 +152,7 @@ checkout:
                 iso2Code:
                 - NotBlank
           payments:
+          - NotBlank
           - All:
               constraints:
               - Collection:
