@@ -81,7 +81,7 @@ class CalculatorForm extends AbstractType
                 return [
                     Constraint::DEFAULT_GROUP,
                     $formData->getCollectorStrategyType(),
-                    $this->getCalculatorInputType($formData->getCalculatorPlugin())
+                    $this->getCalculatorInputType($formData->getCalculatorPlugin()),
                 ];
             },
         ]);
