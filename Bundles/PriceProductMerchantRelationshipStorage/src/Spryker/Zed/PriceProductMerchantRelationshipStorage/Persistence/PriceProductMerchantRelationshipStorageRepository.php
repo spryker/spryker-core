@@ -153,7 +153,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     {
         return $priceProductStoreQuery
             ->usePriceProductQuery()
-            ->innerJoinProduct()
+                ->innerJoinProduct()
             ->endUse();
     }
 
@@ -166,7 +166,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     {
         return $priceProductStoreQuery
             ->usePriceProductQuery()
-            ->innerJoinSpyProductAbstract()
+                ->innerJoinSpyProductAbstract()
             ->endUse();
     }
 
