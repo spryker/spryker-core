@@ -85,4 +85,20 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
 
         return $this->buildQueryFromCriteria($query)->find();
     }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
+     */
+    public function findProductConcreteMeasurementUnitStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array
+    {
+        $query = $this->getFactory()
+            ->createProductConcreteMeasurementUnitStorageQuery()
+            ->setOffset($offset)
+            ->setLimit($limit);
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
 }

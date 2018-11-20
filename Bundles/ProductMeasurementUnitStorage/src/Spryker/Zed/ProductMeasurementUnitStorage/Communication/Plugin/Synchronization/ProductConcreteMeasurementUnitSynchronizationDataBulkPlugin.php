@@ -10,17 +10,15 @@ namespace Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchro
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization\ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin instead.
- *
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Business\ProductMeasurementUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Communication\ProductMeasurementUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig getConfig()
  */
-class ProductConcreteMeasurementUnitSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -51,18 +49,16 @@ class ProductConcreteMeasurementUnitSynchronizationDataPlugin extends AbstractPl
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int $offset
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(int $offset, int $limit): array
     {
         $synchronizationDataTransfers = [];
-        $productConcreteMeasurementUnitTransfers = $this->getRepository()->findProductConcreteMeasurementUnitStorageEntities($ids);
-
-        if (empty($ids)) {
-            $productConcreteMeasurementUnitTransfers = $this->getRepository()->findAllProductConcreteMeasurementUnitStorageEntities();
-        }
+        $productConcreteMeasurementUnitTransfers = $this->getRepository()
+            ->findProductConcreteMeasurementUnitStorageEntitiesByOffsetAndLimit($offset, $limit);
 
         foreach ($productConcreteMeasurementUnitTransfers as $productConcreteMeasurementUnitTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
