@@ -26,8 +26,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeReques
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinder;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinderInterface;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PreCheck\ProductBundleCartPriceCheck;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PreCheck\ProductBundleCartPriceCheckInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PreCheck\ProductBundleCartPriceChecker;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PreCheck\ProductBundleCartPriceCheckerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouper;
@@ -152,11 +152,11 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PreCheck\ProductBundleCartPriceCheckInterface
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PreCheck\ProductBundleCartPriceCheckerInterface
      */
-    public function createProductBundleCartPricePreCheck(): ProductBundleCartPriceCheckInterface
+    public function createProductBundleCartPricePreCheck(): ProductBundleCartPriceCheckerInterface
     {
-        return new ProductBundleCartPriceCheck(
+        return new ProductBundleCartPriceChecker(
             $this->getQueryContainer(),
             $this->getPriceProductFacade()
         );

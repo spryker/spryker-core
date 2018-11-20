@@ -17,7 +17,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
-class ProductBundleCartPriceCheck implements ProductBundleCartPriceCheckInterface
+class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInterface
 {
     public const CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY = 'cart.pre.check.price.failed';
 
@@ -53,6 +53,10 @@ class ProductBundleCartPriceCheck implements ProductBundleCartPriceCheckInterfac
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())
             ->setIsSuccess(true);
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if (!$itemTransfer->getBundleItemIdentifier()) {
+                continue;
+            }
+
             $itemTransfer->requireSku()->requireQuantity();
 
             $cartPreCheckResponseTransfer = $this->checkItemPrice($itemTransfer, $cartPreCheckResponseTransfer, $cartChangeTransfer);
@@ -72,13 +76,13 @@ class ProductBundleCartPriceCheck implements ProductBundleCartPriceCheckInterfac
         QuoteTransfer $quoteTransfer
     ): PriceProductFilterTransfer {
 
-        $priceProductFilterTransfer = new PriceProductFilterTransfer();
-        $priceProductFilterTransfer->setSku($productEntity->getSku());
-        $priceProductFilterTransfer->setPriceMode($quoteTransfer->getPriceMode());
-        $priceProductFilterTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
-        $priceProductFilterTransfer->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
-        $priceProductFilterTransfer->setStoreName($quoteTransfer->getStore()->getName());
-        $priceProductFilterTransfer->setQuote($quoteTransfer);
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setSku($productEntity->getSku())
+            ->setPriceMode($quoteTransfer->getPriceMode())
+            ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
+            ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName())
+            ->setStoreName($quoteTransfer->getStore()->getName())
+            ->setQuote($quoteTransfer);
 
         return $priceProductFilterTransfer;
     }
