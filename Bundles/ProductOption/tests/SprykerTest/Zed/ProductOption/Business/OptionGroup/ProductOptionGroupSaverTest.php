@@ -33,8 +33,8 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class ProductOptionGroupSaverTest extends MockProvider
 {
-    protected const ID_PRODUCT_OPTION_GROUP = 1;
-    protected const IS_ACTIVE = 1;
+    protected const VALUE_ID_PRODUCT_OPTION_GROUP = 1;
+    protected const VALUE_IS_ACTIVE = 1;
 
     /**
      * @return void
@@ -104,7 +104,7 @@ class ProductOptionGroupSaverTest extends MockProvider
         $productOptionGroupSaverMock->method('getOptionGroupById')
             ->willReturn($productOptionGroupEntityMock);
 
-        $isActivated = $productOptionGroupSaverMock->toggleOptionActive(static::ID_PRODUCT_OPTION_GROUP, static::IS_ACTIVE);
+        $isActivated = $productOptionGroupSaverMock->toggleOptionActive(static::VALUE_ID_PRODUCT_OPTION_GROUP, static::VALUE_IS_ACTIVE);
 
         $this->assertTrue($isActivated);
     }
@@ -120,10 +120,10 @@ class ProductOptionGroupSaverTest extends MockProvider
 
         $productOptionGroupSaverMock->expects($this->once())
             ->method('getOptionGroupById')
-            ->with(static::ID_PRODUCT_OPTION_GROUP)
+            ->with(static::VALUE_ID_PRODUCT_OPTION_GROUP)
             ->willThrowException(new ProductOptionGroupNotFoundException());
 
-        $productOptionGroupSaverMock->toggleOptionActive(static::ID_PRODUCT_OPTION_GROUP, static::IS_ACTIVE);
+        $productOptionGroupSaverMock->toggleOptionActive(static::VALUE_ID_PRODUCT_OPTION_GROUP, static::VALUE_IS_ACTIVE);
     }
 
     /**
