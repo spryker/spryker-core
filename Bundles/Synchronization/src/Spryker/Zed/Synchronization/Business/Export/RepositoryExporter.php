@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataChunkableRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
@@ -53,7 +53,7 @@ class RepositoryExporter implements ExporterInterface
     }
 
     /**
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface[]|\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataChunkableRepositoryPluginInterface[] $plugins
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface[]|\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface[] $plugins
      * @param int[] $ids
      *
      * @return void
@@ -66,7 +66,7 @@ class RepositoryExporter implements ExporterInterface
                 continue;
             }
 
-            if ($plugin instanceof SynchronizationDataChunkableRepositoryPluginInterface) {
+            if ($plugin instanceof SynchronizationDataBulkRepositoryPluginInterface) {
                 $this->exportDataWithinChunks($plugin);
             }
         }
@@ -93,11 +93,11 @@ class RepositoryExporter implements ExporterInterface
     }
 
     /**
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataChunkableRepositoryPluginInterface $plugin
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface $plugin
      *
      * @return void
      */
-    protected function exportDataWithinChunks(SynchronizationDataChunkableRepositoryPluginInterface $plugin): void
+    protected function exportDataWithinChunks(SynchronizationDataBulkRepositoryPluginInterface $plugin): void
     {
         $offset = 0;
 
