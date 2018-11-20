@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyBusinessUnitFacadeInterface
@@ -150,4 +151,16 @@ interface CompanyBusinessUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
      */
     public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - checks that exist company user
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return bool
+     */
+    public function checkCompanyUserByBusinessUnitIdCompanyUserIdExists(CompanyUserTransfer $companyUserTransfer): bool;
 }
