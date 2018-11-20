@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
@@ -25,6 +26,7 @@ use Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStorageListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelPublishStorageListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelStorageListener;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use SprykerTest\Zed\ProductLabelStorage\ProductLabelStorageConfigMock;
 
 /**
@@ -140,13 +142,19 @@ class ProductLabelStorageListenerTest extends Unit
         $productLabelDictionaryStorageListener->handleBulk($eventTransfers, ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE);
 
         // Assert
-        $labelsCount = SpyProductLabelQuery::create()->count();
+        $nowDate = (new DateTime())->format('Y-m-d H:i:s');
+        $labelsCount = SpyProductLabelQuery::create()
+            ->filterByValidTo(null)
+            ->_or()
+            ->filterByValidTo($nowDate, Criteria::GREATER_EQUAL)
+            ->count();
+        $this->getProductLabelFacade()->checkLabelValidityDateRangeAndTouch();
         $labelDictionaryStorageCount = SpyProductLabelDictionaryStorageQuery::create()->count();
         $this->assertSame(2, $labelDictionaryStorageCount);
         $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()->findOne();
         $this->assertNotNull($spyProductLabelDictionaryStorage);
         $data = $spyProductLabelDictionaryStorage->getData();
-        $this->assertSame(5, count($data['items']));
+        $this->assertSame($labelsCount, count($data['items']));
     }
 
     /**
