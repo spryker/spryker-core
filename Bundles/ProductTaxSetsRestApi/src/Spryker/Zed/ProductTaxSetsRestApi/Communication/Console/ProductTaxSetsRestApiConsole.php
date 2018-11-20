@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ProductTaxSetsRestApi\Business\ProductTaxSetsRestApiFacade getFacade()
+ * @method \Spryker\Zed\ProductTaxSetsRestApi\Communication\ProductTaxSetsRestApiCommunicationFactory getFactory()
  */
 class ProductTaxSetsRestApiConsole extends Console
 {

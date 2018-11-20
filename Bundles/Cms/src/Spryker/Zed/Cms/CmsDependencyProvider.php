@@ -16,6 +16,9 @@ use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Cms\CmsConfig getConfig()
+ */
 class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_URL = 'facade_url';

@@ -16,6 +16,9 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceP
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig getConfig()
+ */
 class PriceProductMerchantRelationshipStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_PRICE_PRODUCT_STORE = 'PROPEL_QUERY_PRICE_PRODUCT_STORE';

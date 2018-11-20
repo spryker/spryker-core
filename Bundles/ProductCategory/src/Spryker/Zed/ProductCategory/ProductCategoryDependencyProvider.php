@@ -16,6 +16,9 @@ use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductBridge
 use Spryker\Zed\ProductCategory\Dependency\QueryContainer\ProductCategoryToCategoryBridge as ProductCategoryToCategoryQueryContainerBridge;
 use Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncodingBridge;
 
+/**
+ * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
+ */
 class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'locale facade';

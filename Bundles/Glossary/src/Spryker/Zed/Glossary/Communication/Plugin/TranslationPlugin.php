@@ -13,6 +13,8 @@ use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
 /**
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
  */
 class TranslationPlugin extends AbstractPlugin implements TranslationPluginInterface
 {
