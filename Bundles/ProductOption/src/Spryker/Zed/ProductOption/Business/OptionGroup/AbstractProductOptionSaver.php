@@ -104,28 +104,12 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
      * @param string $abstractSku
      * @param int $idProductOptionGroup
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\AbstractProductNotFoundException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
-     *
      * @return bool
      */
     public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup)
     {
-        $productOptionGroupEntity = $this->findOptionGroupEntityById($idProductOptionGroup);
-        if (!$productOptionGroupEntity) {
-            throw new ProductOptionGroupNotFoundException(sprintf(
-                'Product option group with id "%s" not found.',
-                $idProductOptionGroup
-            ));
-        }
-
-        $productAbstractEntity = $this->findProductAbstractEntityBySku($abstractSku);
-        if (!$productAbstractEntity) {
-            throw new AbstractProductNotFoundException(sprintf(
-                'Abstract product with sku "%s" not found.',
-                $abstractSku
-            ));
-        }
+        $productOptionGroupEntity = $this->getOptionGroupById($idProductOptionGroup);
+        $productAbstractEntity = $this->getProductAbstractBySku($abstractSku);
 
         $productOptionGroupEntity->addSpyProductAbstract($productAbstractEntity);
 
@@ -146,25 +130,47 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
     /**
      * @param int $idProductOptionGroup
      *
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
+     *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null
      */
-    protected function findOptionGroupEntityById(int $idProductOptionGroup): ?SpyProductOptionGroup
+    protected function getOptionGroupById(int $idProductOptionGroup): ?SpyProductOptionGroup
     {
-        return $this->productOptionQueryContainer
+        $productOptionGroupEntity = $this->productOptionQueryContainer
             ->queryProductOptionGroupById($idProductOptionGroup)
             ->findOne();
+
+        if (!$productOptionGroupEntity) {
+            throw new ProductOptionGroupNotFoundException(sprintf(
+                'Product option group with id "%s" not found.',
+                $idProductOptionGroup
+            ));
+        }
+
+        return $productOptionGroupEntity;
     }
 
     /**
      * @param string $abstractSku
      *
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\AbstractProductNotFoundException
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
      */
-    protected function findProductAbstractEntityBySku(string $abstractSku): ?SpyProductAbstract
+    protected function getProductAbstractBySku(string $abstractSku): ?SpyProductAbstract
     {
-        return $this->productOptionQueryContainer
+        $productAbstractEntity = $this->productOptionQueryContainer
             ->queryProductAbstractBySku($abstractSku)
             ->findOne();
+
+        if (!$productAbstractEntity) {
+            throw new AbstractProductNotFoundException(sprintf(
+                'Abstract product with sku "%s" not found.',
+                $abstractSku
+            ));
+        }
+
+        return $productAbstractEntity;
     }
 
     /**

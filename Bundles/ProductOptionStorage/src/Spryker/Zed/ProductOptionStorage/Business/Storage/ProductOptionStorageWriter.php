@@ -100,14 +100,11 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      *
      * @return void
      */
-    protected function deleteStorageData(array $spyProductAbstractOptionStorageEntities)
+    protected function deleteStorageData(array $spyProductAbstractOptionStorageEntities): void
     {
-        foreach ($this->stores as $storeTransfer) {
-            $storeName = $storeTransfer->getName();
-            foreach ($spyProductAbstractOptionStorageEntities as $productAbstractOptionStorageEntity) {
-                if (isset($productAbstractOptionStorageEntity[$storeName])) {
-                    $productAbstractOptionStorageEntity[$storeName]->delete();
-                }
+        foreach ($spyProductAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
+            foreach ($productAbstractOptionStorageEntityArray as $storeName => $productAbstractOptionStorageEntity) {
+                $productAbstractOptionStorageEntity->delete();
             }
         }
     }
