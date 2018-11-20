@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityGui\AvailabilityGuiConfig getConfig()
  */
 class AvailabilityStockForm extends AbstractType
 {

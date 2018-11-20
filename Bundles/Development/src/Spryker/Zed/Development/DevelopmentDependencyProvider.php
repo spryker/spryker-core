@@ -14,6 +14,9 @@ use Symfony\Component\Finder\Finder;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 
+/**
+ * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
+ */
 class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_GRAPH = 'graph plugin';

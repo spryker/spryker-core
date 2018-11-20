@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesOrderThreshold\SalesOrderThresholdConfig getConfig()
  */
 class SalesOrderThresholdExpenseSavePlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {

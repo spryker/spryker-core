@@ -257,9 +257,23 @@ interface ProductOptionFacadeInterface
      *
      * @api
      *
+     * @deprecated Use checkProductOptionGroupExistenceByProductOptionValueId() instead
+     *
      * @param int $idProductOptionValue
      *
      * @return bool
      */
     public function checkProductOptionValueExistence(int $idProductOptionValue): bool;
+
+    /**
+     * Specification:
+     * - Checks if product option group exists using product option value id.
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool;
 }

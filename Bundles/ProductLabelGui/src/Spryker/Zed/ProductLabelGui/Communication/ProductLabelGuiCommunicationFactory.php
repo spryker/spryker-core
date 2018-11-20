@@ -28,6 +28,7 @@ use Spryker\Zed\ProductLabelGui\ProductLabelGuiDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
  * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
  */
 class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
 {

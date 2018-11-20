@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface getRepository()
  */
 class ProductListSearchFacade extends AbstractFacade implements ProductListSearchFacadeInterface
 {

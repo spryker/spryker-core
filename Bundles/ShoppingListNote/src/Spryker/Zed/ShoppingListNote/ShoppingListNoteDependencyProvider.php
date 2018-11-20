@@ -9,6 +9,9 @@ namespace Spryker\Zed\ShoppingListNote;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\ShoppingListNote\ShoppingListNoteConfig getConfig()
+ */
 class ShoppingListNoteDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

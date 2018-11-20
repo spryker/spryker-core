@@ -10,10 +10,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/config": "^3.0.0",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/config": "If you want to use ServiceProvider plugins.",
     "spryker/silex": "If you want to use ServiceProvider plugins."
   },
   "autoload": {
