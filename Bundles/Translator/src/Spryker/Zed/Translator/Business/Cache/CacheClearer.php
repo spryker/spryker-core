@@ -55,6 +55,10 @@ class CacheClearer implements CacheClearerInterface
      */
     protected function clearDirectory(string $directory): void
     {
+        if (!file_exists($directory)) {
+            return;
+        }
+
         $this->fileSystem->remove($this->findFiles($directory));
     }
 
