@@ -24,4 +24,12 @@ interface CompanyUserTableExpanderPluginExecutorInterface
      * @return array
      */
     public function executePrepareDataExpanderPlugins(array $companyUserDataItem): array;
+
+    /**
+     * @param array $companyUserDataItem
+     * @param string[] $actionButtons
+     *
+     * @return string[]
+     */
+    public function executeActionExpanderPlugins(array $companyUserDataItem, array $actionButtons): array;
 }

@@ -379,4 +379,24 @@ class CompanyUser implements CompanyUserInterface
 
         return $companyUserResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function deleteWithoutCustomerAnonymizing(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserTransfer) {
+            $this->companyUserPluginExecutor->executePreDeletePlugins($companyUserTransfer);
+
+            $companyUserTransfer = $this->companyUserRepository->getCompanyUserById(
+                $companyUserTransfer->getIdCompanyUser()
+            );
+
+            $this->companyUserEntityManager->deleteCompanyUserById($companyUserTransfer->getIdCompanyUser());
+
+            return (new CompanyUserResponseTransfer())->setIsSuccessful(true);
+        });
+    }
 }

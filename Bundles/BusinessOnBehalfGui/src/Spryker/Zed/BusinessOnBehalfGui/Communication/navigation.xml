@@ -20,6 +20,14 @@
                         <action>attach-customer</action>
                         <visible>0</visible>
                     </customer-business-unit-attach>
+                    <confirm-delete-company-user-without-customer-anonymazing>
+                        <label>Confirm Delete Company User</label>
+                        <title>Confirm Delete Company User</title>
+                        <bundle>business-on-behalf-gui</bundle>
+                        <controller>delete-company-user</controller>
+                        <action>confirm-delete</action>
+                        <visible>0</visible>
+                    </confirm-delete-company-user-without-customer-anonymazing>
                 </pages>
             </company-user-gui>
         </pages>

@@ -198,6 +198,8 @@ class CompanyUserTable extends AbstractTable
             $this->generateCompanyUserDeleteButton($companyUserDataItem),
         ];
 
+        $actionButtons = $this->expandActionLinks($companyUserDataItem, $actionButtons);
+
         return implode($actionButtons);
     }
 
@@ -267,5 +269,17 @@ class CompanyUserTable extends AbstractTable
             ]),
             'Delete'
         );
+    }
+
+    /**
+     * @param array $companyUserDataItem
+     * @param string[] $actionButtons
+     *
+     * @return string[]
+     */
+    protected function expandActionLinks(array $companyUserDataItem, array $actionButtons): array
+    {
+        return $this->companyUserTableExpanderPluginExecutor
+            ->executeActionExpanderPlugins($companyUserDataItem, $actionButtons);
     }
 }

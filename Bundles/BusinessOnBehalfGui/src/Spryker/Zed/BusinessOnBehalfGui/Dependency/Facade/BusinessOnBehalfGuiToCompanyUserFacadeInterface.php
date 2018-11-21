@@ -15,6 +15,13 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 interface BusinessOnBehalfGuiToCompanyUserFacadeInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function deleteWithoutCustomerAnonymizing(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer

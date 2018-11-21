@@ -28,6 +28,16 @@ class BusinessOnBehalfGuiToCompanyUserFacadeBridge implements BusinessOnBehalfGu
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function deleteWithoutCustomerAnonymizing(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->companyUserFacade->deleteWithoutCustomerAnonymizing($companyUserTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer

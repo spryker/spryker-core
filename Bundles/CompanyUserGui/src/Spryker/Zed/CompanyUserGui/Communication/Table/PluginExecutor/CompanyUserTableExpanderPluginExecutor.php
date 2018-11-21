@@ -22,15 +22,23 @@ class CompanyUserTableExpanderPluginExecutor implements CompanyUserTableExpander
     protected $companyUserTablePrepareDataExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionLinksExpanderPluginInterface[]
+     */
+    protected $companyUserTableActionLinksExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableConfigExpanderPluginInterface[] $companyUserTableConfigExpanderPlugins
      * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface[] $companyUserTablePrepareDataExpanderPlugins
+     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionLinksExpanderPluginInterface[] $companyUserTableActionLinksExpanderPlugins
      */
     public function __construct(
         array $companyUserTableConfigExpanderPlugins,
-        array $companyUserTablePrepareDataExpanderPlugins
+        array $companyUserTablePrepareDataExpanderPlugins,
+        array $companyUserTableActionLinksExpanderPlugins
     ) {
         $this->companyUserTableConfigExpanderPlugins = $companyUserTableConfigExpanderPlugins;
         $this->companyUserTablePrepareDataExpanderPlugins = $companyUserTablePrepareDataExpanderPlugins;
+        $this->companyUserTableActionLinksExpanderPlugins = $companyUserTableActionLinksExpanderPlugins;
     }
 
     /**
@@ -59,5 +67,20 @@ class CompanyUserTableExpanderPluginExecutor implements CompanyUserTableExpander
         }
 
         return $companyUserDataItem;
+    }
+
+    /**
+     * @param array $companyUserDataItem
+     * @param string[] $actionButtons
+     *
+     * @return string[]
+     */
+    public function executeActionExpanderPlugins(array $companyUserDataItem, array $actionButtons): array
+    {
+        foreach ($this->companyUserTableActionLinksExpanderPlugins as $companyUserTableActionExpanderPlugin) {
+            $actionButtons = $companyUserTableActionExpanderPlugin->expandActionLinks($companyUserDataItem, $actionButtons);
+        }
+
+        return $actionButtons;
     }
 }

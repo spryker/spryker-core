@@ -182,4 +182,16 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Deletes a company user without anonymizing of customer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function deleteWithoutCustomerAnonymizing(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }
