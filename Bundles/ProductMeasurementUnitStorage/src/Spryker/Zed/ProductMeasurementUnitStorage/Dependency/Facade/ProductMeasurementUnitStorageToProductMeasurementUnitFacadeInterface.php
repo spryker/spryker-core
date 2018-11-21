@@ -51,9 +51,10 @@ interface ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
     public function findProductMeasurementUnitTransfersByIdsFilteredByOffsetAndLimit(array $productMeasurementUnitIds, FilterTransfer $filterTransfer): array;
 
     /**
+     * @param int[] $salesUnitIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function getSalesUnitsByOffsetAndLimit(FilterTransfer $filterTransfer): array;
+    public function findSalesUnitsByIdsFilteredByOffsetAndLimit(array $salesUnitIds, FilterTransfer $filterTransfer): array;
 }
