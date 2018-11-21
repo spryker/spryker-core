@@ -7,8 +7,14 @@
 
 namespace Spryker\Zed\CustomersRestApi\Business;
 
+use Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper\AddressesQuoteMapper;
+use Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper\AddressesQuoteMapperInterface;
 use Spryker\Zed\CustomersRestApi\Business\Addresses\AddressesUuidWriter;
 use Spryker\Zed\CustomersRestApi\Business\Addresses\AddressesUuidWriterInterface;
+use Spryker\Zed\CustomersRestApi\Business\Mapper\CustomerQuoteMapper;
+use Spryker\Zed\CustomersRestApi\Business\Mapper\CustomerQuoteMapperInterface;
+use Spryker\Zed\CustomersRestApi\CustomersRestApiDependencyProvider;
+use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -25,5 +31,33 @@ class CustomersRestApiBusinessFactory extends AbstractBusinessFactory
         return new AddressesUuidWriter(
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomersRestApi\Business\Mapper\CustomerQuoteMapperInterface
+     */
+    public function createCustomerQuoteMapper(): CustomerQuoteMapperInterface
+    {
+        return new CustomerQuoteMapper(
+            $this->getCustomerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper\AddressesQuoteMapperInterface
+     */
+    public function createAddressesQuoteMapper(): AddressesQuoteMapperInterface
+    {
+        return new AddressesQuoteMapper(
+            $this->getCustomerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeInterface
+     */
+    public function getCustomerFacade(): CustomersRestApiToCustomerFacadeInterface
+    {
+        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::FACADE_CUSTOMER);
     }
 }

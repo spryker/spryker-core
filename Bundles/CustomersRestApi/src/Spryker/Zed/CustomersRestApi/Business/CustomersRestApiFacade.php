@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CustomersRestApi\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -24,5 +26,39 @@ class CustomersRestApiFacade extends AbstractFacade implements CustomersRestApiF
     public function updateCustomerAddressUuid(): void
     {
         $this->getFactory()->createCustomersAddressesUuidUpdater()->updateAddressesUuid();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapAddressesToQuote(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        return $this->getFactory()->createAddressesQuoteMapper()->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapCustomerToQuote(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        return $this->getFactory()->createCustomerQuoteMapper()->mapCustomerToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 }

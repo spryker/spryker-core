@@ -5,33 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CheckoutRestApi\Communication\Plugin;
+namespace Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMappingPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-/**
- * @method \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacadeInterface getFacade()
- */
-class PaymentsQuoteMappingPlugin extends AbstractPlugin implements QuoteMappingPluginInterface
+interface AddressesQuoteMapperInterface
 {
     /**
-     * {@inheritdoc}
-     * - Maps rest request payments to quote.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mapRestRequestToQuote(
+    public function mapAddressesToQuote(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
-    ): QuoteTransfer {
-        return $this->getFacade()->mapPaymentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-    }
+    ): QuoteTransfer;
 }
