@@ -9,14 +9,14 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plug
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\PriceProductMerchantRelationshipStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\PriceProductMerchantRelationshipStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface getRepository()
- * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig getConfig()
  */
-class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin implements EventBulkHandlerInterface
+class PriceProductMerchantRelationshipConcreteDeleteListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * {@inheritdoc}
@@ -30,11 +30,18 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $priceProductMerchantRelationshipIds = $this->getFactory()
+        $productIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferIds($eventTransfers);
+            ->getEventTransferForeignKeys(
+                $eventTransfers,
+                PriceProductMerchantRelationshipStorageConfig::COL_FK_PRODUCT
+            );
+
+        if (empty($productIds)) {
+            return;
+        }
 
         $this->getFacade()
-            ->publishAbstractPriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
+            ->publishConcretePriceProductByProductIds($productIds);
     }
 }
