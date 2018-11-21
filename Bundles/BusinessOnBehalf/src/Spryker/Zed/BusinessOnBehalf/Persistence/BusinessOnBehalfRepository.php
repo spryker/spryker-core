@@ -49,7 +49,8 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
     public function findActiveCompanyUserIdsByCustomerId(int $idCustomer): array
     {
         $companyUserQuery = $this->getFactory()->getCompanyUserQuery();
-        if (method_exists($companyUserQuery, 'filterByIsActive')) { // For BC reasons
+        // For BC reasons
+        if (method_exists($companyUserQuery, 'filterByIsActive')) {
             $companyUserQuery->filterByIsActive(true);
         }
 
@@ -75,7 +76,8 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
     public function findDefaultCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer
     {
         $companyUserQuery = $this->getFactory()->getCompanyUserQuery();
-        if (method_exists($companyUserQuery, 'filterByIsActive')) { // For BC reasons
+        // For BC reasons
+        if (method_exists($companyUserQuery, 'filterByIsActive')) {
             $companyUserQuery->filterByIsActive(true);
         }
 
