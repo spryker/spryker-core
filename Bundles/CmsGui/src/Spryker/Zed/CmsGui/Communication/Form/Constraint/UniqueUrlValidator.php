@@ -75,17 +75,21 @@ class UniqueUrlValidator extends ConstraintValidator
      * @return bool
      */
     protected function isUrlChanged(
-        $url,
+        string $url,
         CmsPageAttributesTransfer $submittedPageAttributesTransfer,
         UniqueUrl $constraint
-    ) {
-        $urlTransfer = $this->findUrl($constraint, $url);
+    ): bool {
+        $urlTransfer = $this->findUrlCaseInsensitive($constraint, $url);
 
         if ($urlTransfer === null) {
             return true;
         }
 
         if ($urlTransfer->getFkResourcePage() && (int)$urlTransfer->getFkResourcePage() === (int)$submittedPageAttributesTransfer->getIdCmsPage()) {
+            return false;
+        }
+
+        if (strcasecmp($url, $urlTransfer->getUrl()) === 0) {
             return false;
         }
 
@@ -104,19 +108,17 @@ class UniqueUrlValidator extends ConstraintValidator
     }
 
     /**
-     * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $constraint
+     * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $uniqueUrlConstraint
      * @param string $url
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    protected function findUrl(UniqueUrl $constraint, $url)
+    protected function findUrlCaseInsensitive(UniqueUrl $uniqueUrlConstraint, string $url): ?UrlTransfer
     {
-        $urlTransfer = new UrlTransfer();
-        $urlTransfer->setUrl($url);
+        $urlTransfer = (new UrlTransfer())
+            ->setUrl($url);
 
-        $urlTransfer = $constraint->getUrlFacade()
-            ->findUrl($urlTransfer);
-
-        return $urlTransfer;
+        return $uniqueUrlConstraint->getUrlFacade()
+            ->findUrlCaseInsensitive($urlTransfer);
     }
 }

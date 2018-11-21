@@ -22,5 +22,5 @@ interface CmsGuiToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    public function findUrl(UrlTransfer $urlTransfer);
+    public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer;
 }

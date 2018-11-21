@@ -39,8 +39,8 @@ class CmsGuiToUrlBridge implements CmsGuiToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    public function findUrl(UrlTransfer $urlTransfer)
+    public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer
     {
-        return $this->urlFacade->findUrl($urlTransfer);
+        return $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
     }
 }
