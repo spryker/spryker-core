@@ -56,36 +56,6 @@ class CheckoutRestApiFacade extends AbstractFacade implements CheckoutRestApiFac
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mapShipmentToQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()->createRestCheckoutRequestMapper()->mapShipment($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapPaymentToQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()->createRestCheckoutRequestMapper()->mapPayments($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function mapAddressesToQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()->createRestCheckoutRequestMapper()->mapAddresses($restCheckoutRequestAttributesTransfer, $quoteTransfer);

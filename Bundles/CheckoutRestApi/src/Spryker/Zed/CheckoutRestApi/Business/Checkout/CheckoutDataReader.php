@@ -12,12 +12,11 @@ use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutRestApiErrorTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
+use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
 use Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig;
-use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface;
@@ -26,9 +25,9 @@ use Symfony\Component\HttpFoundation\Response;
 class CheckoutDataReader implements CheckoutDataReaderInterface
 {
     /**
-     * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface
+     * @var \Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface
      */
-    protected $cartsRestApiFacade;
+    protected $quoteReader;
 
     /**
      * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface
@@ -46,25 +45,25 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $customerFacade;
 
     /**
-     * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMappingPluginInterface[]
+     * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
      */
     protected $quoteMappingPlugins;
 
     /**
-     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
+     * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface $paymentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface $customerFacade
-     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMappingPluginInterface[] $quoteMappingPlugins
+     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMappingPlugins
      */
     public function __construct(
-        CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade,
+        QuoteReaderInterface $quoteReader,
         CheckoutRestApiToShipmentFacadeInterface $shipmentFacade,
         CheckoutRestApiToPaymentFacadeInterface $paymentFacade,
         CheckoutRestApiToCustomerFacadeInterface $customerFacade,
         array $quoteMappingPlugins
     ) {
-        $this->cartsRestApiFacade = $cartsRestApiFacade;
+        $this->quoteReader = $quoteReader;
         $this->shipmentFacade = $shipmentFacade;
         $this->paymentFacade = $paymentFacade;
         $this->customerFacade = $customerFacade;
@@ -78,14 +77,14 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     public function getCheckoutData(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutDataResponseTransfer
     {
-        $quoteTransfer = $this->findCustomerQuote($restCheckoutRequestAttributesTransfer);
+        $quoteTransfer = $this->quoteReader->findCustomerQuote($restCheckoutRequestAttributesTransfer);
 
         if (!$quoteTransfer) {
             return $this->createCartNotFoundErrorResponse();
         }
 
         foreach ($this->quoteMappingPlugins as $quoteMappingPlugin) {
-            $quoteTransfer = $quoteMappingPlugin->mapRestRequestToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+            $quoteTransfer = $quoteMappingPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         }
 
         $checkoutDataTransfer = (new CheckoutDataTransfer())
@@ -132,30 +131,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         }
 
         return $this->customerFacade->getAddresses($customerTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
-     */
-    protected function findCustomerQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
-    {
-        if (!$restCheckoutRequestAttributesTransfer->getCart()
-            || !$restCheckoutRequestAttributesTransfer->getCart()->getCustomer()
-            || !$restCheckoutRequestAttributesTransfer->getCart()->getCustomer()->getCustomerReference()) {
-            return null;
-        }
-
-        $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
-            ->setCustomerReference($restCheckoutRequestAttributesTransfer->getCart()->getCustomer()->getCustomerReference());
-        $quoteResponseTransfer = $this->cartsRestApiFacade
-            ->findQuoteByUuid(
-                $restCheckoutRequestAttributesTransfer->getCart()->getId(),
-                $quoteCriteriaFilterTransfer
-            );
-
-        return $quoteResponseTransfer->getQuoteTransfer();
     }
 
     /**

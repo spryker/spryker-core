@@ -5,21 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CheckoutRestApi\Communication\Plugin;
+namespace Spryker\Zed\PaymentsRestApi\Business;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMappingPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-/**
- * @method \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacadeInterface getFacade()
- */
-class PaymentsQuoteMappingPlugin extends AbstractPlugin implements QuoteMappingPluginInterface
+interface PaymentsRestApiFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * Specification:
      * - Maps rest request payments to quote.
+     * - Sets first payment method with unlimited amount as main payment method to quote.
      *
      * @api
      *
@@ -28,10 +24,8 @@ class PaymentsQuoteMappingPlugin extends AbstractPlugin implements QuoteMappingP
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mapRestRequestToQuote(
+    public function mapPaymentsToQuote(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
-    ): QuoteTransfer {
-        return $this->getFacade()->mapPaymentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-    }
+    ): QuoteTransfer;
 }
