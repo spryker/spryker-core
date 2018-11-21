@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SetupFrontend;
 
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SetupFrontendConfig extends AbstractBundleConfig
@@ -45,7 +46,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     public function getYvesInstallerDirectoryPattern(): array
     {
         return [
-            APPLICATION_ROOT_DIR . '/vendor/spryker/spryker-shop/Bundles/*/assets/Yves',
+            $this->get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Yves',
         ];
     }
 
@@ -81,7 +82,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     public function getZedInstallerDirectoryPattern(): array
     {
         return [
-            APPLICATION_ROOT_DIR . '/vendor/spryker/spryker/Bundles/*/assets/Zed',
+            $this->get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Zed',
         ];
     }
 
