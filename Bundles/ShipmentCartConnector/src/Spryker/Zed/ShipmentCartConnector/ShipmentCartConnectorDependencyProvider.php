@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeBridge;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ShipmentCartConnector\ShipmentCartConnectorConfig getConfig()
+ */
 class ShipmentCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SHIPMENT = 'shipment facade';

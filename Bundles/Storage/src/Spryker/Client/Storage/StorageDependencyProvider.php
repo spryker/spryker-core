@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientBridge;
 use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientBridge;
 
+/**
+ * @method \Spryker\Client\Storage\StorageConfig getConfig()
+ */
 class StorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORE = 'CLIENT_STORE';

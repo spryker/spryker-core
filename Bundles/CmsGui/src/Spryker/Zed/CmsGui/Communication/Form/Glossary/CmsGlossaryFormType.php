@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
  */
 class CmsGlossaryFormType extends AbstractType
 {

@@ -17,6 +17,9 @@ use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToEventBeha
 use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeBridge;
 use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductPageSearchFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
+ */
 class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_PRODUCT_QUERY = 'PROPEL_PRODUCT_QUERY';

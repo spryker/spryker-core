@@ -7,15 +7,20 @@
 namespace Spryker\Glue\CatalogSearchRestApi;
 
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCatalogClientBridge;
+use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToGlossaryStorageClientBridge;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @method \Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig getConfig()
+ */
 class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
     public const STORE = 'STORE';
 
     /**
@@ -27,6 +32,7 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = parent::provideDependencies($container);
 
+        $container = $this->addGlossaryStorageClient($container);
         $container = $this->addCatalogClient($container);
         $container = $this->addStore($container);
         $container = $this->addPriceClient($container);
@@ -71,6 +77,20 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::CLIENT_PRICE] = function (Container $container) {
             return new CatalogSearchRestApiToPriceClientBridge($container->getLocator()->price()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+            return new CatalogSearchRestApiToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
         };
 
         return $container;

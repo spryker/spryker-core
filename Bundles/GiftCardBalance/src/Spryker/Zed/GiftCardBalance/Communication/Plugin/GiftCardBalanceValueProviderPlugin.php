@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\GiftCardBalance\Business\GiftCardBalanceFacadeInterface getFacade()
  * @method \Spryker\Zed\GiftCardBalance\Communication\GiftCardBalanceCommunicationFactory getFactory()
+ * @method \Spryker\Zed\GiftCardBalance\GiftCardBalanceConfig getConfig()
+ * @method \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainerInterface getQueryContainer()
  */
 class GiftCardBalanceValueProviderPlugin extends AbstractPlugin implements GiftCardValueProviderPluginInterface
 {

@@ -13,6 +13,7 @@ use Spryker\Zed\Storage\StorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Storage\StorageConfig getConfig()
+ * @method \Spryker\Zed\Storage\Business\StorageFacadeInterface getFacade()
  */
 class StorageCommunicationFactory extends AbstractCommunicationFactory
 {
