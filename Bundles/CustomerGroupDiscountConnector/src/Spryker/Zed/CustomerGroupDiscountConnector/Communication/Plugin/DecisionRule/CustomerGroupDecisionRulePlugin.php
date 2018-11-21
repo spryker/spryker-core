@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CustomerGroupDiscountConnector\Business\CustomerGroupDiscountConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CustomerGroupDiscountConnector\CustomerGroupDiscountConnectorConfig getConfig()
  */
 class CustomerGroupDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {

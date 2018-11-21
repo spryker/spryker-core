@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToCollectorBridge;
 use Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToProductLabelBridge;
 
+/**
+ * @method \Spryker\Zed\ProductLabelCollector\ProductLabelCollectorConfig getConfig()
+ */
 class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';

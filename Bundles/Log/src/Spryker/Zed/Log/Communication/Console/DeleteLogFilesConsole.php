@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Log\Business\LogFacadeInterface getFacade()
+ * @method \Spryker\Zed\Log\Communication\LogCommunicationFactory getFactory()
  */
 class DeleteLogFilesConsole extends Console
 {

@@ -13,6 +13,9 @@ use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnec
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToLocaleBridge;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductBridge;
 
+/**
+ * @method \Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorConfig getConfig()
+ */
 class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';

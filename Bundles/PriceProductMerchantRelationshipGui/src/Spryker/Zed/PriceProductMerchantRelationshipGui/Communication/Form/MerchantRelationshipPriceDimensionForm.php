@@ -14,6 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipGui\PriceProductMerchantRelationshipGuiConfig getConfig()
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\PriceProductMerchantRelationshipGuiCommunicationFactory getFactory()
+ */
 class MerchantRelationshipPriceDimensionForm extends AbstractType
 {
     public const OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES = 'merchant_relationship_choices';
