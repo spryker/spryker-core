@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\CustomerBusinessUnitAttachForm;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface;
-use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyRoleFacadeInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface;
 
 class CustomerBusinessUnitAttachFormDataProvider
@@ -28,27 +27,19 @@ class CustomerBusinessUnitAttachFormDataProvider
     protected $companyBusinessUnitFacade;
 
     /**
-     * @var \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyRoleFacadeInterface
-     */
-    protected $companyRoleFacade;
-
-    /**
      * @var \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface
      */
     protected $companyUserFacade;
 
     /**
      * @param \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
-     * @param \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyRoleFacadeInterface $companyRoleFacade
      * @param \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface $companyUserFacade
      */
     public function __construct(
         BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
-        BusinessOnBehalfGuiToCompanyRoleFacadeInterface $companyRoleFacade,
         BusinessOnBehalfGuiToCompanyUserFacadeInterface $companyUserFacade
     ) {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
-        $this->companyRoleFacade = $companyRoleFacade;
         $this->companyUserFacade = $companyUserFacade;
     }
 

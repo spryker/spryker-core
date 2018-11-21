@@ -21,8 +21,8 @@ class CheckCompanyUserByBusinessUnitIdCompanyUserIdExistsPlugin extends Abstract
     protected const MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED = 'Company user already attached to this business unit.';
 
     /**
-     * Specification:
-     * - Checks exists relation between customer and business unit before save company user for avoid duplicates of company user entity
+     * {@inheritdoc}
+     * - Checks exists relation between customer and business unit before save company user for avoid duplicates of company user entity.
      *
      * @api
      *

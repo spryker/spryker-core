@@ -8,9 +8,10 @@
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -42,7 +43,11 @@ class CreateCompanyUserController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->attachCustomer($form);
+            $companyUserResponseTransfer = $this->attachCustomer($form->getData());
+
+            if ($companyUserResponseTransfer->getIsSuccessful()) {
+                return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+            }
         }
 
         return $this->viewResponse([
@@ -51,29 +56,25 @@ class CreateCompanyUserController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $companyUserForm
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function attachCustomer(FormInterface $companyUserForm)
+    protected function attachCustomer(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserTransfer = $companyUserForm->getData();
-
         $companyUserResponseTransfer = $this->getFactory()
             ->getCompanyUserFacade()
             ->create($companyUserTransfer);
 
-        if (!$companyUserResponseTransfer->getIsSuccessful()) {
-            $this->handleErrorMessages($companyUserResponseTransfer->getMessages());
-        } else {
+        if ($companyUserResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
 
-            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+            return $companyUserResponseTransfer;
         }
 
-        return $this->viewResponse([
-            'form' => $companyUserForm->createView(),
-        ]);
+        $this->handleErrorMessages($companyUserResponseTransfer->getMessages());
+
+        return $companyUserResponseTransfer;
     }
 
     /**

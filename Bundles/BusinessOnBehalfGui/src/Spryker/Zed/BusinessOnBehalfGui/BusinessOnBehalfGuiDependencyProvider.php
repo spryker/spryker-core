@@ -9,7 +9,6 @@ namespace Spryker\Zed\BusinessOnBehalfGui;
 
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeBridge;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyFacadeBridge;
-use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyRoleFacadeBridge;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeBridge;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCustomerFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -23,7 +22,6 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_COMPANY = 'FACADE_COMPANY';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
-    public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
 
     public const PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER = 'PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER';
@@ -40,7 +38,6 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addCompanyFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addCompanyUserFacade($container);
-        $container = $this->addCompanyRoleFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addCustomerBusinessUnitAttachFormExpanderPlugins($container);
 
@@ -89,22 +86,6 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
         $container[static::FACADE_COMPANY_USER] = function (Container $container) {
             return new BusinessOnBehalfGuiToCompanyUserFacadeBridge(
                 $container->getLocator()->companyUser()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCompanyRoleFacade(Container $container): Container
-    {
-        $container[static::FACADE_COMPANY_ROLE] = function (Container $container) {
-            return new BusinessOnBehalfGuiToCompanyRoleFacadeBridge(
-                $container->getLocator()->companyRole()->facade()
             );
         };
 

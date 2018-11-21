@@ -57,7 +57,7 @@ class CustomerBusinessUnitAttachForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCompanyBusinessUnitCollectionField($builder, $options);
-        $this->executeCustomerBusinessUnitAttachExpanderPlugins($builder);
+        $this->executeCustomerBusinessUnitAttachFormExpanderPlugins($builder);
     }
 
     /**
@@ -85,10 +85,10 @@ class CustomerBusinessUnitAttachForm extends AbstractType
      *
      * @return $this
      */
-    protected function executeCustomerBusinessUnitAttachExpanderPlugins(FormBuilderInterface $builder): self
+    protected function executeCustomerBusinessUnitAttachFormExpanderPlugins(FormBuilderInterface $builder): self
     {
-        foreach ($this->getFactory()->getCompanyUserAttachCustomerFormExpanderPlugins() as $attachCustomerFormExpanderPlugin) {
-            $builder = $attachCustomerFormExpanderPlugin->expand($builder);
+        foreach ($this->getFactory()->getCustomerBusinessUnitAttachFormExpanderPlugins() as $customerBusinessUnitAttachFormExpanderPlugin) {
+            $builder = $customerBusinessUnitAttachFormExpanderPlugin->expand($builder);
         }
 
         return $this;
