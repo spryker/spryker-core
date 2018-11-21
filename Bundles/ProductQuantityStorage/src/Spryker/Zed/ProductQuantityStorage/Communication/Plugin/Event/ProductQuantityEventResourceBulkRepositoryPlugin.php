@@ -7,21 +7,20 @@
 
 namespace Spryker\Zed\ProductQuantityStorage\Communication\Plugin\Event;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\ProductQuantity\Persistence\Map\SpyProductQuantityTableMap;
 use Spryker\Shared\ProductQuantityStorage\ProductQuantityStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductQuantity\Dependency\ProductQuantityEvents;
 
 /**
- * @deprecated Use \Spryker\Zed\ProductQuantityStorage\Communication\Plugin\Event\ProductQuantityEventResourceBulkRepositoryPlugin instead.
- *
  * @method \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductQuantityStorage\Business\ProductQuantityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductQuantityStorage\Communication\ProductQuantityStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductQuantityStorage\ProductQuantityStorageConfig getConfig()
  */
-class ProductQuantityEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
+class ProductQuantityEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -40,16 +39,16 @@ class ProductQuantityEventResourceRepositoryPlugin extends AbstractPlugin implem
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int $offset
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(int $offset, int $limit): array
     {
-        if (!empty($ids)) {
-            return $this->getFacade()->findProductQuantityByProductIdsTransfers($ids);
-        }
-        return $this->getFacade()->findProductQuantityTransfers();
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
+        return $this->getFacade()->findProductQuantityTransfersByOffsetAndLimit($filterTransfer);
     }
 
     /**
@@ -74,5 +73,18 @@ class ProductQuantityEventResourceRepositoryPlugin extends AbstractPlugin implem
     public function getIdColumnName(): ?string
     {
         return SpyProductQuantityTableMap::COL_FK_PRODUCT;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

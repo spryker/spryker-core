@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductQuantity\Business\Model;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Spryker\Zed\ProductQuantity\Persistence\ProductQuantityRepositoryInterface;
 
@@ -65,6 +66,22 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
     public function findProductQuantityTransfersByProductSku(array $productSkus): array
     {
         $productQuantityTransfers = $this->productQuantityRepository->findProductQuantityTransfersByProductSku($productSkus);
+
+        foreach ($productQuantityTransfers as $productQuantityTransfer) {
+            $this->filterProductQuantityTransfer($productQuantityTransfer);
+        }
+
+        return $productQuantityTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findProductQuantityTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    {
+        $productQuantityTransfers = $this->productQuantityRepository->findProductQuantityTransfersByOffsetAndLimit($filterTransfer);
 
         foreach ($productQuantityTransfers as $productQuantityTransfer) {
             $this->filterProductQuantityTransfer($productQuantityTransfer);

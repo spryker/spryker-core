@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductQuantity\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -78,5 +79,21 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
         return $this->getFactory()
             ->createProductQuantityReader()
             ->findProductQuantityTransfers();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findProductQuantityTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    {
+        return $this->getFactory()
+            ->createProductQuantityReader()
+            ->findProductQuantityTransfersByOffsetAndLimit($filterTransfer);
     }
 }

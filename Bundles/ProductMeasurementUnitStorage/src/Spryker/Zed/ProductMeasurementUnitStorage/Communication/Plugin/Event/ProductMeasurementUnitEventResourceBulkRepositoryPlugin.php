@@ -42,7 +42,7 @@ class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPl
      * @param int $offset
      * @param int $limit
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData(int $offset, int $limit): array
     {
