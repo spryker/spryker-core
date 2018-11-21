@@ -16,6 +16,9 @@ use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeBrid
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeBridge;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
+/**
+ * @method \Spryker\Zed\PersistentCart\PersistentCartConfig getConfig()
+ */
 class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CART = 'FACADE_CART';

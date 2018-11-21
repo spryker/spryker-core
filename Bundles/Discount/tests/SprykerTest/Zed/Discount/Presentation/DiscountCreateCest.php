@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\Discount\Presentation;
 
-use Codeception\Scenario;
 use SprykerTest\Zed\Discount\DiscountPresentationTester;
 use SprykerTest\Zed\Discount\PageObject\DiscountCreatePage;
 
@@ -25,14 +24,11 @@ class DiscountCreateCest
     /**
      * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
-     * @param \Codeception\Scenario $scenario
      *
      * @return void
      */
-    public function createExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage, Scenario $scenario)
+    public function createExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage)
     {
-        $scenario->skip("Skipping test until fail reason is clarified.");
-
         $createPage->createDiscount(DiscountCreatePage::DISCOUNT_VALID_EXCLUSIVE);
         $i->see($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
     }
@@ -40,14 +36,11 @@ class DiscountCreateCest
     /**
      * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
-     * @param \Codeception\Scenario $scenario
      *
      * @return void
      */
-    public function createNotExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage, Scenario $scenario)
+    public function createNotExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage)
     {
-        $scenario->skip("Skipping test until fail reason is clarified.");
-
         $createPage->createDiscount(DiscountCreatePage::DISCOUNT_VALID_NOT_EXCLUSIVE);
         $i->see($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
     }

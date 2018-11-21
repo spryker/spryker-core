@@ -9,6 +9,9 @@ namespace Spryker\Zed\CompanyUnitAddressLabelDataImport;
 
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportConfig getConfig()
+ */
 class CompanyUnitAddressLabelDataImportDependencyProvider extends DataImportDependencyProvider
 {
 }
