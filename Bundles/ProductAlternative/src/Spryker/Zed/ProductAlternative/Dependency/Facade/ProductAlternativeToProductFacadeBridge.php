@@ -51,4 +51,14 @@ class ProductAlternativeToProductFacadeBridge implements ProductAlternativeToPro
     {
         return $this->productFacade->findProductConcreteIdBySku($sku);
     }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
+    {
+        return $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
+    }
 }
