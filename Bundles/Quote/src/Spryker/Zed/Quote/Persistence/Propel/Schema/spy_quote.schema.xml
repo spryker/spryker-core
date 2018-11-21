@@ -11,6 +11,8 @@
         <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
         <column name="quote_data" required="true" type="LONGVARCHAR"/>
 
+        <column name="uuid" required="false" type="VARCHAR" size="255"/>
+
         <behavior name="timestampable"/>
 
         <id-method-parameter value="id_quote_pk_seq"/>
@@ -26,6 +28,10 @@
         <index name="spy_quote-customer_reference">
             <index-column name="customer_reference"/>
         </index>
+
+        <unique name="spy_quote-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
     </table>
 
 </database>

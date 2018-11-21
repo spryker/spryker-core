@@ -9,6 +9,7 @@ namespace Spryker\Zed\Quote\Business\Model;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface;
 
 class QuoteReader implements QuoteReaderInterface
@@ -80,5 +81,26 @@ class QuoteReader implements QuoteReaderInterface
         $quoteResponseTransfer->setIsSuccessful(true);
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteTransfer->requireUuid();
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setIsSuccessful(false);
+        $quoteTransfer = $this->quoteRepository
+            ->findQuoteByUuid($quoteTransfer->getUuid());
+        if (!$quoteTransfer) {
+            return $quoteResponseTransfer;
+        }
+
+        return $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer())
+            ->setQuoteTransfer($quoteTransfer)
+            ->setIsSuccessful(true);
     }
 }
