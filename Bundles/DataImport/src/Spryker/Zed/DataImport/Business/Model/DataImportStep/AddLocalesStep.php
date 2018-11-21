@@ -31,7 +31,7 @@ class AddLocalesStep implements DataImportStepInterface
      */
     public function __construct(Store $store)
     {
-        $this->availableLocales = $store->getLocales();
+        $this->availableLocales = $this->getLocales($store);
     }
 
     /**
@@ -52,5 +52,20 @@ class AddLocalesStep implements DataImportStepInterface
         }
 
         $dataSet[static::KEY_LOCALES] = $this->locales;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Store $store
+     *
+     * @return string[]
+     */
+    protected function getLocales(Store $store): array
+    {
+        $locales = $store->getLocales();
+        foreach ($store->getStoresWithSharedPersistence() as $storeName) {
+            $locales = array_merge($locales, $store->getLocalesPerStore($storeName));
+        }
+
+        return $locales;
     }
 }
