@@ -39,6 +39,7 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
      *
      * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
      * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
+     * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery::filterByIsActive()
      * @uses \Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap
      * @uses \Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyTableMap
      *
@@ -68,6 +69,7 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
 
     /**
      * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
+     * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery::filterByIsActive()
      *
      * @param int $idCustomer
      *
