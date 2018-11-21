@@ -39,17 +39,17 @@ class ProductQuantityEventResourceBulkRepositoryPlugin extends AbstractPlugin im
      *
      * @api
      *
-     * @param int[] $ids
      * @param int $offset
      * @param int $limit
+     * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function getData(array $ids, int $offset, int $limit): array
+    public function getData(int $offset, int $limit, array $ids = []): array
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->findProductQuantityTransfersByProductIdsFilteredByOffsetAndLimit($ids, $filterTransfer);
+        return $this->getFacade()->findProductQuantityTransfersFilteredByOffsetAndLimit($filterTransfer, $ids);
     }
 
     /**

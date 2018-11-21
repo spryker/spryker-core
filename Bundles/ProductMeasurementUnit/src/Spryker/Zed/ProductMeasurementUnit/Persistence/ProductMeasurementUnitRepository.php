@@ -222,18 +222,21 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param int[] $productMeasurementUnitIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productMeasurementUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfersByIdsFilteredByOffsetAndLimit(array $productMeasurementUnitIds, FilterTransfer $filterTransfer): array
+    public function findProductMeasurementUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array
     {
         $query = $this->getFactory()
             ->createProductMeasurementUnitQuery()
-            ->filterByIdProductMeasurementUnit_In($productMeasurementUnitIds)
             ->offset($filterTransfer->getOffset())
             ->limit($filterTransfer->getLimit());
+
+        if ($productMeasurementUnitIds) {
+            $query->filterByIdProductMeasurementUnit_In($productMeasurementUnitIds);
+        }
 
         $productMeasurementUnitEntityCollection = $query->find();
 
@@ -242,12 +245,12 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $salesUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function getProductMeasurementSalesUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $salesUnitIds = []): array
     {
-
         $query = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
             ->joinWithProductMeasurementBaseUnit()
@@ -257,6 +260,10 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore')
             ->setOffset($filterTransfer->getOffset())
             ->setLimit($filterTransfer->getLimit());
+
+        if ($salesUnitIds) {
+            $query->filterByIdProductMeasurementSalesUnit_In($salesUnitIds);
+        }
 
         $productMeasurementSalesUnitEntityCollection = $query->find();
 

@@ -43,18 +43,18 @@ interface ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
     public function findAllProductMeasurementUnitTransfers(): array;
 
     /**
-     * @param int[] $productMeasurementUnitIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productMeasurementUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfersByIdsFilteredByOffsetAndLimit(array $productMeasurementUnitIds, FilterTransfer $filterTransfer): array;
+    public function findProductMeasurementUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array;
 
     /**
-     * @param int[] $salesUnitIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $salesUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function findSalesUnitsByIdsFilteredByOffsetAndLimit(array $salesUnitIds, FilterTransfer $filterTransfer): array;
+    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $salesUnitIds = []): array;
 }

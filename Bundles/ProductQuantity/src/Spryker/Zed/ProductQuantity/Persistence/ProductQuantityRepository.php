@@ -34,7 +34,7 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
             ->createProductQuantityQuery()
             ->joinWithProduct()
             ->useProductQuery()
-            ->filterBySku_In($productSkus)
+                ->filterBySku_In($productSkus)
             ->endUse();
 
         $productQuantityEntityTransfers = $this->buildQueryFromCriteria($query)->find();
@@ -74,17 +74,21 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
     }
 
     /**
-     * @param int[] $productIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityTransfersByProductIdsFilteredByOffsetAndLimit(array $productIds, FilterTransfer $filterTransfer): array
+    public function findProductQuantityTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $productIds = []): array
     {
         $query = $this->getFactory()
-            ->createProductQuantityQuery()
-            ->filterByFkProduct_In($productIds)
-            ->offset($filterTransfer->getOffset())
+            ->createProductQuantityQuery();
+
+        if ($productIds) {
+            $query->filterByFkProduct_In($productIds);
+        }
+
+        $query->offset($filterTransfer->getOffset())
             ->limit($filterTransfer->getLimit());
 
         $productQuantityEntityTransfers = $this->buildQueryFromCriteria($query)->find();

@@ -92,26 +92,26 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     /**
      * @api
      *
-     * @param int[] $productMeasurementUnitIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productMeasurementUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function findProductMeasurementUnitTransfersByIdsFilteredByOffsetAndLimit(array $productMeasurementUnitIds, FilterTransfer $filterTransfer): array
+    public function findProductMeasurementUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array
     {
-        return $this->getFactory()->getProductMeasurementUnitFacade()->findProductMeasurementUnitTransfersByIdsFilteredByOffsetAndLimit($productMeasurementUnitIds, $filterTransfer);
+        return $this->getFactory()->getProductMeasurementUnitFacade()->findProductMeasurementUnitTransfersFilteredByOffsetAndLimit($filterTransfer, $productMeasurementUnitIds);
     }
 
     /**
      * @api
      *
-     * @param int[] $salesUnitIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $salesUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function findSalesUnitsByIdsFilteredByOffsetAndLimit(array $salesUnitIds, FilterTransfer $filterTransfer): array
+    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $salesUnitIds = []): array
     {
-        return $this->getFactory()->getProductMeasurementUnitFacade()->findSalesUnitsByIdsFilteredByOffsetAndLimit($salesUnitIds, $filterTransfer);
+        return $this->getFactory()->getProductMeasurementUnitFacade()->findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit($filterTransfer, $salesUnitIds);
     }
 }
