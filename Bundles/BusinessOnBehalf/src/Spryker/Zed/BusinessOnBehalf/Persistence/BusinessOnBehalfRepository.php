@@ -48,17 +48,21 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
      */
     public function findActiveCompanyUserIdsByCustomerId(int $idCustomer): array
     {
-        $query = $this->getFactory()->getCompanyUserQuery();
-        $query->filterByFkCustomer($idCustomer)
+        $companyUserQuery = $this->getFactory()->getCompanyUserQuery();
+        if (method_exists($companyUserQuery, 'filterByIsActive')) { // For BC reasons
+            $companyUserQuery->filterByIsActive(true);
+        }
+
+        $companyUserQuery->filterByFkCustomer($idCustomer)
             ->joinCompany()
             ->useCompanyQuery()
                 ->filterByIsActive(true)
                 ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
             ->endUse()
-            ->orderByIdCompanyUser();
-        $query->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER);
+            ->orderByIdCompanyUser()
+            ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER);
 
-        return $query->find()->toArray();
+        return $companyUserQuery->find()->toArray();
     }
 
     /**
@@ -70,8 +74,12 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
      */
     public function findDefaultCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer
     {
-        $spyCompanyUser = $this->getFactory()
-            ->getCompanyUserQuery()
+        $companyUserQuery = $this->getFactory()->getCompanyUserQuery();
+        if (method_exists($companyUserQuery, 'filterByIsActive')) { // For BC reasons
+            $companyUserQuery->filterByIsActive(true);
+        }
+
+        $spyCompanyUser = $companyUserQuery
             ->filterByFkCustomer($idCustomer)
             ->filterByIsDefault(true)
             ->findOne();
