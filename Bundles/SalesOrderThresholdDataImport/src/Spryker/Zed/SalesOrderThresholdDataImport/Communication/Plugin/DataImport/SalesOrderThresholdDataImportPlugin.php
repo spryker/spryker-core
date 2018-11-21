@@ -15,6 +15,7 @@ use Spryker\Zed\SalesOrderThresholdDataImport\SalesOrderThresholdDataImportConfi
 
 /**
  * @method \Spryker\Zed\SalesOrderThresholdDataImport\Business\SalesOrderThresholdDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesOrderThresholdDataImport\SalesOrderThresholdDataImportConfig getConfig()
  */
 class SalesOrderThresholdDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

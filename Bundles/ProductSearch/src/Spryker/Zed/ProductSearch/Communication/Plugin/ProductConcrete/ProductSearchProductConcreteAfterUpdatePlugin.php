@@ -14,6 +14,8 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 /**
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  */
 class ProductSearchProductConcreteAfterUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {

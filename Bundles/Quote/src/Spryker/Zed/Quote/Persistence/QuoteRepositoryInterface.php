@@ -20,6 +20,8 @@ interface QuoteRepositoryInterface
      *
      * @api
      *
+     * @deprecated Use findQuoteByCustomerReferenceAndIdStore() instead.
+     *
      * @param string $customerReference
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
@@ -28,7 +30,7 @@ interface QuoteRepositoryInterface
 
     /**
      * Specification:
-     * - Find quote by customer reference and store id.
+     * - Find quote by customer reference and ID store.
      *
      * @api
      *

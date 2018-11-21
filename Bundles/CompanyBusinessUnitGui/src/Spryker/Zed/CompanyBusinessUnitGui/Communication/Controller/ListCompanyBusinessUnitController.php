@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\Business\CompanyBusinessUnitGuiFacadeInterface getFacade()
  */
 class ListCompanyBusinessUnitController extends AbstractController
 {

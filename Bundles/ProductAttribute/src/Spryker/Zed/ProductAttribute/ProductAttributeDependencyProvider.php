@@ -14,6 +14,9 @@ use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleBridg
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductBridge;
 use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilEncodingBridge;
 
+/**
+ * @method \Spryker\Zed\ProductAttribute\ProductAttributeConfig getConfig()
+ */
 class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';

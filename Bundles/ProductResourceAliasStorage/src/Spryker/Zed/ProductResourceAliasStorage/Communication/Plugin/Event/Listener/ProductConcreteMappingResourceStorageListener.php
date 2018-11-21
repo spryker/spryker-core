@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\ProductResourceAliasStorage\Business\ProductResourceAliasStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductResourceAliasStorage\Communication\ProductResourceAliasStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductResourceAliasStorage\ProductResourceAliasStorageConfig getConfig()
  */
 class ProductConcreteMappingResourceStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
