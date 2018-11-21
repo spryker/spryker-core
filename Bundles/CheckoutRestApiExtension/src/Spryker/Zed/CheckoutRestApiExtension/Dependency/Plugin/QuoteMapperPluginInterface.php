@@ -10,7 +10,7 @@ namespace Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
-interface QuoteMappingPluginInterface
+interface QuoteMapperPluginInterface
 {
     /**
      * Specification:
@@ -23,7 +23,7 @@ interface QuoteMappingPluginInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mapRestRequestToQuote(
+    public function map(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer;
