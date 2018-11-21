@@ -74,14 +74,16 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
     }
 
     /**
+     * @param int[] $productIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    public function findProductQuantityTransfersByProductIdsFilteredByOffsetAndLimit(array $productIds, FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
             ->createProductQuantityQuery()
+            ->filterByFkProduct_In($productIds)
             ->offset($filterTransfer->getOffset())
             ->limit($filterTransfer->getLimit());
 

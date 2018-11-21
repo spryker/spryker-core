@@ -64,12 +64,13 @@ class ProductQuantityStorageFacade extends AbstractFacade implements ProductQuan
      *
      * @api
      *
+     * @param int[] $productIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function findProductQuantityTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    public function findProductQuantityTransfersByProductIdsFilteredByOffsetAndLimit(array $productIds, FilterTransfer $filterTransfer): array
     {
-        return $this->getFactory()->getProductQuantityFacade()->findProductQuantityTransfersByOffsetAndLimit($filterTransfer);
+        return $this->getFactory()->getProductQuantityFacade()->findProductQuantityTransfersByProductIdsFilteredByOffsetAndLimit($productIds, $filterTransfer);
     }
 }

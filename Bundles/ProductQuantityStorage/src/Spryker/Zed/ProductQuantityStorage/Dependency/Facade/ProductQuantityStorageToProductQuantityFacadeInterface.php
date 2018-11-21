@@ -24,9 +24,10 @@ interface ProductQuantityStorageToProductQuantityFacadeInterface
     public function findProductQuantityTransfers(): array;
 
     /**
+     * @param int[] $productIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array;
+    public function findProductQuantityTransfersByProductIdsFilteredByOffsetAndLimit(array $productIds, FilterTransfer $filterTransfer): array;
 }
