@@ -25,7 +25,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PAYMENT = 'FACADE_PAYMENT';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
-    public const FACADE_CALCULATION = 'FACADE_SHIPMENT';
+    public const FACADE_CALCULATION = 'FACADE_CALCULATION';
     public const PLUGINS_QUOTE_MAPPING = 'PLUGINS_QUOTE_MAPPING';
 
     /**
