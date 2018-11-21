@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  *
  * @method \Spryker\Zed\Calculation\Business\CalculationFacadeInterface getFacade()
  * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Checkout\CheckoutConfig getConfig()
  */
 class CheckoutGrandTotalPreCondition extends AbstractPlugin implements CheckoutPreConditionInterface
 {
