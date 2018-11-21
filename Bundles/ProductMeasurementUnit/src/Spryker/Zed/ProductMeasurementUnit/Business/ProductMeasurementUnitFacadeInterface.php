@@ -192,11 +192,12 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @api
      *
+     * @param int[] $productMeasurementUnitIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array;
+    public function findProductMeasurementUnitTransfersByIdsFilteredByOffsetAndLimit(array $productMeasurementUnitIds, FilterTransfer $filterTransfer): array;
 
     /**
      * Specification

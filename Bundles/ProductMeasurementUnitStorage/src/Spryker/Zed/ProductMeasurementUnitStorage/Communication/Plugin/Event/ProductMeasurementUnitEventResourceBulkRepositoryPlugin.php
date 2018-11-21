@@ -39,16 +39,17 @@ class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPl
      *
      * @api
      *
+     * @param int[] $ids
      * @param int $offset
      * @param int $limit
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function getData(int $offset, int $limit): array
+    public function getData(array $ids, int $offset, int $limit): array
     {
         $filterTranser = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->findProductMeasurementUnitTransfersByOffsetAndLimit($filterTranser);
+        return $this->getFacade()->findProductMeasurementUnitTransfersByIdsFilteredByOffsetAndLimit($ids, $filterTranser);
     }
 
     /**

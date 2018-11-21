@@ -222,25 +222,22 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
+     * @param int[] $productMeasurementUnitIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    public function findProductMeasurementUnitTransfersByIdsFilteredByOffsetAndLimit(array $productMeasurementUnitIds, FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
-            ->createProductMeasurementSalesUnitQuery()
-            ->joinWithProductMeasurementBaseUnit()
-            ->joinWith('ProductMeasurementUnit salesUnitMeasurementUnit')
-            ->joinWith('ProductMeasurementBaseUnit.ProductMeasurementUnit baseUnitMeasurementUnit')
-            ->leftJoinWithSpyProductMeasurementSalesUnitStore()
-            ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore')
-            ->setOffset($filterTransfer->getOffset())
-            ->setLimit($filterTransfer->getLimit());
+            ->createProductMeasurementUnitQuery()
+            ->filterByIdProductMeasurementUnit_In($productMeasurementUnitIds)
+            ->offset($filterTransfer->getOffset())
+            ->limit($filterTransfer->getLimit());
 
-        $productMeasurementSalesUnitEntityCollection = $query->find();
+        $productMeasurementUnitEntityCollection = $query->find();
 
-        return $this->getMappedProductMeasurementUnitTransfers($productMeasurementSalesUnitEntityCollection);
+        return $this->getMappedProductMeasurementUnitTransfers($productMeasurementUnitEntityCollection);
     }
 
     /**
@@ -267,7 +264,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productMeasurementUnitEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnit[] $productMeasurementUnitEntityCollection
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
@@ -287,7 +284,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productMeasurementSalesUnitEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit[] $productMeasurementSalesUnitEntityCollection
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */

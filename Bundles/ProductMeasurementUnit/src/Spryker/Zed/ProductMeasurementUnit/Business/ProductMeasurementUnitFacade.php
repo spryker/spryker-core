@@ -246,13 +246,14 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @api
      *
+     * @param int[] $productMeasurementUnitIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    public function findProductMeasurementUnitTransfersByIdsFilteredByOffsetAndLimit(array $productMeasurementUnitIds, FilterTransfer $filterTransfer): array
     {
-        return $this->getRepository()->findProductMeasurementUnitTransfersByOffsetAndLimit($filterTransfer);
+        return $this->getRepository()->findProductMeasurementUnitTransfersByIdsFilteredByOffsetAndLimit($productMeasurementUnitIds, $filterTransfer);
     }
 
     /**

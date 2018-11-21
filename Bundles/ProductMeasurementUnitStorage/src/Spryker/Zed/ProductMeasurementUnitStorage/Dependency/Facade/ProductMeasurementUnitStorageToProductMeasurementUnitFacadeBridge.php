@@ -71,13 +71,14 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
     }
 
     /**
+     * @param int[] $productMeasurementUnitIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfersByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    public function findProductMeasurementUnitTransfersByIdsFilteredByOffsetAndLimit(array $productMeasurementUnitIds, FilterTransfer $filterTransfer): array
     {
-        return $this->productMeasurementUnitFacade->findProductMeasurementUnitTransfersByOffsetAndLimit($filterTransfer);
+        return $this->productMeasurementUnitFacade->findProductMeasurementUnitTransfersByIdsFilteredByOffsetAndLimit($productMeasurementUnitIds, $filterTransfer);
     }
 
     /**
