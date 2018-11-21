@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Communication\Console;
 
+use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,6 +19,9 @@ class DocumentationGeneratorRestApiConsole extends Console
 {
     protected const COMMAND_NAME = 'rest-api:generate:documentation';
     protected const DESCRIPTION = 'Generates documentation for enabled Rest API endpoints.';
+
+    protected const APPLICATION_ENV_DEVELOPMENT = 'development';
+    protected const EXCEPTION_NOT_ALLOWED_MESSAGE = 'This action is allowed only for development environment.';
 
     /**
      * @return void
@@ -38,6 +42,12 @@ class DocumentationGeneratorRestApiConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if (Environment::isNotDevelopment()) {
+            $this->error(static::EXCEPTION_NOT_ALLOWED_MESSAGE);
+
+            return static::CODE_ERROR;
+        }
+
         $this->getFacade()->generateDocumentation();
 
         return static::CODE_SUCCESS;
