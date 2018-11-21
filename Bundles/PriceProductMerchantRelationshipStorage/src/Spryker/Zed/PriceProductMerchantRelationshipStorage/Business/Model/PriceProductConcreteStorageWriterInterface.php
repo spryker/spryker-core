@@ -10,6 +10,8 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 interface PriceProductConcreteStorageWriterInterface
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param array $businessUnitProducts
      *
      * @return void
@@ -17,16 +19,23 @@ interface PriceProductConcreteStorageWriterInterface
     public function publishByBusinessUnitProducts(array $businessUnitProducts): void;
 
     /**
-     * @param array $priceProductStoreIds
+     * @param int[] $companyBusinessUnitIds
      *
      * @return void
      */
-    public function publishByPriceProductStoreIds(array $priceProductStoreIds): void;
+    public function publishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void;
 
     /**
-     * @param array $businessUnitIds
+     * @param int[] $priceProductMerchantRelationshipIds
      *
      * @return void
      */
-    public function publishByBusinessUnits(array $businessUnitIds): void;
+    public function publishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return void
+     */
+    public function publishConcretePriceProductByProductIds(array $productIds): void;
 }
