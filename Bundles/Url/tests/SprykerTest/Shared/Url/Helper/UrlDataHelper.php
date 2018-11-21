@@ -40,7 +40,7 @@ class UrlDataHelper extends Module
         $this->getUrlFacade()->createUrl($urlTransfer);
 
         $this->debug(sprintf(
-            'Inserted Url: %d',
+            'Inserted URL: %d',
             $urlTransfer->getIdUrl()
         ));
 
@@ -58,7 +58,7 @@ class UrlDataHelper extends Module
      */
     protected function cleanupUrl(UrlTransfer $urlTransfer): void
     {
-        $this->debug(sprintf('Deleting Url: %d', $urlTransfer->getIdUrl()));
+        $this->debug(sprintf('Deleting URL: %d', $urlTransfer->getIdUrl()));
 
         $this->getUrlFacade()->deleteUrl($urlTransfer);
     }

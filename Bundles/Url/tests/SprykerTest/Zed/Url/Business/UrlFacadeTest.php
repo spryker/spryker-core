@@ -202,7 +202,7 @@ class UrlFacadeTest extends Unit
 
         // Act
         $urlTransfer->setUrl(
-            strtoupper($urlTransfer->getUrl())
+            mb_strtoupper($urlTransfer->getUrl())
         );
         $existingUrlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
 
