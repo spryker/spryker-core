@@ -23,7 +23,29 @@ $(document).ready(function() {
     $('.gui-table-data')
         .on('error.dt', dataTable.onError)
         .dataTable(dataTable.defaultConfiguration);
-
+    
+    /* Delay for data tables search */
+    var dataTables = $('.dataTable');
+    dataTables.each(function() {
+        var searchInput = $(this).parents('.dataTables_wrapper').find('input[type="search"]');
+        var dtable = $('.gui-table-data').dataTable().api();
+        var timeOutId = 0;
+        
+        if(searchInput.length) {
+            searchInput
+                .unbind()
+                .bind("input", function(e) {
+                    var self = this;
+                    
+                    clearTimeout(timeOutId);
+                    timeOutId = setTimeout(function() {
+                        dtable.search(self.value).draw();
+                    }, 500);
+                    return;
+                });
+        }
+    });
+    
     /* Draw data tables without search */
     $('.gui-table-data-no-search')
         .on('error.dt', dataTable.onError)
