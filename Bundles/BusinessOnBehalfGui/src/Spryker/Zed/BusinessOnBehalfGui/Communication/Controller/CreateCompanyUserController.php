@@ -8,8 +8,6 @@
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Controller;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CompanyUserResponseTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,38 +41,22 @@ class CreateCompanyUserController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $companyUserResponseTransfer = $this->attachCustomer($form->getData());
+            $companyUserResponseTransfer = $this->getFactory()
+                ->getCompanyUserFacade()
+                ->create($form->getData());
 
             if ($companyUserResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
+
                 return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
             }
+
+            $this->handleErrorMessages($companyUserResponseTransfer->getMessages());
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
-     */
-    protected function attachCustomer(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
-    {
-        $companyUserResponseTransfer = $this->getFactory()
-            ->getCompanyUserFacade()
-            ->create($companyUserTransfer);
-
-        if ($companyUserResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
-
-            return $companyUserResponseTransfer;
-        }
-
-        $this->handleErrorMessages($companyUserResponseTransfer->getMessages());
-
-        return $companyUserResponseTransfer;
     }
 
     /**
