@@ -49,6 +49,19 @@ interface UrlFacadeInterface
 
     /**
      * Specification:
+     * - Finds existing URL entity by case insensitive URL value.
+     * - Returns UrlTransfer with the appropriate data from database if the entity is found, NULL otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
+    public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer;
+
+    /**
+     * Specification:
      * - Checks if URL entity exists in database by the provided `id_url` or `url`.
      * - URL redirects are ignored unless the URL to be checked is a redirect as well (`fkResourceRedirect` is set).
      *

@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\Url\Business\UrlBusinessFactory getFactory()
+ * @method \Spryker\Zed\Url\Persistence\UrlRepositoryInterface getRepository()
  */
 class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 {
@@ -74,6 +75,20 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
         return $this->getFactory()
             ->createUrlReader()
             ->findUrl($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
+    public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer
+    {
+        return $this->getRepository()->findUrlCaseInsensitive($urlTransfer);
     }
 
     /**

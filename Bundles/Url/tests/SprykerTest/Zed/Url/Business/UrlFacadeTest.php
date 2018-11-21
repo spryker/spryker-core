@@ -35,6 +35,11 @@ use Symfony\Component\HttpFoundation\Response;
 class UrlFacadeTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\Url\UrlBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @var \Spryker\Zed\Url\Business\UrlFacade
      */
     protected $urlFacade;
@@ -168,6 +173,41 @@ class UrlFacadeTest extends Unit
 
         $this->assertNotNull($urlTransfer, 'Finding existing URL entity by ID should return transfer object.');
         $this->assertSame($urlEntity->getUrl(), $urlTransfer->getUrl(), 'Reading URL entity by ID should return transfer with proper data.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindUrlCaseInsensitiveShouldSearchByIdAndReturnCorrectUrlTransfer(): void
+    {
+        // Assign
+        $urlTransfer = $this->tester->haveUrl();
+
+        // Act
+        $existingUrlTransfer = $this->urlFacade->findUrlCaseInsensitive(
+            (new UrlTransfer())->setIdUrl($urlTransfer->getIdUrl())
+        );
+
+        // Assert
+        $this->assertSame($urlTransfer->getUrl(), $existingUrlTransfer->getUrl());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindUrlCaseInsensitiveShouldSearchByCaseInsensitiveUrlValueAndReturnCorrectUrlTransfer(): void
+    {
+        // Assign
+        $urlTransfer = $this->tester->haveUrl();
+
+        // Act
+        $urlTransfer->setUrl(
+            strtoupper($urlTransfer->getUrl())
+        );
+        $existingUrlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
+
+        // Assert
+        $this->assertSame($urlTransfer->getIdUrl(), $existingUrlTransfer->getIdUrl());
     }
 
     /**
