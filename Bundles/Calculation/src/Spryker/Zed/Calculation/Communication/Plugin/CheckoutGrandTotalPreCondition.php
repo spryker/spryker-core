@@ -10,11 +10,15 @@ namespace Spryker\Zed\Calculation\Communication\Plugin;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated This class will be removed.
+ *
  * @method \Spryker\Zed\Calculation\Business\CalculationFacadeInterface getFacade()
+ * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
  */
-class CheckoutGrandTotalPreCondition implements CheckoutPreConditionInterface
+class CheckoutGrandTotalPreCondition extends AbstractPlugin implements CheckoutPreConditionInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
