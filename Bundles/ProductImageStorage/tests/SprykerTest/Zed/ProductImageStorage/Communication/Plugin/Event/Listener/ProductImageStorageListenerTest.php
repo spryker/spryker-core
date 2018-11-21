@@ -13,8 +13,6 @@ use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\ProductImageStorage\Business\ProductImageStorageBusinessFactory;
 use Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacade;
@@ -58,11 +56,6 @@ class ProductImageStorageListenerTest extends Unit
 
         if (!$this->tester->isSuiteProject()) {
             throw new SkippedTestError('Warning: not in suite environment');
-        }
-
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
     }
 

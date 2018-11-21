@@ -11,9 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductGroup\Persistence\Map\SpyProductAbstractGroupTableMap;
 use Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductGroup\Dependency\ProductGroupEvents;
 use Spryker\Zed\ProductGroupStorage\Business\ProductGroupStorageBusinessFactory;
 use Spryker\Zed\ProductGroupStorage\Business\ProductGroupStorageFacade;
@@ -35,19 +32,6 @@ use SprykerTest\Zed\ProductGroupStorage\ProductGroupStorageConfigMock;
  */
 class ProductGroupStorageListenerTest extends Unit
 {
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
-
     /**
      * @return void
      */

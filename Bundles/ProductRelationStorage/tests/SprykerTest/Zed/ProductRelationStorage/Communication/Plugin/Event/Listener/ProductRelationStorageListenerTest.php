@@ -12,9 +12,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductRelation\Dependency\ProductRelationEvents;
 use Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageBusinessFactory;
 use Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade;
@@ -37,19 +34,6 @@ use SprykerTest\Zed\ProductRelationStorage\ProductRelationStorageConfigMock;
  */
 class ProductRelationStorageListenerTest extends Unit
 {
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
-
     /**
      * @return void
      */

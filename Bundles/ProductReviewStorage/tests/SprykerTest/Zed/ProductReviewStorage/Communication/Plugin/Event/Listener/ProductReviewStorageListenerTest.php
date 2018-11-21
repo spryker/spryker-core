@@ -11,9 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductReviewStorage\Persistence\SpyProductAbstractReviewStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductReview\Dependency\ProductReviewEvents;
 use Spryker\Zed\ProductReviewStorage\Business\ProductReviewStorageBusinessFactory;
 use Spryker\Zed\ProductReviewStorage\Business\ProductReviewStorageFacade;
@@ -35,19 +32,6 @@ use SprykerTest\Zed\ProductReviewStorage\ProductReviewStorageConfigMock;
  */
 class ProductReviewStorageListenerTest extends Unit
 {
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
-
     /**
      * @return void
      */
@@ -116,6 +100,6 @@ class ProductReviewStorageListenerTest extends Unit
         $spyProductReviewStorage = SpyProductAbstractReviewStorageQuery::create()->orderByIdProductAbstractReviewStorage()->filterByFkProductAbstract(86)->findOne();
         $this->assertNotNull($spyProductReviewStorage);
         $data = $spyProductReviewStorage->getData();
-        $this->assertSame(4, $data['review_count']);
+        $this->assertSame(4, (int)$data['review_count']);
     }
 }

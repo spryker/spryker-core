@@ -13,8 +13,6 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\PriceProductStorage\Business\PriceProductStorageBusinessFactory;
 use Spryker\Zed\PriceProductStorage\Business\PriceProductStorageFacade;
@@ -55,11 +53,6 @@ class PriceProductAbstractStorageListenerTest extends Unit
 
         if (!$this->tester->isSuiteProject()) {
             throw new SkippedTestError('Warning: not in suite environment');
-        }
-
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
     }
 

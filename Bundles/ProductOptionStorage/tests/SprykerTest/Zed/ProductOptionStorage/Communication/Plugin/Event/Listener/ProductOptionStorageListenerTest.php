@@ -13,9 +13,6 @@ use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTa
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValuePriceTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductOption\Dependency\ProductOptionEvents;
 use Spryker\Zed\ProductOptionStorage\Business\ProductOptionStorageBusinessFactory;
 use Spryker\Zed\ProductOptionStorage\Business\ProductOptionStorageFacade;
@@ -41,19 +38,6 @@ use SprykerTest\Zed\ProductOptionStorage\ProductOptionStorageConfigMock;
  */
 class ProductOptionStorageListenerTest extends Unit
 {
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
-
     /**
      * @return void
      */

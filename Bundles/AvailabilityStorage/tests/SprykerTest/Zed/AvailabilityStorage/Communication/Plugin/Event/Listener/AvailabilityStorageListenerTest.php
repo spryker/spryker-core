@@ -11,9 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorageQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageBusinessFactory;
 use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacade;
@@ -36,19 +33,6 @@ use SprykerTest\Zed\AvailabilityStorage\AvailabilityStorageConfigMock;
  */
 class AvailabilityStorageListenerTest extends Unit
 {
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
-
     /**
      * @return void
      */
