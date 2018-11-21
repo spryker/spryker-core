@@ -5,21 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CheckoutRestApi\Communication\Plugin;
+namespace Spryker\Zed\PaymentsRestApi\Communication\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMappingPluginInterface;
+use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\PaymentsRestApi\Business\PaymentsRestApiFacadeInterface getFacade()
  */
-class ShipmentQuoteMappingPlugin extends AbstractPlugin implements QuoteMappingPluginInterface
+class PaymentsQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Maps rest request shipment to quote.
+     * - Maps rest request payments to quote.
+     * - Sets first payment method with unlimited amount as main payment method to quote.
      *
      * @api
      *
@@ -28,10 +29,11 @@ class ShipmentQuoteMappingPlugin extends AbstractPlugin implements QuoteMappingP
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mapRestRequestToQuote(
+    public function map(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        return $this->getFacade()->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+        return $this->getFacade()
+            ->mapPaymentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 }

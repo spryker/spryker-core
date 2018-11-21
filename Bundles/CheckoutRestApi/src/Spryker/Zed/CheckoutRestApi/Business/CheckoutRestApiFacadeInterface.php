@@ -44,32 +44,6 @@ interface CheckoutRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Maps rest request shipment information to quote.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapShipmentToQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
-
-    /**
-     * Specification:
-     * - Maps rest request payment information to quote.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapPaymentToQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
-
-    /**
-     * Specification:
      * - Maps rest request billing and shipping information to quote.
      *
      * @api
