@@ -9,10 +9,6 @@ namespace Spryker\Zed\CheckoutRestApi\Business;
 
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\CheckoutDataReader;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\CheckoutDataReaderInterface;
-use Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\Customer\QuoteCustomerExpander;
-use Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\Customer\QuoteCustomerExpanderInterface;
-use Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\RestCheckoutRequestMapper;
-use Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\RestCheckoutRequestMapperInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessor;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessorInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReader;
@@ -66,22 +62,6 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function createQuoteReader(): QuoteReaderInterface
     {
         return new QuoteReader($this->getQuoteFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\Customer\QuoteCustomerExpanderInterface
-     */
-    public function createQuoteCustomerExpander(): QuoteCustomerExpanderInterface
-    {
-        return new QuoteCustomerExpander($this->getCustomerFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\CheckoutRestApi\Business\Checkout\Mapper\RestCheckoutRequestMapperInterface
-     */
-    public function createRestCheckoutRequestMapper(): RestCheckoutRequestMapperInterface
-    {
-        return new RestCheckoutRequestMapper();
     }
 
     /**

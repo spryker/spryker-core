@@ -33,15 +33,15 @@ class QuoteReader implements QuoteReaderInterface
      */
     public function findCustomerQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
     {
-        $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
-        if (!$restQuoteRequestTransfer
-            || !$restQuoteRequestTransfer->getCustomer()
-            || !$restQuoteRequestTransfer->getCustomer()->getCustomerReference()) {
+        $restCartTransfer = $restCheckoutRequestAttributesTransfer->getCart();
+        if (!$restCartTransfer
+            || !$restCartTransfer->getCustomer()
+            || !$restCartTransfer->getCustomer()->getCustomerReference()) {
             return null;
         }
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setUuid($restQuoteRequestTransfer->getId());
+            ->setUuid($restCartTransfer->getId());
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
 
@@ -51,7 +51,7 @@ class QuoteReader implements QuoteReaderInterface
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
-        if ($quoteTransfer->getCustomerReference() !== $restQuoteRequestTransfer->getCustomer()->getCustomerReference()) {
+        if ($quoteTransfer->getCustomerReference() !== $restCartTransfer->getCustomer()->getCustomerReference()) {
             return null;
         }
 

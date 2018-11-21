@@ -9,7 +9,6 @@ namespace Spryker\Zed\CheckoutRestApi\Business;
 
 use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -44,35 +43,5 @@ class CheckoutRestApiFacade extends AbstractFacade implements CheckoutRestApiFac
     public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutResponseTransfer
     {
         return $this->getFactory()->createPlaceOrderProcessor()->placeOrder($restCheckoutRequestAttributesTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapAddressesToQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()->createRestCheckoutRequestMapper()->mapAddresses($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapCustomerToQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()->createQuoteCustomerExpander()->expandQuoteWithCustomerData($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 }

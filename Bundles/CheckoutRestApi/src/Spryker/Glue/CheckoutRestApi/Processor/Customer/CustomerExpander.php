@@ -24,15 +24,15 @@ class CustomerExpander implements CustomerExpanderInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCustomerTransfer {
         $restCustomerTransfer = new RestCustomerTransfer();
-        $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
+        $restCartTransfer = $restCheckoutRequestAttributesTransfer->getCart();
 
         if ($restRequest->getUser() === null) {
             return $restCustomerTransfer;
         }
 
-        if ($restQuoteRequestTransfer->getCustomer()) {
+        if ($restCartTransfer->getCustomer()) {
             $restCustomerTransfer->fromArray(
-                $restQuoteRequestTransfer->getCustomer()->toArray(),
+                $restCartTransfer->getCustomer()->toArray(),
                 true
             );
         }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\CheckoutRestApi\Business;
 
 use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
 interface CheckoutRestApiFacadeInterface
@@ -41,30 +40,4 @@ interface CheckoutRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutResponseTransfer;
-
-    /**
-     * Specification:
-     * - Maps rest request billing and shipping information to quote.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapAddressesToQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
-
-    /**
-     * Specification:
-     * - Maps rest request customer information to quote.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapCustomerToQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

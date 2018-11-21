@@ -8,8 +8,10 @@
 namespace Spryker\Zed\PaymentsRestApi\Business\Quote;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestPaymentTransfer;
 
 class QuoteMapper implements QuoteMapperInterface
 {
@@ -23,12 +25,12 @@ class QuoteMapper implements QuoteMapperInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        $payments = $restCheckoutRequestAttributesTransfer->getCart()->getPayments();
-        $quoteTransfer = $this->setFirstPaymentMethodWithUnlimitedAmountToQuote($payments, $quoteTransfer);
+        $restPaymentTransfers = $restCheckoutRequestAttributesTransfer->getCart()->getPayments();
+        $quoteTransfer = $this->setFirstPaymentMethodWithUnlimitedAmountToQuote($restPaymentTransfers, $quoteTransfer);
 
-        foreach ($payments as $paymentTransfer) {
-            if ($quoteTransfer->getPayment()->getPaymentSelection() !== $paymentTransfer->getPaymentSelection()) {
-                $quoteTransfer->addPayment($paymentTransfer);
+        foreach ($restPaymentTransfers as $restPaymentTransfer) {
+            if ($quoteTransfer->getPayment()->getPaymentSelection() !== $restPaymentTransfer->getPaymentSelection()) {
+                $quoteTransfer->addPayment($this->preparePaymentTransfer($restPaymentTransfer));
             }
         }
 
@@ -36,23 +38,33 @@ class QuoteMapper implements QuoteMapperInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PaymentTransfer[] $payments
+     * @param \ArrayObject|\Generated\Shared\Transfer\RestPaymentTransfer[] $restPaymentTransfers
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function setFirstPaymentMethodWithUnlimitedAmountToQuote(
-        ArrayObject $payments,
+        ArrayObject $restPaymentTransfers,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        foreach ($payments as $paymentTransfer) {
-            if (!$paymentTransfer->getIsLimitedAmount()) {
-                $quoteTransfer->setPayment($paymentTransfer);
+        foreach ($restPaymentTransfers as $restPaymentTransfer) {
+            if (!$restPaymentTransfer->getIsLimitedAmount()) {
+                $quoteTransfer->setPayment($this->preparePaymentTransfer($restPaymentTransfer));
 
                 return $quoteTransfer;
             }
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestPaymentTransfer $restPaymentTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentTransfer
+     */
+    protected function preparePaymentTransfer(RestPaymentTransfer $restPaymentTransfer): PaymentTransfer
+    {
+        return (new PaymentTransfer())->fromArray($restPaymentTransfer->toArray(), true);
     }
 }
