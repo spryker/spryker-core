@@ -11,5 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class BusinessOnBehalfGuiConfig extends AbstractBundleConfig
 {
-    public const PARAM_ID_COMPANY_USER = 'id-company-user';
+    public const PARAM_ID_CUSTOMER = 'id-customer';
+    public const PARAM_ID_COMPANY = 'id-company';
 }

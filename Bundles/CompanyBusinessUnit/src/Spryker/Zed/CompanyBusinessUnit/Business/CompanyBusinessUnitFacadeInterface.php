@@ -154,13 +154,13 @@ interface CompanyBusinessUnitFacadeInterface
 
     /**
      * Specification:
-     * - checks that exist company user
+     * - Checks if company user exists by customer id and company business unit id.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function checkCompanyUserByBusinessUnitIdCompanyUserIdExists(CompanyUserTransfer $companyUserTransfer): bool;
+    public function checkCompanyUserByIdBusinessUnitAndIdCustomerExists(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }

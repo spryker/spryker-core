@@ -284,20 +284,13 @@ class CompanyBusinessUnitFacadeTest extends Test
     }
 
     /**
-     * @group Propel
-     *
      * @return void
      */
     public function testCheckCompanyUserByBusinessUnitIdCompanyUserIdExistsShouldReturnTrueIfCompanyUserRelationAlreadyExists()
     {
+        // Arrange
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
         $customerTransfer = $this->tester->haveCustomer();
-
-        $nonexistentСompanyUserTransfer = (new CompanyUserBuilder())
-            ->build()
-            ->setFkCustomer($customerTransfer->getIdCustomer())
-            ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
-
         $companyUserTransfer = $this->tester->haveCompanyUser(
             [
                 CompanyUserTransfer::CUSTOMER => $customerTransfer,
@@ -308,11 +301,34 @@ class CompanyBusinessUnitFacadeTest extends Test
             ]
         );
 
-        $existsCompanyUser = $this->getFacade()->checkCompanyUserByBusinessUnitIdCompanyUserIdExists($nonexistentСompanyUserTransfer);
-        $this->assertFalse($existsCompanyUser);
+        // Act
+        $existsCompanyUser = $this->getFacade()
+            ->checkCompanyUserByIdBusinessUnitAndIdCustomerExists($companyUserTransfer);
 
-        $existsCompanyUser = $this->getFacade()->checkCompanyUserByBusinessUnitIdCompanyUserIdExists($companyUserTransfer);
+        // Assert
         $this->assertTrue($existsCompanyUser);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckCompanyUserByBusinessUnitIdCompanyUserIdExistsShouldReturnFalseIfCompanyUserRelationDoesNotExists()
+    {
+        // Arrange
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        $customerTransfer = $this->tester->haveCustomer();
+
+        $notExistentСompanyUserTransfer = (new CompanyUserBuilder())
+            ->build()
+            ->setFkCustomer($customerTransfer->getIdCustomer())
+            ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
+
+        // Act
+        $existsCompanyUser = $this->getFacade()
+            ->checkCompanyUserByIdBusinessUnitAndIdCustomerExists($notExistentСompanyUserTransfer);
+
+        // Assert
+        $this->assertFalse($existsCompanyUser);
     }
 
     /**

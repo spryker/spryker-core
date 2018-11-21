@@ -30,7 +30,8 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new CustomerBusinessUnitAttachFormDataProvider(
             $this->getCompanyBusinessUnitFacade(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyFacade(),
+            $this->getCustomerFacade()
         );
     }
 

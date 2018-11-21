@@ -9,7 +9,6 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 
 class BusinessOnBehalfGuiToCompanyBusinessUnitFacadeBridge implements BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface
 {
@@ -24,16 +23,6 @@ class BusinessOnBehalfGuiToCompanyBusinessUnitFacadeBridge implements BusinessOn
     public function __construct($companyBusinessUnitFacade)
     {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return bool
-     */
-    public function checkCompanyUserByBusinessUnitIdCompanyUserIdExists(CompanyUserTransfer $companyUserTransfer): bool
-    {
-        return $this->companyBusinessUnitFacade->checkCompanyUserByBusinessUnitIdCompanyUserIdExists($companyUserTransfer);
     }
 
     /**

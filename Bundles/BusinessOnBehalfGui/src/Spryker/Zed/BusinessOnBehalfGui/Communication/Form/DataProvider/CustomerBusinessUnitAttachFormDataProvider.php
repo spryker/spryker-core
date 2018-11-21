@@ -9,10 +9,13 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\CustomerBusinessUnitAttachForm;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface;
-use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface;
+use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyFacadeInterface;
+use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCustomerFacadeInterface;
 
 class CustomerBusinessUnitAttachFormDataProvider
 {
@@ -27,36 +30,50 @@ class CustomerBusinessUnitAttachFormDataProvider
     protected $companyBusinessUnitFacade;
 
     /**
-     * @var \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface
+     * @var \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyFacadeInterface
      */
-    protected $companyUserFacade;
+    protected $companyFacade;
+
+    /**
+     * @var \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCustomerFacadeInterface
+     */
+    protected $customerFacade;
 
     /**
      * @param \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
-     * @param \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface $companyUserFacade
+     * @param \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyFacadeInterface $companyFacade
+     * @param \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCustomerFacadeInterface $customerFacade
      */
     public function __construct(
         BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
-        BusinessOnBehalfGuiToCompanyUserFacadeInterface $companyUserFacade
+        BusinessOnBehalfGuiToCompanyFacadeInterface $companyFacade,
+        BusinessOnBehalfGuiToCustomerFacadeInterface $customerFacade
     ) {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
-        $this->companyUserFacade = $companyUserFacade;
+        $this->companyFacade = $companyFacade;
+        $this->customerFacade = $customerFacade;
     }
 
     /**
-     * @param int $idCompanyUser
+     * @param int $idCustomer
+     * @param int $idCompany
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function getData(int $idCompanyUser): CompanyUserTransfer
+    public function getData(int $idCustomer, int $idCompany): CompanyUserTransfer
     {
-        $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($idCompanyUser);
+        $companyTransfer = $this->companyFacade->getCompanyById(
+            (new CompanyTransfer())->setIdCompany($idCompany)
+        );
+        $customerTransfer = $this->customerFacade->findCustomerById(
+            (new CustomerTransfer())->setIdCustomer($idCustomer)
+        );
 
         return (new CompanyUserTransfer())
-            ->setCustomer($companyUserTransfer->getCustomer())
-            ->setCompany($companyUserTransfer->getCompany())
-            ->setFkCompany($companyUserTransfer->getCompany()->getIdCompany())
-            ->setFkCustomer($companyUserTransfer->getCustomer()->getIdCustomer());
+            ->setFkCompany($idCompany)
+            ->setFkCustomer($idCustomer)
+            ->setCompany($companyTransfer)
+            ->setCustomer($customerTransfer);
     }
 
     /**

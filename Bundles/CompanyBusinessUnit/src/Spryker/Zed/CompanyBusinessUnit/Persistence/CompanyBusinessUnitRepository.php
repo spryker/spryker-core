@@ -220,17 +220,15 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      *
      * @return bool
      */
-    public function checkCompanyUserByBusinessUnitIdCompanyUserIdExists(CompanyUserTransfer $companyUserTransfer): bool
+    public function checkCompanyUserByIdBusinessUnitAndIdCustomerExists(CompanyUserTransfer $companyUserTransfer): bool
     {
         $companyUserTransfer->requireFkCustomer()
             ->requireFkCompanyBusinessUnit();
 
-        $existsSpyCompanyUser = $this->getFactory()
+        return $this->getFactory()
             ->createCompanyUserQuery()
             ->filterByFkCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
             ->filterByFkCustomer($companyUserTransfer->getFkCustomer())
             ->exists();
-
-        return $existsSpyCompanyUser;
     }
 }
