@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade;
+namespace Spryker\Zed\PersistentCart\Dependency\Facade;
 
 use Generated\Shared\Transfer\StoreTransfer;
 
-class PriceProductMerchantRelationshipStorageToStoreFacadeBridge implements PriceProductMerchantRelationshipStorageToStoreFacadeInterface
+class PersistentCartToStoreFacadeBridge implements PersistentCartToStoreFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
@@ -25,12 +25,10 @@ class PriceProductMerchantRelationshipStorageToStoreFacadeBridge implements Pric
     }
 
     /**
-     * @param int $idStore
-     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreById(int $idStore): StoreTransfer
+    public function getCurrentStore(): StoreTransfer
     {
-        return $this->storeFacade->getStoreById($idStore);
+        return $this->storeFacade->getCurrentStore();
     }
 }

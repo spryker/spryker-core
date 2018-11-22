@@ -20,6 +20,9 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
 
+/**
+ * @method \Spryker\Zed\Oms\OmsConfig getConfig()
+ */
 class OmsDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CONDITION_PLUGINS = 'CONDITION_PLUGINS';
