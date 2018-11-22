@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Table;
 
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
+use Generated\Shared\Transfer\QueryJoinTransfer;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -57,6 +59,8 @@ class ProductListTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
+        $this->expandQuery();
+
         $queryResults = $this->runQuery($this->productListQuery, $config);
 
         $results = [];
@@ -72,6 +76,7 @@ class ProductListTable extends AbstractTable
             $rowData += $this->productListTablePluginExecutor->executeTableDataExpanderPlugins($item);
             $results[] = $rowData;
         }
+
         unset($queryResults);
 
         return $results;
@@ -173,5 +178,70 @@ class ProductListTable extends AbstractTable
         }
 
         return implode(' ', $buttons);
+    }
+
+    /**
+     * Expands query with params from expander plugins.
+     *
+     * @return void
+     */
+    protected function expandQuery(): void
+    {
+        $queryCriteriaTransfer = $this->productListTablePluginExecutor
+            ->executeTableQueryCriteriaExpanderPlugins(new QueryCriteriaTransfer());
+
+        foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
+            $this->productListQuery->withColumn($field, $value);
+        }
+
+        /**
+         * @var \ArrayObject|\Generated\Shared\Transfer\QueryJoinTransfer[]|null
+         */
+        $queryCriteriaTransferJoins = $queryCriteriaTransfer->getJoins();
+
+        if (!$queryCriteriaTransferJoins) {
+            return;
+        }
+
+        foreach ($queryCriteriaTransferJoins as $queryJoinTransfer) {
+            if ($queryJoinTransfer->getRelation()) {
+                $this->expandQueryWithRelation($queryJoinTransfer);
+
+                continue;
+            }
+
+            $this->expandQueryWithoutRelation($queryJoinTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueryJoinTransfer $queryJoinTransfer
+     *
+     * @return void
+     */
+    protected function expandQueryWithRelation(QueryJoinTransfer $queryJoinTransfer): void
+    {
+        $this->productListQuery->join($queryJoinTransfer->getRelation(), $queryJoinTransfer->getJoinType());
+
+        if ($queryJoinTransfer->getCondition()) {
+            $this->productListQuery->addJoinCondition(
+                $queryJoinTransfer->getRelation(),
+                $queryJoinTransfer->getCondition()
+            );
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueryJoinTransfer $queryJoinTransfer
+     *
+     * @return void
+     */
+    protected function expandQueryWithoutRelation(QueryJoinTransfer $queryJoinTransfer): void
+    {
+        $this->productListQuery->addJoin(
+            $queryJoinTransfer->getLeft(),
+            $queryJoinTransfer->getRight(),
+            $queryJoinTransfer->getJoinType()
+        );
     }
 }
