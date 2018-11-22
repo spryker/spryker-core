@@ -26,6 +26,12 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     public const AGGREGATION_GLOBAL_PREFIX = 'global-';
 
     /**
+     * {@inheritdoc}
+     * - Applies facet filters to query
+     * - Facet filter values that equal null, empty string or false are dropped other values are kept including 0(zero)
+     *
+     * @api
+     *
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *
