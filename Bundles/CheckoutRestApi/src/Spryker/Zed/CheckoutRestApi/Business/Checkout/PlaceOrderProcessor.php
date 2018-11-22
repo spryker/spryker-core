@@ -9,6 +9,7 @@ namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
@@ -85,6 +86,33 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     {
         $quoteTransfer = $this->quoteReader->findCustomerQuote($restCheckoutRequestAttributesTransfer);
 
+        $restCheckoutResponseTransfer = $this->validateQuoteTransfer($quoteTransfer);
+        if ($restCheckoutResponseTransfer !== null) {
+            return $restCheckoutResponseTransfer;
+        }
+
+        $quoteTransfer = $this->prepareQuoteTransfer($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $checkoutResponseTransfer = $this->placeOrderWithQuoteTransfer($quoteTransfer);
+        if (!$checkoutResponseTransfer->getIsSuccess()) {
+            return $this->createRestCheckoutResponseWithErrorFromCheckoutResponseTransfer($checkoutResponseTransfer);
+        }
+
+        $quoteResponseTransfer = $this->deleteQuote($quoteTransfer);
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
+        }
+
+        return $this->createRestCheckoutResponseTransfer($checkoutResponseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer|null
+     */
+    protected function validateQuoteTransfer(?QuoteTransfer $quoteTransfer): ?RestCheckoutResponseTransfer
+    {
         if (!$quoteTransfer) {
             return $this->createCartNotFoundErrorResponse();
         }
@@ -99,26 +127,44 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
         }
 
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function prepareQuoteTransfer(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
         foreach ($this->quoteMappingPlugins as $quoteMappingPlugin) {
             $quoteTransfer = $quoteMappingPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         }
 
-        $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
+        return $this->calculationFacade->recalculateQuote($quoteTransfer);
+    }
 
-        $checkoutResponseTransfer = $this->checkoutFacade->placeOrder($quoteTransfer);
-        if (!$checkoutResponseTransfer->getIsSuccess()) {
-            return $this->createRestCheckoutResponseWithErrorFromCheckoutResponseTransfer($checkoutResponseTransfer);
-        }
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function placeOrderWithQuoteTransfer(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    {
+        return $this->checkoutFacade->placeOrder($quoteTransfer);
+    }
 
-        $quoteResponseTransfer = $this->quoteFacade->deleteQuote($quoteTransfer);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
-        }
-
-        return (new RestCheckoutResponseTransfer())
-            ->setIsSuccess(true)
-            ->setOrderReference($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->quoteFacade->deleteQuote($quoteTransfer);
     }
 
     /**
@@ -213,5 +259,17 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         }
 
         return $restCheckoutResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
+     */
+    protected function createRestCheckoutResponseTransfer(CheckoutResponseTransfer $checkoutResponseTransfer): RestCheckoutResponseTransfer
+    {
+        return (new RestCheckoutResponseTransfer())
+            ->setIsSuccess(true)
+            ->setOrderReference($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
     }
 }
