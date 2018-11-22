@@ -6,66 +6,66 @@ parameters:
 
 services:
     -
-        class: PhpStan\DynamicType\FacadeDynamicTypeExtension
+        class: PHPStan\Type\Spryker\FacadeDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
-        class: PhpStan\DynamicType\QueryContainerDynamicTypeExtension
+        class: PHPStan\Type\Spryker\QueryContainerDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
-        class: PhpStan\DynamicType\ConsoleDynamicTypeExtension
+        class: PHPStan\Type\Spryker\ConsoleDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
-        class: PhpStan\DynamicType\ControllerDynamicTypeExtension
+        class: PHPStan\Type\Spryker\ControllerDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
-        class: PhpStan\DynamicType\PluginDynamicTypeExtension
+        class: PHPStan\Type\Spryker\PluginDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
-        class: PhpStan\DynamicType\ServiceDynamicTypeExtension
+        class: PHPStan\Type\Spryker\ServiceDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
-        class: PhpStan\DynamicType\ConfigDynamicTypeExtension
+        class: PHPStan\Type\Spryker\ConfigDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
-        class: PhpStan\DynamicType\ClientDynamicTypeExtension
+        class: PHPStan\Type\Spryker\ClientDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
-        class: PhpStan\DynamicType\ClientPluginDynamicTypeExtension
+        class: PHPStan\Type\Spryker\ClientPluginDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
-        class: PhpStan\DynamicType\YvesFormTypeDynamicTypeExtension
+        class: PHPStan\Type\Spryker\YvesFormTypeDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
-        class: PhpStan\DynamicType\ZedFormTypeDynamicTypeExtension
+        class: PHPStan\Type\Spryker\ZedFormTypeDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
-        class: PhpStan\DynamicType\YvesFactoryDynamicTypeExtension
+        class: PHPStan\Type\Spryker\YvesFactoryDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
 
     -
-        class: PhpStan\DynamicType\ZedFactoryDynamicTypeExtension
+        class: PHPStan\Type\Spryker\ZedFactoryDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
