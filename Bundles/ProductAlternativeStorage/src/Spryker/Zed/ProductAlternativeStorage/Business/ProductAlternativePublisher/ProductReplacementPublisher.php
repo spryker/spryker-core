@@ -118,8 +118,11 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
         array $indexedSkus
     ): void {
         foreach ($indexedSkus as $idProduct => $productConcreteData) {
-            $replacementIds = $this->productAlternativeStorageRepository->getReplacementsByConcreteProductId($idProduct);
-            $sku = $productConcreteData[ProductConcreteTransfer::SKU];
+            $replacementIds = array_merge(
+                $this->productAlternativeStorageRepository->getReplacementsByConcreteProductId($idProduct),
+                $this->productAlternativeStorageRepository->getReplacementsByAbstractProductId($productConcreteData[ProductConcreteTransfer::FK_PRODUCT_ABSTRACT])
+            );
+            $sku = $productConcreteData[ProductConcreteTransfer::SKU] ?? $productConcreteData[ProductConcreteTransfer::ABSTRACT_SKU];
             $productReplacementStorageEntity = $this->productAlternativeStorageRepository->findProductReplacementStorageEntitiesBySku($sku);
             $this->storeDataSet($sku, $replacementIds, $productReplacementStorageEntity);
         }
