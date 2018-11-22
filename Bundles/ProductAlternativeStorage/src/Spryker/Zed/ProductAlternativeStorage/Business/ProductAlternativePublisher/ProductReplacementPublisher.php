@@ -45,7 +45,6 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
      */
     public function publishAbstractReplacements(array $productIds): void
     {
-        $replacementIds = [];
         $productAbstractIndexedSkus = $this->productAlternativeStorageRepository->getIndexedProductAbstractIdToSkusByProductIds($productIds);
         $this->storeAbstractProductData($productAbstractIndexedSkus);
 
@@ -55,6 +54,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
             return;
         }
 
+        $replacementIds = [];
         foreach ($productAbstractIndexedSkus as $idProductAbstract => $productAbstractData) {
             $replacementIds = $this->productAlternativeStorageRepository->getReplacementsByAbstractProductId($idProductAbstract);
         }
