@@ -29,11 +29,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     /**
      * @var array
      */
-    protected static $statusMessages = [
-        self::INFO_MESSAGES => [],
-        self::ERROR_MESSAGES => [],
-        self::SUCCESS_MESSAGES => [],
-    ];
+    protected static $statusMessages;
 
     /**
      * @var \Spryker\Shared\Kernel\Transfer\TransferInterface[]|\Closure[]
@@ -46,6 +42,11 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     public function __construct(HttpClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
+        static::$statusMessages = [
+            static::INFO_MESSAGES => [],
+            static::ERROR_MESSAGES => [],
+            static::SUCCESS_MESSAGES => [],
+        ];
     }
 
     /**
@@ -70,7 +71,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
      */
     public function call($url, TransferInterface $object, $requestOptions = null)
     {
-        self::$lastResponse = null;
+        static::$lastResponse = null;
 
         $response = $this->httpClient->request(
             $url,
@@ -79,10 +80,10 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
             $requestOptions
         );
 
-        self::$lastResponse = $response;
+        static::$lastResponse = $response;
         $this->collectStatusMessages($response);
 
-        return self::$lastResponse->getTransfer();
+        return static::$lastResponse->getTransfer();
     }
 
     /**
@@ -90,7 +91,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
      */
     public function hasLastResponse()
     {
-        return self::$lastResponse !== null;
+        return static::$lastResponse !== null;
     }
 
     /**
@@ -104,7 +105,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
             throw new BadMethodCallException('There is no response received from zed.');
         }
 
-        return self::$lastResponse;
+        return static::$lastResponse;
     }
 
     /**
@@ -112,7 +113,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
      */
     public function getInfoStatusMessages(): array
     {
-        return self::$statusMessages[self::INFO_MESSAGES];
+        return static::$statusMessages[static::INFO_MESSAGES];
     }
 
     /**
@@ -120,7 +121,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
      */
     public function getErrorStatusMessages(): array
     {
-        return self::$statusMessages[self::ERROR_MESSAGES];
+        return static::$statusMessages[static::ERROR_MESSAGES];
     }
 
     /**
@@ -128,7 +129,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
      */
     public function getSuccessStatusMessages(): array
     {
-        return self::$statusMessages[self::SUCCESS_MESSAGES];
+        return static::$statusMessages[static::SUCCESS_MESSAGES];
     }
 
     /**
@@ -153,13 +154,13 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     protected function collectStatusMessages(ResponseInterface $response): void
     {
         foreach ($response->getErrorMessages() as $errorMessage) {
-            self::$statusMessages[self::ERROR_MESSAGES][] = $errorMessage;
+            static::$statusMessages[static::ERROR_MESSAGES][] = $errorMessage;
         }
         foreach ($response->getSuccessMessages() as $successMessage) {
-            self::$statusMessages[self::SUCCESS_MESSAGES][] = $successMessage;
+            static::$statusMessages[static::SUCCESS_MESSAGES][] = $successMessage;
         }
         foreach ($response->getInfoMessages() as $infoMessage) {
-            self::$statusMessages[self::INFO_MESSAGES][] = $infoMessage;
+            static::$statusMessages[static::INFO_MESSAGES][] = $infoMessage;
         }
     }
 }
