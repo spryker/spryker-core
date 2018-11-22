@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  * @method \Spryker\Zed\CategoryImageStorage\Communication\CategoryImageStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\CategoryImageStorage\Business\CategoryImageStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\CategoryImageStorage\CategoryImageStorageConfig getConfig()
  */
 class CategoryImageSetCategoryImageStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

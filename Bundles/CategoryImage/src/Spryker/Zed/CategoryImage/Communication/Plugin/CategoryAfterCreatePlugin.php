@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CategoryImage\Business\CategoryImageFacadeInterface getFacade()
+ * @method \Spryker\Zed\CategoryImage\CategoryImageConfig getConfig()
  */
 class CategoryAfterCreatePlugin extends AbstractPlugin implements CategoryCreateAfterPluginInterface
 {

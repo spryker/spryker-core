@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CategoryImageStorage\Business\CategoryImageStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryImageStorage\Communication\CategoryImageStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryImageStorage\CategoryImageStorageConfig getConfig()
  */
 class CategoryImageStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

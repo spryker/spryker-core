@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\CategoryImage\Business;
 
+use Spryker\Zed\CategoryImage\Business\Model\ImageSet\Reader;
+use Spryker\Zed\CategoryImage\Business\Model\ImageSet\ReaderInterface;
+use Spryker\Zed\CategoryImage\Business\Model\ImageSet\Writer;
+use Spryker\Zed\CategoryImage\Business\Model\ImageSet\WriterInterface;
 use Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizer;
 use Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface;
-use Spryker\Zed\CategoryImage\Business\Model\Reader;
-use Spryker\Zed\CategoryImage\Business\Model\ReaderInterface;
-use Spryker\Zed\CategoryImage\Business\Model\Writer;
-use Spryker\Zed\CategoryImage\Business\Model\WriterInterface;
 use Spryker\Zed\CategoryImage\Business\Provider\LocaleProvider;
 use Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface;
 use Spryker\Zed\CategoryImage\CategoryImageDependencyProvider;
@@ -27,7 +27,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CategoryImageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CategoryImage\Business\Model\ReaderInterface
+     * @return \Spryker\Zed\CategoryImage\Business\Model\ImageSet\ReaderInterface
      */
     public function createCategoryImageReader(): ReaderInterface
     {
@@ -38,7 +38,7 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryImage\Business\Model\WriterInterface
+     * @return \Spryker\Zed\CategoryImage\Business\Model\ImageSet\WriterInterface
      */
     public function createCategoryImageWriter(): WriterInterface
     {

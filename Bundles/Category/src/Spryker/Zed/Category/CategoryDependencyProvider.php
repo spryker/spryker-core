@@ -245,9 +245,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryPostCreatePluginStack(Container $container): Container
     {
-        $container[static::PLUGIN_STACK_CATEGORY_POST_CREATE] = Container::share(function () {
+        $container[static::PLUGIN_STACK_CATEGORY_POST_CREATE] = function () {
             return $this->getCategoryPostCreatePluginStack();
-        });
+        };
 
         return $container;
     }
@@ -259,9 +259,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryPostUpdatePluginStack(Container $container): Container
     {
-        $container[static::PLUGIN_STACK_CATEGORY_POST_UPDATE] = Container::share(function () {
+        $container[static::PLUGIN_STACK_CATEGORY_POST_UPDATE] = function () {
             return $this->getCategoryPostUpdatePluginStack();
-        });
+        };
 
         return $container;
     }
@@ -273,9 +273,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryPostReadPluginStack(Container $container): Container
     {
-        $container[static::PLUGIN_STACK_CATEGORY_POST_READ] = Container::share(function () {
+        $container[static::PLUGIN_STACK_CATEGORY_POST_READ] = function () {
             return $this->getCategoryPostReadPluginStack();
-        });
+        };
 
         return $container;
     }

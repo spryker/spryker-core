@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer;
 interface CategoryImageStorageReaderInterface
 {
     /**
-     * @param int $categoryId
+     * @param int $idCategory
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer|null
      */
-    public function getCategoryImageStorage(int $categoryId, string $localeName): ?CategoryImageSetCollectionStorageTransfer;
+    public function getCategoryImageStorage(int $idCategory, string $localeName): ?CategoryImageSetCollectionStorageTransfer;
 }

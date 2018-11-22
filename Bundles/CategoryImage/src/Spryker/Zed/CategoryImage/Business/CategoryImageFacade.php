@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CategoryImage\Business\CategoryImageBusinessFactory getFactory()
+ * @method \Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface getRepository()
  */
 class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeInterface
 {

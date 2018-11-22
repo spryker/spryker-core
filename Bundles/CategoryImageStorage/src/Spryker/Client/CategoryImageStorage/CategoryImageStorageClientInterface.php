@@ -17,10 +17,10 @@ interface CategoryImageStorageClientInterface
      *
      * @api
      *
-     * @param int $categoryId
+     * @param int $idCategory
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer|null
      */
-    public function getCategoryImageSetCollectionStorage(int $categoryId, string $localeName): ?CategoryImageSetCollectionStorageTransfer;
+    public function findCategoryImageSetCollectionStorage(int $idCategory, string $localeName): ?CategoryImageSetCollectionStorageTransfer;
 }

@@ -17,9 +17,9 @@ interface CategoryPluginExecutorInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return void
      */
-    public function executePostUpdatePlugins(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function executePostUpdatePlugins(CategoryTransfer $categoryTransfer): void;
 
     /**
      * Specification:
@@ -27,9 +27,9 @@ interface CategoryPluginExecutorInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return void
      */
-    public function executePostCreatePlugins(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function executePostCreatePlugins(CategoryTransfer $categoryTransfer): void;
 
     /**
      * Specification:

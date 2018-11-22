@@ -19,7 +19,7 @@ class CategoryImageRepository extends AbstractRepository implements CategoryImag
     /**
      * {@inheritdoc}
      */
-    public function findCategoryImageSetsByCategoryId(int $categoryId, array $excludeIdCategoryImageSets = []): array
+    public function findCategoryImageSetsByCategoryId(int $idCategory, array $excludeIdCategoryImageSets = []): array
     {
         $categoryImageSetEntityCollection = $this->getFactory()
             ->createCategoryImageSetQuery()
@@ -27,7 +27,7 @@ class CategoryImageRepository extends AbstractRepository implements CategoryImag
             ->useSpyCategoryImageSetToCategoryImageQuery()
                 ->joinWithSpyCategoryImage()
             ->endUse()
-            ->filterByFkCategory($categoryId)
+            ->filterByFkCategory($idCategory)
             ->filterByIdCategoryImageSet($excludeIdCategoryImageSets, Criteria::NOT_IN)
             ->find();
 

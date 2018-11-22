@@ -13,6 +13,9 @@ use Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToEve
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CategoryImageStorage\CategoryImageStorageConfig getConfig()
+ */
 class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';

@@ -20,10 +20,10 @@ class CategoryImageStorageClient extends AbstractClient implements CategoryImage
      *
      * @api
      */
-    public function getCategoryImageSetCollectionStorage(int $categoryId, string $localeName): ?CategoryImageSetCollectionStorageTransfer
+    public function findCategoryImageSetCollectionStorage(int $idCategory, string $localeName): ?CategoryImageSetCollectionStorageTransfer
     {
         return $this->getFactory()
             ->createCategoryImageStorageReader()
-            ->getCategoryImageStorage($categoryId, $localeName);
+            ->getCategoryImageStorage($idCategory, $localeName);
     }
 }

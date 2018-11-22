@@ -40,9 +40,9 @@ class CategoryImageStorageReader implements CategoryImageStorageReaderInterface
     /**
      * {@inheritdoc}
      */
-    public function getCategoryImageStorage(int $categoryId, string $localeName): ?CategoryImageSetCollectionStorageTransfer
+    public function getCategoryImageStorage(int $idCategory, string $localeName): ?CategoryImageSetCollectionStorageTransfer
     {
-        $key = $this->generateKey($categoryId, $localeName);
+        $key = $this->generateKey($idCategory, $localeName);
         $categoryImageStorageData = $this->storageClient->get($key);
         if (!$categoryImageStorageData) {
             return null;
@@ -63,16 +63,16 @@ class CategoryImageStorageReader implements CategoryImageStorageReaderInterface
     }
 
     /**
-     * @param int $categoryId
+     * @param int $idCategory
      * @param string $localName
      *
      * @return string
      */
-    protected function generateKey(int $categoryId, string $localName): string
+    protected function generateKey(int $idCategory, string $localName): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
             ->setLocale($localName)
-            ->setReference((string)$categoryId);
+            ->setReference((string)$idCategory);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(CategoryImageStorageConfig::CATEGORY_IMAGE_RESOURCE_NAME)

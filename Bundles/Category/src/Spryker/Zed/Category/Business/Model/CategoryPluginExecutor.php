@@ -44,29 +44,25 @@ class CategoryPluginExecutor implements CategoryPluginExecutorInterface
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return void
      */
-    public function executePostUpdatePlugins(CategoryTransfer $categoryTransfer): CategoryTransfer
+    public function executePostUpdatePlugins(CategoryTransfer $categoryTransfer): void
     {
         foreach ($this->categoryPostUpdatePlugins as $plugin) {
-            $categoryTransfer = $plugin->execute($categoryTransfer);
+            $plugin->execute($categoryTransfer);
         }
-
-        return $categoryTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return void
      */
-    public function executePostCreatePlugins(CategoryTransfer $categoryTransfer): CategoryTransfer
+    public function executePostCreatePlugins(CategoryTransfer $categoryTransfer): void
     {
         foreach ($this->categoryPostCreatePlugins as $plugin) {
-            $categoryTransfer = $plugin->execute($categoryTransfer);
+            $plugin->execute($categoryTransfer);
         }
-
-        return $categoryTransfer;
     }
 
     /**

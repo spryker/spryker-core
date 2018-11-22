@@ -5,9 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryImage\Business\Model;
+namespace Spryker\Zed\CategoryImage\Business\Model\ImageSet;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface;
 
 class Reader implements ReaderInterface

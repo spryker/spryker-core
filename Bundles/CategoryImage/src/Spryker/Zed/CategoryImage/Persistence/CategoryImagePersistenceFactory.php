@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CategoryImage\CategoryImageConfig getConfig()
+ * @method \Spryker\Zed\CategoryImage\Persistence\CategoryImageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface getRepository()
  */
 class CategoryImagePersistenceFactory extends AbstractPersistenceFactory
 {
