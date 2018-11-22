@@ -337,8 +337,16 @@ class Discount implements DiscountInterface
                 $discountEntity->getIdDiscount()
             );
 
+            $minimumItemAmount = $discountEntity->getMinimumItemAmount();
+            $matchedProductAmount = 0;
+
             foreach ($discountApplicableItems as $itemTransfer) {
-                if ($compositeSpecification->isSatisfiedBy($quoteTransfer, $itemTransfer) === true) {
+                if ($compositeSpecification->isSatisfiedBy($quoteTransfer, $itemTransfer) !== true) {
+                    continue;
+                }
+
+                $matchedProductAmount += $itemTransfer->getQuantity();
+                if ($matchedProductAmount >= $minimumItemAmount) {
                     return true;
                 }
             }

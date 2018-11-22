@@ -14,6 +14,9 @@ use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToSt
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientBridge;
 use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceBridge;
 
+/**
+ * @method \Spryker\Client\PriceProductStorage\PriceProductStorageConfig getConfig()
+ */
 class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
