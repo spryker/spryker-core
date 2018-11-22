@@ -11,6 +11,9 @@ use Spryker\Zed\Company\Dependency\Facade\CompanyToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Company\CompanyConfig getConfig()
+ */
 class CompanyDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_STORE = 'FACADE_STORE';

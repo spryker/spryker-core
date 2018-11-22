@@ -14,6 +14,8 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface;
 /**
  * @method \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImage\Communication\ProductImageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductImage\ProductImageConfig getConfig()
+ * @method \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface getQueryContainer()
  */
 class ProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginReadInterface
 {

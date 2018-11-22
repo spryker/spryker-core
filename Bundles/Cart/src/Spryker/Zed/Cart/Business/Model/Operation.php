@@ -72,6 +72,11 @@ class Operation implements OperationInterface
     protected $terminationPlugins = [];
 
     /**
+     * @var array|\Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[]
+     */
+    protected $postReloadItemsPlugins = [];
+
+    /**
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
@@ -80,6 +85,7 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[] $postSavePlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[] $terminationPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface[] $cartRemovalPreCheckPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[] $postReloadItemsPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
@@ -89,7 +95,8 @@ class Operation implements OperationInterface
         array $preCheckPlugins,
         array $postSavePlugins,
         array $terminationPlugins,
-        array $cartRemovalPreCheckPlugins
+        array $cartRemovalPreCheckPlugins,
+        array $postReloadItemsPlugins
     ) {
         $this->cartStorageProvider = $cartStorageProvider;
         $this->calculationFacade = $calculationFacade;
@@ -99,6 +106,7 @@ class Operation implements OperationInterface
         $this->postSavePlugins = $postSavePlugins;
         $this->terminationPlugins = $terminationPlugins;
         $this->cartRemovalPreCheckPlugins = $cartRemovalPreCheckPlugins;
+        $this->postReloadItemsPlugins = $postReloadItemsPlugins;
     }
 
     /**
@@ -210,8 +218,24 @@ class Operation implements OperationInterface
         $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
         $quoteTransfer = $this->recalculate($quoteTransfer);
 
+        $quoteTransfer = $this->executePostReloadItemsPlugins($quoteTransfer);
+
         if ($this->isTerminated(static::TERMINATION_EVENT_NAME_RELOAD, $cartChangeTransfer, $quoteTransfer)) {
             return $originalQuoteTransfer;
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executePostReloadItemsPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->postReloadItemsPlugins as $postReloadItemPlugin) {
+            $quoteTransfer = $postReloadItemPlugin->postReloadItems($quoteTransfer);
         }
 
         return $quoteTransfer;

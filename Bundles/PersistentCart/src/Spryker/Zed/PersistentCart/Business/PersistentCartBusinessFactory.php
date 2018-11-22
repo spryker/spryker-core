@@ -26,6 +26,7 @@ use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizer;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
+use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface;
 use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
@@ -70,6 +71,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->createQuoteResponseExpander(),
             $this->getMessengerFacade(),
+            $this->getStoreFacade(),
             $this->getConfig()
         );
     }
@@ -83,7 +85,8 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->getCartFacade(),
             $this->getQuoteFacade(),
             $this->createQuoteResponseExpander(),
-            $this->createQuoteMerger()
+            $this->createQuoteMerger(),
+            $this->getStoreFacade()
         );
     }
 
@@ -164,6 +167,14 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     public function getQuoteFacade()
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::FACADE_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface
+     */
+    public function getStoreFacade(): PersistentCartToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::FACADE_STORE);
     }
 
     /**

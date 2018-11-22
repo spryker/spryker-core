@@ -93,7 +93,7 @@ class CmsPageTable extends AbstractTable
         $cmsPageAttributesTransfer->setLocaleName($localeTransfer->getLocaleName());
 
         $urlPrefix = $this->cmsFacade->getPageUrlPrefix($cmsPageAttributesTransfer);
-        $query = $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocaleAndVersion($localeTransfer->getIdLocale());
+        $query = $this->cmsQueryContainer->queryLocalizedPagesWithTemplates();
 
         $queryResults = $this->runQuery($query, $config);
 
@@ -498,12 +498,34 @@ class CmsPageTable extends AbstractTable
         $actions = implode(' ', $this->buildLinks($item, $urlPrefix));
         return [
             CmsPageTableConstants::COL_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
-            CmsPageTableConstants::COL_NAME => $item[CmsPageTableConstants::COL_NAME],
+            CmsPageTableConstants::COL_NAME => $this->buildCmsPageName($item),
             CmsPageTableConstants::COL_URL => $this->buildUrlList($item),
             CmsPageTableConstants::COL_TEMPLATE => $item[CmsPageTableConstants::COL_TEMPLATE],
             CmsPageTableConstants::COL_STATUS => $this->getStatusLabel($item),
             CmsPageTableConstants::ACTIONS => $actions,
         ];
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function buildCmsPageName(array $item): string
+    {
+        $cmsNames = $this->extractNames($item);
+
+        return reset($cmsNames);
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string[]
+     */
+    protected function extractNames(array $item): array
+    {
+        return explode(',', $item[CmsPageTableConstants::COL_NAME]);
     }
 
     /**

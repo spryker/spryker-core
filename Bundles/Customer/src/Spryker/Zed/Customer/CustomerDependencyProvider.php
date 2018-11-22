@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
+ */
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';

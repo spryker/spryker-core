@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\ProductOptionStorage\Communication\Plugin\Event\Listen
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValuePriceTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
@@ -25,6 +28,7 @@ use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\Product
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\ProductOptionValuePriceStorageListener;
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\ProductOptionValueStorageListener;
 use Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainer;
+use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
 use SprykerTest\Zed\ProductOptionStorage\ProductOptionStorageConfigMock;
 
 /**
@@ -42,16 +46,64 @@ use SprykerTest\Zed\ProductOptionStorage\ProductOptionStorageConfigMock;
 class ProductOptionStorageListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\ProductOptionStorage\ProductOptionStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected $productAbstractTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductOptionGroupTransfer
+     */
+    protected $productOptionGroupTransfer;
+
+    /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
      * @return void
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
         if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
+
+        $this->productOptionGroupTransfer = $this->tester->haveProductOptionGroupWithValues(
+            [],
+            [
+                [
+                    [],
+                    [
+                        [
+                            ProductOptionGroupDataHelper::CURRENCY_CODE => 'USD',
+                            ProductOptionGroupDataHelper::STORE_NAME => 'DE',
+                            MoneyValueTransfer::GROSS_AMOUNT => null,
+                            MoneyValueTransfer::NET_AMOUNT => null,
+                        ],
+                        [
+                            ProductOptionGroupDataHelper::CURRENCY_CODE => 'USD',
+                            ProductOptionGroupDataHelper::STORE_NAME => null,
+                            MoneyValueTransfer::GROSS_AMOUNT => null,
+                            MoneyValueTransfer::NET_AMOUNT => null,
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        $this->productAbstractTransfer = $this->tester->haveProductAbstract();
+
+        $localizedAttributes = $this->tester->generateLocalizedAttributes();
+
+        $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer, $localizedAttributes);
+
+        $this->assignOptionGroupToProductAbstract($this->productOptionGroupTransfer, $this->productAbstractTransfer);
     }
 
     /**
@@ -59,14 +111,14 @@ class ProductOptionStorageListenerTest extends Unit
      */
     public function testProductOptionPublishStorageListenerStoreData()
     {
-        SpyProductAbstractOptionStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyProductAbstractOptionStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractOptionStorageQuery::create()->count();
 
         $productOptionPublishStorageListener = new ProductOptionPublishStorageListener();
         $productOptionPublishStorageListener->setFacade($this->getProductOptionStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
         $productOptionPublishStorageListener->handleBulk($eventTransfers, ProductOptionEvents::PRODUCT_ABSTRACT_PRODUCT_OPTION_PUBLISH);
 
@@ -79,7 +131,7 @@ class ProductOptionStorageListenerTest extends Unit
      */
     public function testProductOptionStorageListenerStoreData()
     {
-        SpyProductAbstractOptionStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyProductAbstractOptionStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractOptionStorageQuery::create()->count();
 
         $productOptionStorageListener = new ProductOptionStorageListener();
@@ -87,7 +139,7 @@ class ProductOptionStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+                SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ]),
         ];
         $productOptionStorageListener->handleBulk($eventTransfers, ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_CREATE);
@@ -102,7 +154,8 @@ class ProductOptionStorageListenerTest extends Unit
     public function testProductOptionGroupStorageListenerStoreData()
     {
         $productOptionStorageQueryContainer = new ProductOptionStorageQueryContainer();
-        $productAbstractIds = $productOptionStorageQueryContainer->queryProductAbstractIdsByProductGroupOptionByIds([1])->find()->getData();
+        $productAbstractIds = $productOptionStorageQueryContainer->queryProductAbstractIdsByProductGroupOptionByIds([$this->productOptionGroupTransfer->getIdProductOptionGroup()])->find()->getData();
+
         SpyProductAbstractOptionStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
         $beforeCount = SpyProductAbstractOptionStorageQuery::create()->count();
 
@@ -110,7 +163,7 @@ class ProductOptionStorageListenerTest extends Unit
         $productOptionGroupStorageListener->setFacade($this->getProductOptionStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($this->productOptionGroupTransfer->getIdProductOptionGroup()),
         ];
         $productOptionGroupStorageListener->handleBulk($eventTransfers, ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_GROUP_UPDATE);
 
@@ -124,7 +177,7 @@ class ProductOptionStorageListenerTest extends Unit
     public function testProductOptionValueStorageListenerStoreData()
     {
         $productOptionStorageQueryContainer = new ProductOptionStorageQueryContainer();
-        $productAbstractIds = $productOptionStorageQueryContainer->queryProductAbstractIdsByProductGroupOptionByIds([1])->find()->getData();
+        $productAbstractIds = $productOptionStorageQueryContainer->queryProductAbstractIdsByProductGroupOptionByIds([$this->productOptionGroupTransfer->getIdProductOptionGroup()])->find()->getData();
         SpyProductAbstractOptionStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
         $beforeCount = SpyProductAbstractOptionStorageQuery::create()->count();
 
@@ -133,7 +186,7 @@ class ProductOptionStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductOptionValueTableMap::COL_FK_PRODUCT_OPTION_GROUP => 1,
+                SpyProductOptionValueTableMap::COL_FK_PRODUCT_OPTION_GROUP => $this->productOptionGroupTransfer->getIdProductOptionGroup(),
             ]),
         ];
         $productOptionValueStorageListener->handleBulk($eventTransfers, ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_CREATE);
@@ -148,18 +201,25 @@ class ProductOptionStorageListenerTest extends Unit
     public function testProductOptionValuePriceStorageListenerStoreData()
     {
         $productOptionStorageQueryContainer = new ProductOptionStorageQueryContainer();
-        $productAbstractIds = $productOptionStorageQueryContainer->queryProductAbstractIdsByProductGroupOptionByIds([1])->find()->getData();
+        $productAbstractIds = $productOptionStorageQueryContainer->queryProductAbstractIdsByProductGroupOptionByIds([$this->productOptionGroupTransfer->getIdProductOptionGroup()])->find()->getData();
         SpyProductAbstractOptionStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
         $beforeCount = SpyProductAbstractOptionStorageQuery::create()->count();
 
         $productOptionValuePriceStorageListener = new ProductOptionValuePriceStorageListener();
         $productOptionValuePriceStorageListener->setFacade($this->getProductOptionStorageFacade());
 
-        $eventTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyProductOptionValuePriceTableMap::COL_FK_PRODUCT_OPTION_VALUE => 1,
-            ]),
-        ];
+        $productOptionValues = $this->productOptionGroupTransfer->getProductOptionValues();
+
+        $eventTransfers = [];
+
+        if ($productOptionValues) {
+            $productOptionValueTransfer = current($productOptionValues);
+
+            $eventTransfers[] = (new EventEntityTransfer())->setForeignKeys([
+                SpyProductOptionValuePriceTableMap::COL_FK_PRODUCT_OPTION_VALUE => $productOptionValueTransfer->getIdProductOptionValue(),
+            ]);
+        }
+
         $productOptionValuePriceStorageListener->handleBulk($eventTransfers, ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_CREATE);
 
         // Assert
@@ -188,21 +248,36 @@ class ProductOptionStorageListenerTest extends Unit
     protected function assertProductAbstractOptionGroupStorage($beforeCount)
     {
         $productOptionStorageCount = SpyProductAbstractOptionStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 348, $productOptionStorageCount);
+        $this->assertSame($beforeCount + 1, $productOptionStorageCount);
     }
 
-        /**
-         * @param int $beforeCount
-         *
-         * @return void
-         */
+    /**
+     * @param int $beforeCount
+     *
+     * @return void
+     */
     protected function assertProductAbstractOptionStorage($beforeCount)
     {
         $productOptionStorageCount = SpyProductAbstractOptionStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 2, $productOptionStorageCount);
-        $spyProductAbstractOptionStorage = SpyProductAbstractOptionStorageQuery::create()->orderByIdProductAbstractOptionStorage()->findOneByFkProductAbstract(1);
+        $this->assertSame($beforeCount + 1, $productOptionStorageCount);
+        $spyProductAbstractOptionStorage = SpyProductAbstractOptionStorageQuery::create()->orderByIdProductAbstractOptionStorage()->findOneByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
         $this->assertNotNull($spyProductAbstractOptionStorage);
         $data = $spyProductAbstractOptionStorage->getData();
-        $this->assertSame(2, count($data['product_option_groups']));
+        $this->assertSame(1, count($data['product_option_groups']));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function assignOptionGroupToProductAbstract(
+        ProductOptionGroupTransfer $productOptionGroupTransfer,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): void {
+        $productOptionGroupTransfer->setProductsToBeAssigned([$productAbstractTransfer->getIdProductAbstract()]);
+
+        $this->tester->getProductOptionFacade()->saveProductOptionGroup($productOptionGroupTransfer);
     }
 }

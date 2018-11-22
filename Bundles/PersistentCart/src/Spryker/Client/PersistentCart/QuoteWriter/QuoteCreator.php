@@ -10,9 +10,9 @@ namespace Spryker\Client\PersistentCart\QuoteWriter;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface;
+use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientInterface;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface;
-use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class QuoteCreator implements QuoteCreatorInterface
 {
@@ -32,19 +32,19 @@ class QuoteCreator implements QuoteCreatorInterface
     protected $quoteUpdatePluginExecutor;
 
     /**
-     * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     * @var \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientInterface
      */
     protected $zedRequestClient;
 
     /**
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface $quoteClient
-     * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestClient
+     * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface $persistentCartStub
      * @param \Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface $quoteUpdatePluginExecutor
      */
     public function __construct(
         PersistentCartToQuoteClientInterface $quoteClient,
-        ZedRequestClientInterface $zedRequestClient,
+        PersistentCartToZedRequestClientInterface $zedRequestClient,
         PersistentCartStubInterface $persistentCartStub,
         QuoteUpdatePluginExecutorInterface $quoteUpdatePluginExecutor
     ) {

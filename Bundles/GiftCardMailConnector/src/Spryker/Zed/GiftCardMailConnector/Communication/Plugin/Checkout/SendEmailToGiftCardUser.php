@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\GiftCardMailConnector\Communication\GiftCardMailConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\GiftCardMailConnector\Business\GiftCardMailConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\GiftCardMailConnector\GiftCardMailConnectorConfig getConfig()
  */
 class SendEmailToGiftCardUser extends AbstractPlugin implements CheckoutPostSaveHookInterface
 {

@@ -9,34 +9,15 @@ namespace Spryker\Zed\Session\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
  * @method \Spryker\Zed\Session\Business\SessionFacadeInterface getFacade()
+ * @method \Spryker\Zed\Session\SessionConfig getConfig()
  */
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    /**
-     * @deprecated Please don't use this property anymore. The needed ClientInterface is now retrieved by the Factory.
-     *
-     * @var \Spryker\Client\Session\SessionClientInterface
-     */
-    private $client;
-
-    /**
-     * @deprecated Please remove usage of this setter. The needed ClientInterface is now retrieved by the Factory.
-     *
-     * @param \Spryker\Client\Session\SessionClientInterface $client
-     *
-     * @return void
-     */
-    public function setClient(SessionClientInterface $client)
-    {
-        $this->client = $client;
-    }
-
     /**
      * @param \Silex\Application $application
      *
@@ -90,11 +71,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     protected function getSessionClient()
     {
-        if (!$this->client) {
-            return $this->getFactory()->getSessionClient();
-        }
-
-        return $this->client;
+        return $this->getFactory()->getSessionClient();
     }
 
     /**
