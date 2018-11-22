@@ -25,7 +25,7 @@ class CustomerValidator implements CustomerValidatorInterface
             return (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)
                 ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_AUTH_MISSING)
-                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAIL_AUTH_MISSING);
+                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_AUTH_MISSING);
         }
 
         return null;

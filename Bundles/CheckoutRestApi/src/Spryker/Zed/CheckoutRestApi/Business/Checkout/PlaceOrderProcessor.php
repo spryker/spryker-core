@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
-use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
+use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
-use Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface;
@@ -78,9 +79,9 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
      */
-    public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutResponseTransfer
+    public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestCheckoutResponseTransfer
     {
         $quoteTransfer = $this->quoteReader->findCustomerQuote($restCheckoutRequestAttributesTransfer);
 
@@ -106,7 +107,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
 
         $checkoutResponseTransfer = $this->checkoutFacade->placeOrder($quoteTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
-            return $checkoutResponseTransfer;
+            return $this->createRestCheckoutResponseWithErrorFromCheckoutResponseTransfer($checkoutResponseTransfer);
         }
 
         $quoteResponseTransfer = $this->quoteFacade->deleteQuote($quoteTransfer);
@@ -115,53 +116,102 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             return $this->createCheckoutResponseTransferFromQuoteErrorTransfer($quoteResponseTransfer);
         }
 
-        return $checkoutResponseTransfer;
+        return (new RestCheckoutResponseTransfer())
+            ->setIsSuccess(true)
+            ->setOrderReference($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
      */
-    protected function createCheckoutResponseTransferFromQuoteErrorTransfer(QuoteResponseTransfer $quoteResponseTransfer): CheckoutResponseTransfer
+    protected function createCheckoutResponseTransferFromQuoteErrorTransfer(QuoteResponseTransfer $quoteResponseTransfer): RestCheckoutResponseTransfer
     {
-        $checkoutResponseTransfer = new CheckoutResponseTransfer();
-        $checkoutResponseTransfer->setIsSuccess(false);
+        if ($quoteResponseTransfer->getErrors()->count() === 0) {
+            return (new RestCheckoutResponseTransfer())
+                ->setIsSuccess(false)
+                ->addError(
+                    (new RestCheckoutErrorTransfer())
+                        ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                        ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CHECKOUT_DATA_INVALID)
+                        ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CHECKOUT_DATA_INVALID)
+                );
+        }
+
+        $restCheckoutResponseTransfer = (new RestCheckoutResponseTransfer())
+            ->setIsSuccess(false);
         foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
-            $checkoutResponseTransfer->addError(
-                (new CheckoutErrorTransfer())
-                    ->setMessage($quoteErrorTransfer->getMessage())
+            $restCheckoutResponseTransfer->addError(
+                (new RestCheckoutErrorTransfer())
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CHECKOUT_DATA_INVALID)
+                    ->setDetail($quoteErrorTransfer->getMessage())
             );
         }
 
-        return $checkoutResponseTransfer;
+        return $restCheckoutResponseTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
      */
-    protected function createCartNotFoundErrorResponse(): CheckoutResponseTransfer
+    protected function createCartNotFoundErrorResponse(): RestCheckoutResponseTransfer
     {
-        return (new CheckoutResponseTransfer())
+        return (new RestCheckoutResponseTransfer())
             ->setIsSuccess(false)
             ->addError(
-                (new CheckoutErrorTransfer())
-                    ->setErrorCode(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setMessage(CheckoutRestApiConfig::ERROR_MESSAGE_CART_NOT_FOUND)
+                (new RestCheckoutErrorTransfer())
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
+                    ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND)
             );
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
      */
-    protected function createCartIsEmptyErrorResponse(): CheckoutResponseTransfer
+    protected function createCartIsEmptyErrorResponse(): RestCheckoutResponseTransfer
     {
-        return (new CheckoutResponseTransfer())
+        return (new RestCheckoutResponseTransfer())
             ->setIsSuccess(false)
             ->addError(
-                (new CheckoutErrorTransfer())
-                    ->setErrorCode(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setMessage(CheckoutRestApiConfig::ERROR_MESSAGE_CART_IS_EMPTY)
+                (new RestCheckoutErrorTransfer())
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_IS_EMPTY)
+                    ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_IS_EMPTY)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
+     */
+    protected function createRestCheckoutResponseWithErrorFromCheckoutResponseTransfer(CheckoutResponseTransfer $checkoutResponseTransfer): RestCheckoutResponseTransfer
+    {
+        if ($checkoutResponseTransfer->getErrors()->count() === 0) {
+            return (new RestCheckoutResponseTransfer())
+                ->setIsSuccess(false)
+                ->addError(
+                    (new RestCheckoutErrorTransfer())
+                        ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                        ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_ORDER_NOT_PLACED)
+                        ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_ORDER_NOT_PLACED)
+                );
+        }
+        $restCheckoutResponseTransfer = (new RestCheckoutResponseTransfer())
+            ->setIsSuccess(false);
+        foreach ($checkoutResponseTransfer->getErrors() as $errorTransfer) {
+            $restCheckoutResponseTransfer->addError(
+                (new RestCheckoutErrorTransfer())
+                    ->setStatus($errorTransfer->getErrorCode())
+                    ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_ORDER_NOT_PLACED)
+                    ->setDetail($errorTransfer->getMessage())
+                    ->setParameters($errorTransfer->getParameters())
+            );
+        }
+
+        return $restCheckoutResponseTransfer;
     }
 }
