@@ -89,7 +89,7 @@ class UniqueUrlValidator extends ConstraintValidator
             return false;
         }
 
-        if (strcasecmp($url, $urlTransfer->getUrl()) === 0) {
+        if ($this->compareTwoMultibyteStringsCaseInsensitive($url, $urlTransfer->getUrl()) === 0) {
             return false;
         }
 
@@ -120,5 +120,18 @@ class UniqueUrlValidator extends ConstraintValidator
 
         return $uniqueUrlConstraint->getUrlFacade()
             ->findUrlCaseInsensitive($urlTransfer);
+    }
+
+    /**
+     * @param string $str1
+     * @param string $str2
+     *
+     * @return int
+     */
+    protected function compareTwoMultibyteStringsCaseInsensitive(string $str1, string $str2): int
+    {
+        $encoding = mb_internal_encoding();
+
+        return strcmp(mb_strtoupper($str1, $encoding), mb_strtoupper($str2, $encoding));
     }
 }
