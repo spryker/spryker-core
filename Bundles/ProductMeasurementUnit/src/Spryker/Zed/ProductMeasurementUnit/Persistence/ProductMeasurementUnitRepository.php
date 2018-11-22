@@ -223,20 +223,15 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productMeasurementUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array
+    public function findProductMeasurementUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
             ->createProductMeasurementUnitQuery()
             ->offset($filterTransfer->getOffset())
             ->limit($filterTransfer->getLimit());
-
-        if ($productMeasurementUnitIds) {
-            $query->filterByIdProductMeasurementUnit_In($productMeasurementUnitIds);
-        }
 
         $productMeasurementUnitEntityCollection = $query->find();
 
@@ -245,11 +240,10 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $salesUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $salesUnitIds = []): array
+    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
@@ -260,10 +254,6 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore')
             ->setOffset($filterTransfer->getOffset())
             ->setLimit($filterTransfer->getLimit());
-
-        if ($salesUnitIds) {
-            $query->filterByIdProductMeasurementSalesUnit_In($salesUnitIds);
-        }
 
         $productMeasurementSalesUnitEntityCollection = $query->find();
 

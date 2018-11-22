@@ -41,15 +41,14 @@ class ProductConcreteMeasurementUnitEventResourceBulkRepositoryPlugin extends Ab
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function getData(int $offset, int $limit, array $ids = []): array
+    public function getData(int $offset, int $limit): array
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit($filterTransfer, $ids);
+        return $this->getFacade()->findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit($filterTransfer);
     }
 
     /**

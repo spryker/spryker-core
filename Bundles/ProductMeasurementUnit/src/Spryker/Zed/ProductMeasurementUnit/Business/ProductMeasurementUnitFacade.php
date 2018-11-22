@@ -247,13 +247,12 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productMeasurementUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array
+    public function findProductMeasurementUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
     {
-        return $this->getRepository()->findProductMeasurementUnitTransfersFilteredByOffsetAndLimit($filterTransfer, $productMeasurementUnitIds);
+        return $this->getRepository()->findProductMeasurementUnitTransfersFilteredByOffsetAndLimit($filterTransfer);
     }
 
     /**
@@ -262,14 +261,13 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $salesUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $salesUnitIds = []): array
+    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
     {
         return $this->getFactory()
             ->createProductMeasurementSalesUnitReader()
-            ->findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit($filterTransfer, $salesUnitIds);
+            ->findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit($filterTransfer);
     }
 }

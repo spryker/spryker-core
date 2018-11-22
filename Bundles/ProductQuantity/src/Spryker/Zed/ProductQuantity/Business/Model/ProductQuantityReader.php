@@ -76,14 +76,13 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $productIds = []): array
+    public function findProductQuantityTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
     {
         $productQuantityTransfers = $this->productQuantityRepository
-            ->findProductQuantityTransfersFilteredByOffsetAndLimit($filterTransfer, $productIds);
+            ->findProductQuantityTransfersFilteredByOffsetAndLimit($filterTransfer);
 
         foreach ($productQuantityTransfers as $productQuantityTransfer) {
             $this->filterProductQuantityTransfer($productQuantityTransfer);

@@ -44,12 +44,11 @@ class ProductQuantityStorageToProductQuantityFacadeBridge implements ProductQuan
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer, array $productIds = []): array
+    public function findProductQuantityTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
     {
-        return $this->productQuantityFacade->findProductQuantityTransfersFilteredByOffsetAndLimit($filterTransfer, $productIds);
+        return $this->productQuantityFacade->findProductQuantityTransfersFilteredByOffsetAndLimit($filterTransfer);
     }
 }
