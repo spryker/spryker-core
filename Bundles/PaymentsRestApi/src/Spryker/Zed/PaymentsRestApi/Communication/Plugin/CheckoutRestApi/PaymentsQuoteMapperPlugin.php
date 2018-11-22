@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\PaymentsRestApi\Business\PaymentsRestApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\PaymentsRestApi\PaymentsRestApiConfig getConfig()
  */
 class PaymentsQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPluginInterface
 {

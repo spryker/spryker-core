@@ -17,6 +17,9 @@ use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacad
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig getConfig()
+ */
 class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CART = 'FACADE_CART';

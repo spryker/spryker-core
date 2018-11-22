@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiConfig getConfig()
  */
 class ShipmentQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPluginInterface
 {

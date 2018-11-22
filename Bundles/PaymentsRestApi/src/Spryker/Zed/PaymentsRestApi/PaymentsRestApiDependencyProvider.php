@@ -9,6 +9,9 @@ namespace Spryker\Zed\PaymentsRestApi;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\PaymentsRestApi\PaymentsRestApiConfig getConfig()
+ */
 class PaymentsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

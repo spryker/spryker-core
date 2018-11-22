@@ -11,6 +11,9 @@ use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStor
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig getConfig()
+ */
 class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
