@@ -9,6 +9,8 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Communication;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiDependencyProvider;
+use Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\GuiButtonCreator;
+use Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\GuiButtonCreatorInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\CustomerBusinessUnitAttachForm;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\DataProvider\CustomerBusinessUnitAttachFormDataProvider;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface;
@@ -86,5 +88,13 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getProvidedDependency(
             BusinessOnBehalfGuiDependencyProvider::PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\GuiButtonCreatorInterface
+     */
+    public function createGuiButtonCreator(): GuiButtonCreatorInterface
+    {
+        return new GuiButtonCreator();
     }
 }

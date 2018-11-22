@@ -92,7 +92,7 @@ class CustomerBusinessUnitAttachFormDataProvider
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return array[[businessUnitName => idBusinessUnit]],
+     * @return array [[businessUnitName => idBusinessUnit]],
      *                Where businessUnitName: "<idBusinessUnit> - <BusinessUnitName>"
      */
     protected function prepareCompanyBusinessUnitAttributeMap(CompanyUserTransfer $companyUserTransfer): array

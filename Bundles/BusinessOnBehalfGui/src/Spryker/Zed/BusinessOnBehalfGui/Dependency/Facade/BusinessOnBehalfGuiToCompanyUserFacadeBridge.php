@@ -9,6 +9,7 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 class BusinessOnBehalfGuiToCompanyUserFacadeBridge implements BusinessOnBehalfGuiToCompanyUserFacadeInterface
 {
@@ -23,6 +24,16 @@ class BusinessOnBehalfGuiToCompanyUserFacadeBridge implements BusinessOnBehalfGu
     public function __construct($companyUserFacade)
     {
         $this->companyUserFacade = $companyUserFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return int
+     */
+    public function countActiveCompanyUsersByIdCustomer(CustomerTransfer $customerTransfer): int
+    {
+        return $this->companyUserFacade->countActiveCompanyUsersByIdCustomer($customerTransfer);
     }
 
     /**
