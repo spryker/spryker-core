@@ -26,19 +26,19 @@ class CmsPageSearchClient extends AbstractClient implements CmsPageSearchClientI
      */
     public function search(string $searchString, array $requestParameters = []): array
     {
-        $searchClient = $this
-            ->getFactory()
-            ->getSearchClient();
-
         $queryExpanderPlugins = $this->getFactory()->getCmsPageSearchQueryExpanderPlugins();
 
-        $searchQuery = $this->getFactory()->createCmsPageSearchQuery($searchClient, $searchString, $requestParameters, $queryExpanderPlugins);
+        $searchQuery = $this->getFactory()
+            ->createCmsPageSearchQuery($searchString, $requestParameters, $queryExpanderPlugins);
 
         $resultFormatters = $this
             ->getFactory()
             ->getCmsPageSearchResultFormatters();
 
-        return $searchClient->search($searchQuery, $resultFormatters, $requestParameters);
+        return $this
+            ->getFactory()
+            ->getSearchClient()
+            ->search($searchQuery, $resultFormatters, $requestParameters);
     }
 
     /**
@@ -53,14 +53,15 @@ class CmsPageSearchClient extends AbstractClient implements CmsPageSearchClientI
      */
     public function searchCount(string $searchString, array $requestParameters): int
     {
-        $searchClient = $this
-            ->getFactory()
-            ->getSearchClient();
-
         $queryExpanderPlugins = $this->getFactory()->getCmsPageSearchCountQueryExpanderPlugins();
 
-        $searchQuery = $this->getFactory()->createCmsPageSearchQuery($searchClient, $searchString, $requestParameters, $queryExpanderPlugins);
+        $searchQuery = $this->getFactory()
+            ->createCmsPageSearchQuery($searchString, $requestParameters, $queryExpanderPlugins);
 
-        return $searchClient->search($searchQuery, [], $requestParameters)->getTotalHits();
+        return $this
+            ->getFactory()
+            ->getSearchClient()
+            ->search($searchQuery, [], $requestParameters)
+            ->getTotalHits();
     }
 }

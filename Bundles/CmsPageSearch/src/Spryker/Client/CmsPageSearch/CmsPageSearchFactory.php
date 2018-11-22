@@ -22,7 +22,6 @@ use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 class CmsPageSearchFactory extends AbstractFactory
 {
     /**
-     * @param \Spryker\Client\CmsPageSearch\Dependency\Client\CmsPageSearchToSearchBridgeInterface $searchClient
      * @param string $searchString
      * @param array $requestParameters
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[] $queryExpanderPlugins
@@ -30,7 +29,6 @@ class CmsPageSearchFactory extends AbstractFactory
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function createCmsPageSearchQuery(
-        CmsPageSearchToSearchBridgeInterface $searchClient,
         string $searchString,
         array $requestParameters,
         array $queryExpanderPlugins
@@ -41,7 +39,7 @@ class CmsPageSearchFactory extends AbstractFactory
             $searchQuery->setSearchString($searchString);
         }
 
-        $searchQuery = $searchClient->expandQuery($searchQuery, $queryExpanderPlugins, $requestParameters);
+        $searchQuery = $this->getSearchClient()->expandQuery($searchQuery, $queryExpanderPlugins, $requestParameters);
 
         return $searchQuery;
     }
