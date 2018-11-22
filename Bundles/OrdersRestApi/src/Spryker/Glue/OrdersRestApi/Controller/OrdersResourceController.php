@@ -37,7 +37,7 @@ class OrdersResourceController extends AbstractController
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
-     *          }],
+     *          }]
      *     }
      * })
      *

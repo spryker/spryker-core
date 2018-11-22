@@ -35,12 +35,12 @@ class CatalogSearchResourceController extends AbstractController
      *              {
      *                  "name": "currency",
      *                  "in": "query",
-     *                  "description": "Currency code to process request with.",
+     *                  "description": "Currency code to process request with."
      *              },
      *              {
      *                  "name": "priceMode",
      *                  "in": "query",
-     *                  "description": "Price mode to process request with.",
+     *                  "description": "Price mode to process request with."
      *              }
      *          ],
      *          "responses": {

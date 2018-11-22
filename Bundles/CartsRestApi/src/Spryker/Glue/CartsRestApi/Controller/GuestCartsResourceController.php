@@ -39,7 +39,7 @@ class GuestCartsResourceController extends AbstractController
      *              "name": "X-Anonymous-Customer-Unique-Id",
      *              "in": "header",
      *              "required": true
-     *          }],
+     *          }]
      *     }
      * })
      *

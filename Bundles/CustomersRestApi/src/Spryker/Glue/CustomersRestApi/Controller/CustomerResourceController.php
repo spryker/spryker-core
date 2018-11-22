@@ -32,7 +32,7 @@ class CustomerResourceController extends AbstractController
      *              "403": "Unauthorized request.",
      *              "404": "Customer not found."
      *          }
-     *     },
+     *     }
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -88,7 +88,7 @@ class CustomerResourceController extends AbstractController
      *          "responses": {
      *              "400": "Failed to save customer.",
      *              "403": "Unauthorized request.",
-     *              "404": "Customer not found.",
+     *              "404": "Customer not found."
      *          }
      *     }
      * })

@@ -70,7 +70,7 @@ class AddressResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "403": "Unauthorized request.",
-     *              "404": "Customer not found.",
+     *              "404": "Customer not found."
      *          }
      *     }
      * })
@@ -99,7 +99,7 @@ class AddressResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Address id is not specified.",
-     *              "403": "Unauthorized request.",
+     *              "403": "Unauthorized request."
      *          }
      *     }
      * })
@@ -126,7 +126,7 @@ class AddressResourceController extends AbstractController
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
-     *          "responses": {CustomerPasswordResourceController.php
+     *          "responses": {
      *              "400": "Address id is not specified.",
      *              "403": "Unauthorized request.",
      *              "404": "Address not found."
