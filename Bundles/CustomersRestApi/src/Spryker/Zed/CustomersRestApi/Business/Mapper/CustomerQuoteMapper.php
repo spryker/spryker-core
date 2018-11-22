@@ -39,6 +39,10 @@ class CustomerQuoteMapper implements CustomerQuoteMapperInterface
     ): QuoteTransfer {
         $restCustomerTransfer = $restCheckoutRequestAttributesTransfer->getCart()->getCustomer();
 
+        if (!$restCustomerTransfer) {
+            return $quoteTransfer;
+        }
+
         $customerResponseTransfer = $this->customerFacade->findCustomerByReference($restCustomerTransfer->getCustomerReference());
 
         if ($customerResponseTransfer->getHasCustomer() === false) {
@@ -46,7 +50,9 @@ class CustomerQuoteMapper implements CustomerQuoteMapperInterface
                 ->fromArray($restCustomerTransfer->toArray(), true)
                 ->setIsGuest(true);
 
-            return $quoteTransfer->setCustomer($customerTransfer);
+            return $quoteTransfer
+                ->setCustomer($customerTransfer)
+                ->setCustomerReference($customerTransfer->getCustomerReference());
         }
 
         $quoteTransfer

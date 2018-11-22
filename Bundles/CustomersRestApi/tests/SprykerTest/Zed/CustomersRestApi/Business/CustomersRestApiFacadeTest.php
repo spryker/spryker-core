@@ -1,0 +1,315 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Zed\CustomersRestApi\Business;
+
+use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\AddressBuilder;
+use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\CustomersRestApi\Business\CustomersRestApiBusinessFactory;
+use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeBridge;
+
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group CustomersRestApi
+ * @group Business
+ * @group Facade
+ * @group CustomersRestApiFacadeTest
+ * Add your own group annotations below this line
+ */
+class CustomersRestApiFacadeTest extends Unit
+{
+    /**
+     * @var \SprykerTest\Zed\CustomersRestApi\CustomersRestApiBusinessTester
+     */
+    protected $tester;
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteOnAllDataProvided(): void
+    {
+        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertBothAddressesMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getCart()->getBillingAddress()->getId(), $actualQuote->getBillingAddress()->getUuid());
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getCart()->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnAllDataProvided(): void
+    {
+        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullGuestRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertBothAddressesMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteOnOnlyBillingAddressProvided(): void
+    {
+        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyBillingRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertBillingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getCart()->getBillingAddress()->getId(), $actualQuote->getBillingAddress()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnOnlyBillingAddressProvided(): void
+    {
+        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyBillingGuestRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertBillingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteOnOnlyShippingAddressProvided(): void
+    {
+        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyShippingRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertShippingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getCart()->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnOnlyShippingAddressProvided(): void
+    {
+        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyShippingGuestRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertShippingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteOnNoAddressProvided(): void
+    {
+        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareNoAddressRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->assertNull($actualQuote->getBillingAddress());
+        $this->assertNull($actualQuote->getShippingAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnNoAddressProvided(): void
+    {
+        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareNoAddressGuestRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->assertNull($actualQuote->getBillingAddress());
+        $this->assertNull($actualQuote->getShippingAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapCustomerToQuoteWillReturnQuoteWithCustomerProvided(): void
+    {
+        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareCustomerRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapCustomerToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->assertNotNull($actualQuote->getCustomer());
+        $this->assertNotNull($actualQuote->getCustomerReference());
+        $expectedRestCustomerTransfer = $restCheckoutRequestAttributesTransfer->getCart()->getCustomer();
+        $this->assertEquals($expectedRestCustomerTransfer->getCustomerReference(), $actualQuote->getCustomer()->getCustomerReference());
+        $this->assertEquals($expectedRestCustomerTransfer->getIdCustomer(), $actualQuote->getCustomer()->getIdCustomer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapCustomerToQuoteWillReturnQuoteForGuestWithCustomerProvided(): void
+    {
+        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareGuestCustomerRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapCustomerToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->assertNotNull($actualQuote->getCustomer());
+        $this->assertNotNull($actualQuote->getCustomerReference());
+        $expectedRestCustomerTransfer = $restCheckoutRequestAttributesTransfer->getCart()->getCustomer();
+        $this->assertEquals($expectedRestCustomerTransfer->getCustomerReference(), $actualQuote->getCustomer()->getCustomerReference());
+        $this->assertEquals($expectedRestCustomerTransfer->getIdCustomer(), $actualQuote->getCustomer()->getIdCustomer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapCustomerToQuoteWillReturnQuoteWithNoCustomerProvided(): void
+    {
+        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareNoCustomerRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapCustomerToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->assertNull($actualQuote->getCustomer());
+        $this->assertNull($actualQuote->getCustomerReference());
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getMockCustomersRestApiFactory(): MockObject
+    {
+        $mockFactory = $this->createPartialMock(
+            CustomersRestApiBusinessFactory::class,
+            ['getCustomerFacade']
+        );
+
+        $mockFactory->method('getCustomerFacade')
+            ->willReturn(new CustomersRestApiToCustomerFacadeBridge($this->getMockCustomerFacade()));
+
+        return $mockFactory;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getMockCustomersRestApiFactoryForGuest(): MockObject
+    {
+        $mockFactory = $this->createPartialMock(
+            CustomersRestApiBusinessFactory::class,
+            ['getCustomerFacade']
+        );
+
+        $mockFactory->method('getCustomerFacade')
+            ->willReturn(new CustomersRestApiToCustomerFacadeBridge($this->getMockCustomerFacadeForGuest()));
+
+        return $mockFactory;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getMockCustomerFacade(): MockObject
+    {
+        $mockCustomerFacade = $this->createPartialMock(
+            CustomerFacade::class,
+            ['getAddresses', 'findCustomerByReference']
+        );
+
+        $mockCustomerFacade->method('getAddresses')
+            ->willReturn(
+                (new AddressesTransfer())
+                    ->addAddress((new AddressBuilder($this->tester::ADDRESS_1))->build())
+                    ->addAddress((new AddressBuilder($this->tester::ADDRESS_2))->build())
+            );
+
+        $mockCustomerFacade->method('findCustomerByReference')
+            ->willReturn(
+                (new CustomerResponseTransfer())
+                    ->setIsSuccess(true)
+                    ->setHasCustomer(true)
+                    ->setCustomerTransfer((new CustomerBuilder($this->tester::CUSTOMER))->build())
+            );
+
+        return $mockCustomerFacade;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getMockCustomerFacadeForGuest(): MockObject
+    {
+        $mockCustomerFacade = $this->createPartialMock(
+            CustomerFacade::class,
+            ['getAddresses', 'findCustomerByReference']
+        );
+
+        $mockCustomerFacade->method('getAddresses')
+            ->willReturn(
+                (new AddressesTransfer())
+                    ->addAddress((new AddressBuilder($this->tester::ADDRESS_1))->build())
+                    ->addAddress((new AddressBuilder($this->tester::ADDRESS_2))->build())
+            );
+
+        $mockCustomerFacade->method('findCustomerByReference')
+            ->willReturn(
+                (new CustomerResponseTransfer())
+                    ->setIsSuccess(false)
+                    ->setHasCustomer(false)
+            );
+
+        return $mockCustomerFacade;
+    }
+}
