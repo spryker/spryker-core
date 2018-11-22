@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -55,6 +56,8 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
      *
      * @api
      *
+     * @deprecated Use findQuoteByCustomerAndStore() instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -62,6 +65,21 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteReader()->findQuoteByCustomer($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByCustomerAndStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteReader()->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
     }
 
     /**

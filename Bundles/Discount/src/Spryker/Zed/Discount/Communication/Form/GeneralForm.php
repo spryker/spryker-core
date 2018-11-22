@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
  */
 class GeneralForm extends AbstractType
 {

@@ -20,6 +20,11 @@ class Cronjobs
     public const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
     public const JENKINS_API_JOBS_URL = 'api/json/jobs?pretty=true&tree=jobs[name]';
 
+    protected const JENKINS_URL_API_CSRF_TOKEN = 'crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)';
+    protected const JENKINS_CSRF_TOKEN_NAME = 'crumb';
+
+    protected const TEMPLATE_MESSAGE_ERROR_CURL = 'cURL error: %s  while calling Jenkins URL %s';
+
     /**
      * @var array
      */
@@ -272,22 +277,25 @@ class Cronjobs
      *
      * @return int
      */
-    protected function callJenkins($url, $body = '')
+    protected function callJenkins($url, $body = ''): int
     {
         $postUrl = $this->getJenkinsUrl($url);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $postUrl);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: text/xml']);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->getHeaders());
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
 
         $curlResponse = curl_exec($ch);
 
         if ($curlResponse === false) {
-            throw new ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
+            $exceptionMessage = $this->buildExceptionMessage(curl_error($ch), $postUrl);
+
+            throw new ErrorException($exceptionMessage);
         }
 
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -448,23 +456,36 @@ class Cronjobs
      */
     protected function getCommand($command, $store)
     {
+        $commandTemplate = '<command>%s
+export APPLICATION_ENV=%s
+export APPLICATION_STORE=%s
+cd %s
+. %s
+%s</command>';
+
+        $cronjobsConfigPath = $this->config->getCronjobsConfigFilePath();
+
         $environment = Environment::getInstance();
-        $environment_name = $environment->getEnvironment();
+        $customBashCommand = '';
+        $destination = APPLICATION_ROOT_DIR;
+
         if ($environment->isNotDevelopment()) {
-            return "<command>[ -f " . APPLICATION_ROOT_DIR . "/deploy/vars ] &amp;&amp; . " . APPLICATION_ROOT_DIR . "/deploy/vars
-export APPLICATION_ENV=$environment_name
-export APPLICATION_STORE=$store
-cd \$destination_release_dir
-. ./config/Zed/cronjobs/cron.conf
-$command</command>";
+            $checkDeployFolderExistsBashCommand = '[ -f ' . APPLICATION_ROOT_DIR . '/deploy/vars ]';
+            $sourceBashCommand = '. ' . APPLICATION_ROOT_DIR . '/deploy/vars';
+
+            $customBashCommand = $checkDeployFolderExistsBashCommand . ' ' . '&amp;&amp;' . ' ' . $sourceBashCommand;
+            $destination = '\$destination_release_dir';
         }
 
-        return "<command>
-export APPLICATION_ENV=$environment_name
-export APPLICATION_STORE=$store
-cd /data/shop/development/current
-. ./config/Zed/cronjobs/cron.conf
-$command</command>";
+        return sprintf(
+            $commandTemplate,
+            $customBashCommand,
+            $environment->getEnvironment(),
+            $store,
+            $destination,
+            $cronjobsConfigPath,
+            $command
+        );
     }
 
     /**
@@ -472,7 +493,7 @@ $command</command>";
      */
     protected function getJobConfigPath()
     {
-        return $this->config->getPathForJobsPHP();
+        return $this->config->getCronjobsDefinitionFilePath();
     }
 
     /**
@@ -491,5 +512,58 @@ $command</command>";
     protected function getJobsDir()
     {
         return $this->config->getJenkinsJobsDirectory();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getJenkinsCsrfHeader(): string
+    {
+        return $this->getJenkinsApiResponse(static::JENKINS_URL_API_CSRF_TOKEN);
+    }
+
+    /**
+     * @param string $errorMessage
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function buildExceptionMessage(string $errorMessage, string $url): string
+    {
+        $curlErrorMessage = sprintf(static::TEMPLATE_MESSAGE_ERROR_CURL, $errorMessage, $url);
+
+        if (strpos($curlErrorMessage, static::JENKINS_CSRF_TOKEN_NAME) !== false) {
+            $curlErrorMessage = $this->buildCsrfProtectionErrorMessage($curlErrorMessage);
+        }
+
+        return $curlErrorMessage;
+    }
+
+    /**
+     * @param string $errorMessage
+     *
+     * @return string
+     */
+    protected function buildCsrfProtectionErrorMessage(string $errorMessage): string
+    {
+        $csrfErrorMessage = 'Please add the following configuration to your config_* file to enable the CSRF protection for Jenkins.'
+            . PHP_EOL
+            . '$config[SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED] = true;';
+
+        return $errorMessage . PHP_EOL . $csrfErrorMessage;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getHeaders(): array
+    {
+        $httpHeader = ['Content-Type: text/xml'];
+
+        if ($this->config->isJenkinsCsrfProtectionEnabled()) {
+            $httpHeader[] = $this->getJenkinsCsrfHeader();
+        }
+
+        return $httpHeader;
     }
 }

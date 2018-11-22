@@ -13,6 +13,7 @@ use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDele
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Business\PriceProductMerchantRelationshipFacade getFacade()
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Communication\PriceProductMerchantRelationshipCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig getConfig()
  */
 class MerchantRelationshipPriceProductStorePreDeletePlugin extends AbstractPlugin implements PriceProductStorePreDeletePluginInterface
 {

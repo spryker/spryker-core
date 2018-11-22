@@ -1,4 +1,4 @@
 parameters:
     ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Method .+PriceProductMerchantRelationshipStorageRepository::queryPriceProductStoreByCompanyBusinessUnitIds\(\) should return Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductStoreQuery but returns Propel\\Runtime\\ActiveQuery\\Criteria#'
+    - '#Method Spryker\\Zed\\Kernel\\Persistence\\AbstractEntityManager::save().+invoked with 0 parameters, 1 required.#'
+    - '#Call to an undefined method.+Orm\\Zed\\Company\\Persistence\\.+useMerchantRelationshipQuery()#'
