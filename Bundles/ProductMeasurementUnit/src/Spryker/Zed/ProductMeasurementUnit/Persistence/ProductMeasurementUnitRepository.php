@@ -245,19 +245,45 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      */
     public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
     {
+        $productMeasurementSalesUnitIds = $this->findProductMeasurementSalesUnitIdsFilteredByOffsetAndLimit($filterTransfer);
+
+        if (!$productMeasurementSalesUnitIds) {
+            return [];
+        }
+
         $query = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
+            ->filterByIdProductMeasurementSalesUnit_In($productMeasurementSalesUnitIds)
             ->joinWithProductMeasurementBaseUnit()
             ->joinWith('ProductMeasurementUnit salesUnitMeasurementUnit')
             ->joinWith('ProductMeasurementBaseUnit.ProductMeasurementUnit baseUnitMeasurementUnit')
             ->leftJoinWithSpyProductMeasurementSalesUnitStore()
-            ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore')
-            ->setOffset($filterTransfer->getOffset())
-            ->setLimit($filterTransfer->getLimit());
+            ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore');
 
         $productMeasurementSalesUnitEntityCollection = $query->find();
 
         return $this->getMappedProductMeasurementSalesUnitTransfers($productMeasurementSalesUnitEntityCollection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return int[]
+     */
+    protected function findProductMeasurementSalesUnitIdsFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    {
+        $productMeasurementSalesUnitIds = [];
+
+        $query = $this->getFactory()
+            ->createProductMeasurementSalesUnitQuery()
+            ->offset($filterTransfer->getOffset())
+            ->limit($filterTransfer->getLimit());
+
+        foreach ($query->find() as $productMeasurementSalesUnit) {
+            $productMeasurementSalesUnitIds[] = $productMeasurementSalesUnit->getIdProductMeasurementSalesUnit();
+        }
+
+        return $productMeasurementSalesUnitIds;
     }
 
     /**

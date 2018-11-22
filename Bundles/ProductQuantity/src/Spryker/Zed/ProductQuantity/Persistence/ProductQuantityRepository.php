@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductQuantity\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -91,11 +90,11 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productQuantityEntityTransfers
+     * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[] $productQuantityEntityTransfers
      *
      * @return array
      */
-    protected function getMappedProductQuantityTransfers(ObjectCollection $productQuantityEntityTransfers)
+    protected function getMappedProductQuantityTransfers(array $productQuantityEntityTransfers)
     {
         $productQuantityTransfers = [];
         $mapper = $this->getFactory()->createProductQuantityMapper();
