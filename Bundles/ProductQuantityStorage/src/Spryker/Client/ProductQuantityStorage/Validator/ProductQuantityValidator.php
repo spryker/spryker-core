@@ -51,7 +51,7 @@ class ProductQuantityValidator implements ProductQuantityValidatorInterface
         }
 
         if ($interval && ($quantity - $min) % $interval !== 0) {
-            $allowedQuantities = range($min, $max, $interval);
+            $allowedQuantities = array_reverse(range($min, $max, $interval));
             $quantity = $this->getNearestQuantityFromAllowed($quantity, $allowedQuantities);
         }
 
