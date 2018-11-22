@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockGui\CmsBlockGuiConfig getConfig()
  */
 class CmsBlockGlossaryPlaceholderForm extends AbstractType
 {

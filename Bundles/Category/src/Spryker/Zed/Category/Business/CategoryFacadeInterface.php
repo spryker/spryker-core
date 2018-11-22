@@ -506,7 +506,7 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Finds a Category transfer by id.
+     * - Finds a Category transfer by id with category nodes and attributes.
      * - Returns NULL if a Category does not exist.
      *
      * @api

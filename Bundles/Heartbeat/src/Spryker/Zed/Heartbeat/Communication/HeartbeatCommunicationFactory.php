@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Heartbeat\HeartbeatConfig getConfig()
+ * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacadeInterface getFacade()
  */
 class HeartbeatCommunicationFactory extends AbstractCommunicationFactory
 {

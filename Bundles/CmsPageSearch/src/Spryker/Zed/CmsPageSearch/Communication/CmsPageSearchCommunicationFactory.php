@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CmsPageSearch\CmsPageSearchConfig getConfig()
+ * @method \Spryker\Zed\CmsPageSearch\Business\CmsPageSearchFacadeInterface getFacade()
  */
 class CmsPageSearchCommunicationFactory extends AbstractCommunicationFactory
 {

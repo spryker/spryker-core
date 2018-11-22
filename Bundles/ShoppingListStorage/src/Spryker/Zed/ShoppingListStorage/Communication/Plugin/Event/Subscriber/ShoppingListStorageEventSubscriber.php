@@ -20,6 +20,7 @@ use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\Shopping
 /**
  * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacade getFacade()
  * @method \Spryker\Zed\ShoppingListStorage\Communication\ShoppingListStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ShoppingListStorage\ShoppingListStorageConfig getConfig()
  */
 class ShoppingListStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

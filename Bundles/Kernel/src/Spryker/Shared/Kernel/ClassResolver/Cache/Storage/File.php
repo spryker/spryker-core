@@ -17,6 +17,11 @@ use Spryker\Shared\Kernel\Store;
 class File implements StorageInterface
 {
     /**
+     * @var string|null
+     */
+    protected $cacheFilePath;
+
+    /**
      * @param array $data
      *
      * @return void
@@ -64,6 +69,12 @@ class File implements StorageInterface
      */
     protected function getCacheFilename()
     {
-        return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/' . ucfirst(strtolower(APPLICATION)) . '/unresolvable.cache';
+        if (!$this->cacheFilePath) {
+            $defaultPath = APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/' . ucfirst(strtolower(APPLICATION)) . '/unresolvable.cache';
+
+            $this->cacheFilePath = Config::get(KernelConstants::AUTO_LOADER_CACHE_FILE_PATH, $defaultPath);
+        }
+
+        return $this->cacheFilePath;
     }
 }
