@@ -16,6 +16,7 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/event": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/propel-query-builder": "*",
