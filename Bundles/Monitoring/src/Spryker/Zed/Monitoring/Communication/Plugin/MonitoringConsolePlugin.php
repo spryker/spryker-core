@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */
 class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {

@@ -14,6 +14,7 @@ use Spryker\Zed\PriceProductDataImport\PriceProductDataImportConfig;
 
 /**
  * @method \Spryker\Zed\CompanyDataImport\Business\CompanyDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\PriceProductDataImport\PriceProductDataImportConfig getConfig()
  */
 class PriceProductDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

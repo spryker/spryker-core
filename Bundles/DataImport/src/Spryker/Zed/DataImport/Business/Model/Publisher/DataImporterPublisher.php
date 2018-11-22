@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DataImport\Business\Model\Publisher;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Spryker\Zed\Kernel\Locator;
 
 class DataImporterPublisher implements DataImporterPublisherInterface
 {
@@ -111,7 +112,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     protected static function loadEventFacade()
     {
         if (!static::$eventFacade) {
-            $locatorClassName = '\Spryker\Zed\Kernel\Locator';
+            $locatorClassName = Locator::class;
             static::$eventFacade = $locatorClassName::getInstance()->event()->facade();
         }
     }

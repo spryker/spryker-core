@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\OauthCustomerConnector\Business\OauthCustomerConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig getConfig()
  */
 class OauthCustomerInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {

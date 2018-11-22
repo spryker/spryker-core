@@ -17,6 +17,7 @@ use Spryker\Zed\SalesOrderThreshold\Persistence\Propel\Mapper\SalesOrderThreshol
 /**
  * @method \Spryker\Zed\SalesOrderThreshold\SalesOrderThresholdConfig getConfig()
  * @method \Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInterface getRepository()
+ * @method \Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdEntityManagerInterface getEntityManager()
  */
 class SalesOrderThresholdPersistenceFactory extends AbstractPersistenceFactory
 {

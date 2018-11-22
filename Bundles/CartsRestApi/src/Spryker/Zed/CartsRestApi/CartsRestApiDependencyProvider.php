@@ -14,6 +14,9 @@ use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPlu
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
+ */
 class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_QUOTE = 'FACADE_QUOTE';

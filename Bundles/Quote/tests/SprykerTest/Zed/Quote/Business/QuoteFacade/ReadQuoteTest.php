@@ -36,14 +36,16 @@ class ReadQuoteTest extends Unit
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
+        $storeTransfer = $quoteTransfer->getStore();
 
         // Act
         /** @var \Spryker\Zed\Quote\Business\QuoteFacadeInterface $quoteFacade */
         $quoteFacade = $this->tester->getFacade();
-        $quoteResponseTransfer = $quoteFacade->findQuoteByCustomer($customerTransfer);
+        $quoteResponseTransfer = $quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
 
         // Assert
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful(), 'Quote response transfer should have ben successful.');

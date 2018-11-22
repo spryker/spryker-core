@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig getConfig()
+ * @method \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface getRepository()
  */
 class ProductDiscontinuedCommunicationFactory extends AbstractCommunicationFactory
 {
