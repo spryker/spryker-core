@@ -45,8 +45,21 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
      */
     public function publishAbstractReplacements(array $productIds): void
     {
-        $indexedSkus = $this->productAlternativeStorageRepository->getIndexedProductAbstractIdToSkusByProductIds($productIds);
-        $this->storeAbstractProductData($indexedSkus);
+        $replacementIds = [];
+        $productAbstractIndexedSkus = $this->productAlternativeStorageRepository->getIndexedProductAbstractIdToSkusByProductIds($productIds);
+        $this->storeAbstractProductData($productAbstractIndexedSkus);
+
+        $productConcreteIndexedSkusPerAbstract = $this->productAlternativeStorageRepository->getIndexedProductConcreteIdToSkusByProductAbstractIds($productIds);
+
+        if (!count($productConcreteIndexedSkusPerAbstract)) {
+            return;
+        }
+
+        foreach ($productAbstractIndexedSkus as $idProductAbstract => $productAbstractData) {
+            $replacementIds = $this->productAlternativeStorageRepository->getReplacementsByAbstractProductId($idProductAbstract);
+        }
+
+        $this->storeConcreteProductDataPerAbstract($productConcreteIndexedSkusPerAbstract, $replacementIds);
     }
 
     /**
@@ -70,6 +83,27 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
         foreach ($indexedSkus as $idProductAbstract => $productAbstractData) {
             $replacementIds = $this->productAlternativeStorageRepository->getReplacementsByAbstractProductId($idProductAbstract);
             $sku = $productAbstractData[ProductAbstractTransfer::SKU];
+            $productReplacementStorageEntity = $this->productAlternativeStorageRepository->findProductReplacementStorageEntitiesBySku($sku);
+            $this->storeDataSet($sku, $replacementIds, $productReplacementStorageEntity);
+        }
+    }
+
+    /**
+     * @param array $indexedSkus
+     * @param array $replacementIds
+     *
+     * @return void
+     */
+    protected function storeConcreteProductDataPerAbstract(
+        array $indexedSkus,
+        array $replacementIds
+    ): void {
+        foreach ($indexedSkus as $idProduct => $productConcreteData) {
+            $replacementIds = array_merge(
+                $this->productAlternativeStorageRepository->getReplacementsByConcreteProductId($idProduct),
+                $replacementIds
+            );
+            $sku = $productConcreteData[ProductConcreteTransfer::SKU];
             $productReplacementStorageEntity = $this->productAlternativeStorageRepository->findProductReplacementStorageEntitiesBySku($sku);
             $this->storeDataSet($sku, $replacementIds, $productReplacementStorageEntity);
         }

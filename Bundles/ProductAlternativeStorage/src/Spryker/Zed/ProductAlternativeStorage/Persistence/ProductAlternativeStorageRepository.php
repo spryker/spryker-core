@@ -134,6 +134,24 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @module Product
+     *
+     * @param int[] $productIds
+     *
+     * @return string[]
+     */
+    public function getIndexedProductConcreteIdToSkusByProductAbstractIds(array $productIds): array
+    {
+        $productAbstractQuery = $this->getFactory()
+            ->getProductPropelQuery();
+        $productAbstractQuery->filterByFkProductAbstract_In($productIds)
+            ->addAsColumn(ProductConcreteTransfer::SKU, SpyProductTableMap::COL_SKU);
+        return $productAbstractQuery->select([SpyProductTableMap::COL_ID_PRODUCT, ProductConcreteTransfer::SKU])
+            ->find()
+            ->toArray(SpyProductTableMap::COL_ID_PRODUCT);
+    }
+
+    /**
      * @param string $sku
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage|null

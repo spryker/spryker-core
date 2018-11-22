@@ -124,12 +124,6 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
         if ($idProductAbstract) {
             $this->createProductAbstractAlternative($productAlternativeCreateRequestTransfer->getIdProduct(), $idProductAbstract);
 
-            $productConcreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
-
-            foreach ($productConcreteIds as $productConcreteId) {
-                $this->createProductConcreteAlternative($productAlternativeCreateRequestTransfer->getIdProduct(), $productConcreteId);
-            }
-
             return;
         }
 

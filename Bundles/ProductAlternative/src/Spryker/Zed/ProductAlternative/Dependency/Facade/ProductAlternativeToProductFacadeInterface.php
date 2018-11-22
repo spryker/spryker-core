@@ -29,11 +29,4 @@ interface ProductAlternativeToProductFacadeInterface
      * @return int|null
      */
     public function findProductConcreteIdBySku($sku);
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return int[]
-     */
-    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
 }
