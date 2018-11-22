@@ -49,8 +49,13 @@ class QuoteMapper implements QuoteMapperInterface
         $idShipmentMethod = $restCheckoutRequestAttributesTransfer->getCart()->getShipment()->getShipmentSelection();
 
         $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
+        if ($shipmentMethodTransfer === null) {
+            return $quoteTransfer;
+        }
+
         $shipmentTransfer = new ShipmentTransfer();
-        $shipmentTransfer->setMethod($shipmentMethodTransfer);
+        $shipmentTransfer->setMethod($shipmentMethodTransfer)
+            ->setShipmentSelection((string)$idShipmentMethod);
 
         $quoteTransfer->setShipment($shipmentTransfer);
 

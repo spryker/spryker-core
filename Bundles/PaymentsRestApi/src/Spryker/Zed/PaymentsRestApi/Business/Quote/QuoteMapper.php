@@ -28,6 +28,10 @@ class QuoteMapper implements QuoteMapperInterface
         $restPaymentTransfers = $restCheckoutRequestAttributesTransfer->getCart()->getPayments();
         $quoteTransfer = $this->setFirstPaymentMethodWithUnlimitedAmountToQuote($restPaymentTransfers, $quoteTransfer);
 
+        if ($quoteTransfer->getPayment() === null) {
+            return $quoteTransfer;
+        }
+
         foreach ($restPaymentTransfers as $restPaymentTransfer) {
             if ($quoteTransfer->getPayment()->getPaymentSelection() !== $restPaymentTransfer->getPaymentSelection()) {
                 $quoteTransfer->addPayment($this->preparePaymentTransfer($restPaymentTransfer));
