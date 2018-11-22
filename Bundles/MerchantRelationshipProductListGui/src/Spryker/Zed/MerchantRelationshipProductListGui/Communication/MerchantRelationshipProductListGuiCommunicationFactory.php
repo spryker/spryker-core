@@ -17,6 +17,7 @@ use Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductLi
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiConfig getConfig()
+ * @method \Spryker\Zed\MerchantRelationshipProductListGui\Persistence\MerchantRelationshipProductListGuiRepositoryInterface getRepository()
  */
 class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCommunicationFactory
 {
