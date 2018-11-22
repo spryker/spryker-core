@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/payments-rest-api.svg)](https://travis-ci.org/spryker/payments-rest-api)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/payments-rest-api/badge.svg)](https://coveralls.io/github/spryker/payments-rest-api)
 
-{{ADD DESCRIPTION HERE}}
+PaymentsRestApi provides payment methods handling for CheckoutRestApi.
 
 ## Installation
 
