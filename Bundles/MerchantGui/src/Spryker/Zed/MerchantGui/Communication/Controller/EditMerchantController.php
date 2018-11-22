@@ -33,9 +33,16 @@ class EditMerchantController extends AbstractController
         $idMerchant = $this->castId($request->get(MerchantTableConstants::REQUEST_ID_MERCHANT));
 
         $dataProvider = $this->getFactory()->createMerchantFormDataProvider();
+        $merchantTransfer = $dataProvider->getData($idMerchant);
+
+        if ($merchantTransfer === null) {
+            $this->addErrorMessage(sprintf('Merchant with id %s doesn\'t exists.', $idMerchant));
+            return $this->redirectResponse(MerchantTableConstants::URL_MERCHANT_LIST);
+        }
+
         $merchantForm = $this->getFactory()
             ->getMerchantForm(
-                $dataProvider->getData($idMerchant),
+                $merchantTransfer,
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
