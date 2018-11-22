@@ -9,11 +9,13 @@ namespace Spryker\Client\ProductOptionStorage\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface;
+use Spryker\Client\ProductOptionStorage\ProductOptionStorageConfig;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig;
+use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig as SharedProductOptionStorageConfig;
 
 class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
 {
@@ -64,7 +66,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     public function getProductOptions($idProductAbstract, $locale)
     {
         $key = $this->generateKey($idProductAbstract);
-        $productAbstractOptionStorageData = $this->storageClient->get($key);
+        $productAbstractOptionStorageData = $this->getStorageData($idProductAbstract);
 
         if (!$productAbstractOptionStorageData) {
             return null;
@@ -80,14 +82,52 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      */
     public function getProductOptionsForCurrentStore($idProductAbstract)
     {
-        $key = $this->generateKey($idProductAbstract);
-        $productAbstractOptionStorageData = $this->storageClient->get($key);
+        $productAbstractOptionStorageData = $this->getStorageData($idProductAbstract);
 
         if (!$productAbstractOptionStorageData) {
             return null;
         }
 
         return $this->mapToProductAbstractOptionStorageTransfer($productAbstractOptionStorageData);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string|null $locale
+     *
+     * @return array
+     */
+    protected function getStorageData(int $idProductAbstract, ?string $locale = null): array
+    {
+        if (ProductOptionStorageConfig::isCollectorCompatibilityMode()) {
+            if ($locale === null) {
+                $locale = Store::getInstance()->getCurrentLocale();
+            }
+            $clientLocatorName = Locator::class;
+            /** @var \Spryker\Client\ProductOption\ProductOptionClientInterface $productOptionClient */
+            $productOptionClient = $clientLocatorName::getInstance()->productOption()->client();
+
+            $collectorData = $productOptionClient->getProductOptions($idProductAbstract, $locale);
+
+            $formattedCollectorData = [
+                'id_product_abstract' => $idProductAbstract,
+                'product_option_groups' => [],
+            ];
+
+            foreach ($collectorData->getProductOptionGroups() as $productOptionGroupTransfer) {
+                $productOptionData = $productOptionGroupTransfer->toArray();
+                $productOptionData['product_option_values'] = $productOptionData['values'];
+                unset($productOptionData['values']);
+
+                $formattedCollectorData['product_option_groups'][] = $productOptionData;
+            }
+
+            return $formattedCollectorData;
+        }
+
+        $key = $this->generateKey($idProductAbstract);
+
+        return $this->storageClient->get($key);
     }
 
     /**
@@ -120,7 +160,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
             ->setReference($idProductAbstract);
 
         return $this->synchronizationService
-            ->getStorageKeyBuilder(ProductOptionStorageConfig::PRODUCT_ABSTRACT_OPTION_RESOURCE_NAME)
+            ->getStorageKeyBuilder(SharedProductOptionStorageConfig::PRODUCT_ABSTRACT_OPTION_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
     }
 }
