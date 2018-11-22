@@ -93,4 +93,20 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
     {
         return $this->getRepository()->getMerchants();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantReader()
+            ->findMerchantById($merchantTransfer);
+    }
 }
