@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -88,14 +89,17 @@ class PriceProductAbstractMerchantRelationSynchronizationDataBulkPlugin extends 
      *
      * @param int $offset
      * @param int $limit
+     * @param int[] $ids
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(int $offset, int $limit): array
+    public function getData(int $offset, int $limit, array $ids = []): array
     {
         $data = [];
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
         $priceProductAbstractMerchantRelationshipStorageEntities = $this->getRepository()
-            ->findPriceProductAbstractMerchantRelationshipStorageEntitiesByOffsetAndLimit($offset, $limit);
+            ->findPriceProductAbstractMerchantRelationshipStorageEntitiesByOffsetAndLimitFilteredByIds($filterTransfer, $ids);
 
         foreach ($priceProductAbstractMerchantRelationshipStorageEntities as $priceProductAbstractMerchantRelationshipStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
@@ -106,5 +110,18 @@ class PriceProductAbstractMerchantRelationSynchronizationDataBulkPlugin extends 
         }
 
         return $data;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

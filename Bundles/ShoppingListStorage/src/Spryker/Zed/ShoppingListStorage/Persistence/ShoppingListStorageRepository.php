@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -92,17 +93,21 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $shoppingListCustomerStorageEntityIds
      *
      * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findShoppingListCustomerStorageEntitiesByOffsetAndLimit(int $offset, int $limit): ObjectCollection
+    public function findShoppingListCustomerStorageEntitiesByOffsetAndLimitFilteredByIds(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): ObjectCollection
     {
-        return $this->getFactory()
-            ->createShoppingListCustomerStoragePropelQuery()
-            ->offset($offset)
-            ->limit($limit)
+        $query = $this->getFactory()->createShoppingListCustomerStoragePropelQuery();
+
+        if ($shoppingListCustomerStorageEntityIds) {
+            $query->filterByIdShoppingListCustomerStorage_In($shoppingListCustomerStorageEntityIds);
+        }
+
+        return $query->offset($filterTransfer->getOffset())
+            ->limit($filterTransfer->getLimit())
             ->find();
     }
 

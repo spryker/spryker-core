@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStoragePersistenceFactory getFactory()
  */
@@ -121,18 +123,18 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
     public function findPriceProductAbstractMerchantRelationshipStorageEntitiesByIds(array $priceProductAbstractMerchantRelationshipStorageEntityIds): array;
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $priceProductConcreteMerchantRelationshipStorageIds
      *
      * @return array
      */
-    public function findPriceProductConcreteMerchantRelationshipStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array;
+    public function findPriceProductConcreteMerchantRelationshipStorageEntitiesByOffsetAndLimitFilteredByIds(FilterTransfer $filterTransfer, array $priceProductConcreteMerchantRelationshipStorageIds = []): array;
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $priceProductAbstractMerchantRelationshipStorageIds
      *
      * @return array
      */
-    public function findPriceProductAbstractMerchantRelationshipStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array;
+    public function findPriceProductAbstractMerchantRelationshipStorageEntitiesByOffsetAndLimitFilteredByIds(FilterTransfer $filterTransfer, array $priceProductAbstractMerchantRelationshipStorageIds = []): array;
 }

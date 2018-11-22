@@ -87,10 +87,11 @@ class ProductAbstractProductListSynchronizationDataBulkPlugin extends AbstractPl
      *
      * @param int $offset
      * @param int $limit
+     * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(int $offset, int $limit): array
+    public function getData(int $offset, int $limit, array $ids = []): array
     {
         $spyProductAbstractProductListStorageEntities = $this->getRepository()
             ->findProductAbstractProductListStorageEntitiesByOffsetAndLimit($offset, $limit);

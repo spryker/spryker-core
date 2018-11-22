@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductMeasurementUnitStorageRepositoryInterface
 {
     /**
@@ -34,18 +36,18 @@ interface ProductMeasurementUnitStorageRepositoryInterface
     public function findAllProductConcreteMeasurementUnitStorageEntities(): array;
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productMeasurementUnitStorageEntityIds
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
      */
-    public function findProductMeasurementUnitStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array;
+    public function findProductMeasurementUnitStorageEntitiesByOffsetAndLimitFilteredByIds(FilterTransfer $filterTransfer, array $productMeasurementUnitStorageEntityIds = []): array;
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productConcreteMeasurementUnitStorageEntityIds
      *
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
      */
-    public function findProductConcreteMeasurementUnitStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array;
+    public function findProductConcreteMeasurementUnitStorageEntitiesByOffsetAndLimitFilteredByIds(FilterTransfer $filterTransfer, array $productConcreteMeasurementUnitStorageEntityIds = []): array;
 }

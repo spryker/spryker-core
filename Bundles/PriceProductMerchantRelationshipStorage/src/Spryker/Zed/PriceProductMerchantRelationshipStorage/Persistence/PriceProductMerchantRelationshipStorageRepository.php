@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipValueTransfer;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
@@ -366,33 +367,41 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $priceProductConcreteMerchantRelationshipStorageIds
      *
      * @return array
      */
-    public function findPriceProductConcreteMerchantRelationshipStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array
+    public function findPriceProductConcreteMerchantRelationshipStorageEntitiesByOffsetAndLimitFilteredByIds(FilterTransfer $filterTransfer, array $priceProductConcreteMerchantRelationshipStorageIds = []): array
     {
-        return $this->getFactory()
-            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
-            ->offset($offset)
-            ->limit($limit)
+        $query = $this->getFactory()->createPriceProductConcreteMerchantRelationshipStorageQuery();
+
+        if ($priceProductConcreteMerchantRelationshipStorageIds) {
+            $query->filterByIdPriceProductConcreteMerchantRelationshipStorage_In($priceProductConcreteMerchantRelationshipStorageIds);
+        }
+
+        return $query->offset($filterTransfer->getOffset())
+            ->limit($filterTransfer->getLimit())
             ->find()
             ->getArrayCopy();
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $priceProductAbstractMerchantRelationshipStorageIds
      *
      * @return array
      */
-    public function findPriceProductAbstractMerchantRelationshipStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array
+    public function findPriceProductAbstractMerchantRelationshipStorageEntitiesByOffsetAndLimitFilteredByIds(FilterTransfer $filterTransfer, array $priceProductAbstractMerchantRelationshipStorageIds = []): array
     {
-        return $this->getFactory()
-            ->createPriceProductAbstractMerchantRelationshipStorageQuery()
-            ->setOffset($offset)
-            ->setLimit($limit)
+        $query = $this->getFactory()->createPriceProductAbstractMerchantRelationshipStorageQuery();
+
+        if ($priceProductAbstractMerchantRelationshipStorageIds) {
+            $query->filterByIdPriceProductAbstractMerchantRelationshipStorage_In($priceProductAbstractMerchantRelationshipStorageIds);
+        }
+
+        return $query->offset($filterTransfer->getOffset())
+            ->limit($filterTransfer->getLimit())
             ->find()
             ->getArrayCopy();
     }

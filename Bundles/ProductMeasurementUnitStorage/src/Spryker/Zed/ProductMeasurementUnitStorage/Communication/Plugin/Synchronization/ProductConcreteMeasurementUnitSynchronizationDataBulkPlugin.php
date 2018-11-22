@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -51,14 +52,17 @@ class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends Abstra
      *
      * @param int $offset
      * @param int $limit
+     * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(int $offset, int $limit): array
+    public function getData(int $offset, int $limit, array $ids = []): array
     {
         $synchronizationDataTransfers = [];
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
         $productConcreteMeasurementUnitTransfers = $this->getRepository()
-            ->findProductConcreteMeasurementUnitStorageEntitiesByOffsetAndLimit($offset, $limit);
+            ->findProductConcreteMeasurementUnitStorageEntitiesByOffsetAndLimitFilteredByIds($filterTransfer, $ids);
 
         foreach ($productConcreteMeasurementUnitTransfers as $productConcreteMeasurementUnitTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
@@ -105,5 +109,18 @@ class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends Abstra
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getProductConcreteMeasurementUnitSynchronizationPoolName();
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

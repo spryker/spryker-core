@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -51,14 +52,17 @@ class ShoppingListSynchronizationDataBulkPlugin extends AbstractPlugin implement
      *
      * @param int $offset
      * @param int $limit
+     * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(int $offset, int $limit): array
+    public function getData(int $offset, int $limit, array $ids = []): array
     {
         $synchronizationDataTransfers = [];
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
         $shoppingListCustomerStorageEntities = $this->getRepository()
-            ->findShoppingListCustomerStorageEntitiesByOffsetAndLimit($offset, $limit);
+            ->findShoppingListCustomerStorageEntitiesByOffsetAndLimitFilteredByIds($filterTransfer, $ids);
 
         foreach ($shoppingListCustomerStorageEntities as $shoppingListCustomerStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
@@ -104,5 +108,18 @@ class ShoppingListSynchronizationDataBulkPlugin extends AbstractPlugin implement
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getShoppingListSynchronizationPoolName();
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }
