@@ -19,9 +19,6 @@ use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCusto
 
 class CustomerBusinessUnitAttachFormDataProvider
 {
-    protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
-    protected const OPTION_IS_DEFAULT = 'data-is_default';
-
     protected const FORMAT_NAME = '%s (id: %s)';
 
     /**
@@ -83,40 +80,35 @@ class CustomerBusinessUnitAttachFormDataProvider
      */
     public function getOptions(CompanyUserTransfer $companyUserTransfer): array
     {
-        [$companyBusinessUnitChoicesValues, $companyBusinessUnitChoicesAttributes] = $this->prepareCompanyBusinessUnitAttributeMap($companyUserTransfer);
+        $companyBusinessUnitChoicesValues = $this->prepareCompanyBusinessUnitAttributeMap($companyUserTransfer);
 
         return [
-            CustomerBusinessUnitAttachForm::OPTION_VALUES_BUSINESS_UNITS_CHOICES => $companyBusinessUnitChoicesValues,
-            CustomerBusinessUnitAttachForm::OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES => $companyBusinessUnitChoicesAttributes,
-            'data_class' => CompanyUserTransfer::class,
+            CustomerBusinessUnitAttachForm::OPTION_COMPANY_BUSINESS_UNITS_CHOICES => $companyBusinessUnitChoicesValues,
         ];
     }
 
     /**
-     * Retrieves the list of units for the same company.
+     * Retrieves the list of units for the company.
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return array [[unitKey => idBusinessUnit], [unitKey => ['data-id-company' => idCompany]]]
-     *                Where unitKey: "<idBusinessUnit> - <BusinessUnitName>"
+     * @return array[[businessUnitName => idBusinessUnit]],
+     *                Where businessUnitName: "<idBusinessUnit> - <BusinessUnitName>"
      */
     protected function prepareCompanyBusinessUnitAttributeMap(CompanyUserTransfer $companyUserTransfer): array
     {
-        $values = [];
-        $attributes = [];
+        $companyBusinessUnitChoicesValues = [];
 
         $companyBusinessUnitCollection = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
             (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompany($companyUserTransfer->getCompany()->getIdCompany())
         );
 
         foreach ($companyBusinessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
-            $unitKey = $this->generateCompanyBusinessUnitName($companyBusinessUnitTransfer);
-
-            $values[$unitKey] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
-            $attributes[$unitKey] = [static::OPTION_ATTRIBUTE_DATA => $companyBusinessUnitTransfer->getFkCompany()];
+            $businessUnitName = $this->generateCompanyBusinessUnitName($companyBusinessUnitTransfer);
+            $companyBusinessUnitChoicesValues[$businessUnitName] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
         }
 
-        return [$values, $attributes];
+        return $companyBusinessUnitChoicesValues;
     }
 
     /**
