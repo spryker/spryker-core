@@ -51,9 +51,29 @@ class ProductQuantityValidator implements ProductQuantityValidatorInterface
         }
 
         if ($interval && ($quantity - $min) % $interval !== 0) {
-            $quantity = round(($quantity - $min) / $interval) * $interval + $min;
+            $allowedQuantities = range($min, $max, $interval);
+            $quantity = $this->getNearestQuantityFromAllowed($quantity, $allowedQuantities);
         }
 
         return $quantity;
+    }
+
+    /**
+     * @param int $quantity
+     * @param int[] $allowedQuantities
+     *
+     * @return int
+     */
+    protected function getNearestQuantityFromAllowed(int $quantity, array $allowedQuantities): int
+    {
+        $nearest = null;
+
+        foreach ($allowedQuantities as $allowedQuantity) {
+            if ($nearest === null || abs($quantity - $nearest) > abs($allowedQuantity - $quantity)) {
+                $nearest = $allowedQuantity;
+            }
+        }
+
+        return $nearest ?? $quantity;
     }
 }
