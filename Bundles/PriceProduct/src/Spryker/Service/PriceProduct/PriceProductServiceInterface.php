@@ -55,8 +55,7 @@ interface PriceProductServiceInterface
 
     /**
      * Specification:
-     * - Merges one product concrete prices with its product abstract prices.
-     * - Takes product concrete prices and product abstract prices as arguments.
+     * - Merges product concrete prices with its product abstract prices.
      * - Overrides product abstract prices with the existing product concrete prices.
      *
      * @api
