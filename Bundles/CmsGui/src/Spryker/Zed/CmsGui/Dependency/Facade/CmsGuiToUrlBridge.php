@@ -29,9 +29,9 @@ class CmsGuiToUrlBridge implements CmsGuiToUrlInterface
      *
      * @return bool
      */
-    public function hasUrl($urlTransfer)
+    public function hasUrlCaseInsensitive($urlTransfer): bool
     {
-        return $this->urlFacade->hasUrl($urlTransfer);
+        return $this->urlFacade->hasUrlCaseInsensitive($urlTransfer);
     }
 
     /**

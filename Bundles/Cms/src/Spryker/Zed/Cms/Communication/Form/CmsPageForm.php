@@ -215,7 +215,7 @@ class CmsPageForm extends AbstractType
                     $urlTransfer = new UrlTransfer();
                     $urlTransfer->setUrl($url);
 
-                    if ($this->getFactory()->getUrlFacade()->hasUrl($urlTransfer)) {
+                    if ($this->getFactory()->getUrlFacade()->hasUrlCaseInsensitive($urlTransfer)) {
                         $context->addViolation('URL is already used');
                     }
 

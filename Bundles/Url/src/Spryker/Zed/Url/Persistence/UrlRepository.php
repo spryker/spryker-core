@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Url\Persistence;
 
 use Generated\Shared\Transfer\UrlTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -35,5 +36,24 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param bool $ignoreRedirects
+     *
+     * @return bool
+     */
+    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer, bool $ignoreRedirects): bool
+    {
+        return $this->getFactory()
+            ->createUrlQuery()
+            ->filterByUrl($urlTransfer->getUrl())
+            ->_or()
+            ->filterByIdUrl($urlTransfer->getIdUrl())
+            ->_if($ignoreRedirects)
+                ->filterByFkResourceRedirect(null, Criteria::ISNULL)
+            ->_endif()
+            ->exists();
     }
 }

@@ -148,7 +148,7 @@ class UrlFacadeTest extends Unit
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setUrl('/some/url/like/string');
 
-        $urlTransfer = $this->urlFacade->findUrl($urlTransfer);
+        $urlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
 
         $this->assertNotNull($urlTransfer, 'Finding existing URL entity by path should return transfer object.');
         $this->assertSame($urlEntity->getIdUrl(), $urlTransfer->getIdUrl(), 'Reading URL entity by path should return transfer with proper data.');
@@ -169,7 +169,7 @@ class UrlFacadeTest extends Unit
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setIdUrl($urlEntity->getIdUrl());
 
-        $urlTransfer = $this->urlFacade->findUrl($urlTransfer);
+        $urlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
 
         $this->assertNotNull($urlTransfer, 'Finding existing URL entity by ID should return transfer object.');
         $this->assertSame($urlEntity->getUrl(), $urlTransfer->getUrl(), 'Reading URL entity by ID should return transfer with proper data.');
@@ -297,7 +297,7 @@ class UrlFacadeTest extends Unit
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setIdUrl($urlEntity->getIdUrl());
 
-        $hasUrl = $this->urlFacade->hasUrlOrRedirectedUrl($urlTransfer);
+        $hasUrl = $this->urlFacade->hasUrlOrRedirectedUrlCaseInsensitive($urlTransfer);
 
         $this->assertTrue($hasUrl, 'Checking if URL redirect entity exists by ID should return true.');
     }

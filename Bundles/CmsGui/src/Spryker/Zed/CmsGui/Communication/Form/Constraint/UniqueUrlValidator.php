@@ -64,7 +64,7 @@ class UniqueUrlValidator extends ConstraintValidator
         $urlTransfer->setFkResourcePage($idCmsPage);
         $urlTransfer->setUrl($url);
 
-        return $constraint->getUrlFacade()->hasUrl($urlTransfer);
+        return $constraint->getUrlFacade()->hasUrlCaseInsensitive($urlTransfer);
     }
 
     /**

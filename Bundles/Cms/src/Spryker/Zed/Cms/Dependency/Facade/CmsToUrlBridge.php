@@ -70,13 +70,13 @@ class CmsToUrlBridge implements CmsToUrlInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
-    public function hasUrl($urlTransfer)
+    public function hasUrlCaseInsensitive($urlTransfer): bool
     {
-        return $this->urlFacade->hasUrl($urlTransfer);
+        return $this->urlFacade->hasUrlCaseInsensitive($urlTransfer);
     }
 
     /**
@@ -84,9 +84,9 @@ class CmsToUrlBridge implements CmsToUrlInterface
      *
      * @return bool
      */
-    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer)
+    public function hasUrlOrRedirectedUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
     {
-        return $this->urlFacade->hasUrlOrRedirectedUrl($urlTransfer);
+        return $this->urlFacade->hasUrlOrRedirectedUrlCaseInsensitive($urlTransfer);
     }
 
     /**

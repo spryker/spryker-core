@@ -88,7 +88,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      */
     public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer
     {
-        return $this->getRepository()->findUrlCaseInsensitive($urlTransfer);
+        return $this->getFactory()
+            ->createUrlReader()
+            ->findUrlCaseInsensitive($urlTransfer);
     }
 
     /**
@@ -120,11 +122,43 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @return bool
      */
+    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
+    {
+        return $this->getFactory()
+            ->createUrlReader()
+            ->hasUrlCaseInsensitive($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
     public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer)
     {
         return $this->getFactory()
             ->createUrlReader()
             ->hasUrlOrRedirectedUrl($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrlOrRedirectedUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
+    {
+        return $this->getFactory()
+            ->createUrlReader()
+            ->hasUrlOrRedirectedUrlCaseInsensitive($urlTransfer);
     }
 
     /**

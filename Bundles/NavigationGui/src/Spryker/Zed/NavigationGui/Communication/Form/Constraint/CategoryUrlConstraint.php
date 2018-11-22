@@ -38,6 +38,6 @@ class CategoryUrlConstraint extends SymfonyConstraint
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setUrl($value->getCategoryUrl());
 
-        return $this->urlFacade->findUrl($urlTransfer);
+        return $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
     }
 }

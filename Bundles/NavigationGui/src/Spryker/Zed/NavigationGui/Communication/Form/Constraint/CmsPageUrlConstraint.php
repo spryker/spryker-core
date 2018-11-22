@@ -38,6 +38,6 @@ class CmsPageUrlConstraint extends SymfonyConstraint
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setUrl($value->getCmsPageUrl());
 
-        return $this->urlFacade->findUrl($urlTransfer);
+        return $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
     }
 }

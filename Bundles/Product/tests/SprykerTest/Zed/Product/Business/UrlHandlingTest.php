@@ -181,7 +181,7 @@ class UrlHandlingTest extends FacadeTestAbstract
         foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
             $urlTransfer = new UrlTransfer();
             $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
-            $urlTransfer = $this->urlFacade->findUrl($urlTransfer);
+            $urlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
 
             $activeTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
 
@@ -209,7 +209,7 @@ class UrlHandlingTest extends FacadeTestAbstract
         foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
             $urlTransfer = new UrlTransfer();
             $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
-            $urlTransfer = $this->urlFacade->findUrl($urlTransfer);
+            $urlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
 
             $deletedTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
 

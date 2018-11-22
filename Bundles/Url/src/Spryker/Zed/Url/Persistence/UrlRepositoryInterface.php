@@ -17,4 +17,12 @@ interface UrlRepositoryInterface
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
     public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param bool $ignoreRedirects
+     *
+     * @return bool
+     */
+    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer, bool $ignoreRedirects): bool;
 }

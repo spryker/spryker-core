@@ -316,7 +316,7 @@ class PageManager implements PageManagerInterface
         }
 
         $urlTransfer = $pageTransfer->getUrl();
-        if (!$this->urlFacade->hasUrl($urlTransfer)) {
+        if (!$this->urlFacade->hasUrlCaseInsensitive($urlTransfer)) {
             $urlTransfer = $this->createPageUrl($pageTransfer);
             $pageTransfer->setUrl($urlTransfer);
         }
