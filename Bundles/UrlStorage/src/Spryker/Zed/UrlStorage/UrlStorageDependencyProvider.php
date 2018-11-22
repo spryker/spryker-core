@@ -13,6 +13,9 @@ use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToEventBehaviorFacadeBrid
 use Spryker\Zed\UrlStorage\Dependency\QueryContainer\UrlStorageToUrlQueryContainerBridge;
 use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceBridge;
 
+/**
+ * @method \Spryker\Zed\UrlStorage\UrlStorageConfig getConfig()
+ */
 class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';

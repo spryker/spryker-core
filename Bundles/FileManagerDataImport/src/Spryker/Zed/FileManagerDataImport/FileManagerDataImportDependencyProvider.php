@@ -9,6 +9,9 @@ namespace Spryker\Zed\FileManagerDataImport;
 
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\FileManagerDataImport\FileManagerDataImportConfig getConfig()
+ */
 class FileManagerDataImportDependencyProvider extends DataImportDependencyProvider
 {
 }

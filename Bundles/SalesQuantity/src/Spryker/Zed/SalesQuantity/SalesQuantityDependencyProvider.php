@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\SalesQuantity\SalesQuantityConfig getConfig()
+ */
 class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';

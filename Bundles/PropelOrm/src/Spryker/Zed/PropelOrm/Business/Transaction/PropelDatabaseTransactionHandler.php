@@ -18,7 +18,7 @@ use Throwable;
 class PropelDatabaseTransactionHandler implements TransactionHandlerInterface
 {
     /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface
+     * @var \Propel\Runtime\Connection\ConnectionInterface|null
      */
     protected $connection;
 

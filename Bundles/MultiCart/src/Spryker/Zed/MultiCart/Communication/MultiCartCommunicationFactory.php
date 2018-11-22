@@ -14,6 +14,8 @@ use Spryker\Zed\MultiCart\MultiCartDependencyProvider;
 /**
  * @method \Spryker\Zed\MultiCart\Business\MultiCartFacadeInterface getFacade()
  * @method \Spryker\Zed\MultiCart\MultiCartConfig getConfig()
+ * @method \Spryker\Zed\MultiCart\Persistence\MultiCartEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MultiCart\Persistence\MultiCartRepositoryInterface getRepository()
  */
 class MultiCartCommunicationFactory extends AbstractCommunicationFactory
 {

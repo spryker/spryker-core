@@ -14,6 +14,9 @@ use Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToLocaleFacadeBridge;
 use Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToStoreFacadeBridge;
 use Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceBridge;
 
+/**
+ * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
+ */
 class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const MONITORING_SERVICE = 'monitoring service';
