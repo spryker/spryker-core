@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeBridge;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\MultiCart\MultiCartConfig getConfig()
+ */
 class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_QUOTE = 'QUERY_QUOTE';

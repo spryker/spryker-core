@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ProductValidity\Business\ProductValidityFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface getQueryContainer()
  */
 class ProductValidityConsole extends Console
 {

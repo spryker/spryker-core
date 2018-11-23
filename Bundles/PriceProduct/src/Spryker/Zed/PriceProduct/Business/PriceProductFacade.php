@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory getFactory()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface getRepository()
  */
 class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInterface
 {

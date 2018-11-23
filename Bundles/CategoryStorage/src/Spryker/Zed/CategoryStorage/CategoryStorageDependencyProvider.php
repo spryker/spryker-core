@@ -15,6 +15,9 @@ use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitize
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
+ */
 class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';

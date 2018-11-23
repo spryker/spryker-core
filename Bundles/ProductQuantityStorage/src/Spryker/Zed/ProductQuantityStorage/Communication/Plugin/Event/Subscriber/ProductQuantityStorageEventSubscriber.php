@@ -16,6 +16,7 @@ use Spryker\Zed\ProductQuantityStorage\Communication\Plugin\Event\Listener\Produ
 /**
  * @method \Spryker\Zed\ProductQuantityStorage\Communication\ProductQuantityStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductQuantityStorage\Business\ProductQuantityStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductQuantityStorage\ProductQuantityStorageConfig getConfig()
  */
 class ProductQuantityStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
