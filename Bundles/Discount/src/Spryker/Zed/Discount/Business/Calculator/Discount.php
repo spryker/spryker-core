@@ -95,7 +95,7 @@ class Discount implements DiscountInterface
             $this->getIdStore($quoteTransfer->getStore())
         );
 
-        [$applicableDiscounts, $nonApplicableDiscounts] = $this->filterDiscountsByApplicability($activeDiscounts, $quoteTransfer);
+        [$applicableDiscounts, $nonApplicableDiscounts] = $this->splitDiscountsByApplicability($activeDiscounts, $quoteTransfer);
 
         $collectedDiscounts = $this->calculator->calculate($applicableDiscounts, $quoteTransfer);
 
@@ -169,12 +169,14 @@ class Discount implements DiscountInterface
     }
 
     /**
+     * Returns array of discounts splitted in two arrays by applicability. Applicable discounts first.
+     *
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount[] $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return array [\Orm\Zed\Discount\Persistence\SpyDiscount[], \Orm\Zed\Discount\Persistence\SpyDiscount[]]
      */
-    protected function filterDiscountsByApplicability(array $discounts, QuoteTransfer $quoteTransfer)
+    protected function splitDiscountsByApplicability(array $discounts, QuoteTransfer $quoteTransfer)
     {
         $uniqueVoucherDiscounts = [];
         $applicableDiscounts = [];
