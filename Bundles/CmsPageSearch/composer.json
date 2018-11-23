@@ -16,13 +16,13 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
+    "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/propel-query-builder": "*",
     "spryker/testify": "*",
-    "spryker/url": "*",
-    "spryker/elastica": "*"
+    "spryker/url": "*"
   },
   "suggest": {
     "spryker/elastica": "If you want to use Elastica plugins.",
