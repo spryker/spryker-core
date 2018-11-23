@@ -44,7 +44,7 @@ class ButtonUrlGenerator
      */
     public function __construct($url, $title, array $options)
     {
-        $this->url = $url;
+        $this->url = $this->escapeUrl($url ?: '');
         $this->title = $title;
         $this->options = $options;
     }
@@ -117,6 +117,16 @@ class ButtonUrlGenerator
         }
 
         return $html;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function escapeUrl(string $url): string
+    {
+        return str_replace('"', '', $url);
     }
 
     /**
