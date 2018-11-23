@@ -66,7 +66,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     public function getProductOptions($idProductAbstract, $locale)
     {
         $key = $this->generateKey($idProductAbstract);
-        $productAbstractOptionStorageData = $this->getStorageData($idProductAbstract);
+        $productAbstractOptionStorageData = $this->findStorageData($idProductAbstract);
 
         if (!$productAbstractOptionStorageData) {
             return null;
@@ -82,7 +82,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      */
     public function getProductOptionsForCurrentStore($idProductAbstract)
     {
-        $productAbstractOptionStorageData = $this->getStorageData($idProductAbstract);
+        $productAbstractOptionStorageData = $this->findStorageData($idProductAbstract);
 
         if (!$productAbstractOptionStorageData) {
             return null;
@@ -97,7 +97,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      *
      * @return array|null
      */
-    protected function getStorageData(int $idProductAbstract, ?string $locale = null): ?array
+    protected function findStorageData(int $idProductAbstract, ?string $locale = null): ?array
     {
         if (ProductOptionStorageConfig::isCollectorCompatibilityMode()) {
             if ($locale === null) {
