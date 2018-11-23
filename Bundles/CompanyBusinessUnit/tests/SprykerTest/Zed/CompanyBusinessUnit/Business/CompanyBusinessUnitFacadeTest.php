@@ -303,10 +303,10 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         // Act
         $existsCompanyUser = $this->getFacade()
-            ->checkCompanyUserByIdBusinessUnitAndIdCustomerExists($companyUserTransfer);
+            ->checkCompanyUserNotDuplicated($companyUserTransfer);
 
         // Assert
-        $this->assertTrue($existsCompanyUser);
+        $this->assertTrue($existsCompanyUser->getIsSuccessful());
     }
 
     /**
@@ -325,10 +325,10 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         // Act
         $existsCompanyUser = $this->getFacade()
-            ->checkCompanyUserByIdBusinessUnitAndIdCustomerExists($notExistentСompanyUserTransfer);
+            ->checkCompanyUserNotDuplicated($notExistentСompanyUserTransfer);
 
         // Assert
-        $this->assertFalse($existsCompanyUser);
+        $this->assertFalse($existsCompanyUser->getIsSuccessful());
     }
 
     /**

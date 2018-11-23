@@ -17,5 +17,5 @@ interface CompanyUserCheckerInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function checkCompanyUserByIdBusinessUnitAndIdCustomerExists(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+    public function checkCompanyUserNotDuplicated(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }

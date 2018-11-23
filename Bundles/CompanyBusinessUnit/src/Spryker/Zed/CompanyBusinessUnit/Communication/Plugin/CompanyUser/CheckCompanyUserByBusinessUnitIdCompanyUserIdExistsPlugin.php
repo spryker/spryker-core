@@ -31,6 +31,6 @@ class CheckCompanyUserByBusinessUnitIdCompanyUserIdExistsPlugin extends Abstract
     public function check(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->getFacade()
-            ->checkCompanyUserByIdBusinessUnitAndIdCustomerExists($companyUserTransfer);
+            ->checkCompanyUserNotDuplicated($companyUserTransfer);
     }
 }

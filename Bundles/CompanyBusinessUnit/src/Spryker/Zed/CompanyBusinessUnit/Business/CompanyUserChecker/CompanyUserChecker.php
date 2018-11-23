@@ -35,12 +35,12 @@ class CompanyUserChecker implements CompanyUserCheckerInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function checkCompanyUserByIdBusinessUnitAndIdCustomerExists(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    public function checkCompanyUserNotDuplicated(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setIsSuccessful(true);
 
         $existsSpyCompanyUser = $this->repository
-            ->checkCompanyUserByIdBusinessUnitAndIdCustomerExists($companyUserTransfer);
+            ->checkCompanyUserNotDuplicated($companyUserTransfer);
 
         if ($existsSpyCompanyUser) {
             $message = (new ResponseMessageTransfer())

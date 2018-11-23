@@ -11,14 +11,11 @@ use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleForm;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleByCompany\CompanyUserRoleByCompanyForm;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
 
-class CompanyUserRoleFormByCompanyDataProvider
+class CompanyUserRoleByCompanyFormDataProvider
 {
-    protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
-    protected const OPTION_IS_DEFAULT = 'data-is_default';
-
     protected const FORMAT_NAME = '%s (id: %s)';
 
     /**
@@ -57,11 +54,10 @@ class CompanyUserRoleFormByCompanyDataProvider
      */
     public function getOptions(CompanyUserTransfer $companyUserTransfer): array
     {
-        [$choicesValues, $choicesAttributes] = $this->prepareCompanyRoleAttributeMap($companyUserTransfer);
+        $companyRoleChoicesValues = $this->prepareCompanyRoleAttributeMap($companyUserTransfer);
 
         return [
-            CompanyUserRoleForm::OPTION_VALUES_ROLES_CHOICES => $choicesValues,
-            CompanyUserRoleForm::OPTION_ATTRIBUTES_ROLES_CHOICES => $choicesAttributes,
+            CompanyUserRoleByCompanyForm::OPTION_COMPANY_ROLE_CHOICES => $companyRoleChoicesValues,
         ];
     }
 
@@ -70,32 +66,23 @@ class CompanyUserRoleFormByCompanyDataProvider
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return array [[roleKey => idRole], [roleKey => ['data-id-company' => idCompany]]]
-     *                Where roleKey: "<idRole> - <RoleName>"
+     * @return array [[roleName => idRole]],
+     *                Where roleName: "<idRole> - <RoleName>"
      */
     protected function prepareCompanyRoleAttributeMap(CompanyUserTransfer $companyUserTransfer): array
     {
-        $values = [];
-        $attributes = [];
+        $companyRoleChoicesValues = [];
+
         $companyRoleCollection = $this->companyRoleFacade->getCompanyRoleCollection(
             (new CompanyRoleCriteriaFilterTransfer())->setIdCompany($companyUserTransfer->getCompany()->getIdCompany())
         );
 
         foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {
-            $roleKey = $this->generateCompanyRoleName($companyRoleTransfer);
-
-            $companyRoleAttributes = [static::OPTION_ATTRIBUTE_DATA => $companyRoleTransfer->getFkCompany()];
-            if ($companyRoleTransfer->getIsDefault()
-                && $companyUserTransfer->getCompanyRoleCollection() === null
-            ) {
-                $companyRoleAttributes[static::OPTION_IS_DEFAULT] = true;
-            }
-
-            $values[$roleKey] = $companyRoleTransfer->getIdCompanyRole();
-            $attributes[$roleKey] = $companyRoleAttributes;
+            $roleName = $this->generateCompanyRoleName($companyRoleTransfer);
+            $companyRoleChoicesValues[$roleName] = $companyRoleTransfer->getIdCompanyRole();
         }
 
-        return [$values, $attributes];
+        return $companyRoleChoicesValues;
     }
 
     /**

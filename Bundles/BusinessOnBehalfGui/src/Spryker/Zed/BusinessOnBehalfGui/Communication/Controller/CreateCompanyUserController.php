@@ -8,7 +8,6 @@
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Controller;
 
 use ArrayObject;
-use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,6 +21,9 @@ class CreateCompanyUserController extends AbstractController
 
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
+    protected const PARAM_ID_CUSTOMER = 'id-customer';
+    protected const PARAM_ID_COMPANY = 'id-company';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -29,8 +31,8 @@ class CreateCompanyUserController extends AbstractController
      */
     public function attachCustomerAction(Request $request)
     {
-        $idCustomer = $this->castId($request->query->get(BusinessOnBehalfGuiConfig::PARAM_ID_CUSTOMER));
-        $idCompany = $this->castId($request->query->get(BusinessOnBehalfGuiConfig::PARAM_ID_COMPANY));
+        $idCustomer = $this->castId($request->query->get(static::PARAM_ID_CUSTOMER));
+        $idCompany = $this->castId($request->query->get(static::PARAM_ID_COMPANY));
         $dataProvider = $this->getFactory()->createCustomerCompanyAttachFormDataProvider();
         $companyUserTransfer = $dataProvider->getData($idCustomer, $idCompany);
 
