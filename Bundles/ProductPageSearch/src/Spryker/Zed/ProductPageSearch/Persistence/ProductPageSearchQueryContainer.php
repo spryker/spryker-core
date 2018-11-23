@@ -309,9 +309,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
         $idImageSetSubQuery = $this->getFactory()
             ->getProductImageQueryContainer()
             ->queryProductImageSet()
-            ->addSelfSelectColumns()
-            ->clearSelectColumns()
-            ->withColumn(SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET)
+            ->addSelectColumn(SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET)
             ->where(sprintf(
                 '(%s = %s AND (%s = %s OR %s IS NULL)) ',
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
