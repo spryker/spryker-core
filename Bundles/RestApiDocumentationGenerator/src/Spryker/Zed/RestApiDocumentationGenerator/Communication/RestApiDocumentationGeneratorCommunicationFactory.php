@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig getConfig()
+ * @method \Spryker\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationGeneratorFacadeInterface getFacade()
  */
 class RestApiDocumentationGeneratorCommunicationFactory extends AbstractCommunicationFactory
 {

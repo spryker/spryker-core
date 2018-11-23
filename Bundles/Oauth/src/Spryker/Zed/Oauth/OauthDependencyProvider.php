@@ -10,6 +10,9 @@ namespace Spryker\Zed\Oauth;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Oauth\OauthConfig getConfig()
+ */
 class OauthDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_USER_PROVIDER = 'PLUGIN_USER_PROVIDER';

@@ -14,6 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\ProductListGui\ProductListGuiConfig getConfig()
+ * @method \Spryker\Zed\ProductListGui\Communication\ProductListGuiCommunicationFactory getFactory()
+ */
 class ProductListCategoryRelationFormType extends AbstractType
 {
     public const FIELD_ID_PRODUCT_LIST = ProductListCategoryRelationTransfer::ID_PRODUCT_LIST;
