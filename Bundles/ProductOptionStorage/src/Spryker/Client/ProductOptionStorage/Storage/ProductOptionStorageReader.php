@@ -9,6 +9,8 @@ namespace Spryker\Client\ProductOptionStorage\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\CustomerAccessPermission\Plugin\SeePricePermissionPlugin;
+use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPermissionClientInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface;
@@ -38,21 +40,29 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     protected $valuePriceReader;
 
     /**
+     * @var \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPermissionClientInterface
+     */
+    protected $permissionClient;
+
+    /**
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface $storageClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface $valuePriceReader
+     * @param \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPermissionClientInterface $permissionClient
      */
     public function __construct(
         ProductOptionStorageToStorageInterface $storageClient,
         Store $store,
         ProductOptionStorageToSynchronizationServiceInterface $synchronizationService,
-        ValuePriceReaderInterface $valuePriceReader
+        ValuePriceReaderInterface $valuePriceReader,
+        ProductOptionStorageToPermissionClientInterface $permissionClient
     ) {
         $this->storageClient = $storageClient;
         $this->store = $store;
         $this->synchronizationService = $synchronizationService;
         $this->valuePriceReader = $valuePriceReader;
+        $this->permissionClient = $permissionClient;
     }
 
     /**
@@ -99,6 +109,10 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     {
         $productAbstractOptionStorageTransfer = new ProductAbstractOptionStorageTransfer();
         $productAbstractOptionStorageTransfer->fromArray($productAbstractOptionStorageData, true);
+
+        if (!$this->permissionClient->can(SeePricePermissionPlugin::KEY)) {
+            return $productAbstractOptionStorageTransfer;
+        }
 
         foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroup) {
             $this->valuePriceReader->resolvePrices($productOptionGroup);
