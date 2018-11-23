@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -58,9 +59,10 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         $synchronizationDataTransfers = [];
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
         $productAbstractPackagingUnitTransfers = $this->getRepository()
-            ->findProductAbstractPackagingUnitStoragesByOffsetAndLimit($limit, $limit);
+            ->findProductAbstractPackagingUnitStoragesByOffsetAndLimitFilteredByProductAbstractIds($filterTransfer, $ids);
 
         foreach ($productAbstractPackagingUnitTransfers as $productAbstractPackagingUnitTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
@@ -108,5 +110,18 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
         return $this->getFactory()
             ->getConfig()
             ->getProductPackagingUnitSynchronizationPoolName();
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

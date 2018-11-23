@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductQuantityStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductQuantityStorageRepositoryInterface
 {
     /**
@@ -22,10 +24,10 @@ interface ProductQuantityStorageRepositoryInterface
     public function findAllProductQuantityStorageEntities(): array;
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
      */
-    public function findProductQuantityStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array;
+    public function findProductQuantityStorageEntitiesByOffsetAndLimitFilteredByProductIds(FilterTransfer $filterTransfer, array $productIds = []): array;
 }

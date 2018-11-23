@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -74,17 +75,21 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function findProductAbstractPackagingUnitStoragesByOffsetAndLimit(int $offset, int $limit): array
+    public function findProductAbstractPackagingUnitStoragesByOffsetAndLimitFilteredByProductAbstractIds(FilterTransfer $filterTransfer, array $productAbstractIds = []): array
     {
-        $query = $this->getFactory()
-            ->createSpyProductAbstractPackagingStorageQuery()
-            ->offset($offset)
-            ->limit($limit);
+        $query = $this->getFactory()->createSpyProductAbstractPackagingStorageQuery();
+
+        if ($productAbstractIds) {
+            $query->filterByFkProductAbstract_In($productAbstractIds);
+        }
+
+        $query->offset($filterTransfer->getOffset())
+            ->limit($filterTransfer->getLimit());
 
         return $this->buildQueryFromCriteria($query)->find();
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\ProductListStorage\ProductListStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -93,10 +94,12 @@ class ProductAbstractProductListSynchronizationDataBulkPlugin extends AbstractPl
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $spyProductAbstractProductListStorageEntities = $this->getRepository()
-            ->findProductAbstractProductListStorageEntitiesByOffsetAndLimit($offset, $limit);
-
         $synchronizationDataTransfers = [];
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
+        $spyProductAbstractProductListStorageEntities = $this->getRepository()
+            ->findProductAbstractProductListStorageEntitiesByOffsetAndLimitFilteredByProductAbstractIds($filterTransfer, $ids);
+
         foreach ($spyProductAbstractProductListStorageEntities as $spyProductAbstractProductListStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
             /** @var string $data */
@@ -107,5 +110,18 @@ class ProductAbstractProductListSynchronizationDataBulkPlugin extends AbstractPl
         }
 
         return $synchronizationDataTransfers;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

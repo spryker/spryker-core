@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
@@ -173,32 +174,40 @@ class ProductListStorageRepository extends AbstractRepository implements Product
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productConcreteIds
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
      */
-    public function findProductConcreteProductListStorageEntitiesByOffsetAndLimit(int $offset, int $limit): ObjectCollection
+    public function findProductConcreteProductListStorageEntitiesByOffsetAndLimitFilteredByProductConcreteIds(FilterTransfer $filterTransfer, array $productConcreteIds = []): ObjectCollection
     {
-        return $this->getFactory()
-            ->createProductConcreteProductListStorageQuery()
-            ->offset($offset)
-            ->limit($limit)
+        $query = $this->getFactory()->createProductConcreteProductListStorageQuery();
+
+        if ($productConcreteIds) {
+            $query->filterByFkProduct_In($productConcreteIds);
+        }
+
+        return $query->offset($filterTransfer->getOffset())
+            ->limit($filterTransfer->getLimit())
             ->find();
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAbstractIds
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
      */
-    public function findProductAbstractProductListStorageEntitiesByOffsetAndLimit(int $offset, int $limit): ObjectCollection
+    public function findProductAbstractProductListStorageEntitiesByOffsetAndLimitFilteredByProductAbstractIds(FilterTransfer $filterTransfer, array $productAbstractIds = []): ObjectCollection
     {
-        return $this->getFactory()
-            ->createProductAbstractProductListStorageQuery()
-            ->offset($offset)
-            ->limit($limit)
+        $query = $this->getFactory()->createProductAbstractProductListStorageQuery();
+
+        if ($productAbstractIds) {
+            $query->filterByFkProductAbstract_In($productAbstractIds);
+        }
+
+        return $query->offset($filterTransfer->getOffset())
+            ->limit($filterTransfer->getLimit())
             ->find();
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductQuantityStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -43,17 +44,21 @@ class ProductQuantityStorageRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
      */
-    public function findProductQuantityStorageEntitiesByOffsetAndLimit(int $offset, int $limit): array
+    public function findProductQuantityStorageEntitiesByOffsetAndLimitFilteredByProductIds(FilterTransfer $filterTransfer, array $productIds = []): array
     {
-        $query = $this->getFactory()
-            ->createProductQuantityStorageQuery()
-            ->setOffset($offset)
-            ->setLimit($limit);
+        $query = $this->getFactory()->createProductQuantityStorageQuery();
+
+        if ($productIds) {
+            $query->filterByFkProduct_In($productIds);
+        }
+
+        $query->setOffset($filterTransfer->getOffset())
+            ->setLimit($filterTransfer->getLimit());
 
         return $this->buildQueryFromCriteria($query)->find();
     }

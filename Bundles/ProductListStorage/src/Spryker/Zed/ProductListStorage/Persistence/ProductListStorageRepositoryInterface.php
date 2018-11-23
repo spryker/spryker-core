@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface ProductListStorageRepositoryInterface
@@ -64,18 +65,18 @@ interface ProductListStorageRepositoryInterface
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productConcreteIds
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
      */
-    public function findProductConcreteProductListStorageEntitiesByOffsetAndLimit(int $offset, int $limit): ObjectCollection;
+    public function findProductConcreteProductListStorageEntitiesByOffsetAndLimitFilteredByProductConcreteIds(FilterTransfer $filterTransfer, array $productConcreteIds = []): ObjectCollection;
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAbstractIds
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
      */
-    public function findProductAbstractProductListStorageEntitiesByOffsetAndLimit(int $offset, int $limit): ObjectCollection;
+    public function findProductAbstractProductListStorageEntitiesByOffsetAndLimitFilteredByProductAbstractIds(FilterTransfer $filterTransfer, array $productAbstractIds = []): ObjectCollection;
 }
