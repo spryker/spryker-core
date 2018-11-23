@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 class PriceProductMerger implements PriceProductMergerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function mergeConcreteAndAbstractPrices(array $concretePriceProductTransfers, array $abstractPriceProductTransfers): array
+    public function mergeConcreteAndAbstractPrices(array $abstractPriceProductTransfers, array $concretePriceProductTransfers): array
     {
         $priceProductTransfers = [];
         foreach ($abstractPriceProductTransfers as $abstractPriceProductTransfer) {
@@ -29,10 +29,6 @@ class PriceProductMerger implements PriceProductMergerInterface
                 $abstractPriceProductTransfer,
                 $priceProductTransfers
             );
-
-            if (!isset($priceProductTransfers[$abstractKey])) {
-                $priceProductTransfers[$abstractKey] = $abstractPriceProductTransfer;
-            }
         }
 
         return $this->addConcreteNotMergedPrices($concretePriceProductTransfers, $priceProductTransfers);
@@ -45,17 +41,13 @@ class PriceProductMerger implements PriceProductMergerInterface
      */
     protected function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
     {
-        $priceProductTransfer->requireMoneyValue()->requirePriceTypeName();
-        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+        $priceProductTransfer->requireMoneyValue();
+        $priceProductTransfer->requirePriceTypeName();
+        $priceProductTransfer->getMoneyValue()->requireCurrency();
+        $priceProductTransfer->getMoneyValue()->getCurrency()->requireCode();
+        $priceProductTransfer->requirePriceDimension();
 
-        return implode(
-            '-',
-            array_filter([
-                $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
-                $priceProductTransfer->getPriceTypeName(),
-                $priceProductTransfer->getMoneyValue()->getFkStore(),
-            ] + array_values($priceDimensionTransfer->toArray()))
-        );
+        return implode('-', array_filter($this->getIdentifiersPath($priceProductTransfer)));
     }
 
     /**
@@ -135,5 +127,22 @@ class PriceProductMerger implements PriceProductMergerInterface
         }
 
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return array
+     */
+    protected function getIdentifiersPath(PriceProductTransfer $priceProductTransfer): array
+    {
+        $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
+
+        return array_merge([
+                $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
+                $priceProductTransfer->getPriceTypeName(),
+                $priceProductTransfer->getMoneyValue()->getFkStore(),
+                $priceProductTransfer->getPriceType()->getPriceModeConfiguration(),
+            ], array_values($priceDimensionTransfer->toArray()));
     }
 }
