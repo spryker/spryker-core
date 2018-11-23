@@ -103,14 +103,9 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $searchResult = $this->catalogClient->catalogSearch($searchString, $requestParameters);
 
-        $currency = $this->store->getCurrencyIsoCode();
-        if (!empty($requestParameters[RestCatalogSearchAttributesTransfer::CURRENCY])) {
-            $currency = $requestParameters[RestCatalogSearchAttributesTransfer::CURRENCY];
-        }
-
         $restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
-            ->mapSearchResultToRestAttributesTransfer($searchResult, $currency);
+            ->mapSearchResultToRestAttributesTransfer($searchResult, $this->getCurrency($requestParameters));
 
         $this->catalogSearchResourceMapper
             ->mapPrices($restSearchAttributesTransfer, $this->getPriceModeConfigurationTransfer());
@@ -170,6 +165,21 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         }
 
         return $params;
+    }
+
+    /**
+     * @param array $requestParameters
+     *
+     * @return string
+     */
+    protected function getCurrency(array $requestParameters): string
+    {
+        $currency = $this->store->getCurrencyIsoCode();
+        if (!empty($requestParameters[RestCatalogSearchAttributesTransfer::CURRENCY])) {
+            $currency = $requestParameters[RestCatalogSearchAttributesTransfer::CURRENCY];
+        }
+
+        return $currency;
     }
 
     /**
