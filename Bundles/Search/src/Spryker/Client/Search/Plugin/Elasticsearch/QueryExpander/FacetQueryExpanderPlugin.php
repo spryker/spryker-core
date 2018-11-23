@@ -118,7 +118,9 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
         if (is_array($filterValue) && empty(array_filter($filterValue, 'strlen'))) {
             // returns null if $filterValue is array of values like null, empty string or false but not 0(zero)
             return null;
-        } elseif (empty($filterValue) && !is_numeric($filterValue)) {
+        }
+
+        if (!is_array($filterValue) && empty($filterValue) && !is_numeric($filterValue)) {
             // returns null if $filterValue equals null, empty string or false but not 0(zero)
             return null;
         }
