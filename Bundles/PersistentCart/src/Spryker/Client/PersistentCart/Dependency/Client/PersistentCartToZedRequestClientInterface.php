@@ -24,4 +24,9 @@ interface PersistentCartToZedRequestClientInterface
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest();
+
+    /**
+     * @return void
+     */
+    public function addResponseMessagesToMessenger(): void;
 }
