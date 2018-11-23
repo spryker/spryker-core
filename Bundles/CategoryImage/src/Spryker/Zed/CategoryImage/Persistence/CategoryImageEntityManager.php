@@ -19,7 +19,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CategoryImageEntityManager extends AbstractEntityManager implements CategoryImageEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageTransfer
      */
     public function saveCategoryImage(CategoryImageTransfer $categoryImageTransfer): CategoryImageTransfer
     {
@@ -42,7 +44,9 @@ class CategoryImageEntityManager extends AbstractEntityManager implements Catego
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */
     public function saveCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer
     {
@@ -67,7 +71,9 @@ class CategoryImageEntityManager extends AbstractEntityManager implements Catego
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSet
+     *
+     * @return void
      */
     public function deleteCategoryImageSet(CategoryImageSetTransfer $categoryImageSet): void
     {
@@ -88,7 +94,11 @@ class CategoryImageEntityManager extends AbstractEntityManager implements Catego
     }
 
     /**
-     * {@inheritdoc}
+     * @param int $idCategoryImageSet
+     * @param int $idCategoryImage
+     * @param int|null $sortOrder
+     *
+     * @return int
      */
     public function saveCategoryImageSetToCategoryImage(int $idCategoryImageSet, int $idCategoryImage, $sortOrder = null): int
     {
@@ -105,7 +115,10 @@ class CategoryImageEntityManager extends AbstractEntityManager implements Catego
     }
 
     /**
-     * {@inheritdoc}
+     * @param int $idCategoryImageSet
+     * @param int $idCategoryImage
+     *
+     * @return void
      */
     public function deleteCategoryImageSetToCategoryImage(int $idCategoryImageSet, int $idCategoryImage): void
     {

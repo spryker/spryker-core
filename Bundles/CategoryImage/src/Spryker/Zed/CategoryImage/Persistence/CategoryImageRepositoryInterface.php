@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CategoryImage\Persistence;
 
-use Generated\Shared\Transfer\CategoryImageSetTransfer;
-
 /**
  * @method \Spryker\Zed\CategoryImage\Persistence\CategoryImagePersistenceFactory getFactory()
  */
@@ -21,28 +19,6 @@ interface CategoryImageRepositoryInterface
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
     public function findCategoryImageSetsByCategoryId(int $idCategory, array $excludeIdCategoryImageSets = []): array;
-
-    /**
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
-     */
-    public function findDefaultCategoryImageSets(int $idCategory): array;
-
-    /**
-     * @param int $idCategory
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
-     */
-    public function findLocalizedCategoryImageSets(int $idCategory, int $idLocale): array;
-
-    /**
-     * @param int|null $idCategoryImageSet
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
-     */
-    public function findOrCreateCategoryImageSetById(?int $idCategoryImageSet): CategoryImageSetTransfer;
 
     /**
      * @param int $idCategoryImageSet

@@ -33,7 +33,9 @@ class CategoryImageMapper implements CategoryImageMapperInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet[]|\Propel\Runtime\Collection\ObjectCollection $categoryImageSetEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
     public function mapCategoryImageSetCollection(ObjectCollection $categoryImageSetEntityCollection): array
     {
@@ -46,7 +48,9 @@ class CategoryImageMapper implements CategoryImageMapperInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet $categoryImageSetEntity
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */
     public function mapCategoryImageSet(SpyCategoryImageSet $categoryImageSetEntity): CategoryImageSetTransfer
     {
@@ -61,7 +65,10 @@ class CategoryImageMapper implements CategoryImageMapperInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImage[]|\Propel\Runtime\Collection\ObjectCollection $categoryImageEntityCollection
+     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet|null $categoryImageSetEntity
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageTransfer[]
      */
     public function mapCategoryImageCollection(ObjectCollection $categoryImageEntityCollection, ?SpyCategoryImageSet $categoryImageSetEntity): array
     {
@@ -77,7 +84,10 @@ class CategoryImageMapper implements CategoryImageMapperInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImage $categoryImageEntity
+     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet $categoryImageSetEntity
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageTransfer
      */
     public function mapCategoryImage(SpyCategoryImage $categoryImageEntity, SpyCategoryImageSet $categoryImageSetEntity): CategoryImageTransfer
     {
@@ -91,7 +101,10 @@ class CategoryImageMapper implements CategoryImageMapperInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImage $categoryImageEntity
+     * @param \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer
+     *
+     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImage
      */
     public function mapCategoryImageToEntity(
         SpyCategoryImage $categoryImageEntity,
@@ -105,7 +118,10 @@ class CategoryImageMapper implements CategoryImageMapperInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet $categoryImageSetEntity
+     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
+     *
+     * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet
      */
     public function mapCategoryImageSetToEntity(
         SpyCategoryImageSet $categoryImageSetEntity,

@@ -160,7 +160,7 @@ class Writer implements WriterInterface
         }
 
         $removedCategoryImageSetCollection = $this->categoryImageRepository
-            ->getCategoryImageSetsByCategoryId(
+            ->findCategoryImageSetsByCategoryId(
                 $categoryTransfer->getIdCategory(),
                 $validIdCategoryImageSetCollection
             );

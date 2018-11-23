@@ -19,7 +19,9 @@ class CategoryImageDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
-     * {@inheritdoc}
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -29,7 +31,9 @@ class CategoryImageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
