@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Business\Calculator;
 
 use ArrayObject;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -111,7 +112,7 @@ class Discount implements DiscountInterface
      *
      * @return void
      */
-    protected function addNonApplicableDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts)
+    protected function addNonApplicableDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts): void
     {
         $usedNotAppliedVoucherCodes = $quoteTransfer->getUsedNotAppliedVoucherCodes();
 
@@ -128,7 +129,7 @@ class Discount implements DiscountInterface
      *
      * @return void
      */
-    protected function addDiscountsToQuote(QuoteTransfer $quoteTransfer, array $collectedDiscounts)
+    protected function addDiscountsToQuote(QuoteTransfer $quoteTransfer, array $collectedDiscounts): void
     {
         $quoteTransfer->setVoucherDiscounts(new ArrayObject());
         $quoteTransfer->setCartRuleDiscounts(new ArrayObject());
@@ -169,7 +170,8 @@ class Discount implements DiscountInterface
     }
 
     /**
-     * Returns array of discounts splitted in two arrays by applicability. Applicable discounts first.
+     * - Returns array of discounts splitted in two arrays by applicability. Applicable discounts first.
+     * - Adds only one of the duplicate discounts to the applicable discounts, the rest to the non applicable.
      *
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount[] $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -216,7 +218,7 @@ class Discount implements DiscountInterface
      *
      * @return string[]
      */
-    protected function getVoucherCodes(QuoteTransfer $quoteTransfer)
+    protected function getVoucherCodes(QuoteTransfer $quoteTransfer): array
     {
         $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
 
@@ -236,7 +238,7 @@ class Discount implements DiscountInterface
      *
      * @return \Generated\Shared\Transfer\DiscountTransfer
      */
-    protected function hydrateDiscountTransfer(SpyDiscount $discountEntity, QuoteTransfer $quoteTransfer)
+    protected function hydrateDiscountTransfer(SpyDiscount $discountEntity, QuoteTransfer $quoteTransfer): DiscountTransfer
     {
         $discountTransfer = $this->discountEntityMapper->mapFromEntity($discountEntity);
         $discountTransfer->setCurrency($quoteTransfer->getCurrency());
@@ -251,7 +253,7 @@ class Discount implements DiscountInterface
      *
      * @return bool
      */
-    protected function isDiscountApplicable(QuoteTransfer $quoteTransfer, SpyDiscount $discountEntity)
+    protected function isDiscountApplicable(QuoteTransfer $quoteTransfer, SpyDiscount $discountEntity): bool
     {
         if ($this->isDiscountEntityOfTypeVoucher($discountEntity)) {
             if ($this->voucherValidator->isUsable($discountEntity->getVoucherCode()) === false) {
@@ -317,7 +319,7 @@ class Discount implements DiscountInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function filterDiscountApplicableItems(QuoteTransfer $quoteTransfer, $idDiscount)
+    protected function filterDiscountApplicableItems(QuoteTransfer $quoteTransfer, $idDiscount): array
     {
         if (count($this->discountApplicableFilterPlugins) === 0) {
             return (array)$quoteTransfer->getItems();
