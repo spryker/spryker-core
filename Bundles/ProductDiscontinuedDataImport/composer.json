@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-discontinued-data-import",
+  "type": "library",
   "description": "ProductDiscontinuedDataImport module",
   "license": "MIT",
   "require": {

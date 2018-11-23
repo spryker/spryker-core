@@ -1,5 +1,6 @@
 {
   "name": "spryker/gui",
+  "type": "library",
   "description": "Gui module",
   "license": "proprietary",
   "require": {

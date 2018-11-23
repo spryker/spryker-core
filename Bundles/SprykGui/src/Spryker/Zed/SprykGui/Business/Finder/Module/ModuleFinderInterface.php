@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\SprykGui\Business\Finder\Module;
 
-use Generated\Shared\Transfer\ModuleCollectionTransfer;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
 
 interface ModuleFinderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ModuleCollectionTransfer
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function findModules(): ModuleCollectionTransfer;
+    public function findModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 }

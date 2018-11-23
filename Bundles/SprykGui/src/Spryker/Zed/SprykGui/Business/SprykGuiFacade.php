@@ -8,9 +8,8 @@
 namespace Spryker\Zed\SprykGui\Business;
 
 use Generated\Shared\Transfer\AccessibleTransferCollection;
-use Generated\Shared\Transfer\ClassInformationCollectionTransfer;
 use Generated\Shared\Transfer\ClassInformationTransfer;
-use Generated\Shared\Transfer\ModuleCollectionTransfer;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -83,11 +82,13 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ModuleCollectionTransfer
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function getModules(): ModuleCollectionTransfer
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
-        return $this->getFactory()->createModuleFinder()->findModules();
+        return $this->getFactory()->createModuleFinder()->findModules($moduleFilterTransfer);
     }
 
     /**
@@ -114,20 +115,6 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
     public function getAccessibleTransfers(string $module): AccessibleTransferCollection
     {
         return $this->getFactory()->createAccessibleTransferFinder()->findAccessibleTransfers($module);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     *
-     * @return \Generated\Shared\Transfer\ClassInformationCollectionTransfer
-     */
-    public function getZedBusinessModels(ModuleTransfer $moduleTransfer): ClassInformationCollectionTransfer
-    {
-        return $this->getFactory()->createZedBusinessModelFinder()->findBusinessModels($moduleTransfer);
     }
 
     /**
@@ -170,5 +157,20 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
     public function buildOptions(ModuleTransfer $moduleTransfer): ModuleTransfer
     {
         return $this->getFactory()->createOptionBuilder()->build($moduleTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $choiceLoaderName
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return array
+     */
+    public function loadChoices(string $choiceLoaderName, ModuleTransfer $moduleTransfer): array
+    {
+        return $this->getFactory()->createChoiceLoader()->loadChoices($choiceLoaderName, $moduleTransfer);
     }
 }

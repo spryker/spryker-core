@@ -55,7 +55,7 @@ class VoucherValidator implements VoucherValidatorInterface
             ->findOne();
 
         if (!$discountVoucherEntity) {
-            $this->addMessage(self::REASON_VOUCHER_CODE_NOT_FOUND);
+            $this->addErrorMessage(self::REASON_VOUCHER_CODE_NOT_FOUND);
             return false;
         }
 
@@ -70,23 +70,24 @@ class VoucherValidator implements VoucherValidatorInterface
     protected function validateDiscountVoucher(SpyDiscountVoucher $discountVoucherEntity)
     {
         if (!$discountVoucherEntity->getIsActive()) {
-            $this->addMessage(self::REASON_VOUCHER_CODE_NOT_ACTIVE);
+            $this->addErrorMessage(self::REASON_VOUCHER_CODE_NOT_ACTIVE);
             return false;
         }
 
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool|null $voucherPoolEntity */
         $voucherPoolEntity = $discountVoucherEntity->getVoucherPool();
         if (!$voucherPoolEntity) {
-            $this->addMessage(self::REASON_VOUCHER_CODE_POOL_MISSING);
+            $this->addErrorMessage(self::REASON_VOUCHER_CODE_POOL_MISSING);
             return false;
         }
 
         if (!$voucherPoolEntity->getIsActive()) {
-            $this->addMessage(self::REASON_VOUCHER_CODE_POOL_NOT_ACTIVE);
+            $this->addErrorMessage(self::REASON_VOUCHER_CODE_POOL_NOT_ACTIVE);
             return false;
         }
 
         if (!$this->isValidNumberOfUses($discountVoucherEntity)) {
-            $this->addMessage(self::REASON_VOUCHER_CODE_LIMIT_REACHED);
+            $this->addInfoMessage(self::REASON_VOUCHER_CODE_LIMIT_REACHED);
             return false;
         }
 
@@ -94,16 +95,54 @@ class VoucherValidator implements VoucherValidatorInterface
     }
 
     /**
+     * @deprecated Use addErrorMessage()
+     *
      * @param string $message
      *
      * @return void
      */
     protected function addMessage($message)
     {
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue($message);
+        $this->addErrorMessage($message);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function addErrorMessage(string $message): void
+    {
+        $messageTransfer = $this->createMessageTransfer($message);
 
         $this->messengerFacade->addErrorMessage($messageTransfer);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function addInfoMessage(string $message): void
+    {
+        $messageTransfer = $this->createMessageTransfer($message);
+
+        $this->messengerFacade->addInfoMessage($messageTransfer);
+    }
+
+    /**
+     * @param string $message
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessageTransfer(string $message, array $data = []): MessageTransfer
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue($message);
+        $messageTransfer->setParameters($data);
+
+        return $messageTransfer;
     }
 
     /**

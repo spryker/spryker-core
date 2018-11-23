@@ -11,7 +11,11 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientBridge;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientBridge;
+use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientBridge;
 
+/**
+ * @method \Spryker\Client\PersistentCart\PersistentCartConfig getConfig()
+ */
 class PersistentCartDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
@@ -72,7 +76,7 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
     protected function addZedRequestClient(Container $container): Container
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
+            return new PersistentCartToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;

@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-page-search",
+  "type": "library",
   "description": "CmsPageSearch module",
   "license": "proprietary",
   "require": {

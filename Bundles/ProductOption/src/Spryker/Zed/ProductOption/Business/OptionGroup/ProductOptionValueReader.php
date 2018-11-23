@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionNotFoundException;
@@ -43,15 +45,60 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      */
     public function getProductOption($idProductOptionValue)
     {
-        $productOptionValueEntity = $this->getOptionValueById($idProductOptionValue);
+        $productOptionValueEntity = $this->findOptionValueById((int)$idProductOptionValue);
 
-        if (!$productOptionValueEntity) {
-            throw new ProductOptionNotFoundException(
-                sprintf('Product option with id "%d" not found in persistence.', $idProductOptionValue)
-            );
+        if ($productOptionValueEntity) {
+            return $this->hydrateProductOptionTransfer($productOptionValueEntity);
         }
 
-        return $this->hydrateProductOptionTransfer($productOptionValueEntity);
+        throw new ProductOptionNotFoundException(
+            sprintf('Product option with id "%d" not found in persistence.', $idProductOptionValue)
+        );
+    }
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
+     */
+    public function findProductOptionByIdProductOptionValue(int $idProductOptionValue): ?ProductOptionTransfer
+    {
+        $productOptionValueEntity = $this->findOptionValueById($idProductOptionValue);
+
+        if ($productOptionValueEntity) {
+            return $this->hydrateProductOptionTransfer($productOptionValueEntity);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
+     */
+    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer
+    {
+        $productOptionValueEntities = $this->productOptionQueryContainer
+            ->queryProductOptionByProductOptionCriteria($productOptionCriteriaTransfer)
+            ->find();
+
+        return $this->hydrateProductOptionCollectionTransfer(
+            new ProductOptionCollectionTransfer(),
+            $productOptionValueEntities->getArrayCopy()
+        );
+    }
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function checkProductOptionValueExistence(int $idProductOptionValue): bool
+    {
+        return $this->productOptionQueryContainer
+            ->queryProductOptionByValueId($idProductOptionValue)
+            ->exists();
     }
 
     /**
@@ -71,11 +118,30 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductOptionCollectionTransfer $productOptionCollectionTransfer
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
+     */
+    protected function hydrateProductOptionCollectionTransfer(
+        ProductOptionCollectionTransfer $productOptionCollectionTransfer,
+        array $productOptionValueEntities
+    ): ProductOptionCollectionTransfer {
+        foreach ($productOptionValueEntities as $productOptionValueEntity) {
+            $productOptionCollectionTransfer->addProductOption(
+                $this->hydrateProductOptionTransfer($productOptionValueEntity)
+            );
+        }
+
+        return $productOptionCollectionTransfer;
+    }
+
+    /**
      * @param int $idProductOptionValue
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */
-    protected function getOptionValueById($idProductOptionValue)
+    protected function findOptionValueById(int $idProductOptionValue): ?SpyProductOptionValue
     {
         $productOptionValueEntity = $this->productOptionQueryContainer
             ->queryProductOptionByValueId($idProductOptionValue)

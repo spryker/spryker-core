@@ -1,5 +1,6 @@
 {
   "name": "spryker/search",
+  "type": "library",
   "description": "Search module",
   "license": "proprietary",
   "require": {

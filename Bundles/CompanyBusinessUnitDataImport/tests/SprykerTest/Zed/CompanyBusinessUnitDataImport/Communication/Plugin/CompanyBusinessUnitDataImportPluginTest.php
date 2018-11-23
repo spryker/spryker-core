@@ -44,14 +44,9 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
      */
     public function testImportImportsCompanyBusinessUnit(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->truncateCompanyBusinessUnitRelations();
+
         $this->tester->haveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
-        $this->tester->haveCompanyBusinessUnit([
-            CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
-        ]);
-        $this->tester->haveCompanyBusinessUnit([
-            CompanyBusinessUnitTransfer::KEY => static::COMPANY_CHILD_BUSINESS_UNIT_KEY,
-        ]);
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
             static::IMPORT_COMPANY_BUSINESS_UNIT_CSV
@@ -73,7 +68,7 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
      */
     public function testImportThrowsExceptionWhenCompanyNotFound(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->truncateCompanyBusinessUnitRelations();
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
             static::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_COMPANY_CSV
@@ -92,7 +87,8 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
      */
     public function testImportThrowsExceptionWhenParentBusinessUnitNotFound(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->truncateCompanyBusinessUnitRelations();
+
         $this->tester->haveActiveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
         $this->tester->haveCompanyBusinessUnit([
             CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,

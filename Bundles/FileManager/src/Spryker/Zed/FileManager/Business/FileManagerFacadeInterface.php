@@ -108,8 +108,9 @@ interface FileManagerFacadeInterface
 
     /**
      * Specification:
-     * - Finds a file by idFile
-     * - Returns file with localized attributes
+     * - Finds a file by idFile.
+     * - Returns file with localized attributes.
+     * - Reads latest file.
      *
      * @api
      *

@@ -1,5 +1,6 @@
 {
   "name": "spryker/category-navigation-connector",
+  "type": "library",
   "description": "CategoryNavigationConnector module",
   "license": "proprietary",
   "require": {

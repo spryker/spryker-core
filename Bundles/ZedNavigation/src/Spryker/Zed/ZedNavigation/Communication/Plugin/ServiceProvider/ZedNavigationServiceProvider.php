@@ -18,6 +18,7 @@ use Twig_SimpleFunction;
 /**
  * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
  * @method \Spryker\Zed\ZedNavigation\Communication\ZedNavigationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ZedNavigation\ZedNavigationConfig getConfig()
  */
 class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

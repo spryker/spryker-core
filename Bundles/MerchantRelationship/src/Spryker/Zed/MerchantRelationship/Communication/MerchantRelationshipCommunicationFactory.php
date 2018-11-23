@@ -14,6 +14,8 @@ use Spryker\Zed\MerchantRelationship\Communication\Hydrator\MerchantRelationship
 /**
  * @method \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantRelationship\MerchantRelationshipConfig getConfig()
+ * @method \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface getFacade()
  */
 class MerchantRelationshipCommunicationFactory extends AbstractCommunicationFactory
 {

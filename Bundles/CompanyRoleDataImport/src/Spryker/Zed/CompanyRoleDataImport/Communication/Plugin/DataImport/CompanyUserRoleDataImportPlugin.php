@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyRoleDataImport\Business\CompanyRoleDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyRoleDataImport\CompanyRoleDataImportConfig getConfig()
  */
 class CompanyUserRoleDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

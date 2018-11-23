@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block-product-storage",
+  "type": "library",
   "description": "CmsBlockProductStorage module",
   "license": "proprietary",
   "require": {
@@ -15,6 +16,7 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/event": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/propel-query-builder": "*",

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-relation",
+  "type": "library",
   "description": "ProductRelation module",
   "license": "proprietary",
   "require": {
@@ -39,7 +40,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\ProductRelation\\Helper\\": "tests/SprykerTest/Shared/ProductRelation/_support/Helper/"
     }
   },
   "autoload-dev": {

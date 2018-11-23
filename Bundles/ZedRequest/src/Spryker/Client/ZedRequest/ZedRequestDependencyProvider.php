@@ -11,6 +11,9 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToMessengerClientBridge;
 
+/**
+ * @method \Spryker\Client\ZedRequest\ZedRequestConfig getConfig()
+ */
 class ZedRequestDependencyProvider extends AbstractDependencyProvider
 {
     public const SERVICE_NETWORK = 'util network service';
@@ -93,7 +96,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
 
     /**
      * Key value pair of mata data provider plugins, array key is the index key of transfer in
-     * \Spryker\Shared\ZedRequest\Client\AbstractRequest::metaTransfers, you can read back by this key in zed.
+     * Spryker\Shared\ZedRequest\Client\AbstractRequest::metaTransfers, you can read back by this key in Zed.
      *
      * @return \Spryker\Client\ZedRequest\Dependency\Plugin\MetaDataProviderPluginInterface[]
      */

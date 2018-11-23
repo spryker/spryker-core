@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
+ * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface getFacade()
  */
 class ShoppingListCommunicationFactory extends AbstractCommunicationFactory
 {

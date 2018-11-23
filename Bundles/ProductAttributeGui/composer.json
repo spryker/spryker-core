@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-attribute-gui",
+  "type": "library",
   "description": "ProductAttributeGui module",
   "license": "proprietary",
   "require": {

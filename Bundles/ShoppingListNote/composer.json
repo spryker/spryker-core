@@ -1,0 +1,47 @@
+{
+  "name": "spryker/shopping-list-note",
+  "type": "library",
+  "description": "ShoppingListNote module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/cart": "^5.3.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/shopping-list": "^1.0.0 || ^2.0.0",
+    "spryker/shopping-list-extension": "^1.2.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/company": "*",
+    "spryker/company-business-unit": "*",
+    "spryker/company-user": "*",
+    "spryker/customer": "*",
+    "spryker/permission": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
+    "spryker/quote": "*",
+    "spryker/stock": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\ShoppingListNote\\Helper\\": "tests/SprykerTest/Shared/ShoppingListNote/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

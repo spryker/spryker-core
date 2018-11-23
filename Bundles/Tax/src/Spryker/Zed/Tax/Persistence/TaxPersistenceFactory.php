@@ -10,10 +10,14 @@ namespace Spryker\Zed\Tax\Persistence;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Tax\Persistence\Propel\Mapper\TaxRateMapper;
+use Spryker\Zed\Tax\Persistence\Propel\Mapper\TaxRateMapperInterface;
+use Spryker\Zed\Tax\Persistence\Propel\Mapper\TaxSetMapper;
 
 /**
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()
  */
 class TaxPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -31,5 +35,23 @@ class TaxPersistenceFactory extends AbstractPersistenceFactory
     public function createTaxSetQuery()
     {
         return SpyTaxSetQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Persistence\Propel\Mapper\TaxRateMapperInterface
+     */
+    public function createTaxRateMapper(): TaxRateMapperInterface
+    {
+        return new TaxRateMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Persistence\Propel\Mapper\TaxSetMapper
+     */
+    public function createTaxSetMapper(): TaxSetMapper
+    {
+        return new TaxSetMapper(
+            $this->createTaxRateMapper()
+        );
     }
 }

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-category-storage",
+  "type": "library",
   "description": "ProductCategoryStorage module",
   "license": "proprietary",
   "require": {
