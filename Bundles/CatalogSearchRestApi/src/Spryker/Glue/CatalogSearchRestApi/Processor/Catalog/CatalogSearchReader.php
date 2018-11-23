@@ -102,9 +102,15 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $searchString = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::QUERY_STRING_PARAMETER);
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $searchResult = $this->catalogClient->catalogSearch($searchString, $requestParameters);
+
+        $currency = $this->store->getCurrencyIsoCode();
+        if (!empty($requestParameters[RestCatalogSearchAttributesTransfer::CURRENCY])) {
+            $currency = $requestParameters[RestCatalogSearchAttributesTransfer::CURRENCY];
+        }
+
         $restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
-            ->mapSearchResultToRestAttributesTransfer($searchResult, $this->store->getCurrencyIsoCode());
+            ->mapSearchResultToRestAttributesTransfer($searchResult, $currency);
 
         $this->catalogSearchResourceMapper
             ->mapPrices($restSearchAttributesTransfer, $this->getPriceModeConfigurationTransfer());
