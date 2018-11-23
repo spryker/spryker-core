@@ -7,19 +7,19 @@
 
 namespace Spryker\Client\CartsRestApi\Zed;
 
-use Generated\Shared\Transfer\QuoteByIdCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartsRestApiZedStubInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteByIdCriteriaFilterTransfer $quoteByIdCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findQuoteByUuid(QuoteByIdCriteriaFilterTransfer $quoteByIdCriteriaFilterTransfer): QuoteResponseTransfer;
+    public function findCustomerQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer

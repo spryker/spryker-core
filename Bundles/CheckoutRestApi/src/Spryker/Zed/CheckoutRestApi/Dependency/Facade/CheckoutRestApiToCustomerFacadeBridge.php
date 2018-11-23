@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Dependency\Facade;
 
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 class CheckoutRestApiToCustomerFacadeBridge implements CheckoutRestApiToCustomerFacadeInterface
@@ -33,15 +32,5 @@ class CheckoutRestApiToCustomerFacadeBridge implements CheckoutRestApiToCustomer
     public function getAddresses(CustomerTransfer $customerTransfer)
     {
         return $this->customerFacade->getAddresses($customerTransfer);
-    }
-
-    /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    public function findCustomerByReference(string $customerReference): CustomerResponseTransfer
-    {
-        return $this->customerFacade->findCustomerByReference($customerReference);
     }
 }

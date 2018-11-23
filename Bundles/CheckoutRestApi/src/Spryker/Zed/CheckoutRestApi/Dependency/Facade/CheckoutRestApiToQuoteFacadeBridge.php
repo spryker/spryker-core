@@ -30,16 +30,6 @@ class CheckoutRestApiToQuoteFacadeBridge implements CheckoutRestApiToQuoteFacade
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        return $this->quoteFacade->findQuoteByUuid($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->quoteFacade->deleteQuote($quoteTransfer);

@@ -10,6 +10,7 @@ namespace Spryker\Zed\CartsRestApi\Business;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -53,16 +54,15 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
-     * @param string $uuid
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteResponseTransfer
+    public function findCustomerQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createCartReader()
-            ->findQuoteByUuid($uuid, $quoteCriteriaFilterTransfer);
+            ->findCustomerQuoteByUuid($quoteTransfer);
     }
 
     /**

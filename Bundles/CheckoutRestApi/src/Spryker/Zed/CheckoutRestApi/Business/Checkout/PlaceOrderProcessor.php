@@ -93,7 +93,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
 
         $quoteTransfer = $this->prepareQuoteTransfer($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
-        $checkoutResponseTransfer = $this->placeOrderWithQuoteTransfer($quoteTransfer);
+        $checkoutResponseTransfer = $this->executePlaceOrder($quoteTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
             return $this->createRestCheckoutResponseWithErrorFromCheckoutResponseTransfer($checkoutResponseTransfer);
         }
@@ -152,7 +152,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    protected function placeOrderWithQuoteTransfer(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    protected function executePlaceOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
     {
         return $this->checkoutFacade->placeOrder($quoteTransfer);
     }

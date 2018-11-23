@@ -9,6 +9,7 @@ namespace Spryker\Zed\CartsRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartsRestApiToQuoteFacadeInterface
 {
@@ -18,4 +19,11 @@ interface CartsRestApiToQuoteFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }
