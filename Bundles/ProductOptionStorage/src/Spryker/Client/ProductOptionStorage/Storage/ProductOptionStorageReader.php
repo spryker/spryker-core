@@ -97,7 +97,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      *
      * @return array
      */
-    protected function getStorageData(int $idProductAbstract, ?string $locale = null): array
+    protected function getStorageData(int $idProductAbstract, ?string $locale = null): ?array
     {
         if (ProductOptionStorageConfig::isCollectorCompatibilityMode()) {
             if ($locale === null) {
