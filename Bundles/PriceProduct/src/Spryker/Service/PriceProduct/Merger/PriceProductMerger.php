@@ -50,11 +50,16 @@ class PriceProductMerger implements PriceProductMergerInterface
 
         return implode(
             '-',
-            array_filter([
-                $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
-                $priceProductTransfer->getPriceTypeName(),
-                $priceProductTransfer->getMoneyValue()->getFkStore(),
-            ] + array_values($priceDimensionTransfer->toArray()))
+            array_filter(
+                array_merge(
+                    [
+                        $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
+                        $priceProductTransfer->getPriceTypeName(),
+                        $priceProductTransfer->getMoneyValue()->getFkStore(),
+                    ],
+                    array_values($priceDimensionTransfer->toArray())
+                )
+            )
         );
     }
 

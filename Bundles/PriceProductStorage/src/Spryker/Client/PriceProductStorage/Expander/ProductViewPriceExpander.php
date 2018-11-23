@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\PriceProductStorage\Expander;
 
-use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface;
+use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface;
 
@@ -32,18 +32,26 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     protected $priceProductClient;
 
     /**
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface $priceAbstractStorageReader
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface $priceConcreteStorageReader
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface $priceProductClient
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface $priceProductService
      */
     public function __construct(
         PriceAbstractStorageReaderInterface $priceAbstractStorageReader,
         PriceConcreteStorageReaderInterface $priceConcreteStorageReader,
-        PriceProductStorageToPriceProductInterface $priceProductClient
+        PriceProductStorageToPriceProductInterface $priceProductClient,
+        PriceProductStorageToPriceProductServiceInterface $priceProductService
     ) {
         $this->priceAbstractStorageReader = $priceAbstractStorageReader;
         $this->priceConcreteStorageReader = $priceConcreteStorageReader;
         $this->priceProductClient = $priceProductClient;
+        $this->priceProductService = $priceProductService;
     }
 
     /**
@@ -54,34 +62,28 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     public function expandProductViewPriceData(ProductViewTransfer $productViewTransfer)
     {
         $priceProductAbstractTransfers = $this->findPriceAbstractData($productViewTransfer);
-        $currentProductAbstractPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
-            $priceProductAbstractTransfers,
-            $this->getPriceProductFilterFromProductView($productViewTransfer)
-        );
-
         $priceProductConcreteTransfers = $this->findPriceConcreteData($productViewTransfer);
+        $priceProductFilter = $this->getPriceProductFilterFromProductView($productViewTransfer);
+
         if (!$priceProductConcreteTransfers) {
+            $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
+                $priceProductAbstractTransfers,
+                $priceProductFilter
+            );
+
             return $productViewTransfer
-                ->setPrice($currentProductAbstractPriceTransfer->getPrice())
-                ->setPrices($currentProductAbstractPriceTransfer->getPrices());
+                ->setPrice($currentProductPriceTransfer->getPrice())
+                ->setPrices($currentProductPriceTransfer->getPrices());
         }
 
-        $currentProductConcretePriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
+        $priceProductConcreteTransfers = $this->priceProductService->mergeConcreteAndAbstractPrices(
             $priceProductConcreteTransfers,
-            $this->getPriceProductFilterFromProductView($productViewTransfer)
+            $priceProductAbstractTransfers
         );
 
-        if (!$currentProductConcretePriceTransfer->getPrice()) {
-            return $productViewTransfer
-                ->setPrice($currentProductAbstractPriceTransfer->getPrice())
-                ->setPrices($currentProductAbstractPriceTransfer->getPrices());
-        }
-
-        $currentProductPriceTransfer = (new CurrentProductPriceTransfer())->fromArray(
-            array_replace_recursive(
-                $currentProductAbstractPriceTransfer->toArray(),
-                $currentProductConcretePriceTransfer->toArray()
-            )
+        $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
+            $priceProductConcreteTransfers,
+            $priceProductFilter
         );
 
         return $productViewTransfer
