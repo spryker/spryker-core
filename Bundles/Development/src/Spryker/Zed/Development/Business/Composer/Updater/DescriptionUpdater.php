@@ -21,7 +21,7 @@ class DescriptionUpdater implements UpdaterInterface
      */
     public function update(array $composerJson, SplFileInfo $composerJsonFile)
     {
-        $moduleName = $composerJsonFile->getRelativePath();
+        $moduleName = basename($composerJsonFile->getPath());
         $composerJson[static::KEY_DESCRIPTION] = $moduleName . ' module';
 
         return $composerJson;
