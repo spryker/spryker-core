@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\CustomerAccessGui\Communication\CustomerAccessGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerAccessGui\CustomerAccessGuiConfig getConfig()
  */
 class CustomerAccessForm extends AbstractType
 {

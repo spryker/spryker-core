@@ -179,7 +179,7 @@ class ProductOptionGroupDataHelper extends Module
     /**
      * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface
      */
-    protected function getProductOptionFacade()
+    public function getProductOptionFacade()
     {
         return $this->getLocator()->productOption()->facade();
     }

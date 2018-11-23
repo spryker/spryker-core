@@ -8,11 +8,16 @@
 namespace Spryker\Client\ProductStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
+use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
+use Zend\Filter\FilterChain;
+use Zend\Filter\StringToLower;
+use Zend\Filter\Word\CamelCaseToUnderscore;
 
 class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterface
 {
@@ -87,14 +92,56 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
             return null;
         }
 
+        if (ProductStorageConfig::isCollectorCompatibilityMode()) {
+            $clientLocatorClassName = Locator::class;
+            /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
+            $productClient = $clientLocatorClassName::getInstance()->product()->client();
+            $collectorData = $productClient->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
+
+            unset($collectorData['prices'], $collectorData['categories'], $collectorData['imageSets']);
+            $collectorData = $this->changeKeys($collectorData);
+
+            $attributeMap = $productClient->getAttributeMapByIdAndLocale($idProductAbstract, $localeName);
+            $attributeMap = $this->changeKeys($attributeMap);
+
+            $collectorData['attribute_map'] = $attributeMap;
+
+            return $collectorData;
+        }
+
         $key = $this->getStorageKey($idProductAbstract, $localeName);
 
         $productStorageData = $this->storageClient->get($key);
+
+        if (!$productStorageData) {
+            return null;
+        }
 
         $productStorageData = $this->productAbstractVariantsRestrictionFilter
             ->filterAbstractProductVariantsData($productStorageData);
 
         return $productStorageData;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function changeKeys(array $data): array
+    {
+        $filterChain = new FilterChain();
+        $filterChain
+            ->attach(new CamelCaseToUnderscore())
+            ->attach(new StringToLower());
+
+        $filteredData = [];
+
+        foreach ($data as $key => $value) {
+            $filteredData[$filterChain->filter($key)] = $value;
+        }
+
+        return $filteredData;
     }
 
     /**

@@ -20,6 +20,7 @@ use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\Pr
 /**
  * @method \Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternativeStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig getConfig()
  */
 class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

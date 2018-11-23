@@ -15,6 +15,7 @@ use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorage
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
+use Spryker\Zed\ProductRelation\Business\ProductRelationFacade;
 use Spryker\Zed\ProductRelation\Dependency\ProductRelationEvents;
 use Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageBusinessFactory;
 use Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade;
@@ -38,16 +39,53 @@ use SprykerTest\Zed\ProductRelationStorage\ProductRelationStorageConfigMock;
 class ProductRelationStorageListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\ProductRelationStorage\ProductRelationStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected $productAbstractTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected $productAbstractTransferRelated;
+
+    /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
      * @return void
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
         if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
+
+        $this->productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->productAbstractTransferRelated = $this->tester->haveProductAbstract();
+
+        $localizedAttributes = $this->tester->generateLocalizedAttributes();
+        $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer, $localizedAttributes);
+        $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransferRelated, $localizedAttributes);
+
+        $this->tester->haveProductRelation(
+            $this->productAbstractTransfer->getSku(),
+            $this->productAbstractTransferRelated->getIdProductAbstract()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Business\ProductRelationFacade
+     */
+    protected function createProductRelationFacade()
+    {
+        return new ProductRelationFacade();
     }
 
     /**
@@ -55,14 +93,14 @@ class ProductRelationStorageListenerTest extends Unit
      */
     public function testProductRelationPublishStorageListenerStoreData()
     {
-        SpyProductAbstractRelationStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyProductAbstractRelationStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransferRelated->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractRelationStorageQuery::create()->count();
 
         $productRelationPublishStorageListener = new ProductRelationPublishStorageListener();
         $productRelationPublishStorageListener->setFacade($this->getProductRelationStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($this->productAbstractTransferRelated->getIdProductAbstract()),
         ];
         $productRelationPublishStorageListener->handleBulk($eventTransfers, ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH);
 
@@ -75,7 +113,7 @@ class ProductRelationStorageListenerTest extends Unit
      */
     public function testProductRelationStorageListenerStoreData()
     {
-        SpyProductAbstractRelationStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyProductAbstractRelationStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransferRelated->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractRelationStorageQuery::create()->count();
 
         $productRelationStorageListener = new ProductRelationStorageListener();
@@ -83,7 +121,7 @@ class ProductRelationStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductRelationTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+                SpyProductRelationTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransferRelated->getIdProductAbstract(),
             ]),
         ];
         $productRelationStorageListener->handleBulk($eventTransfers, ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_CREATE);
@@ -97,7 +135,7 @@ class ProductRelationStorageListenerTest extends Unit
      */
     public function testProductRelationProductAbstractStorageListenerStoreData()
     {
-        SpyProductAbstractRelationStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyProductAbstractRelationStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransferRelated->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractRelationStorageQuery::create()->count();
 
         $productRelationProductAbstractStorageListener = new ProductRelationProductAbstractStorageListener();
@@ -105,7 +143,7 @@ class ProductRelationStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductRelationProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+                SpyProductRelationProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransferRelated->getIdProductAbstract(),
             ]),
         ];
         $productRelationProductAbstractStorageListener->handleBulk($eventTransfers, ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE);
@@ -136,10 +174,10 @@ class ProductRelationStorageListenerTest extends Unit
     protected function assertProductAbstractRelationStorage($beforeCount)
     {
         $productRelationStorageCount = SpyProductAbstractRelationStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $productRelationStorageCount);
-        $productAbstractRelationStorage = SpyProductAbstractRelationStorageQuery::create()->orderByIdProductAbstractRelationStorage()->findOneByFkProductAbstract(1);
+        $this->assertGreaterThan($beforeCount, $productRelationStorageCount);
+        $productAbstractRelationStorage = SpyProductAbstractRelationStorageQuery::create()->orderByIdProductAbstractRelationStorage()->findOneByFkProductAbstract($this->productAbstractTransferRelated->getIdProductAbstract());
         $this->assertNotNull($productAbstractRelationStorage);
         $data = $productAbstractRelationStorage->getData();
-        $this->assertSame(2, count($data['product_relations']));
+        $this->assertSame(1, count($data['product_relations']));
     }
 }

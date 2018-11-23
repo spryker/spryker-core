@@ -85,21 +85,9 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     protected function storeData(array $urlStorageTransfers, array $urlStorageEntities)
     {
         foreach ($urlStorageTransfers as $urlStorageTransfer) {
-            $idUrl = $urlStorageTransfer->getIdUrl();
-            if (isset($urlStorageEntities[$idUrl])) {
-                if ($urlStorageEntities[$idUrl]->getUrl() === $urlStorageTransfer->getUrl()) {
-                    $this->storeDataSet($urlStorageTransfer, $urlStorageEntities[$idUrl]);
+            $urlStorageEntity = $urlStorageEntities[$urlStorageTransfer->getIdUrl()] ?? null;
 
-                    continue;
-                }
-
-                $this->storeDataSet($urlStorageTransfer);
-                $urlStorageEntities[$idUrl]->delete();
-
-                continue;
-            }
-
-            $this->storeDataSet($urlStorageTransfer);
+            $this->storeDataSet($urlStorageTransfer, $urlStorageEntity);
         }
     }
 

@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyUnitAddressDataImport\Business\CompanyUnitAddressDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig getConfig()
  */
 class CompanyUnitAddressDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
