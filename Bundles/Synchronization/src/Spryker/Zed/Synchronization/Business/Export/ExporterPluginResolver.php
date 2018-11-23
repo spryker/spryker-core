@@ -130,7 +130,7 @@ class ExporterPluginResolver
 
     /**
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]|\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface[] $effectivePlugins
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[] $pluginsPerExporter
+     * @param array $pluginsPerExporter
      *
      * @return array
      */
