@@ -23,7 +23,6 @@ use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
@@ -48,11 +47,6 @@ class DiscountTest extends Unit
      * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $storeFacadeMock;
-
-    /**
-     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $messengerFacadeMock;
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -87,10 +81,6 @@ class DiscountTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->messengerFacadeMock = $this->getMockBuilder(DiscountToMessengerInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $this->discountQueryContainerMock = $this->getMockBuilder(DiscountQueryContainerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -115,7 +105,6 @@ class DiscountTest extends Unit
                 $voucherValidatorMock,
                 $this->discountEntityMapperMock,
                 $this->storeFacadeMock,
-                $this->messengerFacadeMock,
             ])->setMethods([
                 'isDiscountApplicable',
                 'hydrateDiscountTransfer',
@@ -236,10 +225,6 @@ class DiscountTest extends Unit
         $this->discountMock->expects($this->any())
             ->method('hydrateDiscountTransfer')
             ->willReturn($expectedVoucherDiscount);
-
-        $this->messengerFacadeMock
-            ->expects($this->once())
-            ->method('addErrorMessage');
 
         // Act
         $actualResult = $this->discountMock->calculate($quoteTransfer);

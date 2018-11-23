@@ -8,26 +8,21 @@
 namespace Spryker\Zed\Discount\Business\Calculator;
 
 use ArrayObject;
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Propel\Runtime\Collection\Collection;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class Discount implements DiscountInterface
 {
     use LoggerTrait;
-
-    protected const MESSAGE_VOUCHER_APPLY_FAILED = 'cart.voucher.apply.failed';
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -65,18 +60,12 @@ class Discount implements DiscountInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
-     */
-    protected $messengerFacade;
-
-    /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface $calculator
      * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $decisionRuleBuilder
      * @param \Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface $voucherValidator
      * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface $discountEntityMapper
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      */
     public function __construct(
         DiscountQueryContainerInterface $queryContainer,
@@ -84,8 +73,7 @@ class Discount implements DiscountInterface
         SpecificationBuilderInterface $decisionRuleBuilder,
         VoucherValidatorInterface $voucherValidator,
         DiscountEntityMapperInterface $discountEntityMapper,
-        DiscountToStoreFacadeInterface $storeFacade,
-        DiscountToMessengerInterface $messengerFacade
+        DiscountToStoreFacadeInterface $storeFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->calculator = $calculator;
@@ -93,7 +81,6 @@ class Discount implements DiscountInterface
         $this->voucherValidator = $voucherValidator;
         $this->discountEntityMapper = $discountEntityMapper;
         $this->storeFacade = $storeFacade;
-        $this->messengerFacade = $messengerFacade;
     }
 
     /**
@@ -109,11 +96,11 @@ class Discount implements DiscountInterface
         );
 
         [$applicableDiscounts, $nonApplicableDiscounts] = $this->filterDiscountsByApplicability($activeDiscounts, $quoteTransfer);
+
         $collectedDiscounts = $this->calculator->calculate($applicableDiscounts, $quoteTransfer);
 
         $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
         $this->addNonApplicableDiscountsToQuote($quoteTransfer, $nonApplicableDiscounts);
-        $this->addMessagesForNonApplicableDiscounts($nonApplicableDiscounts);
 
         return $quoteTransfer;
     }
@@ -160,9 +147,9 @@ class Discount implements DiscountInterface
      * @param string[] $voucherCodes
      * @param int $idStore
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
      */
-    protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes, $idStore)
+    protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes, $idStore): array
     {
         $discounts = $this->queryContainer
             ->queryActiveCartRulesForStore($idStore)
@@ -178,16 +165,16 @@ class Discount implements DiscountInterface
             }
         }
 
-        return $discounts;
+        return $discounts->getData();
     }
 
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\Collection $discounts
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount[] $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    protected function filterDiscountsByApplicability(Collection $discounts, QuoteTransfer $quoteTransfer)
+    protected function filterDiscountsByApplicability(array $discounts, QuoteTransfer $quoteTransfer)
     {
         $uniqueVoucherDiscounts = [];
         $applicableDiscounts = [];
@@ -340,34 +327,6 @@ class Discount implements DiscountInterface
         }
 
         return $discountApplicableItems;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
-     *
-     * @return void
-     */
-    protected function addMessagesForNonApplicableDiscounts(array $discountTransfers): void
-    {
-        foreach ($discountTransfers as $discountTransfer) {
-            if (!$discountTransfer->getVoucherCode()) {
-                continue;
-            }
-
-            $this->messengerFacade->addErrorMessage(
-                $this->createMessageTransfer(static::MESSAGE_VOUCHER_APPLY_FAILED)
-            );
-        }
-    }
-
-    /**
-     * @param string $message
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
-    protected function createMessageTransfer(string $message): MessageTransfer
-    {
-        return (new MessageTransfer())->setValue($message);
     }
 
     /**
