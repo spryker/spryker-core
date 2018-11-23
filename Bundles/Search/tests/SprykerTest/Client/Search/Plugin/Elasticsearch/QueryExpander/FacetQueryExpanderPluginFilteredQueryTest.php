@@ -49,7 +49,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             'filtered single incorrect value facet' => $this->createFilteredIncorrectStringFacetData(),
             'filtered multiple incorrect value facets' => $this->createMultiFilteredIncorrectValuesFacetData(),
             'filtered string facet with multiple incorrect values' => $this->createFilteredStringFacetDataWithMultipleIncorrectValues(),
-            'filtered zero facets' => $this->createFilteredZeroValuesFacetData(),
+            'filtered zero value facets' => $this->createFilteredZeroValuesFacetData(),
         ];
     }
 
@@ -532,7 +532,6 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     protected function createFilteredStringFacetDataWithMultipleIncorrectValues()
     {
         $searchConfig = $this->createMixedSearchConfig();
-
         $expectedQuery = new BoolQuery();
 
         $parameters = [
