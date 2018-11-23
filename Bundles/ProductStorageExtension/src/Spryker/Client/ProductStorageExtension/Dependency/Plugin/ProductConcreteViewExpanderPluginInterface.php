@@ -7,21 +7,11 @@
 
 namespace Spryker\Client\ProductStorageExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
-
+/**
+ * Specification:
+ * - Interface shows that ProductViewExpanderPluginInterface plugins expands ProductView with Concrete data.
+ * - Interface can be used to exclude ProductViewExpanderPluginInterface plugins during abstract product specific processing.
+ */
 interface ProductConcreteViewExpanderPluginInterface
 {
-    /**
-     * Specification:
-     * - Expands and returns the provided ProductView transfer objects.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productData
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName);
 }

@@ -16,7 +16,7 @@ class ProductAbstractStorageDataMapper implements ProductStorageDataMapperInterf
     /**
      * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
-    protected $productAbstractStorageExpanderPlugins;
+    protected $productStorageExpanderPlugins;
 
     /**
      * @var \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface
@@ -31,7 +31,7 @@ class ProductAbstractStorageDataMapper implements ProductStorageDataMapperInterf
         array $storageProductExpanderPlugins,
         ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
     ) {
-        $this->productAbstractStorageExpanderPlugins = $storageProductExpanderPlugins;
+        $this->productStorageExpanderPlugins = $storageProductExpanderPlugins;
         $this->productAbstractVariantsRestrictionFilter = $productAbstractVariantsRestrictionFilter;
     }
 
@@ -48,7 +48,7 @@ class ProductAbstractStorageDataMapper implements ProductStorageDataMapperInterf
         $productViewTransfer = $this->createProductViewTransfer($productStorageData);
         $productViewTransfer->setSelectedAttributes($selectedAttributes);
 
-        foreach ($this->productAbstractStorageExpanderPlugins as $productViewExpanderPlugin) {
+        foreach ($this->productStorageExpanderPlugins as $productViewExpanderPlugin) {
             if ($productViewExpanderPlugin instanceof ProductConcreteViewExpanderPluginInterface) {
                 continue;
             }
