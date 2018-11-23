@@ -9,6 +9,9 @@ namespace Spryker\Zed\Locale;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
+ */
 class LocaleDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

@@ -13,6 +13,8 @@ use Twig_Environment;
 
 /**
  * @method \Spryker\Zed\SalesStatistics\SalesStatisticsConfig getConfig()
+ * @method \Spryker\Zed\SalesStatistics\Persistence\SalesStatisticsRepositoryInterface getRepository()
+ * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
  */
 class SalesStatisticsCommunicationFactory extends AbstractCommunicationFactory
 {

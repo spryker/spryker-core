@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Glossary\Communication\Form\DataProvider;
 
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
@@ -37,7 +38,12 @@ class TranslationFormDataProvider
     {
         $data = [];
 
-        $glossaryKeyEntity = $this->getGlossaryKey($fkGlossaryKey);
+        $glossaryKeyEntity = $this->findGlossaryKey($fkGlossaryKey);
+
+        if ($glossaryKeyEntity === null) {
+            return $data;
+        }
+
         $data[TranslationForm::FIELD_GLOSSARY_KEY] = $glossaryKeyEntity->getKey();
 
         $translationCollection = $this->getGlossaryKeyTranslations($fkGlossaryKey, $locales);
@@ -68,10 +74,12 @@ class TranslationFormDataProvider
     /**
      * @param int $fkGlossaryKey
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey|null
      */
-    protected function getGlossaryKey($fkGlossaryKey)
+    protected function findGlossaryKey($fkGlossaryKey): ?SpyGlossaryKey
     {
-        return $this->glossaryQueryContainer->queryKeys()->findOneByIdGlossaryKey($fkGlossaryKey);
+        return $this->glossaryQueryContainer
+            ->queryKeys()
+            ->findOneByIdGlossaryKey($fkGlossaryKey);
     }
 }

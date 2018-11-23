@@ -18,6 +18,7 @@ use Spryker\Zed\ProductAlternative\ProductAlternativeDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductAlternative\ProductAlternativeConfig getConfig()
+ * @method \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface getEntityManager()
  */
 class ProductAlternativePersistenceFactory extends AbstractPersistenceFactory
 {

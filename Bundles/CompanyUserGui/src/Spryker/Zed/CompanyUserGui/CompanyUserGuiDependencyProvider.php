@@ -14,6 +14,9 @@ use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeB
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig getConfig()
+ */
 class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';

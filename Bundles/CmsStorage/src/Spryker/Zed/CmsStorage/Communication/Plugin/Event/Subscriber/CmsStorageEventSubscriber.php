@@ -19,6 +19,8 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 /**
  * @method \Spryker\Zed\CmsStorage\Communication\CmsStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsStorage\Business\CmsStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsStorage\CmsStorageConfig getConfig()
+ * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface getQueryContainer()
  */
 class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
