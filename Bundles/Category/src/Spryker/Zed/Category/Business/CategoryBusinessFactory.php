@@ -128,6 +128,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getRelationDeletePluginStack(),
             $this->getRelationUpdatePluginStack(),
             $this->createPluginExecutor(),
+            $this->createCategoryReader(),
             $this->getEventFacade()
         );
     }
@@ -376,7 +377,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryReader(): CategoryReaderInterface
     {
         return new CategoryReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createPluginExecutor()
         );
     }
 

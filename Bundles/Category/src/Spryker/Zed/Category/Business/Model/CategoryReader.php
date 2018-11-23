@@ -18,11 +18,20 @@ class CategoryReader implements CategoryReaderInterface
     protected $repository;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $repository
+     * @var \Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface
      */
-    public function __construct(CategoryRepositoryInterface $repository)
-    {
+    private $categoryPluginExecutor;
+
+    /**
+     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $repository
+     * @param \Spryker\Zed\Category\Business\Model\CategoryPluginExecutorInterface $categoryPluginExecutor
+     */
+    public function __construct(
+        CategoryRepositoryInterface $repository,
+        CategoryPluginExecutorInterface $categoryPluginExecutor
+    ) {
         $this->repository = $repository;
+        $this->categoryPluginExecutor = $categoryPluginExecutor;
     }
 
     /**
@@ -32,6 +41,11 @@ class CategoryReader implements CategoryReaderInterface
      */
     public function findCategoryById(int $idCategory): ?CategoryTransfer
     {
-        return $this->repository->findCategoryById($idCategory);
+        $categoryTransfer = $this->repository->findCategoryById($idCategory);
+        if (!$categoryTransfer) {
+            return null;
+        }
+
+        return $this->categoryPluginExecutor->executePostReadPlugins($categoryTransfer);
     }
 }
