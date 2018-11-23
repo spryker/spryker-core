@@ -14,6 +14,8 @@ use Spryker\Zed\Quote\QuoteDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Quote\QuoteConfig getConfig()
+ * @method \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface getRepository()
  */
 class QuotePersistenceFactory extends AbstractPersistenceFactory
 {

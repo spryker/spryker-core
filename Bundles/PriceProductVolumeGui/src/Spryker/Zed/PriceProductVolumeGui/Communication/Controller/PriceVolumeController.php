@@ -235,7 +235,7 @@ class PriceVolumeController extends AbstractController
      */
     protected function generateUrl(string $url, array $query = [], array $options = []): string
     {
-        return Url::generate($url, $query, $options)->build();
+        return urldecode(Url::generate($url, $query, $options)->build());
     }
 
     /**

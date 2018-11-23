@@ -17,6 +17,9 @@ use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProdu
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\AvailabilityGui\AvailabilityGuiConfig getConfig()
+ */
 class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'locale facade';

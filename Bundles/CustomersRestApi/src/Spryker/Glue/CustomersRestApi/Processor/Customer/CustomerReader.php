@@ -74,21 +74,19 @@ class CustomerReader implements CustomerReaderInterface
     public function getCustomerByCustomerReference(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
+        $customerResourceId = $restRequest->getResource()->getId();
 
-        if (!$restRequest->getResource()->getId()) {
-            return $this->restApiError->addCustomerReferenceMissingError($restResponse);
+        $customerResponseTransfer = $this->getCurrentCustomer($restRequest);
+        if ($customerResourceId) {
+            if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
+                return $this->restApiError->addCustomerNotFoundError($restResponse);
+            }
+
+            $customerResponseTransfer = $this->findCustomer($restRequest);
         }
 
-        $customerResponseTransfer = $this->findCustomer($restRequest);
-
-        $restResponse = $this->restApiValidator->validateCustomerResponseTransfer(
-            $customerResponseTransfer,
-            $restRequest,
-            $restResponse
-        );
-
-        if (count($restResponse->getErrors()) > 0) {
-            return $restResponse;
+        if (!$customerResponseTransfer->getHasCustomer()) {
+            return $this->restApiError->addCustomerNotFoundError($restResponse);
         }
 
         $restCustomersResponseAttributesTransfer = $this
@@ -112,6 +110,18 @@ class CustomerReader implements CustomerReaderInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function findCustomer(RestRequestInterface $restRequest): CustomerResponseTransfer
+    {
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getResource()->getId());
+
+        return $this->customerClient->findCustomerByReference($customerTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCurrentCustomer(RestRequestInterface $restRequest): CustomerResponseTransfer
     {
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
 

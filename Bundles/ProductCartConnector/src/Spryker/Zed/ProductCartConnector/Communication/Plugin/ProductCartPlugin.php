@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCartConnector\Communication\ProductCartConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCartConnector\ProductCartConnectorConfig getConfig()
  */
 class ProductCartPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {

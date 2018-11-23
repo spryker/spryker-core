@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressConfig getConfig()
+ * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface getRepository()
  */
 class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
 {

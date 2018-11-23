@@ -14,6 +14,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMa
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use PDO;
@@ -100,6 +101,23 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         return $this->getFactory()
             ->createProductOptionValueQuery()
             ->filterByIdProductOptionValue($idProductOptionValue);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryProductOptionGroupByProductOptionValueId(int $idProductOptionValue): SpyProductOptionGroupQuery
+    {
+        return $this->getFactory()
+            ->createProductOptionGroupQuery()
+            ->filterByActive(true)
+            ->useSpyProductOptionValueQuery()
+                ->filterByIdProductOptionValue($idProductOptionValue)
+            ->endUse();
     }
 
     /**

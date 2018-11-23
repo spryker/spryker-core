@@ -11,6 +11,9 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Price\Dependency\Client\PriceToQuoteClientBridge;
 
+/**
+ * @method \Spryker\Client\Price\PriceConfig getConfig()
+ */
 class PriceDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';

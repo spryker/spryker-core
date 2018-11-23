@@ -10,9 +10,11 @@ namespace Spryker\Client\CmsStorage\Plugin;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
+use Spryker\Client\CmsStorage\CmsStorageConfig;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
 use Spryker\Shared\CmsStorage\CmsStorageConstants;
+use Spryker\Shared\Kernel\Store;
 
 /**
  * @method \Spryker\Client\CmsStorage\CmsStorageFactory getFactory()
@@ -46,6 +48,16 @@ class UrlStorageCmsPageMapperPlugin extends AbstractPlugin implements UrlStorage
      */
     protected function generateKey($idCmsPage, $locale)
     {
+        if (CmsStorageConfig::isCollectorCompatibilityMode()) {
+            $collectorDataKey = sprintf(
+                '%s.%s.resource.page.%s',
+                strtolower(Store::getInstance()->getStoreName()),
+                strtolower($locale),
+                $idCmsPage
+            );
+
+            return $collectorDataKey;
+        }
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setLocale($locale);
         $synchronizationDataTransfer->setReference($idCmsPage);

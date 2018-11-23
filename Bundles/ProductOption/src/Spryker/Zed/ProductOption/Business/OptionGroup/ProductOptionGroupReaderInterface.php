@@ -16,4 +16,11 @@ interface ProductOptionGroupReaderInterface
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
     public function getProductOptionGroupById($idProductOptionGroup);
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool;
 }
