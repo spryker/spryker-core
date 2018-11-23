@@ -29,7 +29,11 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     /**
      * @var array
      */
-    protected static $statusMessages;
+    protected static $statusMessages = [
+        self::INFO_MESSAGES => [],
+        self::ERROR_MESSAGES => [],
+        self::SUCCESS_MESSAGES => [],
+    ];
 
     /**
      * @var \Spryker\Shared\Kernel\Transfer\TransferInterface[]|\Closure[]
@@ -42,11 +46,6 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     public function __construct(HttpClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
-        static::$statusMessages = [
-            static::INFO_MESSAGES => [],
-            static::ERROR_MESSAGES => [],
-            static::SUCCESS_MESSAGES => [],
-        ];
     }
 
     /**
