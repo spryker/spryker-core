@@ -11,9 +11,9 @@ interface GuiButtonCreatorInterface
 {
     /**
      * @param int $idCustomer
-     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttons
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function addAttachToCompanyButtonForCustomerTable(int $idCustomer, array $buttons): array;
+    public function addAttachToCompanyButton(int $idCustomer, array $buttonTransfers): array;
 }

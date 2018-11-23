@@ -8,7 +8,9 @@
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator;
 
 use Generated\Shared\Transfer\ButtonTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface;
 
 class GuiButtonCreator implements GuiButtonCreatorInterface
 {
@@ -17,13 +19,35 @@ class GuiButtonCreator implements GuiButtonCreatorInterface
     protected const PARAM_ID_CUSTOMER = 'id-customer';
 
     /**
+     * @var \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface
+     */
+    protected $companyUserFacade;
+
+    /**
+     * @param \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface $companyUserFacade
+     */
+    public function __construct(
+        BusinessOnBehalfGuiToCompanyUserFacadeInterface $companyUserFacade
+    ) {
+        $this->companyUserFacade = $companyUserFacade;
+    }
+
+    /**
      * @param int $idCustomer
-     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttons
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function addAttachToCompanyButtonForCustomerTable(int $idCustomer, array $buttons): array
+    public function addAttachToCompanyButton(int $idCustomer, array $buttonTransfers): array
     {
+        $activeCompanyUsersCount = $this->companyUserFacade->countActiveCompanyUsersByIdCustomer(
+            (new CustomerTransfer())->setIdCustomer($idCustomer)
+        );
+
+        if ($activeCompanyUsersCount === 0) {
+            return $buttonTransfers;
+        }
+
         $defaultOptions = [
             'class' => 'btn-create',
             'icon' => 'fa-plus',
@@ -36,11 +60,11 @@ class GuiButtonCreator implements GuiButtonCreatorInterface
             ]
         );
 
-        $buttons[] = (new ButtonTransfer())
+        $buttonTransfers[] = (new ButtonTransfer())
             ->setUrl($url)
             ->setTitle(static::BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE)
             ->setDefaultOptions($defaultOptions);
 
-        return $buttons;
+        return $buttonTransfers;
     }
 }

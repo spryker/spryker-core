@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Plugin\Customer;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -19,27 +18,19 @@ class BusinessOnBehalfGuiAttachToCompanyButtonCustomerTableActionExpanderPlugin 
 {
     /**
      * {@inheritdoc}
-     * - Adds "Attach to company" button in actions for customer table if customer have a company user
+     * - Adds "Attach to company" button to customer table actions if the customer have at least one company user.
      *
      * @api
      *
      * @param int $idCustomer
-     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttons
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function execute(int $idCustomer, array $buttons): array
+    public function execute(int $idCustomer, array $buttonTransfers): array
     {
-        $countActiveCompanyUsersByIdCustomer = $this->getFactory()
-            ->getCompanyUserFacade()
-            ->countActiveCompanyUsersByIdCustomer((new CustomerTransfer())->setIdCustomer($idCustomer));
-
-        if ($countActiveCompanyUsersByIdCustomer === 0) {
-            return $buttons;
-        }
-
         return $this->getFactory()
             ->createGuiButtonCreator()
-            ->addAttachToCompanyButtonForCustomerTable($idCustomer, $buttons);
+            ->addAttachToCompanyButton($idCustomer, $buttonTransfers);
     }
 }
