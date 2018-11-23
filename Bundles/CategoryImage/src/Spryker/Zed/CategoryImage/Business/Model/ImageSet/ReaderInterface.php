@@ -16,12 +16,12 @@ interface ReaderInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function findCategoryImagesSetCollectionByCategoryId(int $idCategory): array;
+    public function findCategoryImagesSetCollectionByIdCategory(int $idCategory): array;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function expandCategoryWithImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer;
+    public function expandCategoryWithImageSetCollection(CategoryTransfer $categoryTransfer): CategoryTransfer;
 }

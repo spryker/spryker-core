@@ -30,7 +30,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
     {
         return $this->getFactory()
             ->createCategoryImageReader()
-            ->findCategoryImagesSetCollectionByCategoryId($idCategory);
+            ->findCategoryImagesSetCollectionByIdCategory($idCategory);
     }
 
     /**
@@ -78,6 +78,6 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
     {
         return $this->getFactory()
             ->createCategoryImageReader()
-            ->expandCategoryWithImageSets($categoryTransfer);
+            ->expandCategoryWithImageSetCollection($categoryTransfer);
     }
 }

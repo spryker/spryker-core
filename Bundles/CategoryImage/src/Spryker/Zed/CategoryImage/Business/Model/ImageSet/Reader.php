@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CategoryImage\Business\Model\ImageSet;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface;
 use Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface;
 
 class Reader implements ReaderInterface
@@ -19,20 +19,11 @@ class Reader implements ReaderInterface
     protected $categoryImageRepository;
 
     /**
-     * @var \Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface
-     */
-    private $imageSetLocalizer;
-
-    /**
      * @param \Spryker\Zed\CategoryImage\Persistence\CategoryImageRepositoryInterface $categoryImageRepository
-     * @param \Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface $imageSetLocalizer
      */
-    public function __construct(
-        CategoryImageRepositoryInterface $categoryImageRepository,
-        ImageSetLocalizerInterface $imageSetLocalizer
-    ) {
+    public function __construct(CategoryImageRepositoryInterface $categoryImageRepository)
+    {
         $this->categoryImageRepository = $categoryImageRepository;
-        $this->imageSetLocalizer = $imageSetLocalizer;
     }
 
     /**
@@ -40,15 +31,15 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function expandCategoryWithImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer
+    public function expandCategoryWithImageSetCollection(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
-        $categoryImageSetCollection = $this->findCategoryImagesSetCollectionByCategoryId(
+        $categoryImageSetCollection = $this->findCategoryImagesSetCollectionByIdCategory(
             $categoryTransfer->requireIdCategory()->getIdCategory()
         );
-
         if ($categoryImageSetCollection) {
-            $localizedCategoryImageSetCollection = $this->buildLocalizedImageSetCollection($categoryImageSetCollection);
-            $categoryTransfer->setFormImageSets($localizedCategoryImageSetCollection);
+            $categoryTransfer->setImageSets(
+                new ArrayObject($categoryImageSetCollection)
+            );
         }
 
         return $categoryTransfer;
@@ -59,18 +50,8 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function findCategoryImagesSetCollectionByCategoryId(int $idCategory): array
+    public function findCategoryImagesSetCollectionByIdCategory(int $idCategory): array
     {
         return $this->categoryImageRepository->findCategoryImageSetsByCategoryId($idCategory);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $categoryImageSetCollection
-     *
-     * @return array
-     */
-    protected function buildLocalizedImageSetCollection(array $categoryImageSetCollection): array
-    {
-        return $this->imageSetLocalizer->buildFormImageSetCollection($categoryImageSetCollection);
     }
 }

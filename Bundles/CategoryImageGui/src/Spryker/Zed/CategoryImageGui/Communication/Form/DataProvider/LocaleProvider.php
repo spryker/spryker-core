@@ -10,7 +10,7 @@ namespace Spryker\Zed\CategoryImageGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\CategoryImageGui\Dependency\Facade\CategoryImageGuiToLocaleInterface;
 
-class LocaleProvider
+class LocaleProvider implements LocaleProviderInterface
 {
     public const DEFAULT_LOCALE = 'default';
     /**
@@ -31,7 +31,7 @@ class LocaleProvider
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getLocaleCollection($includeDefault = false)
+    public function getLocaleCollection($includeDefault = false): array
     {
         $result = [];
 
@@ -52,7 +52,7 @@ class LocaleProvider
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleTransfer($localeCode)
+    public function getLocaleTransfer($localeCode): LocaleTransfer
     {
         return $this->localeFacade->getLocale($localeCode);
     }
@@ -60,8 +60,25 @@ class LocaleProvider
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasLocale(string $localeName): bool
+    {
+        return $this->localeFacade->hasLocale($localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createDefaultLocale(): LocaleTransfer
+    {
+        return (new LocaleTransfer())
+            ->setLocaleName(static::DEFAULT_LOCALE);
     }
 }

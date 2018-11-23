@@ -11,12 +11,6 @@ use Spryker\Zed\CategoryImage\Business\Model\ImageSet\Reader;
 use Spryker\Zed\CategoryImage\Business\Model\ImageSet\ReaderInterface;
 use Spryker\Zed\CategoryImage\Business\Model\ImageSet\Writer;
 use Spryker\Zed\CategoryImage\Business\Model\ImageSet\WriterInterface;
-use Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizer;
-use Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface;
-use Spryker\Zed\CategoryImage\Business\Provider\LocaleProvider;
-use Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface;
-use Spryker\Zed\CategoryImage\CategoryImageDependencyProvider;
-use Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -32,8 +26,7 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     public function createCategoryImageReader(): ReaderInterface
     {
         return new Reader(
-            $this->getRepository(),
-            $this->createImageSetLocalizer()
+            $this->getRepository()
         );
     }
 
@@ -44,36 +37,7 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     {
         return new Writer(
             $this->getRepository(),
-            $this->getEntityManager(),
-            $this->createImageSetLocalizer()
+            $this->getEntityManager()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface
-     */
-    public function createLocaleProvider(): LocaleProviderInterface
-    {
-        return new LocaleProvider(
-            $this->getLocaleFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryImage\Business\Model\ImageSetLocalizerInterface
-     */
-    public function createImageSetLocalizer(): ImageSetLocalizerInterface
-    {
-        return new ImageSetLocalizer(
-            $this->createLocaleProvider()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface
-     */
-    protected function getLocaleFacade(): CategoryImageToLocaleInterface
-    {
-        return $this->getProvidedDependency(CategoryImageDependencyProvider::FACADE_LOCALE);
     }
 }

@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryImage\Business\Model;
+namespace Spryker\Zed\CategoryImageGui\Communication\Form\ImageSetLocalizer;
 
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
-use Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface;
+use Spryker\Zed\CategoryImageGui\Communication\Form\DataProvider\LocaleProviderInterface;
 
 class ImageSetLocalizer implements ImageSetLocalizerInterface
 {
     /**
-     * @var \Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface
+     * @var \Spryker\Zed\CategoryImageGui\Communication\Form\DataProvider\LocaleProviderInterface
      */
     private $localeProvider;
 
     /**
-     * @param \Spryker\Zed\CategoryImage\Business\Provider\LocaleProviderInterface $localeProvider
+     * @param \Spryker\Zed\CategoryImageGui\Communication\Form\DataProvider\LocaleProviderInterface $localeProvider
      */
     public function __construct(LocaleProviderInterface $localeProvider)
     {
@@ -30,7 +30,7 @@ class ImageSetLocalizer implements ImageSetLocalizerInterface
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
-    public function buildCategoryImageSetCollection(array $formImageSetCollection): array
+    public function buildCategoryImageSetCollectionFromLocalizedArray(array $formImageSetCollection): array
     {
         $localizedImageSetCollection = [];
         foreach ($this->localeProvider->getLocaleCollection(true) as $localeTransfer) {
@@ -52,12 +52,12 @@ class ImageSetLocalizer implements ImageSetLocalizerInterface
      *
      * @return array
      */
-    public function buildFormImageSetCollection(array $categoryImageSetCollection): array
+    public function buildLocalizedArrayFromImageSetCollection(array $categoryImageSetCollection): array
     {
-        $localizedImageSetCollection = [];
+        $formImageSetCollection = [];
         foreach ($this->localeProvider->getLocaleCollection(true) as $localeTransfer) {
             $localeName = $localeTransfer->getLocaleName();
-            $localizedImageSetCollection[$localeName] = array_filter(
+            $formImageSetCollection[$localeName] = array_filter(
                 $categoryImageSetCollection,
                 function (CategoryImageSetTransfer $categoryImageSet) use ($localeName) {
                     $this->prepareLocale($categoryImageSet);
@@ -67,7 +67,7 @@ class ImageSetLocalizer implements ImageSetLocalizerInterface
             );
         }
 
-        return $localizedImageSetCollection;
+        return $formImageSetCollection;
     }
 
     /**

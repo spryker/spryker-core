@@ -1,7 +1,7 @@
-<div class="image-set-container" data-image-collection-prototype="{{ form_widget(categoryForm.formImageSets[localeName].vars.prototype.children.categoryImages.vars.prototype) | e }}"
-     data-image-set-prototype="{{ form_widget(categoryForm.formImageSets[localeName].vars.prototype) | e }}"
+<div class="image-set-container" data-image-collection-prototype="{{ form_widget(categoryForm.imageSets[localeName].vars.prototype.children.categoryImages.vars.prototype) | e }}"
+     data-image-set-prototype="{{ form_widget(categoryForm.imageSets[localeName].vars.prototype) | e }}"
 >
-    {% for imageSet in categoryForm.formImageSets[localeName] %}
+    {% for imageSet in categoryForm.imageSets[localeName] %}
         {% if imageSet.vars.data.locale.localeName == localeName %}
             {{ form_widget(imageSet) }}
         {% endif %}

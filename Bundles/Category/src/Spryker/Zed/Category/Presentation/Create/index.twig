@@ -22,7 +22,7 @@
 
             {{ form_start(categoryForm) }}
                 {% do categoryForm.localized_attributes.setRendered %}
-                {% do categoryForm.formImageSets.setRendered %}
+                {% do categoryForm.imageSets.setRendered %}
             {{ tabs(categoryFormCreateTabs, {
                 'categoryForm': categoryForm,
                 'currentLocale': currentLocale,

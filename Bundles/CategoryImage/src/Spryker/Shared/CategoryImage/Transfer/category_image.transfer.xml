@@ -20,7 +20,6 @@
 
     <transfer name="Category">
         <property name="imageSets" type="CategoryImageSet[]" singular="imageSet" />
-        <property name="formImageSets" type="array" singular="formImageSet" />
     </transfer>
 
 </transfers>

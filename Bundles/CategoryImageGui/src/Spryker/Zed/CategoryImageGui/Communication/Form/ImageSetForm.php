@@ -46,7 +46,7 @@ class ImageSetForm extends AbstractType
 
         $validationGroups = [
             Constraint::DEFAULT_GROUP,
-            self::VALIDATION_GROUP_IMAGE_COLLECTION,
+            static::VALIDATION_GROUP_IMAGE_COLLECTION,
         ];
 
         $resolver->setDefaults([
@@ -94,7 +94,7 @@ class ImageSetForm extends AbstractType
     protected function addSetIdField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_ID, HiddenType::class, []);
+            ->add(static::FIELD_ID, HiddenType::class, []);
 
         return $this;
     }
@@ -107,7 +107,7 @@ class ImageSetForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_NAME, TextType::class, [
+            ->add(static::FIELD_NAME, TextType::class, [
                 'required' => false,
                 'label' => 'Image Set Name',
             ]);
@@ -122,7 +122,7 @@ class ImageSetForm extends AbstractType
      */
     protected function addLocaleHiddenField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_LOCALE, HiddenType::class);
+        $builder->add(static::FIELD_LOCALE, HiddenType::class);
         $builder->get(static::FIELD_LOCALE)
             ->addModelTransformer($this->createLocaleModelTransformer());
 
@@ -136,7 +136,7 @@ class ImageSetForm extends AbstractType
      */
     protected function addCategoryHiddenField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CATEGORY, HiddenType::class);
+        $builder->add(static::FIELD_CATEGORY, HiddenType::class);
 
         return $this;
     }
@@ -149,7 +149,7 @@ class ImageSetForm extends AbstractType
     protected function addImageCollectionForm(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::CATEGORY_IMAGES, CollectionType::class, [
+            ->add(static::CATEGORY_IMAGES, CollectionType::class, [
                 'entry_type' => ImageCollectionForm::class,
                 'label' => false,
                 'allow_add' => true,
@@ -169,11 +169,11 @@ class ImageSetForm extends AbstractType
                             $context->addViolation('Please enter required image information');
                         }
                     },
-                    'groups' => [self::VALIDATION_GROUP_IMAGE_COLLECTION],
+                    'groups' => [static::VALIDATION_GROUP_IMAGE_COLLECTION],
                 ])],
             ]);
 
-        $builder->get(self::CATEGORY_IMAGES)->addModelTransformer(
+        $builder->get(static::CATEGORY_IMAGES)->addModelTransformer(
             $this->createArrayObjectModelTransformer()
         );
 

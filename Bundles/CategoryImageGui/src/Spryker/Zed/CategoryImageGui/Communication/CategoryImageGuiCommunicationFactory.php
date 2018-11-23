@@ -9,6 +9,8 @@ namespace Spryker\Zed\CategoryImageGui\Communication;
 
 use Spryker\Zed\CategoryImageGui\CategoryImageGuiDependencyProvider;
 use Spryker\Zed\CategoryImageGui\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\CategoryImageGui\Communication\Form\ImageSetLocalizer\ImageSetLocalizer;
+use Spryker\Zed\CategoryImageGui\Communication\Form\ImageSetLocalizer\ImageSetLocalizerInterface;
 use Spryker\Zed\CategoryImageGui\Dependency\Facade\CategoryImageGuiToLocaleInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -30,5 +32,15 @@ class CategoryImageGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade(): CategoryImageGuiToLocaleInterface
     {
         return $this->getProvidedDependency(CategoryImageGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImageGui\Communication\Form\ImageSetLocalizer\ImageSetLocalizerInterface
+     */
+    public function createImageSetLocalizer(): ImageSetLocalizerInterface
+    {
+        return new ImageSetLocalizer(
+            $this->createLocaleProvider()
+        );
     }
 }

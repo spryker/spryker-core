@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryImage\Business\Provider;
+namespace Spryker\Zed\CategoryImageGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 

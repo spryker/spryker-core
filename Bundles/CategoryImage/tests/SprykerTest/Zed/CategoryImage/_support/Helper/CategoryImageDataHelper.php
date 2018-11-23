@@ -31,6 +31,7 @@ class CategoryImageDataHelper extends Module
     public const IMAGE_SET_NAME = 'category-image-set';
     public const SORT_ORDER = 1;
     public const LOCALE_NAME_DE = 'de_DE';
+    public const LOCALE_ID_DE = 46;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -41,10 +42,7 @@ class CategoryImageDataHelper extends Module
     public function haveCategoryImageSetForCategory(CategoryTransfer $categoryTransfer, array $seedData = [])
     {
         $categoryImageSetTransfer = $this->buildCategoryImageSetTransfer($seedData);
-        $originalImageSets = $categoryTransfer->getFormImageSets();
-        $newImageSet = $this->buildFormImageSets([$categoryImageSetTransfer]);
-        $combinedImageSets = array_merge_recursive($originalImageSets, $newImageSet);
-        $categoryTransfer->setFormImageSets($combinedImageSets);
+        $categoryTransfer->addImageSet($categoryImageSetTransfer);
         $this->getCategoryImageFacade()->updateCategoryImageSetCollection($categoryTransfer);
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($categoryImageSetTransfer) {
@@ -91,36 +89,6 @@ class CategoryImageDataHelper extends Module
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $imageSets
-     *
-     * @return array
-     */
-    public function buildFormImageSets(array $imageSets): array
-    {
-        $formImageSets = [];
-        foreach ($imageSets as $imageSet) {
-            $formImageSets[$imageSet->getLocale()->getLocaleName()][] = $imageSet;
-        }
-
-        return $formImageSets;
-    }
-
-    /**
-     * @param array $formImageSets
-     *
-     * @return array
-     */
-    public function flattenFormImageSets(array $formImageSets): array
-    {
-        $imageSetCollection = [];
-        foreach ($formImageSets as $localeName => $imageSets) {
-            $imageSetCollection = array_merge($imageSetCollection, $imageSets);
-        }
-
-        return $imageSetCollection;
-    }
-
-    /**
      * @param array $seedData
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
@@ -128,6 +96,7 @@ class CategoryImageDataHelper extends Module
     public function buildLocaleTransfer(array $seedData = [])
     {
         $seedData = $seedData + [
+            'idLocale' => static::LOCALE_ID_DE,
             'localeName' => static::LOCALE_NAME_DE,
         ];
         return (new LocaleBuilder($seedData))->build();

@@ -37,7 +37,7 @@ class CategoryImageStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
+        $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new CategoryImageStorageToStorageClientBridge($container->getLocator()->storage()->client());
         };
 
@@ -51,7 +51,7 @@ class CategoryImageStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new CategoryImageStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         };
 

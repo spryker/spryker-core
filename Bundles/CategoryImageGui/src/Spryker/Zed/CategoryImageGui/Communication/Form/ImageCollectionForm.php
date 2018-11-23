@@ -77,7 +77,7 @@ class ImageCollectionForm extends AbstractType
      */
     protected function addCategoryImageIdHiddenField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_CATEGORY_IMAGE, HiddenType::class, []);
+        $builder->add(static::FIELD_ID_CATEGORY_IMAGE, HiddenType::class, []);
 
         return $this;
     }
@@ -89,7 +89,7 @@ class ImageCollectionForm extends AbstractType
      */
     protected function addImageSmallField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IMAGE_SMALL, TextType::class, [
+        $builder->add(static::FIELD_IMAGE_SMALL, TextType::class, [
             'required' => true,
             'label' => 'Small',
             'constraints' => [
@@ -111,10 +111,10 @@ class ImageCollectionForm extends AbstractType
      */
     protected function addImagePreviewField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IMAGE_PREVIEW, ImageType::class, [
+        $builder->add(static::FIELD_IMAGE_PREVIEW, ImageType::class, [
             'required' => false,
             'label' => false,
-            'property_path' => self::FIELD_IMAGE_SMALL,
+            'property_path' => static::FIELD_IMAGE_SMALL,
             ImageType::OPTION_IMAGE_WIDTH => static::IMAGE_PREVIEW_WIDTH,
         ]);
 
@@ -128,7 +128,7 @@ class ImageCollectionForm extends AbstractType
      */
     protected function addImageBigField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IMAGE_LARGE, TextType::class, [
+        $builder->add(static::FIELD_IMAGE_LARGE, TextType::class, [
             'required' => true,
             'label' => 'Large',
             'constraints' => [
@@ -150,7 +150,7 @@ class ImageCollectionForm extends AbstractType
      */
     protected function addOrderHiddenField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SORT_ORDER, HiddenType::class, []);
+        $builder->add(static::FIELD_SORT_ORDER, HiddenType::class, []);
 
         return $this;
     }

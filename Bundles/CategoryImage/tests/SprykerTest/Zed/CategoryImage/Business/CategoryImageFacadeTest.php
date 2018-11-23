@@ -42,9 +42,7 @@ class CategoryImageFacadeTest extends Test
             rand(1, static::MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE)
         );
         $categoryTransfer = $this->tester->haveCategory();
-        $categoryTransfer->setFormImageSets(
-            $this->tester->buildFormImageSets($categoryImageSetTransferCollection)
-        );
+        $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetTransferCollection));
 
         $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
         $dbCategoryImageSetCollection = $this->getFacade()->findCategoryImagesSetCollectionByCategoryId(
@@ -65,9 +63,7 @@ class CategoryImageFacadeTest extends Test
     {
         $categoryTransfer = $this->tester->haveCategory();
         $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(static::DEFAULT_CATEGORY_IMAGE_SET_COUNT);
-        $categoryTransfer->setFormImageSets(
-            $this->tester->buildFormImageSets($categoryImageSetCollection)
-        );
+        $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetCollection));
 
         $resultCategoryTransfer = $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
         $dbCategoryImageSetCollection = $this->getFacade()->findCategoryImagesSetCollectionByCategoryId(
@@ -92,9 +88,7 @@ class CategoryImageFacadeTest extends Test
         $categoryImage = $this->tester->buildCategoryImageTransfer();
         $categoryImageSet = $this->tester->buildCategoryImageSetTransfer();
         $categoryImageSet->setCategoryImages(new ArrayObject([$categoryImage]));
-        $categoryTransfer->setFormImageSets(
-            $this->tester->buildFormImageSets([$categoryImageSet])
-        );
+        $categoryTransfer->addImageSet($categoryImageSet);
 
         $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
 
@@ -121,9 +115,7 @@ class CategoryImageFacadeTest extends Test
     {
         $categoryTransfer = $this->tester->haveCategory();
         $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(rand(2, static::MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE));
-        $categoryTransfer->setFormImageSets(
-            $this->tester->buildFormImageSets($categoryImageSetCollection)
-        );
+        $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetCollection));
 
         $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
         $dbCategoryImageSetCollection = $this->getFacade()->findCategoryImagesSetCollectionByCategoryId(
@@ -136,9 +128,7 @@ class CategoryImageFacadeTest extends Test
             $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection)
         ));
         unset($categoryImageSetCollection[$randomImageSetKeyToBeDeleted]);
-        $categoryTransfer->setFormImageSets(
-            $this->tester->buildFormImageSets($categoryImageSetCollection)
-        );
+        $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetCollection));
         $this->getFacade()->updateCategoryImageSetCollection($categoryTransfer);
         $dbCategoryImageSetCollection = $this->getFacade()->findCategoryImagesSetCollectionByCategoryId(
             $categoryTransfer->getIdCategory()
@@ -158,14 +148,12 @@ class CategoryImageFacadeTest extends Test
         $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(
             rand(1, static::MAX_CATEGORY_IMAGE_SET_COLLECTION_SIZE)
         );
-        $categoryTransfer->setFormImageSets(
-            $this->tester->buildFormImageSets($categoryImageSetCollection)
-        );
+        $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetCollection));
 
         $this->getFacade()->createCategoryImageSetCollection($categoryTransfer);
-        $categoryTransfer->setFormImageSets([]);
+        $categoryTransfer->setImageSets(new ArrayObject());
         $this->getFacade()->expandCategoryWithImageSets($categoryTransfer);
-        $dbCategoryImageSetCollection = $this->tester->flattenFormImageSets($categoryTransfer->getFormImageSets());
+        $dbCategoryImageSetCollection = $categoryTransfer->getImageSets()->getArrayCopy();
         $this->assertEquals(count($categoryImageSetCollection), count($dbCategoryImageSetCollection));
         $this->assertEmpty(array_diff(
             $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection),
