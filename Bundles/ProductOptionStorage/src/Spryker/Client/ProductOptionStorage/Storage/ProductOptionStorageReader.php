@@ -65,7 +65,6 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      */
     public function getProductOptions($idProductAbstract, $locale)
     {
-        $key = $this->generateKey($idProductAbstract);
         $productAbstractOptionStorageData = $this->findStorageData($idProductAbstract);
 
         if (!$productAbstractOptionStorageData) {
