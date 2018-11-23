@@ -13,6 +13,9 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
+/**
+ * @method \Spryker\Client\CmsPageSearch\CmsPageSearchConfig getConfig()
+ */
 class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
