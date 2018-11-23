@@ -120,7 +120,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     /**
      * {@inheritdoc}
      *
-     * @deprecated Use SearchFacade::transformPageMapToDocumentByMapperName() instead
+     * @deprecated Use transformPageMapToDocumentByMapperName() instead.
      *
      * @api
      *

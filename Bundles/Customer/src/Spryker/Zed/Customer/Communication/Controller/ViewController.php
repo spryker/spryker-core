@@ -80,7 +80,7 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @deprecated Use addressTableAction
+     * @deprecated Use addressTableAction() instead.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

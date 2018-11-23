@@ -10,7 +10,7 @@ namespace Spryker\Yves\CmsContentWidgetProductSetConnector;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 /**
- * @deprecated Use \Spryker\Yves\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorFactory instead
+ * @deprecated Use \Spryker\Yves\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorFactory instead.
  */
 class CmsContentWidgetProductSetConnectorConnectorFactory extends AbstractFactory
 {
