@@ -95,7 +95,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      * @param int $idProductAbstract
      * @param string|null $locale
      *
-     * @return array
+     * @return array|null
      */
     protected function getStorageData(int $idProductAbstract, ?string $locale = null): ?array
     {
