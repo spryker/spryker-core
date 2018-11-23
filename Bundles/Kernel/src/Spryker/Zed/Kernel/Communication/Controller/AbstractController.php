@@ -192,7 +192,7 @@ abstract class AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function redirectResponseExternal(string $url, int $code = 302, array $headers = [])
+    protected function redirectResponseExternal(string $url, int $code = 302, array $headers = []): RedirectResponse
     {
         if (strpos($url, '/') !== 0 && !$this->isUrlDomainWhitelisted($url)) {
             throw new ForbiddenRedirectException(sprintf("This URL %s is not a part of a whitelisted domain", $url));
