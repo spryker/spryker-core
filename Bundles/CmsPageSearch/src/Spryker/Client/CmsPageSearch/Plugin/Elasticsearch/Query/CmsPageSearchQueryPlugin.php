@@ -109,6 +109,7 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     {
         $boolQuery = new BoolQuery();
         $boolQuery->addMust($matchQuery);
+        $this->setTypeFilter($boolQuery);
 
         return $boolQuery;
     }
@@ -127,8 +128,6 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
         }
 
         $baseQuery->setQuery($this->createBoolQuery($matchQuery));
-
-        $this->setTypeFilter($baseQuery->getQuery());
 
         return $baseQuery;
     }

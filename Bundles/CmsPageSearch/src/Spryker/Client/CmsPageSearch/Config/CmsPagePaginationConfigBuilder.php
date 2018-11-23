@@ -74,7 +74,7 @@ class CmsPagePaginationConfigBuilder implements PaginationConfigBuilderInterface
     {
         return (
             !empty($requestParameters[$paramName]) &&
-            in_array((int)$requestParameters[$paramName], (array)$this->paginationConfigTransfer->getValidItemsPerPageOptions())
+            in_array((int)$requestParameters[$paramName], $this->paginationConfigTransfer->getValidItemsPerPageOptions())
         );
     }
 }
