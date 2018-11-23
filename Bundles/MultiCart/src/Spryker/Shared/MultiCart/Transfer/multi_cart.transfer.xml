@@ -18,6 +18,16 @@
         <property name="customer" type="Customer" />
     </transfer>
 
+    <transfer name="QuoteCollection">
+        <property name="quotes" type="Quote" singular="quote"/>
+    </transfer>
+
+    <transfer name="QuoteCriteriaFilter">
+        <property name="customerReference" type="string"/>
+        <property name="filter" type="Filter"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
     <transfer name="QuoteActivationRequest">
         <property name="customer" type="Customer"/>
         <property name="idQuote" type="int"/>
@@ -34,6 +44,15 @@
 
     <transfer name="Store">
         <property name="idStore" type="int" />
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
 </transfers>
