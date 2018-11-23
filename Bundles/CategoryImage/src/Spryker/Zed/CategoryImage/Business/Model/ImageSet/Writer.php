@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryImage\Business\Model\ImageSet;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryImageTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -58,6 +59,7 @@ class Writer implements WriterInterface
     {
         $this->saveCategoryImageSetCollection($categoryTransfer);
         $this->deleteRemovedCategoryImageSets($categoryTransfer);
+        $this->deleteRemovedCategoryImages($categoryTransfer->getImageSets());
 
         return $categoryTransfer;
     }
@@ -109,42 +111,10 @@ class Writer implements WriterInterface
      */
     protected function saveCategoryImageSet(CategoryImageSetTransfer $categoryImageSetTransfer): CategoryImageSetTransfer
     {
-        if ($categoryImageSetTransfer->getIdCategoryImageSet()) {
-            $this->deleteMissingCategoryImageSetToCategoryImage($categoryImageSetTransfer);
-        }
-
         $categoryImageSetTransfer = $this->categoryImageEntityManager->saveCategoryImageSet($categoryImageSetTransfer);
         $categoryImageSetTransfer = $this->saveCategoryImageCollection($categoryImageSetTransfer);
 
         return $categoryImageSetTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
-     *
-     * @return void
-     */
-    protected function deleteMissingCategoryImageSetToCategoryImage(CategoryImageSetTransfer $categoryImageSetTransfer): void
-    {
-        $excludeIdCategoryImageCollection = [];
-
-        foreach ($categoryImageSetTransfer->getCategoryImages() as $categoryImageTransfer) {
-            $excludeIdCategoryImageCollection[] = $categoryImageTransfer->getIdCategoryImage();
-        }
-
-        $missingCategoryImageCollection = $this->categoryImageRepository
-            ->findCategoryImagesByCategoryImageSetId(
-                $categoryImageSetTransfer->getIdCategoryImageSet(),
-                $excludeIdCategoryImageCollection
-            );
-
-        foreach ($missingCategoryImageCollection as $missingCategoryImage) {
-            $this->categoryImageEntityManager
-                ->deleteCategoryImageSetToCategoryImage(
-                    $categoryImageSetTransfer->getIdCategoryImageSet(),
-                    $missingCategoryImage->getIdCategoryImage()
-                );
-        }
     }
 
     /**
@@ -184,17 +154,56 @@ class Writer implements WriterInterface
      */
     protected function deleteRemovedCategoryImageSets(CategoryTransfer $categoryTransfer): void
     {
-        $excludeIdCategoryImageSetCollection = [];
+        $validIdCategoryImageSetCollection = [];
         foreach ($categoryTransfer->getImageSets() as $categoryImageSetTransfer) {
-            $excludeIdCategoryImageSetCollection[] = $categoryImageSetTransfer->getIdCategoryImageSet();
+            $validIdCategoryImageSetCollection[] = $categoryImageSetTransfer->getIdCategoryImageSet();
         }
 
         $removedCategoryImageSetCollection = $this->categoryImageRepository
-            ->findCategoryImageSetsByCategoryId(
+            ->getCategoryImageSetsByCategoryId(
                 $categoryTransfer->getIdCategory(),
-                $excludeIdCategoryImageSetCollection
+                $validIdCategoryImageSetCollection
             );
 
         $this->deleteCategoryImageSetCollection($removedCategoryImageSetCollection);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryImageSetTransfer[] $categoryImageSetCollection
+     *
+     * @return void
+     */
+    private function deleteRemovedCategoryImages(ArrayObject $categoryImageSetCollection)
+    {
+        foreach ($categoryImageSetCollection as $categoryImageSetTransfer) {
+            $this->deleteMissingCategoryImageSetToCategoryImage($categoryImageSetTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
+     *
+     * @return void
+     */
+    protected function deleteMissingCategoryImageSetToCategoryImage(CategoryImageSetTransfer $categoryImageSetTransfer): void
+    {
+        $excludeIdCategoryImageCollection = [];
+        foreach ($categoryImageSetTransfer->getCategoryImages() as $categoryImageTransfer) {
+            $excludeIdCategoryImageCollection[] = $categoryImageTransfer->getIdCategoryImage();
+        }
+
+        $missingCategoryImageCollection = $this->categoryImageRepository
+            ->findCategoryImagesByCategoryImageSetId(
+                $categoryImageSetTransfer->getIdCategoryImageSet(),
+                $excludeIdCategoryImageCollection
+            );
+
+        foreach ($missingCategoryImageCollection as $missingCategoryImage) {
+            $this->categoryImageEntityManager
+                ->deleteCategoryImageSetToCategoryImage(
+                    $categoryImageSetTransfer->getIdCategoryImageSet(),
+                    $missingCategoryImage->getIdCategoryImage()
+                );
+        }
     }
 }
