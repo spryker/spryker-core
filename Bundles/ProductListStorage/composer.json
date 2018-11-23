@@ -12,6 +12,7 @@
     "spryker/product-category": "^4.0.0",
     "spryker/product-list": "^1.2.0",
     "spryker/product-storage-extension": "^1.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0"
@@ -20,13 +21,11 @@
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
-    "spryker/product-storage": "If you want to use restriction plugins, minimum required version: 1.0.0",
-    "spryker/propel-orm": "If you want to use transaction functionality, minimum required version: 1.3.0"
+    "spryker/product-storage": "If you want to use restriction plugins, minimum required version: 1.0.0"
   },
   "autoload": {
     "psr-4": {
