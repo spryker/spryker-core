@@ -13,7 +13,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class ComposerJsonFinder implements ComposerJsonFinderInterface
 {
-    protected const PRESERVE_ITERATOR_KEYS = false;
     protected const COMPOSER_JSON_FILE_NAME = 'composer.json';
 
     /**
@@ -46,7 +45,7 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
             return null;
         }
 
-        return iterator_to_array($currentFinderInstance, static::PRESERVE_ITERATOR_KEYS)[0];
+        return iterator_to_array($currentFinderInstance, false)[0];
     }
 
     /**
