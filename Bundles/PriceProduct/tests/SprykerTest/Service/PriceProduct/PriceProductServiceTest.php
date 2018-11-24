@@ -42,7 +42,7 @@ class PriceProductServiceTest extends Unit
     ): void {
         $priceProductService = $this->getPriceProductService();
 
-        $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
+        $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer */
         $concretePriceProductTransfer = $concretePriceProductTransfers[0];
@@ -75,7 +75,7 @@ class PriceProductServiceTest extends Unit
         $concretePriceProductTransfer = $concretePriceProductTransfers[0];
         $concretePriceProductTransfer->getMoneyValue()->setGrossAmount(null)->setNetAmount(null);
 
-        $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
+        $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $mergedPriceProductTransfer */
         $mergedPriceProductTransfer = $mergedPriceProductTransfers[array_keys($mergedPriceProductTransfers)[1]];
@@ -100,7 +100,7 @@ class PriceProductServiceTest extends Unit
     ): void {
         $priceProductService = $this->getPriceProductService();
 
-        $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
+        $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer */
         $concretePriceProductTransfer = $concretePriceProductTransfers[0];

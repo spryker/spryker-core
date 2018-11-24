@@ -23,13 +23,13 @@ class PriceProductStorageToPriceProductServiceBridge implements PriceProductStor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function mergeConcreteAndAbstractPrices(array $concretePriceProductTransfers, array $abstractPriceProductTransfers): array
+    public function mergeConcreteAndAbstractPrices(array $abstractPriceProductTransfers, array $concretePriceProductTransfers): array
     {
-        return $this->priceProductService->mergeConcreteAndAbstractPrices($concretePriceProductTransfers, $abstractPriceProductTransfers);
+        return $this->priceProductService->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
     }
 }

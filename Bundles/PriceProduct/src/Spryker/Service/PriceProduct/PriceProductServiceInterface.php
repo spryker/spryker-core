@@ -55,16 +55,15 @@ interface PriceProductServiceInterface
 
     /**
      * Specification:
-     * - Merges one product concrete prices with its product abstract prices.
-     * - Takes product concrete prices and product abstract prices as arguments.
+     * - Merges product concrete prices with its product abstract prices.
      * - Overrides product abstract prices with the existing product concrete prices.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function mergeConcreteAndAbstractPrices(array $concretePriceProductTransfers, array $abstractPriceProductTransfers): array;
+    public function mergeConcreteAndAbstractPrices(array $abstractPriceProductTransfers, array $concretePriceProductTransfers): array;
 }

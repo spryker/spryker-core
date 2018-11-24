@@ -56,8 +56,8 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
                 ->findPriceProductAbstractTransfers($idProductAbstract);
 
         return $this->priceProductService->mergeConcreteAndAbstractPrices(
-            $concretePriceProductTransfers,
-            $abstractPriceProductTransfers
+            $abstractPriceProductTransfers,
+            $concretePriceProductTransfers
         );
     }
 }
