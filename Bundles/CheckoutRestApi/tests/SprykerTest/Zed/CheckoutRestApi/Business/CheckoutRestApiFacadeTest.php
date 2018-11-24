@@ -63,7 +63,7 @@ class CheckoutRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCheckoutDataWillReturnNotEmptyCheckoutDataTransfer()
+    public function testGetCheckoutDataWillReturnNotEmptyCheckoutDataTransfer(): void
     {
         /**
          * @var \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade $checkoutRestApiFacade
@@ -88,7 +88,7 @@ class CheckoutRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCheckoutDataWillReturnNotEmptyCheckoutDataTransferForGuest()
+    public function testGetCheckoutDataWillReturnNotEmptyCheckoutDataTransferForGuest(): void
     {
         /**
          * @var \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade $checkoutRestApiFacade
@@ -113,7 +113,7 @@ class CheckoutRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPlaceOrderWillPlaceOrderForCustomer()
+    public function testPlaceOrderWillPlaceOrderForCustomer(): void
     {
         /**
          * @var \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade $checkoutRestApiFacade
@@ -133,7 +133,7 @@ class CheckoutRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPlaceOrderWillPlaceOrderForGuest()
+    public function testPlaceOrderWillPlaceOrderForGuest(): void
     {
         /**
          * @var \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade $checkoutRestApiFacade
@@ -153,7 +153,7 @@ class CheckoutRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPlaceOrderWillFailOnItemOutOfStock()
+    public function testPlaceOrderWillFailOnItemOutOfStock(): void
     {
         /**
          * @var \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade $checkoutRestApiFacade

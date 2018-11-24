@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomerTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class CustomerExpander implements CustomerExpanderInterface
+class CustomerMapper implements CustomerMapperInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -19,7 +19,7 @@ class CustomerExpander implements CustomerExpanderInterface
      *
      * @return \Generated\Shared\Transfer\RestCustomerTransfer
      */
-    public function getCustomerTransferFromRequest(
+    public function mapCustomerTransferFromRestCheckoutRequest(
         RestRequestInterface $restRequest,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCustomerTransfer {

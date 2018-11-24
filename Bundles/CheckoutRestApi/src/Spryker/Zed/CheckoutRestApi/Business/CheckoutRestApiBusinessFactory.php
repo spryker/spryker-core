@@ -14,6 +14,7 @@ use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessorInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReader;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
 use Spryker\Zed\CheckoutRestApi\CheckoutRestApiDependencyProvider;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface;
@@ -124,7 +125,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface
      */
-    public function getCalculationFacade()
+    public function getCalculationFacade(): CheckoutRestApiToCalculationFacadeInterface
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::FACADE_CALCULATION);
     }
@@ -134,6 +135,6 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function getQuoteMappingPlugins(): array
     {
-        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_QUOTE_MAPPING);
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_QUOTE_MAPPER);
     }
 }

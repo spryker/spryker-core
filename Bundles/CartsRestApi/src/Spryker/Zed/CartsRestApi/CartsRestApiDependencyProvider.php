@@ -100,7 +100,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
     {
         throw new MissingQuoteCollectionReaderPluginException(sprintf(
-            'Missing instance of %s! You need to configure CartQuoteCollectionReaderPlugin ' .
+            'Missing instance of %s! You need to configure QuoteCollectionReaderPlugin ' .
             'in your own CartsRestApiDependencyProvider::getQuoteCollectionReaderPlugin() ' .
             'to be able to read quote collection.',
             QuoteCollectionReaderPluginInterface::class

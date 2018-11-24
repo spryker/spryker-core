@@ -31,7 +31,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_QUOTE = 'FACADE_QUOTE';
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
-    public const PLUGINS_QUOTE_MAPPING = 'PLUGINS_QUOTE_MAPPING';
+    public const PLUGINS_QUOTE_MAPPER = 'PLUGINS_QUOTE_MAPPER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -49,7 +49,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteFacade($container);
         $container = $this->addShipmentFacade($container);
         $container = $this->addCalculationFacade($container);
-        $container = $this->addQuoteMappingPlugins($container);
+        $container = $this->addQuoteMapperPlugins($container);
 
         return $container;
     }
@@ -171,10 +171,10 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQuoteMappingPlugins(Container $container): Container
+    protected function addQuoteMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_MAPPING] = function () {
-            return $this->getQuoteMappingPlugins();
+        $container[static::PLUGINS_QUOTE_MAPPER] = function () {
+            return $this->getQuoteMapperPlugins();
         };
 
         return $container;
@@ -183,7 +183,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
      */
-    protected function getQuoteMappingPlugins(): array
+    protected function getQuoteMapperPlugins(): array
     {
         return [];
     }

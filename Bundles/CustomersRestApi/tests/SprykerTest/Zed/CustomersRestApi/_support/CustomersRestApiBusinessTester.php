@@ -37,8 +37,8 @@ class CustomersRestApiBusinessTester extends Actor
         'idCustomer' => 666,
     ];
 
-    public const GUEST_CUSTOMER = [
-        'customerReference' => 'anonymous-666',
+    protected const GUEST_CUSTOMER = [
+        'customerReference' => 'anonymous:666',
     ];
 
     public const ADDRESS_1 = [

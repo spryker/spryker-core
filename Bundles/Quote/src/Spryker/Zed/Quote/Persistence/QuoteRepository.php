@@ -141,7 +141,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByUuid($uuidQuote): ?QuoteTransfer
+    public function findQuoteByUuid(string $uuidQuote): ?QuoteTransfer
     {
         if (!$this->hasUuidColumn()) {
             return null;
@@ -165,7 +165,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
      *
      * @return bool
      */
-    private function hasUuidColumn()
+    private function hasUuidColumn(): bool
     {
         return SpyQuoteTableMap::getTableMap()
             ->hasColumn('uuid');

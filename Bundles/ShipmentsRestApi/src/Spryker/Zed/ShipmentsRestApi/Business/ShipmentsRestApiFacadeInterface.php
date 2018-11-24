@@ -13,6 +13,10 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 interface ShipmentsRestApiFacadeInterface
 {
     /**
+     * Specification:
+     * - Maps rest request shipment to quote.
+     * - Finds shipment method by shipmentSelection from request.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer

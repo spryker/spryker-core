@@ -48,9 +48,9 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        /** @var \Generated\Shared\Transfer\QuoteCollectionTransfer $checkoutResponseTransfer */
-        $checkoutResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/get-quote-collection-by-criteria', $quoteCriteriaFilterTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer */
+        $quoteCollectionTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/get-quote-collection-by-criteria', $quoteCriteriaFilterTransfer);
 
-        return $checkoutResponseTransfer;
+        return $quoteCollectionTransfer;
     }
 }

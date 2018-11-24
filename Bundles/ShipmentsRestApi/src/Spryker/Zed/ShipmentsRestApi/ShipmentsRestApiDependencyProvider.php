@@ -25,7 +25,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        parent::provideBusinessLayerDependencies($container);
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addShipmentFacade($container);
 
         return $container;

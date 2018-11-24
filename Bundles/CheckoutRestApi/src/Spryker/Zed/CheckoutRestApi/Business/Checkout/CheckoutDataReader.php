@@ -47,27 +47,27 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     /**
      * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
      */
-    protected $quoteMappingPlugins;
+    protected $quoteMapperPlugins;
 
     /**
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface $paymentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface $customerFacade
-     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMappingPlugins
+     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
         CheckoutRestApiToShipmentFacadeInterface $shipmentFacade,
         CheckoutRestApiToPaymentFacadeInterface $paymentFacade,
         CheckoutRestApiToCustomerFacadeInterface $customerFacade,
-        array $quoteMappingPlugins
+        array $quoteMapperPlugins
     ) {
         $this->quoteReader = $quoteReader;
         $this->shipmentFacade = $shipmentFacade;
         $this->paymentFacade = $paymentFacade;
         $this->customerFacade = $customerFacade;
-        $this->quoteMappingPlugins = $quoteMappingPlugins;
+        $this->quoteMapperPlugins = $quoteMapperPlugins;
     }
 
     /**
@@ -83,7 +83,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             return $this->createCartNotFoundErrorResponse();
         }
 
-        foreach ($this->quoteMappingPlugins as $quoteMappingPlugin) {
+        foreach ($this->quoteMapperPlugins as $quoteMappingPlugin) {
             $quoteTransfer = $quoteMappingPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         }
 

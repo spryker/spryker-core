@@ -51,7 +51,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     /**
      * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
      */
-    protected $quoteMappingPlugins;
+    protected $quoteMapperPlugins;
 
     /**
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface $quoteReader
@@ -59,7 +59,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface $calculationFacade
-     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMappingPlugins
+     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
@@ -67,14 +67,14 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade,
         CheckoutRestApiToQuoteFacadeInterface $quoteFacade,
         CheckoutRestApiToCalculationFacadeInterface $calculationFacade,
-        array $quoteMappingPlugins
+        array $quoteMapperPlugins
     ) {
         $this->quoteReader = $quoteReader;
         $this->cartFacade = $cartFacade;
         $this->checkoutFacade = $checkoutFacade;
         $this->quoteFacade = $quoteFacade;
         $this->calculationFacade = $calculationFacade;
-        $this->quoteMappingPlugins = $quoteMappingPlugins;
+        $this->quoteMapperPlugins = $quoteMapperPlugins;
     }
 
     /**
@@ -140,7 +140,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        foreach ($this->quoteMappingPlugins as $quoteMappingPlugin) {
+        foreach ($this->quoteMapperPlugins as $quoteMappingPlugin) {
             $quoteTransfer = $quoteMappingPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         }
 

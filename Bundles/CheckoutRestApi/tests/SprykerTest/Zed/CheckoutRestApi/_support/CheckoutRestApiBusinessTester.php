@@ -42,18 +42,18 @@ class CheckoutRestApiBusinessTester extends Actor
 {
     use _generated\CheckoutRestApiBusinessTesterActions;
 
-    public const CART_UUID = 'test-cart-uuid';
+    protected const CART_UUID = 'test-cart-uuid';
 
-    public const CUSTOMER = [
+    protected const CUSTOMER = [
         'customerReference' => 'DE-666',
         'idCustomer' => 666,
     ];
 
-    public const GUEST_CUSTOMER = [
-        'customerReference' => 'anonymous-666',
+    protected const GUEST_CUSTOMER = [
+        'customerReference' => 'anonymous:666',
     ];
 
-    public const ADDRESS_1 = [
+    protected const ADDRESS_1 = [
         'id' => 'dd1ddd99-1315-5eae-aaaf-9e74f78a33d52',
         'uuid' => 'dd1ddd99-1315-5eae-aaaf-9e74f78a33d52',
         'salutation' => 'Mr',
@@ -69,7 +69,7 @@ class CheckoutRestApiBusinessTester extends Actor
         'phone' => '+380666666666',
     ];
 
-    public const ADDRESS_2 = [
+    protected const ADDRESS_2 = [
         'id' => 'b3840c0d-07e3-58b3-87e7-dabec8170324',
         'uuid' => 'b3840c0d-07e3-58b3-87e7-dabec8170324',
         'salutation' => 'Mr',

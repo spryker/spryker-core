@@ -24,7 +24,7 @@ interface CustomersRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Maps rest request billing and shipping information to quote.
+     * - Maps rest request billing and shipping addresses information to quote.
      *
      * @api
      *

@@ -14,8 +14,8 @@ use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReaderInterface;
-use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerExpander;
-use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerExpanderInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapper;
+use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidator;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -36,7 +36,7 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCheckoutDataMapper(),
             $this->createCustomerValidator(),
-            $this->createCustomerExpander()
+            $this->createCustomerMapper()
         );
     }
 
@@ -58,7 +58,7 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->getGlossaryStorageClient(),
             $this->createCustomerValidator(),
-            $this->createCustomerExpander()
+            $this->createCustomerMapper()
         );
     }
 
@@ -71,11 +71,11 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerExpanderInterface
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface
      */
-    public function createCustomerExpander(): CustomerExpanderInterface
+    public function createCustomerMapper(): CustomerMapperInterface
     {
-        return new CustomerExpander();
+        return new CustomerMapper();
     }
 
     /**

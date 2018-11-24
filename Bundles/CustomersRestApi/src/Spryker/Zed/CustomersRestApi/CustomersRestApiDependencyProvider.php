@@ -27,7 +27,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
-        parent::providePersistenceLayerDependencies($container);
+        $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addCustomerAddressPropelQuery($container);
 
         return $container;
@@ -40,7 +40,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        parent::provideBusinessLayerDependencies($container);
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCustomerFacade($container);
 
         return $container;

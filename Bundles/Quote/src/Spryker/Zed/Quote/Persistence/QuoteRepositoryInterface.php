@@ -82,5 +82,5 @@ interface QuoteRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByUuid($uuidQuote): ?QuoteTransfer;
+    public function findQuoteByUuid(string $uuidQuote): ?QuoteTransfer;
 }

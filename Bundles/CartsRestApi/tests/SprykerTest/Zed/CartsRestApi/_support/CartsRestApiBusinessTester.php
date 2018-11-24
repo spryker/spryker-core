@@ -38,7 +38,7 @@ class CartsRestApiBusinessTester extends Actor
 
     public const TEST_QUOTE_UUID = 'test-quote-uuid';
 
-    public const DE_666 = 'DE--666';
+    public const TEST_CUSTOMER_REFERENCE = 'DE--666';
 
     /**
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -47,7 +47,7 @@ class CartsRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = (new QuoteResponseBuilder(['isSuccessful' => true]))
-            ->withQuoteTransfer(['uuid' => static::TEST_QUOTE_UUID, 'customerReference' => static::DE_666])
+            ->withQuoteTransfer(['uuid' => static::TEST_QUOTE_UUID, 'customerReference' => static::TEST_CUSTOMER_REFERENCE])
             ->build();
 
         return $quoteResponseTransfer;
@@ -70,7 +70,7 @@ class CartsRestApiBusinessTester extends Actor
     public function prepareQuoteCriteriaFilterTransfer(): QuoteCriteriaFilterTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer */
-        $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterBuilder(['customerReference' => static::DE_666]))
+        $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterBuilder(['customerReference' => static::TEST_CUSTOMER_REFERENCE]))
             ->build();
 
         return $quoteCriteriaFilterTransfer;
@@ -93,7 +93,7 @@ class CartsRestApiBusinessTester extends Actor
     public function prepareQuoteTransfer(): QuoteTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
-        $quoteTransfer = (new QuoteBuilder(['uuid' => static::TEST_QUOTE_UUID, 'customerReference' => static::DE_666]))->build();
+        $quoteTransfer = (new QuoteBuilder(['uuid' => static::TEST_QUOTE_UUID, 'customerReference' => static::TEST_CUSTOMER_REFERENCE]))->build();
 
         return $quoteTransfer;
     }
@@ -115,7 +115,7 @@ class CartsRestApiBusinessTester extends Actor
     public function prepareQuoteTransferWithoutCartUuid(): QuoteTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
-        $quoteTransfer = (new QuoteBuilder(['customerReference' => static::DE_666]))->build();
+        $quoteTransfer = (new QuoteBuilder(['customerReference' => static::TEST_CUSTOMER_REFERENCE]))->build();
 
         return $quoteTransfer;
     }
