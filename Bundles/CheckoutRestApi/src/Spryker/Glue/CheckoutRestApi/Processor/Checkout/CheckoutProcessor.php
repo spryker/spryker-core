@@ -84,7 +84,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
                 ->addError($customerValidationError);
         }
 
-        $restCustomerTransfer = $this->customerMapper->mapCustomerTransferFromRestCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
+        $restCustomerTransfer = $this->customerMapper->mapRestCustomerTransferFromRestCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
         $restCheckoutRequestAttributesTransfer->getCart()->setCustomer($restCustomerTransfer);
 
         $restCheckoutResponseTransfer = $this->checkoutRestApiClient->placeOrder($restCheckoutRequestAttributesTransfer);

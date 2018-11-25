@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ShipmentsRestApi\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\RestCartBuilder;
+use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -50,7 +51,8 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentProvided(): void
     {
-        $shipmentRestApiFacade = $this->tester->getLocator()->shipmentsRestApi()->facade();
+        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        $shipmentRestApiFacade = $this->tester->getFacade();
         $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
 
         $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithShipment();
@@ -77,7 +79,8 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnNoShipmentProvided(): void
     {
-        $shipmentRestApiFacade = $this->tester->getLocator()->shipmentsRestApi()->facade();
+        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        $shipmentRestApiFacade = $this->tester->getFacade();
         $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
 
         $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithoutShipment();
@@ -94,7 +97,8 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentNotFound(): void
     {
-        $shipmentRestApiFacade = $this->tester->getLocator()->shipmentsRestApi()->facade();
+        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        $shipmentRestApiFacade = $this->tester->getFacade();
         $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactoryWithShipmentNotFound());
 
         $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithShipment();
@@ -177,10 +181,11 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     protected function prepareRestCheckoutRequestAttributesTransferWithoutShipment(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(new RestCartBuilder())->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -188,12 +193,14 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     protected function prepareRestCheckoutRequestAttributesTransferWithShipment(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withShipment(['shipmentSelection' => static::SHIPMENT_METHOD['idShipmentMethod']])
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(
+                (new RestCartBuilder())
+                    ->withShipment(['shipmentSelection' => static::SHIPMENT_METHOD['idShipmentMethod']])
+            )->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**

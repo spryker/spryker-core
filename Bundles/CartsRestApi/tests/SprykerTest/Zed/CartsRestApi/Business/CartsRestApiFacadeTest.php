@@ -48,7 +48,7 @@ class CartsRestApiFacadeTest extends Unit
         $this->assertInstanceOf(QuoteCollectionTransfer::class, $actualQuoteCollectionTransfer);
         $this->assertCount(1, $actualQuoteCollectionTransfer->getQuotes());
         $this->assertInstanceOf(QuoteTransfer::class, $actualQuoteCollectionTransfer->getQuotes()->offsetGet(0));
-        $this->assertEquals('test-quote-uuid', $actualQuoteCollectionTransfer->getQuotes()->offsetGet(0)->getUuid());
+        $this->assertEquals($this->tester::TEST_QUOTE_UUID, $actualQuoteCollectionTransfer->getQuotes()->offsetGet(0)->getUuid());
     }
 
     /**
@@ -131,7 +131,7 @@ class CartsRestApiFacadeTest extends Unit
         $this->assertInstanceOf(QuoteCollectionTransfer::class, $actualQuoteCollectionTransfer);
         $this->assertCount(1, $actualQuoteCollectionTransfer->getQuotes());
         $this->assertInstanceOf(QuoteTransfer::class, $actualQuoteCollectionTransfer->getQuotes()->offsetGet(0));
-        $this->assertEquals('test-quote-uuid', $actualQuoteCollectionTransfer->getQuotes()->offsetGet(0)->getUuid());
+        $this->assertEquals($this->tester::TEST_QUOTE_UUID, $actualQuoteCollectionTransfer->getQuotes()->offsetGet(0)->getUuid());
     }
 
     /**

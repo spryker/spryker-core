@@ -143,7 +143,7 @@ class CustomersRestApiFacadeTest extends Unit
         $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
 
-        $restCheckoutRequestAttributesTransfer = $this->tester->prepareNoAddressRestCheckoutRequestAttributesTransfer();
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareCustomerRestCheckoutRequestAttributesTransfer();
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
@@ -160,7 +160,7 @@ class CustomersRestApiFacadeTest extends Unit
         $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
 
-        $restCheckoutRequestAttributesTransfer = $this->tester->prepareNoAddressGuestRestCheckoutRequestAttributesTransfer();
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareGuestCustomerRestCheckoutRequestAttributesTransfer();
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);

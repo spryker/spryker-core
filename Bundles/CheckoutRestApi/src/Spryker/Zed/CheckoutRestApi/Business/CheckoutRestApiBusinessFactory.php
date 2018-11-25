@@ -39,7 +39,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getShipmentFacade(),
             $this->getPaymentFacade(),
             $this->getCustomerFacade(),
-            $this->getQuoteMappingPlugins()
+            $this->getQuoteMapperPlugins()
         );
     }
 
@@ -54,7 +54,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getCheckoutFacade(),
             $this->getQuoteFacade(),
             $this->getCalculationFacade(),
-            $this->getQuoteMappingPlugins()
+            $this->getQuoteMapperPlugins()
         );
     }
 
@@ -91,7 +91,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeBridge
+     * @return \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface
      */
     public function getCustomerFacade(): CheckoutRestApiToCustomerFacadeInterface
     {
@@ -133,7 +133,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
      */
-    public function getQuoteMappingPlugins(): array
+    public function getQuoteMapperPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_QUOTE_MAPPER);
     }

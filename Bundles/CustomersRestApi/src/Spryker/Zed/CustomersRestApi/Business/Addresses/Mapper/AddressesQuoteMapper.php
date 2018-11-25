@@ -42,14 +42,18 @@ class AddressesQuoteMapper implements AddressesQuoteMapperInterface
     ): QuoteTransfer {
         $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
         if ($restQuoteRequestTransfer->getBillingAddress() !== null) {
-            $billingAddress = $this->getAddressTransfer($restQuoteRequestTransfer->getBillingAddress(), $restQuoteRequestTransfer->getCustomer());
-
+            $billingAddress = $this->getAddressTransfer(
+                $restQuoteRequestTransfer->getBillingAddress(),
+                $restQuoteRequestTransfer->getCustomer()
+            );
             $quoteTransfer->setBillingAddress($billingAddress);
         }
 
         if ($restQuoteRequestTransfer->getShippingAddress() !== null) {
-            $shippingAddress = $this->getAddressTransfer($restQuoteRequestTransfer->getShippingAddress(), $restQuoteRequestTransfer->getCustomer());
-
+            $shippingAddress = $this->getAddressTransfer(
+                $restQuoteRequestTransfer->getShippingAddress(),
+                $restQuoteRequestTransfer->getCustomer()
+            );
             $quoteTransfer->setShippingAddress($shippingAddress);
         }
 

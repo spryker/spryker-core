@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\CustomersRestApi\CustomersRestApiConfig getConfig()
  */
 class CustomerQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPluginInterface
 {

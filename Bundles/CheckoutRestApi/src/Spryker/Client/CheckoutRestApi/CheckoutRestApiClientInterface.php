@@ -28,10 +28,12 @@ interface CheckoutRestApiClientInterface
 
     /**
      * Specification:
-     * - Extends the Customer transfer with the customer data (for registered users).
-     * - Updated billing and shipping addresses with full details if UUID is passed.
+     * - Looks up the customer quote by uuid.
      * - Validates quote.
+     * - Runs the quote mapper plugins that update the quote with data from request.
+     * - Recalculates quote.
      * - Places an order.
+     * - Deletes quote.
      *
      * @api
      *

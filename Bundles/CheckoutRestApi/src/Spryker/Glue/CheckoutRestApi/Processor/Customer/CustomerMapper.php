@@ -19,7 +19,7 @@ class CustomerMapper implements CustomerMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCustomerTransfer
      */
-    public function mapCustomerTransferFromRestCheckoutRequest(
+    public function mapRestCustomerTransferFromRestCheckoutRequest(
         RestRequestInterface $restRequest,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCustomerTransfer {

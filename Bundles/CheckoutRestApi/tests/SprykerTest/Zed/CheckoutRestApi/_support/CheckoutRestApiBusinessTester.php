@@ -226,4 +226,21 @@ class CheckoutRestApiBusinessTester extends Actor
 
         return $quoteTransfer->setPayment($this->getPaymentTransfer());
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuote(): QuoteTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = (new QuoteBuilder(['uuid' => static::CART_UUID]))
+            ->withCustomer(['isGuest' => false] + static::CUSTOMER)
+            ->withBillingAddress(static::ADDRESS_1)
+            ->withShippingAddress(static::ADDRESS_2)
+            ->withShipment()
+            ->withPayment()
+            ->build();
+
+        return $quoteTransfer->setCustomerReference(static::CUSTOMER['customerReference']);
+    }
 }

@@ -84,7 +84,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      */
     public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestCheckoutResponseTransfer
     {
-        $quoteTransfer = $this->quoteReader->findCustomerQuote($restCheckoutRequestAttributesTransfer);
+        $quoteTransfer = $this->quoteReader->findCustomerQuoteByUuid($restCheckoutRequestAttributesTransfer);
 
         $restCheckoutResponseTransfer = $this->validateQuoteTransfer($quoteTransfer);
         if ($restCheckoutResponseTransfer !== null) {
@@ -140,8 +140,8 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        foreach ($this->quoteMapperPlugins as $quoteMappingPlugin) {
-            $quoteTransfer = $quoteMappingPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+        foreach ($this->quoteMapperPlugins as $quoteMapperPlugin) {
+            $quoteTransfer = $quoteMapperPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         }
 
         return $this->calculationFacade->recalculateQuote($quoteTransfer);

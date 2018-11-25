@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\CustomersRestApi;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\RestCartBuilder;
+use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
@@ -78,14 +79,16 @@ class CustomersRestApiBusinessTester extends Actor
      */
     public function prepareFullRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withBillingAddress(static::ADDRESS_1)
-            ->withShippingAddress(static::ADDRESS_2)
-            ->withCustomer(static::CUSTOMER)
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(
+                (new RestCartBuilder())
+                    ->withBillingAddress(static::ADDRESS_1)
+                    ->withShippingAddress(static::ADDRESS_2)
+                    ->withCustomer(static::CUSTOMER)
+            )->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -93,14 +96,16 @@ class CustomersRestApiBusinessTester extends Actor
      */
     public function prepareFullGuestRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withBillingAddress(static::ADDRESS_1)
-            ->withShippingAddress(static::ADDRESS_2)
-            ->withCustomer(static::GUEST_CUSTOMER)
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(
+                (new RestCartBuilder())
+                    ->withBillingAddress(static::ADDRESS_1)
+                    ->withShippingAddress(static::ADDRESS_2)
+                    ->withCustomer(static::GUEST_CUSTOMER)
+            )->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -108,13 +113,15 @@ class CustomersRestApiBusinessTester extends Actor
      */
     public function prepareOnlyBillingRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withBillingAddress(static::ADDRESS_1)
-            ->withCustomer(static::CUSTOMER)
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(
+                (new RestCartBuilder())
+                    ->withBillingAddress(static::ADDRESS_1)
+                    ->withCustomer(static::CUSTOMER)
+            )->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -122,13 +129,15 @@ class CustomersRestApiBusinessTester extends Actor
      */
     public function prepareOnlyBillingGuestRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withBillingAddress(static::ADDRESS_1)
-            ->withCustomer(static::GUEST_CUSTOMER)
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(
+                (new RestCartBuilder())
+                    ->withBillingAddress(static::ADDRESS_1)
+                    ->withCustomer(static::GUEST_CUSTOMER)
+            )->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -136,13 +145,15 @@ class CustomersRestApiBusinessTester extends Actor
      */
     public function prepareOnlyShippingRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withShippingAddress(static::ADDRESS_2)
-            ->withCustomer(static::CUSTOMER)
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(
+                (new RestCartBuilder())
+                    ->withShippingAddress(static::ADDRESS_2)
+                    ->withCustomer(static::CUSTOMER)
+            )->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -150,39 +161,15 @@ class CustomersRestApiBusinessTester extends Actor
      */
     public function prepareOnlyShippingGuestRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withShippingAddress(static::ADDRESS_2)
-            ->withCustomer(static::GUEST_CUSTOMER)
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(
+                (new RestCartBuilder())
+                    ->withShippingAddress(static::ADDRESS_2)
+                    ->withCustomer(static::GUEST_CUSTOMER)
+            )->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer
-     */
-    public function prepareNoAddressRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
-    {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withCustomer(static::CUSTOMER)
-            ->build();
-
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer
-     */
-    public function prepareNoAddressGuestRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
-    {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withCustomer(static::GUEST_CUSTOMER)
-            ->build();
-
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -190,12 +177,14 @@ class CustomersRestApiBusinessTester extends Actor
      */
     public function prepareCustomerRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withCustomer(static::CUSTOMER)
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(
+                (new RestCartBuilder())
+                    ->withCustomer(static::CUSTOMER)
+            )->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -203,12 +192,14 @@ class CustomersRestApiBusinessTester extends Actor
      */
     public function prepareGuestCustomerRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withCustomer(static::GUEST_CUSTOMER)
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(
+                (new RestCartBuilder())
+                    ->withCustomer(static::GUEST_CUSTOMER)
+            )->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -216,11 +207,11 @@ class CustomersRestApiBusinessTester extends Actor
      */
     public function prepareNoCustomerRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart((new RestCartBuilder()))->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**

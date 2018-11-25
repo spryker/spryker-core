@@ -17,5 +17,5 @@ interface QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findCustomerQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer;
+    public function findCustomerQuoteByUuid(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer;
 }

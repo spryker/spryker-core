@@ -83,7 +83,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
                 ->addError($customerValidationError);
         }
 
-        $restCustomerTransfer = $this->customerMapper->mapCustomerTransferFromRestCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
+        $restCustomerTransfer = $this->customerMapper->mapRestCustomerTransferFromRestCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
         $restCheckoutRequestAttributesTransfer->getCart()->setCustomer($restCustomerTransfer);
 
         $restCheckoutDataResponseTransfer = $this->checkoutRestApiClient->getCheckoutData($restCheckoutRequestAttributesTransfer);
@@ -92,7 +92,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         }
 
         $restCheckoutResponseAttributesTransfer = $this->checkoutDataMapper
-            ->mapCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer($restCheckoutDataResponseTransfer->getCheckoutData(), $restCheckoutRequestAttributesTransfer);
+            ->mapRestCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer($restCheckoutDataResponseTransfer->getCheckoutData(), $restCheckoutRequestAttributesTransfer);
 
         return $this->createRestResponse($restCheckoutResponseAttributesTransfer);
     }

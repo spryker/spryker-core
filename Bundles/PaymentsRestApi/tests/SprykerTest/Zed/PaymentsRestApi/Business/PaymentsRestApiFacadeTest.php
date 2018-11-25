@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\PaymentsRestApi\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\RestCartBuilder;
+use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\DataBuilder\RestPaymentBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -36,7 +37,8 @@ class PaymentsRestApiFacadeTest extends Unit
      */
     public function testPaymentRestApiFacadeWillMapSinglePaymentToQuote(): void
     {
-        $paymentsRestApiFacade = $this->tester->getLocator()->paymentsRestApi()->facade();
+        /** @var \Spryker\Zed\PaymentsRestApi\Business\PaymentsRestApiFacadeInterface $paymentsRestApiFacade */
+        $paymentsRestApiFacade = $this->tester->getFacade();
 
         $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithSinglePayment();
         $quoteTransfer = $this->prepareQuoteTransfer();
@@ -56,7 +58,8 @@ class PaymentsRestApiFacadeTest extends Unit
      */
     public function testPaymentRestApiFacadeWillMapSinglePaymentWithLimitedAmountToQuote(): void
     {
-        $paymentsRestApiFacade = $this->tester->getLocator()->paymentsRestApi()->facade();
+        /** @var \Spryker\Zed\PaymentsRestApi\Business\PaymentsRestApiFacadeInterface $paymentsRestApiFacade */
+        $paymentsRestApiFacade = $this->tester->getFacade();
 
         $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithSinglePaymentWithLimitedAmount();
         $quoteTransfer = $this->prepareQuoteTransfer();
@@ -72,7 +75,8 @@ class PaymentsRestApiFacadeTest extends Unit
      */
     public function testPaymentRestApiFacadeWillMapMultiplePaymentsToQuote(): void
     {
-        $paymentsRestApiFacade = $this->tester->getLocator()->paymentsRestApi()->facade();
+        /** @var \Spryker\Zed\PaymentsRestApi\Business\PaymentsRestApiFacadeInterface $paymentsRestApiFacade */
+        $paymentsRestApiFacade = $this->tester->getFacade();
 
         $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithMultiplePayments();
         $quoteTransfer = $this->prepareQuoteTransfer();
@@ -98,7 +102,8 @@ class PaymentsRestApiFacadeTest extends Unit
      */
     public function testPaymentRestApiFacadeWillMapNoPaymentsToQuote(): void
     {
-        $paymentsRestApiFacade = $this->tester->getLocator()->paymentsRestApi()->facade();
+        /** @var \Spryker\Zed\PaymentsRestApi\Business\PaymentsRestApiFacadeInterface $paymentsRestApiFacade */
+        $paymentsRestApiFacade = $this->tester->getFacade();
 
         $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithoutPayments();
         $quoteTransfer = $this->prepareQuoteTransfer();
@@ -114,12 +119,14 @@ class PaymentsRestApiFacadeTest extends Unit
      */
     protected function prepareRestCheckoutRequestAttributesTransferWithSinglePayment(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withPayment($this->prepareRestPayment())
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(
+                (new RestCartBuilder())
+                    ->withPayment($this->prepareRestPayment())
+            )->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -127,12 +134,14 @@ class PaymentsRestApiFacadeTest extends Unit
      */
     protected function prepareRestCheckoutRequestAttributesTransferWithSinglePaymentWithLimitedAmount(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withPayment($this->prepareRestPaymentWithLimitedAmount())
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(
+                (new RestCartBuilder())
+                    ->withPayment($this->prepareRestPaymentWithLimitedAmount())
+            )->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -140,13 +149,15 @@ class PaymentsRestApiFacadeTest extends Unit
      */
     protected function prepareRestCheckoutRequestAttributesTransferWithMultiplePayments(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
-            ->withPayment($this->prepareRestPayment())
-            ->withAnotherPayment($this->prepareRestPaymentWithLimitedAmount())
-            ->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(
+                (new RestCartBuilder())
+                    ->withPayment($this->prepareRestPayment())
+                    ->withAnotherPayment($this->prepareRestPaymentWithLimitedAmount())
+            )->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -154,10 +165,11 @@ class PaymentsRestApiFacadeTest extends Unit
      */
     protected function prepareRestCheckoutRequestAttributesTransferWithoutPayments(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())->build();
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
+            ->withCart(new RestCartBuilder())->build();
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
