@@ -9,6 +9,8 @@ namespace SprykerTest\Shared\Url\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\UrlBuilder;
+use Generated\Shared\DataBuilder\UrlRedirectBuilder;
+use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Url\Business\UrlFacadeInterface;
@@ -27,15 +29,7 @@ class UrlDataHelper extends Module
      */
     public function haveUrl(array $urlOverride = []): UrlTransfer
     {
-        $urlTransfer = (new UrlBuilder())
-            ->seed($urlOverride)
-            ->build();
-
-        if ($urlTransfer->getFkLocale() === null) {
-            $currentLocaleTransfer = $this->getLocaleFacade()->getCurrentLocale();
-
-            $urlTransfer->setFkLocale($currentLocaleTransfer->getIdLocale());
-        }
+        $urlTransfer = $this->buildUrl($urlOverride);
 
         $this->getUrlFacade()->createUrl($urlTransfer);
 
@@ -52,6 +46,38 @@ class UrlDataHelper extends Module
     }
 
     /**
+     * @param array $urlRedirectOverride
+     * @param array $urlOverride
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     */
+    public function haveUrlRedirect(array $urlRedirectOverride = [], array $urlOverride = []): UrlRedirectTransfer
+    {
+        $urlRedirectTransfer = (new UrlRedirectBuilder())
+            ->seed($urlRedirectOverride)
+            ->build();
+
+        if ($urlRedirectTransfer->getSource() === null) {
+            $urlTransfer = $this->buildUrl($urlOverride);
+
+            $urlRedirectTransfer->setSource($urlTransfer);
+        }
+
+        $this->getUrlFacade()->createUrlRedirect($urlRedirectTransfer);
+
+        $this->debug(sprintf(
+            'Inserted URL Redirect: %d',
+            $urlRedirectTransfer->getIdUrlRedirect()
+        ));
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($urlRedirectTransfer) {
+            $this->cleanupUrlRedirect($urlRedirectTransfer);
+        });
+
+        return $urlRedirectTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
@@ -61,6 +87,36 @@ class UrlDataHelper extends Module
         $this->debug(sprintf('Deleting URL: %d', $urlTransfer->getIdUrl()));
 
         $this->getUrlFacade()->deleteUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     */
+    protected function cleanupUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer): void
+    {
+        $this->debug(sprintf('Deleting URL Redirect: %d', $urlRedirectTransfer->getIdUrlRedirect()));
+
+        $this->getUrlFacade()->deleteUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * @param array $urlOverride
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function buildUrl(array $urlOverride = []): UrlTransfer
+    {
+        $urlTransfer = (new UrlBuilder())
+            ->seed($urlOverride)
+            ->build();
+
+        if ($urlTransfer->getFkLocale() === null) {
+            $currentLocaleTransfer = $this->getLocaleFacade()->getCurrentLocale();
+
+            $urlTransfer->setFkLocale($currentLocaleTransfer->getIdLocale());
+        }
+
+        return $urlTransfer;
     }
 
     /**

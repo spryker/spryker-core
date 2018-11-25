@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Url\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use InvalidArgumentException;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
@@ -34,6 +35,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UrlFacadeTest extends Unit
 {
+    protected const VALUE_URL = 'http://value.url/';
+
     /**
      * @var \SprykerTest\Zed\Url\UrlBusinessTester
      */
@@ -213,6 +216,21 @@ class UrlFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testFindUrlCaseInsensitiveWillThrowInvalidArgumentExceptionIfIdUrlOrUrlValueIsNotSet(): void
+    {
+        // Assign
+        $urlTransfer = new UrlTransfer();
+
+        // Assert
+        $this->expectException(InvalidArgumentException::class);
+
+        // Act
+        $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testHasUrlEntityByUrl()
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
@@ -228,6 +246,79 @@ class UrlFacadeTest extends Unit
         $hasUrl = $this->urlFacade->hasUrl($urlTransfer);
 
         $this->assertTrue($hasUrl, 'Checking if URL entity exists by path should return true.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasUrlCaseInsensitiveShouldReturnTrueIfUrlExists(): void
+    {
+        // Assign
+        $this->tester->haveUrl([
+            UrlTransfer::URL => static::VALUE_URL,
+        ]);
+
+        $urlTransfer = (new UrlTransfer())
+            ->setUrl(static::VALUE_URL);
+
+        // Act
+        $hasUrlCaseInsensitive = $this->urlFacade->hasUrlCaseInsensitive($urlTransfer);
+
+        // Assert
+        $this->assertTrue($hasUrlCaseInsensitive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasUrlCaseInsensitiveShouldReturnFalseIfUrlDoesNotExist(): void
+    {
+        // Assign
+        $this->tester->haveUrl();
+
+        $urlTransfer = (new UrlTransfer())
+            ->setUrl(static::VALUE_URL);
+
+        // Act
+        $hasUrlCaseInsensitive = $this->urlFacade->hasUrlCaseInsensitive($urlTransfer);
+
+        // Assert
+        $this->assertFalse($hasUrlCaseInsensitive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasUrlCaseInsensitiveShouldReturnFalseIfUrlDoesNotExistButUrlRedirectExists(): void
+    {
+        // Assign
+        $this->tester->haveUrlRedirect([], [
+            UrlTransfer::URL => static::VALUE_URL,
+        ]);
+
+        $urlTransfer = (new UrlTransfer())
+            ->setUrl(static::VALUE_URL);
+
+        // Act
+        $hasUrlCaseInsensitive = $this->urlFacade->hasUrlCaseInsensitive($urlTransfer);
+
+        // Assert
+        $this->assertFalse($hasUrlCaseInsensitive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasUrlCaseInsensitiveWillThrowInvalidArgumentExceptionIfIdUrlOrUrlValueIsNotSet(): void
+    {
+        // Assign
+        $urlTransfer = new UrlTransfer();
+
+        // Assert
+        $this->expectException(InvalidArgumentException::class);
+
+        // Act
+        $this->urlFacade->hasUrl($urlTransfer);
     }
 
     /**
@@ -254,6 +345,77 @@ class UrlFacadeTest extends Unit
         $hasUrl = $this->urlFacade->hasUrl($urlTransfer);
 
         $this->assertFalse($hasUrl, 'Checking if URL redirect entity exists should get ignored.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasUrlOrRedirectedUrlCaseInsensitiveShouldReturnTrueIfUrlExistsAndUrlRedirectDoesNot(): void
+    {
+        // Assign
+        $this->tester->haveUrl([
+            UrlTransfer::URL => static::VALUE_URL,
+        ]);
+
+        $urlTransfer = (new UrlTransfer())
+            ->setUrl(static::VALUE_URL);
+
+        // Act
+        $hasUrlOrRedirectedUrlCaseInsensitive = $this->urlFacade->hasUrlOrRedirectedUrlCaseInsensitive($urlTransfer);
+
+        // Assert
+        $this->assertTrue($hasUrlOrRedirectedUrlCaseInsensitive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasUrlOrRedirectedUrlCaseInsensitiveShouldReturnTrueIfUrlRedirectExistsAndUrlDoesNot(): void
+    {
+        // Assign
+        $this->tester->haveUrlRedirect([], [
+            UrlTransfer::URL => static::VALUE_URL,
+        ]);
+
+        $urlTransfer = (new UrlTransfer())
+            ->setUrl(static::VALUE_URL);
+
+        // Act
+        $hasUrlOrRedirectedUrlCaseInsensitive = $this->urlFacade->hasUrlOrRedirectedUrlCaseInsensitive($urlTransfer);
+
+        // Assert
+        $this->assertTrue($hasUrlOrRedirectedUrlCaseInsensitive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasUrlOrRedirectedUrlCaseInsensitiveShouldReturnFalseIfUrlAndUrlRedirectDoNotExist(): void
+    {
+        // Assign
+        $urlTransfer = (new UrlTransfer())
+            ->setUrl(static::VALUE_URL);
+
+        // Act
+        $hasUrlOrRedirectedUrlCaseInsensitive = $this->urlFacade->hasUrlOrRedirectedUrlCaseInsensitive($urlTransfer);
+
+        // Assert
+        $this->assertFalse($hasUrlOrRedirectedUrlCaseInsensitive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasUrlOrRedirectedUrlCaseInsensitiveWillThrowInvalidArgumentExceptionIfIdUrlOrUrlValueIsNotSet(): void
+    {
+        // Assign
+        $urlTransfer = new UrlTransfer();
+
+        // Assert
+        $this->expectException(InvalidArgumentException::class);
+
+        // Act
+        $this->urlFacade->hasUrlOrRedirectedUrlCaseInsensitive($urlTransfer);
     }
 
     /**
