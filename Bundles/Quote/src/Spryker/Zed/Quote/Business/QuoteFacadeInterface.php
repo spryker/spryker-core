@@ -145,6 +145,8 @@ interface QuoteFacadeInterface
      *
      * @api
      *
+     * {@internal will work if uuid field is provided.}
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

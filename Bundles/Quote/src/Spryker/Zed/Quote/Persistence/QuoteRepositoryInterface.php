@@ -73,11 +73,6 @@ interface QuoteRepositoryInterface
     public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer;
 
     /**
-     * Specification:
-     * - Finds quote by uuid.
-     *
-     * @api
-     *
      * @param string $uuidQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
