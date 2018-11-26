@@ -92,9 +92,9 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
     /**
      * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[] $productQuantityEntityTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    protected function getMappedProductQuantityTransfers(array $productQuantityEntityTransfers)
+    protected function getMappedProductQuantityTransfers(array $productQuantityEntityTransfers): array
     {
         $productQuantityTransfers = [];
         $mapper = $this->getFactory()->createProductQuantityMapper();

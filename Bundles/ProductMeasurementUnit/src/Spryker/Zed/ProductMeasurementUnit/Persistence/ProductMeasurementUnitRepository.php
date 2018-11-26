@@ -311,7 +311,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    protected function getMappedProductMeasurementSalesUnitTransfers(ObjectCollection $productMeasurementSalesUnitEntityCollection)
+    protected function getMappedProductMeasurementSalesUnitTransfers(ObjectCollection $productMeasurementSalesUnitEntityCollection): array
     {
         $productMeasurementSalesUnitTransfers = [];
         $mapper = $this->getFactory()->createProductMeasurementUnitMapper();
