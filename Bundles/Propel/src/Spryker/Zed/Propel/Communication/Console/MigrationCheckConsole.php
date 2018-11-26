@@ -24,6 +24,9 @@ class MigrationCheckConsole extends Console
     public const COMMAND_NAME = 'propel:migration:check';
     public const CODE_CHANGES = 3;
 
+    public const MIGRATION_NEEDS_TO_BE_EXECUTED_MESSAGE = 'migration needs to be executed';
+    public const MIGRATIONS_NEED_TO_BE_EXECUTED_MESSAGE = 'migrations need to be executed';
+
     /**
      * @return void
      */
@@ -58,11 +61,7 @@ class MigrationCheckConsole extends Console
 
         $processOutput = $process->getOutput();
 
-        $migrationNeeded = false;
-        if (strpos($processOutput, 'migration needs to be executed') !== false ||
-            strpos($processOutput, 'migrations need to be executed') !== false) {
-            $migrationNeeded = true;
-        }
+        $migrationNeeded = $this->checkIfMigrationRunNeeded($processOutput);
 
         if ($migrationNeeded) {
             $output->writeln($processOutput, OutputInterface::VERBOSITY_VERBOSE);
@@ -77,5 +76,20 @@ class MigrationCheckConsole extends Console
         $output->writeln('<success>migration not needed</success>');
 
         return static::CODE_SUCCESS;
+    }
+
+    /**
+     * @param string $processOutput
+     *
+     * @return bool
+     */
+    protected function checkIfMigrationRunNeeded(string $processOutput): bool
+    {
+        if (strpos($processOutput, static::MIGRATION_NEEDS_TO_BE_EXECUTED_MESSAGE) !== false ||
+            strpos($processOutput, static::MIGRATIONS_NEED_TO_BE_EXECUTED_MESSAGE) !== false) {
+            return true;
+        }
+
+        return false;
     }
 }
