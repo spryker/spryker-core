@@ -11,6 +11,9 @@ use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CustomersRestApi\CustomersRestApiConfig getConfig()
+ */
 class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_CUSTOMER_ADDRESS = 'PROPEL_QUERY_CUSTOMER_ADDRESS';

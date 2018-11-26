@@ -24,6 +24,9 @@ use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesQuer
 use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingServiceBridge;
 use Spryker\Zed\ProductOption\Exception\MissingMoneyCollectionFormTypePluginException;
 
+/**
+ * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
+ */
 class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';

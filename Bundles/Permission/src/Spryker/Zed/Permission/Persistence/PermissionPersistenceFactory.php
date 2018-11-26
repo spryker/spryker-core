@@ -13,6 +13,8 @@ use Spryker\Zed\Permission\Persistence\Propel\Mapper\PermissionMapper;
 
 /**
  * @method \Spryker\Zed\Permission\PermissionConfig getConfig()
+ * @method \Spryker\Zed\Permission\Persistence\PermissionEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface getRepository()
  */
 class PermissionPersistenceFactory extends AbstractPersistenceFactory
 {

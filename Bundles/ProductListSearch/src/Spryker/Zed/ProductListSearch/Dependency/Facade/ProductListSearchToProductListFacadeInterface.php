@@ -14,14 +14,14 @@ interface ProductListSearchToProductListFacadeInterface
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsIdProductAbstract(int $idProductAbstract): array;
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
+    public function getProductWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int[] $productListIds

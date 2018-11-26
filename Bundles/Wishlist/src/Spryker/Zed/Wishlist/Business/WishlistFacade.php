@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Wishlist\Business\WishlistBusinessFactory getFactory()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface getRepository()
  */
 class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 {

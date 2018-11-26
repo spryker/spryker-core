@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\CompanyRoleGui\Communication\CompanyRoleGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyRoleGui\CompanyRoleGuiConfig getConfig()
  */
 class CompanyRoleFormExpanderPlugin extends AbstractPlugin implements CompanyUserFormExpanderPluginInterface
 {

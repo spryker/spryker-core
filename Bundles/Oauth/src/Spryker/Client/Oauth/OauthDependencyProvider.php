@@ -11,6 +11,9 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Oauth\Dependency\Client\OauthToZedRequestClientBridge;
 
+/**
+ * @method \Spryker\Client\Oauth\OauthConfig getConfig()
+ */
 class OauthDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
