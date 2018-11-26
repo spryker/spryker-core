@@ -59,7 +59,8 @@ class MigrationCheckConsole extends Console
         $processOutput = $process->getOutput();
 
         $migrationNeeded = false;
-        if (strpos($processOutput, 'migration needs to be executed') !== false) {
+        if (strpos($processOutput, 'migration needs to be executed') !== false ||
+            strpos($processOutput, 'migrations need to be executed') !== false) {
             $migrationNeeded = true;
         }
 
