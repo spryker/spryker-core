@@ -58,5 +58,5 @@ interface CompanyBusinessUnitRepositoryInterface
      *
      * @return bool
      */
-    public function checkCompanyUserByBusinessUnitIdCompanyUserIdExists(CompanyUserTransfer $companyUserTransfer): bool;
+    public function checkCompanyUserNotDuplicated(CompanyUserTransfer $companyUserTransfer): bool;
 }

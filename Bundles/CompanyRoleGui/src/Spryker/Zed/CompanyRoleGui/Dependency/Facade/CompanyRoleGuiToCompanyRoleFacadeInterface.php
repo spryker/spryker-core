@@ -54,5 +54,7 @@ interface CompanyRoleGuiToCompanyRoleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
-    public function getCompanyRoleCollection(CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer): CompanyRoleCollectionTransfer;
+    public function getCompanyRoleCollection(
+        CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyRoleCollectionTransfer;
 }

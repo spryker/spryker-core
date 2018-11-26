@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleCreateForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleByCompany\CompanyUserRoleFormByCompany;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleByCompany\DataProvider\CompanyUserRoleFormByCompanyDataProvider;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleByCompany\CompanyUserRoleByCompanyForm;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleByCompany\DataProvider\CompanyUserRoleByCompanyFormDataProvider;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleCreateDataProvider;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyUserRoleFormDataProvider;
@@ -153,16 +153,16 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Form\FormTypeInterface
      */
-    public function createCompanyUserRoleFormByCompany(): FormTypeInterface
+    public function createCompanyUserRoleByCompanyForm(): FormTypeInterface
     {
-        return new CompanyUserRoleFormByCompany();
+        return new CompanyUserRoleByCompanyForm();
     }
 
     /**
-     * @return \Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleByCompany\DataProvider\CompanyUserRoleFormByCompanyDataProvider
+     * @return \Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleByCompany\DataProvider\CompanyUserRoleByCompanyFormDataProvider
      */
-    public function createCompanyUserRoleFormDataProviderByCompany(): CompanyUserRoleFormByCompanyDataProvider
+    public function createCompanyUserRoleFormDataProviderByCompany(): CompanyUserRoleByCompanyFormDataProvider
     {
-        return new CompanyUserRoleFormByCompanyDataProvider($this->getCompanyRoleFacade());
+        return new CompanyUserRoleByCompanyFormDataProvider($this->getCompanyRoleFacade());
     }
 }

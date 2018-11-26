@@ -19,8 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CustomerBusinessUnitAttachForm extends AbstractType
 {
-    public const OPTION_VALUES_BUSINESS_UNITS_CHOICES = 'company_business_unit_choices';
-    public const OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES = 'company_business_unit_attributes';
+    public const OPTION_COMPANY_BUSINESS_UNIT_CHOICES = 'company_business_unit_choices';
 
     public const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
 
@@ -41,8 +40,7 @@ class CustomerBusinessUnitAttachForm extends AbstractType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setRequired(static::OPTION_VALUES_BUSINESS_UNITS_CHOICES);
-        $resolver->setRequired(static::OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES);
+        $resolver->setRequired(static::OPTION_COMPANY_BUSINESS_UNIT_CHOICES);
         $resolver->setDefaults([
             'data_class' => CompanyUserTransfer::class,
         ]);
@@ -57,7 +55,7 @@ class CustomerBusinessUnitAttachForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCompanyBusinessUnitCollectionField($builder, $options);
-        $this->executeCustomerBusinessUnitAttachExpanderPlugins($builder);
+        $this->executeCustomerBusinessUnitAttachFormExpanderPlugins($builder);
     }
 
     /**
@@ -71,8 +69,7 @@ class CustomerBusinessUnitAttachForm extends AbstractType
         $builder->add(static::FIELD_FK_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
             'label' => 'Business Unit',
             'placeholder' => 'Business Unit name',
-            'choices' => $options[static::OPTION_VALUES_BUSINESS_UNITS_CHOICES],
-            'choice_attr' => $options[static::OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES],
+            'choices' => $options[static::OPTION_COMPANY_BUSINESS_UNIT_CHOICES],
             'choices_as_values' => true,
             'required' => true,
         ]);
@@ -85,10 +82,10 @@ class CustomerBusinessUnitAttachForm extends AbstractType
      *
      * @return $this
      */
-    protected function executeCustomerBusinessUnitAttachExpanderPlugins(FormBuilderInterface $builder): self
+    protected function executeCustomerBusinessUnitAttachFormExpanderPlugins(FormBuilderInterface $builder): self
     {
-        foreach ($this->getFactory()->getCompanyUserAttachCustomerFormExpanderPlugins() as $attachCustomerFormExpanderPlugin) {
-            $builder = $attachCustomerFormExpanderPlugin->expand($builder);
+        foreach ($this->getFactory()->getCustomerBusinessUnitAttachFormExpanderPlugins() as $customerBusinessUnitAttachFormExpanderPlugin) {
+            $builder = $customerBusinessUnitAttachFormExpanderPlugin->expand($builder);
         }
 
         return $this;

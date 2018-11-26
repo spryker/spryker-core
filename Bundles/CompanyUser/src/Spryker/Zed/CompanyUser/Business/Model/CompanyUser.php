@@ -76,11 +76,8 @@ class CompanyUser implements CompanyUserInterface
      */
     public function create(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
-            ->setCompanyUser($companyUserTransfer)
-            ->setIsSuccessful(true);
+        $companyUserResponseTransfer = $this->executePreSaveCheckPlugins($companyUserTransfer);
 
-        $companyUserResponseTransfer = $this->executePreSaveCheckPlugins($companyUserResponseTransfer);
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
             return $companyUserResponseTransfer;
         }
@@ -97,11 +94,8 @@ class CompanyUser implements CompanyUserInterface
      */
     public function save(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
-            ->setCompanyUser($companyUserTransfer)
-            ->setIsSuccessful(true);
+        $companyUserResponseTransfer = $this->executePreSaveCheckPlugins($companyUserTransfer);
 
-        $companyUserResponseTransfer = $this->executePreSaveCheckPlugins($companyUserResponseTransfer);
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
             return $companyUserResponseTransfer;
         }
@@ -367,17 +361,22 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function executePreSaveCheckPlugins(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
+    protected function executePreSaveCheckPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         foreach ($this->companyUserPreSaveCheckPlugins as $companyUserPreSaveCheckPlugin) {
-            $companyUserResponseTransfer = $companyUserPreSaveCheckPlugin->check($companyUserResponseTransfer);
+            $companyUserResponseTransfer = $companyUserPreSaveCheckPlugin->check($companyUserTransfer);
+            if (!$companyUserResponseTransfer->getIsSuccessful()) {
+                return $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
+            }
         }
 
-        return $companyUserResponseTransfer;
+        return (new CompanyUserResponseTransfer())
+            ->setCompanyUser($companyUserTransfer)
+            ->setIsSuccessful(true);
     }
 
     /**

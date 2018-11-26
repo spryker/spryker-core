@@ -8,9 +8,7 @@
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Controller;
 
 use ArrayObject;
-use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,13 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateCompanyUserController extends AbstractController
 {
-    protected const PARAM_REDIRECT_URL = 'redirect-url';
-
-    protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Company user has been attached to business unit.';
-    protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Company user has not been attached to business unit.';
-    protected const MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED = 'Company user already attached to this business unit.';
+    protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Customer has been attached to business unit.';
+    protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Customer has not been attached to business unit.';
 
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
+
+    protected const PARAM_ID_CUSTOMER = 'id-customer';
+    protected const PARAM_ID_COMPANY = 'id-company';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -33,46 +31,31 @@ class CreateCompanyUserController extends AbstractController
      */
     public function attachCustomerAction(Request $request)
     {
-        $idCompanyUser = $this->castId($request->query->get(BusinessOnBehalfGuiConfig::PARAM_ID_COMPANY_USER));
+        $idCustomer = $this->castId($request->query->get(static::PARAM_ID_CUSTOMER));
+        $idCompany = $this->castId($request->query->get(static::PARAM_ID_COMPANY));
         $dataProvider = $this->getFactory()->createCustomerCompanyAttachFormDataProvider();
-        $companyUserTransfer = $dataProvider->getData($idCompanyUser);
+        $companyUserTransfer = $dataProvider->getData($idCustomer, $idCompany);
 
         $form = $this->getFactory()
             ->getCustomerBusinessUnitAttachForm($companyUserTransfer, $dataProvider->getOptions($companyUserTransfer))
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->attachCustomer($form);
+            $companyUserResponseTransfer = $this->getFactory()
+                ->getCompanyUserFacade()
+                ->create($form->getData());
+
+            if ($companyUserResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
+
+                return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+            }
+
+            $this->handleErrorMessages($companyUserResponseTransfer->getMessages());
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $companyUserForm
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function attachCustomer(FormInterface $companyUserForm)
-    {
-        $companyUserTransfer = $companyUserForm->getData();
-
-        $companyUserResponseTransfer = $this->getFactory()
-            ->getCompanyUserFacade()
-            ->create($companyUserTransfer);
-
-        if (!$companyUserResponseTransfer->getIsSuccessful()) {
-            $this->handleErrorMessages($companyUserResponseTransfer->getMessages());
-        } else {
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
-
-            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
-        }
-
-        return $this->viewResponse([
-            'form' => $companyUserForm->createView(),
         ]);
     }
 
@@ -83,10 +66,13 @@ class CreateCompanyUserController extends AbstractController
      */
     protected function handleErrorMessages(ArrayObject $errorMessageTransfers): void
     {
+        if (count($errorMessageTransfers) === 0) {
+            $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_CREATE);
+            return;
+        }
+
         foreach ($errorMessageTransfers as $errorMessageTransfer) {
             $this->addErrorMessage($errorMessageTransfer->getText());
         }
-
-        $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_CREATE);
     }
 }

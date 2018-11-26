@@ -15,7 +15,6 @@ use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\CustomerBusinessUnitAttac
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\DataProvider\CustomerBusinessUnitAttachFormDataProvider;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyFacadeInterface;
-use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyRoleFacadeInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCustomerFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -33,8 +32,8 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new CustomerBusinessUnitAttachFormDataProvider(
             $this->getCompanyBusinessUnitFacade(),
-            $this->getCompanyRoleFacade(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyFacade(),
+            $this->getCustomerFacade()
         );
     }
 
@@ -63,14 +62,6 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyRoleFacadeInterface
-     */
-    public function getCompanyRoleFacade(): BusinessOnBehalfGuiToCompanyRoleFacadeInterface
-    {
-        return $this->getProvidedDependency(BusinessOnBehalfGuiDependencyProvider::FACADE_COMPANY_ROLE);
-    }
-
-    /**
      * @return \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface
      */
     public function getCompanyBusinessUnitFacade(): BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface
@@ -90,9 +81,9 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserAttachCustomerFormExpanderPluginInterface[]
+     * @return \Spryker\Zed\BusinessOnBehalfGuiExtension\Dependency\Plugin\CustomerBusinessUnitAttachFormExpanderPluginInterface[]
      */
-    public function getCompanyUserAttachCustomerFormExpanderPlugins(): array
+    public function getCustomerBusinessUnitAttachFormExpanderPlugins(): array
     {
         return $this->getProvidedDependency(
             BusinessOnBehalfGuiDependencyProvider::PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER
