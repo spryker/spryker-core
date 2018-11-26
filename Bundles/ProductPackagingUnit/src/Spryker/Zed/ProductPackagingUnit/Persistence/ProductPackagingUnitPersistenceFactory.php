@@ -18,6 +18,8 @@ use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
+ * @method \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface getRepository()
  */
 class ProductPackagingUnitPersistenceFactory extends AbstractPersistenceFactory
 {

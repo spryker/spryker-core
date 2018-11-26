@@ -14,6 +14,9 @@ use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyBridge;
 use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToProductBridge;
 use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToSalesAggregatorBridge;
 
+/**
+ * @method \Spryker\Zed\Ratepay\RatepayConfig getConfig()
+ */
 class RatepayDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATED';

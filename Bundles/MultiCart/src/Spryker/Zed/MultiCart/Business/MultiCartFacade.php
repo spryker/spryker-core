@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\MultiCart\Business\MultiCartBusinessFactory getFactory()
  * @method \Spryker\Zed\MultiCart\Persistence\MultiCartEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MultiCart\Persistence\MultiCartRepositoryInterface getRepository()
  */
 class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
 {

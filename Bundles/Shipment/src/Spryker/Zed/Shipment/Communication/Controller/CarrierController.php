@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  */
 class CarrierController extends AbstractController
 {
