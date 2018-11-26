@@ -195,7 +195,7 @@ abstract class AbstractController
     protected function redirectResponseExternal(string $url, int $code = 302, array $headers = []): RedirectResponse
     {
         if (strpos($url, '/') !== 0 && !$this->isUrlDomainWhitelisted($url)) {
-            throw new ForbiddenRedirectException(sprintf("URL %s is not a part of a whitelisted domain", $url));
+            throw new ForbiddenRedirectException(sprintf('URL %s is not a part of a whitelisted domain', $url));
         }
 
         return $this->redirectResponse($url, $code, $headers);
@@ -319,8 +319,9 @@ abstract class AbstractController
     protected function isUrlDomainWhitelisted(string $absoluteUrl): bool
     {
         $whitelistedDomains = Config::get(KernelConstants::DOMAIN_WHITELIST, []);
+        $isStrictDomainRedirect = Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
 
-        if (empty($whitelistedDomains)) {
+        if (empty($whitelistedDomains) && !$isStrictDomainRedirect) {
             return true;
         }
 
