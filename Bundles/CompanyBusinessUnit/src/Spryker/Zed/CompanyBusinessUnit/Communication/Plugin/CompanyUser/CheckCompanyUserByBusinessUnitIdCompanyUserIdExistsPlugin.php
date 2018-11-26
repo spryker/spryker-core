@@ -20,7 +20,7 @@ class CheckCompanyUserByBusinessUnitIdCompanyUserIdExistsPlugin extends Abstract
 {
     /**
      * {@inheritdoc}
-     * - Checks exists relation between customer and business unit before save company user for avoid duplicates of company user entity.
+     * - Checks exists relation between customer and business unit before save company user to avoid duplicates of company user entity.
      *
      * @api
      *

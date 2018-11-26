@@ -54,10 +54,9 @@ class CompanyUserRoleByCompanyFormDataProvider
      */
     public function getOptions(CompanyUserTransfer $companyUserTransfer): array
     {
-        $companyRoleChoicesValues = $this->prepareCompanyRoleAttributeMap($companyUserTransfer);
-
         return [
-            CompanyUserRoleByCompanyForm::OPTION_COMPANY_ROLE_CHOICES => $companyRoleChoicesValues,
+            CompanyUserRoleByCompanyForm::OPTION_COMPANY_ROLE_CHOICES =>
+                $this->prepareCompanyRoleAttributeMap($companyUserTransfer),
         ];
     }
 
