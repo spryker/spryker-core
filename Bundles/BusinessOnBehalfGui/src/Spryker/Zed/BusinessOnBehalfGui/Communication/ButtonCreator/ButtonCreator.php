@@ -14,8 +14,9 @@ use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompa
 
 class ButtonCreator implements ButtonCreatorInterface
 {
-    protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_URL = 'company-user-gui/create-company-user/attach-customer';
+    protected const URL_ATTACH_CUSTOMER_TO_COMPANY = 'company-user-gui/create-company-user/attach-customer';
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE = 'Attach to company';
+
     protected const PARAM_ID_CUSTOMER = 'id-customer';
 
     /**
@@ -64,17 +65,27 @@ class ButtonCreator implements ButtonCreatorInterface
             'class' => 'btn-create',
             'icon' => 'fa-plus',
         ];
+        $url = Url::generate(static::URL_ATTACH_CUSTOMER_TO_COMPANY, [
+            static::PARAM_ID_CUSTOMER => $idCustomer,
+        ]);
 
-        $url = Url::generate(
-            static::BUTTON_ATTACH_CUSTOMER_TO_COMPANY_URL,
-            [
-                static::PARAM_ID_CUSTOMER => $idCustomer,
-            ]
-        );
+        return $this->generateButtonTransfer($url, static::BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE, $defaultOptions);
+    }
 
+    /**
+     * @param string $url
+     * @param string $title
+     * @param array $defaultOptions
+     * @param array|null $customOptions
+     *
+     * @return \Generated\Shared\Transfer\ButtonTransfer
+     */
+    protected function generateButtonTransfer(string $url, string $title, array $defaultOptions, ?array $customOptions = null): ButtonTransfer
+    {
         return (new ButtonTransfer())
             ->setUrl($url)
-            ->setTitle(static::BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE)
-            ->setDefaultOptions($defaultOptions);
+            ->setTitle($title)
+            ->setDefaultOptions($defaultOptions)
+            ->setCustomOptions($customOptions);
     }
 }

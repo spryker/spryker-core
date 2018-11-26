@@ -18,7 +18,7 @@ class BusinessOnBehalfGuiAttachToCompanyButtonCustomerTableActionExpanderPlugin 
 {
     /**
      * {@inheritdoc}
-     * - Adds "Attach to company" button to customer table actions if the customer have at least one company user.
+     * - Adds "Attach to company" button to customer table actions if the customer has at least one company user.
      *
      * @api
      *
