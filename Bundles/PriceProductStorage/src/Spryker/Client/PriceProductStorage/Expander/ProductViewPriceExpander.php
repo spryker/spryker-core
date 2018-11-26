@@ -77,8 +77,8 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
         }
 
         $priceProductConcreteTransfers = $this->priceProductService->mergeConcreteAndAbstractPrices(
-            $priceProductConcreteTransfers,
-            $priceProductAbstractTransfers
+            $priceProductAbstractTransfers,
+            $priceProductConcreteTransfers
         );
 
         $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
