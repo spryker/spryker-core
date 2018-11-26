@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\SettingsFormDataProvider;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalThresholdDataProviderResolver;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalThresholdDataProviderResolverInterface;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolver;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolverInterface;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\GlobalThresholdMapperResolver;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\GlobalThresholdMapperResolverInterface;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\SettingsForm;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\Resolver\GlobalThresholdMapperResolver;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\Resolver\GlobalThresholdMapperResolverInterface;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\SettingsType;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinder;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface;
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToCurrencyFacadeInterface;
@@ -61,7 +61,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
     public function getSettingsForm(SettingsFormDataProvider $settingsFormDataProvider): FormInterface
     {
         return $this->getFormFactory()->create(
-            SettingsForm::class,
+            SettingsType::class,
             $settingsFormDataProvider->getData(),
             $settingsFormDataProvider->getOptions()
         );
@@ -103,7 +103,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\GlobalThresholdMapperResolverInterface
+     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\Resolver\GlobalThresholdMapperResolverInterface
      */
     public function createGlobalSoftThresholdFormMapperResolver(): GlobalThresholdMapperResolverInterface
     {
@@ -115,7 +115,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalThresholdDataProviderResolverInterface
+     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolverInterface
      */
     public function createGlobalSoftThresholdDataProviderResolver(): GlobalThresholdDataProviderResolverInterface
     {

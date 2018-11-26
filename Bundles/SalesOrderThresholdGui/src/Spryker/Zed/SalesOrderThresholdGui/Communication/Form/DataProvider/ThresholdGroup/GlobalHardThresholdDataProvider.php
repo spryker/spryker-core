@@ -8,10 +8,9 @@
 namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup;
 
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategyDataProviderInterface;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalHardThresholdType;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\LocalizedForm;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\LocalizedMessagesType;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\GlobalHardThresholdType;
 
 class GlobalHardThresholdDataProvider extends AbstractGlobalThresholdDataProvider implements ThresholdStrategyDataProviderInterface
 {
@@ -33,11 +32,11 @@ class GlobalHardThresholdDataProvider extends AbstractGlobalThresholdDataProvide
             }
 
             $thresholdData[GlobalHardThresholdType::FIELD_STRATEGY] = $formExpanderPlugin->getThresholdKey();
-            $thresholdData = $formExpanderPlugin->getData($thresholdData, $salesOrderThresholdTransfer);
+            $thresholdData = $formExpanderPlugin->getData($thresholdData, $salesOrderThresholdTransfer->getSalesOrderThresholdValue());
         }
 
         foreach ($salesOrderThresholdTransfer->getLocalizedMessages() as $localizedMessage) {
-            $thresholdData[$localizedMessage->getLocaleCode()][LocalizedForm::FIELD_MESSAGE] = $localizedMessage->getMessage();
+            $thresholdData[$localizedMessage->getLocaleCode()][LocalizedMessagesType::FIELD_MESSAGE] = $localizedMessage->getMessage();
         }
 
         $data[GlobalThresholdType::FIELD_HARD] = $thresholdData;

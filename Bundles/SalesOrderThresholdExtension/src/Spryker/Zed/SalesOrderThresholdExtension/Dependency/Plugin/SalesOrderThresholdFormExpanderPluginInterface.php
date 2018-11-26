@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
+use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Symfony\Component\Form\FormBuilderInterface;
 
 interface SalesOrderThresholdFormExpanderPluginInterface
 {
     /**
      * Specification:
-     *  - TODO.
+     *  - Returns the threshold name.
      *
      * @api
      *
@@ -24,7 +24,7 @@ interface SalesOrderThresholdFormExpanderPluginInterface
 
     /**
      * Specification:
-     *  - TODO.
+     *  - Returns the threshold key.
      *
      * @api
      *
@@ -34,7 +34,7 @@ interface SalesOrderThresholdFormExpanderPluginInterface
 
     /**
      * Specification:
-     *  - TODO.
+     *  - Returns the threshold group.
      *
      * @api
      *
@@ -44,7 +44,7 @@ interface SalesOrderThresholdFormExpanderPluginInterface
 
     /**
      * Specification:
-     *  - TODO.
+     *  - Expands the sales order threshold form.
      *
      * @api
      *
@@ -57,27 +57,27 @@ interface SalesOrderThresholdFormExpanderPluginInterface
 
     /**
      * Specification:
-     *  - TODO.
+     *  - Maps the data from SalesOrderThresholdValueTransfer to array form data.
      *
      * @api
      *
      * @param array $data
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      *
      * @return array
      */
-    public function getData(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): array;
+    public function getData(array $data, SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): array;
 
     /**
      * Specification:
-     *  - TODO.
+     *  - Maps the form data to SalesOrderThresholdValueTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer
      */
-    public function mapData(SalesOrderThresholdTransfer $salesOrderThresholdTransfer, array $data): SalesOrderThresholdTransfer;
+    public function mapData(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $data): SalesOrderThresholdValueTransfer;
 }

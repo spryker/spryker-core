@@ -11,8 +11,8 @@ require('../../scss/main.scss');
 var thresholdStrategyToggle = function(thresholdGroup) {
     var strategyKey = $('input[name="global-threshold[' + thresholdGroup + 'Threshold][strategy]"]:checked').val();
 
-    $('#threshold-key-' + strategyKey).removeClass('hidden');
-    $('.threshold_group_' + thresholdGroup + ':not(#threshold-key-'+ strategyKey +')').addClass('hidden');
+    $('.threshold-key-' + strategyKey).removeClass('hidden');
+    $('.threshold_group_' + thresholdGroup + ':not(.threshold-key-'+ strategyKey +')').addClass('hidden');
 };
 
 $(document).ready(function () {

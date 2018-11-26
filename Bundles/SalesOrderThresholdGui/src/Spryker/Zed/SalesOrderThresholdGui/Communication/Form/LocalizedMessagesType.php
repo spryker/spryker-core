@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * @method \Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig getConfig()
  * @method \Spryker\Zed\SalesOrderThresholdGui\Communication\SalesOrderThresholdGuiCommunicationFactory getFactory()
  */
-class LocalizedForm extends AbstractType
+class LocalizedMessagesType extends AbstractType
 {
     public const FIELD_MESSAGE = 'message';
 
@@ -27,8 +27,6 @@ class LocalizedForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        parent::buildForm($builder, $options);
-
         $this->addMessageField($builder, $options);
     }
 
@@ -41,8 +39,8 @@ class LocalizedForm extends AbstractType
     protected function addMessageField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_MESSAGE, TextType::class, [
-                'required' => false,
-            ]);
+            'required' => false,
+        ]);
 
         return $this;
     }

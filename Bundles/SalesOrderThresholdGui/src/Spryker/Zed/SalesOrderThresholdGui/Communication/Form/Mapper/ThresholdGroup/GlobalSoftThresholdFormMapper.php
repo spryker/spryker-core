@@ -8,7 +8,7 @@
 namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup;
 
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalSoftThresholdType;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\GlobalSoftThresholdType;
 
 class GlobalSoftThresholdFormMapper extends AbstractGlobalThresholdFormMapper implements GlobalThresholdFormMapperInterface
 {
@@ -20,6 +20,7 @@ class GlobalSoftThresholdFormMapper extends AbstractGlobalThresholdFormMapper im
      */
     public function map(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer
     {
+        $salesOrderThresholdTransfer->setIdSalesOrderThreshold($data[GlobalSoftThresholdType::FIELD_ID_THRESHOLD] ?? null);
         $salesOrderThresholdTransfer->setIdSalesOrderThreshold($data[GlobalSoftThresholdType::FIELD_ID_THRESHOLD]);
         $salesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,
@@ -34,7 +35,9 @@ class GlobalSoftThresholdFormMapper extends AbstractGlobalThresholdFormMapper im
                 continue;
             }
 
-            $salesOrderThresholdTransfer = $formExpanderPlugin->mapData($salesOrderThresholdTransfer, $data);
+            $salesOrderThresholdTransfer->setSalesOrderThresholdValue(
+                $formExpanderPlugin->mapData($salesOrderThresholdTransfer->getSalesOrderThresholdValue(), $data)
+            );
         }
 
         return $salesOrderThresholdTransfer;

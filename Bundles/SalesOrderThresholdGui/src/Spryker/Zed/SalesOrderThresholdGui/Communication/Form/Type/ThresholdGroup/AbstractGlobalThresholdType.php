@@ -5,9 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form;
+namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\LocalizedMessagesType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -47,7 +48,7 @@ abstract class AbstractGlobalThresholdType extends AbstractType
      */
     protected function addLocalizedForm(FormBuilderInterface $builder, string $name, array $options = []): self
     {
-        $builder->add($name, LocalizedForm::class, [
+        $builder->add($name, LocalizedMessagesType::class, [
                 'label' => false,
             ]);
 

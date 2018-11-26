@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup;
+namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver;
 
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategyDataProviderInterface;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyDataProviderInterface;
 
 interface GlobalThresholdDataProviderResolverInterface
 {
@@ -16,7 +16,7 @@ interface GlobalThresholdDataProviderResolverInterface
      *
      * @throws \Spryker\Zed\SalesOrderThresholdGui\Communication\Exception\MissingGlobalThresholdFormMapperException
      *
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategyDataProviderInterface
+     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyDataProviderInterface
      */
     public function resolveGlobalThresholdDataProviderByStrategyGroup(string $salesOrderThresholdTypeGroup): ThresholdStrategyDataProviderInterface;
 

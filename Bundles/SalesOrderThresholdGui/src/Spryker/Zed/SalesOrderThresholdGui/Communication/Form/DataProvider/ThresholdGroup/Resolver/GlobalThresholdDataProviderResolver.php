@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup;
+namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver;
 
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Exception\MissingThresholdDataProviderException;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategyDataProviderInterface;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyDataProviderInterface;
 use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 
 class GlobalThresholdDataProviderResolver implements GlobalThresholdDataProviderResolverInterface
@@ -38,14 +38,14 @@ class GlobalThresholdDataProviderResolver implements GlobalThresholdDataProvider
      *
      * @throws \Spryker\Zed\SalesOrderThresholdGui\Communication\Exception\MissingThresholdDataProviderException
      *
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategyDataProviderInterface
+     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyDataProviderInterface
      */
     public function resolveGlobalThresholdDataProviderByStrategyGroup(string $salesOrderThresholdTypeGroup): ThresholdStrategyDataProviderInterface
     {
         if (!$this->hasGlobalThresholdDataProviderByStrategyGroup($salesOrderThresholdTypeGroup)) {
             throw new MissingThresholdDataProviderException();
         }
-        /** @var \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategyDataProviderInterface $dataProvider */
+        /** @var \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyDataProviderInterface $dataProvider */
         $dataProvider = $this->config->getStrategyGroupToDataProviderMap()[$salesOrderThresholdTypeGroup];
 
         return new $dataProvider($this->formExpanderPlugins);

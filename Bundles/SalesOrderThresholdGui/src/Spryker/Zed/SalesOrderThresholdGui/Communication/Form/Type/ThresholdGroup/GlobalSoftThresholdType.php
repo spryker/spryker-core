@@ -5,8 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form;
+namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup;
 
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;

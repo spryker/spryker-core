@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\Threshold
 
 use Generated\Shared\Transfer\SalesOrderThresholdLocalizedMessageTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\LocalizedForm;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\LocalizedMessagesType;
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToLocaleFacadeInterface;
 
 abstract class AbstractGlobalThresholdFormMapper
@@ -50,7 +50,7 @@ abstract class AbstractGlobalThresholdFormMapper
         foreach ($localeCollection as $localeTransfer) {
             $localizedMessage = (new SalesOrderThresholdLocalizedMessageTransfer())
                 ->setLocaleCode($localeTransfer->getLocaleName())
-                ->setMessage($data[$localeTransfer->getLocaleName()][LocalizedForm::FIELD_MESSAGE]);
+                ->setMessage($data[$localeTransfer->getLocaleName()][LocalizedMessagesType::FIELD_MESSAGE]);
 
             $salesOrderThresholdTransfer->addLocalizedMessage($localizedMessage);
         }

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Plugin\FormExpander;
 
-use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
+use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface;
 use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
@@ -67,11 +67,11 @@ class GlobalSoftThresholdWithMessageFormExpanderPlugin extends AbstractPlugin im
      * @api
      *
      * @param array $data
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      *
      * @return array
      */
-    public function getData(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): array
+    public function getData(array $data, SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): array
     {
         return $data;
     }
@@ -79,22 +79,19 @@ class GlobalSoftThresholdWithMessageFormExpanderPlugin extends AbstractPlugin im
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer
      */
-    public function mapData(SalesOrderThresholdTransfer $salesOrderThresholdTransfer, array $data): SalesOrderThresholdTransfer
+    public function mapData(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $data): SalesOrderThresholdValueTransfer
     {
-        $salesOrderThresholdValueTransfer = $salesOrderThresholdTransfer->getSalesOrderThresholdValue();
         $salesOrderThresholdValueTransfer->setSalesOrderThresholdType(
             (new SalesOrderThresholdTypeTransfer())
                 ->setKey($this->getThresholdKey())
                 ->setThresholdGroup($this->getThresholdGroup())
         );
 
-        $salesOrderThresholdTransfer->setSalesOrderThresholdValue($salesOrderThresholdValueTransfer);
-
-        return $salesOrderThresholdTransfer;
+        return $salesOrderThresholdValueTransfer;
     }
 }

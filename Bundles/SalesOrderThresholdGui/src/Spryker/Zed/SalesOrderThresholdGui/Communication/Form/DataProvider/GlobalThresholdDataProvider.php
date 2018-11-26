@@ -9,8 +9,10 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalThresholdDataProviderResolverInterface;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolverInterface;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\GlobalHardThresholdType;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\GlobalSoftThresholdType;
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToCurrencyFacadeInterface;
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface;
 use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
@@ -31,7 +33,7 @@ class GlobalThresholdDataProvider
     protected $currencyFacade;
 
     /**
-     * @var \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalThresholdDataProviderResolverInterface
+     * @var \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolverInterface
      */
     protected $globalThresholdDataProviderResolver;
 
@@ -43,7 +45,7 @@ class GlobalThresholdDataProvider
     /**
      * @param \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface $salesOrderThresholdFacade
      * @param \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToCurrencyFacadeInterface $currencyFacade
-     * @param \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalThresholdDataProviderResolverInterface $globalThresholdDataProviderResolver
+     * @param \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolverInterface $globalThresholdDataProviderResolver
      * @param \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[] $formExpanderPlugins
      */
     public function __construct(
@@ -84,7 +86,15 @@ class GlobalThresholdDataProvider
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
-        $data = [];
+        $data = [
+            GlobalThresholdType::FIELD_HARD => [
+                GlobalHardThresholdType::FIELD_STRATEGY => current($this->getHardTypesList()),
+            ],
+            GlobalThresholdType::FIELD_SOFT => [
+                GlobalSoftThresholdType::FIELD_STRATEGY => current($this->getSoftTypesList()),
+            ],
+        ];
+
         $salesOrderThresholdTransfers = $this->getSalesOrderThresholdTransfers($storeTransfer, $currencyTransfer);
         foreach ($salesOrderThresholdTransfers as $salesOrderThresholdTransfer) {
             if ($thresholdStrategyDataProvider = $this->globalThresholdDataProviderResolver

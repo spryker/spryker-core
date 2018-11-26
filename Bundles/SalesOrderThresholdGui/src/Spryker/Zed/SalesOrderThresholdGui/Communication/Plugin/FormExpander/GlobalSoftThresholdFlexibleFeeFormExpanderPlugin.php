@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Plugin\FormExpander;
 
-use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
+use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface;
 use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
@@ -23,8 +23,6 @@ use Symfony\Component\Validator\Constraints\Range;
 class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin implements SalesOrderThresholdFormExpanderPluginInterface
 {
     protected const FIELD_SOFT_FLEXIBLE_FEE = 'flexibleFee';
-
-    protected const TEMPLATE_PATH = '@SalesOrderThresholdGui/ThresholdStrategy/flexible-fee.twig';
 
     /**
      * @api
@@ -75,13 +73,13 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
      * @api
      *
      * @param array $data
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      *
      * @return array
      */
-    public function getData(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): array
+    public function getData(array $data, SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): array
     {
-        $data[static::FIELD_SOFT_FLEXIBLE_FEE] = $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getFee();
+        $data[static::FIELD_SOFT_FLEXIBLE_FEE] = $salesOrderThresholdValueTransfer->getFee();
 
         return $data;
     }
@@ -89,14 +87,13 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer
      */
-    public function mapData(SalesOrderThresholdTransfer $salesOrderThresholdTransfer, array $data): SalesOrderThresholdTransfer
+    public function mapData(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $data): SalesOrderThresholdValueTransfer
     {
-        $salesOrderThresholdValueTransfer = $salesOrderThresholdTransfer->getSalesOrderThresholdValue();
         $salesOrderThresholdValueTransfer->setFee($data[static::FIELD_SOFT_FLEXIBLE_FEE])
         ->setSalesOrderThresholdType(
             (new SalesOrderThresholdTypeTransfer())
@@ -104,9 +101,7 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
             ->setThresholdGroup($this->getThresholdGroup())
         );
 
-        $salesOrderThresholdTransfer->setSalesOrderThresholdValue($salesOrderThresholdValueTransfer);
-
-        return $salesOrderThresholdTransfer;
+        return $salesOrderThresholdValueTransfer;
     }
 
     /**
@@ -124,7 +119,6 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
             'attr' => [
                 'threshold_group' => $this->getThresholdGroup(),
                 'threshold_key' => $this->getThresholdKey(),
-                'template_path' => $this->getTemplatePath(),
             ],
             'constraints' => [
                 $this->createRangeConstraint($options, 0, 100),
@@ -147,13 +141,5 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
             'min' => $min,
             'max' => $max,
         ]);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getTemplatePath(): string
-    {
-        return static::TEMPLATE_PATH;
     }
 }
