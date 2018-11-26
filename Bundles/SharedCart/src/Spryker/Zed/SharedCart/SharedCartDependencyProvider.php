@@ -13,6 +13,9 @@ use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeBridge;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeBridge;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
+ */
 class SharedCartDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_QUOTE = 'FACADE_QUOTE';

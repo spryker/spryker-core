@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-review-storage",
+  "type": "library",
   "description": "ProductReviewStorage module",
   "license": "proprietary",
   "require": {
@@ -14,7 +15,10 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
+    "spryker/customer": "*",
     "spryker/event": "*",
+    "spryker/locale": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/propel-query-builder": "*",

@@ -13,6 +13,9 @@ use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEvent
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerBridge;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
+ */
 class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';

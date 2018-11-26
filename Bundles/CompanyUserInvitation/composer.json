@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-user-invitation",
+  "type": "library",
   "description": "CompanyUserInvitation module",
   "license": "proprietary",
   "require": {

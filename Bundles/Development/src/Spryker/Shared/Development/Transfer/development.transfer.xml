@@ -120,6 +120,7 @@
         <property name="nameDashed" type="string"/>
         <property name="organization" type="Organization"/>
         <property name="application" type="Application"/>
+        <property name="applications" type="Application[]" singular="application"/>
         <property name="path" type="string"/>
         <property name="isStandalone" type="bool"/>
     </transfer>
@@ -157,6 +158,12 @@
         <property name="fullyQualifiedClassName" type="string"/>
         <property name="className" type="string"/>
         <property name="module" type="Module"/>
+    </transfer>
+
+    <transfer name="ModuleOverview">
+        <property name="moduleName" type="string"/>
+        <property name="existsCoreModule" type="bool"/>
+        <property name="existsProjectModule" type="bool"/>
     </transfer>
 
 </transfers>

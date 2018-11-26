@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-image-storage",
+  "type": "library",
   "description": "ProductImageStorage module",
   "license": "proprietary",
   "require": {
@@ -17,6 +18,7 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/event": "*",
+    "spryker/product-attribute": "*",
     "spryker/product-storage": "*",
     "spryker/propel": "*",
     "spryker/propel-query-builder": "*",

@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  */
 class IndexController extends AbstractController
 {

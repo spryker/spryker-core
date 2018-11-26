@@ -1,5 +1,6 @@
 {
   "name": "spryker/glossary-storage",
+  "type": "library",
   "description": "GlossaryStorage module",
   "license": "proprietary",
   "require": {
@@ -10,8 +11,7 @@
     "spryker/propel-orm": "^1.5.0",
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^0.2.0 || ^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0",
-    "spryker/util-sanitize": "^2.1.0"
+    "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

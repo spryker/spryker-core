@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface getRepository()
  * @method \Spryker\Zed\Permission\Business\PermissionBusinessFactory getFactory()
+ * @method \Spryker\Zed\Permission\Persistence\PermissionEntityManagerInterface getEntityManager()
  */
 class PermissionFacade extends AbstractFacade implements PermissionFacadeInterface
 {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/flysystem-local-file-system",
+  "type": "library",
   "description": "FlysystemLocalFileSystem module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-relationship-data-import",
+  "type": "library",
   "description": "MerchantRelationshipDataImport module",
   "license": "MIT",
   "require": {

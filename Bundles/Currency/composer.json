@@ -1,5 +1,6 @@
 {
   "name": "spryker/currency",
+  "type": "library",
   "description": "Currency module",
   "license": "proprietary",
   "require": {
@@ -9,7 +10,7 @@
     "spryker/messenger": "^3.1.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/quote-extension": "^1.0.0",
-    "spryker/session": "^3.0.0",
+    "spryker/session": "^3.0.0 || ^4.0.0",
     "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",
     "spryker/zed-request": "^3.2.0"

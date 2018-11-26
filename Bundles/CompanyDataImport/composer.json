@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-data-import",
+  "type": "library",
   "description": "CompanyDataImport module",
   "license": "MIT",
   "require": {

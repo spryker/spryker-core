@@ -15,6 +15,9 @@ use Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer\ProductCategory
 use Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer\ProductCategoryStorageToProductCategoryQueryContainerBridge;
 use Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer\ProductCategoryStorageToProductQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig getConfig()
+ */
 class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';

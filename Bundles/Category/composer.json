@@ -1,5 +1,6 @@
 {
   "name": "spryker/category",
+  "type": "library",
   "description": "Category module",
   "license": "proprietary",
   "require": {
