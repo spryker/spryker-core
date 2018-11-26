@@ -51,8 +51,6 @@ class ProductRelationStorageListenerTest extends Unit
     protected $productAbstractTransferRelated;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp()

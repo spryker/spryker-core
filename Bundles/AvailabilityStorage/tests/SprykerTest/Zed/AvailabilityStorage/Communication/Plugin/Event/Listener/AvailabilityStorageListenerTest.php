@@ -49,8 +49,6 @@ class AvailabilityStorageListenerTest extends Unit
     protected $tester;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp()

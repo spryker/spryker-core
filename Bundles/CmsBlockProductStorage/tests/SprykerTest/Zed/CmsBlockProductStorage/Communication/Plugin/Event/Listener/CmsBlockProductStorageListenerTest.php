@@ -44,8 +44,6 @@ class CmsBlockProductStorageListenerTest extends Unit
     protected $productAbstractTransfer;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp()
