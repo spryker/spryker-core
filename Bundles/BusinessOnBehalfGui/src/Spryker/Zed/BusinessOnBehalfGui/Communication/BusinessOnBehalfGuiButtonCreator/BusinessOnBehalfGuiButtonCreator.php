@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator;
+namespace Spryker\Zed\BusinessOnBehalfGui\Communication\BusinessOnBehalfGuiButtonCreator;
 
 use Generated\Shared\Transfer\ButtonTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 
-class ButtonCreator implements ButtonCreatorInterface
+class BusinessOnBehalfGuiButtonCreator implements BusinessOnBehalfGuiButtonCreatorInterface
 {
     protected const BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK = 'company-user-gui/delete-company-user/confirm-delete?id-company-user=';
 
@@ -34,7 +34,7 @@ class ButtonCreator implements ButtonCreatorInterface
     {
         foreach ($buttonTransfers as $key => $buttonTransfer) {
             if (strripos($buttonTransfer->getUrl(), static::BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK)) {
-                $url = Url::generate(static::URL_CONFIRM_DELETE_COMPANY_USER, [
+                $url = $this->generateUrl(static::URL_CONFIRM_DELETE_COMPANY_USER, [
                     static::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
                 ]);
 
@@ -53,7 +53,7 @@ class ButtonCreator implements ButtonCreatorInterface
      */
     public function addAttachCustomerToBusinessUnitButton(array $companyUserDataItem, array $actionButtons): array
     {
-        $url = Url::generate(static::URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT, [
+        $url = $this->generateUrl(static::URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT, [
             static::PARAM_ID_CUSTOMER => $companyUserDataItem[SpyCompanyUserTableMap::COL_FK_CUSTOMER],
             static::PARAM_ID_COMPANY => $companyUserDataItem[SpyCompanyUserTableMap::COL_FK_COMPANY],
         ]);
@@ -83,5 +83,16 @@ class ButtonCreator implements ButtonCreatorInterface
             ->setTitle($title)
             ->setDefaultOptions($defaultOptions)
             ->setCustomOptions($customOptions);
+    }
+
+    /**
+     * @param string $url
+     * @param array $queryParams
+     *
+     * @return string
+     */
+    protected function generateUrl(string $url, array $queryParams): string
+    {
+        return Url::generate($url, $queryParams);
     }
 }

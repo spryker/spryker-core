@@ -30,7 +30,7 @@ class CompanyUserTableAttachToBusinessUnitActionLinksExpanderPlugin extends Abst
     public function expandActionLinks(array $companyUserDataItem, array $actionButtons): array
     {
         return $this->getFactory()
-            ->createButtonCreator()
+            ->createBusinessOnBehalfGuiButtonCreator()
             ->addAttachCustomerToBusinessUnitButton($companyUserDataItem, $actionButtons);
     }
 }
