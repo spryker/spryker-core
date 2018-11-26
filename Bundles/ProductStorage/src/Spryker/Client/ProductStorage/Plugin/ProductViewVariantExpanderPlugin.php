@@ -9,13 +9,13 @@ namespace Spryker\Client\ProductStorage\Plugin;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteViewExpanderPluginInterface;
+use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteViewExpanderExcluderPluginInterface;
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\ProductStorage\ProductStorageFactory getFactory()
  */
-class ProductViewVariantExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface, ProductConcreteViewExpanderPluginInterface
+class ProductViewVariantExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface, ProductConcreteViewExpanderExcluderPluginInterface
 {
     /**
      * {@inheritdoc}

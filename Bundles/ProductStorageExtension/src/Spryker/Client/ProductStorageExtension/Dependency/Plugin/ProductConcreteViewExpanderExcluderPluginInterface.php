@@ -12,6 +12,6 @@ namespace Spryker\Client\ProductStorageExtension\Dependency\Plugin;
  * - Interface shows that ProductViewExpanderPluginInterface plugins expands ProductView with Concrete data.
  * - Interface can be used to exclude ProductViewExpanderPluginInterface plugins during abstract product specific processing.
  */
-interface ProductConcreteViewExpanderPluginInterface
+interface ProductConcreteViewExpanderExcluderPluginInterface
 {
 }

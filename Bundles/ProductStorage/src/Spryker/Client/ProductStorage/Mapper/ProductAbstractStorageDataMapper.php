@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductStorage\Mapper;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
-use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteViewExpanderPluginInterface;
+use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteViewExpanderExcluderPluginInterface;
 
 class ProductAbstractStorageDataMapper implements ProductStorageDataMapperInterface
 {
@@ -49,7 +49,7 @@ class ProductAbstractStorageDataMapper implements ProductStorageDataMapperInterf
         $productViewTransfer->setSelectedAttributes($selectedAttributes);
 
         foreach ($this->productStorageExpanderPlugins as $productViewExpanderPlugin) {
-            if ($productViewExpanderPlugin instanceof ProductConcreteViewExpanderPluginInterface) {
+            if ($productViewExpanderPlugin instanceof ProductConcreteViewExpanderExcluderPluginInterface) {
                 continue;
             }
             $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer($productViewTransfer, $productStorageData, $locale);
