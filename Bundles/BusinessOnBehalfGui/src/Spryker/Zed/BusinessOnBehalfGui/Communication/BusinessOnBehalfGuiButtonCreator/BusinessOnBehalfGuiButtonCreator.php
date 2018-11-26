@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator;
+namespace Spryker\Zed\BusinessOnBehalfGui\Communication\BusinessOnBehalfGuiButtonCreator;
 
 use Generated\Shared\Transfer\ButtonTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface;
 
-class ButtonCreator implements ButtonCreatorInterface
+class BusinessOnBehalfGuiButtonCreator implements BusinessOnBehalfGuiButtonCreatorInterface
 {
     protected const URL_ATTACH_CUSTOMER_TO_COMPANY = 'company-user-gui/create-company-user/attach-customer';
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE = 'Attach to company';
@@ -65,7 +65,7 @@ class ButtonCreator implements ButtonCreatorInterface
             'class' => 'btn-create',
             'icon' => 'fa-plus',
         ];
-        $url = Url::generate(static::URL_ATTACH_CUSTOMER_TO_COMPANY, [
+        $url = $this->generateUrl(static::URL_ATTACH_CUSTOMER_TO_COMPANY, [
             static::PARAM_ID_CUSTOMER => $idCustomer,
         ]);
 
@@ -87,5 +87,16 @@ class ButtonCreator implements ButtonCreatorInterface
             ->setTitle($title)
             ->setDefaultOptions($defaultOptions)
             ->setCustomOptions($customOptions);
+    }
+
+    /**
+     * @param string $url
+     * @param array $queryParams
+     *
+     * @return string
+     */
+    protected function generateUrl(string $url, array $queryParams): string
+    {
+        return Url::generate($url, $queryParams);
     }
 }
