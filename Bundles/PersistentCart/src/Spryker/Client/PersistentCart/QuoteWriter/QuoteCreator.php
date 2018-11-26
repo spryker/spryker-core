@@ -72,6 +72,23 @@ class QuoteCreator implements QuoteCreatorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createAndReloadQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = $this->persistentCartStub->createAndReloadQuote($quoteTransfer);
+        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
+        }
+        $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

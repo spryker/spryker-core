@@ -64,6 +64,18 @@ class QuoteWriter implements QuoteWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createAndReloadQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteTransfer->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
+
+        return $this->quoteResponseExpander->expand($this->quoteItemOperation->reloadItems($quoteTransfer));
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
