@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
-use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -106,20 +105,12 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $uuidQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
     public function findQuoteByUuid($uuidQuote): ?QuoteTransfer
     {
-        if (!$this->hasUuidColumn()) {
-            return null;
-        }
-
         $quoteQuery = $this->getFactory()
             ->createQuoteQuery()
             ->joinWithSpyStore()
@@ -131,16 +122,5 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
         }
 
         return $this->getFactory()->createQuoteMapper()->mapQuoteTransfer($quoteEntityTransfer);
-    }
-
-    /**
-     * @deprecated Will be removed with a next major release.
-     *
-     * @return bool
-     */
-    private function hasUuidColumn()
-    {
-        return SpyQuoteTableMap::getTableMap()
-            ->hasColumn('uuid');
     }
 }

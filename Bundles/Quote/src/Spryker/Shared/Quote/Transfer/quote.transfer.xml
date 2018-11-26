@@ -8,7 +8,6 @@
         <property name="customerReference" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="currency" type="Currency"/>
-        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="QuoteCollection">
