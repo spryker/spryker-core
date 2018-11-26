@@ -195,7 +195,7 @@ abstract class AbstractController
     protected function redirectResponseExternal(string $url, int $code = 302, array $headers = []): RedirectResponse
     {
         if (strpos($url, '/') !== 0 && !$this->isUrlDomainWhitelisted($url)) {
-            throw new ForbiddenRedirectException(sprintf("This URL %s is not a part of a whitelisted domain", $url));
+            throw new ForbiddenRedirectException(sprintf("URL %s is not a part of a whitelisted domain", $url));
         }
 
         return $this->redirectResponse($url, $code, $headers);
