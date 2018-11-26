@@ -17,6 +17,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
+    "spryker/product-attribute": "*",
     "spryker/product-storage": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"

@@ -28,6 +28,8 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
+    "spryker/locale": "*",
+    "spryker/product-attribute": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

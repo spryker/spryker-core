@@ -20,6 +20,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
+    "spryker/product-attribute": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

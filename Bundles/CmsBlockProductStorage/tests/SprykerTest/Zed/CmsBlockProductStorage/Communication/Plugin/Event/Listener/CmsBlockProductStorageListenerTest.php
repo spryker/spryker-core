@@ -32,19 +32,49 @@ use SprykerTest\Zed\CmsBlockProductStorage\CmsBlockProductStorageConfigMock;
  */
 class CmsBlockProductStorageListenerTest extends Unit
 {
+    protected const EXPECTED_BLOCK_NAME_COUNT = 1;
+    /**
+     * @var \SprykerTest\Zed\CmsBlockProductStorage\CmsBlockProductStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected $productAbstractTransfer;
+
+    /**
+     * @throws \PHPUnit\Framework\SkippedTestError
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->productAbstractTransfer = $this->tester->haveProductAbstract();
+
+        $idProductAbstracts = [$this->productAbstractTransfer->getIdProductAbstract()];
+
+        $cmsBlockTransfer = $this->tester->haveCmsBlock();
+        $cmsBlockTransfer->setIdProductAbstracts($idProductAbstracts);
+
+        $this->tester->getCmsBlockProductConnectorFacade()->updateCmsBlockProductAbstractRelations($cmsBlockTransfer);
+    }
+
     /**
      * @return void
      */
     public function testCmsBlockProductConnectorPublishStorageListenerStoreData()
     {
-        SpyCmsBlockProductStorageQuery::create()->filterByFkProductAbstract(35)->delete();
+        SpyCmsBlockProductStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyCmsBlockProductStorageQuery::create()->count();
 
         $cmsBlockProductConnectorPublishStorageListener = new CmsBlockProductConnectorPublishStorageListener();
         $cmsBlockProductConnectorPublishStorageListener->setFacade($this->getCmsBlockProductStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(35),
+            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
         $cmsBlockProductConnectorPublishStorageListener->handleBulk($eventTransfers, CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_PUBLISH);
 
@@ -57,7 +87,7 @@ class CmsBlockProductStorageListenerTest extends Unit
      */
     public function testCmsBlockProductConnectorStorageListenerStoreData()
     {
-        SpyCmsBlockProductStorageQuery::create()->filterByFkProductAbstract(35)->delete();
+        SpyCmsBlockProductStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyCmsBlockProductStorageQuery::create()->count();
 
         $cmsBlockProductConnectorStorageListener = new CmsBlockProductConnectorStorageListener();
@@ -65,7 +95,7 @@ class CmsBlockProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyCmsBlockProductConnectorTableMap::COL_FK_PRODUCT_ABSTRACT => 35,
+                SpyCmsBlockProductConnectorTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ]),
         ];
         $cmsBlockProductConnectorStorageListener->handleBulk($eventTransfers, CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_CREATE);
@@ -96,10 +126,10 @@ class CmsBlockProductStorageListenerTest extends Unit
     protected function assertCmsBlockProductStorage($beforeCount)
     {
         $count = SpyCmsBlockProductStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $count);
-        $cmsBlockProductStorage = SpyCmsBlockProductStorageQuery::create()->orderByIdCmsBlockProductStorage()->findOneByFkProductAbstract(35);
+        $this->assertGreaterThan($beforeCount, $count);
+        $cmsBlockProductStorage = SpyCmsBlockProductStorageQuery::create()->orderByIdCmsBlockProductStorage()->findOneByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
         $this->assertNotNull($cmsBlockProductStorage);
         $data = $cmsBlockProductStorage->getData();
-        $this->assertSame(1, count($data['block_names']));
+        $this->assertSame(static::EXPECTED_BLOCK_NAME_COUNT, count($data['block_names']));
     }
 }

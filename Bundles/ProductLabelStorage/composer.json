@@ -18,6 +18,8 @@
     "spryker/catalog": "*",
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
+    "spryker/locale": "*",
+    "spryker/product-attribute": "*",
     "spryker/propel": "*",
     "spryker/search": "*",
     "spryker/testify": "*"

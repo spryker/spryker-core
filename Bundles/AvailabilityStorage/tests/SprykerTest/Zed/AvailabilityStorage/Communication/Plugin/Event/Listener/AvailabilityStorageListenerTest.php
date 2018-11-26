@@ -34,11 +34,40 @@ use SprykerTest\Zed\AvailabilityStorage\AvailabilityStorageConfigMock;
 class AvailabilityStorageListenerTest extends Unit
 {
     /**
+     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected $productConcreteTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
+     */
+    protected $spyAvailabilityAbstractEntityTransfer;
+
+    /**
+     * @var \SprykerTest\Zed\AvailabilityStorage\AvailabilityStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @throws \PHPUnit\Framework\SkippedTestError
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->productConcreteTransfer = $this->tester->haveProduct();
+        $this->spyAvailabilityAbstractEntityTransfer = $this->tester->haveAvailabilityAbstract($this->productConcreteTransfer);
+    }
+
+    /**
      * @return void
      */
     public function testAvailabilityStorageListenerStoreData()
     {
-        SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract($this->productConcreteTransfer->getFkProductAbstract())->delete();
+
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
 
         // Act
@@ -46,9 +75,9 @@ class AvailabilityStorageListenerTest extends Unit
         $availabilityStorageListener->setFacade($this->getAvailabilityStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
-            (new EventEntityTransfer())->setId(2),
+            (new EventEntityTransfer())->setId($this->spyAvailabilityAbstractEntityTransfer->getIdAvailabilityAbstract()),
         ];
+
         $availabilityStorageListener->handleBulk($eventTransfers, AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH);
 
         // Assert
@@ -60,7 +89,7 @@ class AvailabilityStorageListenerTest extends Unit
      */
     public function testAvailabilityProductStorageListenerStoreData()
     {
-        SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract($this->productConcreteTransfer->getFkProductAbstract())->delete();
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
 
         // Act
@@ -69,7 +98,7 @@ class AvailabilityStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productConcreteTransfer->getFkProductAbstract(),
             ]),
         ];
         $availabilityStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_UPDATE);
@@ -101,7 +130,15 @@ class AvailabilityStorageListenerTest extends Unit
     {
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
         $this->assertGreaterThan($previousCount, $availabilityStorageCount);
-        $availabilityStorageEntity = SpyAvailabilityStorageQuery::create()->orderByIdAvailabilityStorage()->findOneByFkProductAbstract(1);
+
+        $availabilityStorageEntityList = SpyAvailabilityStorageQuery::create()
+            ->findByFkProductAbstract($this->productConcreteTransfer->getFkProductAbstract())
+            ->toKeyIndex('fkAvailabilityAbstract');
+
+        $availabilityStorageEntity = $availabilityStorageEntityList[$this->spyAvailabilityAbstractEntityTransfer->getIdAvailabilityAbstract()] ?? null;
+
         $this->assertNotNull($availabilityStorageEntity);
+        $data = $availabilityStorageEntity->getData();
+        $this->assertEquals($this->spyAvailabilityAbstractEntityTransfer->getQuantity(), $data['quantity']);
     }
 }
