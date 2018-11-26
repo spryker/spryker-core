@@ -30,7 +30,7 @@ class BusinessOnBehalfGuiAttachToCompanyButtonCustomerTableActionExpanderPlugin 
     public function execute(int $idCustomer, array $buttonTransfers): array
     {
         return $this->getFactory()
-            ->createGuiButtonCreator()
-            ->addAttachToCompanyButton($idCustomer, $buttonTransfers);
+            ->createButtonCreator()
+            ->addAttachCustomerToCompanyButton($idCustomer, $buttonTransfers);
     }
 }

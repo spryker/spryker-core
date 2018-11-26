@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator;
 
-interface GuiButtonCreatorInterface
+interface ButtonCreatorInterface
 {
     /**
      * @param int $idCustomer
@@ -15,5 +15,5 @@ interface GuiButtonCreatorInterface
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function addAttachToCompanyButton(int $idCustomer, array $buttonTransfers): array;
+    public function addAttachCustomerToCompanyButton(int $idCustomer, array $buttonTransfers): array;
 }

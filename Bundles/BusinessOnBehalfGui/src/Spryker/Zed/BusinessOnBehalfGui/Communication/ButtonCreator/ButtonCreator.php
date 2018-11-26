@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface;
 
-class GuiButtonCreator implements GuiButtonCreatorInterface
+class ButtonCreator implements ButtonCreatorInterface
 {
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_URL = 'company-user-gui/create-company-user/attach-customer';
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE = 'Attach to company';
@@ -38,7 +38,7 @@ class GuiButtonCreator implements GuiButtonCreatorInterface
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function addAttachToCompanyButton(int $idCustomer, array $buttonTransfers): array
+    public function addAttachCustomerToCompanyButton(int $idCustomer, array $buttonTransfers): array
     {
         $activeCompanyUsersCount = $this->companyUserFacade->countActiveCompanyUsersByIdCustomer(
             (new CustomerTransfer())->setIdCustomer($idCustomer)
@@ -48,6 +48,18 @@ class GuiButtonCreator implements GuiButtonCreatorInterface
             return $buttonTransfers;
         }
 
+        $buttonTransfers[] = $this->buildAttachCustomerToCompanyButton($idCustomer);
+
+        return $buttonTransfers;
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\ButtonTransfer
+     */
+    protected function buildAttachCustomerToCompanyButton(int $idCustomer): ButtonTransfer
+    {
         $defaultOptions = [
             'class' => 'btn-create',
             'icon' => 'fa-plus',
@@ -60,11 +72,9 @@ class GuiButtonCreator implements GuiButtonCreatorInterface
             ]
         );
 
-        $buttonTransfers[] = (new ButtonTransfer())
+        return (new ButtonTransfer())
             ->setUrl($url)
             ->setTitle(static::BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE)
             ->setDefaultOptions($defaultOptions);
-
-        return $buttonTransfers;
     }
 }
