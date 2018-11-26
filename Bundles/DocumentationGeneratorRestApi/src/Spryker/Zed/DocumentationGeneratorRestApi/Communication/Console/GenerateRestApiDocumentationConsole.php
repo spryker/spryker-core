@@ -16,13 +16,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\DocumentationGeneratorRestApi\Communication\DocumentationGeneratorRestApiCommunicationFactory getFactory()
  */
-class DocumentationGeneratorRestApiConsole extends Console
+class GenerateRestApiDocumentationConsole extends Console
 {
     protected const COMMAND_NAME = 'rest-api:generate:documentation';
     protected const DESCRIPTION = 'Generates documentation for enabled Rest API endpoints.';
-
-    protected const APPLICATION_ENV_DEVELOPMENT = 'development';
-    protected const EXCEPTION_NOT_ALLOWED_MESSAGE = 'This action is allowed only for development environment.';
 
     /**
      * @return void
@@ -44,7 +41,7 @@ class DocumentationGeneratorRestApiConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (Environment::isNotDevelopment()) {
-            $this->error(static::EXCEPTION_NOT_ALLOWED_MESSAGE);
+            $this->error('This command intended to be used in development environment only!');
 
             return static::CODE_ERROR;
         }
