@@ -7,6 +7,7 @@
 namespace Spryker\Glue\CatalogSearchRestApi;
 
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCatalogClientInterface;
+use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchReader;
@@ -48,11 +49,11 @@ class CatalogSearchRestApiFactory extends AbstractFactory
         return new CatalogSearchReader(
             $this->getCatalogClient(),
             $this->getPriceClient(),
+            $this->getCurrencyClient(),
             $this->getResourceBuilder(),
             $this->createCatalogSearchResourceMapper(),
             $this->createCatalogSearchSuggestionsResourceMapper(),
-            $this->getStore(),
-            $this->createCatalogSearchTranslationExpander()
+            $this->createCatalogSearchTranslationExpander(),
         );
     }
 
@@ -73,6 +74,8 @@ class CatalogSearchRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * @return \Spryker\Shared\Kernel\Store
      */
     public function getStore(): Store
@@ -94,5 +97,13 @@ class CatalogSearchRestApiFactory extends AbstractFactory
     public function getGlossaryStorageClient(): CatalogSearchRestApiToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CatalogSearchRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
+     */
+    protected function getCurrencyClient(): CatalogSearchRestApiToCurrencyClientInterface
+    {
+        return $this->getProvidedDependency(CatalogSearchRestApiDependencyProvider::CLIENT_CURRENCY);
     }
 }
