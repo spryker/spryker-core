@@ -9,9 +9,11 @@ namespace Spryker\Client\CategoryStorage\Storage;
 
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\CategoryStorage\CategoryStorageConfig;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface;
 use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
+use Spryker\Shared\Kernel\Store;
 
 class CategoryNodeStorage implements CategoryNodeStorageInterface
 {
@@ -43,8 +45,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      */
     public function getCategoryNodeById($idCategoryNode, $localeName)
     {
-        $categoryNodeKey = $this->generateKey($idCategoryNode, $localeName);
-        $categoryData = $this->storageClient->get($categoryNodeKey);
+        $categoryData = $this->getStorageData($idCategoryNode, $localeName);
 
         $categoryNodeStorageTransfer = new CategoryNodeStorageTransfer();
         if ($categoryData) {
@@ -52,6 +53,82 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
         }
 
         return $categoryNodeStorageTransfer;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    protected function getStorageData(int $idCategoryNode, string $localeName)
+    {
+        $categoryNodeKey = $this->generateKey($idCategoryNode, $localeName);
+        $categoryData = $this->storageClient->get($categoryNodeKey);
+
+        if (CategoryStorageConfig::isCollectorCompatibilityMode()) {
+            $categoryNodeKey = sprintf(
+                '%s.%s.resource.categorynode.%s',
+                strtolower(Store::getInstance()->getStoreName()),
+                strtolower($localeName),
+                $idCategoryNode
+            );
+            $collectorData = $this->storageClient->get($categoryNodeKey);
+
+            if (!$collectorData) {
+                return null;
+            }
+
+            if (empty($collectorData['parents'])) {
+                unset($collectorData['parents']);
+            }
+
+            if (empty($collectorData['children'])) {
+                unset($collectorData['children']);
+            }
+
+            if (isset($collectorData['parents']) && is_array($collectorData['parents'])) {
+                $collectorData['parents'] = $this->filterCollectorDataRecursive($collectorData['parents']);
+            }
+
+            if (isset($collectorData['children']) && is_array($collectorData['children'])) {
+                $collectorData['children'] = $this->filterCollectorDataRecursive($collectorData['children']);
+            }
+
+            return $collectorData;
+        }
+
+        $categoryNodeKey = $this->generateKey($idCategoryNode, $localeName);
+        $categoryData = $this->storageClient->get($categoryNodeKey);
+
+        return $categoryData;
+    }
+
+    /**
+     * @param array $categories
+     *
+     * @return array
+     */
+    protected function filterCollectorDataRecursive(array $categories): array
+    {
+        $filteredCategories = [];
+        foreach ($categories as $category) {
+            if (empty($category['children'])) {
+                unset($category['children']);
+            }
+            if (empty($category['parents'])) {
+                unset($category['parents']);
+            }
+            if (isset($category['children'])) {
+                $category['children'] = $this->filterCollectorDataRecursive($category['children']);
+            }
+            if (isset($category['parents'])) {
+                $category['parents'] = $this->filterCollectorDataRecursive($category['parents']);
+            }
+            $filteredCategories[] = $category;
+        }
+
+        return $filteredCategories;
     }
 
     /**

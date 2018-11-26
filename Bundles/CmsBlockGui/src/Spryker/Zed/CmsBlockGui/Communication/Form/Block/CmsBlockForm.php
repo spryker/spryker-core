@@ -27,6 +27,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockGui\CmsBlockGuiConfig getConfig()
  */
 class CmsBlockForm extends AbstractType
 {

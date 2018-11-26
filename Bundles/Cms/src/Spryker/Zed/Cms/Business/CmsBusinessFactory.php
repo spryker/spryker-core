@@ -151,7 +151,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsPageReader()
     {
-        return new CmsPageReader($this->getQueryContainer(), $this->createCmsUrlBuilder());
+        return new CmsPageReader($this->getQueryContainer(), $this->createCmsUrlBuilder(), $this->getLocaleFacade());
     }
 
     /**

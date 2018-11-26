@@ -14,6 +14,9 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncoding;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Event\EventConfig getConfig()
+ */
 class EventDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const EVENT_LISTENERS = 'event_listeners';

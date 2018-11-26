@@ -28,11 +28,11 @@ class ProductAlternativeStorageToProductStorageClientBridge implements ProductAl
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return array
+     * @return array|null
      */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName): array
+    public function findProductAbstractStorageData($idProductAbstract, $localeName): ?array
     {
-        return $this->productStorageClient->getProductAbstractStorageData($idProductAbstract, $localeName);
+        return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
     }
 
     /**
