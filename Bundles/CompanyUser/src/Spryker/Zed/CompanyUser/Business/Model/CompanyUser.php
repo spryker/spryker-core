@@ -367,17 +367,15 @@ class CompanyUser implements CompanyUserInterface
      */
     protected function executePreSaveCheckPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
-            ->setCompanyUser($companyUserTransfer)
-            ->setIsSuccessful(true);
-
         foreach ($this->companyUserPreSaveCheckPlugins as $companyUserPreSaveCheckPlugin) {
-            $companyUserResponseTransferAfterCheck = $companyUserPreSaveCheckPlugin->check($companyUserTransfer);
-            if (!$companyUserResponseTransferAfterCheck->getIsSuccessful()) {
-                return $companyUserResponseTransferAfterCheck->setCompanyUser($companyUserTransfer);
+            $companyUserResponseTransfer = $companyUserPreSaveCheckPlugin->check($companyUserTransfer);
+            if (!$companyUserResponseTransfer->getIsSuccessful()) {
+                return $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
             }
         }
 
-        return $companyUserResponseTransfer;
+        return (new CompanyUserResponseTransfer())
+            ->setCompanyUser($companyUserTransfer)
+            ->setIsSuccessful(true);
     }
 }

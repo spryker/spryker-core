@@ -83,7 +83,7 @@ class CustomerBusinessUnitAttachFormDataProvider
         $companyBusinessUnitChoicesValues = $this->prepareCompanyBusinessUnitAttributeMap($companyUserTransfer);
 
         return [
-            CustomerBusinessUnitAttachForm::OPTION_COMPANY_BUSINESS_UNITS_CHOICES => $companyBusinessUnitChoicesValues,
+            CustomerBusinessUnitAttachForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES => $companyBusinessUnitChoicesValues,
         ];
     }
 

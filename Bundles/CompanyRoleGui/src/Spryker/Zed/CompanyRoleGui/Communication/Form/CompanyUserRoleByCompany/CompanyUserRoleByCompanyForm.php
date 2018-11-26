@@ -22,10 +22,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\CompanyRoleGui\CompanyRoleGuiConfig getConfig()
  * @method \Spryker\Zed\CompanyRoleGui\Communication\CompanyRoleGuiCommunicationFactory getFactory()
  */
-class CompanyUserRoleFormByCompany extends AbstractType
+class CompanyUserRoleByCompanyForm extends AbstractType
 {
-    public const OPTION_VALUES_ROLES_CHOICES = 'company_role_choices';
-    public const OPTION_ATTRIBUTES_ROLES_CHOICES = 'company_role_attributes';
+    public const OPTION_COMPANY_ROLE_CHOICES = 'company_role_choices';
 
     protected const FIELD_COMPANY_ROLE_COLLECTION = 'company_role_collection';
 
@@ -51,8 +50,7 @@ class CompanyUserRoleFormByCompany extends AbstractType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setRequired(static::OPTION_VALUES_ROLES_CHOICES);
-        $resolver->setRequired(static::OPTION_ATTRIBUTES_ROLES_CHOICES);
+        $resolver->setRequired(static::OPTION_COMPANY_ROLE_CHOICES);
     }
 
     /**
@@ -72,8 +70,7 @@ class CompanyUserRoleFormByCompany extends AbstractType
     protected function addCompanyRoleCollectionField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_COMPANY_ROLE_COLLECTION, ChoiceType::class, [
-            'choices' => $options[static::OPTION_VALUES_ROLES_CHOICES],
-            'choice_attr' => $options[static::OPTION_ATTRIBUTES_ROLES_CHOICES],
+            'choices' => $options[static::OPTION_COMPANY_ROLE_CHOICES],
             'constraints' => $this->createCompanyRoleCollectionConstraints(),
             'choices_as_values' => true,
             'label' => false,
