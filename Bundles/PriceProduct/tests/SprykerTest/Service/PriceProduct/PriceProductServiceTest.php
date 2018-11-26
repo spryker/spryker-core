@@ -124,6 +124,37 @@ class PriceProductServiceTest extends Unit
     }
 
     /**
+     * @dataProvider getPriceProductTransfersWithMoreConcreteData
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     *
+     * @return void
+     */
+    public function testMergePricesWillReturnExtraConcretePriceSet(
+        array $concretePriceProductTransfers,
+        array $abstractPriceProductTransfers
+    ): void {
+        $priceProductService = $this->getPriceProductService();
+
+        $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
+
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer */
+        $concretePriceProductTransfer = $concretePriceProductTransfers[0];
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer */
+        $abstractPriceProductTransfer = $abstractPriceProductTransfers[0];
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $mergedPriceProductTransfer */
+        $mergedPriceProductTransfer = $mergedPriceProductTransfers[array_keys($mergedPriceProductTransfers)[0]];
+        $this->assertSame($concretePriceProductTransfer, $mergedPriceProductTransfer);
+        $this->assertEquals($concretePriceProductTransfer->getMoneyValue()->getGrossAmount(), $mergedPriceProductTransfer->getMoneyValue()->getGrossAmount());
+        $this->assertEquals($concretePriceProductTransfer->getMoneyValue()->getNetAmount(), $mergedPriceProductTransfer->getMoneyValue()->getNetAmount());
+        $this->assertNotEquals($abstractPriceProductTransfer->getMoneyValue()->getGrossAmount(), $mergedPriceProductTransfer->getMoneyValue()->getGrossAmount());
+        $this->assertNotEquals($abstractPriceProductTransfer->getMoneyValue()->getNetAmount(), $mergedPriceProductTransfer->getMoneyValue()->getNetAmount());
+
+        $this->assertCount(4, $mergedPriceProductTransfers);
+    }
+
+    /**
      * @return \Spryker\Service\PriceProduct\PriceProductServiceInterface
      */
     protected function getPriceProductService(): PriceProductServiceInterface
@@ -192,6 +223,16 @@ class PriceProductServiceTest extends Unit
     {
         return [
             [$this->getSinglePriceProductTransfers(), $this->getMultiplePriceProductTransfers()],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getPriceProductTransfersWithMoreConcreteData()
+    {
+        return [
+            [$this->getMultiplePriceProductTransfers(), $this->getSinglePriceProductTransfers()],
         ];
     }
 }
