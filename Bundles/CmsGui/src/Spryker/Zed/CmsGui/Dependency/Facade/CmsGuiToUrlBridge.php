@@ -25,11 +25,11 @@ class CmsGuiToUrlBridge implements CmsGuiToUrlInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
-    public function hasUrlCaseInsensitive($urlTransfer): bool
+    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
     {
         return $this->urlFacade->hasUrlCaseInsensitive($urlTransfer);
     }

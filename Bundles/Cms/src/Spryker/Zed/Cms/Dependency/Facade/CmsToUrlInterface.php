@@ -49,7 +49,7 @@ interface CmsToUrlInterface
      *
      * @return bool
      */
-    public function hasUrlCaseInsensitive($urlTransfer): bool;
+    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
