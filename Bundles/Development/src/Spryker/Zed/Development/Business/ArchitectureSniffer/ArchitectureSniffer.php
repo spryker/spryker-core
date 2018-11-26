@@ -35,11 +35,6 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected $xmlReader;
 
     /**
-     * @var int
-     */
-    protected $defaultPriority;
-
-    /**
      * @var \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface
      */
     protected $configurationBuilder;
@@ -47,18 +42,15 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     /**
      * @param \Zend\Config\Reader\ReaderInterface $xmlReader
      * @param string $command
-     * @param int $defaultPriority
      * @param \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface $configurationBuilder
      */
     public function __construct(
         ReaderInterface $xmlReader,
         $command,
-        $defaultPriority,
         SnifferConfigurationBuilderInterface $configurationBuilder
     ) {
         $this->xmlReader = $xmlReader;
         $this->command = $command;
-        $this->defaultPriority = $defaultPriority;
         $this->configurationBuilder = $configurationBuilder;
     }
 
@@ -155,8 +147,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     {
         $command = str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command);
 
-        $priority = !empty($options[static::OPTION_PRIORITY]) ? $options[static::OPTION_PRIORITY] : $this->defaultPriority;
-        $command .= ' --minimumpriority ' . $priority;
+        $command .= ' --minimumpriority ' . $options[static::OPTION_PRIORITY];
 
         if (!empty($options[static::OPTION_STRICT])) {
             $command .= ' --strict';
