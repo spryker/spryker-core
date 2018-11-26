@@ -14,6 +14,9 @@ use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProdu
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorConfig getConfig()
+ */
 class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_LOCALE';

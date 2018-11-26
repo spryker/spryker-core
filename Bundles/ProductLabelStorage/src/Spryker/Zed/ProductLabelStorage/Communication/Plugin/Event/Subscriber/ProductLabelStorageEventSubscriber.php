@@ -18,6 +18,8 @@ use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductL
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Communication\ProductLabelStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  */
 class ProductLabelStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

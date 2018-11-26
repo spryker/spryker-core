@@ -142,6 +142,19 @@ class SharedCartEntityManager extends AbstractEntityManager implements SharedCar
     }
 
     /**
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function deleteShareRelationsForCompanyUserId(int $idCompanyUser): void
+    {
+        $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->delete();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
      *
      * @return void

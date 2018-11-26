@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\Maintenance\Communication\MaintenanceCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacadeInterface getFacade()
  */
 class IndexController extends AbstractController
 {

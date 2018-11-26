@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SearchPreferencesController extends AbstractController
 {
     public const PARAM_ID = 'id';
+    public const REDIRECT_URL_DEFAULT = '/product-search/search-preferences';
 
     /**
      * @return array
@@ -91,9 +92,17 @@ class SearchPreferencesController extends AbstractController
             ->getFactory()
             ->createSearchPreferencesDataProvider();
 
+        $searchPreferencesFormData = $dataProvider->getData($idAttributeKey);
+
+        if ($searchPreferencesFormData === []) {
+            $this->addErrorMessage(sprintf('Attribute with id %s doesn\'t exist', $idAttributeKey));
+
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+        }
+
         $form = $this->getFactory()
             ->createSearchPreferencesForm(
-                $dataProvider->getData($idAttributeKey),
+                $searchPreferencesFormData,
                 $dataProvider->getOptions($idAttributeKey)
             )
             ->handleRequest($request);

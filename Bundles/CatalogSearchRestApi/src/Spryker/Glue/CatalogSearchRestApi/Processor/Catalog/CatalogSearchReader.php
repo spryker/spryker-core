@@ -15,6 +15,7 @@ use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCu
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapperInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface;
+use Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpanderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
@@ -68,12 +69,18 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
     protected $catalogSearchSuggestionsResourceMapper;
 
     /**
+     * @var \Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpanderInterface
+     */
+    protected $catalogSearchTranslationExpander;
+
+    /**
      * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCatalogClientInterface $catalogClient
      * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface $priceClient
      * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface $currencyClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapperInterface $catalogSearchResourceMapper
      * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface $catalogSearchSuggestionsResourceMapper
+     * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpanderInterface $catalogSearchTranslationExpander
      */
     public function __construct(
         CatalogSearchRestApiToCatalogClientInterface $catalogClient,
@@ -81,7 +88,8 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         CatalogSearchRestApiToCurrencyClientInterface $currencyClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CatalogSearchResourceMapperInterface $catalogSearchResourceMapper,
-        CatalogSearchSuggestionsResourceMapperInterface $catalogSearchSuggestionsResourceMapper
+        CatalogSearchSuggestionsResourceMapperInterface $catalogSearchSuggestionsResourceMapper,
+        CatalogSearchTranslationExpanderInterface $catalogSearchTranslationExpander
     ) {
         $this->catalogClient = $catalogClient;
         $this->priceClient = $priceClient;
@@ -89,6 +97,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $this->restResourceBuilder = $restResourceBuilder;
         $this->catalogSearchResourceMapper = $catalogSearchResourceMapper;
         $this->catalogSearchSuggestionsResourceMapper = $catalogSearchSuggestionsResourceMapper;
+        $this->catalogSearchTranslationExpander = $catalogSearchTranslationExpander;
     }
 
     /**
@@ -108,6 +117,9 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
 
         $this->catalogSearchResourceMapper
             ->mapPrices($restSearchAttributesTransfer, $this->getPriceModeConfigurationTransfer());
+
+        $restSearchAttributesTransfer = $this->catalogSearchTranslationExpander
+            ->addTranslations($restSearchAttributesTransfer, $restRequest->getMetadata()->getLocale());
 
         return $this->buildCatalogSearchResponse($restRequest, $restSearchAttributesTransfer);
     }

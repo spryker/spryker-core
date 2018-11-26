@@ -15,6 +15,7 @@
 
     <transfer name="RestCatalogSearchSortAttributes">
         <property name="sortParamNames" type="array"/>
+        <property name="sortParamLocalizedNames" type="array"/>
         <property name="currentSortParam" type="string"/>
         <property name="currentSortOrder" type="string"/>
     </transfer>
@@ -41,6 +42,7 @@
 
     <transfer name="RestRangeSearchResultAttributes">
         <property name="name" type="string" />
+        <property name="localizedName" type="string" />
         <property name="min" type="float" />
         <property name="max" type="float" />
         <property name="activeMin" type="float" />
@@ -50,6 +52,7 @@
 
     <transfer name="RestFacetSearchResultAttributes">
         <property name="name" type="string" />
+        <property name="localizedName" type="string" />
         <property name="docCount" type="int" />
         <property name="values" type="array" singular="value" />
         <property name="activeValue" type="string" />
