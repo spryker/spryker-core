@@ -91,6 +91,8 @@ class UrlDataHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return void
      */
     protected function cleanupUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer): void
     {
