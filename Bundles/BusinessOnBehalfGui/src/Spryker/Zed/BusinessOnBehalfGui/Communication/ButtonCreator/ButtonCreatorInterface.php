@@ -11,17 +11,17 @@ interface ButtonCreatorInterface
 {
     /**
      * @param array $companyUserDataItem
-     * @param string[] $actionButtons
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function addDeleteButton(array $companyUserDataItem, array $actionButtons): array;
+    public function addNewDeleteCompanyUserButton(array $companyUserDataItem, array $buttonTransfers): array;
 
     /**
      * @param array $companyUserDataItem
-     * @param string[] $actionButtons
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function addAttachToBusinessUnitButton(array $companyUserDataItem, array $actionButtons): array;
+    public function addAttachCustomerToBusinessUnitButton(array $companyUserDataItem, array $buttonTransfers): array;
 }

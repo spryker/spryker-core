@@ -16,9 +16,9 @@ interface CompanyUserTableActionLinksExpanderPluginInterface
      * @api
      *
      * @param array $companyUserDataItem
-     * @param string[] $actionButtons
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function expandActionLinks(array $companyUserDataItem, array $actionButtons): array;
+    public function expandActionLinks(array $companyUserDataItem, array $buttonTransfers): array;
 }

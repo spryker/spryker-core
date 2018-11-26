@@ -23,14 +23,14 @@ class CompanyUserTableAttachToBusinessUnitActionLinksExpanderPlugin extends Abst
      * @api
      *
      * @param array $companyUserDataItem
-     * @param string[] $actionButtons
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $actionButtons
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
     public function expandActionLinks(array $companyUserDataItem, array $actionButtons): array
     {
         return $this->getFactory()
             ->createButtonCreator()
-            ->addAttachToBusinessUnitButton($companyUserDataItem, $actionButtons);
+            ->addAttachCustomerToBusinessUnitButton($companyUserDataItem, $actionButtons);
     }
 }

@@ -185,7 +185,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Deletes a company user without customer anonymizing
+     * - Deletes a company user without customer anonymizing.
      *
      * @api
      *

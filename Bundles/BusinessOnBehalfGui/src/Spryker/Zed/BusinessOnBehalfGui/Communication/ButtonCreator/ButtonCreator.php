@@ -7,49 +7,81 @@
 
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator;
 
+use Generated\Shared\Transfer\ButtonTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
+use Spryker\Service\UtilText\Model\Url\Url;
 
 class ButtonCreator implements ButtonCreatorInterface
 {
-    protected const BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK = '/company-user-gui/delete-company-user/confirm-delete?id-company-user=';
-    protected const BUTTON_DELETE_COMPANY_USER_URL = '<a href="/business-on-behalf-gui/delete-company-user/confirm-delete?id-company-user=%s" class="safe-submit btn btn-xs btn-outline btn-danger"><i class="fa fa-trash"></i> Delete</a>';
-    protected const BUTTON_ATTACH_TO_BUSINESS_UNIT_URL = '<a href="/business-on-behalf-gui/create-company-user/attach-customer?id-customer=%s&id-company=%s" class="safe-submit btn btn-xs btn-outline btn-view"><i class="fa fa-paperclip"></i> Attach to BU</a>';
+    protected const BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK = 'company-user-gui/delete-company-user/confirm-delete?id-company-user=';
+
+    protected const URL_CONFIRM_DELETE_COMPANY_USER = '/business-on-behalf-gui/delete-company-user/confirm-delete';
+    protected const URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT = '/business-on-behalf-gui/create-company-user/attach-customer';
+
+    protected const PARAM_ID_COMPANY_USER = 'id-company-user';
+    protected const PARAM_ID_CUSTOMER = 'id-customer';
+    protected const PARAM_ID_COMPANY = 'id-company';
+
+    protected const BUTTON_ATTACH_TO_BUSINESS_UNIT_TITLE = 'Attach to BU';
 
     /**
      * @param array $companyUserDataItem
-     * @param string[] $actionButtons
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function addDeleteButton(array $companyUserDataItem, array $actionButtons): array
+    public function addNewDeleteCompanyUserButton(array $companyUserDataItem, array $buttonTransfers): array
     {
-        foreach ($actionButtons as $key => $actionButton) {
-            if (strripos($actionButton, static::BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK)) {
-                unset($actionButtons[$key]);
+        foreach ($buttonTransfers as $key => $buttonTransfer) {
+            if (strripos($buttonTransfer->getUrl(), static::BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK)) {
+                $url = Url::generate(static::URL_CONFIRM_DELETE_COMPANY_USER, [
+                    static::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+                ]);
+
+                $buttonTransfers[$key]->setUrl($url);
             }
         }
-        $actionButtons[] = sprintf(
-            static::BUTTON_DELETE_COMPANY_USER_URL,
-            $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER]
-        );
+
+        return $buttonTransfers;
+    }
+
+    /**
+     * @param array $companyUserDataItem
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $actionButtons
+     *
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     */
+    public function addAttachCustomerToBusinessUnitButton(array $companyUserDataItem, array $actionButtons): array
+    {
+        $url = Url::generate(static::URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT, [
+            static::PARAM_ID_CUSTOMER => $companyUserDataItem[SpyCompanyUserTableMap::COL_FK_CUSTOMER],
+            static::PARAM_ID_COMPANY => $companyUserDataItem[SpyCompanyUserTableMap::COL_FK_COMPANY],
+        ]);
+
+        $defaultOptions = [
+            'class' => 'safe-submit btn-view',
+            'icon' => 'fa-paperclip',
+        ];
+
+        $actionButtons[] = $this->generateButtonTransfer($url, static::BUTTON_ATTACH_TO_BUSINESS_UNIT_TITLE, $defaultOptions);
 
         return $actionButtons;
     }
 
     /**
-     * @param array $companyUserDataItem
-     * @param string[] $actionButtons
+     * @param string $url
+     * @param string $title
+     * @param array $defaultOptions
+     * @param array|null $customOptions
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\ButtonTransfer
      */
-    public function addAttachToBusinessUnitButton(array $companyUserDataItem, array $actionButtons): array
+    protected function generateButtonTransfer(string $url, string $title, array $defaultOptions, ?array $customOptions = null): ButtonTransfer
     {
-        $actionButtons[] = sprintf(
-            static::BUTTON_ATTACH_TO_BUSINESS_UNIT_URL,
-            $companyUserDataItem[SpyCompanyUserTableMap::COL_FK_CUSTOMER],
-            $companyUserDataItem[SpyCompanyUserTableMap::COL_FK_COMPANY]
-        );
-
-        return $actionButtons;
+        return (new ButtonTransfer())
+            ->setUrl($url)
+            ->setTitle($title)
+            ->setDefaultOptions($defaultOptions)
+            ->setCustomOptions($customOptions);
     }
 }

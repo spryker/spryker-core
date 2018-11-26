@@ -71,16 +71,16 @@ class CompanyUserTableExpanderPluginExecutor implements CompanyUserTableExpander
 
     /**
      * @param array $companyUserDataItem
-     * @param string[] $actionButtons
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function executeActionExpanderPlugins(array $companyUserDataItem, array $actionButtons): array
+    public function executeActionExpanderPlugins(array $companyUserDataItem, array $buttonTransfers): array
     {
         foreach ($this->companyUserTableActionLinksExpanderPlugins as $companyUserTableActionExpanderPlugin) {
-            $actionButtons = $companyUserTableActionExpanderPlugin->expandActionLinks($companyUserDataItem, $actionButtons);
+            $buttonTransfers = $companyUserTableActionExpanderPlugin->expandActionLinks($companyUserDataItem, $buttonTransfers);
         }
 
-        return $actionButtons;
+        return $buttonTransfers;
     }
 }

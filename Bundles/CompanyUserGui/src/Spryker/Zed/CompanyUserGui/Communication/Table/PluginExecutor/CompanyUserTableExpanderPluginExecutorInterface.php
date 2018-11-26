@@ -27,9 +27,9 @@ interface CompanyUserTableExpanderPluginExecutorInterface
 
     /**
      * @param array $companyUserDataItem
-     * @param string[] $actionButtons
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function executeActionExpanderPlugins(array $companyUserDataItem, array $actionButtons): array;
+    public function executeActionExpanderPlugins(array $companyUserDataItem, array $buttonTransfers): array;
 }
