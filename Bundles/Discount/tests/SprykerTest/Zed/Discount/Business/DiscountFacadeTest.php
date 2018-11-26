@@ -828,6 +828,7 @@ class DiscountFacadeTest extends Unit
 
         $discountConditionTransfer = new DiscountConditionTransfer();
         $discountConditionTransfer->setDecisionRuleQueryString('sku = "123"');
+        $discountConditionTransfer->setMinimumItemAmount(1);
         $discountConfiguratorTransfer->setDiscountCondition($discountConditionTransfer);
 
         return $discountConfiguratorTransfer;

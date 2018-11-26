@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -14,11 +15,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  */
 class AddVariantController extends AbstractController
 {
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     protected const PARAM_ID_PRODUCT = 'id-product';
+    protected const PARAM_TYPE = 'type';
+    protected const PARAM_PRICE_DIMENSION = 'price-dimension';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -47,7 +52,7 @@ class AddVariantController extends AbstractController
         $form = $this
             ->getFactory()
             ->getProductVariantFormAdd(
-                $dataProvider->getData(),
+                $dataProvider->getData($request->query->get(static::PARAM_PRICE_DIMENSION)),
                 $dataProvider->getOptions($idProductAbstract, ProductManagementConfig::PRODUCT_TYPE_REGULAR)
             )
             ->handleRequest($request);
@@ -77,11 +82,7 @@ class AddVariantController extends AbstractController
                 $productConcreteTransfer->getSku()
             ));
 
-            return $this->createRedirectResponseAfterAdd(
-                $idProductAbstract,
-                $productConcreteTransfer->getIdProductConcrete(),
-                $type
-            );
+            return $this->createRedirectResponseAfterAdd($productConcreteTransfer->getIdProductConcrete(), $type, $request);
         }
 
         return $this->viewResponse([
@@ -114,21 +115,20 @@ class AddVariantController extends AbstractController
     }
 
     /**
-     * @param int $idProductAbstract
-     * @param int $idConcreteProduct
+     * @param int $idProduct
      * @param string $type
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createRedirectResponseAfterAdd(int $idProductAbstract, int $idConcreteProduct, string $type): RedirectResponse
+    protected function createRedirectResponseAfterAdd(int $idProduct, string $type, Request $request): RedirectResponse
     {
-        return $this->redirectResponse(sprintf(
-            '/product-management/edit/variant?%s=%d&%s=%d&type=%s',
-            static::PARAM_ID_PRODUCT_ABSTRACT,
-            $idProductAbstract,
-            static::PARAM_ID_PRODUCT,
-            $idConcreteProduct,
-            $type
-        ));
+        $params = $request->query->all();
+        $params[static::PARAM_ID_PRODUCT] = $idProduct;
+        $params[static::PARAM_TYPE] = $type;
+
+        return $this->redirectResponse(
+            urldecode(Url::generate('/product-management/edit/variant', $params)->build())
+        );
     }
 }

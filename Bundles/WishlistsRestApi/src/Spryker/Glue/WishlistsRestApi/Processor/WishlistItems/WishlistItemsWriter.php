@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
@@ -110,7 +110,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
             $restWishlistItemsAttributesTransfer
         );
         $wishlistItemResource->addLink(
-            RestResourceInterface::RESOURCE_LINKS_SELF,
+            RestLinkInterface::LINK_SELF,
             $this->createSelfLinkForWishlistItem($wishlistUuid, $restWishlistItemsAttributesTransfer->getSku())
         );
 
@@ -125,6 +125,10 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        if (!$restRequest->getResource()->getId()) {
+            return $this->addItemSkuMissingErrorToResponse($restResponse);
+        }
 
         $sku = $restRequest->getResource()->getId();
         $wishlistResource = $restRequest->findParentResourceByType(WishlistsRestApiConfig::RESOURCE_WISHLISTS);
@@ -217,5 +221,20 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
             $wishlistItemResourceId
         );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addItemSkuMissingErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_ID_IS_NOT_SPECIFIED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_ID_IS_NOT_SPECIFIED);
+
+        return $restResponse->addError($restErrorTransfer);
     }
 }

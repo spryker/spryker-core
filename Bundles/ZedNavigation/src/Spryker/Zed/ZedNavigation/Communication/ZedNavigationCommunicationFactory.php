@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\ZedNavigation\ZedNavigationConfig getConfig()
+ * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
  */
 class ZedNavigationCommunicationFactory extends AbstractCommunicationFactory
 {

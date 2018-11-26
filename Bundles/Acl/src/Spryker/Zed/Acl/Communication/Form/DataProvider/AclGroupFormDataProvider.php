@@ -40,6 +40,10 @@ class AclGroupFormDataProvider
             ->queryGroupById($idGroup)
             ->findOne();
 
+        if (!$group) {
+            return [];
+        }
+
         return [
             GroupForm::FIELD_TITLE => $group->getName(),
             GroupForm::FIELD_ROLES => $this->getAvailableRoleListByIdGroup($idGroup),

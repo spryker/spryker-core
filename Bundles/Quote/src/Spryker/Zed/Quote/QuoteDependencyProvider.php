@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeBridge;
 use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\Quote\QuoteConfig getConfig()
+ */
 class QuoteDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_STORE = 'FACADE_STORE';

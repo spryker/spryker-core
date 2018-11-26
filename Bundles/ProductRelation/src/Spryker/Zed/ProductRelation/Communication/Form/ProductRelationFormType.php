@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductRelation\Communication\ProductRelationCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductRelation\ProductRelationConfig getConfig()
  */
 class ProductRelationFormType extends AbstractType
 {

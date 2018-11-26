@@ -9,6 +9,9 @@ namespace Spryker\Zed\CompanyUnitAddressLabel;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\CompanyUnitAddressLabel\CompanyUnitAddressLabelConfig getConfig()
+ */
 class CompanyUnitAddressLabelDependencyProvider extends AbstractBundleDependencyProvider
 {
 }
