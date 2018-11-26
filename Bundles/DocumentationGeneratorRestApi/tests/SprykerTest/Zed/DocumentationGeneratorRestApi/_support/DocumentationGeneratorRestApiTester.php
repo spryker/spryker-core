@@ -55,7 +55,6 @@ class DocumentationGeneratorRestApiTester extends Actor
     protected const RESPONSE_CODE_DEFAULT = 'default';
     protected const RESPONSE_CODE_OK = 200;
     protected const RESPONSE_CODE_CREATED = 201;
-    protected const RESPONSE_CODE_ACCEPTED = 202;
     protected const RESPONSE_CODE_NO_CONTENT = 204;
     protected const RESPONSE_DESCRIPTION_BAD_REQUEST = 'Bad Request';
     protected const RESPONSE_DESCRIPTION_NOT_FOUND = 'Item not found';
@@ -402,7 +401,7 @@ class DocumentationGeneratorRestApiTester extends Actor
                     ],
                 ],
                 'responses' => [
-                    static::RESPONSE_CODE_ACCEPTED => [
+                    static::RESPONSE_CODE_OK => [
                         'description' => static::RESPONSE_DESCRIPTION_SUCCESS,
                         'content' => [
                             'application/json' => [
@@ -1044,7 +1043,7 @@ class DocumentationGeneratorRestApiTester extends Actor
                         ['BearerAuth' => []],
                     ],
                     'responses' => [
-                        '202' => [
+                        static::RESPONSE_CODE_OK => [
                             'description' => static::SUCCESSFUL_RESPONSE_DESCRIPTION,
                             'content' => [
                                 'application/json' => [

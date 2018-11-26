@@ -147,7 +147,7 @@
           }
         ],
         "responses": {
-          "202": {
+          "200": {
             "description": "Expected response to a valid request.",
             "content": {
               "application\/json": {
