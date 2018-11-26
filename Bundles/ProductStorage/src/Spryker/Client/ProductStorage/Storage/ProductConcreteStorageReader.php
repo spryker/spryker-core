@@ -8,9 +8,14 @@
 namespace Spryker\Client\ProductStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
+use Zend\Filter\FilterChain;
+use Zend\Filter\StringToLower;
+use Zend\Filter\Word\CamelCaseToUnderscore;
 
 class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
 {
@@ -69,9 +74,42 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             return null;
         }
 
+        if (ProductStorageConfig::isCollectorCompatibilityMode()) {
+            $clientLocatorClassName = Locator::class;
+            /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
+            $productClient = $clientLocatorClassName::getInstance()->product()->client();
+            $collectorData = $productClient->getProductConcreteByIdAndLocale($idProductConcrete, $localeName);
+
+            unset($collectorData['prices'], $collectorData['imageSets']);
+            $collectorData = $this->changeKeys($collectorData);
+
+            return $collectorData;
+        }
+
         $key = $this->getStorageKey($idProductConcrete, $localeName);
 
         return $this->storageClient->get($key);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function changeKeys(array $data): array
+    {
+        $filterChain = new FilterChain();
+        $filterChain
+            ->attach(new CamelCaseToUnderscore())
+            ->attach(new StringToLower());
+
+        $filteredData = [];
+
+        foreach ($data as $key => $value) {
+            $filteredData[$filterChain->filter($key)] = $value;
+        }
+
+        return $filteredData;
     }
 
     /**

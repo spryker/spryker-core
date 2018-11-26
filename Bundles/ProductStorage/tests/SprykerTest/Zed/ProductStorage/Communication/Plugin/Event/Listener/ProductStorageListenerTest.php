@@ -9,13 +9,18 @@ namespace SprykerTest\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
 use Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorageQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use PHPUnit\Framework\SkippedTestError;
+use Spryker\Client\Kernel\Container;
+use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Product\Dependency\ProductEvents;
@@ -30,7 +35,7 @@ use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcre
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteProductAbstractStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteProductAbstractUrlStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteStorageListener;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 use SprykerTest\Zed\ProductStorage\ProductStorageConfigMock;
 
@@ -48,13 +53,23 @@ use SprykerTest\Zed\ProductStorage\ProductStorageConfigMock;
  */
 class ProductStorageListenerTest extends Unit
 {
-    public const NUMBER_OF_STORES = 3;
-    public const NUMBER_OF_LOCALES = 2;
+    protected const NUMBER_OF_STORES = 3;
+    protected const NUMBER_OF_LOCALES = 1;
 
     /**
      * @var \SprykerTest\Zed\ProductStorage\ProductStorageCommunicationTester
      */
     protected $tester;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected $productConcreteTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected $productAbstractTransfer;
 
     /**
      * @throws \PHPUnit\Framework\SkippedTestError
@@ -73,6 +88,23 @@ class ProductStorageListenerTest extends Unit
         if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
+
+        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
+            return [
+                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+            ];
+        });
+
+        $this->productConcreteTransfer = $this->tester->haveProduct();
+        $this->productAbstractTransfer = $this->tester->getProductFacade()->findProductAbstractById(
+            $this->productConcreteTransfer->getFkProductAbstract()
+        );
+
+        $localizedAttributes = $this->tester->generateLocalizedAttributes();
+
+        $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer, $localizedAttributes);
+        $this->addStoreRelationToProductAbstracts($this->productAbstractTransfer);
+        $this->tester->addLocalizedAttributesToProductConcrete($this->productConcreteTransfer, $localizedAttributes);
     }
 
     /**
@@ -80,14 +112,14 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductAbstractStorageListenerStoreData()
     {
-        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
         $productAbstractStorageListener = new ProductAbstractStorageListener();
         $productAbstractStorageListener->setFacade($this->getProductStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
         $productAbstractStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_PUBLISH);
 
@@ -100,7 +132,7 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductAbstractUrlStorageListenerStoreData()
     {
-        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
         $productAbstractUrlStorageListener = new ProductAbstractUrlStorageListener();
@@ -108,7 +140,7 @@ class ProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT => 1,
+                SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ])
             ->setModifiedColumns([SpyUrlTableMap::COL_URL]),
         ];
@@ -123,7 +155,7 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductAbstractLocalizedAttributesStorageListenerStoreData()
     {
-        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
         $productAbstractLocalizedAttributesStorageListener = new ProductAbstractLocalizedAttributesStorageListener();
@@ -131,7 +163,7 @@ class ProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ]),
         ];
         $productAbstractLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE);
@@ -145,7 +177,7 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductConcreteProductAbstractRelationStorageListenerStoreData()
     {
-        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
         $productConcreteProductAbstractRelationStorageListener = new ProductConcreteProductAbstractRelationStorageListener();
@@ -153,7 +185,7 @@ class ProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ]),
         ];
         $productConcreteProductAbstractRelationStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_CREATE);
@@ -167,14 +199,14 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductConcreteStorageListenerStoreData()
     {
-        SpyProductConcreteStorageQuery::create()->filterByFkProduct(1)->delete();
+        SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
         $productConcreteStorageListener = new ProductConcreteStorageListener();
         $productConcreteStorageListener->setFacade($this->getProductStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($this->productConcreteTransfer->getIdProductConcrete()),
         ];
         $productConcreteStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_PUBLISH);
 
@@ -187,7 +219,7 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductConcreteRelationUrlStorageListenerStoreData()
     {
-        SpyProductConcreteStorageQuery::create()->filterByFkProduct(1)->delete();
+        SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
         $productConcreteProductAbstractUrlStorageListener = new ProductConcreteProductAbstractUrlStorageListener();
@@ -195,7 +227,7 @@ class ProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT => 1,
+                SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ])
                 ->setModifiedColumns([SpyUrlTableMap::COL_URL]),
         ];
@@ -210,14 +242,14 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductConcreteProductAbstractStorageListenerStoreData()
     {
-        SpyProductConcreteStorageQuery::create()->filterByFkProduct(1)->delete();
+        SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
         $productConcreteProductAbstractStorageListener = new ProductConcreteProductAbstractStorageListener();
         $productConcreteProductAbstractStorageListener->setFacade($this->getProductStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
         $productConcreteProductAbstractStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE);
 
@@ -230,7 +262,7 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductConcreteProductAbstractLocalizedAttributesStorageListenerStoreData()
     {
-        SpyProductConcreteStorageQuery::create()->filterByFkProduct(1)->delete();
+        SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
         $productConcreteProductAbstractLocalizedAttributesStorageListener = new ProductConcreteProductAbstractLocalizedAttributesStorageListener();
@@ -238,7 +270,7 @@ class ProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ]),
         ];
         $productConcreteProductAbstractLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE);
@@ -252,7 +284,7 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductConcreteLocalizedAttributesStorageListenerStoreData()
     {
-        SpyProductConcreteStorageQuery::create()->filterByFkProduct(1)->delete();
+        SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
         $productConcreteLocalizedAttributesStorageListener = new ProductConcreteLocalizedAttributesStorageListener();
@@ -260,7 +292,7 @@ class ProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT => 1,
+                SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT => $this->productConcreteTransfer->getIdProductConcrete(),
             ]),
         ];
         $productConcreteLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE);
@@ -293,13 +325,20 @@ class ProductStorageListenerTest extends Unit
         $afterCount = SpyProductAbstractStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $afterCount);
         $spyProductAbstractStorage = SpyProductAbstractStorageQuery::create()
-            ->orderByIdProductAbstractStorage(Criteria::ASC)
-            ->findOneByFkProductAbstract(1);
+            ->orderByIdProductAbstractStorage()
+            ->findOneByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
+
+        $urlCollectionEntity = SpyUrlQuery::create()
+            ->orderByFkResourceProductAbstract()
+            ->findByFkResourceProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
+
+        $this->assertNotNull($urlCollectionEntity);
+        $this->assertNotNull($urlCollectionEntity->count());
         $this->assertNotNull($spyProductAbstractStorage);
         $data = $spyProductAbstractStorage->getData();
-        $this->assertSame('001', $data['sku']);
-        $this->assertSame(6, count($data['attributes']));
-        $this->assertSame('/de/canon-ixus-160-1', $data['url']);
+        $this->assertSame($this->productAbstractTransfer->getSku(), $data['sku']);
+        $this->assertSame(1, count($data['attributes']));
+        $this->assertContains($data['url'], $urlCollectionEntity->getColumnValues('url'));
     }
 
     /**
@@ -312,12 +351,57 @@ class ProductStorageListenerTest extends Unit
         $afterCount = SpyProductConcreteStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $afterCount);
         $spyProductConcreteStorage = SpyProductConcreteStorageQuery::create()
-            ->orderByIdProductConcreteStorage(Criteria::DESC)
-            ->findOneByFkProduct(1);
+            ->orderByIdProductConcreteStorage()
+            ->findOneByFkProduct($this->productConcreteTransfer->getIdProductConcrete());
+
+        $urlCollectionEntity = SpyUrlQuery::create()
+            ->orderByFkResourceProductAbstract()
+            ->findByFkResourceProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
+
+        $this->assertNotNull($urlCollectionEntity);
+        $this->assertNotNull($urlCollectionEntity->count());
+
         $this->assertNotNull($spyProductConcreteStorage);
         $data = $spyProductConcreteStorage->getData();
-        $this->assertSame('001_25904006', $data['sku']);
-        $this->assertSame(6, count($data['attributes']));
-        $this->assertSame('/de/canon-ixus-160-1', $data['url']);
+
+        $this->assertSame($this->productConcreteTransfer->getSku(), $data['sku']);
+        $this->assertSame(1, count($data['attributes']));
+        $this->assertContains($data['url'], $urlCollectionEntity->getColumnValues('url'));
+    }
+
+    /**
+     * @return array
+     */
+    protected function getIdStores(): array
+    {
+        $storeIds = [];
+
+        foreach ($this->getStoreFacade()->getAllStores() as $storeTransfer) {
+            $storeIds[] = $storeTransfer->getIdStore();
+        }
+
+        return $storeIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function addStoreRelationToProductAbstracts(ProductAbstractTransfer $productAbstractTransfer): void
+    {
+        $idStores = $this->getIdStores();
+
+        $productAbstractTransfer->setStoreRelation((new StoreRelationTransfer())->setIdStores($idStores));
+
+        $this->tester->getProductFacade()->saveProductAbstract($productAbstractTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    protected function getStoreFacade(): StoreFacadeInterface
+    {
+        return $this->tester->getLocator()->store()->facade();
     }
 }
