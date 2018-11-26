@@ -99,7 +99,6 @@ class CatalogSearchRestApiFactory extends AbstractFactory
         return $this->getProvidedDependency(CatalogSearchRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
-
     /**
      * @return \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
      */
