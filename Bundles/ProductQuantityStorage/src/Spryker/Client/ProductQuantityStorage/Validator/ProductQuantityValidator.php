@@ -38,7 +38,7 @@ class ProductQuantityValidator implements ProductQuantityValidatorInterface
             return $quantity;
         }
 
-        $min = $productQuantityTransfer->getQuantityMin() ?? 1;
+        $min = $productQuantityTransfer->getQuantityMin() ?: 1;
         $max = $productQuantityTransfer->getQuantityMax();
         $interval = $productQuantityTransfer->getQuantityInterval();
 
