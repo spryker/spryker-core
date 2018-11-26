@@ -16,6 +16,7 @@ use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapp
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Shared\Kernel\Store;
 
 class CatalogSearchRestApiFactory extends AbstractFactory
 {
@@ -25,6 +26,16 @@ class CatalogSearchRestApiFactory extends AbstractFactory
     public function getCatalogClient(): CatalogSearchRestApiToCatalogClientInterface
     {
         return $this->getProvidedDependency(CatalogSearchRestApiDependencyProvider::CLIENT_CATALOG);
+    }
+
+    /**
+     * @deprecated Will be removed in the next major.
+     *
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore(): Store
+    {
+        return $this->getProvidedDependency(CatalogSearchRestApiDependencyProvider::STORE);
     }
 
     /**
