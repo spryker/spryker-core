@@ -11,7 +11,7 @@ interface CompanyUserTableActionLinksExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands links of action column in company user table in Zed.
+     * - Expands action links in company user table in Zed.
      *
      * @api
      *

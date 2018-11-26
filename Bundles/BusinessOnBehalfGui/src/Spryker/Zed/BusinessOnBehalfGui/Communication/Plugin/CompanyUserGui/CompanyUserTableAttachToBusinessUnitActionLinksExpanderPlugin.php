@@ -18,7 +18,7 @@ class CompanyUserTableAttachToBusinessUnitActionLinksExpanderPlugin extends Abst
 {
     /**
      * {@inheritdoc}
-     * - Adds new "Attach to BU" button in actions for company user table for add link of attach customer to business unit page
+     * - Adds new "Attach to BU" action button to company user table
      *
      * @api
      *
@@ -30,7 +30,7 @@ class CompanyUserTableAttachToBusinessUnitActionLinksExpanderPlugin extends Abst
     public function expandActionLinks(array $companyUserDataItem, array $actionButtons): array
     {
         return $this->getFactory()
-            ->createGuiButtonCreator()
-            ->addAttachToBusinessUnitButtonForCompanyUserTable($companyUserDataItem, $actionButtons);
+            ->createButtonCreator()
+            ->addAttachToBusinessUnitButton($companyUserDataItem, $actionButtons);
     }
 }

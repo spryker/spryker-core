@@ -31,7 +31,7 @@ class CompanyUserTableDeleteActionLinksExpanderPlugin extends AbstractPlugin imp
     public function expandActionLinks(array $companyUserDataItem, array $actionButtons): array
     {
         return $this->getFactory()
-            ->createGuiButtonCreator()
-            ->addDeleteButtonForCompanyUserTable($companyUserDataItem, $actionButtons);
+            ->createButtonCreator()
+            ->addDeleteButton($companyUserDataItem, $actionButtons);
     }
 }

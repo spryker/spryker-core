@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator;
 
-interface GuiButtonCreatorInterface
+interface ButtonCreatorInterface
 {
     /**
      * @param array $companyUserDataItem
@@ -15,7 +15,7 @@ interface GuiButtonCreatorInterface
      *
      * @return string[]
      */
-    public function addDeleteButtonForCompanyUserTable(array $companyUserDataItem, array $actionButtons): array;
+    public function addDeleteButton(array $companyUserDataItem, array $actionButtons): array;
 
     /**
      * @param array $companyUserDataItem
@@ -23,5 +23,5 @@ interface GuiButtonCreatorInterface
      *
      * @return string[]
      */
-    public function addAttachToBusinessUnitButtonForCompanyUserTable(array $companyUserDataItem, array $actionButtons): array;
+    public function addAttachToBusinessUnitButton(array $companyUserDataItem, array $actionButtons): array;
 }

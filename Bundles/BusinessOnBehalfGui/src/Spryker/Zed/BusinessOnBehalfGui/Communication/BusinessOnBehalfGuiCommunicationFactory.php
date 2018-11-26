@@ -9,8 +9,8 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Communication;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiDependencyProvider;
-use Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\GuiButtonCreator;
-use Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\GuiButtonCreatorInterface;
+use Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\ButtonCreator;
+use Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\ButtonCreatorInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\CustomerBusinessUnitAttachForm;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\DataProvider\CustomerBusinessUnitAttachFormDataProvider;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface;
@@ -100,10 +100,10 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\GuiButtonCreatorInterface
+     * @return \Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\ButtonCreatorInterface
      */
-    public function createGuiButtonCreator(): GuiButtonCreatorInterface
+    public function createButtonCreator(): ButtonCreatorInterface
     {
-        return new GuiButtonCreator();
+        return new ButtonCreator();
     }
 }

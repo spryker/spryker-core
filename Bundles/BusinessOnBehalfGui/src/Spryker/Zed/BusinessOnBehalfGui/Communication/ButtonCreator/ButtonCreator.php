@@ -9,7 +9,7 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator;
 
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 
-class GuiButtonCreator implements GuiButtonCreatorInterface
+class ButtonCreator implements ButtonCreatorInterface
 {
     protected const BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK = '/company-user-gui/delete-company-user/confirm-delete?id-company-user=';
     protected const BUTTON_DELETE_COMPANY_USER_URL = '<a href="/business-on-behalf-gui/delete-company-user/confirm-delete?id-company-user=%s" class="safe-submit btn btn-xs btn-outline btn-danger"><i class="fa fa-trash"></i> Delete</a>';
@@ -21,7 +21,7 @@ class GuiButtonCreator implements GuiButtonCreatorInterface
      *
      * @return string[]
      */
-    public function addDeleteButtonForCompanyUserTable(array $companyUserDataItem, array $actionButtons): array
+    public function addDeleteButton(array $companyUserDataItem, array $actionButtons): array
     {
         foreach ($actionButtons as $key => $actionButton) {
             if (strripos($actionButton, static::BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK)) {
@@ -42,7 +42,7 @@ class GuiButtonCreator implements GuiButtonCreatorInterface
      *
      * @return string[]
      */
-    public function addAttachToBusinessUnitButtonForCompanyUserTable(array $companyUserDataItem, array $actionButtons): array
+    public function addAttachToBusinessUnitButton(array $companyUserDataItem, array $actionButtons): array
     {
         $actionButtons[] = sprintf(
             static::BUTTON_ATTACH_TO_BUSINESS_UNIT_URL,
