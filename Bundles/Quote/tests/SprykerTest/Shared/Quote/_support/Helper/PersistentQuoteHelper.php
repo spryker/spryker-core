@@ -25,6 +25,7 @@ class PersistentQuoteHelper extends Module
      */
     public function havePersistentQuote(array $seed = [])
     {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = (new QuoteBuilder($seed))->build();
         $quoteTransfer->setIdQuote(null);
 
@@ -32,6 +33,7 @@ class PersistentQuoteHelper extends Module
 
         $this->assureCurrency($quoteTransfer);
         $this->assureStore($quoteTransfer);
+        $this->assureUuid($quoteTransfer);
 
         $quoteResponseTransfer = $this->getFacade()->createQuote($quoteTransfer);
 
@@ -77,6 +79,18 @@ class PersistentQuoteHelper extends Module
                 ->getStoreByName('DE');
 
             $quoteTransfer->setStore($storeTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function assureUuid(QuoteTransfer $quoteTransfer): void
+    {
+        if (!$quoteTransfer->getUuid()) {
+            $quoteTransfer->setUuid('test-uuid-1');
         }
     }
 }

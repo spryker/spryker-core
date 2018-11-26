@@ -14,6 +14,8 @@ use Spryker\Zed\ProductQuantityStorage\Persistence\Propel\Mapper\ProductQuantity
 
 /**
  * @method \Spryker\Zed\ProductQuantityStorage\ProductQuantityStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageRepositoryInterface getRepository()
  */
 class ProductQuantityStoragePersistenceFactory extends AbstractPersistenceFactory
 {

@@ -20,11 +20,26 @@ interface QuoteRepositoryInterface
      *
      * @api
      *
+     * @deprecated Use findQuoteByCustomerReferenceAndIdStore() instead.
+     *
      * @param string $customerReference
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
     public function findQuoteByCustomer($customerReference): ?QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Find quote by customer reference and ID store.
+     *
+     * @api
+     *
+     * @param string $customerReference
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteByCustomerReferenceAndIdStore(string $customerReference, int $idStore): ?QuoteTransfer;
 
     /**
      * Specification:
@@ -62,5 +77,5 @@ interface QuoteRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByUuid($uuidQuote): ?QuoteTransfer;
+    public function findQuoteByUuid(string $uuidQuote): ?QuoteTransfer;
 }

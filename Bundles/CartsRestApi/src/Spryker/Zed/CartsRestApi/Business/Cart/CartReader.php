@@ -10,6 +10,8 @@ namespace Spryker\Zed\CartsRestApi\Business\Cart;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 
 class CartReader implements CartReaderInterface
@@ -20,33 +22,42 @@ class CartReader implements CartReaderInterface
     protected $quoteCollectionReaderPlugin;
 
     /**
-     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin
+     * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface
      */
-    public function __construct(QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin)
-    {
+    protected $quoteFacade;
+
+    /**
+     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin
+     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
+     */
+    public function __construct(
+        QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin,
+        CartsRestApiToQuoteFacadeInterface $quoteFacade
+    ) {
         $this->quoteCollectionReaderPlugin = $quoteCollectionReaderPlugin;
+        $this->quoteFacade = $quoteFacade;
     }
 
     /**
-     * @param string $uuid
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findQuoteByUuid(string $uuid, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteResponseTransfer
+    public function findCustomerQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $customerReference = $quoteTransfer->getCustomerReference();
 
-        $quoteCollection = $this->quoteCollectionReaderPlugin->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
-        foreach ($quoteCollection->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getUuid() === $uuid) {
-                return $quoteResponseTransfer
-                    ->setIsSuccessful(true)
-                    ->setQuoteTransfer($quoteTransfer);
-            }
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return (new QuoteResponseTransfer())->setIsSuccessful(false);
         }
 
-        return $quoteResponseTransfer->setIsSuccessful(true);
+        if ($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference() !== $customerReference) {
+            return (new QuoteResponseTransfer())->setIsSuccessful(false);
+        }
+
+        return $quoteResponseTransfer;
     }
 
     /**

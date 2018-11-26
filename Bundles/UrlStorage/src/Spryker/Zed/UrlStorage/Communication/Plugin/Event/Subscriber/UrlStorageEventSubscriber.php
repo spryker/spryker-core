@@ -17,6 +17,8 @@ use Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\UrlStorageListene
 /**
  * @method \Spryker\Zed\UrlStorage\Communication\UrlStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\UrlStorage\Business\UrlStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\UrlStorage\UrlStorageConfig getConfig()
+ * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
  */
 class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

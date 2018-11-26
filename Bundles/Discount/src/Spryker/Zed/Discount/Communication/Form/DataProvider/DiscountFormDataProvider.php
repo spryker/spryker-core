@@ -9,10 +9,12 @@ namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
 use DateTime;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
+use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
+use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class DiscountFormDataProvider extends BaseDiscountFormDataProvider
@@ -57,6 +59,9 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
         $calculatedDiscountTransfer = $this->createDiscountCalculatorTransfer();
         $discountConfiguratorTransfer->setDiscountCalculator($calculatedDiscountTransfer);
 
+        $discountConditionTransfer = $this->createDiscountConditionTransfer();
+        $discountConfiguratorTransfer->setDiscountCondition($discountConditionTransfer);
+
         return $discountConfiguratorTransfer;
     }
 
@@ -83,5 +88,16 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
         $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
 
         return $discountCalculatorTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DiscountConditionTransfer
+     */
+    protected function createDiscountConditionTransfer(): DiscountConditionTransfer
+    {
+        $discountConditionTransfer = new DiscountConditionTransfer();
+        $discountConditionTransfer->setMinimumItemAmount(DiscountConfig::DEFAULT_MINIMUM_ITEM_AMOUNT);
+
+        return $discountConditionTransfer;
     }
 }

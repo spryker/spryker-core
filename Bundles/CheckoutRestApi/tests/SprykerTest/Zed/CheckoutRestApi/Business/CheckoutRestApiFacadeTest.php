@@ -9,33 +9,26 @@ namespace SprykerTest\Zed\CheckoutRestApi\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\AddressesBuilder;
-use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
-use Generated\Shared\DataBuilder\CustomerResponseBuilder;
-use Generated\Shared\DataBuilder\PaymentBuilder;
-use Generated\Shared\DataBuilder\PaymentMethodsBuilder;
-use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\QuoteResponseBuilder;
-use Generated\Shared\DataBuilder\ShipmentMethodsBuilder;
 use Generated\Shared\Transfer\AddressesTransfer;
-use Generated\Shared\Transfer\CheckoutDataTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
+use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
-use Generated\Shared\Transfer\StockProductTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Cart\Business\CartFacade;
+use Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeBridge;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeBridge;
+use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Payment\Business\PaymentFacade;
 use Spryker\Zed\Quote\Business\QuoteFacade;
@@ -71,110 +64,105 @@ class CheckoutRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCheckoutDataWillReturnNotEmptyCheckoutDataTransfer()
+    public function testGetCheckoutDataWillReturnNotEmptyCheckoutDataTransfer(): void
     {
         /**
          * @var \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade $checkoutRestApiFacade
          */
         $checkoutRestApiFacade = $this->tester->getFacade();
-        $mockCheckoutRestApiFactory = $this->getMockCheckoutRestApiFactory();
-        $checkoutRestApiFacade->setFactory($mockCheckoutRestApiFactory);
-        $quoteTransfer = $this->createQuoteTransfer();
+        $checkoutRestApiFacade->setFactory($this->getMockCheckoutRestApiFactory());
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullRestCheckoutRequestAttributesTransfer();
 
-        $checkoutDataTransfer = $checkoutRestApiFacade->getCheckoutData($quoteTransfer);
+        $restCheckoutDataResponseTransfer = $checkoutRestApiFacade->getCheckoutData($restCheckoutRequestAttributesTransfer);
 
-        $this->assertNotEmpty($checkoutDataTransfer);
-        $this->assertInstanceOf(CheckoutDataTransfer::class, $checkoutDataTransfer);
-        $this->assertInstanceOf(AddressesTransfer::class, $checkoutDataTransfer->getAddresses());
-        $this->assertInstanceOf(ShipmentMethodsTransfer::class, $checkoutDataTransfer->getShipmentMethods());
-        $this->assertInstanceOf(PaymentMethodsTransfer::class, $checkoutDataTransfer->getPaymentMethods());
-        $this->assertCount(1, $checkoutDataTransfer->getAddresses()->getAddresses());
-        $this->assertCount(1, $checkoutDataTransfer->getShipmentMethods()->getMethods());
-        $this->assertCount(2, $checkoutDataTransfer->getPaymentMethods()->getMethods());
+        $this->assertNotEmpty($restCheckoutDataResponseTransfer);
+        $this->assertInstanceOf(RestCheckoutDataResponseTransfer::class, $restCheckoutDataResponseTransfer);
+        $this->assertInstanceOf(AddressesTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getAddresses());
+        $this->assertInstanceOf(ShipmentMethodsTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getShipmentMethods());
+        $this->assertInstanceOf(PaymentMethodsTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getPaymentMethods());
+        $this->assertCount(1, $restCheckoutDataResponseTransfer->getCheckoutData()->getAddresses()->getAddresses());
+        $this->assertCount(1, $restCheckoutDataResponseTransfer->getCheckoutData()->getShipmentMethods()->getMethods());
+        $this->assertCount(2, $restCheckoutDataResponseTransfer->getCheckoutData()->getPaymentMethods()->getMethods());
     }
 
     /**
      * @return void
      */
-    public function testGetCheckoutDataWillReturnNotEmptyCheckoutDataTransferForGuest()
+    public function testGetCheckoutDataWillReturnNotEmptyCheckoutDataTransferForGuest(): void
     {
         /**
          * @var \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade $checkoutRestApiFacade
          */
         $checkoutRestApiFacade = $this->tester->getFacade();
-        $mockCheckoutRestApiFactory = $this->getMockCheckoutRestApiFactoryForGuest();
-        $checkoutRestApiFacade->setFactory($mockCheckoutRestApiFactory);
-        $quoteTransfer = $this->createQuoteTransfer();
+        $checkoutRestApiFacade->setFactory($this->getMockCheckoutRestApiFactoryForGuest());
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullRestCheckoutRequestAttributesTransfer();
 
-        $checkoutDataTransfer = $checkoutRestApiFacade->getCheckoutData($quoteTransfer);
+        $restCheckoutDataResponseTransfer = $checkoutRestApiFacade->getCheckoutData($restCheckoutRequestAttributesTransfer);
 
-        $this->assertNotEmpty($checkoutDataTransfer);
-        $this->assertInstanceOf(CheckoutDataTransfer::class, $checkoutDataTransfer);
-        $this->assertInstanceOf(AddressesTransfer::class, $checkoutDataTransfer->getAddresses());
-        $this->assertInstanceOf(ShipmentMethodsTransfer::class, $checkoutDataTransfer->getShipmentMethods());
-        $this->assertInstanceOf(PaymentMethodsTransfer::class, $checkoutDataTransfer->getPaymentMethods());
-        $this->assertCount(0, $checkoutDataTransfer->getAddresses()->getAddresses());
-        $this->assertCount(1, $checkoutDataTransfer->getShipmentMethods()->getMethods());
-        $this->assertCount(2, $checkoutDataTransfer->getPaymentMethods()->getMethods());
+        $this->assertNotEmpty($restCheckoutDataResponseTransfer);
+        $this->assertInstanceOf(RestCheckoutDataResponseTransfer::class, $restCheckoutDataResponseTransfer);
+        $this->assertInstanceOf(AddressesTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getAddresses());
+        $this->assertInstanceOf(ShipmentMethodsTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getShipmentMethods());
+        $this->assertInstanceOf(PaymentMethodsTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getPaymentMethods());
+        $this->assertCount(0, $restCheckoutDataResponseTransfer->getCheckoutData()->getAddresses()->getAddresses());
+        $this->assertCount(1, $restCheckoutDataResponseTransfer->getCheckoutData()->getShipmentMethods()->getMethods());
+        $this->assertCount(2, $restCheckoutDataResponseTransfer->getCheckoutData()->getPaymentMethods()->getMethods());
     }
 
     /**
      * @return void
      */
-    public function testPlaceOrderWillPlaceOrderForCustomer()
+    public function testPlaceOrderWillPlaceOrderForCustomer(): void
     {
         /**
          * @var \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade $checkoutRestApiFacade
          */
         $checkoutRestApiFacade = $this->tester->getFacade();
-        $mockCheckoutRestApiFactory = $this->getMockCheckoutRestApiFactory();
-        $checkoutRestApiFacade->setFactory($mockCheckoutRestApiFactory);
+        $checkoutRestApiFacade->setFactory($this->getMockCheckoutRestApiFactory());
 
-        $quoteTransfer = $this->createQuoteTransfer();
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullRestCheckoutRequestAttributesTransfer();
 
-        $checkoutResponseTransfer = $checkoutRestApiFacade->placeOrder($quoteTransfer);
+        $checkoutResponseTransfer = $checkoutRestApiFacade->placeOrder($restCheckoutRequestAttributesTransfer);
 
-        $this->assertInstanceOf(CheckoutResponseTransfer::class, $checkoutResponseTransfer);
+        $this->assertInstanceOf(RestCheckoutResponseTransfer::class, $checkoutResponseTransfer);
         $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
     }
 
     /**
      * @return void
      */
-    public function testPlaceOrderWillPlaceOrderForGuest()
+    public function testPlaceOrderWillPlaceOrderForGuest(): void
     {
         /**
          * @var \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade $checkoutRestApiFacade
          */
         $checkoutRestApiFacade = $this->tester->getFacade();
-        $mockCheckoutRestApiFactory = $this->getMockCheckoutRestApiFactoryForGuest();
-        $checkoutRestApiFacade->setFactory($mockCheckoutRestApiFactory);
+        $checkoutRestApiFacade->setFactory($this->getMockCheckoutRestApiFactoryForGuest());
 
-        $quoteTransfer = $this->createQuoteTransferForGuest();
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullRestCheckoutRequestAttributesTransferForGuest();
 
-        $checkoutResponseTransfer = $checkoutRestApiFacade->placeOrder($quoteTransfer);
+        $checkoutResponseTransfer = $checkoutRestApiFacade->placeOrder($restCheckoutRequestAttributesTransfer);
 
-        $this->assertInstanceOf(CheckoutResponseTransfer::class, $checkoutResponseTransfer);
+        $this->assertInstanceOf(RestCheckoutResponseTransfer::class, $checkoutResponseTransfer);
         $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
     }
 
     /**
      * @return void
      */
-    public function testPlaceOrderWillFailOnItemOutOfStock()
+    public function testPlaceOrderWillFailOnItemOutOfStock(): void
     {
         /**
          * @var \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade $checkoutRestApiFacade
          */
         $checkoutRestApiFacade = $this->tester->getFacade();
-        $mockCheckoutRestApiFactory = $this->getMockCheckoutRestApiFactoryWithFailingValidation();
-        $checkoutRestApiFacade->setFactory($mockCheckoutRestApiFactory);
+        $checkoutRestApiFacade->setFactory($this->getMockCheckoutRestApiFactoryWithFailingValidation());
 
-        $quoteTransfer = $this->createQuoteTransferWithItemOutOfStock();
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullRestCheckoutRequestAttributesTransfer();
 
-        $checkoutResponseTransfer = $checkoutRestApiFacade->placeOrder($quoteTransfer);
+        $checkoutResponseTransfer = $checkoutRestApiFacade->placeOrder($restCheckoutRequestAttributesTransfer);
 
-        $this->assertInstanceOf(CheckoutResponseTransfer::class, $checkoutResponseTransfer);
+        $this->assertInstanceOf(RestCheckoutResponseTransfer::class, $checkoutResponseTransfer);
         $this->assertNotTrue($checkoutResponseTransfer->getIsSuccess());
     }
 
@@ -192,6 +180,9 @@ class CheckoutRestApiFacadeTest extends Unit
                 'getCartFacade',
                 'getCheckoutFacade',
                 'getQuoteFacade',
+                'getCartsRestApiFacade',
+                'getQuoteMapperPlugins',
+                'getCalculationFacade',
             ]
         );
 
@@ -199,6 +190,9 @@ class CheckoutRestApiFacadeTest extends Unit
         $mockCheckoutRestApiFactory = $this->addMockPaymentFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockCheckoutFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockQuoteFacade($mockCheckoutRestApiFactory);
+        $mockCheckoutRestApiFactory = $this->addMockCartsRestApiFacade($mockCheckoutRestApiFactory);
+        $mockCheckoutRestApiFactory = $this->addMockQuoteMapperPlugins($mockCheckoutRestApiFactory);
+        $mockCheckoutRestApiFactory = $this->addMockCalculationFacade($mockCheckoutRestApiFactory);
 
         return $mockCheckoutRestApiFactory;
     }
@@ -240,74 +234,6 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function createQuoteTransfer(): QuoteTransfer
-    {
-        $product = $this->tester->haveProduct();
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $product->getSku()]);
-
-        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::SKU => $product->getSku(), ItemTransfer::UNIT_PRICE => 1])
-            ->withStore([StoreTransfer::NAME => 'DE'])
-            ->withCustomer(['isGuest' => false])
-            ->withTotals(['priceToPay' => 9999])
-            ->withCurrency()
-            ->withShippingAddress()
-            ->withBillingAddress()
-            ->withShipment()
-            ->build();
-
-        return $quoteTransfer->setPayment($this->getPaymentTransfer());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function createQuoteTransferForGuest(): QuoteTransfer
-    {
-        $product = $this->tester->haveProduct();
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $product->getSku()]);
-
-        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::SKU => $product->getSku(), ItemTransfer::UNIT_PRICE => 1])
-            ->withStore([StoreTransfer::NAME => 'DE'])
-            ->withCustomer(['isGuest' => true])
-            ->withTotals(['priceToPay' => 9999])
-            ->withCurrency()
-            ->withShippingAddress()
-            ->withBillingAddress()
-            ->withShipment()
-            ->build();
-
-        return $quoteTransfer->setPayment($this->getPaymentTransfer());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function createQuoteTransferWithItemOutOfStock(): QuoteTransfer
-    {
-        $product = $this->tester->haveProduct();
-
-        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::SKU => $product->getSku(), ItemTransfer::UNIT_PRICE => 1])
-            ->withStore([StoreTransfer::NAME => 'DE'])
-            ->withCustomer(['isGuest' => true])
-            ->withTotals(['priceToPay' => 9999])
-            ->withCurrency()
-            ->withShippingAddress()
-            ->withBillingAddress()
-            ->withShipment()
-            ->build();
-
-        return $quoteTransfer->setPayment($this->getPaymentTransfer());
-    }
-
-    /**
      * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
@@ -320,7 +246,7 @@ class CheckoutRestApiFacadeTest extends Unit
         );
         $mockShipmentFacade
             ->method('getAvailableMethods')
-            ->willReturn($this->createShipmentMethodsTransfer());
+            ->willReturn($this->tester->createShipmentMethodsTransfer());
 
         $mockCheckoutRestApiFactory
             ->method('getShipmentFacade')
@@ -331,21 +257,6 @@ class CheckoutRestApiFacadeTest extends Unit
             );
 
         return $mockCheckoutRestApiFactory;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
-     */
-    protected function createShipmentMethodsTransfer(): AbstractTransfer
-    {
-        $shipmentMethodData = [
-            'carrierName' => 'Spryker Dummy Shipment',
-            'idShipmentMethod' => '1',
-            'name' => 'Standard',
-            'storeCurrencyPrice' => '490',
-        ];
-
-        return (new ShipmentMethodsBuilder())->withMethod($shipmentMethodData)->build();
     }
 
     /**
@@ -361,7 +272,7 @@ class CheckoutRestApiFacadeTest extends Unit
         );
         $mockCartFacade
             ->method('validateQuote')
-            ->willReturn($this->createQuoteResponseTransfer());
+            ->willReturn($this->tester->createQuoteResponseTransfer());
 
         $mockCheckoutRestApiFactory
             ->method('getCartFacade')
@@ -375,13 +286,55 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteResponseTransfer(): AbstractTransfer
+    protected function addMockCartsRestApiFacade(MockObject $mockCheckoutRestApiFactory): MockObject
     {
-        return (new QuoteResponseBuilder(['isSuccessful' => true]))
-            ->withQuoteTransfer($this->createQuoteTransfer()->toArray())
-            ->build();
+        $mockCartsRestApiFacade = $this->createPartialMock(
+            CartsRestApiFacade::class,
+            ['findCustomerQuoteByUuid']
+        );
+        $mockCartsRestApiFacade
+            ->method('findCustomerQuoteByUuid')
+            ->willReturn($this->tester->createQuoteResponseTransfer());
+
+        $mockCheckoutRestApiFactory
+            ->method('getCartsRestApiFacade')
+            ->willReturn(
+                new CheckoutRestApiToCartsRestApiFacadeBridge(
+                    $mockCartsRestApiFacade
+                )
+            );
+
+        return $mockCheckoutRestApiFactory;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function addMockCalculationFacade(MockObject $mockCheckoutRestApiFactory): MockObject
+    {
+        $mockCartsRestApiFacade = $this->createPartialMock(
+            CalculationFacade::class,
+            ['recalculateQuote']
+        );
+        $mockCartsRestApiFacade
+            ->method('recalculateQuote')
+            ->willReturn($this->tester->createQuoteTransfer());
+
+        $mockCheckoutRestApiFactory
+            ->method('getCalculationFacade')
+            ->willReturn(
+                new CheckoutRestApiToCalculationFacadeBridge(
+                    $mockCartsRestApiFacade
+                )
+            );
+
+        return $mockCheckoutRestApiFactory;
     }
 
     /**
@@ -397,7 +350,7 @@ class CheckoutRestApiFacadeTest extends Unit
         );
         $mockCartFacade
             ->method('validateQuote')
-            ->willReturn($this->createQuoteResponseTransferWithFailingValidation());
+            ->willReturn($this->tester->createQuoteResponseTransferWithFailingValidation());
 
         $mockCheckoutRestApiFactory
             ->method('getCartFacade')
@@ -408,16 +361,6 @@ class CheckoutRestApiFacadeTest extends Unit
             );
 
         return $mockCheckoutRestApiFactory;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function createQuoteResponseTransferWithFailingValidation(): AbstractTransfer
-    {
-        return (new QuoteResponseBuilder(['isSuccessful' => false]))
-            ->withQuoteTransfer($this->createQuoteTransfer()->toArray())
-            ->build();
     }
 
     /**
@@ -433,7 +376,7 @@ class CheckoutRestApiFacadeTest extends Unit
         );
         $mockCheckoutFacade
             ->method('placeOrder')
-            ->willReturn($this->createCheckoutResponseTransfer());
+            ->willReturn($this->tester->createCheckoutResponseTransfer());
 
         $mockCheckoutRestApiFactory
             ->method('getCheckoutFacade')
@@ -444,14 +387,6 @@ class CheckoutRestApiFacadeTest extends Unit
             );
 
         return $mockCheckoutRestApiFactory;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    protected function createCheckoutResponseTransfer(): AbstractTransfer
-    {
-        return (new CheckoutResponseBuilder(['isSuccess' => true]))->build();
     }
 
     /**
@@ -467,7 +402,7 @@ class CheckoutRestApiFacadeTest extends Unit
         );
         $mockPaymentFacade
             ->method('getAvailableMethods')
-            ->willReturn($this->createPaymentMethodsTransfer());
+            ->willReturn($this->tester->createPaymentMethodsTransfer());
 
         $mockCheckoutRestApiFactory
             ->method('getPaymentFacade')
@@ -481,24 +416,6 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\PaymentMethodsTransfer
-     */
-    protected function createPaymentMethodsTransfer(): AbstractTransfer
-    {
-        $paymentMethodData1 = [
-            'methodName' => 'dummyPaymentInvoice',
-        ];
-        $paymentMethodData2 = [
-            'methodName' => 'dummyPaymentCreditCard',
-        ];
-
-        return (new PaymentMethodsBuilder())
-            ->withMethod($paymentMethodData1)
-            ->withAnotherMethod($paymentMethodData2)
-            ->build();
-    }
-
-    /**
      * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
@@ -509,15 +426,11 @@ class CheckoutRestApiFacadeTest extends Unit
             CustomerFacade::class,
             [
                 'getAddresses',
-                'findCustomerByReference',
             ]
         );
         $mockCustomerFacade
             ->method('getAddresses')
-            ->willReturn($this->createAddressesTransfer());
-        $mockCustomerFacade
-            ->method('findCustomerByReference')
-            ->willReturn($this->createCustomerResponseTransfer());
+            ->willReturn($this->tester->createAddressesTransfer());
 
         $mockCheckoutRestApiFactory
             ->method('getCustomerFacade')
@@ -528,40 +441,6 @@ class CheckoutRestApiFacadeTest extends Unit
             );
 
         return $mockCheckoutRestApiFactory;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\AddressesTransfer
-     */
-    protected function createAddressesTransfer(): AbstractTransfer
-    {
-        $addressData = [
-            'salutation' => 'Mr',
-            'firstName' => 'Spencor',
-            'lastName' => 'Hopkin',
-            'address1' => 'Julie-Wolfthorn-Straße',
-            'address2' => '1',
-            'address3' => null,
-            'zipCode' => '10115',
-            'city' => 'Berlin',
-            'iso2Code' => 'DE',
-            'company' => 'spryker',
-            'phone' => '+49 (30) 2084 98350',
-            'isDefaultShipping' => null,
-            'isDefaultBilling' => null,
-        ];
-
-        return (new AddressesBuilder())->withAddress($addressData)->build();
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    protected function createCustomerResponseTransfer(): AbstractTransfer
-    {
-        return (new CustomerResponseBuilder())
-            ->withCustomerTransfer($this->tester->haveCustomer()->toArray())
-            ->build();
     }
 
     /**
@@ -591,24 +470,6 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\PaymentTransfer
-     */
-    protected function getPaymentTransfer(): AbstractTransfer
-    {
-        $paymentTransferData = [
-            "dummyPaymentInvoice" => [
-                "dateOfBirth" => "08.04.1986",
-            ],
-            "paymentMethod" => "invoice",
-            "paymentProvider" => "dummyPayment",
-            "paymentSelection" => "dummyPaymentInvoice",
-            "amount" => "899910",
-        ];
-
-        return (new PaymentBuilder($paymentTransferData))->build();
-    }
-
-    /**
      * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
@@ -621,7 +482,7 @@ class CheckoutRestApiFacadeTest extends Unit
         );
         $mockQuoteFacade
             ->method('deleteQuote')
-            ->willReturn($this->createQuoteResponseTransfer());
+            ->willReturn($this->tester->createQuoteResponseTransfer());
 
         $mockCheckoutRestApiFactory
             ->method('getQuoteFacade')
@@ -632,5 +493,39 @@ class CheckoutRestApiFacadeTest extends Unit
             );
 
         return $mockCheckoutRestApiFactory;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function addMockQuoteMapperPlugins(MockObject $mockCheckoutRestApiFactory): MockObject
+    {
+        $mockCheckoutRestApiFactory
+            ->method('getQuoteMapperPlugins')
+            ->willReturn(
+                [
+                    $this->createMockCustomerMapperPlugin(),
+                ]
+            );
+
+        return $mockCheckoutRestApiFactory;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createMockCustomerMapperPlugin(): MockObject
+    {
+        $mockCustomerMapperPlugin = $this->createPartialMock(
+            QuoteMapperPluginInterface::class,
+            ['map']
+        );
+        $mockCustomerMapperPlugin
+            ->method('map')
+            ->willReturn($this->tester->createQuote());
+
+        return $mockCustomerMapperPlugin;
     }
 }

@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PaymentsRestApi\Business\Quote\QuoteMapper;
 use Spryker\Zed\PaymentsRestApi\Business\Quote\QuoteMapperInterface;
 
+/**
+ * @method \Spryker\Zed\PaymentsRestApi\PaymentsRestApiConfig getConfig()
+ */
 class PaymentsRestApiBusinessFactory extends AbstractBusinessFactory
 {
     /**

@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\CheckoutRestApi\Zed;
 
-use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 use Spryker\Client\CheckoutRestApi\Dependency\Client\CheckoutRestApiToZedRequestClientInterface;
 
 class CheckoutRestApiZedStub implements CheckoutRestApiZedStubInterface
@@ -30,26 +30,26 @@ class CheckoutRestApiZedStub implements CheckoutRestApiZedStubInterface
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutDataResponseTransfer
+     * @return \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer
      */
-    public function getCheckoutData(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutDataResponseTransfer
+    public function getCheckoutData(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestCheckoutDataResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CheckoutDataResponseTransfer $checkoutDataResponseTransfer */
-        $checkoutDataResponseTransfer = $this->zedRequestClient->call('/checkout-rest-api/gateway/get-checkout-data', $restCheckoutRequestAttributesTransfer);
+        /** @var \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer */
+        $restCheckoutDataResponseTransfer = $this->zedRequestClient->call('/checkout-rest-api/gateway/get-checkout-data', $restCheckoutRequestAttributesTransfer);
 
-        return $checkoutDataResponseTransfer;
+        return $restCheckoutDataResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
      */
-    public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutResponseTransfer
+    public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestCheckoutResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer */
-        $checkoutResponseTransfer = $this->zedRequestClient->call('/checkout-rest-api/gateway/place-order', $restCheckoutRequestAttributesTransfer);
+        /** @var \Generated\Shared\Transfer\RestCheckoutResponseTransfer $restCheckoutResponseTransfer */
+        $restCheckoutResponseTransfer = $this->zedRequestClient->call('/checkout-rest-api/gateway/place-order', $restCheckoutRequestAttributesTransfer);
 
-        return $checkoutResponseTransfer;
+        return $restCheckoutResponseTransfer;
     }
 }

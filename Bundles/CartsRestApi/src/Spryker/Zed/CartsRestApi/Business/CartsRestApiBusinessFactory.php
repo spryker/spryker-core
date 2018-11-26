@@ -47,7 +47,10 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createCartReader(): CartReaderInterface
     {
-        return new CartReader($this->getQuoteCollectionReaderPlugin());
+        return new CartReader(
+            $this->getQuoteCollectionReaderPlugin(),
+            $this->getQuoteFacade()
+        );
     }
 
     /**

@@ -14,6 +14,9 @@ use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPlu
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
+ */
 class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_QUOTE = 'FACADE_QUOTE';
@@ -97,7 +100,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
     {
         throw new MissingQuoteCollectionReaderPluginException(sprintf(
-            'Missing instance of %s! You need to configure CartQuoteCollectionReaderPlugin ' .
+            'Missing instance of %s! You need to configure QuoteCollectionReaderPlugin ' .
             'in your own CartsRestApiDependencyProvider::getQuoteCollectionReaderPlugin() ' .
             'to be able to read quote collection.',
             QuoteCollectionReaderPluginInterface::class

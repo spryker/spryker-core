@@ -13,6 +13,9 @@ use Spryker\Zed\GiftCard\Communication\Plugin\GiftCardRecreateValueProviderPlugi
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
+ */
 class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_ENCODING = 'SERVICE_ENCODING';

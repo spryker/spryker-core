@@ -59,9 +59,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteReader(): QuoteReaderInterface
     {
-        return new QuoteReader(
-            $this->getRepository()
-        );
+        return new QuoteReader($this->getRepository());
     }
 
     /**

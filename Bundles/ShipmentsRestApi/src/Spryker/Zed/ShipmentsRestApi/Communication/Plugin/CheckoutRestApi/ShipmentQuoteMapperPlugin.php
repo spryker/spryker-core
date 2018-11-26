@@ -9,12 +9,12 @@ namespace Spryker\Zed\ShipmentsRestApi\Communication\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiConfig getConfig()
  */
 class ShipmentQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPluginInterface
 {
@@ -33,8 +33,6 @@ class ShipmentQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPlu
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-
-
-        return $quoteTransfer;
+        return $this->getFacade()->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 }

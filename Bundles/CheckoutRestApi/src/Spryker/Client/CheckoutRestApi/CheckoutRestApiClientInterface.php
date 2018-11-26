@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\CheckoutRestApi;
 
-use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 
 interface CheckoutRestApiClientInterface
 {
@@ -22,22 +22,24 @@ interface CheckoutRestApiClientInterface
      *
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutDataResponseTransfer
+     * @return \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer
      */
-    public function getCheckoutData(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutDataResponseTransfer;
+    public function getCheckoutData(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestCheckoutDataResponseTransfer;
 
     /**
      * Specification:
-     * - Extends the Customer transfer with the customer data (for registered users).
-     * - Updated billing and shipping addresses with full details if UUID is passed.
+     * - Looks up the customer quote by uuid.
      * - Validates quote.
+     * - Runs the quote mapper plugins that update the quote with data from request.
+     * - Recalculates quote.
      * - Places an order.
+     * - Deletes quote.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
      */
-    public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutResponseTransfer;
+    public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestCheckoutResponseTransfer;
 }

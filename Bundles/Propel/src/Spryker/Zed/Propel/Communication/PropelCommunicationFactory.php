@@ -14,6 +14,7 @@ use Spryker\Zed\Propel\PropelDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Propel\PropelConfig getConfig()
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  */
 class PropelCommunicationFactory extends AbstractCommunicationFactory
 {

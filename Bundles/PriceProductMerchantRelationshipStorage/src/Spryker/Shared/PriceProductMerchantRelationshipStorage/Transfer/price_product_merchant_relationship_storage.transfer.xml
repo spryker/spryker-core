@@ -9,10 +9,21 @@
 
     <transfer name="PriceProductMerchantRelationshipStorage">
         <property name="storeName" type="string" />
-        <property name="idMerchantRelationship" type="int" />
+        <property name="idMerchantRelationship" type="int" deprecated="Use PriceProductMerchantRelationshipValueTransfer::idMerchantRelationship instead." />
         <property name="idCompanyBusinessUnit" type="int" />
         <property name="idProduct" type="int" />
+        <property name="priceKey" type="string" />
         <property name="prices" type="array" />
+        <property name="ungroupedPrices" type="PriceProductMerchantRelationshipValue[]" singular="ungroupedPrice" />
+    </transfer>
+
+    <transfer name="PriceProductMerchantRelationshipValue">
+        <property name="idMerchantRelationship" type="int" />
+        <property name="priceType" type="string" />
+        <property name="priceData" type="string" />
+        <property name="grossPrice" type="int" />
+        <property name="netPrice" type="int" />
+        <property name="currencyCode" type="string" />
     </transfer>
 
 </transfers>

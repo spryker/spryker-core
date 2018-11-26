@@ -24,6 +24,9 @@ use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilEncodingServiceBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceBridge;
 
+/**
+ * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
+ */
 class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_OFFER = 'FACADE_OFFER';

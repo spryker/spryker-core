@@ -9,21 +9,21 @@ namespace Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface;
 
 class QuoteReader implements QuoteReaderInterface
 {
     /**
-     * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface
+     * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface
      */
-    protected $quoteFacade;
+    protected $cartsRestApiFacade;
 
     /**
-     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
      */
-    public function __construct(CheckoutRestApiToQuoteFacadeInterface $quoteFacade)
+    public function __construct(CheckoutRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade)
     {
-        $this->quoteFacade = $quoteFacade;
+        $this->cartsRestApiFacade = $cartsRestApiFacade;
     }
 
     /**
@@ -31,27 +31,22 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findCustomerQuote(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
+    public function findCustomerQuoteByUuid(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
     {
-        $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
-        if (!$restQuoteRequestTransfer
-            || !$restQuoteRequestTransfer->getCustomer()
-            || !$restQuoteRequestTransfer->getCustomer()->getCustomerReference()) {
+        $restCartTransfer = $restCheckoutRequestAttributesTransfer->getCart();
+        if (!$restCartTransfer
+            || !$restCartTransfer->getCustomer()
+            || !$restCartTransfer->getCustomer()->getCustomerReference()) {
             return null;
         }
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setUuid($restQuoteRequestTransfer->getId());
+            ->setUuid($restCartTransfer->getId())
+            ->setCustomerReference($restCartTransfer->getCustomer()->getCustomerReference());
 
-        $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiFacade->findCustomerQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return null;
-        }
-
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-
-        if ($quoteTransfer->getCustomerReference() !== $restQuoteRequestTransfer->getCustomer()->getCustomerReference()) {
             return null;
         }
 

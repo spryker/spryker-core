@@ -14,6 +14,7 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipS
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig getConfig()
+ * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Persistence\MerchantRelationshipSalesOrderThresholdGuiRepositoryInterface getRepository()
  */
 class MerchantRelationshipSalesOrderThresholdGuiPersistenceFactory extends AbstractPersistenceFactory
 {

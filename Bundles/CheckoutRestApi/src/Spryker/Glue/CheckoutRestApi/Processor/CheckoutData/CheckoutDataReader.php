@@ -7,13 +7,13 @@
 
 namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData;
 
-use Generated\Shared\Transfer\CheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
+use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
-use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerExpanderInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -43,29 +43,29 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $customerValidator;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerExpanderInterface
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface
      */
-    protected $customerExpander;
+    protected $customerMapper;
 
     /**
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface $checkoutDataMapper
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidatorInterface $customerValidator
-     * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerExpanderInterface $customerExpander
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface $customerMapper
      */
     public function __construct(
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CheckoutDataMapperInterface $checkoutDataMapper,
         CustomerValidatorInterface $customerValidator,
-        CustomerExpanderInterface $customerExpander
+        CustomerMapperInterface $customerMapper
     ) {
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutDataMapper = $checkoutDataMapper;
         $this->customerValidator = $customerValidator;
-        $this->customerExpander = $customerExpander;
+        $this->customerMapper = $customerMapper;
     }
 
     /**
@@ -83,16 +83,16 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
                 ->addError($customerValidationError);
         }
 
-        $restCustomerTransfer = $this->customerExpander->getCustomerTransferFromRequest($restRequest, $restCheckoutRequestAttributesTransfer);
+        $restCustomerTransfer = $this->customerMapper->mapRestCustomerTransferFromRestCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
         $restCheckoutRequestAttributesTransfer->getCart()->setCustomer($restCustomerTransfer);
 
-        $checkoutDataResponseTransfer = $this->checkoutRestApiClient->getCheckoutData($restCheckoutRequestAttributesTransfer);
-        if (!$checkoutDataResponseTransfer->getIsSuccess()) {
-            return $this->createCheckoutDataErrorResponse($checkoutDataResponseTransfer);
+        $restCheckoutDataResponseTransfer = $this->checkoutRestApiClient->getCheckoutData($restCheckoutRequestAttributesTransfer);
+        if (!$restCheckoutDataResponseTransfer->getIsSuccess()) {
+            return $this->createCheckoutDataErrorResponse($restCheckoutDataResponseTransfer);
         }
 
         $restCheckoutResponseAttributesTransfer = $this->checkoutDataMapper
-            ->mapCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer($checkoutDataResponseTransfer->getCheckoutData(), $restCheckoutRequestAttributesTransfer);
+            ->mapRestCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer($restCheckoutDataResponseTransfer->getCheckoutData(), $restCheckoutRequestAttributesTransfer);
 
         return $this->createRestResponse($restCheckoutResponseAttributesTransfer);
     }
@@ -119,20 +119,18 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutDataResponseTransfer $checkoutDataResponseTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createCheckoutDataErrorResponse(CheckoutDataResponseTransfer $checkoutDataResponseTransfer): RestResponseInterface
+    protected function createCheckoutDataErrorResponse(RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        foreach ($checkoutDataResponseTransfer->getErrors() as $checkoutRestApiErrorTransfer) {
-            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CHECKOUT_DATA_INVALID)
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail($checkoutRestApiErrorTransfer->getMessage());
-
-            $restResponse->addError($restErrorMessageTransfer);
+        foreach ($restCheckoutDataResponseTransfer->getErrors() as $restCheckoutErrorTransfer) {
+            $restResponse->addError(
+                (new RestErrorMessageTransfer())
+                    ->fromArray($restCheckoutErrorTransfer->toArray(), true)
+            );
         }
 
         return $restResponse;

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface QuoteFacadeInterface
 {
@@ -46,11 +47,26 @@ interface QuoteFacadeInterface
      *
      * @api
      *
+     * @deprecated Use findQuoteByCustomerAndStore() instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Find quote for customer using a store.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByCustomerAndStore(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

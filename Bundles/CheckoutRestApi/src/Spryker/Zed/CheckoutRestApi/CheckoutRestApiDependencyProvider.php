@@ -9,6 +9,7 @@ namespace Spryker\Zed\CheckoutRestApi;
 
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeBridge;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeBridge;
@@ -17,16 +18,20 @@ use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacad
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig getConfig()
+ */
 class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CART = 'FACADE_CART';
+    public const FACADE_CARTS_REST_API = 'FACADE_CARTS_REST_API';
     public const FACADE_CHECKOUT = 'FACADE_CHECKOUT';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_PAYMENT = 'FACADE_PAYMENT';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
-    public const PLUGINS_QUOTE_MAPPING = 'PLUGINS_QUOTE_MAPPING';
+    public const PLUGINS_QUOTE_MAPPER = 'PLUGINS_QUOTE_MAPPER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,13 +42,14 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCartFacade($container);
+        $container = $this->addCartsRestApiFacade($container);
         $container = $this->addCheckoutFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addPaymentFacade($container);
         $container = $this->addQuoteFacade($container);
         $container = $this->addShipmentFacade($container);
         $container = $this->addCalculationFacade($container);
-        $container = $this->addQuoteMappingPlugins($container);
+        $container = $this->addQuoteMapperPlugins($container);
 
         return $container;
     }
@@ -57,6 +63,20 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CART] = function (Container $container) {
             return new CheckoutRestApiToCartFacadeBridge($container->getLocator()->cart()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartsRestApiFacade(Container $container): Container
+    {
+        $container[static::FACADE_CARTS_REST_API] = function (Container $container) {
+            return new CheckoutRestApiToCartsRestApiFacadeBridge($container->getLocator()->cartsRestApi()->facade());
         };
 
         return $container;
@@ -151,10 +171,10 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQuoteMappingPlugins(Container $container): Container
+    protected function addQuoteMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_MAPPING] = function () {
-            return $this->getQuoteMappingPlugins();
+        $container[static::PLUGINS_QUOTE_MAPPER] = function () {
+            return $this->getQuoteMapperPlugins();
         };
 
         return $container;
@@ -163,7 +183,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
      */
-    protected function getQuoteMappingPlugins(): array
+    protected function getQuoteMapperPlugins(): array
     {
         return [];
     }
