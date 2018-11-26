@@ -21,7 +21,6 @@ class GlobalSoftThresholdFormMapper extends AbstractGlobalThresholdFormMapper im
     public function map(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer
     {
         $salesOrderThresholdTransfer->setIdSalesOrderThreshold($data[GlobalSoftThresholdType::FIELD_ID_THRESHOLD] ?? null);
-        $salesOrderThresholdTransfer->setIdSalesOrderThreshold($data[GlobalSoftThresholdType::FIELD_ID_THRESHOLD]);
         $salesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,
             $salesOrderThresholdTransfer
