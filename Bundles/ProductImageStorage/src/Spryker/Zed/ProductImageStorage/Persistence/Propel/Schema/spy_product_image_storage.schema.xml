@@ -5,7 +5,7 @@
           namespace="Orm\Zed\ProductImageStorage\Persistence"
           package="src.Orm.Zed.ProductImageStorage.Persistence">
 
-    <table name="spy_product_abstract_image_storage">
+    <table name="spy_product_abstract_image_storage" identifierQuoting="true">
         <column name="id_product_abstract_image_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_abstract" type="INTEGER" required="true"/>
         <index name="spy_product_abstract_image_storage-fk_product_abstract">
@@ -21,7 +21,7 @@
         <behavior name="timestampable"/>
     </table>
 
-    <table name="spy_product_concrete_image_storage">
+    <table name="spy_product_concrete_image_storage" identifierQuoting="true">
         <column name="id_product_concrete_image_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <index name="spy_product_concrete_image_storage-fk_product">
