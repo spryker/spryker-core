@@ -44,7 +44,7 @@ class ButtonUrlGenerator
      */
     public function __construct($url, $title, array $options)
     {
-        $this->url = $this->escapeUrl($url ?: '');
+        $this->url = $url;
         $this->title = $title;
         $this->options = $options;
     }
@@ -134,6 +134,6 @@ class ButtonUrlGenerator
      */
     protected function generateAnchor()
     {
-        return '<a' . $this->getClass() . $this->getId() . $this->getExtraAttributes() . ' href="' . $this->url . '">';
+        return '<a' . $this->getClass() . $this->getId() . $this->getExtraAttributes() . ' href="' . $this->escapeUrl($this->url ?: '') . '">';
     }
 }
