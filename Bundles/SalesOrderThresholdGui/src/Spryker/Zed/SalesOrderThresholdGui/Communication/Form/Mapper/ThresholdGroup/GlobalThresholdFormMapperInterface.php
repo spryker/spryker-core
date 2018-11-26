@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper;
+namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup;
 
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 

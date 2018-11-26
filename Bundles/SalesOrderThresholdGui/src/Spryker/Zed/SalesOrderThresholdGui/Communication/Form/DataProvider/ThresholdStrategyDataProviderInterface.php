@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy;
+namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper;
 
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Exception\MissingGlobalThresholdFormMapperException;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface;
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToLocaleFacadeInterface;
 use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 
@@ -20,55 +20,55 @@ class GlobalThresholdMapperResolver implements GlobalThresholdMapperResolverInte
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\SalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface
-     */
-    protected $storeCurrencyFinder;
-
-    /**
      * @var \Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig
      */
     protected $config;
 
     /**
+     * @var array|\Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
+     */
+    protected $formExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\SalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface $storeCurrencyFinder
      * @param \Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig $config
+     * @param \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[] $formExpanderPlugins
      */
     public function __construct(
         SalesOrderThresholdGuiToLocaleFacadeInterface $localeFacade,
-        StoreCurrencyFinderInterface $storeCurrencyFinder,
-        SalesOrderThresholdGuiConfig $config
+        SalesOrderThresholdGuiConfig $config,
+        array $formExpanderPlugins
     ) {
         $this->localeFacade = $localeFacade;
-        $this->storeCurrencyFinder = $storeCurrencyFinder;
         $this->config = $config;
+        $this->formExpanderPlugins = $formExpanderPlugins;
     }
 
     /**
-     * @param string $salesOrderThresholdTypeKey
+     * @param string $salesOrderThresholdTypeGroup
      *
      * @throws \Spryker\Zed\SalesOrderThresholdGui\Communication\Exception\MissingGlobalThresholdFormMapperException
      *
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface
+     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface
      */
-    public function resolveGlobalThresholdMapperByStrategyKey(string $salesOrderThresholdTypeKey): GlobalThresholdFormMapperInterface
+    public function resolveGlobalThresholdMapperByStrategyGroup(string $salesOrderThresholdTypeGroup): GlobalThresholdFormMapperInterface
     {
-        if (!$this->hasGlobalThresholdMapperByStrategyKey($salesOrderThresholdTypeKey)) {
+        if (!$this->hasGlobalThresholdMapperByStrategyGroup($salesOrderThresholdTypeGroup)) {
             throw new MissingGlobalThresholdFormMapperException();
         }
-        /** @var \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface $mapperClass */
-        $mapperClass = $this->config->getStrategyTypeToFormTypeMap()[$salesOrderThresholdTypeKey];
+        /** @var \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface $mapperClass */
+        $mapperClass = $this->config->getStrategyGroupToFormTypeMap()[$salesOrderThresholdTypeGroup];
 
-        return new $mapperClass($this->localeFacade, $this->storeCurrencyFinder);
+        return new $mapperClass($this->localeFacade, $this->formExpanderPlugins);
     }
 
     /**
-     * @param string $salesOrderThresholdTypeKey
+     * @param string $salesOrderThresholdTypeGroup
      *
      * @return bool
      */
-    public function hasGlobalThresholdMapperByStrategyKey(string $salesOrderThresholdTypeKey): bool
+    public function hasGlobalThresholdMapperByStrategyGroup(string $salesOrderThresholdTypeGroup): bool
     {
-        return array_key_exists($salesOrderThresholdTypeKey, $this->config->getStrategyTypeToFormTypeMap());
+        return array_key_exists($salesOrderThresholdTypeGroup, $this->config->getStrategyGroupToFormTypeMap());
     }
 }

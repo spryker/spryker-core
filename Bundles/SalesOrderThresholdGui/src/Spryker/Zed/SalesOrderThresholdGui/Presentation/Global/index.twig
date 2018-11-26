@@ -12,6 +12,8 @@
         {{- block('form_widget_simple') -}}
     </div>
 {% endblock percent_widget %}
+{% set globalHardThresholdEnabled = globalThresholdForm.hardThreshold.strategy.vars.choices|length > 0 %}
+{% set globalSoftThresholdEnabled = globalThresholdForm.softThreshold.strategy.vars.choices|length > 0 %}
 
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Global threshold' } %}
@@ -19,57 +21,77 @@
             {{ form_start(globalThresholdForm) }}
             {{ form_row(globalThresholdForm.storeCurrency) }}
 
-            <h3>{{ 'Hard Threshold' | trans }}</h3>
+            {% if globalHardThresholdEnabled %}
+                <h3>{{ 'Hard Threshold' | trans }}</h3>
 
-            {{ form_row(globalThresholdForm.hardThreshold) }}
+                {{ form_row(globalThresholdForm.hardThreshold.strategy) }}
+                {{ form_row(globalThresholdForm.hardThreshold.threshold) }}
+                {% for child in globalThresholdForm if child.vars.attr.template_path is defined %}
+                    <div class="threshold_group_hard" id="threshold-key-{{ child.vars.attr.threshold_key | default('') }}">
+                        {% if child.vars.attr.template_path is defined %}
+                            {% include child.vars.attr.template_path with {form: child} %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
 
-            {% for localeTransfer in localeCollection %}
-                {% set formKey = 'hard_' ~ localeTransfer.localeName %}
-                {% if globalThresholdForm[formKey] is defined %}
-                    {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
-                        {% block content %}
-                            {% for input in globalThresholdForm[formKey] %}
-                                <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(input) }}
-                                    {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
-                                    {{ form_errors(input) }}
-                                </div>
-                            {% endfor %}
-                        {% endblock %}
-                    {% endembed %}
-                {% endif %}
-            {% endfor %}
+                {% for localeTransfer in localeCollection %}
+                    {% if globalThresholdForm.hardThreshold[localeTransfer.localeName] is defined %}
+                        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+                            {% block content %}
+                                {% for input in globalThresholdForm.hardThreshold[localeTransfer.localeName] %}
+                                    <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                                        {{ form_label(input) }}
+                                        {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
+                                        {{ form_errors(input) }}
+                                    </div>
+                                {% endfor %}
+                            {% endblock %}
+                        {% endembed %}
+                    {% endif %}
+                {% endfor %}
 
-            <hr/>
-            <h3>{{ 'Soft Threshold' | trans }}</h3>
+                <hr/>
+            {% else %}
+                {% do globalThresholdForm.hardThreshold.setRendered %}
+            {% endif %}
 
-            {{ form_row(globalThresholdForm.softStrategy) }}
-            {{ form_row(globalThresholdForm.softThreshold) }}
-            {{ form_row(globalThresholdForm.softFixedFee) }}
-            {{ form_row(globalThresholdForm.softFlexibleFee) }}
+            {% if globalSoftThresholdEnabled %}
+                <h3>{{ 'Soft Threshold' | trans }}</h3>
 
-            {% for localeTransfer in localeCollection %}
-                {% set formKey = 'soft_' ~ localeTransfer.localeName %}
-                {% if globalThresholdForm[formKey] is defined %}
-                    {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
-                        {% block content %}
-                            {% for input in globalThresholdForm[formKey] %}
-                                <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(input) }}
-                                    {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
-                                    {{ form_errors(input) }}
-                                </div>
-                            {% endfor %}
-                        {% endblock %}
-                    {% endembed %}
-                {% endif %}
-            {% endfor %}
+                {{ form_row(globalThresholdForm.softThreshold.strategy) }}
+                {{ form_row(globalThresholdForm.softThreshold.threshold) }}
+                {% for child in globalThresholdForm.softThreshold if child.vars.attr.template_path is defined %}
+                    <div class="threshold_group_soft" id="threshold-key-{{ child.vars.attr.threshold_key | default('') }}">
+                        {% if child.vars.attr.template_path is defined %}
+                            {% include child.vars.attr.template_path with {form: child} %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                {% for localeTransfer in localeCollection %}
+                    {% if globalThresholdForm.softThreshold[localeTransfer.localeName] is defined %}
+                        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+                            {% block content %}
+                                {% for input in globalThresholdForm.softThreshold[localeTransfer.localeName] %}
+                                    <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                                        {{ form_label(input) }}
+                                        {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
+                                        {{ form_errors(input) }}
+                                    </div>
+                                {% endfor %}
+                            {% endblock %}
+                        {% endembed %}
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% do globalThresholdForm.softThreshold.setRendered %}
+            {% endif %}
 
 
             {{ form_widget(globalThresholdForm) }}
 
             <div class="well well-sm">
-                {{ 'You can use the the placeholders <b>{{threshold}}</b> <b>{{fee}}</b>' | raw }}
+                {{ 'You can use the the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>' | raw }}
             </div>
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />

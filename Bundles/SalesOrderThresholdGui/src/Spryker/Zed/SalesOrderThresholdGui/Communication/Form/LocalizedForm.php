@@ -38,10 +38,9 @@ class LocalizedForm extends AbstractType
      *
      * @return $this
      */
-    protected function addMessageField(FormBuilderInterface $builder, array $options = []): self
+    protected function addMessageField(FormBuilderInterface $builder, array $options): self
     {
-        $builder
-            ->add(static::FIELD_MESSAGE, TextType::class, [
+        $builder->add(static::FIELD_MESSAGE, TextType::class, [
                 'required' => false,
             ]);
 
