@@ -17,21 +17,86 @@ class PriceProductMerger implements PriceProductMergerInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function mergeConcreteAndAbstractPrices(array $abstractPriceProductTransfers, array $concretePriceProductTransfers): array
-    {
-        $priceProductTransfers = [];
-        foreach ($abstractPriceProductTransfers as $abstractPriceProductTransfer) {
-            $abstractKey = $this->buildPriceProductIdentifier($abstractPriceProductTransfer);
+    public function mergeConcreteAndAbstractPrices(
+        array $abstractPriceProductTransfers,
+        array $concretePriceProductTransfers
+    ): array {
+        $abstractPriceProductTransfers = $this->prefillPriceProductTransferKeys($abstractPriceProductTransfers);
+        $concretePriceProductTransfers = $this->prefillPriceProductTransferKeys($concretePriceProductTransfers);
 
-            $priceProductTransfers = $this->mergeConcreteProduct(
-                $concretePriceProductTransfers,
-                $abstractKey,
-                $abstractPriceProductTransfer,
-                $priceProductTransfers
-            );
+        $priceProductTransfers = [];
+
+        foreach ($abstractPriceProductTransfers as $abstractPriceProductTransferKey => $abstractPriceProductTransfer) {
+            if (array_key_exists($abstractPriceProductTransferKey, $concretePriceProductTransfers)) {
+                $priceProductTransfers[$abstractPriceProductTransferKey] = $this->resolveConcreteProductPrice($abstractPriceProductTransfer, $concretePriceProductTransfers[$abstractPriceProductTransferKey]);
+                continue;
+            }
+
+            $priceProductTransfers[$abstractPriceProductTransferKey] = $abstractPriceProductTransfer;
         }
 
-        return $this->addConcreteNotMergedPrices($concretePriceProductTransfers, $priceProductTransfers);
+        $priceProductTransfers = $this->addConcreteNotMergedPrices($concretePriceProductTransfers, $priceProductTransfers);
+
+        return $priceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function resolveConcreteProductPrice(
+        PriceProductTransfer $abstractPriceProductTransfer,
+        PriceProductTransfer $concretePriceProductTransfer
+    ): PriceProductTransfer {
+        $abstractMoneyValueTransfer = $abstractPriceProductTransfer->getMoneyValue();
+        $concreteMoneyValueTransfer = $concretePriceProductTransfer->getMoneyValue();
+
+        if ($concreteMoneyValueTransfer->getGrossAmount() === null) {
+            $concreteMoneyValueTransfer->setGrossAmount($abstractMoneyValueTransfer->getGrossAmount());
+        }
+
+        if ($concreteMoneyValueTransfer->getNetAmount() === null) {
+            $concreteMoneyValueTransfer->setNetAmount($abstractMoneyValueTransfer->getNetAmount());
+        }
+
+        return $concretePriceProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function addConcreteNotMergedPrices(
+        array $concretePriceProductTransfers,
+        array $priceProductTransfers
+    ): array {
+        $missingConcretePriceProductTransfers = array_diff_key($concretePriceProductTransfers, $priceProductTransfers);
+
+        return array_values(
+            array_merge(
+                $priceProductTransfers,
+                $missingConcretePriceProductTransfers
+            )
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function prefillPriceProductTransferKeys(array $priceProductTransfers): array
+    {
+        $priceProductTransfersResult = [];
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductTransfersResult[$this->buildPriceProductIdentifier($priceProductTransfer)] = $priceProductTransfer;
+        }
+
+        return $priceProductTransfersResult;
     }
 
     /**
@@ -48,85 +113,6 @@ class PriceProductMerger implements PriceProductMergerInterface
         $priceProductTransfer->requirePriceDimension();
 
         return implode('-', array_filter($this->getIdentifiersPath($priceProductTransfer)));
-    }
-
-    /**
-     * @param array $concretePriceProductTransfers
-     * @param string $abstractKey
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $abstractPriceProductTransfer
-     * @param array $priceProductTransfers
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    protected function mergeConcreteProduct(
-        array $concretePriceProductTransfers,
-        string $abstractKey,
-        PriceProductTransfer $abstractPriceProductTransfer,
-        array $priceProductTransfers
-    ) {
-        foreach ($concretePriceProductTransfers as $concretePriceProductTransfer) {
-            $concreteKey = $this->buildPriceProductIdentifier($concretePriceProductTransfer);
-
-            if ($abstractKey !== $concreteKey) {
-                continue;
-            }
-
-            $priceProductTransfers[$concreteKey] = $this->resolveConcreteProductPrice(
-                $abstractPriceProductTransfer,
-                $concretePriceProductTransfer
-            );
-        }
-
-        if (!isset($priceProductTransfers[$abstractKey])) {
-            $priceProductTransfers[$abstractKey] = $abstractPriceProductTransfer;
-        }
-
-        return $priceProductTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductAbstractTransfer
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function resolveConcreteProductPrice(
-        PriceProductTransfer $priceProductAbstractTransfer,
-        PriceProductTransfer $priceProductConcreteTransfer
-    ) {
-        $abstractMoneyValueTransfer = $priceProductAbstractTransfer->getMoneyValue();
-        $concreteMoneyValueTransfer = $priceProductConcreteTransfer->getMoneyValue();
-
-        if ($concreteMoneyValueTransfer->getGrossAmount() === null) {
-            $concreteMoneyValueTransfer->setGrossAmount($abstractMoneyValueTransfer->getGrossAmount());
-        }
-
-        if ($concreteMoneyValueTransfer->getNetAmount() === null) {
-            $concreteMoneyValueTransfer->setNetAmount($abstractMoneyValueTransfer->getNetAmount());
-        }
-
-        return $priceProductConcreteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    protected function addConcreteNotMergedPrices(array $concretePriceProductTransfers, array $priceProductTransfers)
-    {
-        foreach ($concretePriceProductTransfers as $concretePriceProductTransfer) {
-            $concreteKey = $this->buildPriceProductIdentifier($concretePriceProductTransfer);
-
-            if (isset($priceProductTransfers[$concreteKey])) {
-                continue;
-            }
-
-            $priceProductTransfers[$concreteKey] = $concretePriceProductTransfer;
-        }
-
-        return $priceProductTransfers;
     }
 
     /**
