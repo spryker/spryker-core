@@ -44,21 +44,29 @@ class CompanyUser implements CompanyUserInterface
     protected $companyUserPluginExecutor;
 
     /**
+     * @var array|\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSaveCheckPluginInterface[]
+     */
+    protected $companyUserPreSaveCheckPlugins;
+
+    /**
      * @param \Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface $companyUserRepository
      * @param \Spryker\Zed\CompanyUser\Persistence\CompanyUserEntityManagerInterface $companyUserEntityManager
      * @param \Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutorInterface $companyUserPluginExecutor
+     * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSaveCheckPluginInterface[] $companyUserPreSaveCheckPlugins
      */
     public function __construct(
         CompanyUserRepositoryInterface $companyUserRepository,
         CompanyUserEntityManagerInterface $companyUserEntityManager,
         CompanyUserToCustomerFacadeInterface $customerFacade,
-        CompanyUserPluginExecutorInterface $companyUserPluginExecutor
+        CompanyUserPluginExecutorInterface $companyUserPluginExecutor,
+        array $companyUserPreSaveCheckPlugins
     ) {
         $this->companyUserRepository = $companyUserRepository;
         $this->companyUserEntityManager = $companyUserEntityManager;
         $this->customerFacade = $customerFacade;
         $this->companyUserPluginExecutor = $companyUserPluginExecutor;
+        $this->companyUserPreSaveCheckPlugins = $companyUserPreSaveCheckPlugins;
     }
 
     /**
@@ -68,9 +76,11 @@ class CompanyUser implements CompanyUserInterface
      */
     public function create(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
-            ->setCompanyUser($companyUserTransfer)
-            ->setIsSuccessful(true);
+        $companyUserResponseTransfer = $this->executePreSaveCheckPlugins($companyUserTransfer);
+
+        if (!$companyUserResponseTransfer->getIsSuccessful()) {
+            return $companyUserResponseTransfer;
+        }
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserResponseTransfer) {
             return $this->executeCreateTransaction($companyUserResponseTransfer);
@@ -84,9 +94,11 @@ class CompanyUser implements CompanyUserInterface
      */
     public function save(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
-            ->setCompanyUser($companyUserTransfer)
-            ->setIsSuccessful(true);
+        $companyUserResponseTransfer = $this->executePreSaveCheckPlugins($companyUserTransfer);
+
+        if (!$companyUserResponseTransfer->getIsSuccessful()) {
+            return $companyUserResponseTransfer;
+        }
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserResponseTransfer) {
             $companyUserResponseTransfer = $this->executeSaveTransaction($companyUserResponseTransfer);
@@ -346,5 +358,24 @@ class CompanyUser implements CompanyUserInterface
         }
 
         return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    protected function executePreSaveCheckPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        foreach ($this->companyUserPreSaveCheckPlugins as $companyUserPreSaveCheckPlugin) {
+            $companyUserResponseTransfer = $companyUserPreSaveCheckPlugin->check($companyUserTransfer);
+            if (!$companyUserResponseTransfer->getIsSuccessful()) {
+                return $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
+            }
+        }
+
+        return (new CompanyUserResponseTransfer())
+            ->setCompanyUser($companyUserTransfer)
+            ->setIsSuccessful(true);
     }
 }

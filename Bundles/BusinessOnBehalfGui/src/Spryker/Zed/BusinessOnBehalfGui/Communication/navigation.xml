@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <product>
+    <company-gui>
+        <label>Company Account</label>
+        <title>Company Account</title>
+        <icon>fa-files-o</icon>
         <pages>
-            <BusinessOnBehalfGui>
-            </BusinessOnBehalfGui>
+            <company-user-gui>
+                <label>Company Users</label>
+                <title>Company Users</title>
+                <bundle>company-user-gui</bundle>
+                <controller>list-company-user</controller>
+                <action>index</action>
+                <pages>
+                    <customer-business-unit-attach>
+                        <label>Attach to Business Unit</label>
+                        <title>Attach to Business Unit</title>
+                        <bundle>business-on-behalf-gui</bundle>
+                        <controller>create-company-user</controller>
+                        <action>attach-customer</action>
+                        <visible>0</visible>
+                    </customer-business-unit-attach>
+                </pages>
+            </company-user-gui>
         </pages>
-    </product>
+    </company-gui>
 </config>
