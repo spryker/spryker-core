@@ -179,7 +179,7 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
      */
-    public function findProductConcreteProductListStorageEntitiesByOffsetAndLimitFilteredByProductConcreteIds(FilterTransfer $filterTransfer, array $productConcreteIds = []): ObjectCollection
+    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $productConcreteIds = []): ObjectCollection
     {
         $query = $this->getFactory()->createProductConcreteProductListStorageQuery();
 
@@ -198,7 +198,7 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
      */
-    public function findProductAbstractProductListStorageEntitiesByOffsetAndLimitFilteredByProductAbstractIds(FilterTransfer $filterTransfer, array $productAbstractIds = []): ObjectCollection
+    public function findFilteredProductAbstractProductListStorageEntities(FilterTransfer $filterTransfer, array $productAbstractIds = []): ObjectCollection
     {
         $query = $this->getFactory()->createProductAbstractProductListStorageQuery();
 

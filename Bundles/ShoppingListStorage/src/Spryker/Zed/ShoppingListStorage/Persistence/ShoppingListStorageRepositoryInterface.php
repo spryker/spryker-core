@@ -46,5 +46,5 @@ interface ShoppingListStorageRepositoryInterface
      *
      * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findShoppingListCustomerStorageEntitiesByOffsetAndLimitFilteredByIds(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): ObjectCollection;
+    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): ObjectCollection;
 }

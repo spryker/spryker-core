@@ -77,7 +77,7 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
      */
-    public function findProductMeasurementUnitStorageEntitiesByOffsetAndLimitFilteredByProductMeasurementUnitIds(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array
+    public function findFilteredProductMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array
     {
         $query = $this->getFactory()->createProductMeasurementUnitStorageQuery();
 
@@ -97,7 +97,7 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
      *
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
      */
-    public function findProductConcreteMeasurementUnitStorageEntitiesByOffsetAndLimitFilteredByProductIds(FilterTransfer $filterTransfer, array $productIds = []): array
+    public function findFilteredProductConcreteMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productIds = []): array
     {
         $query = $this->getFactory()->createProductConcreteMeasurementUnitStorageQuery();
 

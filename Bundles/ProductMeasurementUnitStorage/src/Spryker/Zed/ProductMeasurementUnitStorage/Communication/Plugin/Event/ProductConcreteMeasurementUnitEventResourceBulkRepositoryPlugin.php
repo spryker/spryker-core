@@ -48,7 +48,7 @@ class ProductConcreteMeasurementUnitEventResourceBulkRepositoryPlugin extends Ab
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit($filterTransfer);
+        return $this->getFacade()->findFilteredProductMeasurementSalesUnitTransfers($filterTransfer);
     }
 
     /**

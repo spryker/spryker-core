@@ -61,8 +61,7 @@ class ProductMeasurementUnitSynchronizationDataBulkPlugin extends AbstractPlugin
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $productMeasurementUnitTransfers = $this->getRepository()
-            ->findProductMeasurementUnitStorageEntitiesByOffsetAndLimitFilteredByProductMeasurementUnitIds($filterTransfer, $ids);
+        $productMeasurementUnitTransfers = $this->getRepository()->findFilteredProductMeasurementUnitStorageEntities($filterTransfer, $ids);
 
         foreach ($productMeasurementUnitTransfers as $productMeasurementUnitTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();

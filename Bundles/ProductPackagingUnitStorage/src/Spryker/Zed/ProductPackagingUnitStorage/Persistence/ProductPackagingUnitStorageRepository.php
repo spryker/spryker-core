@@ -80,7 +80,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function findProductAbstractPackagingUnitStoragesByOffsetAndLimitFilteredByProductAbstractIds(FilterTransfer $filterTransfer, array $productAbstractIds = []): array
+    public function findFilteredProductAbstractPackagingUnitStorages(FilterTransfer $filterTransfer, array $productAbstractIds = []): array
     {
         $query = $this->getFactory()->createSpyProductAbstractPackagingStorageQuery();
 

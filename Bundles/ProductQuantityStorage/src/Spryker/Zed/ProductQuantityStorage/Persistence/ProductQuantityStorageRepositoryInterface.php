@@ -29,5 +29,5 @@ interface ProductQuantityStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
      */
-    public function findProductQuantityStorageEntitiesByOffsetAndLimitFilteredByProductIds(FilterTransfer $filterTransfer, array $productIds = []): array;
+    public function findFilteredProductQuantityStorageEntities(FilterTransfer $filterTransfer, array $productIds = []): array;
 }

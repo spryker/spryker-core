@@ -250,9 +250,9 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array
     {
-        return $this->getRepository()->findProductMeasurementUnitTransfersFilteredByOffsetAndLimit($filterTransfer);
+        return $this->getRepository()->findFilteredProductMeasurementUnitTransfers($filterTransfer);
     }
 
     /**
@@ -264,10 +264,10 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array
     {
         return $this->getFactory()
             ->createProductMeasurementSalesUnitReader()
-            ->findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit($filterTransfer);
+            ->findFilteredProductMeasurementSalesUnitTransfers($filterTransfer);
     }
 }

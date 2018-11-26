@@ -196,7 +196,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array;
+    public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array;
 
     /**
      * Specification
@@ -208,5 +208,5 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array;
+    public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array;
 }

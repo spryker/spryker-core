@@ -48,7 +48,7 @@ class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPl
     {
         $filterTranser = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->findProductMeasurementUnitTransfersFilteredByOffsetAndLimit($filterTranser);
+        return $this->getFacade()->findFilteredProductMeasurementUnitTransfers($filterTranser);
     }
 
     /**

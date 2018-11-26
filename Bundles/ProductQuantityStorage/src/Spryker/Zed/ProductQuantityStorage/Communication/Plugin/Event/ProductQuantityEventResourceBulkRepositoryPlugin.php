@@ -48,7 +48,7 @@ class ProductQuantityEventResourceBulkRepositoryPlugin extends AbstractPlugin im
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->findProductQuantityTransfersFilteredByOffsetAndLimit($filterTransfer);
+        return $this->getFacade()->findFilteredProductQuantityTransfers($filterTransfer);
     }
 
     /**

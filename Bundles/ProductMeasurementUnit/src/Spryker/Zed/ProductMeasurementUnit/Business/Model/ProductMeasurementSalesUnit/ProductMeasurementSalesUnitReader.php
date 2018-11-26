@@ -108,10 +108,10 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array
     {
         $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitRepository
-            ->findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit($filterTransfer);
+            ->findFilteredProductMeasurementSalesUnitTransfers($filterTransfer);
 
         foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
             $this->setDefaults($productMeasurementSalesUnitTransfer);

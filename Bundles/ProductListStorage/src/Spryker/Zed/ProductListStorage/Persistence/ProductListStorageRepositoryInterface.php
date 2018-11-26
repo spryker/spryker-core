@@ -70,7 +70,7 @@ interface ProductListStorageRepositoryInterface
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
      */
-    public function findProductConcreteProductListStorageEntitiesByOffsetAndLimitFilteredByProductConcreteIds(FilterTransfer $filterTransfer, array $productConcreteIds = []): ObjectCollection;
+    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $productConcreteIds = []): ObjectCollection;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -78,5 +78,5 @@ interface ProductListStorageRepositoryInterface
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
      */
-    public function findProductAbstractProductListStorageEntitiesByOffsetAndLimitFilteredByProductAbstractIds(FilterTransfer $filterTransfer, array $productAbstractIds = []): ObjectCollection;
+    public function findFilteredProductAbstractProductListStorageEntities(FilterTransfer $filterTransfer, array $productAbstractIds = []): ObjectCollection;
 }

@@ -372,7 +372,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return array
      */
-    public function findPriceProductConcreteMerchantRelationshipStorageEntitiesByOffsetAndLimitFilteredByIds(FilterTransfer $filterTransfer, array $priceProductConcreteMerchantRelationshipStorageIds = []): array
+    public function findFilteredPriceProductConcreteMerchantRelationshipStorageEntities(FilterTransfer $filterTransfer, array $priceProductConcreteMerchantRelationshipStorageIds = []): array
     {
         $query = $this->getFactory()->createPriceProductConcreteMerchantRelationshipStorageQuery();
 
@@ -392,7 +392,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return array
      */
-    public function findPriceProductAbstractMerchantRelationshipStorageEntitiesByOffsetAndLimitFilteredByIds(FilterTransfer $filterTransfer, array $priceProductAbstractMerchantRelationshipStorageIds = []): array
+    public function findFilteredPriceProductAbstractMerchantRelationshipStorageEntities(FilterTransfer $filterTransfer, array $priceProductAbstractMerchantRelationshipStorageIds = []): array
     {
         $query = $this->getFactory()->createPriceProductAbstractMerchantRelationshipStorageQuery();
 

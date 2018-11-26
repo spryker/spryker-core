@@ -61,8 +61,7 @@ class ProductQuantitySynchronizationDataBulkPlugin extends AbstractPlugin implem
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $productQuantityTransfers = $this->getRepository()
-            ->findProductQuantityStorageEntitiesByOffsetAndLimitFilteredByProductIds($filterTransfer, $ids);
+        $productQuantityTransfers = $this->getRepository()->findFilteredProductQuantityStorageEntities($filterTransfer, $ids);
 
         foreach ($productQuantityTransfers as $productQuantityTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();

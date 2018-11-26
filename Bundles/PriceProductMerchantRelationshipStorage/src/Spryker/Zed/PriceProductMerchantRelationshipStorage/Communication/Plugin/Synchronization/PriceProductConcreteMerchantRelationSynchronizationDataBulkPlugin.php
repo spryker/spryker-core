@@ -98,8 +98,7 @@ class PriceProductConcreteMerchantRelationSynchronizationDataBulkPlugin extends 
         $data = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $priceProductConcreteMerchantRelationshipStorageEntities = $this->getRepository()
-            ->findPriceProductConcreteMerchantRelationshipStorageEntitiesByOffsetAndLimitFilteredByIds($filterTransfer, $ids);
+        $priceProductConcreteMerchantRelationshipStorageEntities = $this->getRepository()->findFilteredPriceProductConcreteMerchantRelationshipStorageEntities($filterTransfer, $ids);
 
         foreach ($priceProductConcreteMerchantRelationshipStorageEntities as $priceProductConcreteMerchantRelationshipStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();

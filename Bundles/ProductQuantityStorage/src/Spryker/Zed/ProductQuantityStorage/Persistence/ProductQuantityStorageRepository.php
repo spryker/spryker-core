@@ -49,7 +49,7 @@ class ProductQuantityStorageRepository extends AbstractRepository implements Pro
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
      */
-    public function findProductQuantityStorageEntitiesByOffsetAndLimitFilteredByProductIds(FilterTransfer $filterTransfer, array $productIds = []): array
+    public function findFilteredProductQuantityStorageEntities(FilterTransfer $filterTransfer, array $productIds = []): array
     {
         $query = $this->getFactory()->createProductQuantityStorageQuery();
 

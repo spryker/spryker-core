@@ -41,7 +41,7 @@ interface ProductMeasurementUnitStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
      */
-    public function findProductMeasurementUnitStorageEntitiesByOffsetAndLimitFilteredByProductMeasurementUnitIds(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array;
+    public function findFilteredProductMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -49,5 +49,5 @@ interface ProductMeasurementUnitStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
      */
-    public function findProductConcreteMeasurementUnitStorageEntitiesByOffsetAndLimitFilteredByProductIds(FilterTransfer $filterTransfer, array $productIds = []): array;
+    public function findFilteredProductConcreteMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productIds = []): array;
 }

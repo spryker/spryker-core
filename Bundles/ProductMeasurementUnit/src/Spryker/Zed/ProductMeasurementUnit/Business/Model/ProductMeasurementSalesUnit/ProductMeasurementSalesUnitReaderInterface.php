@@ -43,5 +43,5 @@ interface ProductMeasurementSalesUnitReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array;
+    public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array;
 }

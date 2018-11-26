@@ -61,8 +61,7 @@ class ShoppingListSynchronizationDataBulkPlugin extends AbstractPlugin implement
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $shoppingListCustomerStorageEntities = $this->getRepository()
-            ->findShoppingListCustomerStorageEntitiesByOffsetAndLimitFilteredByIds($filterTransfer, $ids);
+        $shoppingListCustomerStorageEntities = $this->getRepository()->findFilteredProductConcreteProductListStorageEntities($filterTransfer, $ids);
 
         foreach ($shoppingListCustomerStorageEntities as $shoppingListCustomerStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();

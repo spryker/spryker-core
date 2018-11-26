@@ -74,7 +74,7 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function findProductMeasurementUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array;
+    public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array;
 
     /**
      * @api
@@ -83,5 +83,5 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array;
+    public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array;
 }

@@ -90,10 +90,10 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array
     {
         return $this->getFactory()
             ->createProductQuantityReader()
-            ->findProductQuantityTransfersFilteredByOffsetAndLimit($filterTransfer);
+            ->findFilteredProductQuantityTransfers($filterTransfer);
     }
 }

@@ -128,7 +128,7 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
      *
      * @return array
      */
-    public function findPriceProductConcreteMerchantRelationshipStorageEntitiesByOffsetAndLimitFilteredByIds(FilterTransfer $filterTransfer, array $priceProductConcreteMerchantRelationshipStorageIds = []): array;
+    public function findFilteredPriceProductConcreteMerchantRelationshipStorageEntities(FilterTransfer $filterTransfer, array $priceProductConcreteMerchantRelationshipStorageIds = []): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -136,5 +136,5 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
      *
      * @return array
      */
-    public function findPriceProductAbstractMerchantRelationshipStorageEntitiesByOffsetAndLimitFilteredByIds(FilterTransfer $filterTransfer, array $priceProductAbstractMerchantRelationshipStorageIds = []): array;
+    public function findFilteredPriceProductAbstractMerchantRelationshipStorageEntities(FilterTransfer $filterTransfer, array $priceProductAbstractMerchantRelationshipStorageIds = []): array;
 }

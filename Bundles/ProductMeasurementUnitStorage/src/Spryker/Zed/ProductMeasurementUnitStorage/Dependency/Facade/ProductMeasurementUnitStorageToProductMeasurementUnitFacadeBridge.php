@@ -75,9 +75,9 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array
     {
-        return $this->productMeasurementUnitFacade->findProductMeasurementUnitTransfersFilteredByOffsetAndLimit($filterTransfer);
+        return $this->productMeasurementUnitFacade->findFilteredProductMeasurementUnitTransfers($filterTransfer);
     }
 
     /**
@@ -85,8 +85,8 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
+    public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array
     {
-        return $this->productMeasurementUnitFacade->findProductMeasurementSalesUnitTransfersFilteredByOffsetAndLimit($filterTransfer);
+        return $this->productMeasurementUnitFacade->findFilteredProductMeasurementSalesUnitTransfers($filterTransfer);
     }
 }
