@@ -206,26 +206,22 @@ class CodeArchitectureSnifferConsole extends Console
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param string $pathSuffix
      *
-     * @return string|null
+     * @return string
      */
-    protected function getCorePath(ModuleTransfer $moduleTransfer, $pathSuffix): ?string
+    protected function getCorePath(ModuleTransfer $moduleTransfer, $pathSuffix): string
     {
-        return $this->buildPath($moduleTransfer->getPath() . DIRECTORY_SEPARATOR, $pathSuffix);
+        return $this->buildPath($moduleTransfer->getPath(), $pathSuffix);
     }
 
     /**
      * @param string $path
-     * @param string $suffix
+     * @param string|null $suffix
      *
      * @return string
      */
-    protected function buildPath($path, $suffix)
+    protected function buildPath(string $path, ?string $suffix = null): string
     {
-        if (!$suffix) {
-            return $path;
-        }
-
-        return $path . $suffix;
+        return rtrim($path . $suffix, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -383,9 +379,9 @@ class CodeArchitectureSnifferConsole extends Console
         $customPath = $pathToRoot . $path;
 
         if (!$module && !$path) {
-            $customPath .= static::SOURCE_FOLDER_NAME . DIRECTORY_SEPARATOR;
+            return $this->buildPath($customPath, static::SOURCE_FOLDER_NAME);
         }
 
-        return $customPath;
+        return $this->buildPath($customPath);
     }
 }
