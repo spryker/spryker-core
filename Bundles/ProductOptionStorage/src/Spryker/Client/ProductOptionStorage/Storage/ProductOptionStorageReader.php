@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductOptionStorage\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Client\CustomerAccessPermission\Plugin\SeePricePermissionPlugin;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPermissionClientInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface;
@@ -150,7 +149,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         $productAbstractOptionStorageTransfer = new ProductAbstractOptionStorageTransfer();
         $productAbstractOptionStorageTransfer->fromArray($productAbstractOptionStorageData, true);
 
-        if (!$this->permissionClient->can(SeePricePermissionPlugin::KEY)) {
+        if (!$this->permissionClient->can('SeePricePermissionPlugin')) {
             return $productAbstractOptionStorageTransfer;
         }
 
