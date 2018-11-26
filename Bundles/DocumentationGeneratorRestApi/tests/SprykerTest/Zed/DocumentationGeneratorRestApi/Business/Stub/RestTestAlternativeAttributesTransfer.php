@@ -66,7 +66,7 @@ class RestTestAlternativeAttributesTransfer extends AbstractTransfer
     /**
      * @param string $attribute3
      *
-     * @return \SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternativeAttributesTransfer
+     * @return $this
      */
     public function setAttribute3(string $attribute3): self
     {
@@ -87,7 +87,7 @@ class RestTestAlternativeAttributesTransfer extends AbstractTransfer
     /**
      * @param string $attribute4
      *
-     * @return \SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternativeAttributesTransfer
+     * @return $this
      */
     public function setAttribute4(string $attribute4): self
     {

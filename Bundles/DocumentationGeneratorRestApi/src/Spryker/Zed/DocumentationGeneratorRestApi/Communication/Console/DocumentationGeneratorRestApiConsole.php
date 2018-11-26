@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\DocumentationGeneratorRestApi\Communication\DocumentationGeneratorRestApiCommunicationFactory getFactory()
  */
 class DocumentationGeneratorRestApiConsole extends Console
 {

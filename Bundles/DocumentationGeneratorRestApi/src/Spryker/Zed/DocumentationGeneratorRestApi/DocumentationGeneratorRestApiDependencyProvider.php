@@ -16,6 +16,9 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGe
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig getConfig()
+ */
 class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
