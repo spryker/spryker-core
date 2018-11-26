@@ -18,8 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteCompanyUserController extends AbstractController
 {
-    protected const MESSAGE_SUCCESS_COMPANY_USER_DELETE = 'Company user successfully removed';
-    protected const MESSAGE_ERROR_COMPANY_USER_DELETE = 'Company user cannot be removed';
+    protected const MESSAGE_SUCCESS_COMPANY_USER_DELETE = 'Company user successfully removed.';
+    protected const MESSAGE_ERROR_COMPANY_USER_DELETE = 'Company user cannot be removed.';
 
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
@@ -30,7 +30,7 @@ class DeleteCompanyUserController extends AbstractController
      */
     public function confirmDeleteAction(Request $request): array
     {
-        $idCompanyUser = $request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
+        $idCompanyUser = $this->castId($request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER));
 
         $companyUserTransfer = $this->getFactory()
             ->getCompanyUserFacade()
@@ -53,7 +53,7 @@ class DeleteCompanyUserController extends AbstractController
      */
     public function deleteAction(Request $request): RedirectResponse
     {
-        $idCompanyUser = $request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
+        $idCompanyUser = $this->castId($request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER));
         if (!$idCompanyUser) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DELETE);
 

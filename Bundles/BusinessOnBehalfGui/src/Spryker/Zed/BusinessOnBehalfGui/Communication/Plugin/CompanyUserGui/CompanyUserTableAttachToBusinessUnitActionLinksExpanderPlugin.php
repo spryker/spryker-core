@@ -18,7 +18,7 @@ class CompanyUserTableAttachToBusinessUnitActionLinksExpanderPlugin extends Abst
 {
     /**
      * {@inheritdoc}
-     * - Adds new "Attach to BU" action button to company user table
+     * - Adds new "Attach to BU" action button to company user table.
      *
      * @api
      *
