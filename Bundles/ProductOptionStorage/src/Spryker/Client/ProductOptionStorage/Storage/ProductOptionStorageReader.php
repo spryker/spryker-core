@@ -127,7 +127,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
 
         $key = $this->generateKey($idProductAbstract);
 
-        return $this->storageClient->get($key);
+        return $this->storageClient->get($key) ?? [];
     }
 
     /**
