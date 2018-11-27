@@ -137,10 +137,6 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
      */
     protected function mapScalarSchemaType(string $type): string
     {
-        if (array_key_exists($type, static::DATA_TYPES_MAPPING_LIST)) {
-            return static::DATA_TYPES_MAPPING_LIST[$type];
-        }
-
-        return $type;
+        return static::DATA_TYPES_MAPPING_LIST[$type] ?? $type;
     }
 }
