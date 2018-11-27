@@ -16,9 +16,9 @@ interface CustomerTableActionExpanderPluginInterface
      * @api
      *
      * @param int $idCustomer
-     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttons
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function execute(int $idCustomer, array $buttonTransfers): array;
+    public function execute(int $idCustomer, array $buttons): array;
 }
