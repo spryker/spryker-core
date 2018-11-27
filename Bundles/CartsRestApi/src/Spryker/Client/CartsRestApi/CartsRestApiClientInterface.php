@@ -14,9 +14,8 @@ interface CartsRestApiClientInterface
 {
     /**
      * Specification:
-     * - Finds customer quote by uuid.
-     * - Uuid and customerReference must be set in the QuoteTransfer taken as parameter.
-     * - Checks that customer is authorized to access a quote by the given uuid.
+     * - Finds quote by uuid.
+     * - Uuid must be set in the QuoteTransfer taken as parameter.
      *
      * @api
      *
@@ -24,5 +23,5 @@ interface CartsRestApiClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findCustomerQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

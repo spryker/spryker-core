@@ -31,10 +31,10 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findCustomerQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/find-customer-quote-by-uuid', $quoteTransfer);
+        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/find-quote-by-uuid', $quoteTransfer);
 
         return $quoteResponseTransfer;
     }

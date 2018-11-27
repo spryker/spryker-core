@@ -8,14 +8,17 @@
 namespace SprykerTest\Zed\CheckoutRestApi;
 
 use Codeception\Actor;
-use Generated\Shared\DataBuilder\AddressesBuilder;
 use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
+use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\DataBuilder\CustomerResponseBuilder;
 use Generated\Shared\DataBuilder\PaymentBuilder;
 use Generated\Shared\DataBuilder\PaymentMethodsBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteResponseBuilder;
 use Generated\Shared\DataBuilder\RestCartBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodsBuilder;
+use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -47,6 +50,8 @@ class CheckoutRestApiBusinessTester extends Actor
     protected const CUSTOMER = [
         'customerReference' => 'DE-666',
         'idCustomer' => 666,
+        'defaultShippingAddress' => '8',
+        'defaultBillingAddress' => '9',
     ];
 
     protected const GUEST_CUSTOMER = [
@@ -136,11 +141,23 @@ class CheckoutRestApiBusinessTester extends Actor
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\AddressesTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function createAddressesTransfer(): AbstractTransfer
+    public function createCustomerResponseTransfer(): AbstractTransfer
     {
-        return (new AddressesBuilder())->withAddress(static::ADDRESS_1)->build();
+        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
+        $customerResponseTransfer = (new CustomerResponseBuilder(['hasCustomer' => true, 'isSuccess' => true]))
+            ->withCustomerTransfer(
+                (new CustomerBuilder(static::CUSTOMER))
+            )
+            ->build();
+
+        $addressesTransfer = (new AddressesTransfer())
+            ->addAddress((new AddressTransfer())->fromArray(static::ADDRESS_1, true));
+
+        $customerResponseTransfer->getCustomerTransfer()->setAddresses($addressesTransfer);
+
+        return $customerResponseTransfer;
     }
 
     /**
@@ -190,6 +207,16 @@ class CheckoutRestApiBusinessTester extends Actor
     }
 
     /**
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuoteResponseForGuestTransfer(): AbstractTransfer
+    {
+        return (new QuoteResponseBuilder(['isSuccessful' => true]))
+            ->withQuoteTransfer($this->createQuoteTransferForGuest()->toArray())
+            ->build();
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function createShipmentMethodsTransfer(): AbstractTransfer
@@ -216,7 +243,30 @@ class CheckoutRestApiBusinessTester extends Actor
         $quoteTransfer = (new QuoteBuilder(['uuid' => static::CART_UUID]))
             ->withItem([ItemTransfer::SKU => $product->getSku(), ItemTransfer::UNIT_PRICE => 1])
             ->withStore([StoreTransfer::NAME => 'DE'])
-            ->withCustomer(['isGuest' => false])
+            ->withCustomer(static::CUSTOMER)
+            ->withTotals(['priceToPay' => 9999])
+            ->withCurrency()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withShipment()
+            ->build();
+
+        return $quoteTransfer->setPayment($this->getPaymentTransfer());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransferForGuest(): QuoteTransfer
+    {
+        $product = $this->haveProduct();
+        $this->haveProductInStock([StockProductTransfer::SKU => $product->getSku()]);
+
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = (new QuoteBuilder(['uuid' => static::CART_UUID]))
+            ->withItem([ItemTransfer::SKU => $product->getSku(), ItemTransfer::UNIT_PRICE => 1])
+            ->withStore([StoreTransfer::NAME => 'DE'])
+            ->withCustomer(static::GUEST_CUSTOMER)
             ->withTotals(['priceToPay' => 9999])
             ->withCurrency()
             ->withShippingAddress()

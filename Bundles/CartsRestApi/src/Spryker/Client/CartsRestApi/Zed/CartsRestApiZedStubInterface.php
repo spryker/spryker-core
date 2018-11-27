@@ -17,5 +17,5 @@ interface CartsRestApiZedStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findCustomerQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

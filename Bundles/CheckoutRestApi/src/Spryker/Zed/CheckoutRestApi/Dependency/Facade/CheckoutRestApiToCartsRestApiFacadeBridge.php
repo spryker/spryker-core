@@ -30,8 +30,8 @@ class CheckoutRestApiToCartsRestApiFacadeBridge implements CheckoutRestApiToCart
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findCustomerQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->cartsRestApiFacade->findCustomerQuoteByUuid($quoteTransfer);
+        return $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
     }
 }

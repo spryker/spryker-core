@@ -35,14 +35,14 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCartsFacadeWillFindCustomerQuoteByUuid(): void
+    public function testCartsFacadeWillFindQuoteByUuid(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
         $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
 
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
-        $actualQuoteResponseTransfer = $cartsRestApiFacade->findCustomerQuoteByUuid($quoteTransfer);
+        $actualQuoteResponseTransfer = $cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
         $this->assertInstanceOf(QuoteResponseTransfer::class, $actualQuoteResponseTransfer);
         $this->assertNotNull($actualQuoteResponseTransfer->getQuoteTransfer());
@@ -54,14 +54,14 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCartsFacadeWillNotFindCustomerQuoteByUuidWithoutCustomerReference(): void
+    public function testCartsFacadeWillNotFindQuoteByUuidWithoutCustomerReference(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
         $cartsRestApiFacade->setFactory($this->getFailingMockCartsRestApiBusinessFactory());
 
         $quoteTransfer = $this->tester->prepareQuoteTransferWithoutCustomerReference();
-        $actualQuoteResponseTransfer = $cartsRestApiFacade->findCustomerQuoteByUuid($quoteTransfer);
+        $actualQuoteResponseTransfer = $cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
         $this->assertInstanceOf(QuoteResponseTransfer::class, $actualQuoteResponseTransfer);
         $this->assertNull($actualQuoteResponseTransfer->getQuoteTransfer());
@@ -70,14 +70,14 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCartsFacadeWillNotFindCustomerQuoteByUuidWithoutCartUuid(): void
+    public function testCartsFacadeWillNotFindQuoteByUuidWithoutCartUuid(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
         $cartsRestApiFacade->setFactory($this->getFailingMockCartsRestApiBusinessFactory());
 
         $quoteTransfer = $this->tester->prepareQuoteTransferWithoutCartUuid();
-        $actualQuoteResponseTransfer = $cartsRestApiFacade->findCustomerQuoteByUuid($quoteTransfer);
+        $actualQuoteResponseTransfer = $cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
         $this->assertInstanceOf(QuoteResponseTransfer::class, $actualQuoteResponseTransfer);
         $this->assertNull($actualQuoteResponseTransfer->getQuoteTransfer());

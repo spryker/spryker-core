@@ -41,12 +41,16 @@ class QuoteReader implements QuoteReaderInterface
         }
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setUuid($restCartTransfer->getId())
-            ->setCustomerReference($restCartTransfer->getCustomer()->getCustomerReference());
+            ->setUuid($restCartTransfer->getId());
 
-        $quoteResponseTransfer = $this->cartsRestApiFacade->findCustomerQuoteByUuid($quoteTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return null;
+        }
+
+        $customerReference = $restCartTransfer->getCustomer()->getCustomerReference();
+        if ($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference() !== $customerReference) {
             return null;
         }
 

@@ -31,17 +31,11 @@ class CartReader implements CartReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findCustomerQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $customerReference = $quoteTransfer->getCustomerReference();
-
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return (new QuoteResponseTransfer())->setIsSuccessful(false);
-        }
-
-        if ($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference() !== $customerReference) {
             return (new QuoteResponseTransfer())->setIsSuccessful(false);
         }
 

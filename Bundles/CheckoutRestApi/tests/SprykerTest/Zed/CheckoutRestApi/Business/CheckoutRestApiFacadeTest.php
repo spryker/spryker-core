@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\CheckoutRestApi\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\AddressesBuilder;
+use Generated\Shared\DataBuilder\CustomerResponseBuilder;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
@@ -76,6 +76,7 @@ class CheckoutRestApiFacadeTest extends Unit
         $restCheckoutDataResponseTransfer = $checkoutRestApiFacade->getCheckoutData($restCheckoutRequestAttributesTransfer);
 
         $this->assertNotEmpty($restCheckoutDataResponseTransfer);
+        $this->assertTrue($restCheckoutDataResponseTransfer->getIsSuccess());
         $this->assertInstanceOf(RestCheckoutDataResponseTransfer::class, $restCheckoutDataResponseTransfer);
         $this->assertInstanceOf(AddressesTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getAddresses());
         $this->assertInstanceOf(ShipmentMethodsTransfer::class, $restCheckoutDataResponseTransfer->getCheckoutData()->getShipmentMethods());
@@ -95,7 +96,7 @@ class CheckoutRestApiFacadeTest extends Unit
          */
         $checkoutRestApiFacade = $this->tester->getFacade();
         $checkoutRestApiFacade->setFactory($this->getMockCheckoutRestApiFactoryForGuest());
-        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullRestCheckoutRequestAttributesTransfer();
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullRestCheckoutRequestAttributesTransferForGuest();
 
         $restCheckoutDataResponseTransfer = $checkoutRestApiFacade->getCheckoutData($restCheckoutRequestAttributesTransfer);
 
@@ -190,7 +191,6 @@ class CheckoutRestApiFacadeTest extends Unit
         $mockCheckoutRestApiFactory = $this->addMockPaymentFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockCheckoutFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockQuoteFacade($mockCheckoutRestApiFactory);
-        $mockCheckoutRestApiFactory = $this->addMockCartsRestApiFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockQuoteMapperPlugins($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockCalculationFacade($mockCheckoutRestApiFactory);
 
@@ -205,6 +205,7 @@ class CheckoutRestApiFacadeTest extends Unit
         $mockCheckoutRestApiFactory = $this->initMockCheckoutRestApiFactory();
         $mockCheckoutRestApiFactory = $this->addMockCustomerFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockCartFacade($mockCheckoutRestApiFactory);
+        $mockCheckoutRestApiFactory = $this->addMockCartsRestApiFacade($mockCheckoutRestApiFactory);
 
         return $mockCheckoutRestApiFactory;
     }
@@ -217,6 +218,7 @@ class CheckoutRestApiFacadeTest extends Unit
         $mockCheckoutRestApiFactory = $this->initMockCheckoutRestApiFactory();
         $mockCheckoutRestApiFactory = $this->addMockCustomerFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockCartFacadeWithFailingValidation($mockCheckoutRestApiFactory);
+        $mockCheckoutRestApiFactory = $this->addMockCartsRestApiFacade($mockCheckoutRestApiFactory);
 
         return $mockCheckoutRestApiFactory;
     }
@@ -229,6 +231,7 @@ class CheckoutRestApiFacadeTest extends Unit
         $mockCheckoutRestApiFactory = $this->initMockCheckoutRestApiFactory();
         $mockCheckoutRestApiFactory = $this->addMockCustomerFacadeForGuest($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockCartFacade($mockCheckoutRestApiFactory);
+        $mockCheckoutRestApiFactory = $this->addMockCartsRestApiFacadeForGuest($mockCheckoutRestApiFactory);
 
         return $mockCheckoutRestApiFactory;
     }
@@ -294,11 +297,37 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockCartsRestApiFacade = $this->createPartialMock(
             CartsRestApiFacade::class,
-            ['findCustomerQuoteByUuid']
+            ['findQuoteByUuid']
         );
         $mockCartsRestApiFacade
-            ->method('findCustomerQuoteByUuid')
+            ->method('findQuoteByUuid')
             ->willReturn($this->tester->createQuoteResponseTransfer());
+
+        $mockCheckoutRestApiFactory
+            ->method('getCartsRestApiFacade')
+            ->willReturn(
+                new CheckoutRestApiToCartsRestApiFacadeBridge(
+                    $mockCartsRestApiFacade
+                )
+            );
+
+        return $mockCheckoutRestApiFactory;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function addMockCartsRestApiFacadeForGuest(MockObject $mockCheckoutRestApiFactory): MockObject
+    {
+        $mockCartsRestApiFacade = $this->createPartialMock(
+            CartsRestApiFacade::class,
+            ['findQuoteByUuid']
+        );
+        $mockCartsRestApiFacade
+            ->method('findQuoteByUuid')
+            ->willReturn($this->tester->createQuoteResponseForGuestTransfer());
 
         $mockCheckoutRestApiFactory
             ->method('getCartsRestApiFacade')
@@ -425,12 +454,12 @@ class CheckoutRestApiFacadeTest extends Unit
         $mockCustomerFacade = $this->createPartialMock(
             CustomerFacade::class,
             [
-                'getAddresses',
+                'findCustomerByReference',
             ]
         );
         $mockCustomerFacade
-            ->method('getAddresses')
-            ->willReturn($this->tester->createAddressesTransfer());
+            ->method('findCustomerByReference')
+            ->willReturn($this->tester->createCustomerResponseTransfer());
 
         $mockCheckoutRestApiFactory
             ->method('getCustomerFacade')
@@ -452,11 +481,11 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockCustomerFacade = $this->createPartialMock(
             CustomerFacade::class,
-            ['getAddresses']
+            ['findCustomerByReference']
         );
         $mockCustomerFacade
-            ->method('getAddresses')
-            ->willReturn((new AddressesBuilder())->build());
+            ->method('findCustomerByReference')
+            ->willReturn((new CustomerResponseBuilder(['isSuccess' => false, 'hasCustomer' => false]))->build());
 
         $mockCheckoutRestApiFactory
             ->method('getCustomerFacade')

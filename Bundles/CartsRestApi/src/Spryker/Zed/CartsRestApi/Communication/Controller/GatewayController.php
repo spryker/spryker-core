@@ -21,8 +21,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findCustomerQuoteByUuidAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function findQuoteByUuidAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->findCustomerQuoteByUuid($quoteTransfer);
+        return $this->getFacade()->findQuoteByUuid($quoteTransfer);
     }
 }
