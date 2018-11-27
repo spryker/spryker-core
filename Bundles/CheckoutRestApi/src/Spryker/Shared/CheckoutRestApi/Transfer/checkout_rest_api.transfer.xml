@@ -58,6 +58,8 @@
         <property name="iso2Code" type="string" />
         <property name="company" type="string" />
         <property name="phone" type="string" />
+        <property name="isDefaultBilling" type="bool" />
+        <property name="isDefaultShipping" type="bool" />
     </transfer>
 
     <transfer name="RestShipment">

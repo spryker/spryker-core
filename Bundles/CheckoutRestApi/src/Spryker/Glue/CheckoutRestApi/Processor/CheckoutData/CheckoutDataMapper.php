@@ -59,16 +59,16 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $checkoutDataTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
     protected function mapAddresses(
-        RestCheckoutDataTransfer $checkoutDataTransfer,
+        RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        foreach ($checkoutDataTransfer->getAddresses()->getAddresses() as $addressTransfer) {
+        foreach ($restCheckoutDataTransfer->getAddresses()->getAddresses() as $addressTransfer) {
             $restCheckoutDataResponseAttributesTransfer->addAddresses(
                 (new RestAddressTransfer())->fromArray(
                     $addressTransfer->toArray(),

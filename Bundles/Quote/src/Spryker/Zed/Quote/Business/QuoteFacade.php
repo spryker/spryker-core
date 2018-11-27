@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Quote\Business\QuoteBusinessFactory getFactory()
  * @method \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface getEntityManager()
  */
 class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
 {

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
 use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
@@ -129,7 +130,9 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             return new AddressesTransfer();
         }
 
-        return $this->customerFacade->getAddresses($customerTransfer);
+        $addressesTransfer = $this->customerFacade->getAddresses($customerTransfer);
+
+        return $this->extendAddressesWithDefaultBillingAndShipping($customerTransfer, $addressesTransfer);
     }
 
     /**
@@ -145,5 +148,26 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
                     ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND)
                     ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressesTransfer
+     */
+    protected function extendAddressesWithDefaultBillingAndShipping(CustomerTransfer $customerTransfer, AddressesTransfer $addressesTransfer): AddressesTransfer
+    {
+        $defaultShippingAddress = $this->customerFacade->getDefaultShippingAddress($customerTransfer);
+        $defaultBillingAddress = $this->customerFacade->getDefaultBillingAddress($customerTransfer);
+
+        foreach ($addressesTransfer->getAddresses() as $addressKey => $addressTransfer) {
+            $addressesTransfer->getAddresses()->offsetGet($addressKey)
+                ->setIsDefaultShipping($addressTransfer->getIdCustomerAddress() == $defaultShippingAddress->getIdCustomerAddress());
+            $addressesTransfer->getAddresses()->offsetGet($addressKey)
+                ->setIsDefaultBilling($addressTransfer->getIdCustomerAddress() == $defaultBillingAddress->getIdCustomerAddress());
+        }
+
+        return $addressesTransfer;
     }
 }

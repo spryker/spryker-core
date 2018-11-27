@@ -37,6 +37,16 @@ checkout-data:
                         min: 3
                     iso2Code:
                     - NotBlank
+                    isDefaultBilling:
+                    - Optional:
+                      constraints:
+                      - Type:
+                          type: boolean
+                    isDefaultShipping:
+                    - Optional:
+                        constraints:
+                        - Type:
+                            type: boolean
           shippingAddress:
           - Optional:
               constraints:
@@ -60,6 +70,16 @@ checkout-data:
                         min: 3
                     iso2Code:
                     - NotBlank
+                    isDefaultBilling:
+                    - Optional:
+                        constraints:
+                        - Type:
+                            type: boolean
+                    isDefaultShipping:
+                    - Optional:
+                        constraints:
+                        - Type:
+                            type: boolean
           payments:
           - Optional:
               constraints:
@@ -117,6 +137,16 @@ checkout:
                     min: 3
                 iso2Code:
                 - NotBlank
+                isDefaultBilling:
+                - Optional:
+                    constraints:
+                    - Type:
+                        type: boolean
+                isDefaultShipping:
+                - Optional:
+                    constraints:
+                    - Type:
+                        type: boolean
           shippingAddress:
           - Collection:
               fields:
@@ -138,6 +168,16 @@ checkout:
                     min: 3
                 iso2Code:
                 - NotBlank
+                isDefaultBilling:
+                - Optional:
+                    constraints:
+                    - Type:
+                        type: boolean
+                isDefaultShipping:
+                - Optional:
+                    constraints:
+                    - Type:
+                        type: boolean
           payments:
           - NotBlank
           - All:

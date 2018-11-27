@@ -33,4 +33,24 @@ class CheckoutRestApiToCustomerFacadeBridge implements CheckoutRestApiToCustomer
     {
         return $this->customerFacade->getAddresses($customerTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
+    {
+        return $this->customerFacade->getDefaultShippingAddress($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
+    {
+        return $this->customerFacade->getDefaultBillingAddress($customerTransfer);
+    }
 }
