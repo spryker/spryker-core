@@ -74,9 +74,7 @@ class PriceProductMerger implements PriceProductMergerInterface
         array $concretePriceProductTransfers,
         array $priceProductTransfers
     ): array {
-        $missingConcretePriceProductTransfers = array_diff_key($concretePriceProductTransfers, $priceProductTransfers);
-
-        return array_values($priceProductTransfers + $missingConcretePriceProductTransfers);
+        return array_values($priceProductTransfers + $concretePriceProductTransfers);
     }
 
     /**
