@@ -20,6 +20,8 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
      *
      * @api
      *
+     * @deprecated Use Spryker\Zed\UtilUuidGenerator\Communication\Console\UuidGeneratorConsole instead.
+     *
      * @return void
      */
     public function updateWishlistsUuid(): void

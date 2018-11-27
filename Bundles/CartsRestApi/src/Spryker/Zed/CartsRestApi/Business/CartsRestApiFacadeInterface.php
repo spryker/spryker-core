@@ -16,6 +16,8 @@ interface CartsRestApiFacadeInterface
      *
      * @api
      *
+     * @deprecated Use Spryker\Zed\UtilUuidGenerator\Communication\Console\UuidGeneratorConsole instead.
+     *
      * @return void
      */
     public function updateQuoteUuid(): void;

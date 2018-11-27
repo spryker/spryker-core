@@ -15,6 +15,8 @@ interface WishlistsRestApiFacadeInterface
      *
      * @api
      *
+     * @deprecated Use Spryker\Zed\UtilUuidGenerator\Communication\Console\UuidGeneratorConsole instead.
+     *
      * @return void
      */
     public function updateWishlistsUuid(): void;
