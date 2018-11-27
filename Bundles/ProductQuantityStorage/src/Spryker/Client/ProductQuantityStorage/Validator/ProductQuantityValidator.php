@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductQuantityStorage\Validator;
 
+use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
 class ProductQuantityValidator implements ProductQuantityValidatorInterface
@@ -17,11 +18,20 @@ class ProductQuantityValidator implements ProductQuantityValidatorInterface
     protected $productQuantityStorageReader;
 
     /**
-     * @param \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface $productQuantityStorageReader
+     * @var \Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface
      */
-    public function __construct(ProductQuantityStorageReaderInterface $productQuantityStorageReader)
-    {
+    protected $productQuantityResolver;
+
+    /**
+     * @param \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface $productQuantityStorageReader
+     * @param \Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface $productQuantityResolver
+     */
+    public function __construct(
+        ProductQuantityStorageReaderInterface $productQuantityStorageReader,
+        ProductQuantityResolverInterface $productQuantityResolver
+    ) {
         $this->productQuantityStorageReader = $productQuantityStorageReader;
+        $this->productQuantityResolver = $productQuantityResolver;
     }
 
     /**
@@ -32,50 +42,12 @@ class ProductQuantityValidator implements ProductQuantityValidatorInterface
      */
     public function getNearestQuantity(int $idProduct, int $quantity): int
     {
-        $productQuantityTransfer = $this->productQuantityStorageReader->findProductQuantityStorage($idProduct);
+        $productQuantityStorageTransfer = $this->productQuantityStorageReader->findProductQuantityStorage($idProduct);
 
-        if (!$productQuantityTransfer) {
+        if (!$productQuantityStorageTransfer) {
             return $quantity;
         }
 
-        $min = $productQuantityTransfer->getQuantityMin() ?: 1;
-        $max = $productQuantityTransfer->getQuantityMax();
-        $interval = $productQuantityTransfer->getQuantityInterval();
-
-        if ($quantity < $min) {
-            return $min;
-        }
-
-        if ($max && $quantity > $max) {
-            $quantity = $max;
-        }
-
-        if ($interval && ($quantity - $min) % $interval !== 0) {
-            $max = $max ?? ($quantity + $interval);
-
-            $allowedQuantities = array_reverse(range($min, $max, $interval));
-            $quantity = $this->getNearestQuantityFromAllowed($quantity, $allowedQuantities);
-        }
-
-        return $quantity;
-    }
-
-    /**
-     * @param int $quantity
-     * @param int[] $allowedQuantities
-     *
-     * @return int
-     */
-    protected function getNearestQuantityFromAllowed(int $quantity, array $allowedQuantities): int
-    {
-        $nearest = null;
-
-        foreach ($allowedQuantities as $allowedQuantity) {
-            if ($nearest === null || abs($quantity - $nearest) > abs($allowedQuantity - $quantity)) {
-                $nearest = $allowedQuantity;
-            }
-        }
-
-        return $nearest ?? $quantity;
+        return $this->productQuantityResolver->getNearestQuantity($productQuantityStorageTransfer, $quantity);
     }
 }
