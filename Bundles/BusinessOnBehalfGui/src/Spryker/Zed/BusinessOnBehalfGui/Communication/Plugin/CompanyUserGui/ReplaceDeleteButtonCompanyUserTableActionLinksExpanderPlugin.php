@@ -18,8 +18,7 @@ class ReplaceDeleteButtonCompanyUserTableActionLinksExpanderPlugin extends Abstr
 {
     /**
      * {@inheritdoc}
-     * - Adds new "Delete" button in actions for company user table for delete without anonymizing of customer.
-     * - Replaces old to the new link to confirmation delete page of "Delete" button.
+     * - Replaces old to the new link to confirmation delete page without anonymizing of customer in "Delete" button.
      *
      * @api
      *

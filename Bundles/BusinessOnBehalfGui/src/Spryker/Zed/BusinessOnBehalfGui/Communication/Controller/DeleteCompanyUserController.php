@@ -54,11 +54,6 @@ class DeleteCompanyUserController extends AbstractController
     public function deleteAction(Request $request): RedirectResponse
     {
         $idCompanyUser = $this->castId($request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER));
-        if (!$idCompanyUser) {
-            $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DELETE);
-
-            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
-        }
 
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
@@ -67,13 +62,13 @@ class DeleteCompanyUserController extends AbstractController
             ->getCompanyUserFacade()
             ->deleteWithoutCustomerAnonymizing($companyUserTransfer);
 
-        if (!$companyUserResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DELETE);
+        if ($companyUserResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_DELETE);
 
             return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
         }
 
-        $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_DELETE);
+        $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DELETE);
 
         return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
     }

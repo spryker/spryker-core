@@ -400,9 +400,7 @@ class CompanyUser implements CompanyUserInterface
      */
     protected function executeDeleteWithoutCustomerAnonymizingTransaction(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserTransfer = $this->companyUserRepository->getCompanyUserById(
-            $companyUserTransfer->getIdCompanyUser()
-        );
+        $companyUserTransfer->requireIdCompanyUser();
 
         $this->companyUserEntityManager->deleteCompanyUserById($companyUserTransfer->getIdCompanyUser());
 
