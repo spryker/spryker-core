@@ -98,7 +98,7 @@ class Builder implements BuilderInterface
             /** @var \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap */
             $processMap = [];
 
-            list($processMap, $mainProcess) = $this->createSubProcess($processMap);
+            [$processMap, $mainProcess] = $this->createSubProcess($processMap);
 
             $stateToProcessMap = $this->createStates($processMap);
 
@@ -146,7 +146,7 @@ class Builder implements BuilderInterface
     protected function recursiveMerge($fromXmlElement, $intoXmlNode, $prefix = null)
     {
         $xmlElements = $fromXmlElement->children();
-        if (!isset($xmlElements)) {
+        if (!$xmlElements) {
             return;
         }
 

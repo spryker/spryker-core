@@ -631,6 +631,24 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $reservationQuantity
+     *
+     * @return void
+     */
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void
+    {
+        $this->getFactory()
+            ->createUtilReservation()
+            ->saveReservation($sku, $storeTransfer, $reservationQuantity);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string[]
      */
     public function getReservedStateNames(): array

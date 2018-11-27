@@ -45,7 +45,7 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array|null $data
+     * @param \Generated\Shared\Transfer\CompanyTransfer|array|null $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface

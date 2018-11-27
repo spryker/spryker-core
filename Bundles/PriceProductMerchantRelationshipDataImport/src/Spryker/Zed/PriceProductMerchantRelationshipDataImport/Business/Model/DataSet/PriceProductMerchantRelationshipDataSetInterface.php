@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet;
@@ -20,6 +20,7 @@ interface PriceProductMerchantRelationshipDataSetInterface
 
     public const ID_CURRENCY = 'id_currency';
     public const ID_PRICE_PRODUCT = 'id_price_product';
+    public const ID_PRICE_PRODUCT_STORE = 'id_price_product_store';
     public const ID_MERCHANT_RELATIONSHIP = 'id_merchant_relationship';
     public const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     public const ID_PRODUCT_CONCRETE = 'id_product';

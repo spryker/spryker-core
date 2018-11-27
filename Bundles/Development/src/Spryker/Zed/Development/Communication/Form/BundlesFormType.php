@@ -16,13 +16,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
  */
 class BundlesFormType extends AbstractType
 {
-    const FORM_TYPE_NAME = 'bundlesFormType';
-    const BUNDLE_NAME_CHOICES = 'bundleNames';
-    const EXCLUDED_BUNDLES = 'excludedBundles';
-    const SHOW_INCOMING = 'showIncoming';
+    public const FORM_TYPE_NAME = 'bundlesFormType';
+    public const BUNDLE_NAME_CHOICES = 'bundleNames';
+    public const EXCLUDED_BUNDLES = 'excludedBundles';
+    public const SHOW_INCOMING = 'showIncoming';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

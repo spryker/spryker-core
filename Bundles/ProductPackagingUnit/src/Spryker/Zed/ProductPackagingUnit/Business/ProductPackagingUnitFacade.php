@@ -21,6 +21,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface getRepository()
  */
 class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackagingUnitFacadeInterface
 {
@@ -121,6 +123,8 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @api
      *
@@ -343,6 +347,22 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function updateLeadProductReservation(string $sku): void
+    {
+        $this->getFactory()
+            ->createProductPackagingUnitReservationHandler()
+            ->updateLeadProductReservation($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
@@ -429,7 +449,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
+    public function transformSplittableItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
         return $this->getFactory()
             ->createSplittableOrderItemTransformer()
@@ -450,22 +470,6 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createProductPackagingUnitItemQuantityValidator()
             ->isProductPackagingUnitItemQuantitySplittable($itemTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    public function expandCartChangeItemsWithProductPackagingUnitTranslation(CartChangeTransfer $cartChangeTransfer)
-    {
-        return $this->getFactory()
-            ->createItemMeasurementUnitDataTranslationExpander()
-            ->expandCartChangeItems($cartChangeTransfer);
     }
 
     /**

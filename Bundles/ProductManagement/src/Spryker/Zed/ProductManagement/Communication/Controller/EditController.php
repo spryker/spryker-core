@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,9 +20,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AddController
 {
-    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    const PARAM_ID_PRODUCT = 'id-product';
-    const PARAM_PRODUCT_TYPE = 'type';
+    public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const PARAM_ID_PRODUCT = 'id-product';
+    public const PARAM_PRODUCT_TYPE = 'type';
+    protected const PARAM_PRICE_DIMENSION = 'price-dimension';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -48,7 +50,7 @@ class EditController extends AddController
         $form = $this
             ->getFactory()
             ->createProductFormEdit(
-                $dataProvider->getData($idProductAbstract),
+                $dataProvider->getData($idProductAbstract, $request->query->get(static::PARAM_PRICE_DIMENSION)),
                 $dataProvider->getOptions($idProductAbstract)
             )
             ->handleRequest($request);
@@ -80,15 +82,13 @@ class EditController extends AddController
                     $productAbstractTransfer->getSku()
                 ));
 
-                return $this->redirectResponse(sprintf(
-                    '/product-management/edit?%s=%d',
-                    self::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idProductAbstract
-                ));
+                return $this->redirectResponse(
+                    urldecode(Url::generate('/product-management/edit', $request->query->all())->build())
+                );
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-        };
+        }
 
         $type = $request->query->get(self::PARAM_PRODUCT_TYPE);
 
@@ -100,12 +100,14 @@ class EditController extends AddController
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
+            'superAttributesCount' => $this->getFactory()->createProductAttributeHelper()->getProductAbstractSuperAttributesCount($productAbstractTransfer),
             'concreteProductCollection' => $concreteProductCollection,
             'localeCollection' => $localeProvider->getLocaleCollection(),
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
             'variantTable' => $variantTable->render(),
             'idProduct' => null,
             'idProductAbstract' => $idProductAbstract,
+            'priceDimension' => $request->get(static::PARAM_PRICE_DIMENSION, []),
             'productFormEditTabs' => $this->getFactory()->createProductFormEditTabs()->createView(),
         ]);
     }
@@ -146,7 +148,7 @@ class EditController extends AddController
         $form = $this
             ->getFactory()
             ->createProductVariantFormEdit(
-                $dataProvider->getData($idProductAbstract, $idProduct),
+                $dataProvider->getData($idProductAbstract, $idProduct, $request->query->get(static::PARAM_PRICE_DIMENSION)),
                 $dataProvider->getOptions($idProductAbstract, $type)
             )
             ->handleRequest($request);
@@ -164,6 +166,10 @@ class EditController extends AddController
                     ->createProductFormTransferGenerator()
                     ->buildProductConcreteTransfer($productAbstractTransfer, $form, $idProduct);
 
+                $productConcreteTransfer = $this->getFactory()
+                    ->getProductBundleFacade()
+                    ->saveBundledProducts($productConcreteTransfer);
+
                 $this->getFactory()
                     ->getProductFacade()
                     ->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
@@ -177,18 +183,13 @@ class EditController extends AddController
                     $productConcreteTransfer->getSku()
                 ));
 
-                return $this->redirectResponse(sprintf(
-                    '/product-management/edit/variant?%s=%d&%s=%d&type=%s',
-                    self::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idProductAbstract,
-                    self::PARAM_ID_PRODUCT,
-                    $idProduct,
-                    $type
-                ));
+                return $this->redirectResponse(
+                    urldecode(Url::generate('/product-management/edit/variant', $request->query->all())->build())
+                );
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-        };
+        }
 
         return $this->viewResponse([
             'form' => $form->createView(),
@@ -198,6 +199,7 @@ class EditController extends AddController
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
             'idProduct' => $idProduct,
             'idProductAbstract' => $idProductAbstract,
+            'priceDimension' => $request->get(static::PARAM_PRICE_DIMENSION, []),
             'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs()->createView(),
             'bundledProductTable' => $bundledProductTable->render(),
             'type' => $type,

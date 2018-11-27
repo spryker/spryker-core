@@ -14,13 +14,16 @@ use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientB
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientBridge;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\Synchronization\SynchronizationConfig getConfig()
+ */
 class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const CLIENT_SEARCH = 'CLIENT_SEARCH';
-    const CLIENT_QUEUE = 'CLIENT_QUEUE';
-    const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
-    const PLUGINS_SYNCHRONIZATION_DATA = 'PLUGINS_SYNCHRONIZATION_DATA';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+    public const CLIENT_QUEUE = 'CLIENT_QUEUE';
+    public const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
+    public const PLUGINS_SYNCHRONIZATION_DATA = 'PLUGINS_SYNCHRONIZATION_DATA';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

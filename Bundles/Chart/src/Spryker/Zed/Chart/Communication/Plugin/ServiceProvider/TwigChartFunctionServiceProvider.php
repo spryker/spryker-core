@@ -15,6 +15,7 @@ use Twig_Environment;
 /**
  * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
  * @method \Spryker\Zed\Chart\Business\ChartFacadeInterface getFacade()
+ * @method \Spryker\Zed\Chart\ChartConfig getConfig()
  */
 class TwigChartFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -26,7 +27,7 @@ class TwigChartFunctionServiceProvider extends AbstractPlugin implements Service
     public function register(Application $app): void
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) {
+            $app->extend('twig', function (Twig_Environment $twig) {
                 return $this->registerChartTwigFunctions($twig);
             })
         );

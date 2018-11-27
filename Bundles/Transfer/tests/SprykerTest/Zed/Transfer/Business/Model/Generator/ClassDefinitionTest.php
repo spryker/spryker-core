@@ -55,7 +55,7 @@ class ClassDefinitionTest extends Unit
         $this->assertTrue(is_array($properties));
 
         $given = $properties['property1'];
-        $expected = $this->getProperty('property1', 'string');
+        $expected = $this->getProperty('property1', 'string|null');
         $this->assertEquals($expected, $given);
     }
 
@@ -74,6 +74,7 @@ class ClassDefinitionTest extends Unit
             'name' => $name,
             'type' => ($return === null) ? $type : $return,
             'bundles' => $bundles,
+            'is_typed_array' => false,
         ];
 
         if ($singular !== null) {
@@ -103,11 +104,11 @@ class ClassDefinitionTest extends Unit
         $this->assertTrue(is_array($properties));
 
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'string');
+        $expectedProperty = $this->getProperty('property1', 'string|null');
         $this->assertEquals($expectedProperty, $givenProperty);
 
         $givenProperty = $properties['property2'];
-        $expectedProperty = $this->getProperty('property2', 'string');
+        $expectedProperty = $this->getProperty('property2', 'string|null');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -185,7 +186,7 @@ class ClassDefinitionTest extends Unit
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'Type', null, '\Generated\Shared\Transfer\TypeTransfer');
+        $expectedProperty = $this->getProperty('property1', 'Type', null, '\Generated\Shared\Transfer\TypeTransfer|null');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -205,11 +206,11 @@ class ClassDefinitionTest extends Unit
         $methods = $classDefinition->getMethods();
 
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string', null, null, 'PROPERTY1', [], false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false);
         $this->assertEquals($expectedSetter, $givenSetter);
 
         $givenGetter = $methods['getProperty1'];
-        $expectedGetter = $this->getGetMethod('getProperty1', 'property1', null, 'string', null, 'PROPERTY1');
+        $expectedGetter = $this->getGetMethod('getProperty1', 'property1', null, 'string|null', null, 'PROPERTY1');
         $this->assertEquals($expectedGetter, $givenGetter);
     }
 
@@ -228,7 +229,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string', null, null, 'PROPERTY1', [], false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false);
 
         $this->assertEquals($expectedSetter, $givenSetter);
     }
@@ -280,6 +281,36 @@ class ClassDefinitionTest extends Unit
         $given = $methods['addProperty1'];
         $expected = $this->getCollectionMethod('addProperty1', 'property1', 'property1', '\Generated\Shared\Transfer\TypeTransfer', null, 'TypeTransfer', 'PROPERTY1', $bundles);
         $this->assertEquals($expected, $given);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTypedArray()
+    {
+        $bundles = ['Bundle1'];
+
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getProperty('property1', 'string[]', null, null, $bundles)],
+        ];
+
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+
+        $properties = $classDefinition->getProperties();
+
+        $expected = [
+            "property1" => [
+                "name" => "property1",
+                "type" => "string[]",
+                "is_typed_array" => true,
+                "bundles" => [
+                    "Bundle1",
+                ],
+            ],
+        ];
+        $this->assertSame($expected, $properties);
     }
 
     /**

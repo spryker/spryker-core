@@ -14,10 +14,13 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 /**
  * @method \Spryker\Zed\Mail\Business\MailFacadeInterface getFacade()
  * @method \Spryker\Zed\Mail\Communication\MailCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Mail\MailConfig getConfig()
  */
 class MailProviderPlugin extends AbstractPlugin implements MailProviderPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return void

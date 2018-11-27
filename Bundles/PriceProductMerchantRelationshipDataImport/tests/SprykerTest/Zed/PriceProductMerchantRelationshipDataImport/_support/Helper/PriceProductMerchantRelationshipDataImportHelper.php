@@ -1,30 +1,17 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\PriceProductMerchantRelationshipDataImport\Helper;
 
 use Codeception\Module;
-use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery;
-use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class PriceProductMerchantRelationshipDataImportHelper extends Module
 {
-    use LocatorHelperTrait;
-
-    /**
-     * @return void
-     */
-    public function ensureDatabaseTableIsEmpty(): void
-    {
-        $this->getPriceProductMerchantRelationshipQuery()->deleteAll();
-        $this->getMerchantRelationshipQuery()->deleteAll();
-    }
-
     /**
      * @return void
      */
@@ -49,13 +36,5 @@ class PriceProductMerchantRelationshipDataImportHelper extends Module
     protected function getPriceProductMerchantRelationshipQuery(): SpyPriceProductMerchantRelationshipQuery
     {
         return SpyPriceProductMerchantRelationshipQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
-     */
-    protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
-    {
-        return SpyMerchantRelationshipQuery::create();
     }
 }

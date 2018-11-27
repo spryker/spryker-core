@@ -13,6 +13,7 @@ use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
  */
 class LeadProductStockUpdateHandlerPlugin extends AbstractPlugin implements StockUpdateHandlerPluginInterface
 {
@@ -29,5 +30,8 @@ class LeadProductStockUpdateHandlerPlugin extends AbstractPlugin implements Stoc
     {
         $this->getFacade()
             ->updateLeadProductAvailability($sku);
+
+        $this->getFacade()
+            ->updateLeadProductReservation($sku);
     }
 }

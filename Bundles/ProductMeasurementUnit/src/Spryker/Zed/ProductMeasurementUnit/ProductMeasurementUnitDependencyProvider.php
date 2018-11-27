@@ -14,6 +14,9 @@ use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitT
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeBridge;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitConfig getConfig()
+ */
 class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION = 'SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION';
@@ -34,7 +37,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
 
         $container = $this->addUtilMeasurementUnitConversionService($container);
         $container = $this->addEventFacade($container);
-        $container = $this->addSalesOrderItemQuery($container);
+        $container = $this->addSalesOrderItemPropelQuery($container);
         $container = $this->addGlossaryFacade($container);
 
         return $container;
@@ -48,7 +51,8 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
-        $container = $this->addSalesOrderItemQuery($container);
+
+        $container = $this->addSalesOrderItemPropelQuery($container);
 
         return $container;
     }
@@ -86,7 +90,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesOrderItemQuery(Container $container): Container
+    protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
         $container[static::PROPEL_QUERY_SALES_ORDER_ITEM] = function () {
             return SpySalesOrderItemQuery::create();

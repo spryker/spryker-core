@@ -13,11 +13,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
+ * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
  */
 class CacheWarmerConsole extends Console
 {
-    const COMMAND_NAME = 'twig:cache:warmer';
-    const DESCRIPTION = 'This command will generate a cache file for twig templates';
+    public const COMMAND_NAME = 'twig:cache:warmer';
+    public const DESCRIPTION = 'This command will generate a cache file for twig templates';
 
     /**
      * @return void

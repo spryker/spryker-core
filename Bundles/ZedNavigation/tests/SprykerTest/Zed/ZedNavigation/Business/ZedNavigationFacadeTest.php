@@ -7,9 +7,6 @@
 
 namespace SprykerTest\Zed\ZedNavigation\Business;
 
-use Codeception\Test\Unit;
-use Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade;
-
 /**
  * Auto-generated group annotations
  * @group SprykerTest
@@ -20,16 +17,8 @@ use Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade;
  * @group ZedNavigationFacadeTest
  * Add your own group annotations below this line
  */
-class ZedNavigationFacadeTest extends Unit
+class ZedNavigationFacadeTest extends ZedNavigationBusinessTester
 {
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface
-     */
-    protected function getFacade()
-    {
-        return new ZedNavigationFacade();
-    }
-
     /**
      * @return void
      */

@@ -13,11 +13,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
+ * @method \Spryker\Zed\ZedNavigation\Communication\ZedNavigationCommunicationFactory getFactory()
  */
 class BuildNavigationConsole extends Console
 {
-    const COMMAND_NAME = 'navigation:build-cache';
-    const DESCRIPTION = 'Build the navigation tree and persist it';
+    public const COMMAND_NAME = 'navigation:build-cache';
+    public const DESCRIPTION = 'Build the navigation tree and persist it';
 
     /**
      * @return void

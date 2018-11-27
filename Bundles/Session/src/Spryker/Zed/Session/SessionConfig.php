@@ -12,18 +12,18 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SessionConfig extends AbstractBundleConfig
 {
-    const PROTOCOL_TCP = 'tcp';
+    public const PROTOCOL_TCP = 'tcp';
 
-    const DATA_SOURCE_NAME_TEMPLATE_TCP = 'tcp://[host]:[port]?database=[database][authFragment]';
-    const AUTH_FRAGMENT_TEMPLATE_TCP = '&password=%s';
+    public const DATA_SOURCE_NAME_TEMPLATE_TCP = 'tcp://[host]:[port]?database=[database][authFragment]';
+    public const AUTH_FRAGMENT_TEMPLATE_TCP = '&password=%s';
 
-    const DATA_SOURCE_NAME_TEMPLATE_REDIS = 'redis://[authFragment][host]:[port]/[database]';
-    const AUTH_FRAGMENT_TEMPLATE_REDIS = ':%s@';
+    public const DATA_SOURCE_NAME_TEMPLATE_REDIS = 'redis://[authFragment][host]:[port]/[database]';
+    public const AUTH_FRAGMENT_TEMPLATE_REDIS = ':%s@';
 
     /**
      * Default Redis database number
      */
-    const DEFAULT_REDIS_DATABASE = 0;
+    public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
      * @return array

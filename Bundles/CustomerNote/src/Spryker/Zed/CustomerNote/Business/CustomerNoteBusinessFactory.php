@@ -13,6 +13,10 @@ use Spryker\Zed\CustomerNote\CustomerNoteDependencyProvider;
 use Spryker\Zed\CustomerNote\Dependency\Facade\CustomerNoteToUserFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
+/**
+ * @method \Spryker\Zed\CustomerNote\Persistence\CustomerNoteEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CustomerNote\Persistence\CustomerNoteRepositoryInterface getRepository()
+ */
 class CustomerNoteBusinessFactory extends AbstractBusinessFactory
 {
     /**

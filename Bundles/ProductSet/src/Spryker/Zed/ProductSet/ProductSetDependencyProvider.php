@@ -15,14 +15,17 @@ use Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToUrlBridge;
 use Spryker\Zed\ProductSet\Dependency\QueryContainer\ProductSetToProductImageBridge as ProductSetToProductImageQueryContainerBridge;
 use Spryker\Zed\ProductSet\Dependency\QueryContainer\ProductSetToUrlBridge as ProductSetToUrlQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ProductSet\ProductSetConfig getConfig()
+ */
 class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'FACADE_TOUCH';
-    const FACADE_URL = 'FACADE_URL';
-    const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const FACADE_URL = 'FACADE_URL';
+    public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
 
-    const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
-    const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+    public const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
+    public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

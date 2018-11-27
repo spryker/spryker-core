@@ -1,5 +1,6 @@
 {
   "name": "spryker/url-collector",
+  "type": "library",
   "description": "UrlCollector module",
   "license": "proprietary",
   "require": {
@@ -15,8 +16,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/twig": "*"
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

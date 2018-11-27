@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductLabel\Persistence\Propel;
 
 use Orm\Zed\ProductLabel\Persistence\Base\SpyProductLabelLocalizedAttributes as BaseSpyProductLabelLocalizedAttributes;
 
+/**
+ * @deprecated Please use AbstractSpyProductLabelLocalizedAttributes instead.
+ */
 class SpyProductLabelLocalizedAttributes extends BaseSpyProductLabelLocalizedAttributes
 {
 }

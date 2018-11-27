@@ -11,9 +11,12 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Price\Dependency\Client\PriceToQuoteClientBridge;
 
+/**
+ * @method \Spryker\Client\Price\PriceConfig getConfig()
+ */
 class PriceDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const PLUGINS_PRICE_MODE_POST_UPDATE = 'PLUGINS_PRICE_MODE_POST_UPDATE';
 
     /**

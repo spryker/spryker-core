@@ -16,10 +16,13 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLoc
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeBridge;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesQuantityFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilTextServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
+ */
 class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -27,9 +30,9 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_PRODUCT_MEASUREMENT_UNIT = 'FACADE_PRODUCT_MEASUREMENT_UNIT';
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
     public const FACADE_OMS = 'FACADE_OMS';
-    public const FACADE_STOCK = 'FACADE_STOCK';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_SALES_QUANTITY = 'FACADE_SALES_QUANTITY';
 
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
@@ -42,14 +45,16 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addLocaleFacade($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addProductMeasurementUnitFacade($container);
         $container = $this->addAvailabilityFacade($container);
         $container = $this->addOmsFacade($container);
-        $container = $this->addStockFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addProductFacade($container);
+        $container = $this->addSalesQuantityFacade($container);
 
         $container = $this->addUtilTextService($container);
 
@@ -63,7 +68,9 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container = $this->addSalesOrderItemQuery($container);
+        $container = parent::providePersistenceLayerDependencies($container);
+
+        $container = $this->addSalesOrderItemPropelQuery($container);
 
         return $container;
     }
@@ -153,22 +160,6 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStockFacade(Container $container): Container
-    {
-        $container[static::FACADE_STOCK] = function (Container $container) {
-            return new ProductPackagingUnitToStockFacadeBridge(
-                $container->getLocator()->stock()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addStoreFacade(Container $container): Container
     {
         $container[static::FACADE_STORE] = function (Container $container) {
@@ -201,7 +192,23 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesOrderItemQuery(Container $container): Container
+    protected function addSalesQuantityFacade(Container $container): Container
+    {
+        $container[static::FACADE_SALES_QUANTITY] = function (Container $container) {
+            return new ProductPackagingUnitToSalesQuantityFacadeBridge(
+                $container->getLocator()->salesQuantity()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
         $container[static::PROPEL_QUERY_SALES_ORDER_ITEM] = function (Container $container) {
             return SpySalesOrderItemQuery::create();

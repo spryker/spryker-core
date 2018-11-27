@@ -15,11 +15,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @deprecated Use Spryker\Zed\Setup\Communication\Console\EmptyGeneratedDirectoryConsole instead.
  *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
+ * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
 class RemoveGeneratedDirectoryConsole extends Console
 {
-    const COMMAND_NAME = 'setup:remove-generated-directory';
-    const DESCRIPTION = 'Remove the directory where generated files are stored';
+    public const COMMAND_NAME = 'setup:remove-generated-directory';
+    public const DESCRIPTION = 'Remove the directory where generated files are stored';
 
     /**
      * @return void

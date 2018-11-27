@@ -13,10 +13,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
  */
 class GlossaryInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
+     * @api
+     *
      * @return void
      */
     public function install()

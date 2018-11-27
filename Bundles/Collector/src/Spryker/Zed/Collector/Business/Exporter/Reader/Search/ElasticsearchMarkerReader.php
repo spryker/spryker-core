@@ -9,14 +9,14 @@ namespace Spryker\Zed\Collector\Business\Exporter\Reader\Search;
 
 class ElasticsearchMarkerReader extends ElasticsearchReader
 {
-    const READER_NAME = 'elastic-search-marker-reader';
-    const META_ATTRIBUTE = '_meta';
+    public const READER_NAME = 'elastic-search-marker-reader';
+    public const META_ATTRIBUTE = '_meta';
 
     /**
      * @param string $key
      * @param string $type
      *
-     * @return null|string
+     * @return string|null
      */
     public function read($key, $type = '')
     {

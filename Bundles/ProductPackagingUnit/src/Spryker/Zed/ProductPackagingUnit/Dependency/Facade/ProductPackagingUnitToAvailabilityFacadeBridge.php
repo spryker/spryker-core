@@ -26,13 +26,13 @@ class ProductPackagingUnitToAvailabilityFacadeBridge implements ProductPackaging
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return bool
+     * @return int
      */
-    public function isProductSellable(string $sku, int $quantity): bool
+    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): int
     {
-        return $this->availabilityFacade->isProductSellable($sku, $quantity);
+        return $this->availabilityFacade->calculateStockForProductWithStore($sku, $storeTransfer);
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business;
@@ -15,6 +15,7 @@ use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\I
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\MerchantRelationshipKeyToIdMerchantRelationshipStep;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\ProductSkuToIdProductStep;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step\StoreToIdStoreStep;
+use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductStore\IdPriceProductStoreStep;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipDataImport\PriceProductMerchantRelationshipDataImportConfig getConfig()
@@ -37,6 +38,7 @@ class PriceProductMerchantRelationshipDataImportBusinessFactory extends DataImpo
             ->addStep($this->createStoreToIdStoreStep())
             ->addStep($this->createCurrencyToIdCurrencyStep())
             ->addStep($this->createIdPriceProductStep())
+            ->addStep($this->createIdPriceProductStoreStep())
             ->addStep(new PriceProductMerchantRelationshipWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -82,5 +84,13 @@ class PriceProductMerchantRelationshipDataImportBusinessFactory extends DataImpo
     public function createIdPriceProductStep(): DataImportStepInterface
     {
         return new IdPriceProductStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createIdPriceProductStoreStep(): DataImportStepInterface
+    {
+        return new IdPriceProductStoreStep();
     }
 }

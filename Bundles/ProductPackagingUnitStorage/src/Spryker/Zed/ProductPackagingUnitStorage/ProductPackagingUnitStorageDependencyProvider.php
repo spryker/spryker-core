@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
+ */
 class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
@@ -26,6 +29,8 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addEventBehaviorFacade($container);
 
         return $container;
@@ -38,6 +43,8 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addProductPackagingUnitFacade($container);
 
         return $container;

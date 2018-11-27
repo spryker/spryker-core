@@ -37,6 +37,24 @@ class PriceProductConfig extends AbstractSharedConfig
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     /**
+     * Price data
+     */
+    public const PRICE_DATA = 'priceData';
+
+    /**
+     * List of price modes
+     */
+    public const PRICE_MODES = [
+        'NET_MODE',
+        'GROSS_MODE',
+    ];
+
+    /**
+     * Price dimension name default
+     */
+    protected const PRICE_DIMENSION_DEFAULT_NAME = 'Default';
+
+    /**
      * @return string
      */
     public function getPriceTypeDefaultName(): string
@@ -74,5 +92,13 @@ class PriceProductConfig extends AbstractSharedConfig
     public function getPriceModeIdentifierForGrossType(): string
     {
         return static::PRICE_GROSS_MODE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceDimensionDefaultName(): string
+    {
+        return static::PRICE_DIMENSION_DEFAULT_NAME;
     }
 }

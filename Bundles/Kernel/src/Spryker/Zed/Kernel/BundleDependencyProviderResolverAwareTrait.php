@@ -20,12 +20,12 @@ trait BundleDependencyProviderResolverAwareTrait
     use ContainerMocker;
 
     /**
-     * @var \Spryker\Zed\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface $container
+     * @var \Spryker\Zed\Kernel\Container
      */
     private $container;
 
     /**
-     * @param \Spryker\Zed\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return $this
      */
@@ -57,7 +57,7 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function createContainerWithProvidedDependencies()
     {
@@ -69,6 +69,7 @@ trait BundleDependencyProviderResolverAwareTrait
         $this->provideExternalDependencies($dependencyProvider, $container);
         $this->injectExternalDependencies($dependencyInjector, $container);
 
+        /** @var \Spryker\Zed\Kernel\Container $container */
         $container = $this->overwriteForTesting($container);
 
         return $container;

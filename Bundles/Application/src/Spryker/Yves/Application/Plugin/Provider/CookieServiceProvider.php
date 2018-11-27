@@ -21,7 +21,7 @@ class CookieServiceProvider implements ServiceProviderInterface
     private $app;
 
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Yves\Kernel\Application $app
      *
      * @return void
      */
@@ -50,7 +50,7 @@ class CookieServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Yves\Kernel\Application $app
      *
      * @return void
      */

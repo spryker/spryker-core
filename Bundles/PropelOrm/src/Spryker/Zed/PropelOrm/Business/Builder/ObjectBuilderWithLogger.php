@@ -6,6 +6,7 @@
  * file that was distributed with the source code of the extended class.
  *
  * @license MIT License
+ * @see https://github.com/propelorm/Propel2
  */
 
 namespace Spryker\Zed\PropelOrm\Business\Builder;
@@ -38,7 +39,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
     }
 
     /**
-     * Change default propel behaviour
+     * Changes default Propel behavior.
      *
      * Adds setter method for boolean columns.
      *
@@ -96,6 +97,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
             '\PDO'
         );
         $table = $this->getTable();
+        /** @var \Propel\Generator\Platform\DefaultPlatform $platform */
         $platform = $this->getPlatform();
         $primaryKeyMethodInfo = '';
         if ($table->getIdMethodParameters()) {
@@ -137,6 +139,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
 
         // if non auto-increment but using sequence, get the id first
         if (!$platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() == "native") {
+            /** @var \Propel\Generator\Model\Column|null $column */
             $column = $table->getFirstPrimaryKeyColumn();
             if (!$column) {
                 throw new PropelException('Cannot find primary key column in table `' . $table->getName() . '`.');
@@ -222,6 +225,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
         } catch (Exception \$e) {
             throw new PropelException('Unable to get autoincrement id.', 0, \$e);
         }";
+            /** @var \Propel\Generator\Model\Column|null $column */
             $column = $table->getFirstPrimaryKeyColumn();
             if ($column) {
                 if ($table->isAllowPkInsert()) {

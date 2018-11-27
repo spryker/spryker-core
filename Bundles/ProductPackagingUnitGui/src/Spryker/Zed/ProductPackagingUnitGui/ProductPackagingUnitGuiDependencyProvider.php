@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig getConfig()
+ */
 class ProductPackagingUnitGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -29,6 +32,8 @@ class ProductPackagingUnitGuiDependencyProvider extends AbstractBundleDependency
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addProductPackagingUnitFacade($container);
         $container = $this->addLocaleFacade($container);
 

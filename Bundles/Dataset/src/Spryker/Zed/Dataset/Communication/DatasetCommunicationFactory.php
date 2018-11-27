@@ -19,6 +19,9 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetRepository getRepository()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Dataset\Business\DatasetFacadeInterface getFacade()
  */
 class DatasetCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -31,7 +34,7 @@ class DatasetCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param null|int $idDataset
+     * @param int|null $idDataset
      *
      * @return \Symfony\Component\Form\FormInterface
      */

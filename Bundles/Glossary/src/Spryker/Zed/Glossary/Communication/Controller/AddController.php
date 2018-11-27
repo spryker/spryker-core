@@ -14,12 +14,13 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
  */
 class AddController extends AbstractController
 {
-    const FORM_ADD_TYPE = 'add';
+    public const FORM_ADD_TYPE = 'add';
 
-    const MESSAGE_CREATE_SUCCESS = 'Translation %d was created successfully.';
+    public const MESSAGE_CREATE_SUCCESS = 'Translation %d was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -13,11 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupRepositoryInterface getRepository()
  */
 class EditController extends AbstractController
 {
-    const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
-    const MESSAGE_CUSTOMER_GROUP_UPDATE_SUCCESS = 'Customer group was updated successfully.';
+    public const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
+    public const MESSAGE_CUSTOMER_GROUP_UPDATE_SUCCESS = 'Customer group was updated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -33,6 +33,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
+ * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
+ */
 class EditOfferType extends AbstractType
 {
     public const FIELD_ID_OFFER = 'idOffer';
@@ -178,7 +182,7 @@ class EditOfferType extends AbstractType
                 $data = $event->getData();
 
                 $storeCurrency = $data[static::FIELD_STORE_CURRENCY];
-                list($storeName, $currencyCode) = $this->getStoreAndCurrency($storeCurrency);
+                [$storeName, $currencyCode] = $this->getStoreAndCurrency($storeCurrency);
 
                 $data[static::FIELD_STORE_NAME] = $storeName;
                 $data[static::FIELD_CURRENCY_CODE] = $currencyCode;

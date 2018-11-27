@@ -41,6 +41,8 @@ interface ProductPackagingUnitRepositoryInterface
     ): int;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
@@ -107,5 +109,5 @@ interface ProductPackagingUnitRepositoryInterface
      *
      * @return int
      */
-    public function sumLeadProductAmountsForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int;
+    public function sumLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int;
 }

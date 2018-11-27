@@ -12,15 +12,24 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface ProductPackagingUnitToOmsFacadeInterface
 {
     /**
-     * @return string[]
-     */
-    public function getReservedStateNames(): array;
-
-    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): int;
+    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): int;
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $reservationQuantity
+     *
+     * @return void
+     */
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void;
+
+    /**
+     * @return string[]
+     */
+    public function getReservedStateNames(): array;
 }

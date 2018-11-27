@@ -80,7 +80,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\SplFileInfo[]
+     * @return array
      */
     protected function getSchemaFilesForValidation(): array
     {
@@ -106,7 +106,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     /**
      * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\SimpleXMLElement[]
      */
     protected function createXmlElements(array $schemaFiles): ArrayObject
     {
@@ -285,7 +285,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
                 $key,
                 $fileName,
                 (string)$toXmlAttributes[$key],
-                (string)$value
+                $value
             ));
         }
     }
@@ -315,7 +315,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
      */
     protected function isAttributeValueChange(array $toXmlAttributes, string $key, string $value): bool
     {
-        return (isset($toXmlAttributes[$key]) && (string)$toXmlAttributes[$key] !== (string)$value);
+        return (isset($toXmlAttributes[$key]) && (string)$toXmlAttributes[$key] !== $value);
     }
 
     /**

@@ -1,5 +1,6 @@
 {
   "name": "spryker/customer-note",
+  "type": "library",
   "description": "CustomerNote module",
   "license": "proprietary",
   "require": {
@@ -9,12 +10,7 @@
     "spryker/user": "^1.0.0 || ^2.0.0 || ^3.0.0"
   },
   "require-dev": {
-    "spryker/application": "*",
-    "spryker/assertion": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {

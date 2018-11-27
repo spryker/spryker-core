@@ -14,6 +14,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 /**
  * @method \Spryker\Zed\CompanyUserInvitation\Business\CompanyUserInvitationFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyUserInvitation\Communication\CompanyUserInvitationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyUserInvitation\CompanyUserInvitationConfig getConfig()
  */
 class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
@@ -23,6 +24,8 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
     protected const TEXT_TEMPLATE = 'company-user-invitation/mail/invitation.text.twig';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -31,6 +34,8 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
      * @return void

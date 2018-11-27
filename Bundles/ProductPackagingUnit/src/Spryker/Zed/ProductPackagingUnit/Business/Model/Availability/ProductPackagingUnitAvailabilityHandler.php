@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Availability;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
 
@@ -20,11 +19,6 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
      * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
      */
     protected $packagingUnitReader;
-
-    /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface
-     */
-    protected $leadProductReservationCalculator;
 
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface
@@ -38,18 +32,15 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $packagingUnitReader
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface $leadProductReservationCalculator
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductPackagingUnitReaderInterface $packagingUnitReader,
-        LeadProductReservationCalculatorInterface $leadProductReservationCalculator,
         ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade,
         ProductPackagingUnitToStoreFacadeInterface $storeFacade
     ) {
         $this->packagingUnitReader = $packagingUnitReader;
-        $this->leadProductReservationCalculator = $leadProductReservationCalculator;
         $this->availabilityFacade = $availabilityFacade;
         $this->storeFacade = $storeFacade;
     }
@@ -72,7 +63,7 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
             return;
         }
 
-        $this->updateStockForLeadProduct($productPackagingLeadProductTransfer->getProduct()->getSku());
+        $this->updateAvailabilityForLeadProduct($productPackagingLeadProductTransfer->getProduct()->getSku());
     }
 
     /**
@@ -80,7 +71,7 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
      *
      * @return void
      */
-    protected function updateStockForLeadProduct(string $leadProductSku): void
+    protected function updateAvailabilityForLeadProduct(string $leadProductSku): void
     {
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
 
@@ -89,8 +80,8 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
 
         foreach ($stores as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-            $stock = $this->leadProductReservationCalculator
-                ->calculateStockForLeadProduct($leadProductSku, $storeTransfer);
+            $stock = $this->availabilityFacade
+                ->calculateStockForProductWithStore($leadProductSku, $storeTransfer);
 
             $this->availabilityFacade->saveProductAvailabilityForStore($leadProductSku, $stock, $storeTransfer);
         }

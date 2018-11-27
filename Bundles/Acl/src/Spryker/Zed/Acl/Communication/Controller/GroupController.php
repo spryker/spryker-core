@@ -18,17 +18,21 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 /**
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
  * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  */
 class GroupController extends AbstractController
 {
-    const USER_LIST_URL = '/acl/users';
-    const PARAMETER_ID_GROUP = 'id-group';
-    const PARAMETER_ID_USER = 'id-user';
+    public const GROUP_LIST_URL = '/acl/group';
 
-    const MESSAGE_GROUP_CREATE_SUCCESS = 'Group was created successfully.';
-    const MESSAGE_GROUP_UPDATE_SUCCESS = 'Group was updated successfully.';
-    const MESSAGE_USER_IN_GROUP_DELETE_SUCCESS = 'The User was removed from the group.';
-    const MESSAGE_USER_IN_GROUP_DELETE_ERROR = 'User and group are not found.';
+    public const USER_LIST_URL = '/acl/users';
+    public const PARAMETER_ID_GROUP = 'id-group';
+    public const PARAMETER_ID_USER = 'id-user';
+
+    public const MESSAGE_GROUP_CREATE_SUCCESS = 'Group was created successfully.';
+    public const MESSAGE_GROUP_UPDATE_SUCCESS = 'Group was updated successfully.';
+    public const MESSAGE_USER_IN_GROUP_DELETE_SUCCESS = 'The User was removed from the group.';
+    public const MESSAGE_USER_IN_GROUP_DELETE_ERROR = 'User and group are not found.';
+    protected const MESSAGE_GROUP_NOT_FOUND = 'Group couldn\'t be found';
 
     /**
      * @return array
@@ -100,9 +104,17 @@ class GroupController extends AbstractController
 
         $dataProvider = $this->getFactory()->createGroupFormDataProvider();
 
+        $formData = $dataProvider->getData($idAclGroup);
+
+        if (!$formData) {
+            $this->addErrorMessage(static::MESSAGE_GROUP_NOT_FOUND);
+
+            return $this->redirectResponse(static::GROUP_LIST_URL);
+        }
+
         $form = $this->getFactory()
             ->createGroupForm(
-                $dataProvider->getData($idAclGroup),
+                $formData,
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);

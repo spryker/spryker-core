@@ -56,8 +56,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\Pro
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriterInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\Translation\ProductPackagingUnitTranslationExpander;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\Translation\ProductPackagingUnitTranslationExpanderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\ProductPackagingUnitReservationHandler;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\ProductPackagingUnitReservationHandlerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidatorInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
@@ -66,7 +66,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLoc
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesQuantityFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilTextServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
@@ -160,8 +160,20 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitAvailabilityHandler(
             $this->createProductPackagingUnitReader(),
-            $this->createLeadProductReservationCalculator(),
             $this->getAvailabilityFacade(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\ProductPackagingUnitReservationHandlerInterface
+     */
+    public function createProductPackagingUnitReservationHandler(): ProductPackagingUnitReservationHandlerInterface
+    {
+        return new ProductPackagingUnitReservationHandler(
+            $this->createProductPackagingUnitReader(),
+            $this->createLeadProductReservationCalculator(),
+            $this->getOmsFacade(),
             $this->getStoreFacade()
         );
     }
@@ -220,14 +232,6 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeInterface
-     */
-    public function getStockFacade(): ProductPackagingUnitToStockFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_STOCK);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface
      */
     public function getStoreFacade(): ProductPackagingUnitToStoreFacadeInterface
@@ -241,6 +245,14 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function getProductFacade(): ProductPackagingUnitToProductFacadeInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesQuantityFacadeInterface
+     */
+    public function getSalesQuantityFacade(): ProductPackagingUnitToSalesQuantityFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_SALES_QUANTITY);
     }
 
     /**
@@ -307,7 +319,6 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new LeadProductReservationCalculator(
             $this->getOmsFacade(),
-            $this->getStockFacade(),
             $this->getRepository()
         );
     }
@@ -378,22 +389,13 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Translation\ProductPackagingUnitTranslationExpanderInterface
-     */
-    public function createItemMeasurementUnitDataTranslationExpander(): ProductPackagingUnitTranslationExpanderInterface
-    {
-        return new ProductPackagingUnitTranslationExpander(
-            $this->getProductMeasurementUnitFacade()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitHydrateOrderInterface
      */
     public function createAmountSalesUnitHydrateOrder(): AmountSalesUnitHydrateOrderInterface
     {
         return new AmountSalesUnitHydrateOrder(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getProductMeasurementUnitFacade()
         );
     }
 
@@ -411,7 +413,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitItemQuantityValidator(): ProductPackagingUnitItemQuantityValidatorInterface
     {
         return new ProductPackagingUnitItemQuantityValidator(
-            $this->getConfig()
+            $this->getSalesQuantityFacade()
         );
     }
 }

@@ -6,11 +6,11 @@
                 {% for price in currentProduct.prices %}
                     <div class="row">
                         <div class="col-xs-4"><b>{{ 'Net price' | trans }} ({{ price.price_type_name }}):</b></div>
-                        <div class="col-xs-8">{{ price.money_value.net_amount | default(0) |  money }}</div>
+                        <div class="col-xs-8">{{ price.money_value.net_amount | default(0) | money(true, price.money_value.currency.code) }}</div>
                     </div>
                     <div class="row">
                         <div class="col-xs-4"><b>{{ 'Gross price' | trans }} ({{ price.price_type_name }}):</b></div>
-                        <div class="col-xs-8">{{ price.money_value.gross_amount | default(0) | money }}</div>
+                        <div class="col-xs-8">{{ price.money_value.gross_amount | default(0) | money(true, price.money_value.currency.code) }}</div>
                     </div>
                 {% endfor %}
             </div>

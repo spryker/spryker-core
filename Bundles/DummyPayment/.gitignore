@@ -12,10 +12,8 @@
 # OS
 .DS_Store
 
-# grunt stuff
-.grunt
-.sass-cache
-/tests/_log/*
-!/tests/_log/.gitkeep
+/vendor
+/composer.lock
 
-vendor/
+/tests/_output/*
+!/tests/_output/.gitkeep

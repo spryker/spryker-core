@@ -13,11 +13,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
  */
 class ExportReservationConsole extends Console
 {
-    const COMMAND_NAME = 'oms:export-reservation';
-    const COMMAND_DESCRIPTION = 'Export reservation to other stores';
+    public const COMMAND_NAME = 'oms:export-reservation';
+    public const COMMAND_DESCRIPTION = 'Export reservation to other stores';
 
     /**
      * @return void

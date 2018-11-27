@@ -12,11 +12,13 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnit\Business\ProductMeasurementUnitBusinessFactory getFactory()
  * @method \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitEntityManagerInterface getEntityManager()
  */
 class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeasurementUnitFacadeInterface
 {
@@ -207,15 +209,18 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
      *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function expandCartChangeItemsWithProductMeasurementUnitTranslation(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
-    {
+    public function expandSalesOrderItem(
+        ItemTransfer $itemTransfer,
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer {
         return $this->getFactory()
-            ->createProductMeasurementUnitTranslationExpander()
-            ->expandCartChangeItems($cartChangeTransfer);
+            ->createOrderItemExpander()
+            ->expandOrderItem($itemTransfer, $salesOrderItemEntity);
     }
 
     /**
@@ -227,8 +232,9 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    public function translateProductMeasurementSalesUnit(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): ProductMeasurementSalesUnitTransfer
-    {
+    public function translateProductMeasurementSalesUnit(
+        ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
+    ): ProductMeasurementSalesUnitTransfer {
         return $this->getFactory()
             ->createProductMeasurementUnitTranslationExpander()
             ->translateProductMeasurementSalesUnit($productMeasurementSalesUnitTransfer);

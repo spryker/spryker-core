@@ -12,10 +12,13 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Propel\Dependency\Facade\PropelToLogBridge;
 use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceBridge;
 
+/**
+ * @method \Spryker\Zed\Propel\PropelConfig getConfig()
+ */
 class PropelDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const UTIL_TEXT_SERVICE = 'util text service';
-    const FACADE_LOG = 'FACADE_LOG';
+    public const UTIL_TEXT_SERVICE = 'util text service';
+    public const FACADE_LOG = 'FACADE_LOG';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

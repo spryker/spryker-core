@@ -46,7 +46,8 @@ class CurrencyFactory extends AbstractFactory
         return new CurrencyUpdater(
             $this->createCurrencyBuilder(),
             $this->createCurrencyPostChangePluginExecutor(),
-            $this->createCurrencyPersistence()
+            $this->createCurrencyPersistence(),
+            $this->getStoreClient()
         );
     }
 
@@ -75,6 +76,14 @@ class CurrencyFactory extends AbstractFactory
     protected function getStore()
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\Currency\Dependency\Client\CurrencyToStoreClientInterface
+     */
+    protected function getStoreClient()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_STORE);
     }
 
     /**

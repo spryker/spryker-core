@@ -14,6 +14,9 @@ use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToSt
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientBridge;
 use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceBridge;
 
+/**
+ * @method \Spryker\Client\PriceProductStorage\PriceProductStorageConfig getConfig()
+ */
 class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
@@ -23,6 +26,7 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     public const PLUGIN_STORAGE_PRICE_DIMENSION = 'PLUGIN_STORAGE_PRICE_DIMENSION';
+    public const PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -36,6 +40,7 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addSynchronizationService($container);
         $container = $this->addStoreClient($container);
         $container = $this->addPriceDimensionPlugins($container);
+        $container = $this->addPriceProductPricesExtractorPlugins($container);
 
         return $container;
     }
@@ -114,6 +119,28 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
      */
     public function getPriceDimensionStorageReaderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceProductPricesExtractorPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR] = function (Container $container) {
+            return $this->getPriceProductPricesExtractorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[]
+     */
+    protected function getPriceProductPricesExtractorPlugins(): array
     {
         return [];
     }

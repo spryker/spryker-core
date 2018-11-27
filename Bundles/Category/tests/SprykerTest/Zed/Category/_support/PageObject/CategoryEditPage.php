@@ -9,10 +9,10 @@ namespace SprykerTest\Zed\Category\PageObject;
 
 class CategoryEditPage extends Category
 {
-    const URL = '/category/edit?id-category=';
-    const TITLE = 'Edit category';
-    const SUCCESS_MESSAGE = 'The category was updated successfully.';
-    const SUBMIT_BUTTON = 'Save';
+    public const URL = '/category/edit?id-category=';
+    public const TITLE = 'Edit category';
+    public const SUCCESS_MESSAGE = 'The category was updated successfully.';
+    public const SUBMIT_BUTTON = 'Save';
 
     /**
      * @param int $idCategory

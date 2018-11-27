@@ -9,7 +9,8 @@ namespace Spryker\Zed\SprykGui\Business;
 
 use Generated\Shared\Transfer\AccessibleTransferCollection;
 use Generated\Shared\Transfer\ClassInformationTransfer;
-use Generated\Shared\Transfer\ModuleCollectionTransfer;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationCollectionTransfer;
 
 interface SprykGuiFacadeInterface
@@ -69,9 +70,11 @@ interface SprykGuiFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ModuleCollectionTransfer
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function getModules(): ModuleCollectionTransfer;
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 
     /**
      * Specification
@@ -119,4 +122,32 @@ interface SprykGuiFacadeInterface
      * @return array
      */
     public function getSprykDefinitionByName(string $spryk): array;
+
+    /**
+     * Specification:
+     * - Loads all possible options for a Spryk.
+     * - Adds OptionsTransfer to ModuleTransfer.
+     * - Returns ModuleTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    public function buildOptions(ModuleTransfer $moduleTransfer): ModuleTransfer;
+
+    /**
+     * Specification:
+     * - Finds attached choiceLoader by passed choiceLoader name.
+     * - Loads elements for a choice field type with found ChoiceLoaderInterface.
+     *
+     * @api
+     *
+     * @param string $choiceLoaderName
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return array
+     */
+    public function loadChoices(string $choiceLoaderName, ModuleTransfer $moduleTransfer): array;
 }

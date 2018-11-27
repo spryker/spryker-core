@@ -14,7 +14,7 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class OrderItemMatrix
 {
-    const COL_STATE = 'COL_STATE';
+    public const COL_STATE = 'COL_STATE';
 
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface

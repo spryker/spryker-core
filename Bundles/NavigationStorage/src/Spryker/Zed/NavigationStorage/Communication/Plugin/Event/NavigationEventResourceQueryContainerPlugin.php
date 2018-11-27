@@ -18,6 +18,7 @@ use Spryker\Zed\Navigation\Dependency\NavigationEvents;
  * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\NavigationStorage\Business\NavigationStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\NavigationStorage\Communication\NavigationStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationStorage\NavigationStorageConfig getConfig()
  */
 class NavigationEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {

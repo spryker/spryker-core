@@ -7,9 +7,12 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Request;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +50,7 @@ class RestRequestValidatorTest extends Unit
      */
     public function testValidateWhenPluginFailsShouldReturnError(): void
     {
-        $restRequestValidatorPluginMock = $this->createRestRequestValidatorPluginMock();
+        $restRequestValidatorPluginMock = $this->createValidateRestRequestPluginMock();
 
         $restRequestValidatorPluginMock
             ->method('validate')
@@ -58,15 +61,36 @@ class RestRequestValidatorTest extends Unit
         $request = Request::create('/', Request::METHOD_GET);
         $restRequest = (new RestRequest())->createRestRequest();
 
-        $restErrorMessageTransfer = $restRequestValidator->validate($request, $restRequest);
+        $restErrorCollectionTransfer = $restRequestValidator->validate($request, $restRequest);
 
-        $this->assertNotEmpty($restErrorMessageTransfer);
+        $this->assertNotEmpty($restErrorCollectionTransfer);
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface
+     * @return void
      */
-    protected function createRestRequestValidatorPluginMock(): ValidateRestRequestPluginInterface
+    public function testValidateWhenValidatorPluginFailsShouldReturnError(): void
+    {
+        $restRequestValidatorPluginMock = $this->createRestRequestValidatorPluginMock();
+
+        $restRequestValidatorPluginMock
+            ->method('validate')
+            ->willReturn(new RestErrorCollectionTransfer());
+
+        $restRequestValidator = $this->createRestRequestValidator([], [$restRequestValidatorPluginMock]);
+
+        $request = Request::create('/', Request::METHOD_GET);
+        $restRequest = (new RestRequest())->createRestRequest();
+
+        $restErrorCollectionTransfer = $restRequestValidator->validate($request, $restRequest);
+
+        $this->assertNotEmpty($restErrorCollectionTransfer);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createValidateRestRequestPluginMock(): MockObject
     {
         return $this->getMockBuilder(ValidateRestRequestPluginInterface::class)
            ->setMethods(['validate'])
@@ -74,12 +98,23 @@ class RestRequestValidatorTest extends Unit
     }
 
     /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createRestRequestValidatorPluginMock(): MockObject
+    {
+        return $this->getMockBuilder(RestRequestValidatorPluginInterface::class)
+           ->setMethods(['validate'])
+           ->getMock();
+    }
+
+    /**
      * @param array $plugins
+     * @param array $restRequestValidatorPlugins
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface
      */
-    protected function createRestRequestValidator(array $plugins = []): RestRequestValidatorInterface
+    protected function createRestRequestValidator(array $plugins = [], $restRequestValidatorPlugins = []): RestRequestValidatorInterface
     {
-        return new RestRequestValidator($plugins);
+        return new RestRequestValidator($plugins, $restRequestValidatorPlugins);
     }
 }

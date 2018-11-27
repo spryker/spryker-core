@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Oms\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
@@ -127,12 +128,9 @@ class OmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetReservedStateNames()
+    public function testGetReservedStateNames(): void
     {
-        $omsFacade = $this->createOmsFacade();
-        $stateNames = $omsFacade->getReservedStateNames();
-
-        $expect = [
+        $expected = [
             'new',
             'payment pending',
             'paid',
@@ -140,7 +138,31 @@ class OmsFacadeTest extends Unit
             'shipped',
         ];
 
-        $this->assertSame($expect, $stateNames);
+        // Action
+        $stateNames = $this->createOmsFacade()->getReservedStateNames();
+
+        // Assert
+        $this->assertSame($expected, $stateNames);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveReservation(): void
+    {
+        $omsFacade = $this->createOmsFacade();
+        $storeTransfer = (new StoreTransfer())->setIdStore(1)->setName('DE');
+        $productSku = 'xxx';
+        $reservationQuantity = 10;
+
+        // Action
+        $this->createOmsFacade()->saveReservation($productSku, $storeTransfer, $reservationQuantity);
+
+        // Assert
+        $this->assertEquals(
+            $reservationQuantity,
+            $this->createOmsFacade()->getOmsReservedProductQuantityForSku($productSku, $storeTransfer)
+        );
     }
 
     /**

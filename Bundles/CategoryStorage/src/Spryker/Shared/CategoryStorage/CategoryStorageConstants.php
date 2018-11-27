@@ -18,7 +18,7 @@ class CategoryStorageConstants
      *
      * @api
      */
-    const CATEGORY_SYNC_STORAGE_QUEUE = 'sync.storage.category';
+    public const CATEGORY_SYNC_STORAGE_QUEUE = 'sync.storage.category';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ class CategoryStorageConstants
      *
      * @api
      */
-    const CATEGORY_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.category.error';
+    public const CATEGORY_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.category.error';
 
     /**
      * Specification:
@@ -34,7 +34,7 @@ class CategoryStorageConstants
      *
      * @api
      */
-    const CATEGORY_NODE_RESOURCE_NAME = 'category_node';
+    public const CATEGORY_NODE_RESOURCE_NAME = 'category_node';
 
     /**
      * Specification:
@@ -42,5 +42,5 @@ class CategoryStorageConstants
      *
      * @api
      */
-    const CATEGORY_TREE_RESOURCE_NAME = 'category_tree';
+    public const CATEGORY_TREE_RESOURCE_NAME = 'category_tree';
 }

@@ -72,6 +72,8 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
@@ -295,7 +297,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Updates the availability of a lead product that is related to the provided sibling product sku.
+     * - Updates the lead product availability of the provided product pacakaging unit sku.
      *
      * @api
      *
@@ -304,6 +306,18 @@ interface ProductPackagingUnitFacadeInterface
      * @return void
      */
     public function updateLeadProductAvailability(string $sku): void;
+
+    /**
+     * Specification:
+     * - Updates the lead product reservations of the provided product pacakaging unit sku.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function updateLeadProductReservation(string $sku): void;
 
     /**
      * Specification:
@@ -354,7 +368,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
+    public function transformSplittableItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
 
     /**
      * Specification:
@@ -367,18 +381,6 @@ interface ProductPackagingUnitFacadeInterface
      * @return bool
      */
     public function isProductPackagingUnitItemQuantitySplittable(ItemTransfer $itemTransfer): bool;
-
-    /**
-     * Specification:
-     * - Expands the items of the CartChangeTransfer with translated ProductPackagingUnit data.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    public function expandCartChangeItemsWithProductPackagingUnitTranslation(CartChangeTransfer $cartChangeTransfer);
 
     /**
      * Specification:

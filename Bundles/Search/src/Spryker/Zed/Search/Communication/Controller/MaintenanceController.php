@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MaintenanceController extends AbstractController
 {
-    const MESSAGE_RESPONSE = 'Response: %s';
-    const URL_SEARCH_MAINTENANCE = '/search/maintenance';
+    public const MESSAGE_RESPONSE = 'Response: %s';
+    public const URL_SEARCH_MAINTENANCE = '/search/maintenance';
 
     /**
      * @return array

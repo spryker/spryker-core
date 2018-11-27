@@ -62,8 +62,8 @@ class TwigConfig extends AbstractBundleConfig
             $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Shared/%s/Theme/' . $themeName;
         }
 
-        $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Yves/%s/Theme' . $themeName;
-        $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Shared/%s/Theme' . $themeName;
+        $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Yves/%s/Theme/' . $themeName;
+        $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Shared/%s/Theme/' . $themeName;
 
         return $paths;
     }
@@ -98,5 +98,13 @@ class TwigConfig extends AbstractBundleConfig
     public function isPathCacheEnabled()
     {
         return $this->get(TwigConstants::YVES_PATH_CACHE_ENABLED, true);
+    }
+
+    /**
+     * @return int
+     */
+    public function getPermissionMode(): int
+    {
+        return $this->get(TwigConstants::DIRECTORY_PERMISSION, 0777);
     }
 }

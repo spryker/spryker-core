@@ -15,12 +15,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\CustomerUserConnectorGui\Communication\CustomerUserConnectorGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerUserConnectorGui\CustomerUserConnectorGuiConfig getConfig()
  */
 class CustomerUserConnectorForm extends AbstractType
 {
-    const FIELD_ID_USER = CustomerUserConnectionUpdateTransfer::ID_USER;
-    const FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV = CustomerUserConnectionUpdateTransfer::ID_CUSTOMERS_TO_ASSIGN;
-    const FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV = CustomerUserConnectionUpdateTransfer::ID_CUSTOMERS_TO_DE_ASSIGN;
+    public const FIELD_ID_USER = CustomerUserConnectionUpdateTransfer::ID_USER;
+    public const FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV = CustomerUserConnectionUpdateTransfer::ID_CUSTOMERS_TO_ASSIGN;
+    public const FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV = CustomerUserConnectionUpdateTransfer::ID_CUSTOMERS_TO_DE_ASSIGN;
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

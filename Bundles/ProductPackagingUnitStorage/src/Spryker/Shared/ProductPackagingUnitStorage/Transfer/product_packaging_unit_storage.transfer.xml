@@ -18,6 +18,7 @@
         <property name="idProductAbstract" type="int"/>
         <property name="leadProduct" type="int"/>
         <property name="types" type="ProductConcretePackagingStorage[]"/>
+        <property name="key" type="string" />
     </transfer>
 
 </transfers>

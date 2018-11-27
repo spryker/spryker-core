@@ -14,15 +14,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class CodeTestConsole extends Console
 {
-    const COMMAND_NAME = 'code:test';
-    const OPTION_MODULE = 'module';
-    const OPTION_MODULE_ALL = 'all';
-    const OPTION_INITIALIZE = 'initialize';
-    const OPTION_GROUP = 'group';
-    const OPTION_TYPE_EXCLUDE = 'exclude';
+    public const COMMAND_NAME = 'code:test';
+    public const OPTION_MODULE = 'module';
+    public const OPTION_MODULE_ALL = 'all';
+    public const OPTION_INITIALIZE = 'initialize';
+    public const OPTION_GROUP = 'group';
+    public const OPTION_TYPE_EXCLUDE = 'exclude';
 
     /**
      * @return void

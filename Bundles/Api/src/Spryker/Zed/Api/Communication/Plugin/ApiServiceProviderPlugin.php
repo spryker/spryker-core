@@ -15,6 +15,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\Api\ApiConfig getConfig()
+ * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
  */
 class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -26,6 +28,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     protected $controllerListener;
 
     /**
+     * @api
+     *
      * @deprecated Please remove usage of this setter. The needed ControllerListenerInterface is now retrieved by the Factory.
      *
      * @param \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface $controllerListener
@@ -38,6 +42,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * @api
+     *
      * @param \Silex\Application $app
      *
      * @return void
@@ -66,6 +72,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * @api
+     *
      * @param \Silex\Application $app
      *
      * @return void

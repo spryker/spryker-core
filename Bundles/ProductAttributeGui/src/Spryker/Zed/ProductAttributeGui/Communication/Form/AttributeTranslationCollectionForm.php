@@ -13,10 +13,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig getConfig()
  */
 class AttributeTranslationCollectionForm extends AbstractType
 {
-    const FIELD_TRANSLATIONS = 'translations';
+    public const FIELD_TRANSLATIONS = 'translations';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

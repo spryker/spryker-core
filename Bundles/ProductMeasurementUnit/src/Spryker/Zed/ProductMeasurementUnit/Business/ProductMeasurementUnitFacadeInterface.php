@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 interface ProductMeasurementUnitFacadeInterface
 {
@@ -156,19 +157,23 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * - Expands the items of the CartChangeTransfer with translated MeasurementUnit data.
+     * - Expands SpySalesOrderItemEntityTransfer with ItemTransfer for the pre-save plugin.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
      *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function expandCartChangeItemsWithProductMeasurementUnitTranslation(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function expandSalesOrderItem(
+        ItemTransfer $itemTransfer,
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer;
 
     /**
      * Specification:
-     * - Translate ProductMeasurementSalesUnit
+     * - Translate the glossary keys of name attributes of ProductMeasurementSalesUnit transfer.
      *
      * @api
      *
@@ -176,5 +181,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    public function translateProductMeasurementSalesUnit(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): ProductMeasurementSalesUnitTransfer;
+    public function translateProductMeasurementSalesUnit(
+        ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
+    ): ProductMeasurementSalesUnitTransfer;
 }

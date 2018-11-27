@@ -14,12 +14,15 @@ use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyBridge;
 use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToProductBridge;
 use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToSalesAggregatorBridge;
 
+/**
+ * @method \Spryker\Zed\Ratepay\RatepayConfig getConfig()
+ */
 class RatepayDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATED';
-    const FACADE_GLOSSARY = 'GLOSSARY_FACADE';
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATED';
+    public const FACADE_GLOSSARY = 'GLOSSARY_FACADE';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_MONEY = 'FACADE_MONEY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

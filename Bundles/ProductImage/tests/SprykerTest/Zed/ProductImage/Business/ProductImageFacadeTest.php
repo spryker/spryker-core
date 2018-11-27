@@ -86,15 +86,15 @@ class ProductImageFacadeTest extends Unit
      */
     protected $image;
 
-    const URL_SMALL = 'small';
-    const URL_LARGE = 'large';
-    const SET_NAME = 'Default';
-    const SET_NAME_DE = 'Default DE';
-    const SET_NAME_EN = 'Default EN';
-    const ABSTRACT_SKU = 'abstract-sku';
-    const CONCRETE_SKU = 'concrete-sku';
-    const ID_LOCALE_DE = 46;
-    const ID_LOCALE_EN = 66;
+    public const URL_SMALL = 'small';
+    public const URL_LARGE = 'large';
+    public const SET_NAME = 'Default';
+    public const SET_NAME_DE = 'Default DE';
+    public const SET_NAME_EN = 'Default EN';
+    public const ABSTRACT_SKU = 'abstract-sku';
+    public const CONCRETE_SKU = 'concrete-sku';
+    public const ID_LOCALE_DE = 46;
+    public const ID_LOCALE_EN = 66;
 
     /**
      * @return void

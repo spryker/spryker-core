@@ -9,12 +9,15 @@ namespace Spryker\Client\UrlStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface;
 use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface;
+use Spryker\Client\UrlStorage\UrlStorageConfig;
+use Spryker\Shared\Kernel\Store;
 
 class UrlStorageReader implements UrlStorageReaderInterface
 {
-    const URL = 'url';
+    public const URL = 'url';
 
     /**
      * @var \Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface
@@ -52,7 +55,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
     public function matchUrl($url, $localeName)
     {
         $urlDetails = $this->getUrlFromStorage($url);
-        if ($urlDetails === null) {
+        if (!$urlDetails) {
             return [];
         }
 
@@ -83,8 +86,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
     public function findUrlStorageTransferByUrl($url)
     {
         $urlDetails = $this->getUrlFromStorage($url);
-
-        if ($urlDetails === null) {
+        if (!$urlDetails) {
             return null;
         }
 
@@ -98,8 +100,52 @@ class UrlStorageReader implements UrlStorageReaderInterface
      */
     protected function getUrlFromStorage($url)
     {
+        if (UrlStorageConfig::isCollectorCompatibilityMode()) {
+            return $this->getCollectorUrlData($url);
+        }
+
         $urlKey = $this->getUrlKey($url);
-        return $this->storageClient->get($urlKey);
+        $urlStorageData = $this->storageClient->get($urlKey);
+
+        return $urlStorageData;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return array|null
+     */
+    protected function getCollectorUrlData(string $url)
+    {
+        $clientLocatorClassName = Locator::class;
+        /** @var \Spryker\Client\Url\UrlClientInterface $urlClient */
+        $urlClient = $clientLocatorClassName::getInstance()->url()->client();
+        $localeName = Store::getInstance()->getCurrentLocale();
+        $urlCollectorStorageTransfer = $urlClient->findUrl($url, $localeName);
+
+        if (!$urlCollectorStorageTransfer) {
+            return null;
+        }
+
+        $primaryUrlTransfer = null;
+        $urlStorageLocaleUrlCollection = [];
+        foreach ($urlCollectorStorageTransfer->getLocaleUrls() as $localeUrlTransfer) {
+            $localeUrl = $localeUrlTransfer->toArray();
+            $urlStorageLocaleUrlCollection[] = $localeUrl;
+
+            if ($localeUrlTransfer->getUrl() === $url) {
+                $primaryUrlTransfer = $localeUrlTransfer;
+            }
+        }
+
+        if (!$primaryUrlTransfer) {
+            return null;
+        }
+
+        $urlData = $primaryUrlTransfer->toArray();
+        $urlData['locale_urls'] = $urlStorageLocaleUrlCollection;
+
+        return $urlData;
     }
 
     /**

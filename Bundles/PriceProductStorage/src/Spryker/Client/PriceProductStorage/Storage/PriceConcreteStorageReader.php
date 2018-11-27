@@ -8,7 +8,9 @@
 namespace Spryker\Client\PriceProductStorage\Storage;
 
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface;
+use Spryker\Client\PriceProductStorage\PriceProductStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
 class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
@@ -34,21 +36,29 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
     protected $priceDimensionPlugins;
 
     /**
+     * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[]
+     */
+    protected $priceProductExtractorPlugins;
+
+    /**
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface $storageClient
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[] $priceDimensionPlugins
+     * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[] $priceProductExtractorPlugins
      */
     public function __construct(
         PriceProductStorageToStorageInterface $storageClient,
         PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator,
         PriceProductMapperInterface $priceProductMapper,
-        array $priceDimensionPlugins
+        array $priceDimensionPlugins,
+        array $priceProductExtractorPlugins
     ) {
         $this->storageClient = $storageClient;
         $this->priceStorageKeyGenerator = $priceStorageKeyGenerator;
         $this->priceProductMapper = $priceProductMapper;
         $this->priceDimensionPlugins = $priceDimensionPlugins;
+        $this->priceProductExtractorPlugins = $priceProductExtractorPlugins;
     }
 
     /**
@@ -76,8 +86,7 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
      */
     protected function findDefaultPriceDimensionPriceProductTransfers(int $idProductConcrete): array
     {
-        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_CONCRETE_RESOURCE_NAME, $idProductConcrete);
-        $priceData = $this->storageClient->get($key);
+        $priceData = $this->findProductConcretePriceData($idProductConcrete);
 
         if (!$priceData) {
             return [];
@@ -86,6 +95,50 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
         $priceProductStorageTransfer = new PriceProductStorageTransfer();
         $priceProductStorageTransfer->fromArray($priceData, true);
 
-        return $this->priceProductMapper->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
+        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
+        $priceProductTransfers = $this->applyPriceProductExtractorPlugins($idProductConcrete, $priceProductTransfers);
+
+        return $priceProductTransfers;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return array|null
+     */
+    protected function findProductConcretePriceData(int $idProductConcrete): ?array
+    {
+        if (PriceProductStorageConfig::isCollectorCompatibilityMode()) {
+            $clientLocatorClassName = Locator::class;
+            /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
+            $productClient = $clientLocatorClassName::getInstance()->product()->client();
+            $collectorData = $productClient->getProductConcreteByIdForCurrentLocale($idProductConcrete);
+            $priceData['prices'] = $collectorData['prices'];
+
+            return $priceData;
+        }
+
+        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_CONCRETE_RESOURCE_NAME, $idProductConcrete);
+        $priceData = $this->storageClient->get($key);
+
+        return $priceData;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function applyPriceProductExtractorPlugins(int $idProductConcrete, array $priceProductTransfers): array
+    {
+        foreach ($this->priceProductExtractorPlugins as $extractorPlugin) {
+            $priceProductTransfers = array_merge(
+                $priceProductTransfers,
+                $extractorPlugin->extractProductPricesForProductConcrete($idProductConcrete, $priceProductTransfers)
+            );
+        }
+
+        return $priceProductTransfers;
     }
 }

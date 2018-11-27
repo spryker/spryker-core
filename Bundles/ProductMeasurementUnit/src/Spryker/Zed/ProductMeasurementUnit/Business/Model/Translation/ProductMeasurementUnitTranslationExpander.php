@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeInterface;
@@ -29,29 +28,13 @@ class ProductMeasurementUnitTranslationExpander implements ProductMeasurementUni
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    public function expandCartChangeItems(CartChangeTransfer $cartChangeTransfer)
-    {
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getQuantitySalesUnit()) {
-                continue;
-            }
-            $this->translateProductMeasurementSalesUnit($itemTransfer->getQuantitySalesUnit());
-        }
-
-        return $cartChangeTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    public function translateProductMeasurementSalesUnit(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer)
-    {
+    public function translateProductMeasurementSalesUnit(
+        ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
+    ): ProductMeasurementSalesUnitTransfer {
         $productMeasurementSalesUnitTransfer
             ->requireProductMeasurementUnit();
 
@@ -110,11 +93,10 @@ class ProductMeasurementUnitTranslationExpander implements ProductMeasurementUni
      *
      * @return string
      */
-    protected function translate(string $msg)
+    protected function translate(string $msg): string
     {
         try {
-            $localizedMsg = $this->glossaryFacade
-                ->translate($msg);
+            $localizedMsg = $this->glossaryFacade->translate($msg);
         } catch (MissingTranslationException $e) {
             $localizedMsg = $msg;
         }

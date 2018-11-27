@@ -14,11 +14,14 @@ use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryMapper;
+use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class CategoryPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -83,5 +86,13 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     public function createCategoryTemplateQuery()
     {
         return SpyCategoryTemplateQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryMapperInterface
+     */
+    public function createCategoryMapper(): CategoryMapperInterface
+    {
+        return new CategoryMapper();
     }
 }

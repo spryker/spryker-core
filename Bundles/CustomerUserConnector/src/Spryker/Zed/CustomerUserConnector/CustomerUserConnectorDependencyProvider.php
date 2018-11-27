@@ -12,10 +12,13 @@ use Spryker\Zed\CustomerUserConnector\Dependency\QueryContainer\CustomerUserConn
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CustomerUserConnector\CustomerUserConnectorConfig getConfig()
+ */
 class CustomerUserConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_USER = 'QUERY_CONTAINER_USER';
-    const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
+    public const QUERY_CONTAINER_USER = 'QUERY_CONTAINER_USER';
+    public const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

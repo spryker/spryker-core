@@ -20,14 +20,13 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     protected const COL_MAX_ID = 'MAX_ID';
 
     /**
-     * {@inheritdoc}
-     *
      * @param int $idMerchantRelationship
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
     public function getMerchantRelationshipById(int $idMerchantRelationship): ?MerchantRelationshipTransfer
     {
+        /** @var \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship|null $spyMerchantRelation */
         $spyMerchantRelation = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->filterByIdMerchantRelationship($idMerchantRelationship)
@@ -43,8 +42,27 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $merchantRelationshipKey
      *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     */
+    public function findMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer
+    {
+        $spyMerchantRelation = $this->getFactory()
+            ->createMerchantRelationshipQuery()
+            ->filterByMerchantRelationshipKey($merchantRelationshipKey)
+            ->findOne();
+
+        if (!$spyMerchantRelation) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createPropelMerchantRelationshipMapper()
+            ->mapEntityToMerchantRelationshipTransfer($spyMerchantRelation, new MerchantRelationshipTransfer());
+    }
+
+    /**
      * @param int $idMerchantRelationship
      *
      * @return int[]
@@ -60,8 +78,6 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param string $candidate
      *
      * @return bool
@@ -75,8 +91,6 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return int
      */
     public function getMaxMerchantRelationshipId(): int
@@ -94,8 +108,6 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param int $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
@@ -123,5 +135,33 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
         }
 
         return $merchantRelationshipCollection;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @module CompanyBusinessUnit
+     * @module Merchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function getMerchantRelationshipCollection(): array
+    {
+        $merchantRelationEntities = $this->getFactory()
+            ->createMerchantRelationshipQuery()
+            ->leftJoinCompanyBusinessUnit()
+            ->innerJoinWithMerchant()
+            ->find();
+
+        $merchantRelationTransfers = [];
+        foreach ($merchantRelationEntities as $merchantRelationEntity) {
+            $merchantRelationTransfers[] = $this->getFactory()
+                ->createPropelMerchantRelationshipMapper()
+                ->mapEntityToMerchantRelationshipTransfer($merchantRelationEntity, new MerchantRelationshipTransfer());
+        }
+
+        return $merchantRelationTransfers;
     }
 }

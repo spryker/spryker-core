@@ -10,11 +10,15 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 
 class PriceChangeExpander implements PriceChangeExpanderInterface
 {
+    /**
+     * @uses CalculationPriceMode::PRICE_MODE_NET
+     */
+    protected const PRICE_MODE_NET = 'NET_MODE';
+
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
      */
@@ -72,13 +76,13 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
             return $itemTransfer;
         }
 
-        if ($quoteTransfer->getPriceMode() === CalculationPriceMode::PRICE_MODE_NET) {
+        if ($quoteTransfer->getPriceMode() === static::PRICE_MODE_NET) {
             $unitNetPrice = $itemTransfer->getUnitNetPrice();
-            $newUnitNetPrice = (int)(($amountPerQuantity / $defaultAmount) * $unitNetPrice);
+            $newUnitNetPrice = (int)round((($amountPerQuantity / $defaultAmount) * $unitNetPrice));
             $itemTransfer->setUnitNetPrice($newUnitNetPrice);
         } else {
             $unitGrossPrice = $itemTransfer->getUnitGrossPrice();
-            $newUnitGrossPrice = (int)(($amountPerQuantity / $defaultAmount) * $unitGrossPrice);
+            $newUnitGrossPrice = (int)round((($amountPerQuantity / $defaultAmount) * $unitGrossPrice));
             $itemTransfer->setUnitGrossPrice($newUnitGrossPrice);
         }
 

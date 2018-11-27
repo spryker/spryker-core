@@ -20,15 +20,18 @@ use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductRev
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatterPlugin;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 
+/**
+ * @method \Spryker\Client\ProductReview\ProductReviewConfig getConfig()
+ */
 class ProductReviewDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const CLIENT_SEARCH = 'CLIENT_SEARCH';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
-    const PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS = 'PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS';
-    const PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS = 'PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS';
-    const PAGINATION_CONFIG_BUILDER_PLUGIN = 'PAGINATION_CONFIG_BUILDER_PLUGIN';
+    public const PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS = 'PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS';
+    public const PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS = 'PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS';
+    public const PAGINATION_CONFIG_BUILDER_PLUGIN = 'PAGINATION_CONFIG_BUILDER_PLUGIN';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

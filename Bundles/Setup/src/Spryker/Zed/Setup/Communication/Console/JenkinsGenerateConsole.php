@@ -14,11 +14,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
+ * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
 class JenkinsGenerateConsole extends Console
 {
-    const COMMAND_NAME = 'setup:jenkins:generate';
-    const DESCRIPTION = 'Generate Jenkins jobs configuration';
+    public const COMMAND_NAME = 'setup:jenkins:generate';
+    public const DESCRIPTION = 'Generate Jenkins jobs configuration';
 
     /**
      * @return void

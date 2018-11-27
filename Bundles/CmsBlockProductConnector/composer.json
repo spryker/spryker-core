@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block-product-connector",
+  "type": "library",
   "description": "CmsBlockProductConnector module",
   "license": "proprietary",
   "require": {
@@ -19,7 +20,7 @@
     "spryker/cms-block-gui": "*",
     "spryker/code-sniffer": "*",
     "spryker/product-management": "*",
-    "spryker/silex": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

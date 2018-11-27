@@ -15,8 +15,6 @@ class SynchronizationToStorageClientBridge implements SynchronizationToStorageCl
     protected $storageClient;
 
     /**
-     * SynchronizationToStorageBridge constructor.
-     *
      * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
      */
     public function __construct($storageClient)
@@ -54,5 +52,25 @@ class SynchronizationToStorageClientBridge implements SynchronizationToStorageCl
     public function delete($key)
     {
         $this->storageClient->delete($key);
+    }
+
+    /**
+     * @param array $items
+     *
+     * @return void
+     */
+    public function setMulti(array $items)
+    {
+        $this->storageClient->setMulti($items);
+    }
+
+    /**
+     * @param array $keys
+     *
+     * @return void
+     */
+    public function deleteMulti(array $keys)
+    {
+        $this->storageClient->deleteMulti($keys);
     }
 }
