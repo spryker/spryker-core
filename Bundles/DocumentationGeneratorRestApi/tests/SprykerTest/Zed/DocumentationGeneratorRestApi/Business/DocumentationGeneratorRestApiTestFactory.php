@@ -23,6 +23,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelation
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\OpenApiSpecificationSchemaComponentBuilder;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaComponentBuilderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinder;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGenerator;
@@ -193,6 +195,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
         return new OpenApiSpecificationSchemaGenerator(
             $this->createResourceRelationshipsPluginAnalyzer(),
             $this->createResourceTransferAnalyzer(),
+            $this->createOpenApiSpecificationSchemaComponentBuilder(),
             $this->createSchemaRenderer()
         );
     }
@@ -332,6 +335,14 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     public function createSecuritySchemeSpecificationComponent(): SecuritySchemeSpecificationComponentInterface
     {
         return new SecuritySchemeSpecificationComponent();
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaComponentBuilderInterface
+     */
+    public function createOpenApiSpecificationSchemaComponentBuilder(): SchemaComponentBuilderInterface
+    {
+        return new OpenApiSpecificationSchemaComponentBuilder();
     }
 
     /**
