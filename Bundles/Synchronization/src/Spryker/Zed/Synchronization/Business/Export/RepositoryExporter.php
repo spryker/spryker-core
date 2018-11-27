@@ -67,7 +67,7 @@ class RepositoryExporter implements ExporterInterface
             }
 
             if ($plugin instanceof SynchronizationDataBulkRepositoryPluginInterface) {
-                $this->exportDataWithinChunks($plugin);
+                $this->exportDataBulk($plugin, $ids);
             }
         }
     }
@@ -94,15 +94,16 @@ class RepositoryExporter implements ExporterInterface
 
     /**
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface $plugin
+     * @param int[] $ids
      *
      * @return void
      */
-    protected function exportDataWithinChunks(SynchronizationDataBulkRepositoryPluginInterface $plugin): void
+    protected function exportDataBulk(SynchronizationDataBulkRepositoryPluginInterface $plugin, array $ids = []): void
     {
         $offset = 0;
 
         do {
-            $synchronizationEntities = $plugin->getData($offset, $this->chunkSize);
+            $synchronizationEntities = $plugin->getData($offset, $this->chunkSize, $ids);
 
             if (empty($synchronizationEntities)) {
                 break;

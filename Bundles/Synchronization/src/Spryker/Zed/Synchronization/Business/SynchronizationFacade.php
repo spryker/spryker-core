@@ -112,12 +112,13 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
      * @api
      *
      * @param string[] $resources
+     * @param int[] $ids
      *
      * @return void
      */
-    public function executeResolvedPluginsBySources(array $resources)
+    public function executeResolvedPluginsBySources(array $resources, array $ids)
     {
-        $this->getFactory()->createExporterPluginResolver()->executeResolvedPluginsBySources($resources);
+        $this->getFactory()->createExporterPluginResolver()->executeResolvedPluginsBySources($resources, $ids);
     }
 
     /**

@@ -103,10 +103,11 @@ interface SynchronizationFacadeInterface
      * @api
      *
      * @param string[] $resources
+     * @param int[] $ids
      *
      * @return void
      */
-    public function executeResolvedPluginsBySources(array $resources);
+    public function executeResolvedPluginsBySources(array $resources, array $ids);
 
     /**
      * Specification:

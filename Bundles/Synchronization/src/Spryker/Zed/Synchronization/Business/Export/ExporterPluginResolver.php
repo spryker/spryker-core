@@ -48,14 +48,15 @@ class ExporterPluginResolver
 
     /**
      * @param string[] $resources
+     * @param int[] $ids
      *
      * @return void
      */
-    public function executeResolvedPluginsBySources(array $resources): void
+    public function executeResolvedPluginsBySources(array $resources, array $ids): void
     {
         $pluginsPerExporter = $this->getResolvedPluginsByResources($resources);
         $this->queryContainerExporter->exportSynchronizedData($pluginsPerExporter[ExporterPluginResolver::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS]);
-        $this->repositoryExporter->exportSynchronizedData($pluginsPerExporter[ExporterPluginResolver::REPOSITORY_SYNCHRONIZATION_PLUGINS]);
+        $this->repositoryExporter->exportSynchronizedData($pluginsPerExporter[ExporterPluginResolver::REPOSITORY_SYNCHRONIZATION_PLUGINS], $ids);
     }
 
     /**
