@@ -17,11 +17,12 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class IdenticalToValidator extends AbstractComparisonValidator
 {
+    protected const INVALID_PROPERTY_PATH = 'Invalid property path "%s" provided to "%s" constraint.';
+
     /**
      * @param mixed $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
-     * @throws \Symfony\Component\Validator\Exception\ConstraintDefinitionException
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
@@ -36,37 +37,10 @@ class IdenticalToValidator extends AbstractComparisonValidator
             return;
         }
 
-        if ($path = $constraint->propertyPath) {
-            if (!isset($this->context->getRoot()[$path])) {
-                throw new ConstraintDefinitionException(sprintf('Invalid property path "%s" provided to "%s" constraint.', $path, get_class($constraint)));
-            }
-            $comparedValue = $this->context->getRoot()[$path];
-        } else {
-            $comparedValue = $constraint->value;
-        }
-
-        // Convert strings to DateTimes if comparing another DateTime
-        // This allows to compare with any date/time value supported by
-        // the DateTime constructor:
-        // http://php.net/manual/en/datetime.formats.php
-        if (is_string($comparedValue)) {
-            if ($value instanceof DateTimeImmutable) {
-                // If $value is immutable, convert the compared value to a
-                // DateTimeImmutable too
-                $comparedValue = new DateTimeImmutable($comparedValue);
-            } elseif ($value instanceof DateTimeInterface) {
-                // Otherwise use DateTime
-                $comparedValue = new DateTime($comparedValue);
-            }
-        }
+        $comparedValue = $this->getComparedValue($value, $constraint);
 
         if (!$this->compareValues($value, $comparedValue)) {
-            $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ value }}', $this->formatValue($value, self::OBJECT_TO_STRING | self::PRETTY_DATE))
-                ->setParameter('{{ compared_value }}', $this->formatValue($comparedValue, self::OBJECT_TO_STRING | self::PRETTY_DATE))
-                ->setParameter('{{ compared_value_type }}', $this->formatTypeOf($comparedValue))
-                ->setCode($this->getErrorCode())
-                ->addViolation();
+            $this->buildViolation($value, $constraint, $comparedValue);
         }
     }
 
@@ -87,5 +61,64 @@ class IdenticalToValidator extends AbstractComparisonValidator
     protected function getErrorCode()
     {
         return IdenticalTo::NOT_IDENTICAL_ERROR;
+    }
+
+    /**
+     * @param mixed $value
+     * @param string $comparedValue
+     *
+     * @return \DateTime|\DateTimeImmutable|string
+     */
+    protected function convertToDateTime($value, string $comparedValue)
+    {
+        if (is_string($comparedValue)) {
+            if ($value instanceof DateTimeImmutable) {
+                $comparedValue = new DateTimeImmutable($comparedValue);
+            } elseif ($value instanceof DateTimeInterface) {
+                $comparedValue = new DateTime($comparedValue);
+            }
+        }
+        return $comparedValue;
+    }
+
+    /**
+     * @param mixed $value
+     * @param \Spryker\Glue\RestRequestValidator\Constraints\IdenticalTo $constraint
+     *
+     * @throws \Symfony\Component\Validator\Exception\ConstraintDefinitionException
+     *
+     * @return \DateTime|\DateTimeImmutable|string
+     */
+    protected function getComparedValue($value, IdenticalTo $constraint)
+    {
+        if ($path = $constraint->propertyPath) {
+            if (!isset($this->context->getRoot()[$path])) {
+                throw new ConstraintDefinitionException(sprintf(static::INVALID_PROPERTY_PATH, $path, get_class($constraint)));
+            }
+            $comparedValue = $this->context->getRoot()[$path];
+        } else {
+            $comparedValue = $constraint->value;
+        }
+
+        $comparedValue = $this->convertToDateTime($value, $comparedValue);
+
+        return $comparedValue;
+    }
+
+    /**
+     * @param mixed $value
+     * @param \Spryker\Glue\RestRequestValidator\Constraints\IdenticalTo $constraint
+     * @param mixed $comparedValue
+     *
+     * @return void
+     */
+    protected function buildViolation($value, IdenticalTo $constraint, $comparedValue): void
+    {
+        $this->context->buildViolation($constraint->message)
+            ->setParameter('{{ value }}', $this->formatValue($value, self::OBJECT_TO_STRING | self::PRETTY_DATE))
+            ->setParameter('{{ compared_value }}', $this->formatValue($comparedValue, self::OBJECT_TO_STRING | self::PRETTY_DATE))
+            ->setParameter('{{ compared_value_type }}', $this->formatTypeOf($comparedValue))
+            ->setCode($this->getErrorCode())
+            ->addViolation();
     }
 }
