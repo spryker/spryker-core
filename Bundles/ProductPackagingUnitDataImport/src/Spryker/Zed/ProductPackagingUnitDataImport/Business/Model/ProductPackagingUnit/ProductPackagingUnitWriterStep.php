@@ -39,9 +39,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     protected static $idProductPackagingUnitTypeHeap = [];
 
     /**
-     * - Keys are product SKUs, values are a set of product abstract ID and product concrete ID.
-     *
-     * @var array
+     * @var array Keys are product SKUs, values are a set of product abstract ID and product concrete ID.
      */
     protected static $productHeap = [];
 
