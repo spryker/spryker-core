@@ -130,9 +130,12 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             return new AddressesTransfer();
         }
 
-        $addressesTransfer = $this->customerFacade->getAddresses($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($customerTransfer->getCustomerReference());
+        if (!$customerResponseTransfer->getHasCustomer()) {
+            return new AddressesTransfer();
+        }
 
-        return $this->extendAddressesWithDefaultBillingAndShipping($customerTransfer, $addressesTransfer);
+        return $this->extendAddressesWithDefaultBillingAndShipping($customerResponseTransfer->getCustomerTransfer());
     }
 
     /**
@@ -152,20 +155,17 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
-    protected function extendAddressesWithDefaultBillingAndShipping(CustomerTransfer $customerTransfer, AddressesTransfer $addressesTransfer): AddressesTransfer
+    protected function extendAddressesWithDefaultBillingAndShipping(CustomerTransfer $customerTransfer): AddressesTransfer
     {
-        $defaultShippingAddress = $this->customerFacade->getDefaultShippingAddress($customerTransfer);
-        $defaultBillingAddress = $this->customerFacade->getDefaultBillingAddress($customerTransfer);
-
+        $addressesTransfer = $customerTransfer->getAddresses();
         foreach ($addressesTransfer->getAddresses() as $addressKey => $addressTransfer) {
             $addressesTransfer->getAddresses()->offsetGet($addressKey)
-                ->setIsDefaultShipping($addressTransfer->getIdCustomerAddress() == $defaultShippingAddress->getIdCustomerAddress());
+                ->setIsDefaultShipping($addressTransfer->getIdCustomerAddress() === (int)$customerTransfer->getDefaultShippingAddress());
             $addressesTransfer->getAddresses()->offsetGet($addressKey)
-                ->setIsDefaultBilling($addressTransfer->getIdCustomerAddress() == $defaultBillingAddress->getIdCustomerAddress());
+                ->setIsDefaultBilling($addressTransfer->getIdCustomerAddress() === (int)$customerTransfer->getDefaultBillingAddress());
         }
 
         return $addressesTransfer;
