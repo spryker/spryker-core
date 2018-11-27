@@ -13,8 +13,6 @@ use Symfony\Component\Finder\Finder;
 
 class PhpstanConfigFileFinder implements PhpstanConfigFileFinderInterface
 {
-    protected const PRESERVE_ITERATOR_KEYS = false;
-
     /**
      * @var \Symfony\Component\Finder\Finder
      */
@@ -57,7 +55,7 @@ class PhpstanConfigFileFinder implements PhpstanConfigFileFinderInterface
             return null;
         }
 
-        return iterator_to_array($this->finder, static::PRESERVE_ITERATOR_KEYS)[0];
+        return iterator_to_array($this->finder, false)[0];
     }
 
     /**
