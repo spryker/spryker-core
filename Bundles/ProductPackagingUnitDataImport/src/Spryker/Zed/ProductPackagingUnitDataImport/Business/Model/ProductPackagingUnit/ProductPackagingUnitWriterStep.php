@@ -60,9 +60,6 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected static $productMeasurementSalesUnitHeapSize = 0;
 
-    /**
-     * @return void
-     */
     public function __construct()
     {
         $this->initIdProductPackagingUnitTypeHeap();
@@ -335,7 +332,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     /**
      * @return void
      */
-    protected function clearProductHeap()
+    protected function clearProductHeap(): void
     {
         static::$productHeapSize = 0;
         static::$productHeap = [];
@@ -344,7 +341,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     /**
      * @return void
      */
-    protected function clearProductMeasurementSalesUnitHeap()
+    protected function clearProductMeasurementSalesUnitHeap(): void
     {
         static::$productMeasurementSalesUnitHeapSize = 0;
         static::$productMeasurementSalesUnitHeap = [];
@@ -353,7 +350,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     /**
      * @return void
      */
-    protected function initIdProductPackagingUnitTypeHeap()
+    protected function initIdProductPackagingUnitTypeHeap(): void
     {
         $productPackagingUnitTypeEntities = $this->getProductPackagingUnitTypeQuery()->find();
 
