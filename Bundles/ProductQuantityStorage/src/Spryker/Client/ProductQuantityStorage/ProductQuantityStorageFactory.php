@@ -14,10 +14,10 @@ use Spryker\Client\ProductQuantityStorage\Expander\ProductConcreteTransferExpand
 use Spryker\Client\ProductQuantityStorage\Expander\ProductConcreteTransferExpanderInterface;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolver;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface;
+use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounder;
+use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReader;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
-use Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityValidator;
-use Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityValidatorInterface;
 
 class ProductQuantityStorageFactory extends AbstractFactory
 {
@@ -59,21 +59,21 @@ class ProductQuantityStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityValidatorInterface
-     */
-    public function createProductQuantityValidator(): ProductQuantityValidatorInterface
-    {
-        return new ProductQuantityValidator(
-            $this->createProductQuantityStorageReader(),
-            $this->createProductQuantityResolver()
-        );
-    }
-
-    /**
      * @return \Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface
      */
     public function createProductQuantityResolver(): ProductQuantityResolverInterface
     {
-        return new ProductQuantityResolver();
+        return new ProductQuantityResolver(
+            $this->createProductQuantityStorageReader(),
+            $this->createProductQuantityRounder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface
+     */
+    public function createProductQuantityRounder(): ProductQuantityRounderInterface
+    {
+        return new ProductQuantityRounder();
     }
 }

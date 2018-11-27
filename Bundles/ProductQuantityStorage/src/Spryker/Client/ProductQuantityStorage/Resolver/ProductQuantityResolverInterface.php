@@ -7,15 +7,13 @@
 
 namespace Spryker\Client\ProductQuantityStorage\Resolver;
 
-use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
-
 interface ProductQuantityResolverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer $productQuantityStorageTransfer
+     * @param int $idProduct
      * @param int $quantity
      *
      * @return int
      */
-    public function getNearestQuantity(ProductQuantityStorageTransfer $productQuantityStorageTransfer, int $quantity): int;
+    public function getNearestQuantity(int $idProduct, int $quantity): int;
 }

@@ -7,56 +7,47 @@
 
 namespace Spryker\Client\ProductQuantityStorage\Resolver;
 
-use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
+use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface;
+use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
 class ProductQuantityResolver implements ProductQuantityResolverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer $productQuantityStorageTransfer
-     * @param int $quantity
-     *
-     * @return int
+     * @var \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface
      */
-    public function getNearestQuantity(ProductQuantityStorageTransfer $productQuantityStorageTransfer, int $quantity): int
-    {
-        $min = $productQuantityStorageTransfer->getQuantityMin() ?: 1;
-        $max = $productQuantityStorageTransfer->getQuantityMax();
-        $interval = $productQuantityStorageTransfer->getQuantityInterval();
+    protected $productQuantityStorageReader;
 
-        if ($quantity < $min) {
-            return $min;
-        }
+    /**
+     * @var \Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface
+     */
+    protected $productQuantityRounder;
 
-        if ($max && $quantity > $max) {
-            $quantity = $max;
-        }
-
-        if ($interval && ($quantity - $min) % $interval !== 0) {
-            $max = $max ?? ($quantity + $interval);
-
-            $allowedQuantities = array_reverse(range($min, $max, $interval));
-            $quantity = $this->getNearestQuantityFromAllowed($quantity, $allowedQuantities);
-        }
-
-        return $quantity;
+    /**
+     * @param \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface $productQuantityStorageReader
+     * @param \Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface $productQuantityRounder
+     */
+    public function __construct(
+        ProductQuantityStorageReaderInterface $productQuantityStorageReader,
+        ProductQuantityRounderInterface $productQuantityRounder
+    ) {
+        $this->productQuantityStorageReader = $productQuantityStorageReader;
+        $this->productQuantityRounder = $productQuantityRounder;
     }
 
     /**
+     * @param int $idProduct
      * @param int $quantity
-     * @param int[] $allowedQuantities
      *
      * @return int
      */
-    protected function getNearestQuantityFromAllowed(int $quantity, array $allowedQuantities): int
+    public function getNearestQuantity(int $idProduct, int $quantity): int
     {
-        $nearest = null;
+        $productQuantityStorageTransfer = $this->productQuantityStorageReader->findProductQuantityStorage($idProduct);
 
-        foreach ($allowedQuantities as $allowedQuantity) {
-            if ($nearest === null || abs($quantity - $nearest) > abs($allowedQuantity - $quantity)) {
-                $nearest = $allowedQuantity;
-            }
+        if (!$productQuantityStorageTransfer) {
+            return $quantity;
         }
 
-        return $nearest ?? $quantity;
+        return $this->productQuantityRounder->getNearestQuantity($productQuantityStorageTransfer, $quantity);
     }
 }
