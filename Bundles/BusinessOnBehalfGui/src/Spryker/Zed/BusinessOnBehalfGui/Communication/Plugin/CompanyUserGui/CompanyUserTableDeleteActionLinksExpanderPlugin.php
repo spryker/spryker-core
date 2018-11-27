@@ -18,8 +18,8 @@ class CompanyUserTableDeleteActionLinksExpanderPlugin extends AbstractPlugin imp
 {
     /**
      * {@inheritdoc}
-     * - Adds new "Delete" button in actions for company user table for delete without anonymizing of customer
-     * - Removes old "Delete" button
+     * - Adds new "Delete" button in actions for company user table for delete without anonymizing of customer.
+     * - Replaces old to the new link to confirmation delete page of "Delete" button.
      *
      * @api
      *

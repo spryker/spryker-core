@@ -47,11 +47,11 @@ class BusinessOnBehalfGuiButtonCreator implements BusinessOnBehalfGuiButtonCreat
 
     /**
      * @param array $companyUserDataItem
-     * @param \Generated\Shared\Transfer\ButtonTransfer[] $actionButtons
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function addAttachCustomerToBusinessUnitButton(array $companyUserDataItem, array $actionButtons): array
+    public function addAttachCustomerToBusinessUnitButton(array $companyUserDataItem, array $buttonTransfers): array
     {
         $url = $this->generateUrl(static::URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT, [
             static::PARAM_ID_CUSTOMER => $companyUserDataItem[SpyCompanyUserTableMap::COL_FK_CUSTOMER],
@@ -63,9 +63,13 @@ class BusinessOnBehalfGuiButtonCreator implements BusinessOnBehalfGuiButtonCreat
             'icon' => 'fa-paperclip',
         ];
 
-        $actionButtons[] = $this->generateButtonTransfer($url, static::BUTTON_ATTACH_TO_BUSINESS_UNIT_TITLE, $defaultOptions);
+        $buttonTransfers[] = $this->generateButtonTransfer(
+            $url,
+            static::BUTTON_ATTACH_TO_BUSINESS_UNIT_TITLE,
+            $defaultOptions
+        );
 
-        return $actionButtons;
+        return $buttonTransfers;
     }
 
     /**
