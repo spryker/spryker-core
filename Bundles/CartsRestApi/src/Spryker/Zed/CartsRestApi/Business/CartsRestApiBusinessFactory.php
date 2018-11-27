@@ -15,7 +15,6 @@ use Spryker\Zed\CartsRestApi\Business\Quote\SingleQuoteCollectionReader;
 use Spryker\Zed\CartsRestApi\Business\Quote\SingleQuoteCollectionReaderInterface;
 use Spryker\Zed\CartsRestApi\CartsRestApiDependencyProvider;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
-use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -47,10 +46,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createCartReader(): CartReaderInterface
     {
-        return new CartReader(
-            $this->getQuoteCollectionReaderPlugin(),
-            $this->getQuoteFacade()
-        );
+        return new CartReader($this->getQuoteFacade());
     }
 
     /**
@@ -59,13 +55,5 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function getQuoteFacade(): CartsRestApiToQuoteFacadeInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::FACADE_QUOTE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
-     */
-    public function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
-    {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_COLLECTION_READER);
     }
 }

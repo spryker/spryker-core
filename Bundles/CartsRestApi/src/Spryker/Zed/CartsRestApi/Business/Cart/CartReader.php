@@ -7,34 +7,22 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Cart;
 
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
-use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 
 class CartReader implements CartReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
-     */
-    protected $quoteCollectionReaderPlugin;
-
     /**
      * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface
      */
     protected $quoteFacade;
 
     /**
-     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
      */
-    public function __construct(
-        QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin,
-        CartsRestApiToQuoteFacadeInterface $quoteFacade
-    ) {
-        $this->quoteCollectionReaderPlugin = $quoteCollectionReaderPlugin;
+    public function __construct(CartsRestApiToQuoteFacadeInterface $quoteFacade)
+    {
         $this->quoteFacade = $quoteFacade;
     }
 
@@ -58,15 +46,5 @@ class CartReader implements CartReaderInterface
         }
 
         return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
-    {
-        return $this->quoteCollectionReaderPlugin->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
     }
 }

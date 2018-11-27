@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\CartsRestApi;
 
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -27,16 +25,4 @@ interface CartsRestApiClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function findCustomerQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification
-     * - Retrieves customer quote collection.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 }

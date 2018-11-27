@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CartsRestApi\Communication\Controller;
 
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -26,15 +24,5 @@ class GatewayController extends AbstractGatewayController
     public function findCustomerQuoteByUuidAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->findCustomerQuoteByUuid($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    public function getQuoteCollectionByCriteriaAction(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
-    {
-        return $this->getFacade()->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
     }
 }

@@ -8,12 +8,10 @@
 namespace SprykerTest\Zed\CartsRestApi\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory;
-use Spryker\Zed\CartsRestApi\Communication\Plugin\QuoteCollectionReader\SingleQuoteCollectionReaderPlugin;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeBridge;
 use Spryker\Zed\Quote\Business\QuoteFacade;
 
@@ -33,38 +31,6 @@ class CartsRestApiFacadeTest extends Unit
      * @var \SprykerTest\Zed\CartsRestApi\CartsRestApiBusinessTester
      */
     protected $tester;
-
-    /**
-     * @return void
-     */
-    public function testCartsFacadeWillReturnQuoteCollectionWithSingleQuoteByCriteria(): void
-    {
-        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
-        $cartsRestApiFacade = $this->tester->getFacade();
-        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
-
-        $actualQuoteCollectionTransfer = $cartsRestApiFacade->getSingleQuoteCollectionByCriteria($this->tester->prepareQuoteCriteriaFilterTransfer());
-
-        $this->assertInstanceOf(QuoteCollectionTransfer::class, $actualQuoteCollectionTransfer);
-        $this->assertCount(1, $actualQuoteCollectionTransfer->getQuotes());
-        $this->assertInstanceOf(QuoteTransfer::class, $actualQuoteCollectionTransfer->getQuotes()->offsetGet(0));
-        $this->assertEquals($this->tester::TEST_QUOTE_UUID, $actualQuoteCollectionTransfer->getQuotes()->offsetGet(0)->getUuid());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCartsFacadeWillReturnEmptyCollectionByCriteriaWithoutCustomerReference(): void
-    {
-        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
-        $cartsRestApiFacade = $this->tester->getFacade();
-        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
-
-        $actualQuoteCollectionTransfer = $cartsRestApiFacade->getSingleQuoteCollectionByCriteria($this->tester->prepareEmptyQuoteCriteriaFilterTransfer());
-
-        $this->assertInstanceOf(QuoteCollectionTransfer::class, $actualQuoteCollectionTransfer);
-        $this->assertCount(0, $actualQuoteCollectionTransfer->getQuotes());
-    }
 
     /**
      * @return void
@@ -118,52 +84,16 @@ class CartsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testCartsFacadeWillReturnQuoteCollectionWithQuoteByCriteria(): void
-    {
-        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
-        $cartsRestApiFacade = $this->tester->getFacade();
-        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
-
-        $actualQuoteCollectionTransfer = $cartsRestApiFacade->getQuoteCollectionByCriteria($this->tester->prepareQuoteCriteriaFilterTransfer());
-
-        $this->assertInstanceOf(QuoteCollectionTransfer::class, $actualQuoteCollectionTransfer);
-        $this->assertCount(1, $actualQuoteCollectionTransfer->getQuotes());
-        $this->assertInstanceOf(QuoteTransfer::class, $actualQuoteCollectionTransfer->getQuotes()->offsetGet(0));
-        $this->assertEquals($this->tester::TEST_QUOTE_UUID, $actualQuoteCollectionTransfer->getQuotes()->offsetGet(0)->getUuid());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCartsFacadeWillNotReturnCollectionByCriteriaWithoutCustomerReference(): void
-    {
-        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
-        $cartsRestApiFacade = $this->tester->getFacade();
-        $cartsRestApiFacade->setFactory($this->getFailingMockCartsRestApiBusinessFactory());
-
-        $actualQuoteCollectionTransfer = $cartsRestApiFacade->getQuoteCollectionByCriteria($this->tester->prepareEmptyQuoteCriteriaFilterTransfer());
-
-        $this->assertInstanceOf(QuoteCollectionTransfer::class, $actualQuoteCollectionTransfer);
-        $this->assertCount(0, $actualQuoteCollectionTransfer->getQuotes());
-    }
-
-    /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockCartsRestApiBusinessFactory(): MockObject
     {
         $cartsRestApiBusinessFactoryMock = $this->createPartialMock(
             CartsRestApiBusinessFactory::class,
-            [
-                'getQuoteFacade',
-                'getQuoteCollectionReaderPlugin',
-            ]
+            ['getQuoteFacade']
         );
 
         $cartsRestApiBusinessFactoryMock = $this->addMockQuoteFacade($cartsRestApiBusinessFactoryMock);
-        $cartsRestApiBusinessFactoryMock = $this->addMockQuoteCollectionReaderPlugin($cartsRestApiBusinessFactoryMock);
 
         return $cartsRestApiBusinessFactoryMock;
     }
@@ -196,43 +126,16 @@ class CartsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function addMockQuoteCollectionReaderPlugin(MockObject $cartsRestApiBusinessFactoryMock): MockObject
-    {
-        $singleQuoteCollectionReaderPlugin = $this->createPartialMock(
-            SingleQuoteCollectionReaderPlugin::class,
-            [
-                'getQuoteCollectionByCriteria',
-            ]
-        );
-
-        $singleQuoteCollectionReaderPlugin->method('getQuoteCollectionByCriteria')
-            ->willReturn($this->tester->prepareQuoteCollectionTransfer());
-
-        $cartsRestApiBusinessFactoryMock->method('getQuoteCollectionReaderPlugin')
-            ->willReturn($singleQuoteCollectionReaderPlugin);
-
-        return $cartsRestApiBusinessFactoryMock;
-    }
-
-    /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function getFailingMockCartsRestApiBusinessFactory(): MockObject
     {
         $cartsRestApiBusinessFactoryMock = $this->createPartialMock(
             CartsRestApiBusinessFactory::class,
-            [
-                'getQuoteFacade',
-                'getQuoteCollectionReaderPlugin',
-            ]
+            ['getQuoteFacade']
         );
 
         $cartsRestApiBusinessFactoryMock = $this->addFailingMockQuoteFacade($cartsRestApiBusinessFactoryMock);
-        $cartsRestApiBusinessFactoryMock = $this->addFailingMockQuoteCollectionReaderPlugin($cartsRestApiBusinessFactoryMock);
 
         return $cartsRestApiBusinessFactoryMock;
     }
@@ -260,29 +163,6 @@ class CartsRestApiFacadeTest extends Unit
 
         $cartsRestApiBusinessFactoryMock->method('getQuoteFacade')
             ->willReturn((new CartsRestApiToQuoteFacadeBridge($quoteFacadeMock)));
-
-        return $cartsRestApiBusinessFactoryMock;
-    }
-
-    /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function addFailingMockQuoteCollectionReaderPlugin(MockObject $cartsRestApiBusinessFactoryMock): MockObject
-    {
-        $singleQuoteCollectionReaderPlugin = $this->createPartialMock(
-            SingleQuoteCollectionReaderPlugin::class,
-            [
-                'getQuoteCollectionByCriteria',
-            ]
-        );
-
-        $singleQuoteCollectionReaderPlugin->method('getQuoteCollectionByCriteria')
-            ->willReturn($this->tester->prepareEmptyQuoteCollectionTransfer());
-
-        $cartsRestApiBusinessFactoryMock->method('getQuoteCollectionReaderPlugin')
-            ->willReturn($singleQuoteCollectionReaderPlugin);
 
         return $cartsRestApiBusinessFactoryMock;
     }

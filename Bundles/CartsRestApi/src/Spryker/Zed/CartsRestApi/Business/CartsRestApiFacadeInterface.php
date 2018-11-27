@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CartsRestApi\Business;
 
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -27,18 +25,6 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves the quote collection with a single quote for the customer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    public function getSingleQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
-
-    /**
-     * Specification:
      * - Finds customer quote by uuid.
      * - Uuid and customerReference must be set in the QuoteTransfer taken as parameter.
      * - Checks that customer is authorized to access a quote by the given uuid.
@@ -50,16 +36,4 @@ interface CartsRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function findCustomerQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves customer quote collection.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 }

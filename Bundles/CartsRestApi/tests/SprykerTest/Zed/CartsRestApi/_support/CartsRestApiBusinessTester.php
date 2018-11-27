@@ -123,17 +123,6 @@ class CartsRestApiBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function prepareQuoteCollectionTransfer(): QuoteCollectionTransfer
-    {
-        /** @var \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer */
-        $quoteCollectionTransfer = (new QuoteCollectionBuilder())->withQuote(['uuid' => static::TEST_QUOTE_UUID])->build();
-
-        return $quoteCollectionTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
     public function prepareEmptyQuoteCollectionTransfer(): QuoteCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer */

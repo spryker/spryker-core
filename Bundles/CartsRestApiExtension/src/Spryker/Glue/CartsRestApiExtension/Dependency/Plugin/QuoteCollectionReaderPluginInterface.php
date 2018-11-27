@@ -5,9 +5,6 @@ namespace Spryker\Glue\CartsRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 
-/**
- * @deprecated Use \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface instead.
- */
 interface QuoteCollectionReaderPluginInterface
 {
     /**

@@ -9,21 +9,21 @@ namespace Spryker\Glue\CartsRestApi\Processor\Quote;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
 
 class QuoteCollectionReader implements QuoteCollectionReaderInterface
 {
     /**
-     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
+     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface
      */
-    protected $cartsRestApiClient;
+    protected $cartClient;
 
     /**
-     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
+     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface $cartClient
      */
-    public function __construct(CartsRestApiClientInterface $cartsRestApiClient)
+    public function __construct(CartsRestApiToCartClientInterface $cartClient)
     {
-        $this->cartsRestApiClient = $cartsRestApiClient;
+        $this->cartClient = $cartClient;
     }
 
     /**
@@ -33,6 +33,13 @@ class QuoteCollectionReader implements QuoteCollectionReaderInterface
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        return $this->cartsRestApiClient->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
+        $quoteCollectionTransfer = new QuoteCollectionTransfer();
+
+        $quoteTransfer = $this->cartClient->getQuote();
+        if ($quoteTransfer->getIdQuote() === null) {
+            return $quoteCollectionTransfer;
+        }
+
+        return $quoteCollectionTransfer->addQuote($quoteTransfer);
     }
 }

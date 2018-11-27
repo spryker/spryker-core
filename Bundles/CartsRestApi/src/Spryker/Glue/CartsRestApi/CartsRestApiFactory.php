@@ -56,7 +56,6 @@ use Spryker\Glue\Kernel\AbstractFactory;
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  *
- * @method \Spryker\Client\CartsRestApi\CartsRestApiClientInterface getClient()
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiConfig getConfig()
  */
 class CartsRestApiFactory extends AbstractFactory
@@ -243,7 +242,7 @@ class CartsRestApiFactory extends AbstractFactory
      */
     public function createQuoteCollectionReader(): QuoteCollectionReaderInterface
     {
-        return new QuoteCollectionReader($this->getClient());
+        return new QuoteCollectionReader($this->getCartClient());
     }
 
     /**
