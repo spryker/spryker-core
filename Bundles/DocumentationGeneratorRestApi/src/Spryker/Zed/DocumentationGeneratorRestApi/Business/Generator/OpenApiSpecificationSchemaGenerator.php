@@ -14,6 +14,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaComponentBuilderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererInterface;
 
@@ -70,6 +71,11 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     protected $resourceTransferAnalyzer;
 
     /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaComponentBuilderInterface
+     */
+    protected $schemaComponentBuilder;
+
+    /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererInterface
      */
     protected $schemaRenderer;
@@ -77,15 +83,18 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaComponentBuilderInterface $schemaComponentBuilder
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererInterface $schemaRenderer
      */
     public function __construct(
         ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer,
         ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
+        SchemaComponentBuilderInterface $schemaComponentBuilder,
         SchemaRendererInterface $schemaRenderer
     ) {
         $this->resourceRelationshipPluginAnalyzer = $resourceRelationshipPluginAnalyzer;
         $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
+        $this->schemaComponentBuilder = $schemaComponentBuilder;
         $this->schemaRenderer = $schemaRenderer;
 
         $this->addDefaultSchemas();
@@ -255,7 +264,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->schemas[$attributesSchemaName] = [];
 
         $transferMetadataValue = $this->resourceTransferAnalyzer->getTransferMetadata($transfer);
-        $schemaData = $this->createSchemaDataTransfer($attributesSchemaName);
+        $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($attributesSchemaName);
         foreach ($transferMetadataValue as $key => $value) {
             $schemaData->addProperty($this->createSchemaPropertyTransfer($key, $value));
         }
@@ -277,7 +286,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->schemas[$attributesSchemaName] = [];
 
         $transferMetadata = $this->resourceTransferAnalyzer->getTransferMetadata($transfer);
-        $schemaData = $this->createSchemaDataTransfer($attributesSchemaName);
+        $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($attributesSchemaName);
         foreach ($transferMetadata as $key => $value) {
             if ($value[static::KEY_REST_REQUEST_PARAMETER] === static::REST_REQUEST_BODY_PARAMETER_NOT_REQUIRED) {
                 continue;
@@ -299,8 +308,8 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     protected function addRequestBaseSchema(string $schemaName, string $ref): void
     {
-        $schemaData = $this->createSchemaDataTransfer($schemaName);
-        $schemaData->addProperty($this->createReferencePropertyTransfer(static::KEY_DATA, $ref));
+        $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
+        $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_DATA, $ref));
 
         $this->addSchemaData($schemaData);
     }
@@ -313,9 +322,9 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     protected function addRequestDataSchema(string $schemaName, string $ref): void
     {
-        $schemaData = $this->createSchemaDataTransfer($schemaName);
-        $schemaData->addProperty($this->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
-        $schemaData->addProperty($this->createReferencePropertyTransfer(static::KEY_ATTRIBUTES, $ref));
+        $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
+        $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
+        $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_ATTRIBUTES, $ref));
 
         $this->addSchemaData($schemaData);
     }
@@ -328,9 +337,9 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     protected function addResponseBaseSchema(string $schemaName, string $ref): void
     {
-        $schemaData = $this->createSchemaDataTransfer($schemaName);
-        $schemaData->addProperty($this->createReferencePropertyTransfer(static::KEY_DATA, $ref));
-        $schemaData->addProperty($this->createReferencePropertyTransfer(static::KEY_LINKS, static::SCHEMA_NAME_LINKS));
+        $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
+        $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_DATA, $ref));
+        $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_LINKS, static::SCHEMA_NAME_LINKS));
 
         $this->addSchemaData($schemaData);
     }
@@ -343,11 +352,11 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     protected function addResponseDataSchema(string $schemaName, string $ref): void
     {
-        $schemaData = $this->createSchemaDataTransfer($schemaName);
-        $schemaData->addProperty($this->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
-        $schemaData->addProperty($this->createTypePropertyTransfer(static::KEY_ID, static::VALUE_TYPE_STRING));
-        $schemaData->addProperty($this->createReferencePropertyTransfer(static::KEY_ATTRIBUTES, $ref));
-        $schemaData->addProperty($this->createReferencePropertyTransfer(static::KEY_LINKS, static::SCHEMA_NAME_LINKS));
+        $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
+        $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
+        $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_ID, static::VALUE_TYPE_STRING));
+        $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_ATTRIBUTES, $ref));
+        $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_LINKS, static::SCHEMA_NAME_LINKS));
 
         $this->addSchemaData($schemaData);
     }
@@ -360,8 +369,8 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     protected function addCollectionResponseBaseSchema(string $schemaName, string $ref): void
     {
-        $schemaData = $this->createSchemaDataTransfer($schemaName);
-        $schemaData->addProperty($this->createArrayOfObjectsPropertyTransfer(static::KEY_DATA, $ref));
+        $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
+        $schemaData->addProperty($this->schemaComponentBuilder->createArrayOfObjectsPropertyTransfer(static::KEY_DATA, $ref));
 
         $this->addSchemaData($schemaData);
     }
@@ -375,13 +384,13 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     protected function addRelationshipsDataToResponseDataSchema(string $dataSchemaName, string $relationshipsSchemaName, array $resourceRelationships): void
     {
-        $dataSchemaData = $this->createSchemaDataTransfer($dataSchemaName);
-        $dataSchemaData->addProperty($this->createReferencePropertyTransfer(static::KEY_RELATIONSHIPS, $relationshipsSchemaName));
+        $dataSchemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($dataSchemaName);
+        $dataSchemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_RELATIONSHIPS, $relationshipsSchemaName));
         $this->addSchemaData($dataSchemaData);
 
-        $relationshipsSchemaData = $this->createSchemaDataTransfer($relationshipsSchemaName);
+        $relationshipsSchemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($relationshipsSchemaName);
         foreach ($resourceRelationships as $resourceRelationship) {
-            $relationshipsSchemaData->addProperty($this->createArrayOfObjectsPropertyTransfer($resourceRelationship, static::SCHEMA_NAME_RELATIONSHIPS));
+            $relationshipsSchemaData->addProperty($this->schemaComponentBuilder->createArrayOfObjectsPropertyTransfer($resourceRelationship, static::SCHEMA_NAME_RELATIONSHIPS));
         }
         $this->addSchemaData($relationshipsSchemaData);
     }
@@ -412,8 +421,8 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     protected function addDefaultLinksSchema(): void
     {
-        $linksSchema = $this->createSchemaDataTransfer(static::SCHEMA_NAME_LINKS);
-        $linksSchema->addProperty($this->createTypePropertyTransfer(static::KEY_SELF, static::VALUE_TYPE_STRING));
+        $linksSchema = $this->schemaComponentBuilder->createSchemaDataTransfer(static::SCHEMA_NAME_LINKS);
+        $linksSchema->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_SELF, static::VALUE_TYPE_STRING));
 
         $this->addSchemaData($linksSchema);
     }
@@ -423,9 +432,9 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     protected function addDefaultRelationshipsSchema(): void
     {
-        $relationshipsSchema = $this->createSchemaDataTransfer(static::SCHEMA_NAME_RELATIONSHIPS);
-        $relationshipsSchema->addProperty($this->createTypePropertyTransfer(static::KEY_ID, static::VALUE_TYPE_STRING));
-        $relationshipsSchema->addProperty($this->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
+        $relationshipsSchema = $this->schemaComponentBuilder->createSchemaDataTransfer(static::SCHEMA_NAME_RELATIONSHIPS);
+        $relationshipsSchema->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_ID, static::VALUE_TYPE_STRING));
+        $relationshipsSchema->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
 
         $this->addSchemaData($relationshipsSchema);
     }
@@ -439,130 +448,13 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     protected function createSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer
     {
         if (class_exists($metadataValue[static::KEY_TYPE])) {
-            return $this->createObjectSchemaTypeTransfer($metadataKey, $metadataValue);
+            $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
+            $this->addResponseDataAttributesSchemaFromTransfer(new $metadataValue[static::KEY_TYPE](), $schemaName);
+
+            return $this->schemaComponentBuilder->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadataValue);
         }
 
-        return $this->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE]);
-    }
-
-    /**
-     * @param string $key
-     * @param string $type
-     *
-     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
-     */
-    protected function createScalarSchemaTypeTransfer(string $key, string $type): SchemaPropertyTransfer
-    {
-        if (substr($type, -2) === '[]') {
-            return $this->createArrayOfTypesPropertyTransfer($key, $this->mapScalarSchemaType(substr($type, 0, -2)));
-        }
-
-        return $this->createTypePropertyTransfer($key, $this->mapScalarSchemaType($type));
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return string
-     */
-    protected function mapScalarSchemaType(string $type): string
-    {
-        if (array_key_exists($type, static::DATA_TYPES_MAPPING_LIST)) {
-            return static::DATA_TYPES_MAPPING_LIST[$type];
-        }
-
-        return $type;
-    }
-
-    /**
-     * @param string $key
-     * @param array $objectMetadata
-     *
-     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
-     */
-    protected function createObjectSchemaTypeTransfer(string $key, array $objectMetadata): SchemaPropertyTransfer
-    {
-        $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($objectMetadata[static::KEY_TYPE]);
-        $this->addResponseDataAttributesSchemaFromTransfer(new $objectMetadata[static::KEY_TYPE](), $schemaName);
-
-        if ($objectMetadata['is_collection']) {
-            return $this->createArrayOfObjectsPropertyTransfer($key, $schemaName);
-        }
-
-        return $this->createReferencePropertyTransfer($key, $schemaName);
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return \Generated\Shared\Transfer\SchemaDataTransfer
-     */
-    public function createSchemaDataTransfer(string $name): SchemaDataTransfer
-    {
-        $schemaData = new SchemaDataTransfer();
-        $schemaData->setName($name);
-
-        return $schemaData;
-    }
-
-    /**
-     * @param string $name
-     * @param string $type
-     *
-     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
-     */
-    public function createTypePropertyTransfer(string $name, string $type): SchemaPropertyTransfer
-    {
-        $typeProperty = new SchemaPropertyTransfer();
-        $typeProperty->setName($name);
-        $typeProperty->setType($type);
-
-        return $typeProperty;
-    }
-
-    /**
-     * @param string $name
-     * @param string $ref
-     *
-     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
-     */
-    public function createReferencePropertyTransfer(string $name, string $ref): SchemaPropertyTransfer
-    {
-        $referenceProperty = new SchemaPropertyTransfer();
-        $referenceProperty->setName($name);
-        $referenceProperty->setReference(sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref));
-
-        return $referenceProperty;
-    }
-
-    /**
-     * @param string $name
-     * @param string $itemsRef
-     *
-     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
-     */
-    public function createArrayOfObjectsPropertyTransfer(string $name, string $itemsRef): SchemaPropertyTransfer
-    {
-        $arrayProperty = new SchemaPropertyTransfer();
-        $arrayProperty->setName($name);
-        $arrayProperty->setItemsReference(sprintf(static::PATTERN_SCHEMA_REFERENCE, $itemsRef));
-
-        return $arrayProperty;
-    }
-
-    /**
-     * @param string $name
-     * @param string $itemsType
-     *
-     * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
-     */
-    public function createArrayOfTypesPropertyTransfer(string $name, string $itemsType): SchemaPropertyTransfer
-    {
-        $arrayProperty = new SchemaPropertyTransfer();
-        $arrayProperty->setName($name);
-        $arrayProperty->setType($itemsType);
-
-        return $arrayProperty;
+        return $this->schemaComponentBuilder->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE]);
     }
 
     /**
