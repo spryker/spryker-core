@@ -28,17 +28,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     protected const KEY_REST_REQUEST_PARAMETER = 'rest_request_parameter';
     protected const KEY_SELF = 'self';
     protected const KEY_TYPE = 'type';
-
-    protected const VALUE_TYPE_BOOLEAN = 'boolean';
-    protected const VALUE_TYPE_INTEGER = 'integer';
-    protected const VALUE_TYPE_NUMBER = 'number';
     protected const VALUE_TYPE_STRING = 'string';
-
-    protected const DATA_TYPES_MAPPING_LIST = [
-        'int' => self::VALUE_TYPE_INTEGER,
-        'bool' => self::VALUE_TYPE_BOOLEAN,
-        'float' => self::VALUE_TYPE_NUMBER,
-    ];
 
     protected const PATTERN_SCHEMA_REFERENCE = '#/components/schemas/%s';
 
