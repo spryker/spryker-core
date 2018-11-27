@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="spryker:transfer-01"
+    elementFormDefault="qualified">
+
+    <xsd:element name="transfers">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="transfer" maxOccurs="unbounded" minOccurs="0">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                                <xsd:element name="property" maxOccurs="unbounded" minOccurs="0">
+                                    <xsd:complexType mixed="true">
+                                        <xsd:sequence>
+                                            <xsd:element name="fixture" minOccurs="0">
+                                                <xsd:complexType mixed="true">
+                                                    <xsd:sequence>
+                                                        <xsd:element type="xsd:byte" name="param" minOccurs="0"/>
+                                                    </xsd:sequence>
+                                                    <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                                </xsd:complexType>
+                                            </xsd:element>
+                                        </xsd:sequence>
+                                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                        <xsd:attribute type="xsd:string" name="type" use="required" />
+                                        <xsd:attribute type="xsd:string" name="singular" use="optional"/>
+                                        <xsd:attribute type="xsd:string" name="deprecated" use="optional"/>
+                                    </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element name="implements" maxOccurs="unbounded" minOccurs="0">
+                                    <xsd:complexType mixed="true">
+                                        <xsd:attribute type="xsd:string" name="type" use="required" />
+                                    </xsd:complexType>
+                                </xsd:element>
+                            </xsd:choice>
+                        </xsd:sequence>
+                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                        <xsd:attribute type="xsd:boolean" name="createCollection" use="optional" />
+                        <xsd:attribute type="xsd:string" name="subFolder" use="optional"/>
+                        <xsd:attribute type="xsd:string" name="deprecated" use="optional"/>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
