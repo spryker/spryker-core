@@ -7,34 +7,10 @@
 
 namespace Spryker\Client\ProductStorage\Mapper;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteViewExpanderExcluderPluginInterface;
 
-class ProductAbstractStorageDataMapper implements ProductStorageDataMapperInterface
+class ProductAbstractStorageDataMapper extends AbstractProductStorageDataMapper
 {
-    /**
-     * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
-     */
-    protected $productStorageExpanderPlugins;
-
-    /**
-     * @var \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface
-     */
-    protected $productAbstractVariantsRestrictionFilter;
-
-    /**
-     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[] $storageProductExpanderPlugins
-     * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
-     */
-    public function __construct(
-        array $storageProductExpanderPlugins,
-        ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
-    ) {
-        $this->productStorageExpanderPlugins = $storageProductExpanderPlugins;
-        $this->productAbstractVariantsRestrictionFilter = $productAbstractVariantsRestrictionFilter;
-    }
-
     /**
      * @param string $locale
      * @param array $productStorageData
@@ -56,18 +32,5 @@ class ProductAbstractStorageDataMapper implements ProductStorageDataMapperInterf
         }
 
         return $productViewTransfer;
-    }
-
-    /**
-     * @param array $productStorageData
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    protected function createProductViewTransfer(array $productStorageData)
-    {
-        $productStorageTransfer = new ProductViewTransfer();
-        $productStorageTransfer->fromArray($productStorageData, true);
-
-        return $productStorageTransfer;
     }
 }
