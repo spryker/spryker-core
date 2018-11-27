@@ -53,7 +53,7 @@ class CatalogSearchRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCatalogSearchResourceMapper(),
             $this->createCatalogSearchSuggestionsResourceMapper(),
-            $this->createCatalogSearchTranslationExpander(),
+            $this->createCatalogSearchTranslationExpander()
         );
     }
 
