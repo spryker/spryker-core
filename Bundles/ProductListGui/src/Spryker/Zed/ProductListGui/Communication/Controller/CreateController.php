@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Spryker\Service\UtilText\Model\Url\Url;
 
 /**
  * @method \Spryker\Zed\ProductListGui\Communication\ProductListGuiCommunicationFactory getFactory()
@@ -36,11 +37,7 @@ class CreateController extends ProductListAbstractController
                 $productListTransfer->getTitle()
             ));
 
-            $defaultRedirectUrl = $this->getFactory()
-                ->getConfig()
-                ->getDefaultRedirectUrl();
-
-            return $this->redirectResponse($defaultRedirectUrl);
+            return $this->redirectResponse($this->getEditUrl($productListTransfer->getIdProductList()));
         }
 
         return $this->viewResponse($this->prepareTemplateVariables($productListAggregateForm));
@@ -68,5 +65,31 @@ class CreateController extends ProductListAbstractController
         return $this->jsonResponse(
             $assignedProductConcreteTable->fetchData()
         );
+    }
+
+    /**
+     * @param int $idProductList
+     *
+     * @return string
+     */
+    protected function getEditUrl(int $idProductList): string
+    {
+        $query = [
+            self::URL_PARAM_ID_PRODUCT_LIST => $idProductList,
+        ];
+
+        return $this->generateUrl(RoutingConstants::URL_EDIT, $query);
+    }
+
+    /**
+     * @param string $url
+     * @param array $query
+     * @param array $options
+     *
+     * @return string
+     */
+    protected function generateUrl(string $url, array $query = [], array $options = []): string
+    {
+        return urldecode(Url::generate($url, $query, $options)->build());
     }
 }
