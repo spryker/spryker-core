@@ -394,6 +394,11 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     {
         $shoppingListsCompanyUsers = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
+                ->useSpyCompanyUserQuery()
+                    ->useCustomerQuery()
+                        ->filterByAnonymizedAt(null)
+                    ->endUse()
+                ->endUse()
             ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
             ->find();
 
