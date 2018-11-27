@@ -13,7 +13,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 
 class BusinessOnBehalfGuiButtonCreator implements BusinessOnBehalfGuiButtonCreatorInterface
 {
-    protected const BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK = 'company-user-gui/delete-company-user/confirm-delete?id-company-user=';
+    protected const BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK = '/company-user-gui/delete-company-user/confirm-delete';
 
     protected const URL_CONFIRM_DELETE_COMPANY_USER = '/business-on-behalf-gui/delete-company-user/confirm-delete';
     protected const URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT = '/business-on-behalf-gui/create-company-user/attach-customer';
@@ -30,15 +30,18 @@ class BusinessOnBehalfGuiButtonCreator implements BusinessOnBehalfGuiButtonCreat
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function addNewDeleteCompanyUserButton(array $companyUserDataItem, array $buttonTransfers): array
+    public function replaceDeleteCompanyUserButton(array $companyUserDataItem, array $buttonTransfers): array
     {
         foreach ($buttonTransfers as $key => $buttonTransfer) {
-            if (strripos($buttonTransfer->getUrl(), static::BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK)) {
-                $url = $this->generateUrl(static::URL_CONFIRM_DELETE_COMPANY_USER, [
-                    static::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
-                ]);
+            $queryParams = [
+                static::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            ];
 
-                $buttonTransfers[$key]->setUrl($url);
+            $oldDeleteUrl = $this->generateUrl(static::BUTTON_DEFAULT_DELETE_COMPANY_USER_LINK, $queryParams);
+
+            if ($buttonTransfer->getUrl() === $oldDeleteUrl) {
+                $newDeleteUrl = $this->generateUrl(static::URL_CONFIRM_DELETE_COMPANY_USER, $queryParams);
+                $buttonTransfers[$key]->setUrl($newDeleteUrl);
             }
         }
 

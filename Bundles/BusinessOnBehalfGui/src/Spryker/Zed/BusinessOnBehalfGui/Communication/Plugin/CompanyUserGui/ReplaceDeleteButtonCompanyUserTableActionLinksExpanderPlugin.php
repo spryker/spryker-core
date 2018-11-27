@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\BusinessOnBehalfGui\Communication\BusinessOnBehalfGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\BusinessOnBehalfGui\BusinessOnBehalfGuiConfig getConfig()
  */
-class CompanyUserTableDeleteActionLinksExpanderPlugin extends AbstractPlugin implements CompanyUserTableActionLinksExpanderPluginInterface
+class ReplaceDeleteButtonCompanyUserTableActionLinksExpanderPlugin extends AbstractPlugin implements CompanyUserTableActionLinksExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -32,6 +32,6 @@ class CompanyUserTableDeleteActionLinksExpanderPlugin extends AbstractPlugin imp
     {
         return $this->getFactory()
             ->createBusinessOnBehalfGuiButtonCreator()
-            ->addNewDeleteCompanyUserButton($companyUserDataItem, $buttonTransfers);
+            ->replaceDeleteCompanyUserButton($companyUserDataItem, $buttonTransfers);
     }
 }

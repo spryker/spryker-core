@@ -15,7 +15,7 @@ interface BusinessOnBehalfGuiButtonCreatorInterface
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function addNewDeleteCompanyUserButton(array $companyUserDataItem, array $buttonTransfers): array;
+    public function replaceDeleteCompanyUserButton(array $companyUserDataItem, array $buttonTransfers): array;
 
     /**
      * @param array $companyUserDataItem
