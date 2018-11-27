@@ -35,10 +35,6 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
      */
     public function findByModule(ModuleTransfer $module): ?SplFileInfo
     {
-        if ($module->getIsStandalone() === true) {
-            return null;
-        }
-
         $currentFinderInstance = $this->getNewFinderInstance();
         $currentFinderInstance
             ->in($module->getPath())
