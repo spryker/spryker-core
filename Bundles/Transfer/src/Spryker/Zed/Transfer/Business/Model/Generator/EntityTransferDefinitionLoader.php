@@ -7,15 +7,19 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use Spryker\Zed\Transfer\Business\Exception\EmptyTransferDefinitionException;
 use Zend\Config\Factory;
 
 class EntityTransferDefinitionLoader extends TransferDefinitionLoader
 {
     public const KEY_TABLE = 'table';
+    public const KEY_COLUMN = 'column';
+    public const KEY_NAME = 'name';
     public const ENTITY_SCHEMA_SUFFIX = '.schema.xml';
     public const ENTITY_PREFIX = 'spy_';
     public const PREFIX_LENGTH = 4;
     public const ENTITY_NAMESPACE = 'entity-namespace';
+    public const ENTITY_SCHEMA_PATHNAME = 'path';
 
     /**
      * @return void
@@ -27,9 +31,11 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
             $xml = simplexml_load_string($xmlTransferDefinition->getContents());
             $namespace = (string)$xml['namespace'];
 
-            $containingBundle = $this->getContainingBundleFromPathName($xmlTransferDefinition->getPathname());
-            $definition = Factory::fromFile($xmlTransferDefinition->getPathname(), true)->toArray();
+            $transferDefinitionFilePath = $xmlTransferDefinition->getPathname();
+            $containingBundle = $this->getContainingBundleFromPathName($transferDefinitionFilePath);
+            $definition = Factory::fromFile($transferDefinitionFilePath, true)->toArray();
             $definition[self::ENTITY_NAMESPACE] = $namespace;
+            $definition[static::ENTITY_SCHEMA_PATHNAME] = $transferDefinitionFilePath;
 
             $this->addDefinition($definition, '', $containingBundle);
         }
@@ -50,6 +56,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
                 $table[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
                 $table[self::ENTITY_NAMESPACE] = $definition[self::ENTITY_NAMESPACE];
 
+                $this->validateDefinition($table, $definition[static::ENTITY_SCHEMA_PATHNAME]);
                 $this->transferDefinitions[] = $table;
             }
         } else {
@@ -58,7 +65,30 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
             $table[self::KEY_BUNDLE] = $module;
             $table[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
             $table[self::ENTITY_NAMESPACE] = $definition[self::ENTITY_NAMESPACE];
+
+            $this->validateDefinition($table, $definition[static::ENTITY_SCHEMA_PATHNAME]);
             $this->transferDefinitions[] = $table;
+        }
+    }
+
+    /**
+     * @param array $definition
+     * @param string $transferDefinitionFilePath
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\EmptyTransferDefinitionException
+     *
+     * @return void
+     */
+    protected function validateDefinition(array $definition, string $transferDefinitionFilePath): void
+    {
+        if (!isset($definition[static::KEY_COLUMN])) {
+            throw new EmptyTransferDefinitionException(
+                sprintf(
+                    'Schema definition file %s doesn\'t contain any column definition for `%s` table, please add at least one column to it.',
+                    $transferDefinitionFilePath,
+                    $definition[static::KEY_NAME]
+                )
+            );
         }
     }
 }
