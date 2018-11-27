@@ -15,6 +15,8 @@ use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PricePro
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductAbstractStorageListener;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcretePublishStorageListener;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcreteStorageListener;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductDefaultAbstractStorageListener;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductDefaultConcreteStorageListener;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductStoreAbstractStorageListener;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductStoreConcreteStorageListener;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceTypeProductAbstractStorageListener;
@@ -55,8 +57,14 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
         $this->addPriceProductStoreConcreteUpdateStorageListener($eventCollection);
         $this->addPriceProductStoreConcreteDeleteStorageListener($eventCollection);
         $this->addPriceProductStoreAbstractCreateStorageListener($eventCollection);
-        $this->addPriceProductStoreAbstractUpdateeStorageListener($eventCollection);
+        $this->addPriceProductStoreAbstractUpdateStorageListener($eventCollection);
         $this->addPriceProductStoreAbstractDeleteStorageListener($eventCollection);
+        $this->addPriceProductDefaultAbstractCreateStorageListener($eventCollection);
+        $this->addPriceProductDefaultAbstractUpdateStorageListener($eventCollection);
+        $this->addPriceProductDefaultAbstractDeleteStorageListener($eventCollection);
+        $this->addPriceProductDefaultConcreteCreateStorageListener($eventCollection);
+        $this->addPriceProductDefaultConcreteUpdateStorageListener($eventCollection);
+        $this->addPriceProductDefaultConcreteDeleteStorageListener($eventCollection);
 
         return $eventCollection;
     }
@@ -246,7 +254,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      *
      * @return void
      */
-    protected function addPriceProductStoreAbstractUpdateeStorageListener(EventCollectionInterface $eventCollection)
+    protected function addPriceProductStoreAbstractUpdateStorageListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE, new PriceProductStoreAbstractStorageListener());
     }
@@ -259,5 +267,65 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
     protected function addPriceProductStoreAbstractDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE, new PriceProductStoreAbstractStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addPriceProductDefaultAbstractCreateStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_CREATE, new PriceProductDefaultAbstractStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addPriceProductDefaultAbstractUpdateStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_UPDATE, new PriceProductDefaultAbstractStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addPriceProductDefaultAbstractDeleteStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_DELETE, new PriceProductDefaultAbstractStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addPriceProductDefaultConcreteCreateStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_CREATE, new PriceProductDefaultConcreteStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addPriceProductDefaultConcreteUpdateStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_UPDATE, new PriceProductDefaultConcreteStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addPriceProductDefaultConcreteDeleteStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_DELETE, new PriceProductDefaultConcreteStorageListener());
     }
 }
