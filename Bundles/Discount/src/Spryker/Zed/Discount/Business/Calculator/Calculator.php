@@ -84,8 +84,19 @@ class Calculator implements CalculatorInterface
     public function calculate(array $discounts, QuoteTransfer $quoteTransfer)
     {
         $collectedDiscounts = $this->calculateDiscountAmount($discounts, $quoteTransfer);
-        $collectedDiscounts = $this->filterExclusiveDiscounts($collectedDiscounts);
+
+        [$promotionalDiscounts, $nonPromotionalDiscounts] = $this->splitByPromotionalDiscounts($collectedDiscounts);
+
+        $promotionalDiscounts = $this->sortByDiscountAmountDescending($promotionalDiscounts);
+        $nonPromotionalDiscounts = $this->sortByDiscountAmountDescending($nonPromotionalDiscounts);
+
+        $promotionalDiscounts = $this->filterExclusiveDiscounts($promotionalDiscounts);
+        $nonPromotionalDiscounts = $this->filterExclusiveDiscounts($nonPromotionalDiscounts);
+
+        $collectedDiscounts = array_merge($promotionalDiscounts, $nonPromotionalDiscounts);
+
         $this->distributeDiscountAmount($collectedDiscounts);
+
         $this->addDiscountsAppliedMessage(
             $collectedDiscounts,
             $quoteTransfer->getCartRuleDiscounts(),
@@ -122,40 +133,46 @@ class Calculator implements CalculatorInterface
     }
 
     /**
+     * - Returns array of discounts splitted in two arrays. Promotional discounts first.
+     *
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscounts
+     *
+     * @return array [\Generated\Shared\Transfer\CollectedDiscountTransfer[], \Generated\Shared\Transfer\CollectedDiscountTransfer[]]
+     */
+    protected function splitByPromotionalDiscounts(array $collectedDiscounts)
+    {
+        $promotionalDiscounts = [];
+        $nonPromotionalDiscounts = [];
+        foreach ($collectedDiscounts as $collectedDiscountTransfer) {
+            if ($collectedDiscountTransfer->getDiscount()->getDiscountPromotion()) {
+                $promotionalDiscounts[] = $collectedDiscountTransfer;
+                continue;
+            }
+
+            $nonPromotionalDiscounts[] = $collectedDiscountTransfer;
+        }
+
+        return [$promotionalDiscounts, $nonPromotionalDiscounts];
+    }
+
+    /**
+     * - Filters exclusive discounts returning only one, or return all discounts.
+     *
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscounts
      *
      * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
      */
     protected function filterExclusiveDiscounts(array $collectedDiscounts)
     {
-        $collectedDiscounts = $this->sortByDiscountAmountDescending($collectedDiscounts);
+        $exclusiveDiscounts = array_filter($collectedDiscounts, function (CollectedDiscountTransfer $collectedDiscountTransfer) {
+            return $collectedDiscountTransfer->getDiscount()->getIsExclusive();
+        });
 
-        $applicableDiscounts = [];
-        $nonExclusiveDiscounts = [];
-        $exclusiveFound = false;
-        foreach ($collectedDiscounts as $collectedDiscountTransfer) {
-            $discountTransfer = $collectedDiscountTransfer->getDiscount();
-            if (!$discountTransfer->getCollectorQueryString()) {
-                $applicableDiscounts[] = $collectedDiscountTransfer;
-                continue;
-            }
-
-            if ($discountTransfer->getIsExclusive() && !$exclusiveFound) {
-                $applicableDiscounts[] = $collectedDiscountTransfer;
-                $exclusiveFound = true;
-                continue;
-            }
-
-            if (!$discountTransfer->getIsExclusive()) {
-                $nonExclusiveDiscounts[] = $collectedDiscountTransfer;
-            }
+        if (!empty($exclusiveDiscounts)) {
+            return array_slice($exclusiveDiscounts, 0, 1);
         }
 
-        if ($exclusiveFound) {
-            return $applicableDiscounts;
-        }
-
-        return array_merge($applicableDiscounts, $nonExclusiveDiscounts);
+        return $collectedDiscounts;
     }
 
     /**
