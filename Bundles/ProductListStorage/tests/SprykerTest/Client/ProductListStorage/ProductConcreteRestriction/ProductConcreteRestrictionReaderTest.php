@@ -34,20 +34,102 @@ class ProductConcreteRestrictionReaderTest extends Unit
     protected $tester;
 
     /**
+     * @return array
+     */
+    public function productConcreteRestrictionReaderDataProvider(): array
+    {
+        return [
+            [
+                'Test product not in product list',
+                [
+                    'whitelist' => [],
+                    'blacklist' => [],
+                ],
+                [
+                    'whitelist' => [],
+                    'blacklist' => [],
+                ],
+                false,
+            ],
+            [
+                'Test product blacklisted',
+                [
+                    'whitelist' => [],
+                    'blacklist' => [1],
+                ],
+                [
+                    'whitelist' => [],
+                    'blacklist' => [1],
+                ],
+                true,
+            ],
+            [
+                'Test product whitelisted',
+                [
+                    'whitelist' => [1],
+                    'blacklist' => [],
+                ],
+                [
+                    'whitelist' => [1],
+                    'blacklist' => [],
+                ],
+                false,
+            ],
+            [
+                'Product in blacklist and not in whitelist',
+                [
+                    'whitelist' => [2],
+                    'blacklist' => [1],
+                ],
+                [
+                    'whitelist' => [],
+                    'blacklist' => [1],
+                ],
+                true,
+            ],
+            [
+                'Product not in whitelist',
+                [
+                    'whitelist' => [2],
+                    'blacklist' => [],
+                ],
+                [
+                    'whitelist' => [],
+                    'blacklist' => [],
+                ],
+                true,
+            ],
+            [
+                'Product whitelisted and blacklisted',
+                [
+                    'whitelist' => [3],
+                    'blacklist' => [2],
+                ],
+                [
+                    'whitelist' => [3],
+                    'blacklist' => [2],
+                ],
+                true,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider productConcreteRestrictionReaderDataProvider
+     *
+     * @param string $name
+     * @param array $customerData
+     * @param array $productData
+     * @param bool $expectedResult
+     *
      * @return void
      */
-    public function testProductNotInProductList()
+    public function testProductConcreteRestrictionReader(string $name, array $customerData, array $productData, bool $expectedResult)
     {
-        $customerWhiteListIds = [];
-        $customerBlackListIds = [];
+        $this->setName($name);
 
-        $productWhiteListids = [];
-        $productBlackListIds = [];
-
-        $expectedResult = false;
-
-        $customerClientMock = $this->generateCustomerClientMock($customerWhiteListIds, $customerBlackListIds);
-        $productListProductConcreteStorageReader = $this->generateProductListProductConcreteStorageReader($productWhiteListids, $productBlackListIds);
+        $customerClientMock = $this->createCustomerClientMock($customerData['whitelist'], $customerData['blacklist']);
+        $productListProductConcreteStorageReader = $this->createProductListProductConcreteStorageReader($productData['whitelist'], $productData['blacklist']);
 
         $productConcreteRestrictionReader = new ProductConcreteRestrictionReader($customerClientMock, $productListProductConcreteStorageReader);
 
@@ -57,127 +139,12 @@ class ProductConcreteRestrictionReaderTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testProductBlacklisted()
-    {
-        $customerWhiteListIds = [];
-        $customerBlackListIds = [1];
-
-        $productWhiteListids = [];
-        $productBlackListIds = [1];
-
-        $expectedResult = true;
-
-        $customerClientMock = $this->generateCustomerClientMock($customerWhiteListIds, $customerBlackListIds);
-        $productListProductConcreteStorageReader = $this->generateProductListProductConcreteStorageReader($productWhiteListids, $productBlackListIds);
-
-        $productConcreteRestrictionReader = new ProductConcreteRestrictionReader($customerClientMock, $productListProductConcreteStorageReader);
-
-        $actualResult = $productConcreteRestrictionReader->isProductConcreteRestricted(self::CONCRETE_PRODUCT_ID);
-
-        $this->assertEquals($expectedResult, $actualResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testProductWhitelisted()
-    {
-        $customerWhiteListIds = [1];
-        $customerBlackListIds = [];
-
-        $productWhiteListids = [1];
-        $productBlackListIds = [];
-
-        $expectedResult = false;
-
-        $customerClientMock = $this->generateCustomerClientMock($customerWhiteListIds, $customerBlackListIds);
-        $productListProductConcreteStorageReader = $this->generateProductListProductConcreteStorageReader($productWhiteListids, $productBlackListIds);
-
-        $productConcreteRestrictionReader = new ProductConcreteRestrictionReader($customerClientMock, $productListProductConcreteStorageReader);
-
-        $actualResult = $productConcreteRestrictionReader->isProductConcreteRestricted(self::CONCRETE_PRODUCT_ID);
-
-        $this->assertEquals($expectedResult, $actualResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testProductInBlackListAndNotInWhiteList()
-    {
-        $customerWhiteListIds = [2];
-        $customerBlackListIds = [1];
-
-        $productWhiteListids = [];
-        $productBlackListIds = [1];
-
-        $expectedResult = true;
-
-        $customerClientMock = $this->generateCustomerClientMock($customerWhiteListIds, $customerBlackListIds);
-        $productListProductConcreteStorageReader = $this->generateProductListProductConcreteStorageReader($productWhiteListids, $productBlackListIds);
-
-        $productConcreteRestrictionReader = new ProductConcreteRestrictionReader($customerClientMock, $productListProductConcreteStorageReader);
-
-        $actualResult = $productConcreteRestrictionReader->isProductConcreteRestricted(self::CONCRETE_PRODUCT_ID);
-
-        $this->assertEquals($expectedResult, $actualResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testProductNotInWhiteList()
-    {
-        $customerWhiteListIds = [2];
-        $customerBlackListIds = [];
-
-        $productWhiteListids = [];
-        $productBlackListIds = [];
-
-        $expectedResult = true;
-
-        $customerClientMock = $this->generateCustomerClientMock($customerWhiteListIds, $customerBlackListIds);
-        $productListProductConcreteStorageReader = $this->generateProductListProductConcreteStorageReader($productWhiteListids, $productBlackListIds);
-
-        $productConcreteRestrictionReader = new ProductConcreteRestrictionReader($customerClientMock, $productListProductConcreteStorageReader);
-
-        $actualResult = $productConcreteRestrictionReader->isProductConcreteRestricted(self::CONCRETE_PRODUCT_ID);
-
-        $this->assertEquals($expectedResult, $actualResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testProductWhitelistedAndBlacklisted()
-    {
-        $customerWhiteListIds = [3];
-        $customerBlackListIds = [2];
-
-        $productWhiteListids = [3];
-        $productBlackListIds = [2];
-
-        $expectedResult = true;
-
-        $customerClientMock = $this->generateCustomerClientMock($customerWhiteListIds, $customerBlackListIds);
-        $productListProductConcreteStorageReader = $this->generateProductListProductConcreteStorageReader($productWhiteListids, $productBlackListIds);
-
-        $productConcreteRestrictionReader = new ProductConcreteRestrictionReader($customerClientMock, $productListProductConcreteStorageReader);
-
-        $actualResult = $productConcreteRestrictionReader->isProductConcreteRestricted(self::CONCRETE_PRODUCT_ID);
-
-        $this->assertEquals($expectedResult, $actualResult);
-    }
-
-    /**
-     * @param array $whiteListIds
-     * @param array $blackListIds
+     * @param int[] $whiteListIds
+     * @param int[] $blackListIds
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
      */
-    protected function generateCustomerClientMock(array $whiteListIds, array $blackListIds)
+    protected function createCustomerClientMock(array $whiteListIds, array $blackListIds)
     {
         $customerProductListCollectionTransfer = new CustomerProductListCollectionTransfer();
         $customerProductListCollectionTransfer->setWhitelistIds($whiteListIds);
@@ -186,43 +153,27 @@ class ProductConcreteRestrictionReaderTest extends Unit
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setCustomerProductListCollection($customerProductListCollectionTransfer);
 
-        $customerClientMock = $this->createCustomerClientMock();
+        $customerClientMock = $this->getMockBuilder(ProductListStorageToCustomerClientInterface::class)->getMock();
         $customerClientMock->method('getCustomer')->willReturn($customerTransfer);
 
         return $customerClientMock;
     }
 
     /**
-     * @param array $whiteListIds
-     * @param array $blackListIds
+     * @param int[] $whiteListIds
+     * @param int[] $blackListIds
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface $productListProductConcreteStorageReader;
      */
-    protected function generateProductListProductConcreteStorageReader(array $whiteListIds, array $blackListIds)
+    protected function createProductListProductConcreteStorageReader(array $whiteListIds, array $blackListIds)
     {
         $productConcreteProductListStorageTransfer = new ProductConcreteProductListStorageTransfer();
         $productConcreteProductListStorageTransfer->setIdWhitelists($whiteListIds);
         $productConcreteProductListStorageTransfer->setIdBlacklists($blackListIds);
 
-        $productListProductConcreteStorageReader = $this->createProductListProductConcreteStorageReader();
+        $productListProductConcreteStorageReader = $this->getMockBuilder(ProductListProductConcreteStorageReaderInterface::class)->getMock();
         $productListProductConcreteStorageReader->expects($this->once())->method('findProductConcreteProductListStorage')->willReturn($productConcreteProductListStorageTransfer);
 
         return $productListProductConcreteStorageReader;
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
-     */
-    protected function createCustomerClientMock()
-    {
-        return $this->getMockBuilder(ProductListStorageToCustomerClientInterface::class)->getMock();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface $productListProductConcreteStorageReader;
-     */
-    protected function createProductListProductConcreteStorageReader()
-    {
-        return $this->getMockBuilder(ProductListProductConcreteStorageReaderInterface::class)->getMock();
     }
 }
