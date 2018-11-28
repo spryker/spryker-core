@@ -12,6 +12,9 @@ use Spryker\Zed\GlossaryStorage\Dependency\QueryContainer\GlossaryStorageToGloss
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
+ */
 class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';

@@ -13,6 +13,9 @@ use Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDisc
 use Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDiscountConnectorToProductLabelBridge;
 use Spryker\Zed\ProductLabelDiscountConnector\Dependency\QueryContainer\ProductLabelDiscountConnectorToProductLabelBridge as ProductLabelDiscountConnectorToProductLabelQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ProductLabelDiscountConnector\ProductLabelDiscountConnectorConfig getConfig()
+ */
 class ProductLabelDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';

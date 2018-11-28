@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductCustomerPermission\Business\ProductCustomerPermissionFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionConfig getConfig()
+ * @method \Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainerInterface getQueryContainer()
  */
 class ProductCustomerPermissionPreConditionCheckerPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {

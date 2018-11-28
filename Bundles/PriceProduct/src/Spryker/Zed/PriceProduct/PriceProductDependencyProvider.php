@@ -17,6 +17,9 @@ use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Service\PriceProductToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
+ */
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_TOUCH = 'FACADE_TOUCH';

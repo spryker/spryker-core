@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 /**
  * @method \Spryker\Zed\SalesSplit\Business\SalesSplitFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesSplit\Communication\SalesSplitCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SalesSplit\SalesSplitConfig getConfig()
  */
 class OrderItemSplitForm extends AbstractType
 {

@@ -15,6 +15,9 @@ use Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToUrlBridge;
 use Spryker\Zed\ProductSet\Dependency\QueryContainer\ProductSetToProductImageBridge as ProductSetToProductImageQueryContainerBridge;
 use Spryker\Zed\ProductSet\Dependency\QueryContainer\ProductSetToUrlBridge as ProductSetToUrlQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ProductSet\ProductSetConfig getConfig()
+ */
 class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_TOUCH = 'FACADE_TOUCH';

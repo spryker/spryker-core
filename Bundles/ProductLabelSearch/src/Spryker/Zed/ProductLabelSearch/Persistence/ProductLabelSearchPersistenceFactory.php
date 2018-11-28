@@ -15,6 +15,7 @@ use Spryker\Zed\ProductLabelSearch\ProductLabelSearchDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()
  * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchRepositoryInterface getRepository()
  */
 class ProductLabelSearchPersistenceFactory extends AbstractPersistenceFactory
 {

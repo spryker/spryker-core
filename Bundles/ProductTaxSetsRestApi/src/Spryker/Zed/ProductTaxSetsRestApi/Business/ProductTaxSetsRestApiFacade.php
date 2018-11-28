@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductTaxSetsRestApi\Business\ProductTaxSetsRestApiBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductTaxSetsRestApi\Persistence\ProductTaxSetsRestApiEntityManagerInterface getEntityManager()
  */
 class ProductTaxSetsRestApiFacade extends AbstractFacade implements ProductTaxSetsRestApiFacadeInterface
 {

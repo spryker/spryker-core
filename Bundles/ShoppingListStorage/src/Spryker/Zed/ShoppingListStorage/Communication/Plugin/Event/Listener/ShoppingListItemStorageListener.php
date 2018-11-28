@@ -16,6 +16,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingListStorage\Communication\ShoppingListStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepository getRepository()
+ * @method \Spryker\Zed\ShoppingListStorage\ShoppingListStorageConfig getConfig()
  */
 class ShoppingListItemStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

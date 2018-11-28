@@ -29,6 +29,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @see \Spryker\Zed\Customer\Communication\CustomerForm original customer form
  *
  * @method \Spryker\Zed\CompanyUserGui\Communication\CompanyUserGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig getConfig()
  */
 class CompanyUserCustomerForm extends AbstractType
 {

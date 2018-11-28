@@ -14,6 +14,9 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductDiscontinuedGui\Communication\ProductDiscontinuedGuiCommunicationFactory getFactory()
+ */
 class DiscontinueProductForm extends AbstractType
 {
     public const FIELD_DISCONTINUED_NOTES = 'discontinued_notes';

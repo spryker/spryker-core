@@ -13,6 +13,9 @@ use Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToProductBridge;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiBridge;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderBridge;
 
+/**
+ * @method \Spryker\Zed\ProductApi\ProductApiConfig getConfig()
+ */
 class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';

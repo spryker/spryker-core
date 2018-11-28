@@ -10,9 +10,6 @@ namespace SprykerTest\Zed\ProductReviewSearch\Communication\Plugin\Event\Listene
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductReview\Dependency\ProductReviewEvents;
 use Spryker\Zed\ProductReviewSearch\Business\ProductReviewSearchBusinessFactory;
 use Spryker\Zed\ProductReviewSearch\Business\ProductReviewSearchFacade;
@@ -33,19 +30,6 @@ use SprykerTest\Zed\ProductReviewSearch\ProductReviewSearchConfigMock;
  */
 class ProductReviewSearchListenerTest extends Unit
 {
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
-
     /**
      * @return void
      */

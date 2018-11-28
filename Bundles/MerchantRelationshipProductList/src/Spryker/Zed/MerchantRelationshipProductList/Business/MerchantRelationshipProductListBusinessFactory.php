@@ -16,6 +16,7 @@ use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductList
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListConfig getConfig()
  * @method \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListEntityManagerInterface getEntityManager()
  */
 class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFactory
 {

@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToDevelopmentFacadeBridge;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\SprykGui\SprykGuiConfig getConfig()
+ */
 class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SPRYK_FACADE = 'SPRYK_FACADE';
