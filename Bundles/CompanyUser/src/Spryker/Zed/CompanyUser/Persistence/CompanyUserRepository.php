@@ -78,6 +78,9 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @module Customer
+     * @module Company
+     *
      * @param string $customerReference
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
@@ -87,11 +90,9 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         $queryCompanyUser = $this->getFactory()
             ->createCompanyUserQuery()
             ->filterByIsActive(true)
-            ->joinCustomer()
             ->useCustomerQuery()
                 ->filterByCustomerReference($customerReference)
             ->endUse()
-            ->joinCompany()
             ->useCompanyQuery()
                 ->filterByIsActive(true)
             ->endUse();

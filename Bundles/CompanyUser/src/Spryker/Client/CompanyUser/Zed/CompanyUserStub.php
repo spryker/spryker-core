@@ -163,9 +163,8 @@ class CompanyUserStub implements CompanyUserStubInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findActiveCompanyUsersByCustomerReference(
-        CustomerTransfer $customerTransfer
-    ): CompanyUserCollectionTransfer {
+    public function findActiveCompanyUsersByCustomerReference(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer
+    {
 
         /** @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer */
         $companyUserCollectionTransfer = $this->zedRequestClient->call(

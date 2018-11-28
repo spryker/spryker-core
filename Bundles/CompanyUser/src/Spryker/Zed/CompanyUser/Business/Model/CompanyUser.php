@@ -198,8 +198,7 @@ class CompanyUser implements CompanyUserInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function executeCreateTransaction(CompanyUserResponseTransfer $companyUserResponseTransfer
-    ): CompanyUserResponseTransfer
+    protected function executeCreateTransaction(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
         $companyUserResponseTransfer = $this->registerCustomer($companyUserResponseTransfer);
 
@@ -222,8 +221,7 @@ class CompanyUser implements CompanyUserInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function executeSaveTransaction(CompanyUserResponseTransfer $companyUserResponseTransfer
-    ): CompanyUserResponseTransfer
+    protected function executeSaveTransaction(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
         $companyUserResponseTransfer->requireCompanyUser();
         $companyUserResponseTransfer->getCompanyUser()->requireCustomer();
@@ -249,8 +247,7 @@ class CompanyUser implements CompanyUserInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function updateCustomer(CompanyUserResponseTransfer $companyUserResponseTransfer
-    ): CompanyUserResponseTransfer
+    protected function updateCustomer(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
         $customerResponseTransfer = $this->customerFacade->updateCustomer($companyUserTransfer->getCustomer());
@@ -275,8 +272,7 @@ class CompanyUser implements CompanyUserInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function registerCustomer(CompanyUserResponseTransfer $companyUserResponseTransfer
-    ): CompanyUserResponseTransfer
+    protected function registerCustomer(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
         $companyUserResponseTransfer->requireCompanyUser();
         $companyUserResponseTransfer->getCompanyUser()->requireCustomer();
@@ -357,10 +353,8 @@ class CompanyUser implements CompanyUserInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function addErrorsToResponse(
-        CompanyUserResponseTransfer $companyUserResponseTransfer,
-        ArrayObject $errors
-    ): CompanyUserResponseTransfer {
+    protected function addErrorsToResponse(CompanyUserResponseTransfer $companyUserResponseTransfer, ArrayObject $errors): CompanyUserResponseTransfer
+    {
         foreach ($errors as $error) {
             $companyUserResponseTransfer->addMessage(
                 (new ResponseMessageTransfer())->setText($error->getMessage())
