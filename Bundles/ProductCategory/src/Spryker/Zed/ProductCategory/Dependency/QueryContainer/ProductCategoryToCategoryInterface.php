@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\QueryContainer;
 
-use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
-
 interface ProductCategoryToCategoryInterface
 {
     /**
@@ -17,16 +15,4 @@ interface ProductCategoryToCategoryInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     public function queryCategoryById($idCategory);
-
-    /**
-     * @param int $idNode
-     * @param int $idLocale
-     * @param bool $excludeRootNode
-     * @param bool $onlyParents
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false): SpyCategoryNodeQuery;
 }
