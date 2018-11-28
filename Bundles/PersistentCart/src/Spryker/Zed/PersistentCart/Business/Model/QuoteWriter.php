@@ -71,7 +71,6 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function createAndReloadQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer = $this->quoteItemOperation->reloadItems($quoteResponseTransfer->getQuoteTransfer());

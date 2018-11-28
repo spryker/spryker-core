@@ -223,7 +223,7 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Create quote in database.
+     *  - Creates quote in database.
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *  - Calls quote response extend plugins.
      *
