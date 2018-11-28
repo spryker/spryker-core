@@ -47,36 +47,46 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param int $idCategoryNode
+     * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $glue
+     * @param bool $excludeRootNode
+     * @param int|null $depth
      *
      * @return string
      */
-    public function getNodePath(int $idCategoryNode, LocaleTransfer $localeTransfer)
+    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer, string $glue = '/', $excludeRootNode = false, ?int $depth = 0): string
     {
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryPathQuery */
-        $categoryPathQuery = $this->queryNodePath($idCategoryNode, $localeTransfer->getIdLocale())
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $nodePathQuery */
+        $nodePathQuery = $this->queryNodePath($idNode, $localeTransfer->getIdLocale(), $excludeRootNode, $depth)
             ->clearSelectColumns()
             ->addSelectColumn(static::COL_CATEGORY_NAME);
 
         /** @var string[] $pathTokens */
-        $pathTokens = $categoryPathQuery->find();
+        $pathTokens = $nodePathQuery->find();
 
-        return implode('/', $pathTokens);
+        return implode($glue, $pathTokens);
     }
 
     /**
      * @param int $idNode
      * @param int $idLocale
+     * @param bool $excludeRootNode
+     * @param int|null $depth
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     protected function queryNodePath(
-        $idNode,
-        $idLocale
+        int $idNode,
+        int $idLocale,
+        bool $excludeRootNode = false,
+        ?int $depth = 0
     ): SpyCategoryNodeQuery {
-        $depth = 0;
-        $nodeQuery = SpyCategoryNodeQuery::create();
+        $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
+
+        if ($excludeRootNode) {
+            $nodeQuery->filterByIsRoot(0);
+        }
 
         $nodeQuery
             ->useClosureTableQuery()

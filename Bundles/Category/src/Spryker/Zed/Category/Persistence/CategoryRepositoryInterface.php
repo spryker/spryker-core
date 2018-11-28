@@ -21,12 +21,15 @@ interface CategoryRepositoryInterface
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 
     /**
-     * @param int $idCategoryNode
+     * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $glue
+     * @param bool $excludeRoot
+     * @param int|null $depth
      *
      * @return string
      */
-    public function getNodePath(int $idCategoryNode, LocaleTransfer $localeTransfer);
+    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer, string $glue = '/', bool $excludeRoot = false, ?int $depth = 0): string;
 
     /**
      * @param string $nodeName

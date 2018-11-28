@@ -31,6 +31,7 @@ class AssignController extends AbstractController
     public function indexAction(Request $request)
     {
         $idCategory = $this->castId($request->get(ProductCategoryTable::PARAM_ID_CATEGORY));
+        $idNode = $this->castId($request->get(ProductCategoryTable::PARAM_ID_NODE));
         $categoryEntity = $this->getCategoryEntity($idCategory);
 
         if (!$categoryEntity) {
@@ -62,7 +63,7 @@ class AssignController extends AbstractController
             'productCategoriesTable' => $categoryProductsTable->render(),
             'productsTable' => $productsTable->render(),
             'currentCategory' => $categoryEntity->toArray(),
-            'categoryPath' => $this->getCategoryPath($idCategory, $localeTransfer->getIdLocale()),
+            'categoryPath' => $this->getFacade()->getNodePath($idNode, $localeTransfer),
             'currentLocale' => $localeTransfer->getLocaleName(),
         ]);
     }
@@ -85,18 +86,6 @@ class AssignController extends AbstractController
         }
 
         return $categoryEntity;
-    }
-
-    /**
-     * @param int $idCategory
-     * @param int $idLocale
-     *
-     * @return string
-     */
-    protected function getCategoryPath(int $idCategory, int $idLocale): string
-    {
-        $categoryPath = $this->getFactory()->getCategoryQueryContainer()->queryPath($idCategory, $idLocale)->find();
-        return implode(' / ', array_column($categoryPath, 'name'));
     }
 
     /**
