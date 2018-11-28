@@ -29,7 +29,7 @@ class BusinessOnBehalfGuiToCustomerFacadeBridge implements BusinessOnBehalfGuiTo
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findCustomerById(CustomerTransfer $customerTransfer): ?CustomerTransfer
+    public function findCustomerById(CustomerTransfer $customerTransfer)
     {
         return $this->customerFacade->findCustomerById($customerTransfer);
     }

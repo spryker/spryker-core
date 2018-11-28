@@ -16,8 +16,6 @@ use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFaca
 
 class CompanyUserRoleByCompanyFormDataProvider
 {
-    protected const FORMAT_NAME = '%s (id: %s)';
-
     /**
      * @var \Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface
      */
@@ -56,19 +54,19 @@ class CompanyUserRoleByCompanyFormDataProvider
     {
         return [
             CompanyUserRoleByCompanyForm::OPTION_COMPANY_ROLE_CHOICES =>
-                $this->prepareCompanyRoleAttributeMap($companyUserTransfer),
+                $this->getCompanyRoleChoices($companyUserTransfer),
         ];
     }
 
     /**
      * Retrieves the list of roles for the same company.
+     * Returns [role name => id role].
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return array [[roleName => idRole]],
-     *                Where roleName: "<idRole> - <RoleName>"
+     * @return array
      */
-    protected function prepareCompanyRoleAttributeMap(CompanyUserTransfer $companyUserTransfer): array
+    protected function getCompanyRoleChoices(CompanyUserTransfer $companyUserTransfer): array
     {
         $companyRoleChoicesValues = [];
 
@@ -91,6 +89,6 @@ class CompanyUserRoleByCompanyFormDataProvider
      */
     protected function generateCompanyRoleName(CompanyRoleTransfer $companyRoleTransfer): string
     {
-        return sprintf(static::FORMAT_NAME, $companyRoleTransfer->getName(), $companyRoleTransfer->getIdCompanyRole());
+        return sprintf('%s (id: %s)', $companyRoleTransfer->getName(), $companyRoleTransfer->getIdCompanyRole());
     }
 }

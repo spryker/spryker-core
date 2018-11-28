@@ -37,6 +37,8 @@ class CompanyBusinessUnitPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @module CompanyUser
+     *
      * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      */
     public function createCompanyUserQuery(): SpyCompanyUserQuery

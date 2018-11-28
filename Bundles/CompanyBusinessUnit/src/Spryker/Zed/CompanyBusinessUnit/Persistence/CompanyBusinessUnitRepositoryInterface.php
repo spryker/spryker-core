@@ -54,9 +54,11 @@ interface CompanyBusinessUnitRepositoryInterface
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 
     /**
+     * @module CompanyUser
+     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return bool
      */
-    public function checkCompanyUserNotDuplicated(CompanyUserTransfer $companyUserTransfer): bool;
+    public function hasCompanyUser(CompanyUserTransfer $companyUserTransfer): bool;
 }
