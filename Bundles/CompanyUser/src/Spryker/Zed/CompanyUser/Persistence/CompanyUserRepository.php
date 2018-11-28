@@ -80,9 +80,9 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findActiveCompanyUsersByCustomerReference(string $customerReference): ?CompanyUserCollectionTransfer
+    public function findActiveCompanyUsersByCustomerReference(string $customerReference): CompanyUserCollectionTransfer
     {
         $queryCompanyUser = $this->getFactory()
             ->createCompanyUserQuery()
@@ -97,10 +97,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->endUse();
 
         $collection = $this->buildQueryFromCriteria($queryCompanyUser)->find();
-
-        if (!$collection) {
-            return null;
-        }
 
         return $this->getFactory()
             ->createCompanyUserMapper()

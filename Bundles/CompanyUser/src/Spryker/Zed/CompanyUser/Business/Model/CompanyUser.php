@@ -163,15 +163,11 @@ class CompanyUser implements CompanyUserInterface
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findActiveCompanyUsersByCustomerReference(string $customerReference): ?CompanyUserCollectionTransfer
+    public function findActiveCompanyUsersByCustomerReference(string $customerReference): CompanyUserCollectionTransfer
     {
         $collectionTransfer = $this->companyUserRepository->findActiveCompanyUsersByCustomerReference($customerReference);
-
-        if (!$collectionTransfer) {
-            return null;
-        }
 
         foreach ($collectionTransfer->getCompanyUsers() as &$companyUserTransfer) {
             $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);

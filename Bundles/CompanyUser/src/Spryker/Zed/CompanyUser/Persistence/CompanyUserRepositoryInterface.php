@@ -72,9 +72,9 @@ interface CompanyUserRepositoryInterface
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function findActiveCompanyUsersByCustomerReference(
         string $customerReference
-    ): ?CompanyUserCollectionTransfer;
+    ): CompanyUserCollectionTransfer;
 }

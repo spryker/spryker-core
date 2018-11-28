@@ -60,9 +60,9 @@ interface CompanyUserInterface
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findActiveCompanyUsersByCustomerReference(string $customerReference): ?CompanyUserCollectionTransfer;
+    public function findActiveCompanyUsersByCustomerReference(string $customerReference): CompanyUserCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
