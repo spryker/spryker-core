@@ -97,14 +97,14 @@ class ProductAbstractProductListSynchronizationDataBulkPlugin extends AbstractPl
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $spyProductAbstractProductListStorageEntities = $this->getRepository()->findFilteredProductAbstractProductListStorageEntities($filterTransfer, $ids);
+        $productAbstractProductListStorageEntityTransfers = $this->getRepository()->findFilteredProductAbstractProductListStorageEntities($filterTransfer, $ids);
 
-        foreach ($spyProductAbstractProductListStorageEntities as $spyProductAbstractProductListStorageEntity) {
+        foreach ($productAbstractProductListStorageEntityTransfers as $productAbstractProductListStorageEntityTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
             /** @var string $data */
-            $data = $spyProductAbstractProductListStorageEntity->getData();
+            $data = $productAbstractProductListStorageEntityTransfer->getData();
             $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($spyProductAbstractProductListStorageEntity->getKey());
+            $synchronizationDataTransfer->setKey($productAbstractProductListStorageEntityTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 

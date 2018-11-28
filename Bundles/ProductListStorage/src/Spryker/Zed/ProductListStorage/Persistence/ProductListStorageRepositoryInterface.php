@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductListStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 
 interface ProductListStorageRepositoryInterface
 {
@@ -68,15 +67,15 @@ interface ProductListStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productConcreteIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer[]
      */
-    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $productConcreteIds = []): ObjectCollection;
+    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $productConcreteIds = []): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productAbstractIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer[]
      */
-    public function findFilteredProductAbstractProductListStorageEntities(FilterTransfer $filterTransfer, array $productAbstractIds = []): ObjectCollection;
+    public function findFilteredProductAbstractProductListStorageEntities(FilterTransfer $filterTransfer, array $productAbstractIds = []): array;
 }

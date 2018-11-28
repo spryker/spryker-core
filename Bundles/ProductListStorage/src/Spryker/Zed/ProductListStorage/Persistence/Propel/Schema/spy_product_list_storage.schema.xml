@@ -7,6 +7,7 @@
 
     <table name="spy_product_abstract_product_list_storage">
         <column name="id_product_abstract_product_list_storage" type="integer" autoIncrement="true" primaryKey="true"/>
+        <column name="key" type="VARCHAR" size="255" required="true"/>
         <column name="fk_product_abstract" type="INTEGER" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
 
@@ -27,6 +28,7 @@
 
     <table name="spy_product_concrete_product_list_storage">
         <column name="id_product_concrete_product_list_storage" type="integer" autoIncrement="true" primaryKey="true"/>
+        <column name="key" type="VARCHAR" size="255" required="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
 

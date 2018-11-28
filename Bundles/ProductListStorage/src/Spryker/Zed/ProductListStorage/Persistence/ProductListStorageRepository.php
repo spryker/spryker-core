@@ -8,10 +8,11 @@
 namespace Spryker\Zed\ProductListStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer;
+use Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -177,37 +178,59 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productConcreteIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer[]
      */
-    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $productConcreteIds = []): ObjectCollection
+    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $productConcreteIds = []): array
     {
+        $productConcreteProductListStorageEntityTransfers = [];
+        $mapper = $this->getFactory()->createProductListStorageMapper();
         $query = $this->getFactory()->createProductConcreteProductListStorageQuery();
 
         if ($productConcreteIds) {
             $query->filterByFkProduct_In($productConcreteIds);
         }
 
-        return $query->offset($filterTransfer->getOffset())
+        $productConcreteProductListStorageEntities = $query->offset($filterTransfer->getOffset())
             ->limit($filterTransfer->getLimit())
             ->find();
+
+        foreach ($productConcreteProductListStorageEntities as $productConcreteProductListStorageEntity) {
+            $productConcreteProductListStorageEntityTransfers[] = $mapper->mapProductConcreteProductListStorageEntitiesToTransfers(
+                $productConcreteProductListStorageEntity,
+                new SpyProductConcreteProductListStorageEntityTransfer()
+            );
+        }
+
+        return $productConcreteProductListStorageEntityTransfers;
     }
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productAbstractIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer[]
      */
-    public function findFilteredProductAbstractProductListStorageEntities(FilterTransfer $filterTransfer, array $productAbstractIds = []): ObjectCollection
+    public function findFilteredProductAbstractProductListStorageEntities(FilterTransfer $filterTransfer, array $productAbstractIds = []): array
     {
+        $productAbstractProductListStorageEntityTransfers = [];
+        $mapper = $this->getFactory()->createProductListStorageMapper();
         $query = $this->getFactory()->createProductAbstractProductListStorageQuery();
 
         if ($productAbstractIds) {
             $query->filterByFkProductAbstract_In($productAbstractIds);
         }
 
-        return $query->offset($filterTransfer->getOffset())
+        $productAbstractProductListStorageEntities = $query->offset($filterTransfer->getOffset())
             ->limit($filterTransfer->getLimit())
             ->find();
+
+        foreach ($productAbstractProductListStorageEntities as $productAbstractProductListStorageEntity) {
+            $productAbstractProductListStorageEntityTransfers[] = $mapper->mapProductAbstractProductListStorageEntitiesToTransfers(
+                $productAbstractProductListStorageEntity,
+                new SpyProductAbstractProductListStorageEntityTransfer()
+            );
+        }
+
+        return $productAbstractProductListStorageEntityTransfers;
     }
 }
