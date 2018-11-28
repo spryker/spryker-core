@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\UtilUuidGenerator\Business\UtilUuidGeneratorBusinessFactory getFactory()
  * @method \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorRepositoryInterface getRepository()
  */
 class UtilUuidGeneratorFacade extends AbstractFacade implements UtilUuidGeneratorFacadeInterface
 {

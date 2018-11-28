@@ -8,14 +8,13 @@
 namespace Spryker\Zed\UtilUuidGenerator\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\UtilUuidGenerator\Business\Builder\QueryBuilder;
-use Spryker\Zed\UtilUuidGenerator\Business\Builder\QueryBuilderInterface;
 use Spryker\Zed\UtilUuidGenerator\Business\Generator\UuidGenerator;
 use Spryker\Zed\UtilUuidGenerator\Business\Generator\UuidGeneratorInterface;
 
 /**
  * @method \Spryker\Zed\UtilUuidGenerator\UtilUuidGeneratorConfig getConfig()
  * @method \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorRepositoryInterface getRepository()()
  */
 class UtilUuidGeneratorBusinessFactory extends AbstractBusinessFactory
 {
@@ -25,16 +24,8 @@ class UtilUuidGeneratorBusinessFactory extends AbstractBusinessFactory
     public function createUuidGenerator(): UuidGeneratorInterface
     {
         return new UuidGenerator(
-            $this->createQueryBuilder(),
+            $this->getRepository(),
             $this->getEntityManager()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\UtilUuidGenerator\Business\Builder\QueryBuilderInterface
-     */
-    public function createQueryBuilder(): QueryBuilderInterface
-    {
-        return new QueryBuilder();
     }
 }

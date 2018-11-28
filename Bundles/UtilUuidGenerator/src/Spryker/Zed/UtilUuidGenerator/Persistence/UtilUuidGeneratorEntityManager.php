@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\UtilUuidGenerator\Persistence;
 
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\UtilUuidGenerator\UtilUuidGeneratorConfig;
@@ -18,13 +17,16 @@ use Spryker\Zed\UtilUuidGenerator\UtilUuidGeneratorConfig;
 class UtilUuidGeneratorEntityManager extends AbstractEntityManager implements UtilUuidGeneratorEntityManagerInterface
 {
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param string $tableName
      *
      * @return int
      */
-    public function fillEmptyUuids(ModelCriteria $query): int
+    public function fillEmptyUuids(string $tableName): int
     {
         $count = 0;
+        $query = $this->getFactory()
+            ->createQueryBuilder()
+            ->buildQuery($tableName);
 
         do {
             /** @var \Propel\Runtime\Collection\ObjectCollection $entities */

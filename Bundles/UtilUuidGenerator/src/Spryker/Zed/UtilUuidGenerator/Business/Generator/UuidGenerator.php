@@ -7,19 +7,15 @@
 
 namespace Spryker\Zed\UtilUuidGenerator\Business\Generator;
 
-use Exception;
-use Spryker\Zed\UtilUuidGenerator\Business\Builder\QueryBuilderInterface;
 use Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorEntityManagerInterface;
+use Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorRepositoryInterface;
 
 class UuidGenerator implements UuidGeneratorInterface
 {
-    protected const COLUMN_UUID = 'uuid';
-    protected const ERROR_MESSAGE_UUID = 'Table %s does not contain field %s.';
-
     /**
-     * @var \Spryker\Zed\UtilUuidGenerator\Business\Builder\QueryBuilderInterface
+     * @var \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorRepositoryInterface
      */
-    protected $queryBuilder;
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorEntityManagerInterface
@@ -27,30 +23,28 @@ class UuidGenerator implements UuidGeneratorInterface
     protected $entityManager;
 
     /**
-     * @param \Spryker\Zed\UtilUuidGenerator\Business\Builder\QueryBuilderInterface $queryBuilder
+     * @param \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorRepositoryInterface $repository
      * @param \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorEntityManagerInterface $entityManager
      */
-    public function __construct(QueryBuilderInterface $queryBuilder, UtilUuidGeneratorEntityManagerInterface $entityManager)
-    {
-        $this->queryBuilder = $queryBuilder;
+    public function __construct(
+        UtilUuidGeneratorRepositoryInterface $repository,
+        UtilUuidGeneratorEntityManagerInterface $entityManager
+    ) {
+        $this->repository = $repository;
         $this->entityManager = $entityManager;
     }
 
     /**
      * @param string $tableName
      *
-     * @throws \Exception
-     *
      * @return int
      */
     public function generate(string $tableName): int
     {
-        $query = $this->queryBuilder->buildQuery($tableName);
-
-        if (!$query->getTableMap()->hasColumn(static::COLUMN_UUID)) {
-            throw new Exception(sprintf(static::ERROR_MESSAGE_UUID, $tableName, static::COLUMN_UUID));
+        if (!$this->repository->hasQueryUuidField($tableName)) {
+            return 0;
         }
 
-        return $this->entityManager->fillEmptyUuids($query);
+        return $this->entityManager->fillEmptyUuids($tableName);
     }
 }

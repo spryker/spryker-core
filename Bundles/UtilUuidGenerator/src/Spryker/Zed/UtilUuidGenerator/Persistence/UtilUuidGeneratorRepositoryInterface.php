@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\UtilUuidGenerator\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\EntityManager\EntityManagerInterface;
-
-interface UtilUuidGeneratorEntityManagerInterface extends EntityManagerInterface
+/**
+ * @method \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorPersistenceFactory getFactory()
+ */
+interface UtilUuidGeneratorRepositoryInterface
 {
     /**
      * @param string $tableName
      *
-     * @return int
+     * @return bool
      */
-    public function fillEmptyUuids(string $tableName): int;
+    public function hasQueryUuidField(string $tableName): bool;
 }

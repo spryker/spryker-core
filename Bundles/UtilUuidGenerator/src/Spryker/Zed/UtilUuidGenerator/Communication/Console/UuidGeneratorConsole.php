@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\UtilUuidGenerator\Business\UtilUuidGeneratorFacadeInterface getFacade()
  * @method \Spryker\Zed\UtilUuidGenerator\Communication\UtilUuidGeneratorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\UtilUuidGenerator\Persistence\UtilUuidGeneratorRepositoryInterface getRepository()
  */
 class UuidGeneratorConsole extends Console
 {
