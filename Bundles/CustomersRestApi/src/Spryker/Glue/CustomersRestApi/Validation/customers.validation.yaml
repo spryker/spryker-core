@@ -89,6 +89,12 @@ addresses:
       - NotBlank
       - Length:
           max: 2
+    isDefaultShipping:
+    - Type:
+        type: bool
+    isDefaultBilling:
+    - Type:
+        type: bool
   patch:
     salutation:
     - Optional:
@@ -137,6 +143,16 @@ addresses:
         - NotBlank
         - Length:
             max: 2
+    isDefaultShipping:
+    - Optional:
+        constraints:
+        - Type:
+            type: bool
+    isDefaultBilling:
+    - Optional:
+        constraints:
+        - Type:
+            type: bool
 
 customer-password:
   patch:
