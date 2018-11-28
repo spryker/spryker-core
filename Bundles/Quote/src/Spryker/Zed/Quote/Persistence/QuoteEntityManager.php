@@ -35,7 +35,7 @@ class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityMan
             ->findOneOrCreate();
         $quoteEntity = $quoteMapper->mapTransferToEntity($quoteTransfer, $quoteEntity);
         $quoteEntity->save();
-        $quoteTransfer->setIdQuote($quoteEntity->getIdQuote());
+        $quoteTransfer->fromArray($quoteEntity->toArray(), true);
 
         return $quoteTransfer;
     }
