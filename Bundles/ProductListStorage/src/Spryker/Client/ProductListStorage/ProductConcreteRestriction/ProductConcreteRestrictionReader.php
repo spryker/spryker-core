@@ -57,10 +57,23 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
 
         $productListProductConcreteStorageTransfer = $this->productListProductConcreteStorageReader->findProductConcreteProductListStorage($idProduct);
 
-        $isProductRestrictedInBlackList = $this->checkIfProductConcreteRestrictedInBlacklist($productListProductConcreteStorageTransfer, $customerBlacklistIds);
-        $isProductRestrictedInWhiteList = $this->checkIfProductConcreteRestrictedInWhitelist($productListProductConcreteStorageTransfer, $customerWhitelistIds);
+        $isProductRestrictedInBlackList = $this->checkIfProductConcreteRestrictedInBlacklist(
+            $productListProductConcreteStorageTransfer,
+            $customerBlacklistIds
+        );
+        if ($isProductRestrictedInBlackList) {
+            return true;
+        }
 
-        return $isProductRestrictedInBlackList || $isProductRestrictedInWhiteList;
+        $isProductRestrictedInWhiteList = $this->checkIfProductConcreteRestrictedInWhitelist(
+            $productListProductConcreteStorageTransfer,
+            $customerWhitelistIds
+        );
+        if ($isProductRestrictedInWhiteList) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -77,13 +90,13 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
             return false;
         }
 
-        if ($productListProductConcreteStorageTransfer) {
-            $isProductInWhitelist = empty(array_intersect($productListProductConcreteStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
-
-            return $isProductInWhitelist;
+        if ($productListProductConcreteStorageTransfer === null) {
+            return true;
         }
 
-        return true;
+        $isProductInWhitelist = empty(array_intersect($productListProductConcreteStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
+
+        return $isProductInWhitelist;
     }
 
     /**
@@ -100,12 +113,12 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
             return false;
         }
 
-        if ($productListProductConcreteStorageTransfer) {
-            $isProductInBlacklist = !empty(array_intersect($productListProductConcreteStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
-
-            return $isProductInBlacklist;
+        if ($productListProductConcreteStorageTransfer === null) {
+            return false;
         }
 
-        return false;
+        $isProductInBlacklist = !empty(array_intersect($productListProductConcreteStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
+
+        return $isProductInBlacklist;
     }
 }
