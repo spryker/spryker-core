@@ -93,7 +93,7 @@ class AssignController extends AbstractController
      *
      * @return string
      */
-    protected function getCategoryPath($idCategory, $idLocale): string
+    protected function getCategoryPath(int $idCategory, int $idLocale): string
     {
         $categoryPath = $this->getFactory()->getCategoryQueryContainer()->queryPath($idCategory, $idLocale)->find();
         return implode(' / ', array_column($categoryPath, 'name'));
