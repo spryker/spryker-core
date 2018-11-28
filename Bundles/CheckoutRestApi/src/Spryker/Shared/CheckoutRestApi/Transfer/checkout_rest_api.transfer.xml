@@ -70,9 +70,9 @@
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">
-        <property name="addresses" type="RestAddress[]"/>
-        <property name="paymentMethods" type="RestPaymentMethod[]"/>
-        <property name="shipmentMethods" type="RestShipmentMethod[]"/>
+        <property name="addresses" type="RestAddress[]" singular="address"/>
+        <property name="paymentMethods" type="RestPaymentMethod[]" singular="paymentMethod"/>
+        <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod"/>
     </transfer>
 
     <transfer name="RestPaymentMethod">

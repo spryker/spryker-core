@@ -69,7 +69,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
         foreach ($restCheckoutDataTransfer->getAddresses()->getAddresses() as $addressTransfer) {
-            $restCheckoutDataResponseAttributesTransfer->addAddresses(
+            $restCheckoutDataResponseAttributesTransfer->addAddress(
                 (new RestAddressTransfer())->fromArray(
                     $addressTransfer->toArray(),
                     true
@@ -95,7 +95,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $restPaymentMethodTransfer->fromArray($paymentMethodTransfer->toArray(), true)
                 ->setRequiredRequestData($this->config->getRequiredRequestDataForMethod($paymentMethodTransfer->getMethodName()));
 
-            $restCheckoutDataResponseAttributesTransfer->addPaymentMethods($restPaymentMethodTransfer);
+            $restCheckoutDataResponseAttributesTransfer->addPaymentMethod($restPaymentMethodTransfer);
         }
 
         return $restCheckoutDataResponseAttributesTransfer;
@@ -117,7 +117,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
                 ->setPrice($shipmentMethodTransfer->getStoreCurrencyPrice())
                 ->setId($shipmentMethodTransfer->getIdShipmentMethod());
 
-            $restCheckoutDataResponseAttributesTransfer->addShipmentMethods($restShipmentMethodTransfer);
+            $restCheckoutDataResponseAttributesTransfer->addShipmentMethod($restShipmentMethodTransfer);
         }
 
         return $restCheckoutDataResponseAttributesTransfer;

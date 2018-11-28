@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business;
 
+use Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReader;
+use Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\CheckoutDataReader;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\CheckoutDataReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessor;
@@ -38,7 +40,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteReader(),
             $this->getShipmentFacade(),
             $this->getPaymentFacade(),
-            $this->getCustomerFacade(),
+            $this->createAddressReader(),
             $this->getQuoteMapperPlugins()
         );
     }
@@ -64,6 +66,14 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function createQuoteReader(): QuoteReaderInterface
     {
         return new QuoteReader($this->getCartsRestApiFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface
+     */
+    public function createAddressReader(): AddressReaderInterface
+    {
+        return new AddressReader($this->getCustomerFacade());
     }
 
     /**

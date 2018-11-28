@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
-use Generated\Shared\Transfer\AddressesTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
@@ -17,8 +15,8 @@ use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
+use Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
-use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,9 +39,9 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $paymentFacade;
 
     /**
-     * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface
+     * @var \Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface
      */
-    protected $customerFacade;
+    protected $addressReader;
 
     /**
      * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
@@ -54,20 +52,20 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface $paymentFacade
-     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCustomerFacadeInterface $customerFacade
+     * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface $addressReader
      * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
         CheckoutRestApiToShipmentFacadeInterface $shipmentFacade,
         CheckoutRestApiToPaymentFacadeInterface $paymentFacade,
-        CheckoutRestApiToCustomerFacadeInterface $customerFacade,
+        AddressReaderInterface $addressReader,
         array $quoteMapperPlugins
     ) {
         $this->quoteReader = $quoteReader;
         $this->shipmentFacade = $shipmentFacade;
         $this->paymentFacade = $paymentFacade;
-        $this->customerFacade = $customerFacade;
+        $this->addressReader = $addressReader;
         $this->quoteMapperPlugins = $quoteMapperPlugins;
     }
 
@@ -91,7 +89,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
             ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
             ->setPaymentMethods($this->getPaymentMethodsTransfer($quoteTransfer))
-            ->setAddresses($this->getAddressesTransfer($quoteTransfer));
+            ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer));
 
         return (new RestCheckoutDataResponseTransfer())
                 ->setIsSuccess(true)
@@ -119,26 +117,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressesTransfer
-     */
-    protected function getAddressesTransfer(QuoteTransfer $quoteTransfer): AddressesTransfer
-    {
-        $customerTransfer = $quoteTransfer->getCustomer();
-        if (!$customerTransfer || $customerTransfer->getIsGuest()) {
-            return new AddressesTransfer();
-        }
-
-        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($customerTransfer->getCustomerReference());
-        if (!$customerResponseTransfer->getHasCustomer()) {
-            return new AddressesTransfer();
-        }
-
-        return $this->extendAddressesWithDefaultBillingAndShipping($customerResponseTransfer->getCustomerTransfer());
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer
      */
     protected function createCartNotFoundErrorResponse(): RestCheckoutDataResponseTransfer
@@ -151,23 +129,5 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
                     ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND)
                     ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
             );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressesTransfer
-     */
-    protected function extendAddressesWithDefaultBillingAndShipping(CustomerTransfer $customerTransfer): AddressesTransfer
-    {
-        $addressesTransfer = new AddressesTransfer();
-        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressKey => $addressTransfer) {
-            $addressTransfer->setIsDefaultShipping($addressTransfer->getIdCustomerAddress() === (int)$customerTransfer->getDefaultShippingAddress());
-            $addressTransfer->setIsDefaultBilling($addressTransfer->getIdCustomerAddress() === (int)$customerTransfer->getDefaultBillingAddress());
-
-            $addressesTransfer->addAddress($addressTransfer);
-        }
-
-        return $addressesTransfer;
     }
 }
