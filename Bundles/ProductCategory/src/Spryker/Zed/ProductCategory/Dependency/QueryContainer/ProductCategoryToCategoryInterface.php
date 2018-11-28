@@ -28,5 +28,5 @@ interface ProductCategoryToCategoryInterface
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function queryPath(int $idNode, int $idLocale, bool $excludeRootNode = true, bool $onlyParents = false): SpyCategoryNodeQuery;
+    public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false): SpyCategoryNodeQuery;
 }
