@@ -20,7 +20,7 @@ class CurrencyParameterValidatorPlugin extends AbstractPlugin implements RestReq
 {
     /**
      * {@inheritdoc}
-     * - Validates currency parameter in the request.
+     * - Validates currency get request parameter.
      * - Checks that currency is available.
      *
      * @api

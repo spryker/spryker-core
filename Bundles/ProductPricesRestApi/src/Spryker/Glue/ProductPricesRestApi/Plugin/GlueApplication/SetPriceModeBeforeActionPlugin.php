@@ -28,6 +28,6 @@ class SetPriceModeBeforeActionPlugin extends AbstractPlugin implements Controlle
      */
     public function beforeAction(string $action, RestRequestInterface $restRequest): void
     {
-        $this->getFactory()->createPriceModeSetter()->setPriceMode($restRequest);
+        $this->getFactory()->createPriceModeUpdater()->switchPriceMode($restRequest);
     }
 }

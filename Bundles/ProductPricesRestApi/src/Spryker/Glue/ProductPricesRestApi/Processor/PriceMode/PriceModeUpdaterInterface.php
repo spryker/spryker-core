@@ -9,12 +9,12 @@ namespace Spryker\Glue\ProductPricesRestApi\Processor\PriceMode;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface PriceModeSetterInterface
+interface PriceModeUpdaterInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
      */
-    public function setPriceMode(RestRequestInterface $restRequest): void;
+    public function switchPriceMode(RestRequestInterface $restRequest): void;
 }

@@ -13,18 +13,19 @@ use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPr
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToStoreClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\AbstractProductPrices\AbstractProductPricesReader;
 use Spryker\Glue\ProductPricesRestApi\Processor\AbstractProductPrices\AbstractProductPricesReaderInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReader;
 use Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReaderInterface;
-use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencySetter;
-use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencySetterInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyUpdater;
+use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyUpdaterInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyValidator;
 use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyValidatorInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapper;
 use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface;
-use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeSetter;
-use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeSetterInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeUpdater;
+use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeUpdaterInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeValidator;
 use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeValidatorInterface;
 
@@ -74,7 +75,10 @@ class ProductPricesRestApiFactory extends AbstractFactory
      */
     public function createCurrencyValidator(): CurrencyValidatorInterface
     {
-        return new CurrencyValidator($this->getCurrencyClient());
+        return new CurrencyValidator(
+            $this->getCurrencyClient(),
+            $this->getStoreClient()
+        );
     }
 
     /**
@@ -86,19 +90,19 @@ class ProductPricesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencySetterInterface
+     * @return \Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyUpdaterInterface
      */
-    public function createCurrencySetter(): CurrencySetterInterface
+    public function createCurrencyUpdater(): CurrencyUpdaterInterface
     {
-        return new CurrencySetter($this->getCurrencyClient());
+        return new CurrencyUpdater($this->getCurrencyClient());
     }
 
     /**
-     * @return \Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeSetterInterface
+     * @return \Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeUpdaterInterface
      */
-    public function createPriceModeSetter(): PriceModeSetterInterface
+    public function createPriceModeUpdater(): PriceModeUpdaterInterface
     {
-        return new PriceModeSetter($this->getPriceClient());
+        return new PriceModeUpdater($this->getPriceClient());
     }
 
     /**
@@ -139,5 +143,13 @@ class ProductPricesRestApiFactory extends AbstractFactory
     public function getCurrencyClient(): ProductPricesRestApiToCurrencyClientInterface
     {
         return $this->getProvidedDependency(ProductPricesRestApiDependencyProvider::CLIENT_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToStoreClientInterface
+     */
+    public function getStoreClient(): ProductPricesRestApiToStoreClientInterface
+    {
+        return $this->getProvidedDependency(ProductPricesRestApiDependencyProvider::CLIENT_STORE);
     }
 }

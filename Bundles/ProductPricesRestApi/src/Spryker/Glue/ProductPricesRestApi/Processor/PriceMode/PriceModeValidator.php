@@ -37,9 +37,6 @@ class PriceModeValidator implements PriceModeValidatorInterface
     public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $priceMode = $this->getRequestParameter($restRequest, ProductPricesRestApiConfig::REQUEST_PARAMETER_PRICE_MODE);
-        if ($priceMode === '') {
-            return null;
-        }
 
         if (in_array($priceMode, $this->priceClient->getPriceModes())) {
             return null;
@@ -47,8 +44,8 @@ class PriceModeValidator implements PriceModeValidatorInterface
 
         return (new RestErrorCollectionTransfer())->addRestError(
             (new RestErrorMessageTransfer())
-                ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_PRICE_MODE_NOT_FOUND)
-                ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_PRICE_MODE_NOT_FOUND)
+                ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_INVALID_PRICE_MODE)
+                ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_INVALID_PRICE_MODE)
                 ->setStatus(Response::HTTP_BAD_REQUEST)
         );
     }

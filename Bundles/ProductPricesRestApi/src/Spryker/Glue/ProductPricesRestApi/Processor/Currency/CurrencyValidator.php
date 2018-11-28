@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToStoreClientInterface;
 use Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,11 +23,20 @@ class CurrencyValidator implements CurrencyValidatorInterface
     protected $currencyClient;
 
     /**
-     * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface $currencyClient
+     * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToStoreClientInterface
      */
-    public function __construct(ProductPricesRestApiToCurrencyClientInterface $currencyClient)
-    {
+    protected $storeClient;
+
+    /**
+     * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface $currencyClient
+     * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToStoreClientInterface $storeClient
+     */
+    public function __construct(
+        ProductPricesRestApiToCurrencyClientInterface $currencyClient,
+        ProductPricesRestApiToStoreClientInterface $storeClient
+    ) {
         $this->currencyClient = $currencyClient;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -37,22 +47,17 @@ class CurrencyValidator implements CurrencyValidatorInterface
     public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $currencyIsoCode = $this->getRequestParameter($restRequest, ProductPricesRestApiConfig::REQUEST_PARAMETER_CURRENCY);
-        if ($currencyIsoCode === '') {
-            return null;
+
+        $currencyIsoCodes = $this->storeClient->getCurrentStore()->getAvailableCurrencyIsoCodes();
+
+        if (!in_array($currencyIsoCode, $currencyIsoCodes)) {
+            return (new RestErrorCollectionTransfer())->addRestError(
+                (new RestErrorMessageTransfer())
+                    ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_INVALID_CURRENCY)
+                    ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_INVALID_CURRENCY)
+                    ->setStatus(Response::HTTP_BAD_REQUEST)
+            );
         }
-
-        $currencyTransfer = $this->currencyClient->fromIsoCode($currencyIsoCode);
-
-        if ($currencyTransfer->getSymbol()) {
-            return null;
-        }
-
-        return (new RestErrorCollectionTransfer())->addRestError(
-            (new RestErrorMessageTransfer())
-                ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_CURRENCY_NOT_FOUND)
-                ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_CURRENCY_NOT_FOUND)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
-        );
     }
 
     /**
@@ -63,6 +68,6 @@ class CurrencyValidator implements CurrencyValidatorInterface
      */
     protected function getRequestParameter(RestRequestInterface $restRequest, string $parameterName): string
     {
-        return $restRequest->getHttpRequest()->query->get($parameterName, '');
+        return $restRequest->getHttpRequest()->query->get($parameterName);
     }
 }

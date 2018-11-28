@@ -9,12 +9,12 @@ namespace Spryker\Glue\ProductPricesRestApi\Processor\Currency;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CurrencySetterInterface
+interface CurrencyUpdaterInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
      */
-    public function setCurrency(RestRequestInterface $restRequest): void;
+    public function setCurrentCurrency(RestRequestInterface $restRequest): void;
 }

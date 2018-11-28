@@ -11,7 +11,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface;
 use Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig;
 
-class CurrencySetter implements CurrencySetterInterface
+class CurrencyUpdater implements CurrencyUpdaterInterface
 {
     /**
      * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface
@@ -31,10 +31,10 @@ class CurrencySetter implements CurrencySetterInterface
      *
      * @return void
      */
-    public function setCurrency(RestRequestInterface $restRequest): void
+    public function setCurrentCurrency(RestRequestInterface $restRequest): void
     {
         $currencyIsoCode = $this->getRequestParameter($restRequest, ProductPricesRestApiConfig::REQUEST_PARAMETER_CURRENCY);
-        if ($currencyIsoCode !== '') {
+        if (!empty($currencyIsoCode)) {
             $this->currencyClient->setCurrentCurrencyIsoCode($currencyIsoCode);
         }
     }
@@ -47,6 +47,6 @@ class CurrencySetter implements CurrencySetterInterface
      */
     protected function getRequestParameter(RestRequestInterface $restRequest, string $parameterName): string
     {
-        return $restRequest->getHttpRequest()->query->get($parameterName, '');
+        return $restRequest->getHttpRequest()->query->get($parameterName);
     }
 }

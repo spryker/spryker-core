@@ -24,7 +24,7 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
     /**
-     * @deprecated Will be removed in the next major.
+     * @deprecated Will be removed in the next major release.
      */
     public const STORE = 'STORE';
 
@@ -61,7 +61,7 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
     }
 
     /**
-     * @deprecated Will be removed in the next major.
+     * @deprecated Will be removed in the next major release.
      *
      * @param \Spryker\Glue\Kernel\Container $container
      *

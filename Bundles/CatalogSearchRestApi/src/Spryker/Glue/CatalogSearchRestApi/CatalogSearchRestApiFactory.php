@@ -38,7 +38,9 @@ class CatalogSearchRestApiFactory extends AbstractFactory
      */
     public function createCatalogSearchSuggestionsResourceMapper(): CatalogSearchSuggestionsResourceMapperInterface
     {
-        return new CatalogSearchSuggestionsResourceMapper();
+        return new CatalogSearchSuggestionsResourceMapper(
+            $this->getCurrencyClient()
+        );
     }
 
     /**
@@ -49,10 +51,10 @@ class CatalogSearchRestApiFactory extends AbstractFactory
         return new CatalogSearchReader(
             $this->getCatalogClient(),
             $this->getPriceClient(),
-            $this->getCurrencyClient(),
             $this->getResourceBuilder(),
             $this->createCatalogSearchResourceMapper(),
             $this->createCatalogSearchSuggestionsResourceMapper(),
+            $this->getStore(),
             $this->createCatalogSearchTranslationExpander()
         );
     }

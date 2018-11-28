@@ -11,7 +11,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface;
 use Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig;
 
-class PriceModeSetter implements PriceModeSetterInterface
+class PriceModeUpdater implements PriceModeUpdaterInterface
 {
     /**
      * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface
@@ -31,7 +31,7 @@ class PriceModeSetter implements PriceModeSetterInterface
      *
      * @return void
      */
-    public function setPriceMode(RestRequestInterface $restRequest): void
+    public function switchPriceMode(RestRequestInterface $restRequest): void
     {
         $priceMode = $this->getRequestParameter($restRequest, ProductPricesRestApiConfig::REQUEST_PARAMETER_PRICE_MODE);
         if ($priceMode !== '') {
@@ -47,6 +47,6 @@ class PriceModeSetter implements PriceModeSetterInterface
      */
     protected function getRequestParameter(RestRequestInterface $restRequest, string $parameterName): string
     {
-        return $restRequest->getHttpRequest()->query->get($parameterName, '');
+        return $restRequest->getHttpRequest()->query->get($parameterName);
     }
 }

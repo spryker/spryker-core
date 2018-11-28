@@ -20,7 +20,6 @@ class SetCurrencyBeforeActionPlugin extends AbstractPlugin implements Controller
      * {@inheritdoc}
      * - Sets the current currency from request.
      * - Uses CurrencyClient to set currency.
-     * - Quote will be reloaded on switching currency.
      *
      * @param string $action
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -29,6 +28,6 @@ class SetCurrencyBeforeActionPlugin extends AbstractPlugin implements Controller
      */
     public function beforeAction(string $action, RestRequestInterface $restRequest): void
     {
-        $this->getFactory()->createCurrencySetter()->setCurrency($restRequest);
+        $this->getFactory()->createCurrencyUpdater()->setCurrentCurrency($restRequest);
     }
 }

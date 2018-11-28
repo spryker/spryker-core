@@ -20,7 +20,7 @@ class PriceModeParameterValidatorPlugin extends AbstractPlugin implements RestRe
 {
     /**
      * {@inheritdoc}
-     * - Validates price mode parameter in the request.
+     * - Validates priceMode get request parameter.
      * - Checks that price mode exists and is available.
      *
      * @api
