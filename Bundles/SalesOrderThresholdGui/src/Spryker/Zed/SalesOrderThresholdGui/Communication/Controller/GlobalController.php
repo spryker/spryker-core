@@ -13,8 +13,7 @@ use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\GlobalHardThresholdType;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\GlobalSoftThresholdType;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\AbstractGlobalThresholdType;
 use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -72,47 +71,58 @@ class GlobalController extends AbstractController
     ): RedirectResponse {
         $data = $globalThresholdForm->getData();
 
-        $hardSalesOrderThresholdTransfer = $this->createSalesOrderThresholdTransfer(
-            $data[GlobalThresholdType::FIELD_HARD][GlobalSoftThresholdType::FIELD_ID_THRESHOLD] ?? null,
+        $this->handleThresholdData(
+            $data[GlobalThresholdType::FIELD_HARD],
+            SalesOrderThresholdGuiConfig::GROUP_HARD,
             $storeTransfer,
             $currencyTransfer
         );
 
-        if (isset($data[GlobalThresholdType::FIELD_HARD][GlobalHardThresholdType::FIELD_STRATEGY]) &&
-            $this->getFactory()->createGlobalSoftThresholdFormMapperResolver()->hasGlobalThresholdMapperByStrategyGroup(
-                SalesOrderThresholdGuiConfig::GROUP_HARD
-            )) {
-            $hardSalesOrderThresholdTransfer = $this->getFactory()
-                ->createGlobalSoftThresholdFormMapperResolver()
-                ->resolveGlobalThresholdMapperByStrategyGroup(SalesOrderThresholdGuiConfig::GROUP_HARD)
-                ->mapFormDataToTransfer($data[GlobalThresholdType::FIELD_HARD], $hardSalesOrderThresholdTransfer);
-        }
-
-        $this->saveSalesOrderThreshold($hardSalesOrderThresholdTransfer);
-
-        $softSalesOrderThresholdTransfer = $this->createSalesOrderThresholdTransfer(
-            $data[GlobalThresholdType::FIELD_SOFT][GlobalSoftThresholdType::FIELD_ID_THRESHOLD] ?? null,
+        $this->handleThresholdData(
+            $data[GlobalThresholdType::FIELD_SOFT],
+            SalesOrderThresholdGuiConfig::GROUP_SOFT,
             $storeTransfer,
             $currencyTransfer
         );
-
-        if (isset($data[GlobalThresholdType::FIELD_SOFT][GlobalSoftThresholdType::FIELD_STRATEGY]) &&
-            $this->getFactory()->createGlobalSoftThresholdFormMapperResolver()->hasGlobalThresholdMapperByStrategyGroup(
-                SalesOrderThresholdGuiConfig::GROUP_SOFT
-            )) {
-            $softSalesOrderThresholdTransfer = $this->getFactory()
-                ->createGlobalSoftThresholdFormMapperResolver()
-                ->resolveGlobalThresholdMapperByStrategyGroup(SalesOrderThresholdGuiConfig::GROUP_SOFT)
-                ->mapFormDataToTransfer($data[GlobalThresholdType::FIELD_SOFT], $softSalesOrderThresholdTransfer);
-        }
-
-        $this->saveSalesOrderThreshold($softSalesOrderThresholdTransfer);
 
         $this->addSuccessMessage(sprintf(
             'The Global Thresholds is saved successfully.'
         ));
 
         return $this->redirectResponse($request->getRequestUri());
+    }
+
+    /**
+     * @param array $thresholdData
+     * @param string $strategyGroup
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return void
+     */
+    protected function handleThresholdData(
+        array $thresholdData,
+        string $strategyGroup,
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): void {
+        $salesOrderThresholdTransfer = $this->createSalesOrderThresholdTransfer(
+            $thresholdData[AbstractGlobalThresholdType::FIELD_ID_THRESHOLD] ?? null,
+            $storeTransfer,
+            $currencyTransfer
+        );
+
+        if (isset($thresholdData[AbstractGlobalThresholdType::FIELD_STRATEGY]) &&
+            $this->getFactory()->createGlobalSoftThresholdFormMapperResolver()->hasGlobalThresholdMapperByStrategyGroup(
+                $strategyGroup
+            )) {
+            $salesOrderThresholdTransfer = $this->getFactory()
+                ->createGlobalSoftThresholdFormMapperResolver()
+                ->resolveGlobalThresholdMapperByStrategyGroup($strategyGroup)
+                ->mapFormDataToTransfer($thresholdData, $salesOrderThresholdTransfer);
+        }
+
+        $this->saveSalesOrderThreshold($salesOrderThresholdTransfer);
     }
 
     /**
