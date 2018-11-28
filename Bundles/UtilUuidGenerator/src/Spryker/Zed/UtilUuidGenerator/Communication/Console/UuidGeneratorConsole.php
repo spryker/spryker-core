@@ -27,7 +27,7 @@ class UuidGeneratorConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this
@@ -44,7 +44,7 @@ class UuidGeneratorConsole extends Console
      *
      * @return void
      */
-    public function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $updatedRecordCount = $this->getFacade()
             ->generateUuids($input->getOption(static::OPTION_TABLE));
