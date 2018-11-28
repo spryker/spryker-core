@@ -5,16 +5,16 @@ customers:
       - EmailConstraint
     salutation:
       - NotBlank
-      - Choice:
-          choices: [Mr, Mrs, Ms, Dr]
     firstName:
       - NotBlank
+      - Length:
+          max: 100
     lastName:
       - NotBlank
+      - Length:
+          max: 100
     gender:
       - NotBlank
-      - Choice:
-          choices: [Male, Female]
     password:
       - NotBlank
     passwordConfirmation:
@@ -25,91 +25,118 @@ customers:
       - NotBlank
       - Type:
           type: bool
-
   patch:
+    email:
+    - Optional:
+        constraints:
+        - NotBlank
+        - EmailConstraint
     salutation:
     - Optional:
         constraints:
         - NotBlank
-        - Choice:
-            choices: [Mr, Mrs, Ms, Dr]
     firstName:
     - Optional:
         constraints:
         - NotBlank
+        - Length:
+            max: 100
     lastName:
     - Optional:
         constraints:
         - NotBlank
+        - Length:
+            max: 100
     gender:
     - Optional:
         constraints:
         - NotBlank
-        - Choice:
-            choices: [Male, Female]
     dateOfBirth:
     - Optional:
         constraints:
         - Date
+
 addresses:
   post:
     salutation:
     - NotBlank
-    - Choice:
-        choices: [Mr, Mrs, Ms, Dr]
     firstName:
       - NotBlank
+      - Length:
+          max: 100
     lastName:
       - NotBlank
+      - Length:
+          max: 100
     address1:
       - NotBlank
+      - Length:
+          max: 255
     address2:
       - NotBlank
+      - Length:
+          max: 255
     zipCode:
       - NotBlank
+      - Length:
+          max: 15
     city:
       - NotBlank
       - Length:
           min: 3
+          max: 255
     iso2Code:
       - NotBlank
+      - Length:
+          max: 2
   patch:
     salutation:
     - Optional:
         constraints:
         - NotBlank
-        - Choice:
-            choices: [Mr, Mrs, Ms, Dr]
     firstName:
     - Optional:
         constraints:
         - NotBlank
+        - Length:
+            max: 100
     lastName:
     - Optional:
         constraints:
         - NotBlank
+        - Length:
+            max: 100
     address1:
     - Optional:
         constraints:
         - NotBlank
+        - Length:
+            max: 255
     address2:
     - Optional:
         constraints:
         - NotBlank
+        - Length:
+            max: 255
     zipCode:
     - Optional:
         constraints:
         - NotBlank
+        - Length:
+            max: 15
     city:
     - Optional:
         constraints:
         - NotBlank
         - Length:
             min: 3
+          max: 255
     iso2Code:
     - Optional:
         constraints:
         - NotBlank
+        - Length:
+            max: 2
 
 customer-password:
   patch:
@@ -127,6 +154,8 @@ customer-forgotten-password:
     email:
       - NotBlank
       - EmailConstraint
+      - Length:
+          max: 255
 
 customer-restore-password:
   patch:
@@ -138,4 +167,3 @@ customer-restore-password:
       - NotBlank
       - IdenticalTo:
           propertyPath: password
-
