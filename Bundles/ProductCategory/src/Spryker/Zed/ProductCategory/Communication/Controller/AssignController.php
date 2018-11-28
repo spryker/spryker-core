@@ -62,6 +62,7 @@ class AssignController extends AbstractController
             'productCategoriesTable' => $categoryProductsTable->render(),
             'productsTable' => $productsTable->render(),
             'currentCategory' => $categoryEntity->toArray(),
+            'categoryPath' => $this->getCategoryPath($idCategory, $localeTransfer->getIdLocale()),
             'currentLocale' => $localeTransfer->getLocaleName(),
         ]);
     }
@@ -84,6 +85,18 @@ class AssignController extends AbstractController
         }
 
         return $categoryEntity;
+    }
+
+    /**
+     * @param int $idCategory
+     * @param int $idLocale
+     *
+     * @return string
+     */
+    protected function getCategoryPath($idCategory, $idLocale): string
+    {
+        $categoryPath = $this->getFactory()->getCategoryQueryContainer()->queryPath($idCategory, $idLocale)->find();
+        return implode(' / ', array_column($categoryPath, 'name'));
     }
 
     /**

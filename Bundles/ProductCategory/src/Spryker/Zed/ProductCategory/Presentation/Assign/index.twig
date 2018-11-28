@@ -14,8 +14,11 @@
 {% endblock %}
 
 {% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Assign products to category' | trans } %}
+        {% block widget_title %}
+            <h5>{{ 'Assign products to category'  | trans }}: <strong>{{ categoryPath }}</strong></h5>
+        {% endblock %}
 
         {% block widget_content %}
 
