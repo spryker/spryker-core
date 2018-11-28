@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesReclamationGui;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToOmsFacadeBridge;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesFacadeBridge;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesReclamationFacadeBridge;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceBridge;
@@ -18,6 +19,7 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
 {
     public const FACADE_SALES_RECLAMATION = 'FACADE_SALES_RECLAMATION';
     public const FACADE_SALES = 'FACADE_SALES';
+    public const FACADE_OMS = 'FACADE_OMS';
 
     public const PROPEL_QUERY_SALES_RECLAMATION = 'PROPEL_QUERY_SALES_RECLAMATION';
 
@@ -34,6 +36,7 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
 
         $this->addSalesFacade($container);
         $this->addSalesReclamationFacade($container);
+        $this->addOmsFacade($container);
         $this->addSalesReclamationPropelQuery($container);
         $this->addDateTimeService($container);
 
@@ -93,6 +96,20 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::FACADE_SALES] = function (Container $container) {
             return new SalesReclamationGuiToSalesFacadeBridge($container->getLocator()->sales()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsFacade(Container $container): Container
+    {
+        $container[static::FACADE_OMS] = function (Container $container) {
+            return new SalesReclamationGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());
         };
 
         return $container;

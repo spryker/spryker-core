@@ -8,6 +8,7 @@
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/manual-order-entry-gui-extension": "^1.1.0",
+    "spryker/oms": "^8.0.0",
     "spryker/sales": "^7.0.0 || ^8.0.0",
     "spryker/sales-extension": "^1.0.0",
     "spryker/sales-reclamation": "^0.0.0 || ^1.0.0",

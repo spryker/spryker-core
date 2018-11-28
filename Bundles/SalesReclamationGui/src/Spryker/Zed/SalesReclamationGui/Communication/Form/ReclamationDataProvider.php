@@ -21,9 +21,8 @@ class ReclamationDataProvider
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function __construct(
-        Request $request
-    ) {
+    public function __construct(Request $request)
+    {
         $this->request = $request;
     }
 
@@ -34,19 +33,27 @@ class ReclamationDataProvider
      */
     public function getOptions(QuoteTransfer $quoteTransfer): array
     {
-        $value = null;
-
-        if (!$quoteTransfer->getReclamationId()
-            && $this->request->query->has(ReclamationTable::PARAM_ID_RECLAMATION)
-        ) {
-            $value = $this->request->query->get(ReclamationTable::PARAM_ID_RECLAMATION);
-        }
-
         return [
             'data_class' => QuoteTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
-            ReclamationType::OPTION_VALUE => $value,
+            ReclamationType::OPTION_VALUE => $quoteTransfer->getReclamationId(),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getData(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        if (!$quoteTransfer->getReclamationId()
+            && $this->request->query->has(ReclamationTable::PARAM_ID_RECLAMATION)
+        ) {
+            $quoteTransfer->setReclamationId($this->request->query->get(ReclamationTable::PARAM_ID_RECLAMATION));
+        }
+
+        return $quoteTransfer;
     }
 }

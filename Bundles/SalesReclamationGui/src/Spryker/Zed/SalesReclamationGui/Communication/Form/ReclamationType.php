@@ -15,9 +15,8 @@ use Symfony\Component\Validator\Constraints\GreaterThan;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\SalesReclamationConfig getConfig()
- * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepository getRepository()
  * @method \Spryker\Zed\SalesReclamation\Business\SalesReclamationFacadeInterface getFacade()
- * @method \Spryker\Zed\SalesReclamation\Communication\SalesReclamationCommunicationFactory getFactory()
  */
 class ReclamationType extends AbstractType
 {
