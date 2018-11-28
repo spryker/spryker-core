@@ -19,6 +19,23 @@ $(document).ready(function() {
         }
     });
 
+    var categorySearchInput = jQuery('.gui-table-data-category').parents('.dataTables_wrapper').find('input[type="search"]');
+    var categoryTimeOutId = 0;
+
+    if(categorySearchInput.length) {
+        categorySearchInput
+        .unbind()
+        .bind("input", function(e) {
+            var self = this;
+
+            clearTimeout(categoryTimeOutId);
+            categoryTimeOutId = setTimeout(function() {
+                rootNodeDataTable.search(self.value).draw();
+            }, 1000);
+            return;
+        });
+    }
+
     rootNodeDataTable.on('draw', function(event, settings) {
         if (settings.json.data.length === 0) {
             return;

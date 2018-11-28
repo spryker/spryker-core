@@ -24,28 +24,6 @@ $(document).ready(function() {
         .on('error.dt', dataTable.onError)
         .dataTable(dataTable.defaultConfiguration);
     
-    /* Delay for data tables search */
-    var dataTables = $('.dataTable');
-    dataTables.each(function() {
-        var searchInput = $(this).parents('.dataTables_wrapper').find('input[type="search"]');
-        var dtable = $('.gui-table-data').dataTable().api();
-        var timeOutId = 0;
-        
-        if(searchInput.length) {
-            searchInput
-                .unbind()
-                .bind("input", function(e) {
-                    var self = this;
-                    
-                    clearTimeout(timeOutId);
-                    timeOutId = setTimeout(function() {
-                        dtable.search(self.value).draw();
-                    }, 500);
-                    return;
-                });
-        }
-    });
-    
     /* Draw data tables without search */
     $('.gui-table-data-no-search')
         .on('error.dt', dataTable.onError)
@@ -100,4 +78,29 @@ $(document).ready(function() {
 
     safeChecks.addSafeSubmitCheck();
     safeChecks.addSafeDatetimeCheck();
+});
+
+$(window).on('load', function() {
+    /* Delay for data tables search */
+    var dataTablesWrapper = $('.dataTables_wrapper');
+    dataTablesWrapper.each(function(index, wrapper) {
+        var searchInput = $(wrapper).find('input[type="search"]');
+        var dataTable = $(wrapper).find('.gui-table-data');
+        var dataTableApi = dataTable.dataTable().api();
+        var timeOutId = 0;
+
+        if(searchInput.length && dataTable.length) {
+            searchInput
+            .unbind()
+            .bind("input", function(e) {
+                var self = this;
+
+                clearTimeout(timeOutId);
+                timeOutId = setTimeout(function() {
+                    dataTableApi.search(self.value).draw();
+                }, 1000);
+                return;
+            });
+        }
+    });
 });
