@@ -120,9 +120,13 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     {
         return function (array $validatorConfig): Constraint {
             $shortClassName = key($validatorConfig);
-            $parameters = $this->getParameters(reset($validatorConfig));
+            $parameters = $this->getParameters($validatorConfig);
 
             $className = $this->resolveConstraintClassName($shortClassName);
+
+            if ($parameters !== null) {
+                $parameters = reset($parameters);
+            }
 
             return new $className($parameters);
         };
@@ -161,12 +165,18 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
      */
     protected function getParameters(?array $constraintParameters = null): ?array
     {
-        if (!$constraintParameters) {
+        if (!reset($constraintParameters)) {
             return null;
         }
 
-        $constraintParameters = $this->processFieldsParameter($constraintParameters);
-        $constraintParameters = $this->processConstraintsParameter($constraintParameters);
+        foreach ($constraintParameters as $constraintName => $constraintParameter) {
+            if (!$constraintParameter) {
+                continue;
+            }
+
+            $constraintParameters[$constraintName] = $constraintParameter = $this->processFieldsParameter($constraintParameter);
+            $constraintParameters[$constraintName] = $constraintParameter = $this->processConstraintsParameter($constraintParameter);
+        }
 
         return $constraintParameters;
     }
@@ -183,9 +193,10 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
         }
 
         foreach ($constraintParameters[static::FIELDS] as $fieldName => $validators) {
-            if ($validators !== null) {
-                $constraintParameters[static::FIELDS][$fieldName] = $this->mapFieldConstrains($validators);
+            if ($validators === null) {
+                continue;
             }
+            $constraintParameters[static::FIELDS][$fieldName] = $this->mapFieldConstrains($validators);
         }
 
         return $constraintParameters + $this->getConstraintCollectionOptions();
