@@ -22,6 +22,8 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return void
      */
     public function updateQuoteUuid(): void

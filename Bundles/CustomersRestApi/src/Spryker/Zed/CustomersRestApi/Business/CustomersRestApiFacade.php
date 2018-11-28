@@ -20,7 +20,7 @@ class CustomersRestApiFacade extends AbstractFacade implements CustomersRestApiF
      *
      * @api
      *
-     * @deprecated Use Spryker\Zed\UtilUuidGenerator\Communication\Console\UuidGeneratorConsole instead.
+     * @deprecated Will be removed in the next major.
      *
      * @return void
      */

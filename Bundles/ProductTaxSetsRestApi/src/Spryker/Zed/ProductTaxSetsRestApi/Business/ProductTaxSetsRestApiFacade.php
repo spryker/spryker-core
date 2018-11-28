@@ -20,7 +20,7 @@ class ProductTaxSetsRestApiFacade extends AbstractFacade implements ProductTaxSe
      *
      * @api
      *
-     * @deprecated Use Spryker\Zed\UtilUuidGenerator\Communication\Console\UuidGeneratorConsole instead.
+     * @deprecated Will be removed in the next major.
      *
      * @return void
      */

@@ -17,5 +17,5 @@ interface UtilUuidGeneratorEntityManagerInterface extends EntityManagerInterface
      *
      * @return int
      */
-    public function setEmptyUuids(ModelCriteria $query): int;
+    public function fillEmptyUuids(ModelCriteria $query): int;
 }

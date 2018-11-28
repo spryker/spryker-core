@@ -15,7 +15,7 @@ interface CustomersRestApiFacadeInterface
      *
      * @api
      *
-     * @deprecated Use Spryker\Zed\UtilUuidGenerator\Communication\Console\UuidGeneratorConsole instead.
+     * @deprecated UWill be removed in the next major.
      *
      * @return void
      */

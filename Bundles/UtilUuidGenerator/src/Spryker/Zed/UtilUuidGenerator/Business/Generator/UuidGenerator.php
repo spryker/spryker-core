@@ -51,6 +51,6 @@ class UuidGenerator implements UuidGeneratorInterface
             throw new Exception(sprintf(static::ERROR_MESSAGE_UUID, $tableName, static::COLUMN_UUID));
         }
 
-        return $this->entityManager->setEmptyUuids($query);
+        return $this->entityManager->fillEmptyUuids($query);
     }
 }
