@@ -22,7 +22,7 @@ class PathResponseSpecificationComponent implements PathResponseSpecificationCom
     protected const KEY_SCHEMA = 'schema';
 
     /**
-     * @var \Generated\Shared\Transfer\PathResponseComponentTransfer $pathResponseComponentTransfer
+     * @var \Generated\Shared\Transfer\PathResponseComponentTransfer|null $pathResponseComponentTransfer
      */
     protected $pathResponseComponentTransfer;
 
@@ -58,7 +58,7 @@ class PathResponseSpecificationComponent implements PathResponseSpecificationCom
      */
     protected function validatePathResponseComponentTransfer(): bool
     {
-        if ($this->pathResponseComponentTransfer === null) {
+        if (!$this->pathResponseComponentTransfer) {
             return false;
         }
 

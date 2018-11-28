@@ -20,7 +20,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
     protected const KEY_ITEMS = 'items';
 
     /**
-     * @var \Generated\Shared\Transfer\SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer
+     * @var \Generated\Shared\Transfer\SchemaPropertyComponentTransfer|null $schemaPropertyComponentTransfer
      */
     protected $schemaPropertyComponentTransfer;
 
@@ -62,7 +62,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
      */
     protected function validateSchemaPropertyComponentTransfer(): bool
     {
-        if ($this->schemaPropertyComponentTransfer === null) {
+        if (!$this->schemaPropertyComponentTransfer) {
             return false;
         }
 

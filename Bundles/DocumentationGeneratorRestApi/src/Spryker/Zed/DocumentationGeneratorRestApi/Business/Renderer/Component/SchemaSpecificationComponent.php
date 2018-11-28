@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\SchemaComponentTransfer;
 class SchemaSpecificationComponent implements SchemaSpecificationComponentInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\SchemaComponentTransfer $schemaComponentTransfer
+     * @var \Generated\Shared\Transfer\SchemaComponentTransfer|null $schemaComponentTransfer
      */
     protected $schemaComponentTransfer;
 
@@ -53,7 +53,7 @@ class SchemaSpecificationComponent implements SchemaSpecificationComponentInterf
      */
     protected function validateSchemaComponentTransfer(): bool
     {
-        if ($this->schemaComponentTransfer === null) {
+        if (!$this->schemaComponentTransfer) {
             return false;
         }
 

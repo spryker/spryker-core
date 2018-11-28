@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\SecuritySchemeComponentTransfer;
 class SecuritySchemeSpecificationComponent implements SecuritySchemeSpecificationComponentInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\SecuritySchemeComponentTransfer $securitySchemeComponentTransfer
+     * @var \Generated\Shared\Transfer\SecuritySchemeComponentTransfer|null $securitySchemeComponentTransfer
      */
     protected $securitySchemeComponentTransfer;
 
@@ -51,7 +51,7 @@ class SecuritySchemeSpecificationComponent implements SecuritySchemeSpecificatio
      */
     protected function validateSecuritySchemeComponentTransfer(): bool
     {
-        if ($this->securitySchemeComponentTransfer === null) {
+        if (!$this->securitySchemeComponentTransfer) {
             return false;
         }
 

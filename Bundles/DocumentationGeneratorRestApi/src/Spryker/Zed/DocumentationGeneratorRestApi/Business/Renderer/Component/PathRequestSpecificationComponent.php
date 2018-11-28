@@ -22,7 +22,7 @@ class PathRequestSpecificationComponent implements PathRequestSpecificationCompo
     protected const KEY_SCHEMA = 'schema';
 
     /**
-     * @var \Generated\Shared\Transfer\PathRequestComponentTransfer $pathRequestComponentTransfer
+     * @var \Generated\Shared\Transfer\PathRequestComponentTransfer|null $pathRequestComponentTransfer
      */
     protected $pathRequestComponentTransfer;
 
@@ -60,7 +60,7 @@ class PathRequestSpecificationComponent implements PathRequestSpecificationCompo
      */
     protected function validatePathRequestComponentTransfer(): bool
     {
-        if ($this->pathRequestComponentTransfer === null) {
+        if (!$this->pathRequestComponentTransfer) {
             return false;
         }
 

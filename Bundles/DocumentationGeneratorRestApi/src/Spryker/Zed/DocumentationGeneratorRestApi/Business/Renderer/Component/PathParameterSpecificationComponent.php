@@ -20,7 +20,7 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
     protected const KEY_TYPE = 'type';
 
     /**
-     * @var \Generated\Shared\Transfer\PathParameterComponentTransfer $pathParameterComponentTransfer
+     * @var \Generated\Shared\Transfer\PathParameterComponentTransfer|null $pathParameterComponentTransfer
      */
     protected $pathParameterComponentTransfer;
 
@@ -69,7 +69,7 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
      */
     protected function validatePathParameterComponentTransfer(): bool
     {
-        if ($this->pathParameterComponentTransfer === null) {
+        if (!$this->pathParameterComponentTransfer) {
             return false;
         }
 

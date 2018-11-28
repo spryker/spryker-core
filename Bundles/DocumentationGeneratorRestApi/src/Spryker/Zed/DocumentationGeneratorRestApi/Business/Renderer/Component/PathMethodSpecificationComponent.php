@@ -19,7 +19,7 @@ class PathMethodSpecificationComponent implements PathMethodSpecificationCompone
     protected const KEY_REQUEST_BODY = 'requestBody';
 
     /**
-     * @var \Generated\Shared\Transfer\PathMethodComponentTransfer $pathMethodComponentTransfer
+     * @var \Generated\Shared\Transfer\PathMethodComponentTransfer|null $pathMethodComponentTransfer
      */
     protected $pathMethodComponentTransfer;
 
@@ -67,7 +67,7 @@ class PathMethodSpecificationComponent implements PathMethodSpecificationCompone
      */
     protected function validatePathMethodComponentTransfer(): bool
     {
-        if ($this->pathMethodComponentTransfer === null) {
+        if (!$this->pathMethodComponentTransfer) {
             return false;
         }
 
