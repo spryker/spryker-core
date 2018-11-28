@@ -84,18 +84,17 @@ class RestRequestValidator implements RestRequestValidatorInterface
         Request $httpRequest,
         RestRequestInterface $restRequest
     ): ?RestErrorCollectionTransfer {
+        foreach ($this->validateRestRequestPlugins as $validateRestRequestPlugins) {
+            $restErrorMessageTransfer = $validateRestRequestPlugins->validate($httpRequest, $restRequest);
+            if ($restErrorMessageTransfer !== null) {
+                return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
+            }
+        }
 
         foreach ($this->restRequestValidatorPlugins as $restRequestValidatorPlugin) {
             $restErrorCollectionTransfer = $restRequestValidatorPlugin->validate($httpRequest, $restRequest);
             if ($restErrorCollectionTransfer !== null) {
                 return $restErrorCollectionTransfer;
-            }
-        }
-
-        foreach ($this->validateRestRequestPlugins as $validateRestRequestPlugins) {
-            $restErrorMessageTransfer = $validateRestRequestPlugins->validate($httpRequest, $restRequest);
-            if ($restErrorMessageTransfer !== null) {
-                return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
             }
         }
 
