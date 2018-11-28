@@ -45,7 +45,7 @@ class GlobalThresholdDataProviderResolver implements GlobalThresholdDataProvider
         if (!$this->hasGlobalThresholdDataProviderByStrategyGroup($salesOrderThresholdTypeGroup)) {
             throw new MissingThresholdDataProviderException();
         }
-        /** @var \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyDataProviderInterface $dataProvider */
+
         $dataProvider = $this->config->getStrategyGroupToDataProviderMap()[$salesOrderThresholdTypeGroup];
 
         return new $dataProvider($this->formExpanderPlugins);

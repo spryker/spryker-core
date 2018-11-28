@@ -56,7 +56,7 @@ class GlobalThresholdMapperResolver implements GlobalThresholdMapperResolverInte
         if (!$this->hasGlobalThresholdMapperByStrategyGroup($salesOrderThresholdTypeGroup)) {
             throw new MissingGlobalThresholdFormMapperException();
         }
-        /** @var \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface $mapperClass */
+
         $mapperClass = $this->config->getStrategyGroupToFormTypeMap()[$salesOrderThresholdTypeGroup];
 
         return new $mapperClass($this->localeFacade, $this->formExpanderPlugins);
