@@ -46,7 +46,7 @@
             <reference local="fk_product_management_attribute_value" foreign="id_product_management_attribute_value" />
         </foreign-key>
 
-        <unique name="spy_pim_attribute_value_translation-unique-locale_attribute_value">
+        <unique name="spy_pim_attribute_value_translation-unique-locale_attribute_val">
             <unique-column name="fk_locale" />
             <unique-column name="fk_product_management_attribute_value" />
         </unique>
