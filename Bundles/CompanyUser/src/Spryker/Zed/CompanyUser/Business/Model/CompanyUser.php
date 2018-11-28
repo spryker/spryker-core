@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface;
 use Spryker\Zed\CompanyUser\Persistence\CompanyUserEntityManagerInterface;
@@ -161,19 +162,21 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
-     * @param string $customerReference
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findActiveCompanyUsersByCustomerReference(string $customerReference): CompanyUserCollectionTransfer
+    public function findActiveCompanyUsersByCustomerReference(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer
     {
-        $collectionTransfer = $this->companyUserRepository->findActiveCompanyUsersByCustomerReference($customerReference);
+        $customerTransfer->requireCustomerReference();
 
-        foreach ($collectionTransfer->getCompanyUsers() as &$companyUserTransfer) {
+        $companyUserCollectionTransfer = $this->companyUserRepository->findActiveCompanyUsersByCustomerReference($customerTransfer->getCustomerReference());
+
+        foreach ($companyUserCollectionTransfer->getCompanyUsers() as &$companyUserTransfer) {
             $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);
         }
 
-        return $collectionTransfer;
+        return $companyUserCollectionTransfer;
     }
 
     /**

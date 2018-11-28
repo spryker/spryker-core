@@ -207,7 +207,7 @@ class CompanyUserFacadeTest extends Test
     public function testFindActiveCompanyUsersByCustomerReferenceShouldReturnTransfer(): void
     {
         // Assign
-        $companyTransfer = $this->tester->haveCompany(['is_active' => true]);
+        $companyTransfer = $this->tester->haveCompany([CompanyUserTransfer::IS_ACTIVE => true]);
         $customerTransfer = $this->tester->haveCustomer();
         $this->tester->haveCompanyUser([
             static::CUSTOMER_COLUMN_COMPANY_USER => $customerTransfer,
@@ -229,7 +229,7 @@ class CompanyUserFacadeTest extends Test
     public function testFindActiveCompanyUsersByCustomerReferenceShouldNotReturnInactiveCompanyUsers(): void
     {
         // Assign
-        $companyTransfer = $this->tester->haveCompany(['is_active' => true]);
+        $companyTransfer = $this->tester->haveCompany([CompanyUserTransfer::IS_ACTIVE => true]);
         $customerTransfer = $this->tester->haveCustomer();
         $this->tester->haveCompanyUser([
             static::CUSTOMER_COLUMN_COMPANY_USER => $customerTransfer,
