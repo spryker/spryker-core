@@ -59,9 +59,6 @@ class CompanyUserRoleByCompanyFormDataProvider
     }
 
     /**
-     * Retrieves the list of roles for the same company.
-     * Returns [role name => id role].
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return array

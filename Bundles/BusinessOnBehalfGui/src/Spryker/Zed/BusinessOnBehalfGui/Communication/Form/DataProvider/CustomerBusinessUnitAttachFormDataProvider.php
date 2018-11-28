@@ -78,17 +78,13 @@ class CustomerBusinessUnitAttachFormDataProvider
      */
     public function getOptions(CompanyUserTransfer $companyUserTransfer): array
     {
-        $companyBusinessUnitChoicesValues = $this->getCompanyBusinessUnitChoices($companyUserTransfer);
-
         return [
-            CustomerBusinessUnitAttachForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES => $companyBusinessUnitChoicesValues,
+            CustomerBusinessUnitAttachForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES =>
+                $this->getCompanyBusinessUnitChoices($companyUserTransfer),
         ];
     }
 
     /**
-     * Retrieves the list of units for the company.
-     * Returns [business unit name => id business unit].
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return array
