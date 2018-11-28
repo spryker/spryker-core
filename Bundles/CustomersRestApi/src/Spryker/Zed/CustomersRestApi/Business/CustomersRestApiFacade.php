@@ -43,7 +43,7 @@ class CustomersRestApiFacade extends AbstractFacade implements CustomersRestApiF
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        return $this->getFactory()->createAddressesQuoteMapper()->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+        return $this->getFactory()->createAddressQuoteMapper()->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 
     /**

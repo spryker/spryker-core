@@ -33,12 +33,6 @@ class CartReader implements CartReaderInterface
      */
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return (new QuoteResponseTransfer())->setIsSuccessful(false);
-        }
-
-        return $quoteResponseTransfer;
+        return $this->quoteFacade->findQuoteByUuid($quoteTransfer);
     }
 }

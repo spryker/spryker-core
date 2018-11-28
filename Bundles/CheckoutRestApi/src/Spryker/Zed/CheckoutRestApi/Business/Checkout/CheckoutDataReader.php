@@ -126,7 +126,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected function getAddressesTransfer(QuoteTransfer $quoteTransfer): AddressesTransfer
     {
         $customerTransfer = $quoteTransfer->getCustomer();
-        if ($customerTransfer === null || $customerTransfer->getIsGuest() === true) {
+        if (!$customerTransfer || $customerTransfer->getIsGuest()) {
             return new AddressesTransfer();
         }
 
@@ -160,12 +160,12 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     protected function extendAddressesWithDefaultBillingAndShipping(CustomerTransfer $customerTransfer): AddressesTransfer
     {
-        $addressesTransfer = $customerTransfer->getAddresses();
-        foreach ($addressesTransfer->getAddresses() as $addressKey => $addressTransfer) {
-            $addressesTransfer->getAddresses()->offsetGet($addressKey)
-                ->setIsDefaultShipping($addressTransfer->getIdCustomerAddress() === (int)$customerTransfer->getDefaultShippingAddress());
-            $addressesTransfer->getAddresses()->offsetGet($addressKey)
-                ->setIsDefaultBilling($addressTransfer->getIdCustomerAddress() === (int)$customerTransfer->getDefaultBillingAddress());
+        $addressesTransfer = new AddressesTransfer();
+        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressKey => $addressTransfer) {
+            $addressTransfer->setIsDefaultShipping($addressTransfer->getIdCustomerAddress() === (int)$customerTransfer->getDefaultShippingAddress());
+            $addressTransfer->setIsDefaultBilling($addressTransfer->getIdCustomerAddress() === (int)$customerTransfer->getDefaultBillingAddress());
+
+            $addressesTransfer->addAddress($addressTransfer);
         }
 
         return $addressesTransfer;

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentsRestApi\Business\Quote;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
-interface QuoteMapperInterface
+interface ShipmentQuoteMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer

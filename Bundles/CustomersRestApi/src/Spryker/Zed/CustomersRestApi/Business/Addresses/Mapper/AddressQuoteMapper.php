@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomerTransfer;
 use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeInterface;
 
-class AddressesQuoteMapper implements AddressesQuoteMapperInterface
+class AddressQuoteMapper implements AddressQuoteMapperInterface
 {
     /**
      * @var \Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeInterface
@@ -74,7 +74,7 @@ class AddressesQuoteMapper implements AddressesQuoteMapperInterface
         }
 
         if ($restAddressTransfer->getId()) {
-            $addressTransfer = $this->getAddressByUuid($restAddressTransfer, $restCustomerTransfer);
+            $addressTransfer = $this->findAddressByUuid($restAddressTransfer, $restCustomerTransfer);
 
             if ($addressTransfer !== null) {
                 return $addressTransfer;
@@ -90,13 +90,13 @@ class AddressesQuoteMapper implements AddressesQuoteMapperInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    protected function getAddressByUuid(RestAddressTransfer $restAddressTransfer, RestCustomerTransfer $restCustomerTransfer): ?AddressTransfer
+    protected function findAddressByUuid(RestAddressTransfer $restAddressTransfer, RestCustomerTransfer $restCustomerTransfer): ?AddressTransfer
     {
         $customerTransfer = (new CustomerTransfer())->setIdCustomer($restCustomerTransfer->getIdCustomer());
 
-        $addressTransfers = $this->customerFacade->getAddresses($customerTransfer);
+        $addressesTransfer = $this->customerFacade->getAddresses($customerTransfer);
 
-        foreach ($addressTransfers->getAddresses() as $addressTransfer) {
+        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
             if ($addressTransfer->getUuid() === $restAddressTransfer->getId()) {
                 return $addressTransfer;
             }

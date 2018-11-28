@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomersRestApi\CustomersRestApiConfig getConfig()
  */
-class AddressesQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPluginInterface
+class AddressQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPluginInterface
 {
     /**
      * {@inheritdoc}

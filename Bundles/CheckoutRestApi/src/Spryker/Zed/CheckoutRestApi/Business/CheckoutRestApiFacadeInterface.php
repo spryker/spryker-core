@@ -30,10 +30,10 @@ interface CheckoutRestApiFacadeInterface
      * Specification:
      * - Looks up the customer quote by uuid.
      * - Validates quote.
-     * - Runs the quote mapper plugins that update the quote with data from request.
+     * - Executes plugins that maps request data into QuoteTransfer.
      * - Recalculates quote.
      * - Places an order.
-     * - Deletes quote.
+     * - Deletes quote if order was placed successfully.
      *
      * @api
      *

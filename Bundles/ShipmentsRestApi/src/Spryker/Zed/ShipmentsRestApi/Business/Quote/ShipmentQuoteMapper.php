@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShipmentsRestApi\Business\Quote;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -16,7 +15,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
 
-class QuoteMapper implements QuoteMapperInterface
+class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
 {
     /**
      * @var \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface
@@ -60,7 +59,7 @@ class QuoteMapper implements QuoteMapperInterface
         $quoteTransfer->setShipment($shipmentTransfer);
 
         $expenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer);
-        $quoteTransfer->setExpenses(new ArrayObject([$expenseTransfer]));
+        $quoteTransfer->addExpense($expenseTransfer);
 
         return $quoteTransfer;
     }

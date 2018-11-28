@@ -45,7 +45,7 @@ class CustomerQuoteMapper implements CustomerQuoteMapperInterface
 
         $customerResponseTransfer = $this->customerFacade->findCustomerByReference($restCustomerTransfer->getCustomerReference());
 
-        if ($customerResponseTransfer->getHasCustomer() === false) {
+        if (!$customerResponseTransfer->getHasCustomer()) {
             $customerTransfer = (new CustomerTransfer())
                 ->fromArray($restCustomerTransfer->toArray(), true)
                 ->setIsGuest(true);

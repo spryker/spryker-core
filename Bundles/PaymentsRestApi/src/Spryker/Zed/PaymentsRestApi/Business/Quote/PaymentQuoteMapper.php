@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestPaymentTransfer;
 
-class QuoteMapper implements QuoteMapperInterface
+class PaymentQuoteMapper implements PaymentQuoteMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer

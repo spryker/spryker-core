@@ -39,7 +39,8 @@ class CustomersRestApiFacadeTest extends Unit
      */
     public function testMapAddressesToQuoteWillReturnQuoteOnAllDataProvided(): void
     {
-        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
 
         $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullRestCheckoutRequestAttributesTransfer();
@@ -57,7 +58,8 @@ class CustomersRestApiFacadeTest extends Unit
      */
     public function testMapAddressesToQuoteWillReturnQuoteForGuestOnAllDataProvided(): void
     {
-        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
 
         $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullGuestRestCheckoutRequestAttributesTransfer();
@@ -73,7 +75,8 @@ class CustomersRestApiFacadeTest extends Unit
      */
     public function testMapAddressesToQuoteWillReturnQuoteOnOnlyBillingAddressProvided(): void
     {
-        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
 
         $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyBillingRestCheckoutRequestAttributesTransfer();
@@ -91,7 +94,8 @@ class CustomersRestApiFacadeTest extends Unit
      */
     public function testMapAddressesToQuoteWillReturnQuoteForGuestOnOnlyBillingAddressProvided(): void
     {
-        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
 
         $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyBillingGuestRestCheckoutRequestAttributesTransfer();
@@ -107,7 +111,8 @@ class CustomersRestApiFacadeTest extends Unit
      */
     public function testMapAddressesToQuoteWillReturnQuoteOnOnlyShippingAddressProvided(): void
     {
-        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
 
         $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyShippingRestCheckoutRequestAttributesTransfer();
@@ -124,7 +129,8 @@ class CustomersRestApiFacadeTest extends Unit
      */
     public function testMapAddressesToQuoteWillReturnQuoteForGuestOnOnlyShippingAddressProvided(): void
     {
-        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
 
         $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyShippingGuestRestCheckoutRequestAttributesTransfer();
@@ -140,7 +146,8 @@ class CustomersRestApiFacadeTest extends Unit
      */
     public function testMapAddressesToQuoteWillReturnQuoteOnNoAddressProvided(): void
     {
-        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
 
         $restCheckoutRequestAttributesTransfer = $this->tester->prepareCustomerRestCheckoutRequestAttributesTransfer();
@@ -157,7 +164,8 @@ class CustomersRestApiFacadeTest extends Unit
      */
     public function testMapAddressesToQuoteWillReturnQuoteForGuestOnNoAddressProvided(): void
     {
-        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
 
         $restCheckoutRequestAttributesTransfer = $this->tester->prepareGuestCustomerRestCheckoutRequestAttributesTransfer();
@@ -174,7 +182,8 @@ class CustomersRestApiFacadeTest extends Unit
      */
     public function testMapCustomerToQuoteWillReturnQuoteWithCustomerProvided(): void
     {
-        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
 
         $restCheckoutRequestAttributesTransfer = $this->tester->prepareCustomerRestCheckoutRequestAttributesTransfer();
@@ -194,7 +203,8 @@ class CustomersRestApiFacadeTest extends Unit
      */
     public function testMapCustomerToQuoteWillReturnQuoteForGuestWithCustomerProvided(): void
     {
-        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
 
         $restCheckoutRequestAttributesTransfer = $this->tester->prepareGuestCustomerRestCheckoutRequestAttributesTransfer();
@@ -214,7 +224,8 @@ class CustomersRestApiFacadeTest extends Unit
      */
     public function testMapCustomerToQuoteWillReturnQuoteWithNoCustomerProvided(): void
     {
-        $customersRestApiFacade = $this->tester->getLocator()->customersRestApi()->facade();
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
 
         $restCheckoutRequestAttributesTransfer = $this->tester->prepareNoCustomerRestCheckoutRequestAttributesTransfer();

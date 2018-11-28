@@ -8,8 +8,8 @@
 namespace Spryker\Zed\PaymentsRestApi\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\PaymentsRestApi\Business\Quote\QuoteMapper;
-use Spryker\Zed\PaymentsRestApi\Business\Quote\QuoteMapperInterface;
+use Spryker\Zed\PaymentsRestApi\Business\Quote\PaymentQuoteMapper;
+use Spryker\Zed\PaymentsRestApi\Business\Quote\PaymentQuoteMapperInterface;
 
 /**
  * @method \Spryker\Zed\PaymentsRestApi\PaymentsRestApiConfig getConfig()
@@ -17,10 +17,10 @@ use Spryker\Zed\PaymentsRestApi\Business\Quote\QuoteMapperInterface;
 class PaymentsRestApiBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\PaymentsRestApi\Business\Quote\QuoteMapperInterface
+     * @return \Spryker\Zed\PaymentsRestApi\Business\Quote\PaymentQuoteMapperInterface
      */
-    public function createQuoteMapper(): QuoteMapperInterface
+    public function createPaymentQuoteMapperMapper(): PaymentQuoteMapperInterface
     {
-        return new QuoteMapper();
+        return new PaymentQuoteMapper();
     }
 }

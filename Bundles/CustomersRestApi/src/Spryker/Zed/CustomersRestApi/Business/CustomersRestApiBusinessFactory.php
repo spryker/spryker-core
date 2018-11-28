@@ -9,8 +9,8 @@ namespace Spryker\Zed\CustomersRestApi\Business;
 
 use Spryker\Zed\CustomersRestApi\Business\Addresses\AddressesUuidWriter;
 use Spryker\Zed\CustomersRestApi\Business\Addresses\AddressesUuidWriterInterface;
-use Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper\AddressesQuoteMapper;
-use Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper\AddressesQuoteMapperInterface;
+use Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper\AddressQuoteMapper;
+use Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper\AddressQuoteMapperInterface;
 use Spryker\Zed\CustomersRestApi\Business\Mapper\CustomerQuoteMapper;
 use Spryker\Zed\CustomersRestApi\Business\Mapper\CustomerQuoteMapperInterface;
 use Spryker\Zed\CustomersRestApi\CustomersRestApiDependencyProvider;
@@ -40,11 +40,11 @@ class CustomersRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper\AddressesQuoteMapperInterface
+     * @return \Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper\AddressQuoteMapperInterface
      */
-    public function createAddressesQuoteMapper(): AddressesQuoteMapperInterface
+    public function createAddressQuoteMapper(): AddressQuoteMapperInterface
     {
-        return new AddressesQuoteMapper($this->getCustomerFacade());
+        return new AddressQuoteMapper($this->getCustomerFacade());
     }
 
     /**

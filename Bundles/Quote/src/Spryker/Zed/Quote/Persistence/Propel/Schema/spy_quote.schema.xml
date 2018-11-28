@@ -26,7 +26,6 @@
         <index name="spy_quote-customer_reference">
             <index-column name="customer_reference"/>
         </index>
-
     </table>
 
 </database>

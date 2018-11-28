@@ -30,7 +30,7 @@ class ShipmentsRestApiFacade extends AbstractFacade implements ShipmentsRestApiF
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        return $this->getFactory()->createQuoteMapper()
+        return $this->getFactory()->createShipmentQuoteMapper()
             ->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 }

@@ -16,10 +16,10 @@ use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface;
-use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutProcessor implements CheckoutProcessorInterface
 {
@@ -39,11 +39,6 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $checkoutRestApiClient;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidatorInterface
-     */
-    protected $customerValidator;
-
-    /**
      * @var \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface
      */
     protected $customerMapper;
@@ -52,20 +47,17 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
-     * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerValidatorInterface $customerValidator
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface $customerMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient,
-        CustomerValidatorInterface $customerValidator,
         CustomerMapperInterface $customerMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
-        $this->customerValidator = $customerValidator;
         $this->customerMapper = $customerMapper;
     }
 
@@ -77,7 +69,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      */
     public function placeOrder(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
     {
-        $customerValidationError = $this->customerValidator->validate($restRequest);
+        $customerValidationError = $this->validateCustomer($restRequest);
         if ($customerValidationError !== null) {
             return $this->restResourceBuilder
                 ->createRestResponse()
@@ -148,5 +140,22 @@ class CheckoutProcessor implements CheckoutProcessorInterface
         return $this->restResourceBuilder
             ->createRestResponse()
             ->addResource($restResource);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
+     */
+    protected function validateCustomer(RestRequestInterface $restRequest): ?RestErrorMessageTransfer
+    {
+        if ($restRequest->getUser() === null) {
+            return (new RestErrorMessageTransfer())
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_USER_IS_NOT_SPECIFIED)
+                ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_USER_IS_NOT_SPECIFIED);
+        }
+
+        return null;
     }
 }

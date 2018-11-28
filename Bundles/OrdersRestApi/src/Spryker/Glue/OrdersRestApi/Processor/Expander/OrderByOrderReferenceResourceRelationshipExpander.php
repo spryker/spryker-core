@@ -43,7 +43,7 @@ class OrderByOrderReferenceResourceRelationshipExpander implements OrderByOrderR
 
         foreach ($resources as $resource) {
             if (!$resource->getAttributes()->offsetExists(static::ORDER_REFERENCE)) {
-                return;
+                continue;
             }
             $orderReference = $resource->getAttributes()->offsetGet(static::ORDER_REFERENCE);
             $orderResource = $this->orderReader->findCustomerOrder($orderReference, $customerReference);

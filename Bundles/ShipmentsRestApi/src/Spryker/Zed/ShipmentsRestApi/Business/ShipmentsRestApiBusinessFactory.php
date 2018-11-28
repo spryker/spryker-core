@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ShipmentsRestApi\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ShipmentsRestApi\Business\Quote\QuoteMapper;
-use Spryker\Zed\ShipmentsRestApi\Business\Quote\QuoteMapperInterface;
+use Spryker\Zed\ShipmentsRestApi\Business\Quote\ShipmentQuoteMapper;
+use Spryker\Zed\ShipmentsRestApi\Business\Quote\ShipmentQuoteMapperInterface;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiDependencyProvider;
 
@@ -19,11 +19,11 @@ use Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiDependencyProvider;
 class ShipmentsRestApiBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ShipmentsRestApi\Business\Quote\QuoteMapperInterface
+     * @return \Spryker\Zed\ShipmentsRestApi\Business\Quote\ShipmentQuoteMapperInterface
      */
-    public function createQuoteMapper(): QuoteMapperInterface
+    public function createShipmentQuoteMapper(): ShipmentQuoteMapperInterface
     {
-        return new QuoteMapper($this->getShipmentFacade());
+        return new ShipmentQuoteMapper($this->getShipmentFacade());
     }
 
     /**

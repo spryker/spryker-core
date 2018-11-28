@@ -91,11 +91,13 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             return $restCheckoutResponseTransfer;
         }
 
-        $quoteTransfer = $this->prepareQuoteTransfer($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+        $quoteTransfer = $this->mapRestCheckoutRequestAttributesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $quoteTransfer = $this->recalculateQuote($quoteTransfer);
 
         $checkoutResponseTransfer = $this->executePlaceOrder($quoteTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
-            return $this->createRestCheckoutResponseWithErrorFromCheckoutResponseTransfer($checkoutResponseTransfer);
+            return $this->createPlaceOrderErrorResponse($checkoutResponseTransfer);
         }
 
         $quoteResponseTransfer = $this->deleteQuote($quoteTransfer);
@@ -136,7 +138,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function prepareQuoteTransfer(
+    protected function mapRestCheckoutRequestAttributesToQuote(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
@@ -144,6 +146,16 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             $quoteTransfer = $quoteMapperPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         }
 
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function recalculateQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
         return $this->calculationFacade->recalculateQuote($quoteTransfer);
     }
 
@@ -234,7 +246,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
      */
-    protected function createRestCheckoutResponseWithErrorFromCheckoutResponseTransfer(CheckoutResponseTransfer $checkoutResponseTransfer): RestCheckoutResponseTransfer
+    protected function createPlaceOrderErrorResponse(CheckoutResponseTransfer $checkoutResponseTransfer): RestCheckoutResponseTransfer
     {
         if ($checkoutResponseTransfer->getErrors()->count() === 0) {
             return (new RestCheckoutResponseTransfer())

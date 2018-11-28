@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CartsRestApi\Dependency\Facade;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -24,16 +23,6 @@ class CartsRestApiToQuoteFacadeBridge implements CartsRestApiToQuoteFacadeInterf
     public function __construct($quoteFacade)
     {
         $this->quoteFacade = $quoteFacade;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer
-    {
-        return $this->quoteFacade->findQuoteByCustomer($customerTransfer);
     }
 
     /**

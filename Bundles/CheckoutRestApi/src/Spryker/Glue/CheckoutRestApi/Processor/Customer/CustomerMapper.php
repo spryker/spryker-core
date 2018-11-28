@@ -26,7 +26,7 @@ class CustomerMapper implements CustomerMapperInterface
         $restCustomerTransfer = new RestCustomerTransfer();
         $restCartTransfer = $restCheckoutRequestAttributesTransfer->getCart();
 
-        if ($restRequest->getUser() === null) {
+        if (!$restRequest->getUser()) {
             return $restCustomerTransfer;
         }
 

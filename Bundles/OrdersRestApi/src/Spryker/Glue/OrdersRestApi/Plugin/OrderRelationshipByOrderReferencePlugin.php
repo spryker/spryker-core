@@ -19,8 +19,8 @@ class OrderRelationshipByOrderReferencePlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritdoc}
-     * - Adds relationship to the order by order reference.
-     * - No relationship will be added for the guest customer.
+     * - Adds orders resource as relationship by order reference.
+     * - Resource should have order reference field in attributes.
      *
      * @api
      *

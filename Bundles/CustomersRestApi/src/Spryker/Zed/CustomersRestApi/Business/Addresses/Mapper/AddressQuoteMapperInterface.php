@@ -10,7 +10,7 @@ namespace Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
-interface AddressesQuoteMapperInterface
+interface AddressQuoteMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer

@@ -24,13 +24,13 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_ORDER_NOT_PLACED = '1102';
     public const RESPONSE_CODE_CART_NOT_FOUND = '1103';
     public const RESPONSE_CODE_CART_IS_EMPTY = '1104';
-    public const RESPONSE_CODE_AUTH_MISSING = '1105';
+    public const RESPONSE_CODE_USER_IS_NOT_SPECIFIED = '1105';
 
     public const RESPONSE_DETAILS_CHECKOUT_DATA_INVALID = 'Checkout data is invalid.';
     public const RESPONSE_DETAILS_ORDER_NOT_PLACED = 'Order could not be placed.';
     public const RESPONSE_DETAILS_CART_NOT_FOUND = 'Cart not found.';
     public const RESPONSE_DETAILS_CART_IS_EMPTY = 'Cart is empty.';
-    public const RESPONSE_DETAILS_AUTH_MISSING = 'Authorization is missing.';
+    public const RESPONSE_DETAILS_USER_IS_NOT_SPECIFIED = 'One of Authorization or X-Anonymous-Customer-Unique-Id headers is required.';
 
     protected const PAYMENT_REQUIRED_FIELDS = [];
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [];

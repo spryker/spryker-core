@@ -11,10 +11,6 @@
         <property name="shipment" type="RestShipment"/>
     </transfer>
 
-    <transfer name="RestShipment">
-        <property name="method" type="ShipmentMethod"/>
-    </transfer>
-
     <transfer name="Quote">
         <property name="shipment" type="Shipment"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
