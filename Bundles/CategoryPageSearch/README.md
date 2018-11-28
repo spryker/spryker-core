@@ -6,7 +6,7 @@
 ## Installation
 
 ```
-composer require spryker/category-node-page-search
+composer require spryker/category-page-search
 ```
 
 ## Documentation
