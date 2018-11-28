@@ -10,6 +10,9 @@ namespace Spryker\Zed\MerchantRelationship;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\MerchantRelationship\MerchantRelationshipConfig getConfig()
+ */
 class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const MERCHANT_RELATIONSHIP_PRE_DELETE_PLUGINS = 'MERCHANT_RELATIONSHIP_PRE_DELETE_PLUGINS';

@@ -41,10 +41,13 @@ class MerchantRelationshipDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->truncateMerchantRelationshipRelations();
+
         $this->tester->assertDatabaseTableIsEmpty();
 
-        $this->tester->ensureRelatedDataIsNotExists();
+        $this->tester->truncateMerchantRelations();
+        $this->tester->truncateCompanyBusinessUnitRelations();
+
         $this->createRelatedData();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();

@@ -14,13 +14,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Propel\PropelConfig getConfig()
  */
 class EntityProcessorPlugin extends AbstractPlugin implements LogProcessorPluginInterface
 {
-    const EXTRA = 'entity';
-    const CONTEXT_KEY = 'entity';
-    const RECORD_CONTEXT = 'context';
-    const RECORD_EXTRA = 'extra';
+    public const EXTRA = 'entity';
+    public const CONTEXT_KEY = 'entity';
+    public const RECORD_CONTEXT = 'context';
+    public const RECORD_EXTRA = 'extra';
 
     /**
      * @api

@@ -155,6 +155,8 @@ class CmsPageSaver implements CmsPageSaverInterface
 
             $cmsPageLocalizedAttributesList = $this->createCmsPageLocalizedAttributesList($cmsPageEntity);
             $this->updateCmsPageLocalizedAttributes($cmsPageTransfer, $cmsPageLocalizedAttributesList, $cmsPageEntity);
+            $cmsPageLocalizedAttributesList
+                = $this->createNewCmsPageLocalizedAttributes($cmsPageTransfer, $cmsPageLocalizedAttributesList, $cmsPageEntity);
             $this->updateCmsPageLocalizedMetaAttributes($cmsPageTransfer, $cmsPageLocalizedAttributesList);
 
             if ($cmsPageEntity->getIsActive()) {
@@ -239,7 +241,7 @@ class CmsPageSaver implements CmsPageSaverInterface
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|null
      */
     protected function getCmsPageEntity(CmsPageTransfer $cmsPageTransfer)
     {
@@ -267,7 +269,7 @@ class CmsPageSaver implements CmsPageSaverInterface
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return array
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[]
      */
     protected function createCmsPageLocalizedAttributesList(SpyCmsPage $cmsPageEntity)
     {
@@ -333,7 +335,7 @@ class CmsPageSaver implements CmsPageSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[] $cmsPageLocalizedAttributesList
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $cmsPageLocalizedAttributesList
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
      * @return void
@@ -346,6 +348,9 @@ class CmsPageSaver implements CmsPageSaverInterface
         $cmsPageUrlList = $this->createCmsPageList($cmsPageEntity);
 
         foreach ($cmsPageTransfer->getPageAttributes() as $cmsPageAttributesTransfer) {
+            if (!$cmsPageAttributesTransfer->getIdCmsPageLocalizedAttributes()) {
+                continue;
+            }
             $cmsPageLocalizedAttributesEntity = $cmsPageLocalizedAttributesList[$cmsPageAttributesTransfer->getIdCmsPageLocalizedAttributes()];
             $urlEntity = $cmsPageUrlList[$cmsPageAttributesTransfer->getFkLocale()];
 
@@ -353,6 +358,49 @@ class CmsPageSaver implements CmsPageSaverInterface
             $this->updatePageUrl($cmsPageAttributesTransfer, $urlEntity);
 
             $cmsPageLocalizedAttributesEntity->save();
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $cmsPageLocalizedAttributesList
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[]
+     */
+    protected function createNewCmsPageLocalizedAttributes(
+        CmsPageTransfer $cmsPageTransfer,
+        array $cmsPageLocalizedAttributesList,
+        SpyCmsPage $cmsPageEntity
+    ): array {
+        foreach ($cmsPageTransfer->getPageAttributes() as $cmsPageAttributesTransfer) {
+            if (!$cmsPageAttributesTransfer->getIdCmsPageLocalizedAttributes()) {
+                $cmsPageLocalizedAttributesEntity = $this->createLocalizedAttributes($cmsPageAttributesTransfer, $cmsPageEntity);
+                $cmsPageLocalizedAttributesList[$cmsPageLocalizedAttributesEntity->getIdCmsPageLocalizedAttributes()]
+                    = $cmsPageLocalizedAttributesEntity;
+                $this->updateMetaAttributeWithLocalizedAttributes($cmsPageTransfer, $cmsPageLocalizedAttributesEntity);
+            }
+        }
+
+        return $cmsPageLocalizedAttributesList;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
+     *
+     * @return void
+     */
+    protected function updateMetaAttributeWithLocalizedAttributes(
+        CmsPageTransfer $cmsPageTransfer,
+        SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
+    ): void {
+        foreach ($cmsPageTransfer->getMetaAttributes() as $cmsPageMetaAttributesTransfer) {
+            if ($cmsPageMetaAttributesTransfer->getFkLocale() === $cmsPageLocalizedAttributesEntity->getFkLocale()) {
+                $cmsPageMetaAttributesTransfer->setIdCmsPageLocalizedAttributes(
+                    $cmsPageLocalizedAttributesEntity->getIdCmsPageLocalizedAttributes()
+                );
+            }
         }
     }
 

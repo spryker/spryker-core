@@ -16,13 +16,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsBlockProductConnector\Communication\CmsBlockProductConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorConfig getConfig()
  */
 class CmsBlockProductAbstractType extends AbstractType
 {
-    const FIELD_ID_CMS_BLOCK = 'id_cms_block';
-    const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
+    public const FIELD_ID_CMS_BLOCK = 'id_cms_block';
+    public const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
 
-    const OPTION_PRODUCT_ABSTRACT_ARRAY = 'option-product-abstracts';
+    public const OPTION_PRODUCT_ABSTRACT_ARRAY = 'option-product-abstracts';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

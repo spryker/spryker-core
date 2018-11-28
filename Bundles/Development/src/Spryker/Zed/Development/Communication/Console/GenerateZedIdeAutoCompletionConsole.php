@@ -13,10 +13,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class GenerateZedIdeAutoCompletionConsole extends Console
 {
-    const COMMAND_NAME = 'dev:ide:generate-zed-auto-completion';
+    public const COMMAND_NAME = 'dev:ide:generate-zed-auto-completion';
 
     /**
      * @return void

@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Tax\TaxConfig getConfig()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
  */
 class TaxAmountCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {

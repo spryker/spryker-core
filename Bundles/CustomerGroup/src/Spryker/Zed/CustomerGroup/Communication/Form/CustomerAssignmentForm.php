@@ -18,12 +18,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
  * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CustomerGroup\CustomerGroupConfig getConfig()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupRepositoryInterface getRepository()
  */
 class CustomerAssignmentForm extends AbstractType
 {
-    const FIELD_ID_CUSTOMER_GROUP = 'idCustomerGroup';
-    const FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV = 'idsCustomerToAssign';
-    const FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV = 'idsCustomerToDeAssign';
+    public const FIELD_ID_CUSTOMER_GROUP = 'idCustomerGroup';
+    public const FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV = 'idsCustomerToAssign';
+    public const FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV = 'idsCustomerToDeAssign';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

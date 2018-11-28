@@ -15,11 +15,13 @@ use Twig_SimpleFunction;
 
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
+ * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
+ * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
  */
 class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const NO_SYMBOL_FOUND = '-';
-    const CURRENCY_SYMBOL_FUNCTION_NAME = 'currencySymbol';
+    public const NO_SYMBOL_FOUND = '-';
+    public const CURRENCY_SYMBOL_FUNCTION_NAME = 'currencySymbol';
 
     /**
      * Registers services on the given app.

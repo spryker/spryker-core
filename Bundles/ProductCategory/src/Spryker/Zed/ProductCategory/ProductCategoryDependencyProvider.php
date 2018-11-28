@@ -16,16 +16,19 @@ use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductBridge
 use Spryker\Zed\ProductCategory\Dependency\QueryContainer\ProductCategoryToCategoryBridge as ProductCategoryToCategoryQueryContainerBridge;
 use Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncodingBridge;
 
+/**
+ * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
+ */
 class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'locale facade';
-    const FACADE_PRODUCT = 'product facade';
-    const FACADE_CATEGORY = 'category facade';
-    const FACADE_EVENT = 'facade event';
+    public const FACADE_LOCALE = 'locale facade';
+    public const FACADE_PRODUCT = 'product facade';
+    public const FACADE_CATEGORY = 'category facade';
+    public const FACADE_EVENT = 'facade event';
 
-    const CATEGORY_QUERY_CONTAINER = 'category query container';
+    public const CATEGORY_QUERY_CONTAINER = 'category query container';
 
-    const SERVICE_UTIL_ENCODING = 'util encoding service';
+    public const SERVICE_UTIL_ENCODING = 'util encoding service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-option-storage",
+  "type": "library",
   "description": "ProductOptionStorage module",
   "license": "proprietary",
   "require": {
@@ -18,10 +19,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/event": "*",
+    "spryker/product-attribute": "*",
     "spryker/propel": "*",
-    "spryker/propel-query-builder": "*",
     "spryker/testify": "*"
   },
   "suggest": {

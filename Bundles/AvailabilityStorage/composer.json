@@ -1,5 +1,6 @@
 {
   "name": "spryker/availability-storage",
+  "type": "library",
   "description": "AvailabilityStorage module",
   "license": "proprietary",
   "require": {
@@ -16,11 +17,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/event": "*",
     "spryker/product-storage": "*",
     "spryker/propel": "*",
-    "spryker/propel-query-builder": "*",
     "spryker/testify": "*"
   },
   "suggest": {

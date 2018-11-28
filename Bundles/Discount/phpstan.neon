@@ -2,7 +2,6 @@ parameters:
     ignoreErrors:
         - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::#'
         - '#Method .+DiscountQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria#'
-        - '#Method .+FilteredCalculator::collectItems\(\) should return array<.+DiscountableItemTransfer> but returns array<int, null>#'
         - '#Method .+DiscountQueryContainer::queryVoucherPoolByVoucherCodes\(\) should return .+SpyDiscountVoucherQuery but returns \$this\(.+SpyDiscountVoucherQuery\).#'
 
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php

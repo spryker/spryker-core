@@ -14,13 +14,16 @@ use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
 
 /**
+ * @deprecated Use \Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\ProductCategoryPageDataLoaderExpanderPlugin instead.
+ *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  */
 class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
-    const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
+    public const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
 
     /**
      * @var array|null

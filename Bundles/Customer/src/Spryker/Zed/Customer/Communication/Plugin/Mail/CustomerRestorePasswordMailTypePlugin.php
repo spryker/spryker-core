@@ -14,10 +14,12 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
  */
 class CustomerRestorePasswordMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    const MAIL_TYPE = 'customer restore password';
+    public const MAIL_TYPE = 'customer restore password';
 
     /**
      * @api

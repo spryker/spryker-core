@@ -16,10 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface getRepository()
  */
 class AssignController extends AbstractController
 {
-    const PARAM_ID_CATEGORY = 'id-category';
+    public const PARAM_ID_CATEGORY = 'id-category';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

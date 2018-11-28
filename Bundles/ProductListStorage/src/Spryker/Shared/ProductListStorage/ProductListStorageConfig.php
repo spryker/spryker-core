@@ -17,7 +17,7 @@ class ProductListStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_LIST_ABSTRACT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_LIST_ABSTRACT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -25,7 +25,7 @@ class ProductListStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_LIST_CONCRETE_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_LIST_CONCRETE_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -42,4 +42,14 @@ class ProductListStorageConfig extends AbstractBundleConfig
      * @api
      */
     public const PRODUCT_LIST_CONCRETE_RESOURCE_NAME = 'product_concrete_product_lists';
+
+    /**
+     * @uses \Spryker\Shared\Product\ProductConfig::VARIANT_LEAF_NODE_ID
+     */
+    public const VARIANT_LEAF_NODE_ID = 'id_product_concrete';
+
+    /**
+     * @uses \Spryker\Shared\Product\ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER
+     */
+    public const ATTRIBUTE_MAP_PATH_DELIMITER = ':';
 }

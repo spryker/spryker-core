@@ -22,15 +22,15 @@ use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterfa
 
 class ProductLabelTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'product-label-table';
-    const COL_ID_PRODUCT_LABEL = SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL;
-    const COL_POSITION = SpyProductLabelTableMap::COL_POSITION;
-    const COL_NAME = SpyProductLabelTableMap::COL_NAME;
-    const COL_IS_EXCLUSIVE = SpyProductLabelTableMap::COL_IS_EXCLUSIVE;
-    const COL_VALIDITY = 'validity';
-    const COL_ABSTRACT_PRODUCT_RELATION_COUNT = 'abstract_product_relation_count';
-    const COL_STATUS = SpyProductLabelTableMap::COL_IS_ACTIVE;
-    const COL_ACTIONS = 'actions';
+    public const TABLE_IDENTIFIER = 'product-label-table';
+    public const COL_ID_PRODUCT_LABEL = SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL;
+    public const COL_POSITION = SpyProductLabelTableMap::COL_POSITION;
+    public const COL_NAME = SpyProductLabelTableMap::COL_NAME;
+    public const COL_IS_EXCLUSIVE = SpyProductLabelTableMap::COL_IS_EXCLUSIVE;
+    public const COL_VALIDITY = 'validity';
+    public const COL_ABSTRACT_PRODUCT_RELATION_COUNT = 'abstract_product_relation_count';
+    public const COL_STATUS = SpyProductLabelTableMap::COL_IS_ACTIVE;
+    public const COL_ACTIONS = 'actions';
 
     /**
      * @var \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface

@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-relationship",
+  "type": "library",
   "description": "MerchantRelationship module",
   "license": "proprietary",
   "require": {
@@ -7,7 +8,7 @@
     "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
     "spryker/company-user-extension": "^1.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/merchant": "^1.0.0",
+    "spryker/merchant": "^1.1.0",
     "spryker/merchant-relationship-extension": "^1.0.0",
     "spryker/propel-orm": "^1.0.0"
   },

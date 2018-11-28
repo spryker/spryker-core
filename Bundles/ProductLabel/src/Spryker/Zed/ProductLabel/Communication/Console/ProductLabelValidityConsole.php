@@ -13,10 +13,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface getQueryContainer()
  */
 class ProductLabelValidityConsole extends Console
 {
-    const COMMAND_NAME = 'product-label:validity';
+    public const COMMAND_NAME = 'product-label:validity';
 
     /**
      * @return void

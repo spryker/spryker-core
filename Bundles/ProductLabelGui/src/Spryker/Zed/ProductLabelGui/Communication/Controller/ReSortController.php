@@ -13,10 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
  */
 class ReSortController extends AbstractController
 {
-    const PARAM_SORT_ORDER_DATA = 'sort-order-data';
+    public const PARAM_SORT_ORDER_DATA = 'sort-order-data';
 
     /**
      * @return array

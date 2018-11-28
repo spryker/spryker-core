@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
-use Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\AbstractSpyCompanyBusinessUnitQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -22,6 +22,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyBusinessUnitRepository extends AbstractRepository implements CompanyBusinessUnitRepositoryInterface
 {
     protected const TABLE_JOIN_PARENT_BUSINESS_UNIT = 'parentCompanyBusinessUnit';
+
+    /**
+     * @see \Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap::COL_CUSTOMER_REFERENCE
+     */
+    protected const COL_CUSTOMER_REFERENCE = 'spy_customer.customer_reference';
 
     /**
      * @param int $idCompanyBusinessUnit
@@ -61,6 +66,8 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
                     ->filterByIdCompanyUser($criteriaFilterTransfer->getIdCompanyUser())
                 ->endUse();
         }
+
+        $this->filterCompanyBusinessUnitCollection($query, $criteriaFilterTransfer);
 
         $collection = $this->buildQueryFromCriteria($query, $criteriaFilterTransfer->getFilter());
         $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
@@ -118,6 +125,27 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     }
 
     /**
+     * @module CompanyUser
+     * @module Customer
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitQuery()
+            ->useCompanyUserQuery()
+                ->joinCustomer()
+            ->endUse()
+            ->filterByIdCompanyBusinessUnit_In($companyBusinessUnitIds)
+            ->select(static::COL_CUSTOMER_REFERENCE)
+            ->find()
+            ->toArray();
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
@@ -142,9 +170,9 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\AbstractSpyCompanyBusinessUnitQuery
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
      */
-    protected function getSpyCompanyBusinessUnitQuery(): AbstractSpyCompanyBusinessUnitQuery
+    protected function getSpyCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
     {
         return $this->getFactory()
             ->createCompanyBusinessUnitQuery()
@@ -169,5 +197,20 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             ->setLastPage($paginationModel->getLastPage())
             ->setNextPage($paginationModel->getNextPage())
             ->setPreviousPage($paginationModel->getPreviousPage());
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery $companyBusinessUnitQuery
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return void
+     */
+    protected function filterCompanyBusinessUnitCollection(
+        SpyCompanyBusinessUnitQuery $companyBusinessUnitQuery,
+        CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
+    ): void {
+        if ($criteriaFilterTransfer->getCompanyBusinessUnitIds()) {
+            $companyBusinessUnitQuery->filterByIdCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitIds());
+        }
     }
 }

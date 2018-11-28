@@ -1,5 +1,6 @@
 {
   "name": "spryker/console",
+  "type": "library",
   "description": "Console module",
   "license": "proprietary",
   "require": {

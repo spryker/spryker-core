@@ -17,10 +17,11 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterf
 /**
  * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DummyPayment\DummyPaymentConfig getConfig()
  */
 class DummyPaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPostCheckPluginInterface
 {
-    const ERROR_CODE_PAYMENT_FAILED = 'payment failed';
+    public const ERROR_CODE_PAYMENT_FAILED = 'payment failed';
 
     /**
      * @api

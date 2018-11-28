@@ -10,7 +10,12 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitAssigner\CompanyBusinessUnitAssigner;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreator;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreatorInterface;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutor;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder\CompanyBusinessUnitReader;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder\CompanyBusinessUnitReaderInterface;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutor;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilder;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilderInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter\CompanyBusinessUnitWriter;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter\CompanyBusinessUnitWriterInterface;
 use Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitDependencyProvider;
@@ -31,7 +36,7 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
         return new CompanyBusinessUnitWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createCompanyBusinessUnitWriterPluginExecutor()
+            $this->createCompanyBusinessUnitPluginExecutor()
         );
     }
 
@@ -42,17 +47,8 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyBusinessUnitCreator(
             $this->getEntityManager(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface
-     */
-    protected function createCompanyBusinessUnitWriterPluginExecutor()
-    {
-        return new CompanyBusinessUnitWriterPluginExecutor(
-            $this->getCompanyBusinessUnitPostSavePlugins()
+            $this->getConfig(),
+            $this->createCompanyBusinessUnitPluginExecutor()
         );
     }
 
@@ -67,10 +63,59 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface
+     */
+    public function createCompanyBusinessUnitPluginExecutor(): CompanyBusinessUnitPluginExecutorInterface
+    {
+        return new CompanyBusinessUnitPluginExecutor(
+            $this->getCompanyBusinessUnitExpanderPlugins(),
+            $this->getCompanyBusinessUnitPostSavePlugins(),
+            $this->getCompanyBusinessUnitPreDeletePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder\CompanyBusinessUnitReaderInterface
+     */
+    public function createCompanyBusinessUnitReader(): CompanyBusinessUnitReaderInterface
+    {
+        return new CompanyBusinessUnitReader(
+            $this->getRepository(),
+            $this->createCompanyBusinessUnitPluginExecutor()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface[]
      */
     protected function getCompanyBusinessUnitPostSavePlugins(): array
     {
         return $this->getProvidedDependency(CompanyBusinessUnitDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface[]
+     */
+    protected function getCompanyBusinessUnitPreDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyBusinessUnitDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_PRE_DELETE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilderInterface
+     */
+    public function createCompanyBusinessUnitTreeBuilder(): CompanyBusinessUnitTreeBuilderInterface
+    {
+        return new CompanyBusinessUnitTreeBuilder(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[]
+     */
+    public function getCompanyBusinessUnitExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyBusinessUnitDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_EXPANDER);
     }
 }

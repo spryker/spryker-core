@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\Development\Business\Module\ModuleFinder;
 
+use Generated\Shared\Transfer\ApplicationTransfer;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
+use Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface;
+use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\FilterChain;
@@ -19,63 +23,176 @@ use Zend\Filter\Word\DashToCamelCase;
 class ModuleFinder implements ModuleFinderInterface
 {
     /**
-     * @var string[]
+     * @var \Spryker\Zed\Development\DevelopmentConfig
      */
-    protected $moduleDirectories;
+    protected $config;
 
     /**
-     * @var \Generated\Shared\Transfer\ModuleTransfer[]|null
+     * @var \Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface
+     */
+    protected $moduleMatcher;
+
+    /**
+     * @var \Generated\Shared\Transfer\ModuleTransfer[]
      */
     protected static $moduleTransferCollection;
 
     /**
-     * @param string[] $moduleDirectories
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @param \Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface $moduleMatcher
      */
-    public function __construct(array $moduleDirectories)
+    public function __construct(DevelopmentConfig $config, ModuleMatcherInterface $moduleMatcher)
     {
-        $this->moduleDirectories = array_filter($moduleDirectories, 'is_dir');
+        $this->config = $config;
+        $this->moduleMatcher = $moduleMatcher;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function find(): array
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
-        if (static::$moduleTransferCollection === null) {
-            $moduleTransferCollection = [];
+        if ($moduleFilterTransfer === null && static::$moduleTransferCollection !== null) {
+            return static::$moduleTransferCollection;
+        }
 
-            $moduleTransferCollection = $this->addStandAloneModulesToCollection($moduleTransferCollection);
-            $moduleTransferCollection = $this->addModulesToCollection($moduleTransferCollection);
+        $moduleTransferCollection = [];
 
-            ksort($moduleTransferCollection);
+        $moduleTransferCollection = $this->addStandaloneModulesToCollection($moduleTransferCollection, $moduleFilterTransfer);
+        $moduleTransferCollection = $this->addModulesToCollection($moduleTransferCollection, $moduleFilterTransfer);
 
+        ksort($moduleTransferCollection);
+
+        if ($moduleFilterTransfer === null) {
             static::$moduleTransferCollection = $moduleTransferCollection;
         }
 
-        return static::$moduleTransferCollection;
+        return $moduleTransferCollection;
     }
 
     /**
      * @param array $moduleTransferCollection
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    protected function addStandAloneModulesToCollection(array $moduleTransferCollection): array
+    protected function addStandaloneModulesToCollection(array $moduleTransferCollection, ?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
-        $standAloneModuleDirectories = (new Finder())->directories()->depth('== 0')->in(APPLICATION_VENDOR_DIR . '/spryker/');
-
-        foreach ($standAloneModuleDirectories as $directoryInfo) {
+        foreach ($this->getStandaloneModuleFinder() as $directoryInfo) {
             if (in_array($directoryInfo->getFilename(), ['spryker', 'spryker-shop'])) {
                 continue;
             }
             $moduleTransfer = $this->getModuleTransfer($directoryInfo);
             $moduleTransfer->setIsStandalone(true);
 
-            $moduleTransferCollection[$this->buildCollectionKey($moduleTransfer)] = $moduleTransfer;
-            $moduleTransferCollection[$moduleTransfer->getName()][] = $moduleTransfer;
+            if (!$this->isModule($moduleTransfer)) {
+                continue;
+            }
+
+            $moduleTransferCollection = $this->addModuleToCollection($moduleTransfer, $moduleTransferCollection, $moduleFilterTransfer);
         }
 
         return $moduleTransferCollection;
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
+     */
+    protected function getStandaloneModuleFinder(): Finder
+    {
+        return (new Finder())->directories()->depth('== 0')->in(APPLICATION_VENDOR_DIR . '/spryker/');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     * @param \Generated\Shared\Transfer\ModuleTransfer[] $moduleTransferCollection
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    protected function addModuleToCollection(ModuleTransfer $moduleTransfer, array $moduleTransferCollection, ?ModuleFilterTransfer $moduleFilterTransfer = null): array
+    {
+        if ($moduleFilterTransfer !== null && !$this->moduleMatcher->matches($moduleTransfer, $moduleFilterTransfer)) {
+            return $moduleTransferCollection;
+        }
+
+        $moduleTransferCollection[$this->buildCollectionKey($moduleTransfer)] = $moduleTransfer;
+
+        return $moduleTransferCollection;
+    }
+
+    /**
+     * Modules which are standalone, can also be normal modules. This can be detected by the composer.json description
+     * which contains `module` at the end of the description.
+     *
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return bool
+     */
+    protected function isModule(ModuleTransfer $moduleTransfer): bool
+    {
+        $composerJsonAsArray = $this->getComposerJsonAsArray($moduleTransfer->getPath());
+
+        if (!isset($composerJsonAsArray['description'])) {
+            return false;
+        }
+
+        $description = $composerJsonAsArray['description'];
+
+        return preg_match('/\smodule$/', $description);
+    }
+
+    /**
+     * @param array $moduleTransferCollection
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    protected function addModulesToCollection(array $moduleTransferCollection, ?ModuleFilterTransfer $moduleFilterTransfer = null): array
+    {
+        foreach ($this->getModuleFinder() as $directoryInfo) {
+            $moduleTransfer = $this->getModuleTransfer($directoryInfo);
+            $moduleTransferCollection = $this->addModuleToCollection($moduleTransfer, $moduleTransferCollection, $moduleFilterTransfer);
+        }
+
+        return $moduleTransferCollection;
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
+     */
+    protected function getModuleFinder(): Finder
+    {
+        return (new Finder())->directories()->depth('== 0')->in($this->getModuleDirectories());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getModuleDirectories(): array
+    {
+        return array_filter([
+            $this->config->getPathToCore(),
+            $this->config->getPathToShop(),
+            $this->config->getPathToSdk(),
+            $this->config->getPathToEco(),
+        ], 'is_dir');
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    protected function getModuleTransfer(SplFileInfo $directoryInfo): ModuleTransfer
+    {
+        if ($this->existComposerJson($directoryInfo->getPathname())) {
+            return $this->buildModuleTransferFromComposerJsonInformation($directoryInfo);
+        }
+
+        return $this->buildModuleTransferFromDirectoryInformation($directoryInfo);
     }
 
     /**
@@ -89,46 +206,13 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
-     * @param array $moduleTransferCollection
-     *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
-     */
-    protected function addModulesToCollection(array $moduleTransferCollection): array
-    {
-        $moduleDirectories = (new Finder())->directories()->depth('== 0')->in($this->moduleDirectories);
-
-        foreach ($moduleDirectories as $directoryInfo) {
-            $moduleTransfer = $this->getModuleTransfer($directoryInfo);
-
-            $moduleTransferCollection[$this->buildCollectionKey($moduleTransfer)] = $moduleTransfer;
-            $moduleTransferCollection[$moduleTransfer->getName()][] = $moduleTransfer;
-        }
-
-        return $moduleTransferCollection;
-    }
-
-    /**
-     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
-     *
-     * @return \Generated\Shared\Transfer\ModuleTransfer
-     */
-    protected function getModuleTransfer(SplFileInfo $directoryInfo): ModuleTransfer
-    {
-        if ($this->existComposerJson($directoryInfo)) {
-            return $this->buildModuleTransferFromComposerJsonInformation($directoryInfo);
-        }
-
-        return $this->buildModuleTransferFromDirectoryInformation($directoryInfo);
-    }
-
-    /**
-     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
+     * @param string $path
      *
      * @return bool
      */
-    protected function existComposerJson(SplFileInfo $directoryInfo): bool
+    protected function existComposerJson(string $path): bool
     {
-        $pathToComposerJson = sprintf('%s/composer.json', $directoryInfo->getPathname());
+        $pathToComposerJson = sprintf('%s/composer.json', $path);
 
         return file_exists($pathToComposerJson);
     }
@@ -147,8 +231,12 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleNameDashed = $this->dasherize($moduleName);
 
         $organizationTransfer = $this->buildOrganizationTransfer($organizationName, $organizationNameDashed);
+
         $moduleTransfer = $this->buildModuleTransfer($moduleName, $moduleNameDashed, $directoryInfo);
-        $moduleTransfer->setOrganization($organizationTransfer);
+        $moduleTransfer
+            ->setOrganization($organizationTransfer);
+
+        $moduleTransfer = $this->addApplications($moduleTransfer);
 
         return $moduleTransfer;
     }
@@ -160,7 +248,7 @@ class ModuleFinder implements ModuleFinderInterface
      */
     protected function buildModuleTransferFromComposerJsonInformation(SplFileInfo $directoryInfo): ModuleTransfer
     {
-        $composerJsonAsArray = $this->getComposerJsonAsArray($directoryInfo);
+        $composerJsonAsArray = $this->getComposerJsonAsArray($directoryInfo->getPathname());
 
         $organizationNameDashed = $this->getOrganizationNameFromComposer($composerJsonAsArray);
         $organizationName = $this->camelCase($organizationNameDashed);
@@ -169,8 +257,35 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleName = $this->camelCase($moduleNameDashed);
 
         $organizationTransfer = $this->buildOrganizationTransfer($organizationName, $organizationNameDashed);
+
         $moduleTransfer = $this->buildModuleTransfer($moduleName, $moduleNameDashed, $directoryInfo);
-        $moduleTransfer->setOrganization($organizationTransfer);
+        $moduleTransfer
+            ->setOrganization($organizationTransfer);
+
+        $moduleTransfer = $this->addApplications($moduleTransfer);
+
+        return $moduleTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    protected function addApplications(ModuleTransfer $moduleTransfer): ModuleTransfer
+    {
+        $lookupDirectory = sprintf('%s/src/%s/', $moduleTransfer->getPath(), $moduleTransfer->getOrganization()->getName());
+        if (!is_dir($lookupDirectory)) {
+            return $moduleTransfer;
+        }
+        $applicationFinder = new Finder();
+        $applicationFinder->in($lookupDirectory)->depth('== 0');
+
+        foreach ($applicationFinder as $applicationDirectoryInfo) {
+            $applicationTransfer = new ApplicationTransfer();
+            $applicationTransfer->setName($applicationDirectoryInfo->getRelativePathname());
+            $moduleTransfer->addApplication($applicationTransfer);
+        }
 
         return $moduleTransfer;
     }
@@ -204,20 +319,20 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleTransfer
             ->setName($moduleName)
             ->setNameDashed($moduleNameDashed)
-            ->setRootDirectory($directoryInfo->getRealPath())
+            ->setPath($directoryInfo->getRealPath())
             ->setIsStandalone(false);
 
         return $moduleTransfer;
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
+     * @param string $path
      *
      * @return array
      */
-    protected function getComposerJsonAsArray(SplFileInfo $directoryInfo): array
+    protected function getComposerJsonAsArray(string $path): array
     {
-        $pathToComposerJson = sprintf('%s/composer.json', $directoryInfo->getPathname());
+        $pathToComposerJson = sprintf('%s/composer.json', $path);
         $fileContent = file_get_contents($pathToComposerJson);
         $composerJsonAsArray = json_decode($fileContent, true);
 
@@ -253,6 +368,21 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
+     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
+     *
+     * @return string
+     */
+    protected function getApplicationNameFromDirectory(SplFileInfo $directoryInfo): string
+    {
+        $pathFragments = explode(DIRECTORY_SEPARATOR, $directoryInfo->getRealPath());
+        $vendorPosition = array_search('vendor', $pathFragments);
+
+        $applicationName = $pathFragments[$vendorPosition + 2];
+
+        return $applicationName;
+    }
+
+    /**
      * @param array $composerJsonAsArray
      *
      * @return string
@@ -280,7 +410,7 @@ class ModuleFinder implements ModuleFinderInterface
      *
      * @return string
      */
-    public function camelCase(string $value): string
+    protected function camelCase(string $value): string
     {
         $filterChain = new FilterChain();
         $filterChain->attach(new DashToCamelCase());
@@ -293,7 +423,7 @@ class ModuleFinder implements ModuleFinderInterface
      *
      * @return string
      */
-    public function dasherize(string $value): string
+    protected function dasherize(string $value): string
     {
         $filterChain = new FilterChain();
         $filterChain
@@ -301,15 +431,5 @@ class ModuleFinder implements ModuleFinderInterface
             ->attach(new StringToLower());
 
         return $filterChain->filter($value);
-    }
-
-    /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
-     */
-    protected function collectCoreModules()
-    {
-        $modules = (new Finder())->directories()->depth('== 0')->in($this->moduleDirectories);
-
-        return $modules;
     }
 }

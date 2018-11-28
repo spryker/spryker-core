@@ -14,10 +14,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSetGui\ProductSetGuiConfig getConfig()
  */
 class SeoFormType extends AbstractType
 {
-    const FIELD_LOCALIZED_SEO_FORM_COLLECTION = 'localized_seo_form_collection';
+    public const FIELD_LOCALIZED_SEO_FORM_COLLECTION = 'localized_seo_form_collection';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

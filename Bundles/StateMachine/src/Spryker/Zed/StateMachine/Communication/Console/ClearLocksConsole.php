@@ -13,11 +13,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\StateMachine\Communication\StateMachineCommunicationFactory getFactory()
  */
 class ClearLocksConsole extends Console
 {
-    const COMMAND_NAME = 'state-machine:clear-locks';
-    const COMMAND_DESCRIPTION = 'Clear expired locks from lock table';
+    public const COMMAND_NAME = 'state-machine:clear-locks';
+    public const COMMAND_DESCRIPTION = 'Clear expired locks from lock table';
 
     /**
      * @return void

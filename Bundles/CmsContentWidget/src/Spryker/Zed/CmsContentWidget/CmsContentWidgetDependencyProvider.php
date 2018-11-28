@@ -12,11 +12,14 @@ use Spryker\Zed\CmsContentWidget\Dependency\Service\CmsContentWidgetToUtilEncodi
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsContentWidget\CmsContentWidgetConfig getConfig()
+ */
 class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS = 'CMS CONTENT WIDGET PARAMETER MAPPER';
-    const FACADE_GLOSSARY = 'FACADE GLOSSARY';
-    const SERVICE_UTIL_ENCODING = 'UTIL ENCODING';
+    public const PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS = 'CMS CONTENT WIDGET PARAMETER MAPPER';
+    public const FACADE_GLOSSARY = 'FACADE GLOSSARY';
+    public const SERVICE_UTIL_ENCODING = 'UTIL ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

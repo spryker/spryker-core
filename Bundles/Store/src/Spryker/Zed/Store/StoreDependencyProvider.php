@@ -12,9 +12,12 @@ use Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreAdapter;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Store\StoreConfig getConfig()
+ */
 class StoreDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const STORE = 'STORE';
+    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

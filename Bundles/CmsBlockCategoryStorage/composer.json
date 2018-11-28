@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-block-category-storage",
+  "type": "library",
   "description": "CmsBlockCategoryStorage module",
   "license": "proprietary",
   "require": {
@@ -15,10 +16,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
-    "spryker/propel-query-builder": "*",
     "spryker/testify": "*"
   },
   "suggest": {

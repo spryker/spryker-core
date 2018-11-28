@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-search-config-storage",
+  "type": "library",
   "description": "ProductSearchConfigStorage module",
   "license": "proprietary",
   "require": {
@@ -13,12 +14,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/event": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
-    "spryker/propel-query-builder": "*",
     "spryker/search": "*",
     "spryker/testify": "*"
   },

@@ -1,5 +1,6 @@
 {
   "name": "spryker/error-handler",
+  "type": "library",
   "description": "ErrorHandler module",
   "license": "proprietary",
   "require": {
@@ -7,11 +8,10 @@
     "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/log": "^3.0.0",
-    "spryker/monitoring": "^1.0.0"
+    "spryker/monitoring": "^1.0.0 || ^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/new-relic-api": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },

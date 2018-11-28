@@ -26,8 +26,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PageController extends AbstractController
 {
-    const REDIRECT_ADDRESS = '/cms/glossary';
-    const CMS_FOLDER_PATH = '@Cms/template/';
+    public const REDIRECT_ADDRESS = '/cms/glossary';
+    public const CMS_FOLDER_PATH = '@Cms/template/';
 
     /**
      * @return array
@@ -166,7 +166,7 @@ class PageController extends AbstractController
 
         $this->updatePageState($idPage, true);
 
-        return $this->redirectResponse($request->headers->get('referer'));
+        return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 
     /**
@@ -180,7 +180,7 @@ class PageController extends AbstractController
 
         $this->updatePageState($idPage, false);
 
-        return $this->redirectResponse($request->headers->get('referer'));
+        return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 
     /**

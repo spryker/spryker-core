@@ -9,11 +9,11 @@ namespace SprykerTest\Zed\Discount\PageObject;
 
 class DiscountListPage
 {
-    const URL = '/discount/index/list';
+    public const URL = '/discount/index/list';
 
-    const SELECTOR_DATA_TABLE = '.dataTables_wrapper';
+    public const SELECTOR_DATA_TABLE = '.dataTables_wrapper';
 
-    const DATA_TABLE_DATA = 'table.dataTable>tbody';
+    public const DATA_TABLE_DATA = 'table.dataTable>tbody';
 
-    const DATA_TABLE_ROW = 'table.dataTable>tbody>tr';
+    public const DATA_TABLE_ROW = 'table.dataTable>tbody>tr';
 }

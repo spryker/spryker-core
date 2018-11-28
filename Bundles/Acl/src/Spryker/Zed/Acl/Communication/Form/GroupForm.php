@@ -23,15 +23,16 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
  * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Acl\AclConfig getConfig()
  */
 class GroupForm extends AbstractType
 {
-    const FIELD_TITLE = 'title';
-    const FIELD_ROLES = 'roles';
+    public const FIELD_TITLE = 'title';
+    public const FIELD_ROLES = 'roles';
 
-    const OPTION_ROLE_CHOICES = 'role_choices';
+    public const OPTION_ROLE_CHOICES = 'role_choices';
 
-    const GROUP_UNIQUE_GROUP_CHECK = 'unique_group_check';
+    public const GROUP_UNIQUE_GROUP_CHECK = 'unique_group_check';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

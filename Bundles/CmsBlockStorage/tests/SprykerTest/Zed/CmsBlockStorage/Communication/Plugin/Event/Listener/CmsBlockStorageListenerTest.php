@@ -11,9 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
 use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageBusinessFactory;
 use Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageFacade;
@@ -35,21 +32,8 @@ use SprykerTest\Zed\CmsBlockStorage\CmsBlockStorageConfigMock;
  */
 class CmsBlockStorageListenerTest extends Unit
 {
-    const NUMBER_OF_LOCALES = 2;
-    const NUMBER_OF_STORES = 3;
-
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
+    public const NUMBER_OF_LOCALES = 2;
+    public const NUMBER_OF_STORES = 3;
 
     /**
      * @return void

@@ -12,6 +12,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -22,15 +23,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ImageCollectionForm extends AbstractSubForm
 {
-    const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
-    const FIELD_IMAGE_SMALL = 'external_url_small';
-    const FIELD_IMAGE_LARGE = 'external_url_large';
-    const FIELD_SORT_ORDER = 'sort_order';
-    const FIELD_IMAGE_PREVIEW = 'image_preview';
-    const FIELD_IMAGE_PREVIEW_LARGE_URL = 'image_preview_large_url';
-    const FIELD_FK_IMAGE_SET_ID = 'fk_image_set_id';
+    public const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
+    public const FIELD_IMAGE_SMALL = 'external_url_small';
+    public const FIELD_IMAGE_LARGE = 'external_url_large';
+    public const FIELD_SORT_ORDER = 'sort_order';
+    public const FIELD_IMAGE_PREVIEW = 'image_preview';
+    public const FIELD_IMAGE_PREVIEW_LARGE_URL = 'image_preview_large_url';
+    public const FIELD_FK_IMAGE_SET_ID = 'fk_image_set_id';
 
-    const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
+    public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -50,6 +51,22 @@ class ImageCollectionForm extends AbstractSubForm
             ->addImageSmallField($builder, $options)
             ->addImageBigField($builder, $options)
             ->addOrderHiddenField($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            'attr' => [
+                'class' => 'image-collection',
+            ],
+        ]);
     }
 
     /**

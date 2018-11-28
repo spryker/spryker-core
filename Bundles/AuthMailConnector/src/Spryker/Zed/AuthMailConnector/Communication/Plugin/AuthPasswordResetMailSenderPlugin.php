@@ -14,11 +14,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\AuthMailConnector\Communication\AuthMailConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig getConfig()
  */
 class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPasswordResetSenderInterface
 {
-    const SUBJECT = 'Password reset request';
-    const TEMPLATE = 'Auth.password.reset';
+    public const SUBJECT = 'Password reset request';
+    public const TEMPLATE = 'Auth.password.reset';
 
     /**
      * @api

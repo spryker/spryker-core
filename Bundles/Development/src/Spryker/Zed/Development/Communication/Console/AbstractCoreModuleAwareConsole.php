@@ -8,13 +8,14 @@
 namespace Spryker\Zed\Development\Communication\Console;
 
 use ArrayObject;
-use Exception;
+use Generated\Shared\Transfer\ApplicationTransfer;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
@@ -23,11 +24,9 @@ use Symfony\Component\Console\Input\InputOption;
 class AbstractCoreModuleAwareConsole extends Console
 {
     protected const ARGUMENT_MODULE = 'module';
-    protected const OPTION_EXPLICIT_MODULE = 'explicit-module';
-    protected const OPTION_EXPLICIT_MODULE_SHORT = 'e';
 
     /**
-     * @var array
+     * @var \Generated\Shared\Transfer\ModuleTransfer[]
      */
     protected $moduleTransferCollection = [];
 
@@ -39,8 +38,24 @@ class AbstractCoreModuleAwareConsole extends Console
         parent::configure();
 
         $this
-            ->addArgument(static::ARGUMENT_MODULE, InputArgument::OPTIONAL, 'Module to run checks for. You must use dot syntax for namespaced ones, e.g. `SprykerEco.FooBar` or `Spryker.all` or `Spryker.M`. The latter syntax will find all modules starting with M, this can be more explicit by using more letters matching the modules you want to run checks for.')
-            ->addOption(static::OPTION_EXPLICIT_MODULE, static::OPTION_EXPLICIT_MODULE_SHORT, InputOption::VALUE_NONE, 'When module syntax like `Spryker.Module` is used and more than one module matches criteria you can make it more explicit by using this option.');
+            ->addArgument(static::ARGUMENT_MODULE, InputArgument::OPTIONAL, 'Module(s) to execute. Organization.Module or Organization.Application.Module can be used. You can also make a wildcard search by prefix or suffix parts with asterisk (*)')
+            ->setHelp('
+For whitespace search you can prefix or suffix all module relevant parts with the asterisk (*)
+
+You can use the following search patterns:
+
+- Organization.Module
+- Organization*.Module
+- *Organization.Module
+- Organization.Module
+- Organization.Module*
+- Organization.*Module
+- Organization.Application.Module
+- Organization.Application*.Module
+- Organization.*Application.Module
+
+Asterisk can also be used more than once in all parts. Currently, it\'s not possible to use it in the middle of one of the parts e.g. Spryker.Foo*Bar is invalid. 
+            ');
     }
 
     /**
@@ -108,15 +123,117 @@ class AbstractCoreModuleAwareConsole extends Console
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    protected function getModulesToCheckForViolations(InputInterface $input): array
+    protected function getModulesToExecute(InputInterface $input): array
     {
-        $module = $input->getArgument(static::ARGUMENT_MODULE);
-
-        if ($module) {
-            return $this->filterModuleTransferCollectionByKey($this->buildFilterKey($module));
+        $moduleFilterTransfer = $this->buildModuleFilterTransfer();
+        if ($moduleFilterTransfer === null) {
+            return $this->getModuleTransferCollection();
         }
 
-        return $this->getModuleTransferCollection();
+        return $this->getFacade()->getModules($moduleFilterTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ModuleFilterTransfer|null
+     */
+    protected function buildModuleFilterTransfer(): ?ModuleFilterTransfer
+    {
+        if (!$this->input->getArgument(static::ARGUMENT_MODULE)) {
+            return null;
+        }
+
+        $moduleFilterTransfer = new ModuleFilterTransfer();
+        $moduleArgument = $this->input->getArgument(static::ARGUMENT_MODULE);
+
+        if (strpos($moduleArgument, '.') === false) {
+            $moduleTransfer = new ModuleTransfer();
+            $moduleTransfer->setName($moduleArgument);
+            $moduleFilterTransfer->setModule($moduleTransfer);
+
+            return $moduleFilterTransfer;
+        }
+
+        $this->addFilterDetails($moduleArgument, $moduleFilterTransfer);
+
+        return $moduleFilterTransfer;
+    }
+
+    /**
+     * @param string $moduleArgument
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleFilterTransfer
+     */
+    protected function addFilterDetails(string $moduleArgument, ModuleFilterTransfer $moduleFilterTransfer): ModuleFilterTransfer
+    {
+        $moduleFragments = explode('.', $moduleArgument);
+
+        $organization = array_shift($moduleFragments);
+        $application = array_shift($moduleFragments);
+        $module = array_shift($moduleFragments);
+
+        if ($module === null) {
+            $module = $application;
+            $application = null;
+        }
+
+        $moduleFilterTransfer = $this->addModuleTransfer($moduleFilterTransfer, $module);
+        $moduleFilterTransfer = $this->addOrganizationTransfer($moduleFilterTransfer, $organization);
+        $moduleFilterTransfer = $this->addApplicationTransfer($moduleFilterTransfer, $application);
+
+        return $moduleFilterTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
+     * @param string $module
+     *
+     * @return \Generated\Shared\Transfer\ModuleFilterTransfer
+     */
+    protected function addModuleTransfer(ModuleFilterTransfer $moduleFilterTransfer, string $module): ModuleFilterTransfer
+    {
+        if ($module !== '*' && $module !== 'all') {
+            $moduleTransfer = new ModuleTransfer();
+            $moduleTransfer->setName($module);
+            $moduleFilterTransfer->setModule($moduleTransfer);
+        }
+
+        return $moduleFilterTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
+     * @param string $organization
+     *
+     * @return \Generated\Shared\Transfer\ModuleFilterTransfer
+     */
+    protected function addOrganizationTransfer(ModuleFilterTransfer $moduleFilterTransfer, string $organization): ModuleFilterTransfer
+    {
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer->setName($organization);
+
+        $moduleFilterTransfer->setOrganization($organizationTransfer);
+
+        return $moduleFilterTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
+     * @param string|null $application
+     *
+     * @return \Generated\Shared\Transfer\ModuleFilterTransfer
+     */
+    protected function addApplicationTransfer(ModuleFilterTransfer $moduleFilterTransfer, ?string $application = null): ModuleFilterTransfer
+    {
+        if ($application === null) {
+            return $moduleFilterTransfer;
+        }
+        $applicationTransfer = new ApplicationTransfer();
+        $applicationTransfer->setName($application);
+
+        $moduleFilterTransfer->setApplication($applicationTransfer);
+
+        return $moduleFilterTransfer;
     }
 
     /**
@@ -140,78 +257,6 @@ class AbstractCoreModuleAwareConsole extends Console
     }
 
     /**
-     * @param string $filterKey
-     *
-     * @return array
-     */
-    protected function filterModuleTransferCollectionByKey(string $filterKey): array
-    {
-        $filteredModuleTransferCollection = [];
-        $moduleTransferCollection = $this->getModuleTransferCollection();
-        foreach ($moduleTransferCollection as $moduleKey => $moduleTransfer) {
-            if (!($moduleTransfer instanceof ModuleTransfer)) {
-                continue;
-            }
-            if (!$this->input->getOption(static::OPTION_EXPLICIT_MODULE) && strpos($moduleKey, $filterKey) === 0) {
-                $filteredModuleTransferCollection[$moduleKey] = $moduleTransfer;
-            }
-            if ($this->input->getOption(static::OPTION_EXPLICIT_MODULE) && $moduleKey === $filterKey) {
-                $filteredModuleTransferCollection[$moduleKey] = $moduleTransfer;
-            }
-        }
-
-        return $filteredModuleTransferCollection;
-    }
-
-    /**
-     * @param string $module
-     *
-     * @return \Generated\Shared\Transfer\ModuleTransfer
-     */
-    protected function getModuleTransfer(string $module): ModuleTransfer
-    {
-        if ($this->isNamespacedModuleName($module)) {
-            return $this->getModuleTransferCollection()[$module];
-        }
-
-        return $this->findInModuleTransferCollectionByModuleName($module);
-    }
-
-    /**
-     * @param array $modulesToValidate
-     *
-     * @return \Generated\Shared\Transfer\ModuleTransfer
-     */
-    protected function getCurrentModule(array $modulesToValidate): ModuleTransfer
-    {
-        return current($modulesToValidate);
-    }
-
-    /**
-     * @param string $module
-     *
-     * @throws \Exception
-     *
-     * @return \Generated\Shared\Transfer\ModuleTransfer
-     */
-    protected function findInModuleTransferCollectionByModuleName(string $module): ModuleTransfer
-    {
-        $moduleTransferCollection = $this->getModuleTransferCollection();
-
-        if (!isset($moduleTransferCollection[$module])) {
-            throw new Exception(sprintf('Module name "%s" not not found in module transfer collection.', $module));
-        }
-
-        $moduleTransferCollection = $moduleTransferCollection[$module];
-
-        if (count($moduleTransferCollection) > 1) {
-            throw new Exception(sprintf('Module name "%s" is not unique across namespaces.', $module));
-        }
-
-        return current($moduleTransferCollection);
-    }
-
-    /**
      * @param string $module
      *
      * @return bool
@@ -222,7 +267,7 @@ class AbstractCoreModuleAwareConsole extends Console
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
     protected function getModuleTransferCollection(): array
     {

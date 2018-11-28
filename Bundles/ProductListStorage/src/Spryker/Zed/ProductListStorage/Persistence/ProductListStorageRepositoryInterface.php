@@ -38,6 +38,16 @@ interface ProductListStorageRepositoryInterface
     public function findProductConcreteProductListStorageEntities(array $productConcreteIds): array;
 
     /**
+     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     */
+    public function findAllProductAbstractProductListStorageEntities(): array;
+
+    /**
+     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
+     */
+    public function findAllProductConcreteProductListStorageEntities(): array;
+
+    /**
      * @param int[] $productListIds
      *
      * @return int[]

@@ -14,12 +14,15 @@ use Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface;
 use Spryker\Client\Search\Exception\MissingSearchConfigPluginException;
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @method \Spryker\Client\Search\SearchConfig getConfig()
+ */
 class SearchDependencyProvider extends AbstractDependencyProvider
 {
-    const SEARCH_CONFIG_BUILDER = 'search config builder';
-    const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
-    const STORE = 'store';
-    const PLUGIN_MONEY = 'money plugin';
+    public const SEARCH_CONFIG_BUILDER = 'search config builder';
+    public const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
+    public const STORE = 'store';
+    public const PLUGIN_MONEY = 'money plugin';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

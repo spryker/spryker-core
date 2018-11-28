@@ -14,12 +14,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface getFacade()
+ * @method \Spryker\Zed\Synchronization\Communication\SynchronizationCommunicationFactory getFactory()
  */
 class ExportSynchronizedDataConsole extends Console
 {
-    const COMMAND_NAME = 'sync:data';
-    const DESCRIPTION = 'Exports synchronized data into queues';
-    const RESOURCE = 'resource';
+    public const COMMAND_NAME = 'sync:data';
+    public const DESCRIPTION = 'Exports synchronized data into queues';
+    public const RESOURCE = 'resource';
 
     /**
      * @return void
@@ -29,8 +30,9 @@ class ExportSynchronizedDataConsole extends Console
         $this->addArgument(static::RESOURCE, InputArgument::OPTIONAL, 'Defines which resource(s) should be exported, if there is more than one, use comma to separate them. 
         If not, full export will be executed.');
 
-        $this->setName(self::COMMAND_NAME)
-            ->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME)
+            ->setDescription(static::DESCRIPTION)
+            ->addUsage($this->getResourcesUsageText());
     }
 
     /**
@@ -48,5 +50,18 @@ class ExportSynchronizedDataConsole extends Console
         }
 
         $this->getFacade()->executeResolvedPluginsBySources($resources);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getResourcesUsageText(): string
+    {
+        $availableResourceNames = $this->getFacade()->getAvailableResourceNames();
+
+        return sprintf(
+            "[\n\t%s\n]",
+            implode(",\n\t", $availableResourceNames)
+        );
     }
 }

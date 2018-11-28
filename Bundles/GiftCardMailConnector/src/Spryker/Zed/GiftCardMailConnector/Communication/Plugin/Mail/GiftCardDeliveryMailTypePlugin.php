@@ -14,10 +14,11 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 /**
  * @method \Spryker\Zed\GiftCardMailConnector\Business\GiftCardMailConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\GiftCardMailConnector\Communication\GiftCardMailConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\GiftCardMailConnector\GiftCardMailConnectorConfig getConfig()
  */
 class GiftCardDeliveryMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    const MAIL_TYPE = 'GIFT_CARD_DELIVERY_MAIL';
+    public const MAIL_TYPE = 'GIFT_CARD_DELIVERY_MAIL';
 
     /**
      * @api

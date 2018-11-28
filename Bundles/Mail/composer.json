@@ -1,20 +1,19 @@
 {
   "name": "spryker/mail",
+  "type": "library",
   "description": "Mail module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/glossary": "^3.0.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.0.0",
+    "swiftmailer/swiftmailer": "^5.4.5 || ^6.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
-  },
-  "suggest": {
-    "swiftmailer/swiftmailer": "Recommended to use this package as default mailer."
   },
   "autoload": {
     "psr-4": {

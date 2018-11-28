@@ -6,6 +6,7 @@
  * file that was distributed with the source code of the extended class.
  *
  * @license MIT License
+ * @see https://github.com/propelorm/Propel2
  */
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator\Helper;
@@ -19,7 +20,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator\Helper;
  *
  * @author paul.hanssen
  */
-
 class StandardEnglishPluralizer implements PluralizerInterface
 {
     /**

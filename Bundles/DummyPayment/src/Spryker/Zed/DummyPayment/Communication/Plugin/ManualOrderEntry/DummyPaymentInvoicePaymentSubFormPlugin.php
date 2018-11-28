@@ -16,10 +16,11 @@ use Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPlu
 /**
  * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DummyPayment\DummyPaymentConfig getConfig()
  */
 class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements PaymentSubFormPluginInterface
 {
-    const PAYMENT_PROVIDER = 'DummyPayment';
+    public const PAYMENT_PROVIDER = 'DummyPayment';
 
     /**
      * @api

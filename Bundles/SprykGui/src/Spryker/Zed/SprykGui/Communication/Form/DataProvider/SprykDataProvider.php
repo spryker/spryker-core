@@ -81,11 +81,6 @@ class SprykDataProvider
             $sprykOptions['argumentChoices'] = $argumentCollectionTransfer->getArguments();
         }
 
-        if (array_key_exists('className', $sprykDefinition['arguments'])) {
-            $classInformationCollectionTransfer = $this->sprykGuiFacade->getZedBusinessModels($moduleTransfer);
-            $sprykOptions['classNameChoices'] = $classInformationCollectionTransfer->getClassInformations();
-        }
-
         if (array_key_exists('output', $sprykDefinition['arguments'])) {
             $returnTypeCollectionTransfer = $optionTransfer->getReturnTypeCollection();
             $sprykOptions['outputChoices'] = $returnTypeCollectionTransfer->getReturnTypes();
@@ -109,6 +104,7 @@ class SprykDataProvider
         $formData = [
             'spryk' => $spryk,
             'module' => $moduleTransfer,
+            'dependentModule' => $moduleTransfer,
         ];
 
         return $this->addSprykDefinitionDefaultData($formData, $spryk);

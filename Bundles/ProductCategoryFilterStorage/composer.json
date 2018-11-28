@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-category-filter-storage",
+  "type": "library",
   "description": "ProductCategoryFilterStorage module",
   "license": "proprietary",
   "require": {
@@ -14,11 +15,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
-    "spryker/propel-query-builder": "*",
     "spryker/testify": "*"
   },
   "suggest": {

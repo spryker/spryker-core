@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class User implements UserInterface
 {
-    const USER_BUNDLE_SESSION_KEY = 'user';
+    public const USER_BUNDLE_SESSION_KEY = 'user';
 
     /**
      * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface
@@ -282,6 +282,24 @@ class User implements UserInterface
 
         if ($entity === null) {
             throw new UserNotFoundException();
+        }
+
+        return $this->entityToTransfer($entity);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUserById(int $id): ?UserTransfer
+    {
+        $entity = $this->queryContainer
+            ->queryUserById($id)
+            ->findOne();
+
+        if ($entity === null) {
+            return null;
         }
 
         return $this->entityToTransfer($entity);

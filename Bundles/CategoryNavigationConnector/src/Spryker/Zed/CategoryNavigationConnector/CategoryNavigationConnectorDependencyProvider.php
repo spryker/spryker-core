@@ -13,11 +13,14 @@ use Spryker\Zed\CategoryNavigationConnector\Dependency\QueryContainer\CategoryNa
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CategoryNavigationConnector\CategoryNavigationConnectorConfig getConfig()
+ */
 class CategoryNavigationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
-    const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
-    const QUERY_CONTAINER_NAVIGATION = 'QUERY_CONTAINER_NAVIGATION';
+    public const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
+    public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    public const QUERY_CONTAINER_NAVIGATION = 'QUERY_CONTAINER_NAVIGATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -119,7 +119,7 @@ class ProductRelationActivator implements ProductRelationActivatorInterface
     /**
      * @param int $idProductRelation
      *
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelation
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelation|null
      */
     protected function findProductRelationById($idProductRelation)
     {

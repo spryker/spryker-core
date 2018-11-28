@@ -1,5 +1,6 @@
 {
   "name": "spryker/category-page-search",
+  "type": "library",
   "description": "CategoryPageSearch module",
   "license": "proprietary",
   "require": {
@@ -16,10 +17,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
-    "spryker/propel-query-builder": "*",
     "spryker/testify": "*"
   },
   "suggest": {

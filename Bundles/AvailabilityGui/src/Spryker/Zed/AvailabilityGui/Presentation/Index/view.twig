@@ -38,14 +38,6 @@
                 <div class="col-lg-2">
                     <p><b>{{ 'Reserved Products' | trans }}:</b></p><p> {{ productAbstractAvailability.reservationQuantity }}</p>
                 </div>
-                <div class="col-lg-2">
-                    <p>
-                        <b>{{ 'Is never out of stock' | trans }}:</b>
-                    </p>
-                    <p>
-                        {{ productAbstractAvailability.isNeverOutOfStock ? 'Yes' | trans : 'No' | trans }}
-                    </p>
-                </div>
                 {% else %}
                     <div class="alert alert-danger">
                         {{ 'Availability information for selected product - store pair does not exist.' | trans }}
