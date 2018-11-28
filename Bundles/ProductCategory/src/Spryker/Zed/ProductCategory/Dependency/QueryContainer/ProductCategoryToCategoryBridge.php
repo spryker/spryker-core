@@ -40,8 +40,6 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false): SpyCategoryNodeQuery
