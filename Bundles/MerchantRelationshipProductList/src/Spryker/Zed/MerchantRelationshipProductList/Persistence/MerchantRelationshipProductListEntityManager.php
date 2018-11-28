@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductList\Persistence;
 
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -14,4 +15,18 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class MerchantRelationshipProductListEntityManager extends AbstractEntityManager implements MerchantRelationshipProductListEntityManagerInterface
 {
+    public const FK_MERCHANT_RELATIONSHIP_KEY = 'FkMerchantRelationship';
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return void
+     */
+    public function deleteMerchantRelationshipFromProductList(ProductListTransfer $productListTransfer): void
+    {
+        $this->getFactory()
+            ->getProductListQuery()
+            ->filterByIdProductList($productListTransfer->getIdProductList())
+            ->update([ static::FK_MERCHANT_RELATIONSHIP_KEY => null]);
+    }
 }

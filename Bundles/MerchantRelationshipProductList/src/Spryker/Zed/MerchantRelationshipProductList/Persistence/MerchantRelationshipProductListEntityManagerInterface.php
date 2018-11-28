@@ -7,6 +7,14 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductList\Persistence;
 
+use Generated\Shared\Transfer\ProductListTransfer;
+
 interface MerchantRelationshipProductListEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return void
+     */
+    public function deleteMerchantRelationshipFromProductList(ProductListTransfer $productListTransfer): void;
 }

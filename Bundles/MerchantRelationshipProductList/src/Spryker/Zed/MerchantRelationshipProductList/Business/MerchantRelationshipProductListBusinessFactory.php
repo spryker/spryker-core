@@ -12,6 +12,7 @@ use Spryker\Zed\MerchantRelationshipProductList\Business\CustomerExpander\Custom
 use Spryker\Zed\MerchantRelationshipProductList\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListReader;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListReaderInterface;
+use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriter;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListConfig getConfig()
@@ -34,5 +35,13 @@ class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFac
     public function createCustomerExpander(): CustomerExpanderInterface
     {
         return new CustomerExpander($this->createProductListReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriter
+     */
+    public function createProductListWriter(): ProductListWriter
+    {
+        return new ProductListWriter($this->getEntityManager());
     }
 }

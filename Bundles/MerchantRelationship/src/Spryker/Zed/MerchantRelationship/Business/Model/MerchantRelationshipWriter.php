@@ -197,6 +197,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
         $errorMessages = new ArrayObject();
         foreach ($this->merchantRelationshipPreDeletePlugins as $merchantRelationshipPreDeletePlugin) {
             $merchantRelationshipDeleteResponseTransfer = $merchantRelationshipPreDeletePlugin->execute($merchantRelationTransfer);
+
             if (!$merchantRelationshipDeleteResponseTransfer->getIsSuccess()) {
                 foreach ($merchantRelationshipDeleteResponseTransfer->getMessages() as $errorMessage) {
                     $errorMessages->append($errorMessage);
