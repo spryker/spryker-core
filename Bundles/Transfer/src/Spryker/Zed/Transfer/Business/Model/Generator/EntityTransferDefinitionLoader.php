@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Spryker\Zed\Transfer\Business\Exception\EmptyTransferDefinitionException;
+use Spryker\Zed\Transfer\Business\Exception\EmptyEntityTransferDefinitionException;
 use Zend\Config\Factory;
 
 class EntityTransferDefinitionLoader extends TransferDefinitionLoader
@@ -56,7 +56,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
                 $table[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
                 $table[self::ENTITY_NAMESPACE] = $definition[self::ENTITY_NAMESPACE];
 
-                $this->validateDefinition($table, $definition[static::ENTITY_SCHEMA_PATHNAME]);
+                $this->assertDefinitionHasColumns($table, $definition[static::ENTITY_SCHEMA_PATHNAME]);
                 $this->transferDefinitions[] = $table;
             }
         } else {
@@ -66,7 +66,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
             $table[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
             $table[self::ENTITY_NAMESPACE] = $definition[self::ENTITY_NAMESPACE];
 
-            $this->validateDefinition($table, $definition[static::ENTITY_SCHEMA_PATHNAME]);
+            $this->assertDefinitionHasColumns($table, $definition[static::ENTITY_SCHEMA_PATHNAME]);
             $this->transferDefinitions[] = $table;
         }
     }
@@ -75,16 +75,16 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
      * @param array $definition
      * @param string $transferDefinitionFilePath
      *
-     * @throws \Spryker\Zed\Transfer\Business\Exception\EmptyTransferDefinitionException
+     * @throws \Spryker\Zed\Transfer\Business\Exception\EmptyEntityTransferDefinitionException
      *
      * @return void
      */
-    protected function validateDefinition(array $definition, string $transferDefinitionFilePath): void
+    protected function assertDefinitionHasColumns(array $definition, string $transferDefinitionFilePath): void
     {
         if (!isset($definition[static::KEY_COLUMN])) {
-            throw new EmptyTransferDefinitionException(
+            throw new EmptyEntityTransferDefinitionException(
                 sprintf(
-                    'Schema definition file %s doesn\'t contain any column definition for `%s` table, please add at least one column to it.',
+                    'Schema definition file `%s` doesn\'t contain any column definition for `%s` table, please add at least one column to it.',
                     $transferDefinitionFilePath,
                     $definition[static::KEY_NAME]
                 )

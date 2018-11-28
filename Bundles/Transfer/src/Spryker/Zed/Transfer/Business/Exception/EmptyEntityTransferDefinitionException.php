@@ -9,6 +9,6 @@ namespace Spryker\Zed\Transfer\Business\Exception;
 
 use Exception;
 
-class EmptyTransferDefinitionException extends Exception
+class EmptyEntityTransferDefinitionException extends Exception
 {
 }
