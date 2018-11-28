@@ -16,6 +16,8 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductCon
 /**
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  */
 class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

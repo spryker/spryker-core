@@ -5,42 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductQuantityStorage\Validator;
+namespace Spryker\Client\ProductQuantityStorage\Rounder;
 
-use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
+use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 
-class ProductQuantityValidator implements ProductQuantityValidatorInterface
+class ProductQuantityRounder implements ProductQuantityRounderInterface
 {
     /**
-     * @var \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface
-     */
-    protected $productQuantityStorageReader;
-
-    /**
-     * @param \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface $productQuantityStorageReader
-     */
-    public function __construct(ProductQuantityStorageReaderInterface $productQuantityStorageReader)
-    {
-        $this->productQuantityStorageReader = $productQuantityStorageReader;
-    }
-
-    /**
-     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer $productQuantityStorageTransfer
      * @param int $quantity
      *
      * @return int
      */
-    public function getNearestQuantity(int $idProduct, int $quantity): int
+    public function getNearestQuantity(ProductQuantityStorageTransfer $productQuantityStorageTransfer, int $quantity): int
     {
-        $productQuantityTransfer = $this->productQuantityStorageReader->findProductQuantityStorage($idProduct);
-
-        if (!$productQuantityTransfer) {
-            return $quantity;
-        }
-
-        $min = $productQuantityTransfer->getQuantityMin();
-        $max = $productQuantityTransfer->getQuantityMax();
-        $interval = $productQuantityTransfer->getQuantityInterval();
+        $min = $productQuantityStorageTransfer->getQuantityMin() ?: 1;
+        $max = $productQuantityStorageTransfer->getQuantityMax();
+        $interval = $productQuantityStorageTransfer->getQuantityInterval();
 
         if ($quantity < $min) {
             return $min;
@@ -51,6 +32,8 @@ class ProductQuantityValidator implements ProductQuantityValidatorInterface
         }
 
         if ($interval && ($quantity - $min) % $interval !== 0) {
+            $max = $max ?? ($quantity + $interval);
+
             $allowedQuantities = array_reverse(range($min, $max, $interval));
             $quantity = $this->getNearestQuantityFromAllowed($quantity, $allowedQuantities);
         }

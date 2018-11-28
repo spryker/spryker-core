@@ -12,10 +12,12 @@ use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStora
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductQuantityStorage\Expander\ProductConcreteTransferExpander;
 use Spryker\Client\ProductQuantityStorage\Expander\ProductConcreteTransferExpanderInterface;
+use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolver;
+use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface;
+use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounder;
+use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReader;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
-use Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityValidator;
-use Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityValidatorInterface;
 
 class ProductQuantityStorageFactory extends AbstractFactory
 {
@@ -57,12 +59,21 @@ class ProductQuantityStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityValidatorInterface
+     * @return \Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface
      */
-    public function createProductQuantityValidator(): ProductQuantityValidatorInterface
+    public function createProductQuantityResolver(): ProductQuantityResolverInterface
     {
-        return new ProductQuantityValidator(
-            $this->createProductQuantityStorageReader()
+        return new ProductQuantityResolver(
+            $this->createProductQuantityStorageReader(),
+            $this->createProductQuantityRounder()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface
+     */
+    public function createProductQuantityRounder(): ProductQuantityRounderInterface
+    {
+        return new ProductQuantityRounder();
     }
 }
