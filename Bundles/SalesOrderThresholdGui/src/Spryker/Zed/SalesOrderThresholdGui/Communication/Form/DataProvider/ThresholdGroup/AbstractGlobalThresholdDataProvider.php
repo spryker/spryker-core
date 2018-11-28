@@ -17,9 +17,8 @@ abstract class AbstractGlobalThresholdDataProvider
     /**
      * @param \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[] $formExpanderPlugins
      */
-    public function __construct(
-        array $formExpanderPlugins
-    ) {
+    public function __construct(array $formExpanderPlugins)
+    {
         $this->formExpanderPlugins = $formExpanderPlugins;
     }
 }

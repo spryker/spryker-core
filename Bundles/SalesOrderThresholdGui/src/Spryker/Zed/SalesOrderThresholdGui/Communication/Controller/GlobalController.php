@@ -85,7 +85,7 @@ class GlobalController extends AbstractController
             $hardSalesOrderThresholdTransfer = $this->getFactory()
                 ->createGlobalSoftThresholdFormMapperResolver()
                 ->resolveGlobalThresholdMapperByStrategyGroup(SalesOrderThresholdGuiConfig::GROUP_HARD)
-                ->map($data[GlobalThresholdType::FIELD_HARD], $hardSalesOrderThresholdTransfer);
+                ->mapFormDataToTransfer($data[GlobalThresholdType::FIELD_HARD], $hardSalesOrderThresholdTransfer);
         }
 
         $this->saveSalesOrderThreshold($hardSalesOrderThresholdTransfer);
@@ -103,7 +103,7 @@ class GlobalController extends AbstractController
             $softSalesOrderThresholdTransfer = $this->getFactory()
                 ->createGlobalSoftThresholdFormMapperResolver()
                 ->resolveGlobalThresholdMapperByStrategyGroup(SalesOrderThresholdGuiConfig::GROUP_SOFT)
-                ->map($data[GlobalThresholdType::FIELD_SOFT], $softSalesOrderThresholdTransfer);
+                ->mapFormDataToTransfer($data[GlobalThresholdType::FIELD_SOFT], $softSalesOrderThresholdTransfer);
         }
 
         $this->saveSalesOrderThreshold($softSalesOrderThresholdTransfer);

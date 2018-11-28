@@ -17,5 +17,5 @@ interface GlobalThresholdFormMapperInterface
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
      */
-    public function map(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer;
+    public function mapFormDataToTransfer(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer;
 }

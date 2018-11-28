@@ -57,7 +57,8 @@ interface SalesOrderThresholdFormExpanderPluginInterface
 
     /**
      * Specification:
-     *  - Maps the data from SalesOrderThresholdValueTransfer to array form data.
+     *  - Gets the from data.
+     *  - Maps the data of SalesOrderThresholdValueTransfer to array form data.
      *
      * @api
      *
@@ -74,10 +75,10 @@ interface SalesOrderThresholdFormExpanderPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      * @param array $data
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer
      */
-    public function mapData(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $data): SalesOrderThresholdValueTransfer;
+    public function mapFormDataToTransfer(array $data, SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): SalesOrderThresholdValueTransfer;
 }

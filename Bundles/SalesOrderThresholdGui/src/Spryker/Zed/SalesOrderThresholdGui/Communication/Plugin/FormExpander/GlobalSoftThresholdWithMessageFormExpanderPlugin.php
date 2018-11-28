@@ -79,12 +79,12 @@ class GlobalSoftThresholdWithMessageFormExpanderPlugin extends AbstractPlugin im
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      * @param array $data
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer
      */
-    public function mapData(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $data): SalesOrderThresholdValueTransfer
+    public function mapFormDataToTransfer(array $data, SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): SalesOrderThresholdValueTransfer
     {
         $salesOrderThresholdValueTransfer->setSalesOrderThresholdType(
             (new SalesOrderThresholdTypeTransfer())

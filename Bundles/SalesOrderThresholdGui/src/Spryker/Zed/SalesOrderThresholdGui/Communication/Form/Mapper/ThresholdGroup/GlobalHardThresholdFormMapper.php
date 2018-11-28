@@ -18,7 +18,7 @@ class GlobalHardThresholdFormMapper extends AbstractGlobalThresholdFormMapper im
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
      */
-    public function map(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer
+    public function mapFormDataToTransfer(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer
     {
         $salesOrderThresholdTransfer->setIdSalesOrderThreshold($data[GlobalHardThresholdType::FIELD_ID_THRESHOLD] ?? null);
         $salesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
@@ -35,7 +35,7 @@ class GlobalHardThresholdFormMapper extends AbstractGlobalThresholdFormMapper im
             }
 
             $salesOrderThresholdTransfer->setSalesOrderThresholdValue(
-                $formExpanderPlugin->mapData($salesOrderThresholdTransfer->getSalesOrderThresholdValue(), $data)
+                $formExpanderPlugin->mapFormDataToTransfer($data, $salesOrderThresholdTransfer->getSalesOrderThresholdValue())
             );
         }
 
