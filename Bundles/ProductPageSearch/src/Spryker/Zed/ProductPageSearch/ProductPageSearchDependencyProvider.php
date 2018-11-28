@@ -36,6 +36,9 @@ use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToPricePro
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilSanitizeServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
+ */
 class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';

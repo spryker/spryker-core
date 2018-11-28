@@ -17,6 +17,8 @@ use Spryker\Zed\Newsletter\NewsletterConfig;
 /**
  * @method \Spryker\Zed\Newsletter\Communication\NewsletterCommunicationFactory getFactory()
  * @method \Spryker\Zed\Newsletter\Business\NewsletterFacadeInterface getFacade()
+ * @method \Spryker\Zed\Newsletter\NewsletterConfig getConfig()
+ * @method \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface getQueryContainer()
  */
 class DoubleOptInSubscriptionSender extends AbstractPlugin implements SubscriberOptInSenderInterface
 {

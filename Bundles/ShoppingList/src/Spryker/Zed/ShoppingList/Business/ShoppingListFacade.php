@@ -26,6 +26,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ShoppingList\Business\ShoppingListBusinessFactory getFactory()
+ * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface getRepository()
  */
 class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInterface
 {

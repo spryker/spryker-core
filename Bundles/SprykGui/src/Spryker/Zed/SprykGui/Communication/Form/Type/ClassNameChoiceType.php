@@ -29,6 +29,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * When the spryk has this configuration this type will be used and the choices will be loaded from the defined choiceLoader.
  *
  * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\SprykGui\SprykGuiConfig getConfig()
+ * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
  */
 class ClassNameChoiceType extends AbstractType
 {

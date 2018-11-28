@@ -8,9 +8,6 @@
 namespace SprykerTest\Zed\ProductLabelSearch\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacade;
 use Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainer;
 
@@ -29,19 +26,6 @@ use Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainer;
 class ProductLabelSearchListenerTest extends Unit
 {
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
-    }
-
-    /**
      * @return void
      */
     public function testQueryProductLabelByProductLabelIds()
@@ -54,7 +38,7 @@ class ProductLabelSearchListenerTest extends Unit
     }
 
     /**
-     * @return Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
+     * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
     protected function createProductLabelFacade()
     {

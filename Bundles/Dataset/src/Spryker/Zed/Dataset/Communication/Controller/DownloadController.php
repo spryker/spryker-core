@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 /**
  * @method \Spryker\Zed\Dataset\Business\DatasetFacadeInterface getFacade()
  * @method \Spryker\Zed\Dataset\Communication\DatasetCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface getRepository()
  */
 class DownloadController extends AbstractController
 {

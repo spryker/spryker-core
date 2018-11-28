@@ -72,20 +72,13 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
         $resourceIdentifier = $restRequest->getResource()->getId();
 
         if (empty($resourceIdentifier)) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setStatus(Response::HTTP_BAD_REQUEST);
-            return $response->addError($restErrorTransfer);
+            return $this->addConcreteSkuNotSpecifiedError($response);
         }
 
         $restResource = $this->findOneByProductConcrete($resourceIdentifier, $restRequest);
 
         if (!$restResource) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_CONCRETE_PRODUCT);
-
-            return $response->addError($restErrorTransfer);
+            return $this->addConcreteProductNotFoundError($response);
         }
 
         return $response->addResource($restResource);
@@ -140,5 +133,35 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             $sku,
             $restConcreteProductsAttributesTransfer
         );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addConcreteSkuNotSpecifiedError(RestResponseInterface $response): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED);
+
+        return $response->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addConcreteProductNotFoundError(RestResponseInterface $response): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_CONCRETE_PRODUCT);
+
+        return $response->addError($restErrorTransfer);
     }
 }

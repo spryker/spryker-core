@@ -30,8 +30,9 @@
     "spryker/config": "*",
     "spryker/elastica": "*",
     "spryker/event": "*",
+    "spryker/locale": "*",
+    "spryker/product-attribute": "*",
     "spryker/propel": "*",
-    "spryker/propel-query-builder": "*",
     "spryker/testify": "*"
   },
   "suggest": {

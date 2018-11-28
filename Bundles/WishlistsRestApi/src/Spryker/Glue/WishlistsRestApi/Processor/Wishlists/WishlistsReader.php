@@ -123,7 +123,7 @@ class WishlistsReader implements WishlistsReaderInterface
 
             $wishlistResource = $this->restResourceBuilder->createRestResource(
                 WishlistsRestApiConfig::RESOURCE_WISHLISTS,
-                $restWishlistsAttributes->getName(),
+                $wishlistTransfer->getUuid(),
                 $restWishlistsAttributes
             );
 

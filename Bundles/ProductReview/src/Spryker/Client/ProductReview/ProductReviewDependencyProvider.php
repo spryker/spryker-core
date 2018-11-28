@@ -20,6 +20,9 @@ use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductRev
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatterPlugin;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 
+/**
+ * @method \Spryker\Client\ProductReview\ProductReviewConfig getConfig()
+ */
 class ProductReviewDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';

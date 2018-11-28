@@ -14,6 +14,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 /**
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
  * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
+ * @method \Spryker\Zed\DummyPayment\DummyPaymentConfig getConfig()
  */
 class IsPayedPlugin extends AbstractPlugin implements ConditionInterface
 {
