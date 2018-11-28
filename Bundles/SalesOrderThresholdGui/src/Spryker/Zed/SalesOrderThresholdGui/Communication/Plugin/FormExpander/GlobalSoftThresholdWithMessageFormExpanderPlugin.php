@@ -10,8 +10,8 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Plugin\FormExpander;
 use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface;
 use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
+use Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**

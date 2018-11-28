@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin;
+namespace Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Symfony\Component\Form\FormBuilderInterface;

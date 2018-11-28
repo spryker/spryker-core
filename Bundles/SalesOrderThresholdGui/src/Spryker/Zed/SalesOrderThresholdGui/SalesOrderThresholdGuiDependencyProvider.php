@@ -149,7 +149,7 @@ class SalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyP
     }
 
     /**
-     * @return \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
+     * @return \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
      */
     protected function getSalesOrderThresholdFormExpanderPlugins(): array
     {

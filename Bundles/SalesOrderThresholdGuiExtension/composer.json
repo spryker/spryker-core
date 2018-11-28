@@ -1,14 +1,18 @@
 {
-  "name": "spryker/sales-order-threshold-extension",
+  "name": "spryker/sales-order-threshold-gui-extension",
   "type": "library",
-  "description": "SalesOrderThresholdExtension module",
+  "description": "SalesOrderThresholdGuiExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/symfony": "If you want to use the form expander plugins."
   },
   "autoload": {
     "psr-4": {
