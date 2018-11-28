@@ -28,25 +28,35 @@ customers:
 
   patch:
     salutation:
-      - NotBlank
-      - Choice:
-          choices: [Mr, Mrs, Ms, Dr]
+    - Optional:
+        constraints:
+        - NotBlank
+        - Choice:
+            choices: [Mr, Mrs, Ms, Dr]
     firstName:
-      - NotBlank
+    - Optional:
+        constraints:
+        - NotBlank
     lastName:
-      - NotBlank
+    - Optional:
+        constraints:
+        - NotBlank
     gender:
-      - NotBlank
-      - Choice:
-          choices: [Male, Female]
+    - Optional:
+        constraints:
+        - NotBlank
+        - Choice:
+            choices: [Male, Female]
     dateOfBirth:
-      - Date
+    - Optional:
+        constraints:
+        - Date
 addresses:
   post:
     salutation:
-      - NotBlank
-      - Choice:
-          choices: [Mr, Mrs, Ms, Dr]
+    - NotBlank
+    - Choice:
+        choices: [Mr, Mrs, Ms, Dr]
     firstName:
       - NotBlank
     lastName:
@@ -65,25 +75,41 @@ addresses:
       - NotBlank
   patch:
     salutation:
-      - NotBlank
-      - Choice:
-          choices: [Mr, Mrs, Ms, Dr]
+    - Optional:
+        constraints:
+        - NotBlank
+        - Choice:
+            choices: [Mr, Mrs, Ms, Dr]
     firstName:
-      - NotBlank
+    - Optional:
+        constraints:
+        - NotBlank
     lastName:
-      - NotBlank
+    - Optional:
+        constraints:
+        - NotBlank
     address1:
-      - NotBlank
+    - Optional:
+        constraints:
+        - NotBlank
     address2:
-      - NotBlank
+    - Optional:
+        constraints:
+        - NotBlank
     zipCode:
-      - NotBlank
+    - Optional:
+        constraints:
+        - NotBlank
     city:
-      - NotBlank
-      - Length:
-          min: 3
+    - Optional:
+        constraints:
+        - NotBlank
+        - Length:
+            min: 3
     iso2Code:
-      - NotBlank
+    - Optional:
+        constraints:
+        - NotBlank
 
 customer-password:
   patch:
