@@ -9,7 +9,6 @@ namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Storage\Redis\Service;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\Request;
 
