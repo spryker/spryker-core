@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductBridge;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxBridge;
 
+/**
+ * @method \Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig getConfig()
+ */
 class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT = 'facade product';

@@ -103,6 +103,8 @@ class CompanyUser implements CompanyUserInterface
     public function delete(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserTransfer) {
+            $this->companyUserPluginExecutor->executePreDeletePlugins($companyUserTransfer);
+
             $companyUserTransfer = $this->companyUserRepository->getCompanyUserById(
                 $companyUserTransfer->getIdCompanyUser()
             );
