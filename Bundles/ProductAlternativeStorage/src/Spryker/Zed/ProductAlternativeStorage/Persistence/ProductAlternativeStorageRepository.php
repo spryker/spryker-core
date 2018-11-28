@@ -112,15 +112,13 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             ->addAsColumn(ProductConcreteTransfer::SKU, SpyProductTableMap::COL_SKU)
             ->addAsColumn(ProductConcreteTransfer::FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->addAsColumn(ProductConcreteTransfer::ABSTRACT_SKU, SpyProductAbstractTableMap::COL_SKU);
-        return $productQuery
-            ->select(
-                [
+
+        return $productQuery->select([
                     SpyProductTableMap::COL_ID_PRODUCT,
                     ProductConcreteTransfer::SKU,
                     ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
                     ProductConcreteTransfer::ABSTRACT_SKU,
-                ]
-            )
+            ])
             ->find()
             ->toArray(SpyProductTableMap::COL_ID_PRODUCT);
     }
@@ -159,15 +157,12 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             ->addAsColumn(ProductConcreteTransfer::SKU, SpyProductTableMap::COL_SKU)
             ->addAsColumn(ProductConcreteTransfer::FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->addAsColumn(ProductConcreteTransfer::ABSTRACT_SKU, SpyProductAbstractTableMap::COL_SKU);
-        return $productAbstractQuery
-            ->select(
-                [
+        return $productAbstractQuery->select([
                     SpyProductTableMap::COL_ID_PRODUCT,
                     ProductConcreteTransfer::SKU,
                     ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
                     ProductConcreteTransfer::ABSTRACT_SKU,
-                ]
-            )
+            ])
             ->find()
             ->toArray(SpyProductTableMap::COL_ID_PRODUCT);
     }
