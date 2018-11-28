@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesReclamationGui\Communication\Form\ReclamationDataProvider;
 use Spryker\Zed\SalesReclamationGui\Communication\Form\ReclamationType;
 use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
+use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToOmsFacadeInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesFacadeInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesReclamationFacadeInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface;
@@ -72,6 +73,7 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
 
         return $this->getFormFactory()->create(
             ReclamationType::class,
+            $dataProvider->getData($quoteTransfer),
             $dataProvider->getOptions($quoteTransfer)
         );
     }
@@ -83,9 +85,7 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createReclamationDataProvider(Request $request): ReclamationDataProvider
     {
-        return new ReclamationDataProvider(
-            $request
-        );
+        return new ReclamationDataProvider($request);
     }
 
     /**
@@ -94,5 +94,13 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getDateTimeService(): SalesReclamationGuiToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(SalesReclamationGuiDependencyProvider::SERVICE_DATETIME);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToOmsFacadeInterface
+     */
+    public function getOmsFacade(): SalesReclamationGuiToOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesReclamationGuiDependencyProvider::FACADE_OMS);
     }
 }
