@@ -46,7 +46,7 @@ class ReclamationDataProvider
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if (!$quoteTransfer->getReclamationId()
             && $this->request->query->has(ReclamationTable::PARAM_ID_RECLAMATION)
