@@ -77,7 +77,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
         }
 
         $restCustomerTransfer = $this->customerMapper->mapRestCustomerTransferFromRestCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
-        $restCheckoutRequestAttributesTransfer->getCart()->setCustomer($restCustomerTransfer);
+        $restCheckoutRequestAttributesTransfer->setCustomer($restCustomerTransfer);
 
         $restCheckoutResponseTransfer = $this->checkoutRestApiClient->placeOrder($restCheckoutRequestAttributesTransfer);
         if (!$restCheckoutResponseTransfer->getIsSuccess()) {

@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\PaymentsRestApi\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\RestCartBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\DataBuilder\RestPaymentBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -46,7 +45,7 @@ class PaymentsRestApiFacadeTest extends Unit
         $actualQuote = $paymentsRestApiFacade->mapPaymentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->assertNotNull($actualQuote->getPayment());
-        $unlimitedPayment = $restCheckoutRequestAttributesTransfer->getCart()->getPayments()->offsetGet(0);
+        $unlimitedPayment = $restCheckoutRequestAttributesTransfer->getPayments()->offsetGet(0);
         $this->assertEquals($unlimitedPayment->getPaymentProvider(), $actualQuote->getPayment()->getPaymentProvider());
         $this->assertEquals($unlimitedPayment->getPaymentSelection(), $actualQuote->getPayment()->getPaymentSelection());
         $this->assertEquals($unlimitedPayment->getPaymentMethod(), $actualQuote->getPayment()->getPaymentMethod());
@@ -84,12 +83,12 @@ class PaymentsRestApiFacadeTest extends Unit
         $actualQuote = $paymentsRestApiFacade->mapPaymentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->assertNotNull($actualQuote->getPayment());
-        $unlimitedPayment = $restCheckoutRequestAttributesTransfer->getCart()->getPayments()->offsetGet(0);
+        $unlimitedPayment = $restCheckoutRequestAttributesTransfer->getPayments()->offsetGet(0);
         $this->assertEquals($unlimitedPayment->getPaymentProvider(), $actualQuote->getPayment()->getPaymentProvider());
         $this->assertEquals($unlimitedPayment->getPaymentSelection(), $actualQuote->getPayment()->getPaymentSelection());
         $this->assertEquals($unlimitedPayment->getPaymentMethod(), $actualQuote->getPayment()->getPaymentMethod());
         $this->assertEquals($unlimitedPayment->getIsLimitedAmount(), $actualQuote->getPayment()->getIsLimitedAmount());
-        $limitedPayment = $restCheckoutRequestAttributesTransfer->getCart()->getPayments()->offsetGet(1);
+        $limitedPayment = $restCheckoutRequestAttributesTransfer->getPayments()->offsetGet(1);
         $actualLimitedPayment = $actualQuote->getPayments()->offsetGet(0);
         $this->assertEquals($limitedPayment->getPaymentProvider(), $actualLimitedPayment->getPaymentProvider());
         $this->assertEquals($limitedPayment->getPaymentSelection(), $actualLimitedPayment->getPaymentSelection());
@@ -121,10 +120,8 @@ class PaymentsRestApiFacadeTest extends Unit
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(
-                (new RestCartBuilder())
-                    ->withPayment($this->prepareRestPayment())
-            )->build();
+            ->withPayment($this->prepareRestPayment())
+            ->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -136,10 +133,8 @@ class PaymentsRestApiFacadeTest extends Unit
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(
-                (new RestCartBuilder())
-                    ->withPayment($this->prepareRestPaymentWithLimitedAmount())
-            )->build();
+            ->withPayment($this->prepareRestPaymentWithLimitedAmount())
+            ->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -151,11 +146,9 @@ class PaymentsRestApiFacadeTest extends Unit
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(
-                (new RestCartBuilder())
-                    ->withPayment($this->prepareRestPayment())
-                    ->withAnotherPayment($this->prepareRestPaymentWithLimitedAmount())
-            )->build();
+            ->withPayment($this->prepareRestPayment())
+            ->withAnotherPayment($this->prepareRestPaymentWithLimitedAmount())
+            ->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -166,8 +159,7 @@ class PaymentsRestApiFacadeTest extends Unit
     protected function prepareRestCheckoutRequestAttributesTransferWithoutPayments(): RestCheckoutRequestAttributesTransfer
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
-        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(new RestCartBuilder())->build();
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }

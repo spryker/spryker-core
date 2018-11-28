@@ -15,7 +15,7 @@ use Generated\Shared\DataBuilder\PaymentBuilder;
 use Generated\Shared\DataBuilder\PaymentMethodsBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteResponseBuilder;
-use Generated\Shared\DataBuilder\RestCartBuilder;
+use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodsBuilder;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
@@ -95,15 +95,14 @@ class CheckoutRestApiBusinessTester extends Actor
      */
     public function prepareFullRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder(['id' => static::CART_UUID]))
             ->withBillingAddress(static::ADDRESS_1)
             ->withShippingAddress(static::ADDRESS_2)
             ->withCustomer(static::CUSTOMER)
             ->build();
-        $restCart->setId(static::CART_UUID);
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**
@@ -111,15 +110,14 @@ class CheckoutRestApiBusinessTester extends Actor
      */
     public function prepareFullRestCheckoutRequestAttributesTransferForGuest(): RestCheckoutRequestAttributesTransfer
     {
-        /** @var \Generated\Shared\Transfer\RestCartTransfer $restCart */
-        $restCart = (new RestCartBuilder())
+        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder(['id' => static::CART_UUID]))
             ->withBillingAddress(static::ADDRESS_1)
             ->withShippingAddress(static::ADDRESS_2)
             ->withCustomer(static::GUEST_CUSTOMER)
             ->build();
-        $restCart->setId(static::CART_UUID);
 
-        return (new RestCheckoutRequestAttributesTransfer())->setCart($restCart);
+        return $restCheckoutRequestAttributesTransfer;
     }
 
     /**

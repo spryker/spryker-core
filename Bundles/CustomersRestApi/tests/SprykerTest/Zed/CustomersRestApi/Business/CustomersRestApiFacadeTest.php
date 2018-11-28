@@ -49,8 +49,8 @@ class CustomersRestApiFacadeTest extends Unit
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->tester->assertBothAddressesMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
-        $this->assertEquals($restCheckoutRequestAttributesTransfer->getCart()->getBillingAddress()->getId(), $actualQuote->getBillingAddress()->getUuid());
-        $this->assertEquals($restCheckoutRequestAttributesTransfer->getCart()->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getBillingAddress()->getId(), $actualQuote->getBillingAddress()->getUuid());
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
     }
 
     /**
@@ -86,7 +86,7 @@ class CustomersRestApiFacadeTest extends Unit
 
         $this->tester->assertBillingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
 
-        $this->assertEquals($restCheckoutRequestAttributesTransfer->getCart()->getBillingAddress()->getId(), $actualQuote->getBillingAddress()->getUuid());
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getBillingAddress()->getId(), $actualQuote->getBillingAddress()->getUuid());
     }
 
     /**
@@ -121,7 +121,7 @@ class CustomersRestApiFacadeTest extends Unit
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->tester->assertShippingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
-        $this->assertEquals($restCheckoutRequestAttributesTransfer->getCart()->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
     }
 
     /**
@@ -193,7 +193,7 @@ class CustomersRestApiFacadeTest extends Unit
 
         $this->assertNotNull($actualQuote->getCustomer());
         $this->assertNotNull($actualQuote->getCustomerReference());
-        $expectedRestCustomerTransfer = $restCheckoutRequestAttributesTransfer->getCart()->getCustomer();
+        $expectedRestCustomerTransfer = $restCheckoutRequestAttributesTransfer->getCustomer();
         $this->assertEquals($expectedRestCustomerTransfer->getCustomerReference(), $actualQuote->getCustomer()->getCustomerReference());
         $this->assertEquals($expectedRestCustomerTransfer->getIdCustomer(), $actualQuote->getCustomer()->getIdCustomer());
     }
@@ -214,7 +214,7 @@ class CustomersRestApiFacadeTest extends Unit
 
         $this->assertNotNull($actualQuote->getCustomer());
         $this->assertNotNull($actualQuote->getCustomerReference());
-        $expectedRestCustomerTransfer = $restCheckoutRequestAttributesTransfer->getCart()->getCustomer();
+        $expectedRestCustomerTransfer = $restCheckoutRequestAttributesTransfer->getCustomer();
         $this->assertEquals($expectedRestCustomerTransfer->getCustomerReference(), $actualQuote->getCustomer()->getCustomerReference());
         $this->assertEquals($expectedRestCustomerTransfer->getIdCustomer(), $actualQuote->getCustomer()->getIdCustomer());
     }

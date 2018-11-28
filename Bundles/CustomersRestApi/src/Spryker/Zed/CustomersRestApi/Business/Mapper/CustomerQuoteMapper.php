@@ -37,7 +37,7 @@ class CustomerQuoteMapper implements CustomerQuoteMapperInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        $restCustomerTransfer = $restCheckoutRequestAttributesTransfer->getCart()->getCustomer();
+        $restCustomerTransfer = $restCheckoutRequestAttributesTransfer->getCustomer();
 
         if (!$restCustomerTransfer || !$restCustomerTransfer->getCustomerReference()) {
             return $quoteTransfer;

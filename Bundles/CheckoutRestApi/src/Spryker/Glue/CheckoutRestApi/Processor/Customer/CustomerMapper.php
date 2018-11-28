@@ -24,15 +24,14 @@ class CustomerMapper implements CustomerMapperInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCustomerTransfer {
         $restCustomerTransfer = new RestCustomerTransfer();
-        $restCartTransfer = $restCheckoutRequestAttributesTransfer->getCart();
 
         if (!$restRequest->getUser()) {
             return $restCustomerTransfer;
         }
 
-        if ($restCartTransfer->getCustomer()) {
+        if ($restCheckoutRequestAttributesTransfer->getCustomer()) {
             $restCustomerTransfer->fromArray(
-                $restCartTransfer->getCustomer()->toArray(),
+                $restCheckoutRequestAttributesTransfer->getCustomer()->toArray(),
                 true
             );
         }

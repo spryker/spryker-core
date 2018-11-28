@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ShipmentsRestApi\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\RestCartBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -62,9 +61,9 @@ class ShipmentsRestApiFacadeTest extends Unit
 
         $this->assertNotNull($actualQuote->getShipment());
         $this->assertGreaterThan(0, $actualQuote->getExpenses()->count());
-        $this->assertEquals($restCheckoutRequestAttributesTransfer->getCart()->getShipment()->getShipmentSelection(), $actualQuote->getShipment()->getShipmentSelection());
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getShipment()->getShipmentSelection(), $actualQuote->getShipment()->getShipmentSelection());
         $actualShipmentMethodTransfer = $actualQuote->getShipment()->getMethod();
-        $this->assertEquals($restCheckoutRequestAttributesTransfer->getCart()->getShipment()->getShipmentSelection(), $actualShipmentMethodTransfer->getIdShipmentMethod());
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getShipment()->getShipmentSelection(), $actualShipmentMethodTransfer->getIdShipmentMethod());
         $this->assertEquals(static::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
         $this->assertEquals(static::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
         $this->assertEquals(static::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
@@ -182,8 +181,7 @@ class ShipmentsRestApiFacadeTest extends Unit
     protected function prepareRestCheckoutRequestAttributesTransferWithoutShipment(): RestCheckoutRequestAttributesTransfer
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
-        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(new RestCartBuilder())->build();
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -195,10 +193,8 @@ class ShipmentsRestApiFacadeTest extends Unit
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(
-                (new RestCartBuilder())
-                    ->withShipment(['shipmentSelection' => static::SHIPMENT_METHOD['idShipmentMethod']])
-            )->build();
+            ->withShipment(['shipmentSelection' => static::SHIPMENT_METHOD['idShipmentMethod']])
+            ->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }

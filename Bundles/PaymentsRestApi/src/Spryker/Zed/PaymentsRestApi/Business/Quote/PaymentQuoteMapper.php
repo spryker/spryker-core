@@ -25,7 +25,7 @@ class PaymentQuoteMapper implements PaymentQuoteMapperInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        $restPaymentTransfers = $restCheckoutRequestAttributesTransfer->getCart()->getPayments();
+        $restPaymentTransfers = $restCheckoutRequestAttributesTransfer->getPayments();
         $quoteTransfer = $this->setFirstPaymentMethodWithUnlimitedAmountToQuote($restPaymentTransfers, $quoteTransfer);
 
         if ($quoteTransfer->getPayment() === null) {

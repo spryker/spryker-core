@@ -75,7 +75,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         }
 
         $restCustomerTransfer = $this->customerMapper->mapRestCustomerTransferFromRestCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
-        $restCheckoutRequestAttributesTransfer->getCart()->setCustomer($restCustomerTransfer);
+        $restCheckoutRequestAttributesTransfer->setCustomer($restCustomerTransfer);
 
         $restCheckoutDataResponseTransfer = $this->checkoutRestApiClient->getCheckoutData($restCheckoutRequestAttributesTransfer);
         if (!$restCheckoutDataResponseTransfer->getIsSuccess()) {

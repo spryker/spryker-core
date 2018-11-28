@@ -83,10 +83,6 @@
     </transfer>
 
     <transfer name="RestCheckoutRequestAttributes">
-        <property name="cart" type="RestCart"/>
-    </transfer>
-
-    <transfer name="RestCart">
         <property name="customer" type="RestCustomer"/>
         <property name="billingAddress" type="RestAddress"/>
         <property name="shippingAddress" type="RestAddress"/>

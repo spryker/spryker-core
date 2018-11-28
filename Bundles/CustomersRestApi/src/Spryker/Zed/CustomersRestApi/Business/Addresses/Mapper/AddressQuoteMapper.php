@@ -40,19 +40,18 @@ class AddressQuoteMapper implements AddressQuoteMapperInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        $restQuoteRequestTransfer = $restCheckoutRequestAttributesTransfer->getCart();
-        if ($restQuoteRequestTransfer->getBillingAddress() !== null) {
+        if ($restCheckoutRequestAttributesTransfer->getBillingAddress() !== null) {
             $billingAddress = $this->getAddressTransfer(
-                $restQuoteRequestTransfer->getBillingAddress(),
-                $restQuoteRequestTransfer->getCustomer()
+                $restCheckoutRequestAttributesTransfer->getBillingAddress(),
+                $restCheckoutRequestAttributesTransfer->getCustomer()
             );
             $quoteTransfer->setBillingAddress($billingAddress);
         }
 
-        if ($restQuoteRequestTransfer->getShippingAddress() !== null) {
+        if ($restCheckoutRequestAttributesTransfer->getShippingAddress() !== null) {
             $shippingAddress = $this->getAddressTransfer(
-                $restQuoteRequestTransfer->getShippingAddress(),
-                $restQuoteRequestTransfer->getCustomer()
+                $restCheckoutRequestAttributesTransfer->getShippingAddress(),
+                $restCheckoutRequestAttributesTransfer->getCustomer()
             );
             $quoteTransfer->setShippingAddress($shippingAddress);
         }

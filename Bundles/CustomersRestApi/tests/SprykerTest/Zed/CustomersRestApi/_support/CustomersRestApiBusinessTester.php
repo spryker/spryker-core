@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\CustomersRestApi;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\RestCartBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -81,12 +80,10 @@ class CustomersRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(
-                (new RestCartBuilder())
-                    ->withBillingAddress(static::ADDRESS_1)
-                    ->withShippingAddress(static::ADDRESS_2)
-                    ->withCustomer(static::CUSTOMER)
-            )->build();
+            ->withBillingAddress(static::ADDRESS_1)
+            ->withShippingAddress(static::ADDRESS_2)
+            ->withCustomer(static::CUSTOMER)
+            ->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -98,12 +95,10 @@ class CustomersRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(
-                (new RestCartBuilder())
-                    ->withBillingAddress(static::ADDRESS_1)
-                    ->withShippingAddress(static::ADDRESS_2)
-                    ->withCustomer(static::GUEST_CUSTOMER)
-            )->build();
+            ->withBillingAddress(static::ADDRESS_1)
+            ->withShippingAddress(static::ADDRESS_2)
+            ->withCustomer(static::GUEST_CUSTOMER)
+            ->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -115,11 +110,9 @@ class CustomersRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(
-                (new RestCartBuilder())
-                    ->withBillingAddress(static::ADDRESS_1)
-                    ->withCustomer(static::CUSTOMER)
-            )->build();
+            ->withBillingAddress(static::ADDRESS_1)
+            ->withCustomer(static::CUSTOMER)
+            ->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -131,11 +124,9 @@ class CustomersRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(
-                (new RestCartBuilder())
-                    ->withBillingAddress(static::ADDRESS_1)
-                    ->withCustomer(static::GUEST_CUSTOMER)
-            )->build();
+            ->withBillingAddress(static::ADDRESS_1)
+            ->withCustomer(static::GUEST_CUSTOMER)
+            ->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -147,11 +138,9 @@ class CustomersRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(
-                (new RestCartBuilder())
-                    ->withShippingAddress(static::ADDRESS_2)
-                    ->withCustomer(static::CUSTOMER)
-            )->build();
+            ->withShippingAddress(static::ADDRESS_2)
+            ->withCustomer(static::CUSTOMER)
+            ->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -163,11 +152,9 @@ class CustomersRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(
-                (new RestCartBuilder())
-                    ->withShippingAddress(static::ADDRESS_2)
-                    ->withCustomer(static::GUEST_CUSTOMER)
-            )->build();
+            ->withShippingAddress(static::ADDRESS_2)
+            ->withCustomer(static::GUEST_CUSTOMER)
+            ->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -179,10 +166,8 @@ class CustomersRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(
-                (new RestCartBuilder())
-                    ->withCustomer(static::CUSTOMER)
-            )->build();
+            ->withCustomer(static::CUSTOMER)
+            ->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -194,10 +179,8 @@ class CustomersRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart(
-                (new RestCartBuilder())
-                    ->withCustomer(static::GUEST_CUSTOMER)
-            )->build();
+            ->withCustomer(static::GUEST_CUSTOMER)
+            ->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -208,8 +191,7 @@ class CustomersRestApiBusinessTester extends Actor
     public function prepareNoCustomerRestCheckoutRequestAttributesTransfer(): RestCheckoutRequestAttributesTransfer
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
-        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withCart((new RestCartBuilder()))->build();
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())->build();
 
         return $restCheckoutRequestAttributesTransfer;
     }
@@ -233,7 +215,7 @@ class CustomersRestApiBusinessTester extends Actor
      */
     public function assertBothAddressesMapping(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $actualQuote): void
     {
-        $expectedBillingAddress = $restCheckoutRequestAttributesTransfer->getCart()->getBillingAddress();
+        $expectedBillingAddress = $restCheckoutRequestAttributesTransfer->getBillingAddress();
         $actualBillingAddressTransfer = $actualQuote->getBillingAddress();
         $this->assertEquals($expectedBillingAddress->getSalutation(), $actualBillingAddressTransfer->getSalutation());
         $this->assertEquals($expectedBillingAddress->getFirstName(), $actualBillingAddressTransfer->getFirstName());
@@ -245,7 +227,7 @@ class CustomersRestApiBusinessTester extends Actor
         $this->assertEquals($expectedBillingAddress->getZipCode(), $actualBillingAddressTransfer->getZipCode());
         $this->assertEquals($expectedBillingAddress->getCompany(), $actualBillingAddressTransfer->getCompany());
 
-        $expectedShippingAddress = $restCheckoutRequestAttributesTransfer->getCart()->getShippingAddress();
+        $expectedShippingAddress = $restCheckoutRequestAttributesTransfer->getShippingAddress();
         $actualShippingAddressTransfer = $actualQuote->getShippingAddress();
         $this->assertEquals($expectedShippingAddress->getSalutation(), $actualShippingAddressTransfer->getSalutation());
         $this->assertEquals($expectedShippingAddress->getFirstName(), $actualShippingAddressTransfer->getFirstName());
@@ -266,7 +248,7 @@ class CustomersRestApiBusinessTester extends Actor
      */
     public function assertBillingAddressMapping(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $actualQuote): void
     {
-        $expectedBillingAddress = $restCheckoutRequestAttributesTransfer->getCart()->getBillingAddress();
+        $expectedBillingAddress = $restCheckoutRequestAttributesTransfer->getBillingAddress();
         $actualBillingAddressTransfer = $actualQuote->getBillingAddress();
         $this->assertEquals($expectedBillingAddress->getSalutation(), $actualBillingAddressTransfer->getSalutation());
         $this->assertEquals($expectedBillingAddress->getFirstName(), $actualBillingAddressTransfer->getFirstName());
@@ -291,7 +273,7 @@ class CustomersRestApiBusinessTester extends Actor
     {
         $this->assertNull($actualQuote->getBillingAddress());
 
-        $expectedShippingAddress = $restCheckoutRequestAttributesTransfer->getCart()->getShippingAddress();
+        $expectedShippingAddress = $restCheckoutRequestAttributesTransfer->getShippingAddress();
         $actualShippingAddressTransfer = $actualQuote->getShippingAddress();
         $this->assertEquals($expectedShippingAddress->getSalutation(), $actualShippingAddressTransfer->getSalutation());
         $this->assertEquals($expectedShippingAddress->getFirstName(), $actualShippingAddressTransfer->getFirstName());

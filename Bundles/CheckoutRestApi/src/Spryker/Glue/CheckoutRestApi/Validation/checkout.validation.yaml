@@ -1,199 +1,193 @@
 checkout-data:
   post:
-    cart:
-    - Collection:
-        fields:
-          id:
-          - NotBlank
-          customer:
-          - Optional:
-              constraints:
-              - Collection:
-                  fields:
-                    salutation:
-                    - NotBlank
-                    email:
-                    - EmailConstraint
-          billingAddress:
-          - Optional:
-              constraints:
-              - Collection:
-                  fields:
-                    salutation:
-                    - NotBlank
-                    firstName:
-                    - NotBlank
-                    lastName:
-                    - NotBlank
-                    address1:
-                    - NotBlank
-                    address2:
-                    - NotBlank
-                    zipCode:
-                    - NotBlank
-                    city:
-                    - NotBlank
-                    - Length:
-                        min: 3
-                    iso2Code:
-                    - NotBlank
-                    isDefaultBilling:
-                    - Optional:
-                      constraints:
-                      - Type:
-                          type: boolean
-                    isDefaultShipping:
-                    - Optional:
-                        constraints:
-                        - Type:
-                            type: boolean
-          shippingAddress:
-          - Optional:
-              constraints:
-              - Collection:
-                  fields:
-                    salutation:
-                    - NotBlank
-                    firstName:
-                    - NotBlank
-                    lastName:
-                    - NotBlank
-                    address1:
-                    - NotBlank
-                    address2:
-                    - NotBlank
-                    zipCode:
-                    - NotBlank
-                    city:
-                    - NotBlank
-                    - Length:
-                        min: 3
-                    iso2Code:
-                    - NotBlank
-                    isDefaultBilling:
-                    - Optional:
-                        constraints:
-                        - Type:
-                            type: boolean
-                    isDefaultShipping:
-                    - Optional:
-                        constraints:
-                        - Type:
-                            type: boolean
-          payments:
-          - Optional:
-              constraints:
-              - All:
+    id:
+    - NotBlank
+    customer:
+    - Optional:
+        constraints:
+        - Collection:
+            fields:
+              salutation:
+              - NotBlank
+              email:
+              - EmailConstraint
+    billingAddress:
+    - Optional:
+        constraints:
+        - Collection:
+            fields:
+              salutation:
+              - NotBlank
+              firstName:
+              - NotBlank
+              lastName:
+              - NotBlank
+              address1:
+              - NotBlank
+              address2:
+              - NotBlank
+              zipCode:
+              - NotBlank
+              city:
+              - NotBlank
+              - Length:
+                  min: 3
+              iso2Code:
+              - NotBlank
+              isDefaultBilling:
+              - Optional:
+                constraints:
+                - Type:
+                    type: boolean
+              isDefaultShipping:
+              - Optional:
                   constraints:
-                  - Collection:
-                      fields:
-                        paymentMethod:
-                        - NotBlank
-                        paymentProvider:
-                        - NotBlank
-                        paymentSelection:
-                        - NotBlank
-          shipment:
-          - Optional:
-              constraints:
-              - Collection:
-                  fields:
-                    shipmentSelection:
-                    - NotBlank
-                    - Type:
-                        type: numeric
+                  - Type:
+                      type: boolean
+    shippingAddress:
+    - Optional:
+        constraints:
+        - Collection:
+            fields:
+              salutation:
+              - NotBlank
+              firstName:
+              - NotBlank
+              lastName:
+              - NotBlank
+              address1:
+              - NotBlank
+              address2:
+              - NotBlank
+              zipCode:
+              - NotBlank
+              city:
+              - NotBlank
+              - Length:
+                  min: 3
+              iso2Code:
+              - NotBlank
+              isDefaultBilling:
+              - Optional:
+                  constraints:
+                  - Type:
+                      type: boolean
+              isDefaultShipping:
+              - Optional:
+                  constraints:
+                  - Type:
+                      type: boolean
+    payments:
+    - Optional:
+        constraints:
+        - All:
+            constraints:
+            - Collection:
+                fields:
+                  paymentMethod:
+                  - NotBlank
+                  paymentProvider:
+                  - NotBlank
+                  paymentSelection:
+                  - NotBlank
+    shipment:
+    - Optional:
+        constraints:
+        - Collection:
+            fields:
+              shipmentSelection:
+              - NotBlank
+              - Type:
+                  type: numeric
 checkout:
   post:
-    cart:
+    id:
+    - NotBlank
+    customer:
     - Collection:
         fields:
-          id:
+          salutation:
           - NotBlank
-          customer:
-          - Collection:
-              fields:
-                salutation:
-                - NotBlank
-                email:
-                - EmailConstraint
-          billingAddress:
-          - Collection:
-              fields:
-                salutation:
-                - NotBlank
-                firstName:
-                - NotBlank
-                lastName:
-                - NotBlank
-                address1:
-                - NotBlank
-                address2:
-                - NotBlank
-                zipCode:
-                - NotBlank
-                city:
-                - NotBlank
-                - Length:
-                    min: 3
-                iso2Code:
-                - NotBlank
-                isDefaultBilling:
-                - Optional:
-                    constraints:
-                    - Type:
-                        type: boolean
-                isDefaultShipping:
-                - Optional:
-                    constraints:
-                    - Type:
-                        type: boolean
-          shippingAddress:
-          - Collection:
-              fields:
-                salutation:
-                - NotBlank
-                firstName:
-                - NotBlank
-                lastName:
-                - NotBlank
-                address1:
-                - NotBlank
-                address2:
-                - NotBlank
-                zipCode:
-                - NotBlank
-                city:
-                - NotBlank
-                - Length:
-                    min: 3
-                iso2Code:
-                - NotBlank
-                isDefaultBilling:
-                - Optional:
-                    constraints:
-                    - Type:
-                        type: boolean
-                isDefaultShipping:
-                - Optional:
-                    constraints:
-                    - Type:
-                        type: boolean
-          payments:
+          email:
+          - EmailConstraint
+    billingAddress:
+    - Collection:
+        fields:
+          salutation:
           - NotBlank
-          - All:
+          firstName:
+          - NotBlank
+          lastName:
+          - NotBlank
+          address1:
+          - NotBlank
+          address2:
+          - NotBlank
+          zipCode:
+          - NotBlank
+          city:
+          - NotBlank
+          - Length:
+              min: 3
+          iso2Code:
+          - NotBlank
+          isDefaultBilling:
+          - Optional:
               constraints:
-              - Collection:
-                  fields:
-                    paymentMethod:
-                    - NotBlank
-                    paymentProvider:
-                    - NotBlank
-                    paymentSelection:
-                    - NotBlank
-          shipment:
-          - Collection:
-              fields:
-                shipmentSelection:
-                - NotBlank
-                - Type:
-                    type: numeric
+              - Type:
+                  type: boolean
+          isDefaultShipping:
+          - Optional:
+              constraints:
+              - Type:
+                  type: boolean
+    shippingAddress:
+    - Collection:
+        fields:
+          salutation:
+          - NotBlank
+          firstName:
+          - NotBlank
+          lastName:
+          - NotBlank
+          address1:
+          - NotBlank
+          address2:
+          - NotBlank
+          zipCode:
+          - NotBlank
+          city:
+          - NotBlank
+          - Length:
+              min: 3
+          iso2Code:
+          - NotBlank
+          isDefaultBilling:
+          - Optional:
+              constraints:
+              - Type:
+                  type: boolean
+          isDefaultShipping:
+          - Optional:
+              constraints:
+              - Type:
+                  type: boolean
+    payments:
+    - NotBlank
+    - All:
+        constraints:
+        - Collection:
+            fields:
+              paymentMethod:
+              - NotBlank
+              paymentProvider:
+              - NotBlank
+              paymentSelection:
+              - NotBlank
+    shipment:
+    - Collection:
+        fields:
+          shipmentSelection:
+          - NotBlank
+          - Type:
+              type: numeric
