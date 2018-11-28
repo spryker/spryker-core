@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
+use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Spryker\Service\UtilText\Model\Url\Url;
 
 /**
  * @method \Spryker\Zed\ProductListGui\Communication\ProductListGuiCommunicationFactory getFactory()
