@@ -27,7 +27,7 @@ interface PersistentCartClientInterface
 
     /**
      * Specification:
-     * - Create quote in database
+     * - Creates quote in database
      *
      * @api
      *
@@ -39,8 +39,8 @@ interface PersistentCartClientInterface
 
     /**
      * Specification:
-     * - Males Zed request.
-     * - Create quote in database.
+     * - Makes Zed request.
+     * - Creates quote in database.
      * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *
      * @api

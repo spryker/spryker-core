@@ -60,6 +60,7 @@ class QuoteWriter implements QuoteWriterInterface
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
+
         return $this->quoteResponseExpander->expand($this->quoteFacade->createQuote($quoteTransfer));
     }
 
@@ -71,8 +72,12 @@ class QuoteWriter implements QuoteWriterInterface
     public function createAndReloadQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
+        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $quoteResponseTransfer = $this->quoteItemOperation->reloadItems($quoteResponseTransfer->getQuoteTransfer());
+        }
 
-        return $this->quoteResponseExpander->expand($this->quoteItemOperation->reloadItems($quoteTransfer));
+        return $this->quoteResponseExpander->expand($quoteResponseTransfer);
     }
 
     /**
