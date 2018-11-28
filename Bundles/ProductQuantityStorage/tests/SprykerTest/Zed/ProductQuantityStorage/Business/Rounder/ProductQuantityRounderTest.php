@@ -66,7 +66,7 @@ class ProductQuantityRounderTest extends Unit
      * @param int|null $interval
      * @param int|null $max
      *
-     * @return ProductQuantityStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
      */
     protected function createProductQuantityStorageTransfer(?int $min, ?int $interval, ?int $max): ProductQuantityStorageTransfer
     {

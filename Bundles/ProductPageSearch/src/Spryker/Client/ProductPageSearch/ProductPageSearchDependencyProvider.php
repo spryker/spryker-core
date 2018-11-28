@@ -14,6 +14,9 @@ use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcreteP
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 
+/**
+ * @method \Spryker\Client\ProductPageSearch\ProductPageSearchConfig getConfig()
+ */
 class ProductPageSearchDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
