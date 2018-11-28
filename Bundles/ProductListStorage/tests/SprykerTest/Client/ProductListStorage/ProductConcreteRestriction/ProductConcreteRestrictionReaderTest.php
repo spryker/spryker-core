@@ -39,8 +39,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
     public function productConcreteRestrictionReaderDataProvider(): array
     {
         return [
-            [
-                'Test product not in product list',
+            'test product not in product list' => [
                 [
                     'whitelist' => [],
                     'blacklist' => [],
@@ -51,8 +50,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
                 ],
                 false,
             ],
-            [
-                'Test product blacklisted',
+            'test product blacklisted' => [
                 [
                     'whitelist' => [],
                     'blacklist' => [1],
@@ -63,8 +61,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
                 ],
                 true,
             ],
-            [
-                'Test product whitelisted',
+            'test product whitelisted' => [
                 [
                     'whitelist' => [1],
                     'blacklist' => [],
@@ -75,8 +72,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
                 ],
                 false,
             ],
-            [
-                'Product in blacklist and not in whitelist',
+            'test product in blacklist and not in whitelist' => [
                 [
                     'whitelist' => [2],
                     'blacklist' => [1],
@@ -87,8 +83,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
                 ],
                 true,
             ],
-            [
-                'Product not in whitelist',
+            'test product not in whitelist' => [
                 [
                     'whitelist' => [2],
                     'blacklist' => [],
@@ -99,8 +94,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
                 ],
                 true,
             ],
-            [
-                'Product whitelisted and blacklisted',
+            'test product whitelisted and blacklisted' => [
                 [
                     'whitelist' => [3],
                     'blacklist' => [2],
@@ -117,21 +111,24 @@ class ProductConcreteRestrictionReaderTest extends Unit
     /**
      * @dataProvider productConcreteRestrictionReaderDataProvider
      *
-     * @param string $name
      * @param array $customerData
      * @param array $productData
      * @param bool $expectedResult
      *
      * @return void
      */
-    public function testProductConcreteRestrictionReader(string $name, array $customerData, array $productData, bool $expectedResult)
+    public function testProductConcreteRestrictionReader(array $customerData, array $productData, bool $expectedResult)
     {
-        $this->setName($name);
-
         $customerClientMock = $this->createCustomerClientMock($customerData['whitelist'], $customerData['blacklist']);
-        $productListProductConcreteStorageReader = $this->createProductListProductConcreteStorageReader($productData['whitelist'], $productData['blacklist']);
+        $productListProductConcreteStorageReader = $this->createProductListProductConcreteStorageReader(
+            $productData['whitelist'],
+            $productData['blacklist']
+        );
 
-        $productConcreteRestrictionReader = new ProductConcreteRestrictionReader($customerClientMock, $productListProductConcreteStorageReader);
+        $productConcreteRestrictionReader = new ProductConcreteRestrictionReader(
+            $customerClientMock,
+            $productListProductConcreteStorageReader
+        );
 
         $actualResult = $productConcreteRestrictionReader->isProductConcreteRestricted(self::CONCRETE_PRODUCT_ID);
 
