@@ -10,7 +10,7 @@ namespace Spryker\Zed\CartsRestApi\Business\Cart;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartReaderInterface
+interface QuoteReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
