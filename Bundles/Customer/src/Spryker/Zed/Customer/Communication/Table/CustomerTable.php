@@ -30,6 +30,8 @@ class CustomerTable extends AbstractTable
     public const COL_FIRST_NAME = 'first_name';
     public const COL_LAST_NAME = 'last_name';
 
+    protected const TABLE_IDENTIFIER = 'table-customer';
+
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
@@ -102,6 +104,10 @@ class CustomerTable extends AbstractTable
             SpyCustomerAddressTableMap::COL_ZIP_CODE,
             SpyCustomerAddressTableMap::COL_CITY,
         ]);
+
+        $config->setStateSave(true);
+
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }

@@ -29,6 +29,8 @@ class OrdersTable extends AbstractTable
     public const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
     public const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
 
+    protected const TABLE_IDENTIFIER = 'table-sales-orders';
+
     /**
      * @var \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface
      */
@@ -100,8 +102,11 @@ class OrdersTable extends AbstractTable
 
         $config->setDefaultSortColumnIndex(0);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
+        $config->setStateSave(true);
 
         $this->persistFilters($config);
+
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }

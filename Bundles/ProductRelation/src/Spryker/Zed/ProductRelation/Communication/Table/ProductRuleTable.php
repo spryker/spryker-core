@@ -30,6 +30,8 @@ class ProductRuleTable extends AbstractProductTable
     public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     public const COL_STATUS = 'status';
 
+    protected const TABLE_IDENTIFIER = 'table-product-relation-product-rule';
+
     /**
      * @var \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToProductInterface
      */
@@ -115,6 +117,8 @@ class ProductRuleTable extends AbstractProductTable
         $this->addRawColumns($config);
 
         $config->setPageLength(10);
+        $config->setStateSave(true);
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }

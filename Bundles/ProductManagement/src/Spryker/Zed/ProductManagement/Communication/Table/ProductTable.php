@@ -31,6 +31,8 @@ class ProductTable extends AbstractProductTable
     public const COL_STORE_RELATION = 'store_relation';
     public const COL_PRODUCT_TYPE = 'product_type';
 
+    protected const TABLE_IDENTIFIER = 'table-product-management-product';
+
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -103,6 +105,9 @@ class ProductTable extends AbstractProductTable
         ]);
 
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
+
+        $config->setStateSave(true);
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }

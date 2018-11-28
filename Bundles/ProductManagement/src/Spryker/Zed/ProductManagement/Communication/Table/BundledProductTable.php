@@ -34,6 +34,8 @@ class BundledProductTable extends AbstractTable
     public const SPY_STOCK_PRODUCT_ALIAS_QUANTITY = 'stockQuantity';
     public const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
 
+    protected const TABLE_IDENTIFIER = 'table-product-management-bundled-product';
+
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -152,6 +154,9 @@ class BundledProductTable extends AbstractTable
             static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY,
             SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK,
         ]);
+
+        $config->setStateSave(true);
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }

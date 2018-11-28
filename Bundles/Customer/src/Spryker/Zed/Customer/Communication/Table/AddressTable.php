@@ -23,6 +23,8 @@ class AddressTable extends AbstractTable
 
     public const COL_COMPANY = 'Company';
 
+    public const TABLE_IDENTIFIER = 'table-customer-address';
+
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
@@ -97,6 +99,10 @@ class AddressTable extends AbstractTable
         ]);
 
         $config->setUrl(sprintf('address-table?id-customer=%d', $this->idCustomer));
+
+        $config->setStateSave(true);
+
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }

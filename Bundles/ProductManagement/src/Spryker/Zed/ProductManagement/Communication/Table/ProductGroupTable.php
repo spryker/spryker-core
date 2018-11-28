@@ -28,6 +28,8 @@ class ProductGroupTable extends AbstractProductTable
     public const COL_STATUS = 'status';
     public const COL_ACTIONS = 'actions';
 
+    protected const TABLE_IDENTIFIER = 'table-product-management-product-group';
+
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -103,6 +105,9 @@ class ProductGroupTable extends AbstractProductTable
             static::COL_SKU,
             static::COL_NAME,
         ]);
+
+        $config->setStateSave(true);
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }

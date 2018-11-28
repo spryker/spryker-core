@@ -24,6 +24,8 @@ class ProductTable extends AbstractProductTable
     public const COL_ACTIONS = 'Actions';
     public const COL_STATUS = 'Status';
 
+    protected const TABLE_IDENTIFIER = 'table-product-relation-product';
+
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
      */
@@ -93,6 +95,8 @@ class ProductTable extends AbstractProductTable
         $this->setSortableFields($config);
         $this->setSearchableFields($config);
         $this->setDefaultSortField($config);
+        $config->setStateSave(true);
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         return $config;
     }
