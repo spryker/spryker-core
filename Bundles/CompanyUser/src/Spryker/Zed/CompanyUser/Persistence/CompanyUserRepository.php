@@ -78,6 +78,36 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer|null
+     */
+    public function findActiveCompanyUsersByCustomerReference(string $customerReference): ?CompanyUserCollectionTransfer
+    {
+        $queryCompanyUser = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByIsActive(true)
+            ->joinCustomer()
+            ->useCustomerQuery()
+                ->filterByCustomerReference($customerReference)
+            ->endUse()
+            ->joinCompany()
+            ->useCompanyQuery()
+                ->filterByIsActive(true)
+            ->endUse();
+
+        $collection = $this->buildQueryFromCriteria($queryCompanyUser)->find();
+
+        if (!$collection) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyUserMapper()
+            ->mapCompanyUserCollection($collection);
+    }
+
+    /**
      * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      *
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
