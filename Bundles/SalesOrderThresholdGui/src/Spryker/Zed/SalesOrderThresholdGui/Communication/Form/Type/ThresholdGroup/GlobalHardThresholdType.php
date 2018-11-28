@@ -8,8 +8,6 @@
 namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup;
 
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,8 +27,8 @@ class GlobalHardThresholdType extends AbstractGlobalThresholdType
     {
         parent::buildForm($builder, $options);
 
-        $this->addHardStrategiesField($builder, $options);
-        $this->addHardValueField($builder, $options);
+        $this->addStrategyField($builder, $options[GlobalThresholdType::OPTION_HARD_TYPES_ARRAY]);
+        $this->addThresholdValueField($builder, $options);
         $this->addLocalizedForms($builder);
     }
 
@@ -41,43 +39,8 @@ class GlobalHardThresholdType extends AbstractGlobalThresholdType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setRequired(GlobalThresholdType::OPTION_CURRENCY_CODE);
+        parent::configureOptions($resolver);
+
         $resolver->setRequired(GlobalThresholdType::OPTION_HARD_TYPES_ARRAY);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addHardStrategiesField(FormBuilderInterface $builder, array $options): self
-    {
-        $builder->add(static::FIELD_STRATEGY, ChoiceType::class, [
-            'label' => false,
-            'choices' => $options[GlobalThresholdType::OPTION_HARD_TYPES_ARRAY],
-            'required' => false,
-            'expanded' => true,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addHardValueField(FormBuilderInterface $builder, array $options): self
-    {
-        $builder->add(static::FIELD_THRESHOLD, MoneyType::class, [
-            'label' => 'Enter minimum order value',
-            'currency' => $options[GlobalThresholdType::OPTION_CURRENCY_CODE],
-            'divisor' => 100,
-            'required' => false,
-        ]);
-
-        return $this;
     }
 }
