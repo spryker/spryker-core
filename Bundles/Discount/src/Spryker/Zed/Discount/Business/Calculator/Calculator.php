@@ -18,6 +18,8 @@ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class Calculator implements CalculatorInterface
@@ -112,7 +114,7 @@ class Calculator implements CalculatorInterface
      *
      * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
      */
-    protected function calculateDiscountAmount(array $discounts, QuoteTransfer $quoteTransfer)
+    protected function calculateDiscountAmount(array $discounts, QuoteTransfer $quoteTransfer): array
     {
         $collectedDiscounts = [];
         foreach ($discounts as $discountTransfer) {
@@ -162,7 +164,7 @@ class Calculator implements CalculatorInterface
      *
      * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
      */
-    protected function filterExclusiveDiscounts(array $collectedDiscounts)
+    protected function filterExclusiveDiscounts(array $collectedDiscounts): array
     {
         $exclusiveDiscounts = array_filter($collectedDiscounts, function (CollectedDiscountTransfer $collectedDiscountTransfer) {
             return $collectedDiscountTransfer->getDiscount()->getIsExclusive();
@@ -180,7 +182,7 @@ class Calculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function distributeDiscountAmount(array $collectedDiscountsTransfer)
+    protected function distributeDiscountAmount(array $collectedDiscountsTransfer): void
     {
         foreach ($collectedDiscountsTransfer as $collectedDiscountTransfer) {
             $this->distributor->distributeDiscountAmountToDiscountableItems($collectedDiscountTransfer);
@@ -192,7 +194,7 @@ class Calculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function setSuccessfulDiscountAddMessage(DiscountTransfer $discountTransfer)
+    protected function setSuccessfulDiscountAddMessage(DiscountTransfer $discountTransfer): void
     {
         if (!$discountTransfer->getAmount()) {
             return;
@@ -212,7 +214,7 @@ class Calculator implements CalculatorInterface
      *
      * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
      */
-    protected function sortByDiscountAmountDescending(array $collectedDiscountsTransfer)
+    protected function sortByDiscountAmountDescending(array $collectedDiscountsTransfer): array
     {
         usort($collectedDiscountsTransfer, function (CollectedDiscountTransfer $a, CollectedDiscountTransfer $b) {
             $amountA = (int)$a->getDiscount()->getAmount();
@@ -230,7 +232,7 @@ class Calculator implements CalculatorInterface
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
-    protected function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
+    protected function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer): array
     {
         $alternativeCollectorStrategyPlugin = $this->resolveCollectorPluginStrategy($quoteTransfer, $discountTransfer);
         if ($alternativeCollectorStrategyPlugin) {
@@ -260,7 +262,7 @@ class Calculator implements CalculatorInterface
      *
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
-    protected function getCalculatorPlugin(DiscountTransfer $discountTransfer)
+    protected function getCalculatorPlugin(DiscountTransfer $discountTransfer): DiscountCalculatorPluginInterface
     {
         if (!isset($this->calculatorPlugins[$discountTransfer->getCalculatorPlugin()])) {
             throw new CalculatorException(
@@ -281,7 +283,7 @@ class Calculator implements CalculatorInterface
      *
      * @return \Generated\Shared\Transfer\CollectedDiscountTransfer
      */
-    protected function createCollectedDiscountTransfer(DiscountTransfer $discountTransfer, array $discountableItems)
+    protected function createCollectedDiscountTransfer(DiscountTransfer $discountTransfer, array $discountableItems): CollectedDiscountTransfer
     {
         $calculatedDiscounts = new CollectedDiscountTransfer();
         $calculatedDiscounts->setDiscount($discountTransfer);
@@ -296,7 +298,7 @@ class Calculator implements CalculatorInterface
      *
      * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface|null
      */
-    protected function resolveCollectorPluginStrategy(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
+    protected function resolveCollectorPluginStrategy(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer): ?CollectorStrategyPluginInterface
     {
         if (!$this->collectorStrategyResolver) {
             return null;
