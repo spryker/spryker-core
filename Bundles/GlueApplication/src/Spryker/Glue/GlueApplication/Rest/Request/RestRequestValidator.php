@@ -9,12 +9,14 @@ namespace Spryker\Glue\GlueApplication\Rest\Request;
 
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class RestRequestValidator implements RestRequestValidatorInterface
 {
     protected const EXCEPTION_MESSAGE_POST_DATA_IS_INVALID = 'Post data is invalid.';
+    protected const EXCEPTION_MESSAGE_RESOURCE_TYPE_MISMATCH = 'Resource type is wrong for requested endpoint.';
 
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
@@ -63,6 +65,13 @@ class RestRequestValidator implements RestRequestValidatorInterface
             return null;
         }
 
+        if (!$this->isResourceTypeValid($restRequest)) {
+            $restErrorMessageTransfer = new RestErrorMessageTransfer();
+            $restErrorMessageTransfer->setDetail(static::EXCEPTION_MESSAGE_RESOURCE_TYPE_MISMATCH);
+
+            return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
+        }
+
         $restResource = $restRequest->getResource();
         if (!$restResource->getAttributes()) {
             $restErrorMessageTransfer = new RestErrorMessageTransfer();
@@ -99,5 +108,15 @@ class RestRequestValidator implements RestRequestValidatorInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isResourceTypeValid(RestRequestInterface $restRequest)
+    {
+        return $restRequest->getResource()->getType() === $restRequest->getHttpRequest()->attributes->get(RestResourceInterface::RESOURCE_TYPE);
     }
 }
