@@ -181,7 +181,7 @@ class WishlistsWriter implements WishlistsWriterInterface
             if ($error === static::WISHLIST_VALIDATION_ERROR_NAME_ALREADY_EXIST) {
                 $restErrorTransfer = (new RestErrorMessageTransfer())
                     ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS)
-                    ->setStatus(Response::HTTP_BAD_REQUEST)
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                     ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS);
 
                 return $restResponse->addError($restErrorTransfer);
