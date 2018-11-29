@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomerPasswordWriter implements CustomerPasswordWriterInterface
 {
+    protected const FIELD_NAME_PASSWORD = 'password';
+    protected const FIELD_NAME_CONFIRM_PASSWORD = 'confirmPassword';
     /**
      * @var \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
      */
@@ -67,7 +69,7 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
         $response = $this->restResourceBuilder->createRestResponse();
 
         if ($restCustomerRestorePasswordAttributesTransfer->getPassword() !== $restCustomerRestorePasswordAttributesTransfer->getConfirmPassword()) {
-            return $this->restApiError->addPasswordsDoNotMatchError($response, 'password', 'confirm_password');
+            return $this->restApiError->addPasswordsDoNotMatchError($response, static::FIELD_NAME_PASSWORD, static::FIELD_NAME_CONFIRM_PASSWORD);
         }
 
         $customerTransfer = $this->customerRestorePasswordResourceMapper

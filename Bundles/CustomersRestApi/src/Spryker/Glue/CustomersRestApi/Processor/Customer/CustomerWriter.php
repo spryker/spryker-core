@@ -25,6 +25,9 @@ class CustomerWriter implements CustomerWriterInterface
 {
     protected const ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
     protected const ERROR_CUSTOMER_PASSWORD_INVALID = 'customer.password.invalid';
+    protected const FIELD_NAME_PASSWORD = 'password';
+    protected const FIELD_NAME_NEW_PASSWORD = 'newPassword';
+    protected const FIELD_NAME_CONFIRM_PASSWORD = 'confirmPassword';
 
     /**
      * @var \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
@@ -103,7 +106,7 @@ class CustomerWriter implements CustomerWriterInterface
         }
 
         if ($restCustomersAttributesTransfer->getPassword() !== $restCustomersAttributesTransfer->getConfirmPassword()) {
-            return $this->restApiError->addPasswordsDoNotMatchError($restResponse, 'password', 'confirm_password');
+            return $this->restApiError->addPasswordsDoNotMatchError($restResponse, static::FIELD_NAME_PASSWORD, self::FIELD_NAME_NEW_PASSWORD);
         }
 
         $customerTransfer = (new CustomerTransfer())->fromArray($restCustomersAttributesTransfer->toArray(), true);
@@ -147,7 +150,7 @@ class CustomerWriter implements CustomerWriterInterface
 
         if ($restCustomerAttributesTransfer->getPassword()
             && $restCustomerAttributesTransfer->getPassword() !== $restCustomerAttributesTransfer->getConfirmPassword()) {
-            return $this->restApiError->addPasswordsDoNotMatchError($restResponse, 'password', 'confirm_password');
+            return $this->restApiError->addPasswordsDoNotMatchError($restResponse, static::FIELD_NAME_PASSWORD, static::FIELD_NAME_CONFIRM_PASSWORD);
         }
 
         $customerResponseTransfer = $this->customerReader->findCustomer($restRequest);
@@ -202,7 +205,7 @@ class CustomerWriter implements CustomerWriterInterface
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
         if ($passwordAttributesTransfer->getNewPassword() !== $passwordAttributesTransfer->getConfirmPassword()) {
-            return $this->restApiError->addPasswordsDoNotMatchError($restResponse, 'newPassword', 'confirm_password');
+            return $this->restApiError->addPasswordsDoNotMatchError($restResponse, static::FIELD_NAME_NEW_PASSWORD, static::FIELD_NAME_CONFIRM_PASSWORD);
         }
         $customerResponseTransfer = $this->customerReader->getCurrentCustomer($restRequest);
 
