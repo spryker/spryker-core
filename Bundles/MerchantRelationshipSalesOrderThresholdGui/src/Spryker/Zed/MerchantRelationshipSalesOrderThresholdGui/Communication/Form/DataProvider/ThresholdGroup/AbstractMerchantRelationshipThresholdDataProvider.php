@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup;
 
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\LocalizedMessagesType;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\AbstractMerchantRelationshipThresholdType;
+
 abstract class AbstractMerchantRelationshipThresholdDataProvider
 {
     /**
@@ -20,5 +24,40 @@ abstract class AbstractMerchantRelationshipThresholdDataProvider
     public function __construct(array $formExpanderPlugins)
     {
         $this->formExpanderPlugins = $formExpanderPlugins;
+    }
+
+    /**
+     * @param array $data
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
+     * @return array
+     */
+    protected function getExpandersData(array $data, MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): array
+    {
+        foreach ($this->formExpanderPlugins as $formExpanderPlugin) {
+            if ($formExpanderPlugin->getThresholdKey() !== $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getKey()) {
+                continue;
+            }
+
+            $data[AbstractMerchantRelationshipThresholdType::FIELD_STRATEGY] = $formExpanderPlugin->getThresholdKey();
+            $data = $formExpanderPlugin->getData($data, $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue());
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array $data
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
+     * @return array
+     */
+    protected function getLocalizedMessages(array $data, MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): array
+    {
+        foreach ($merchantRelationshipSalesOrderThresholdTransfer->getLocalizedMessages() as $localizedMessage) {
+            $data[$localizedMessage->getLocaleCode()][LocalizedMessagesType::FIELD_MESSAGE] = $localizedMessage->getMessage();
+        }
+
+        return $data;
     }
 }

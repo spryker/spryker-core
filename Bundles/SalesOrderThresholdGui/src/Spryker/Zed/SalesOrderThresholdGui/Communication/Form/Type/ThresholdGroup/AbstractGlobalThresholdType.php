@@ -62,7 +62,7 @@ abstract class AbstractGlobalThresholdType extends AbstractType
     protected function addThresholdValueField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_THRESHOLD, MoneyType::class, [
-            'label' => 'Enter minimum order value',
+            'label' => 'Enter threshold value',
             'currency' => $options[GlobalThresholdType::OPTION_CURRENCY_CODE],
             'divisor' => 100,
             'required' => false,

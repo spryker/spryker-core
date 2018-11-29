@@ -25,8 +25,6 @@ class MerchantRelationshipSoftThresholdType extends AbstractMerchantRelationship
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        parent::buildForm($builder, $options);
-
         $this->addStrategyField($builder, $options[MerchantRelationshipThresholdType::OPTION_SOFT_TYPES_ARRAY]);
         $this->addThresholdValueField($builder, $options);
         $this->addLocalizedForms($builder);
