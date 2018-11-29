@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 interface ShoppingListProductOptionConnectorFacadeInterface
@@ -61,4 +62,16 @@ interface ShoppingListProductOptionConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function mapCartItemProductOptionsToShoppingListItemProductOptions(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * Specification:
+     * - unassign deleted product option values from shopping list items.
+     *
+     * @api
+     *
+     * @param ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @return void
+     */
+    public function unassignRemovedProductOptionValuesFromShoppingListItems(ProductOptionGroupTransfer $productOptionGroupTransfer): void;
 }

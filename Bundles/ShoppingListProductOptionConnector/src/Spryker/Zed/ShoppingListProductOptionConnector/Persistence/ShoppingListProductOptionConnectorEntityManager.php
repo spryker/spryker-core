@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingListProductOptionConnector\Persistence;
 
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProductOptionConnectorPersistenceFactory getFactory()
@@ -40,6 +41,21 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
         $shoppingListProductOptionEntities = $this->getFactory()
             ->createSpyShoppingListProductOptionQuery()
             ->filterByFkShoppingListItem($idShoppingListItem)
+            ->find();
+
+        $this->deleteEntitiesAndTriggerEvents($shoppingListProductOptionEntities);
+    }
+
+    /**
+     * @param int[] $idProductOptionValue
+     *
+     * @return void
+     */
+    public function removeProductOptionValuesFromShoppingListItems(array $idProductOptionValue): void
+    {
+        $shoppingListProductOptionEntities = $this->getFactory()
+            ->createSpyShoppingListProductOptionQuery()
+            ->filterByFkProductOptionValue($idProductOptionValue, Criteria::IN)
             ->find();
 
         $this->deleteEntitiesAndTriggerEvents($shoppingListProductOptionEntities);

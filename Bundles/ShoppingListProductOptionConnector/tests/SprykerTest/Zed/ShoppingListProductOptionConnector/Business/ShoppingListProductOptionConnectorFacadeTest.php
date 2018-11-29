@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
@@ -195,6 +196,49 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
 
         $expectedResult = [
             $this->productOptionValueTransfer2->getIdProductOptionValue(),
+        ];
+
+        // Assert
+        $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertContains($productOption->getIdProductOptionValue(), $expectedResult);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveShoppingListItemProductOptionsRemovesMarkedForRemovalProductOptions(): void
+    {
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem())
+            ->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransfer1->getIdProductOptionValue()
+                )
+            )
+            ->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransfer2->getIdProductOptionValue()
+                )
+            );
+        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+
+        $this->tester
+            ->getFacade()
+            ->unassignRemovedProductOptionValuesFromShoppingListItems(
+                (new ProductOptionGroupTransfer())
+                ->addProductOptionValuesToBeRemoved($this->productOptionValueTransfer2->getIdProductOptionValue())
+            );
+
+        $actualResult = $this->tester
+            ->getFacade()
+            ->expandShoppingListItemWithProductOptions(
+                $this->shoppingListItemTransfer
+            );
+
+        $expectedResult = [
+            $this->productOptionValueTransfer1->getIdProductOptionValue(),
         ];
 
         // Assert
