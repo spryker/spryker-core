@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUnitAddress\Business\Model;
+namespace Spryker\Zed\CompanyUnitAddress\Business\CompanyBusinessUnit;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
@@ -35,14 +35,13 @@ class CompanyBusinessUnitExpander implements CompanyBusinessUnitExpanderInterfac
     public function expandCompanyBusinessUnitWithCompanyUnitAddressCollection(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitTransfer {
-        $criteriaFilterTransfer = new CompanyUnitAddressCriteriaFilterTransfer();
-        $criteriaFilterTransfer->setIdCompanyBusinessUnit(
-            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
-        );
+        $criteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
+            ->setIdCompanyBusinessUnit(
+                $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+            );
 
         $companyUnitAddressCollectionTransfer = $this->repository->getCompanyUnitAddressCollection($criteriaFilterTransfer);
-
-        $this->markCompanyUnitAddressAsDefaultBilling($companyBusinessUnitTransfer, $companyUnitAddressCollectionTransfer);
+        $companyUnitAddressCollectionTransfer = $this->markCompanyUnitAddressAsDefaultBilling($companyBusinessUnitTransfer, $companyUnitAddressCollectionTransfer);
 
         $companyBusinessUnitTransfer->setAddressCollection($companyUnitAddressCollectionTransfer);
 
@@ -53,17 +52,19 @@ class CompanyBusinessUnitExpander implements CompanyBusinessUnitExpanderInterfac
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
     protected function markCompanyUnitAddressAsDefaultBilling(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
         CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
-    ): void {
+    ): CompanyUnitAddressCollectionTransfer {
         foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
             if ($companyBusinessUnitTransfer->getDefaultBillingAddress() === $companyUnitAddressTransfer->getIdCompanyUnitAddress()) {
                 $companyUnitAddressTransfer->setIsDefaultBilling(true);
                 break;
             }
         }
+
+        return $companyUnitAddressCollectionTransfer;
     }
 }
