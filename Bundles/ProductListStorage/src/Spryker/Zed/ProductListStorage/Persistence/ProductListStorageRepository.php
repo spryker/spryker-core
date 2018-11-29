@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ProductListStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer;
-use Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
@@ -182,26 +180,13 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      */
     public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $productConcreteIds = []): array
     {
-        $productConcreteProductListStorageEntityTransfers = [];
-        $mapper = $this->getFactory()->createProductListStorageMapper();
         $query = $this->getFactory()->createProductConcreteProductListStorageQuery();
 
         if ($productConcreteIds) {
             $query->filterByFkProduct_In($productConcreteIds);
         }
 
-        $productConcreteProductListStorageEntities = $query->offset($filterTransfer->getOffset())
-            ->limit($filterTransfer->getLimit())
-            ->find();
-
-        foreach ($productConcreteProductListStorageEntities as $productConcreteProductListStorageEntity) {
-            $productConcreteProductListStorageEntityTransfers[] = $mapper->mapProductConcreteProductListStorageEntitiesToTransfers(
-                $productConcreteProductListStorageEntity,
-                new SpyProductConcreteProductListStorageEntityTransfer()
-            );
-        }
-
-        return $productConcreteProductListStorageEntityTransfers;
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 
     /**
@@ -212,25 +197,12 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      */
     public function findFilteredProductAbstractProductListStorageEntities(FilterTransfer $filterTransfer, array $productAbstractIds = []): array
     {
-        $productAbstractProductListStorageEntityTransfers = [];
-        $mapper = $this->getFactory()->createProductListStorageMapper();
         $query = $this->getFactory()->createProductAbstractProductListStorageQuery();
 
         if ($productAbstractIds) {
             $query->filterByFkProductAbstract_In($productAbstractIds);
         }
 
-        $productAbstractProductListStorageEntities = $query->offset($filterTransfer->getOffset())
-            ->limit($filterTransfer->getLimit())
-            ->find();
-
-        foreach ($productAbstractProductListStorageEntities as $productAbstractProductListStorageEntity) {
-            $productAbstractProductListStorageEntityTransfers[] = $mapper->mapProductAbstractProductListStorageEntitiesToTransfers(
-                $productAbstractProductListStorageEntity,
-                new SpyProductAbstractProductListStorageEntityTransfer()
-            );
-        }
-
-        return $productAbstractProductListStorageEntityTransfers;
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }

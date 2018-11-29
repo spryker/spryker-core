@@ -13,8 +13,6 @@ use Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorageQuery;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductListStorage\Persistence\Mapper\ProductListStorageMapper;
-use Spryker\Zed\ProductListStorage\Persistence\Mapper\ProductListStorageMapperInterface;
 use Spryker\Zed\ProductListStorage\ProductListStorageDependencyProvider;
 
 /**
@@ -61,13 +59,5 @@ class ProductListStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getProductListProductConcretePropelQuery(): SpyProductListProductConcreteQuery
     {
         return $this->getProvidedDependency(ProductListStorageDependencyProvider::PROPEL_QUERY_PRODUCT_LIST_PRODUCT_CONCRETE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductListStorage\Persistence\Mapper\ProductListStorageMapperInterface
-     */
-    public function createProductListStorageMapper(): ProductListStorageMapperInterface
-    {
-        return new ProductListStorageMapper();
     }
 }
