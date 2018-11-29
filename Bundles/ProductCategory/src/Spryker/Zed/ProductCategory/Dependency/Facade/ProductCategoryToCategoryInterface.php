@@ -24,5 +24,5 @@ interface ProductCategoryToCategoryInterface
      *
      * @return string
      */
-    public function getNodePath($idNode, LocaleTransfer $localeTransfer): string;
+    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string;
 }

@@ -47,18 +47,54 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getNodePath(int $idCategoryNode, LocaleTransfer $localeTransfer)
+    {
+        return $this->getNodePathBase($idCategoryNode, $localeTransfer, static::NODE_PATH_GLUE, !static::EXCLUDE_NODE_PATH_ROOT, static::NODE_PATH_ZERO_DEPTH);
+    }
+
+    /**
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $glue
-     * @param bool $excludeRootNode
+     * @param bool $excludeRoot
      * @param int|null $depth
      *
      * @return string
      */
-    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer, string $glue = '/', $excludeRootNode = false, ?int $depth = 0): string
-    {
+    public function getCategoryNodePath(
+        int $idNode,
+        LocaleTransfer $localeTransfer,
+        string $glue = self::CATEGORY_NODE_PATH_GLUE,
+        bool $excludeRoot = self::EXCLUDE_NODE_PATH_ROOT,
+        ?int $depth = self::NODE_PATH_NULL_DEPTH
+    ): string {
+
+        return $this->getNodePathBase($idNode, $localeTransfer, $glue, $excludeRoot, $depth);
+    }
+
+    /**
+     * @param int $idNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $glue
+     * @param bool $excludeRoot
+     * @param int|null $depth
+     *
+     * @return string
+     */
+    protected function getNodePathBase(
+        int $idNode,
+        LocaleTransfer $localeTransfer,
+        string $glue = self::CATEGORY_NODE_PATH_GLUE,
+        bool $excludeRoot = self::EXCLUDE_NODE_PATH_ROOT,
+        ?int $depth = self::NODE_PATH_NULL_DEPTH
+    ): string {
         /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $nodePathQuery */
-        $nodePathQuery = $this->queryNodePath($idNode, $localeTransfer->getIdLocale(), $excludeRootNode, $depth)
+        $nodePathQuery = $this->queryNodePath($idNode, $localeTransfer->getIdLocale(), $excludeRoot, $depth)
             ->clearSelectColumns()
             ->addSelectColumn(static::COL_CATEGORY_NAME);
 
@@ -79,13 +115,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     protected function queryNodePath(
         int $idNode,
         int $idLocale,
-        bool $excludeRootNode = false,
-        ?int $depth = 0
+        bool $excludeRootNode = self::EXCLUDE_NODE_PATH_ROOT,
+        ?int $depth = self::NODE_PATH_NULL_DEPTH
     ): SpyCategoryNodeQuery {
         $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
 
         if ($excludeRootNode) {
-            $nodeQuery->filterByIsRoot(0);
+            $nodeQuery->filterByIsRoot(static::IS_ROOT_NODE);
         }
 
         $nodeQuery

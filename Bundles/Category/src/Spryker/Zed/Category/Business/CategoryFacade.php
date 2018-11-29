@@ -702,6 +702,6 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string
     {
-        return $this->getRepository()->getNodePath($idNode, $localeTransfer, ' / ', true, null);
+        return $this->getRepository()->getCategoryNodePath($idNode, $localeTransfer);
     }
 }
