@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalfGui\Communication\BusinessOnBehalfGuiButtonCreator;
+namespace Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator;
 
-interface BusinessOnBehalfGuiButtonCreatorInterface
+interface CompanyUserTableButtonCreatorInterface
 {
     /**
      * @param array $companyUserDataItem

@@ -30,7 +30,7 @@ class ReplaceDeleteButtonCompanyUserTableActionLinksExpanderPlugin extends Abstr
     public function expandActionLinks(array $companyUserDataItem, array $buttonTransfers): array
     {
         return $this->getFactory()
-            ->createBusinessOnBehalfGuiButtonCreator()
+            ->createCompanyUserTableButtonCreator()
             ->replaceDeleteCompanyUserButton($companyUserDataItem, $buttonTransfers);
     }
 }

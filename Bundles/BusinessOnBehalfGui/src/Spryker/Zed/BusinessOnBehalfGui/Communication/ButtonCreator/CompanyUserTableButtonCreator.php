@@ -5,13 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalfGui\Communication\BusinessOnBehalfGuiButtonCreator;
+namespace Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator;
 
-use Generated\Shared\Transfer\ButtonTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
-use Spryker\Service\UtilText\Model\Url\Url;
 
-class BusinessOnBehalfGuiButtonCreator implements BusinessOnBehalfGuiButtonCreatorInterface
+class CompanyUserTableButtonCreator extends AbstractButtonCreator implements CompanyUserTableButtonCreatorInterface
 {
     protected const BUTTON_ORIGINAL_DELETE_COMPANY_USER_LINK = '/company-user-gui/delete-company-user/confirm-delete';
 
@@ -73,33 +71,5 @@ class BusinessOnBehalfGuiButtonCreator implements BusinessOnBehalfGuiButtonCreat
         );
 
         return $buttonTransfers;
-    }
-
-    /**
-     * @param string $url
-     * @param string $title
-     * @param array $defaultOptions
-     * @param array|null $customOptions
-     *
-     * @return \Generated\Shared\Transfer\ButtonTransfer
-     */
-    protected function generateButtonTransfer(string $url, string $title, array $defaultOptions, ?array $customOptions = null): ButtonTransfer
-    {
-        return (new ButtonTransfer())
-            ->setUrl($url)
-            ->setTitle($title)
-            ->setDefaultOptions($defaultOptions)
-            ->setCustomOptions($customOptions);
-    }
-
-    /**
-     * @param string $url
-     * @param array $queryParams
-     *
-     * @return string
-     */
-    protected function generateUrl(string $url, array $queryParams): string
-    {
-        return Url::generate($url, $queryParams);
     }
 }
