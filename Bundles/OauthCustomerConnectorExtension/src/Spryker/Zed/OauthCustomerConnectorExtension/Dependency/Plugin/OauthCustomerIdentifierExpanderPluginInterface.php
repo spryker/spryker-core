@@ -5,8 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\GLue\OauthCustomerConnectorExtension\Dependency\Plugin;
+namespace Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface OauthCustomerIdentifierExpanderPluginInterface
@@ -17,10 +18,13 @@ interface OauthCustomerIdentifierExpanderPluginInterface
      *
      * @api
      *
-     * TODO: annotation
+     * @param \Generated\Shared\Transfer\CustomerIdentifierTransfer $customerIdentifierTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerIdentifierTransfer
      */
     public function expandCustomerIdentifier(
         CustomerIdentifierTransfer $customerIdentifierTransfer,
-        CustomerTransfer $customerTransfe
+        CustomerTransfer $customerTransfer
     ): CustomerIdentifierTransfer;
 }
