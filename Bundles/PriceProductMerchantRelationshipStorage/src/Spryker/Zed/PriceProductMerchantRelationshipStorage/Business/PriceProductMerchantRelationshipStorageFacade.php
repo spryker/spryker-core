@@ -21,19 +21,24 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param array $businessUnitProducts
      *
      * @return void
      */
     public function publishConcretePriceProductByBusinessUnitProducts(array $businessUnitProducts): void
     {
-        $this->getFactory()->createPriceProductConcreteStorageWriter()->publishByBusinessUnitProducts($businessUnitProducts);
+        $this->getFactory()->createPriceProductConcreteStorageWriter()
+            ->publishByBusinessUnitProducts($businessUnitProducts);
     }
 
     /**
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement
      *
      * @param array $businessUnitProducts
      *
@@ -41,7 +46,8 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      */
     public function publishAbstractPriceProductByBusinessUnitProducts(array $businessUnitProducts): void
     {
-        $this->getFactory()->createPriceProductAbstractStorageWriter()->publishByBusinessUnitProducts($businessUnitProducts);
+        $this->getFactory()->createPriceProductAbstractStorageWriter()
+            ->publishByBusinessUnitProducts($businessUnitProducts);
     }
 
     /**
@@ -49,13 +55,14 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param array $businessUnitIds
+     * @param int[] $companyBusinessUnitIds
      *
      * @return void
      */
-    public function publishAbstractPriceProductByBusinessUnits(array $businessUnitIds): void
+    public function publishAbstractPriceProductByBusinessUnits(array $companyBusinessUnitIds): void
     {
-        $this->getFactory()->createPriceProductAbstractStorageWriter()->publishByBusinessUnits($businessUnitIds);
+        $this->getFactory()->createPriceProductAbstractStorageWriter()
+            ->publishByCompanyBusinessUnitIds($companyBusinessUnitIds);
     }
 
     /**
@@ -63,12 +70,73 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param array $businessUnitIds
+     * @param int[] $companyBusinessUnitIds
      *
      * @return void
      */
-    public function publishConcretePriceProductByBusinessUnits(array $businessUnitIds): void
+    public function publishConcretePriceProductByBusinessUnits(array $companyBusinessUnitIds): void
     {
-        $this->getFactory()->createPriceProductConcreteStorageWriter()->publishByBusinessUnits($businessUnitIds);
+        $this->getFactory()->createPriceProductConcreteStorageWriter()
+            ->publishByCompanyBusinessUnitIds($companyBusinessUnitIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return void
+     */
+    public function publishAbstractPriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void
+    {
+        $this->getFactory()->createPriceProductAbstractStorageWriter()
+            ->publishAbstractPriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function publishAbstractPriceProductByProductAbstractIds(array $productAbstractIds): void
+    {
+        $this->getFactory()->createPriceProductAbstractStorageWriter()
+            ->publishAbstractPriceProductByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return void
+     */
+    public function publishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void
+    {
+        $this->getFactory()->createPriceProductConcreteStorageWriter()
+            ->publishConcretePriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return void
+     */
+    public function publishConcretePriceProductByProductIds(array $productIds): void
+    {
+        $this->getFactory()->createPriceProductConcreteStorageWriter()
+            ->publishConcretePriceProductByProductIds($productIds);
     }
 }

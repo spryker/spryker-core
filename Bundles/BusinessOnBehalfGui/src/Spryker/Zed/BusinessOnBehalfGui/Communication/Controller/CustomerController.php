@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\BusinessOnBehalfGui\Communication\BusinessOnBehalfGuiCommunicationFactory getFactory()
  */
-class CreateCompanyUserController extends AbstractController
+class CustomerController extends AbstractController
 {
     protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Customer has been attached to business unit.';
     protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Customer has not been attached to business unit.';

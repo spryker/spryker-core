@@ -19,8 +19,6 @@ use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCusto
 
 class CustomerBusinessUnitAttachFormDataProvider
 {
-    protected const FORMAT_NAME = '%s (id: %s)';
-
     /**
      * @var \Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface
      */
@@ -80,22 +78,18 @@ class CustomerBusinessUnitAttachFormDataProvider
      */
     public function getOptions(CompanyUserTransfer $companyUserTransfer): array
     {
-        $companyBusinessUnitChoicesValues = $this->prepareCompanyBusinessUnitAttributeMap($companyUserTransfer);
-
         return [
-            CustomerBusinessUnitAttachForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES => $companyBusinessUnitChoicesValues,
+            CustomerBusinessUnitAttachForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES =>
+                $this->getCompanyBusinessUnitChoices($companyUserTransfer),
         ];
     }
 
     /**
-     * Retrieves the list of units for the company.
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return array [[businessUnitName => idBusinessUnit]],
-     *                Where businessUnitName: "<idBusinessUnit> - <BusinessUnitName>"
+     * @return array
      */
-    protected function prepareCompanyBusinessUnitAttributeMap(CompanyUserTransfer $companyUserTransfer): array
+    protected function getCompanyBusinessUnitChoices(CompanyUserTransfer $companyUserTransfer): array
     {
         $companyBusinessUnitChoicesValues = [];
 
@@ -118,6 +112,10 @@ class CustomerBusinessUnitAttachFormDataProvider
      */
     protected function generateCompanyBusinessUnitName(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): string
     {
-        return sprintf(static::FORMAT_NAME, $companyBusinessUnitTransfer->getName(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+        return sprintf(
+            '%s (id: %s)',
+            $companyBusinessUnitTransfer->getName(),
+            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+        );
     }
 }

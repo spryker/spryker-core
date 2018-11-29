@@ -216,13 +216,16 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     }
 
     /**
+     * @module CompanyUser
+     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return bool
      */
-    public function checkCompanyUserNotDuplicated(CompanyUserTransfer $companyUserTransfer): bool
+    public function hasCompanyUser(CompanyUserTransfer $companyUserTransfer): bool
     {
-        $companyUserTransfer->requireFkCustomer()
+        $companyUserTransfer
+            ->requireFkCustomer()
             ->requireFkCompanyBusinessUnit();
 
         return $this->getFactory()

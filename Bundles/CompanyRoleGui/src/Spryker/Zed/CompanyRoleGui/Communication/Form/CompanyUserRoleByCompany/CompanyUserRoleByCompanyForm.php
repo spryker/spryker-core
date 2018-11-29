@@ -119,10 +119,12 @@ class CompanyUserRoleByCompanyForm extends AbstractType
         return function ($roleCollection = []): array {
             $roles = [];
 
-            if (!empty($roleCollection[CompanyRoleCollectionTransfer::ROLES])) {
-                foreach ($roleCollection[CompanyRoleCollectionTransfer::ROLES] as $role) {
-                    $roles[] = $role[CompanyRoleTransfer::ID_COMPANY_ROLE];
-                }
+            if (empty($roleCollection[CompanyRoleCollectionTransfer::ROLES])) {
+                return $roles;
+            }
+
+            foreach ($roleCollection[CompanyRoleCollectionTransfer::ROLES] as $role) {
+                $roles[] = $role[CompanyRoleTransfer::ID_COMPANY_ROLE];
             }
 
             return $roles;
