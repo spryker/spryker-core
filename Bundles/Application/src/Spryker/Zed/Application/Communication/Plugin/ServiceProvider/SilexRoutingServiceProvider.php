@@ -30,10 +30,12 @@ class SilexRoutingServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $app->extend('routers', function (ChainRouter $chainRouter) use ($app) {
-            $chainRouter->add(new SilexRouter($app));
+        $app['routers'] = $app->share(
+            $app->extend('routers', function (ChainRouter $chainRouter) use ($app) {
+                $chainRouter->add(new SilexRouter($app));
 
-            return $chainRouter;
-        });
+                return $chainRouter;
+            })
+        );
     }
 }
