@@ -114,7 +114,7 @@ interface CompanyUserClientInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findActiveCompanyUsersByCustomerReference(
+    public function getActiveCompanyUsersByCustomerReference(
         CustomerTransfer $customerTransfer
     ): CompanyUserCollectionTransfer;
 }

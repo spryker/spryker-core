@@ -160,11 +160,11 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findActiveCompanyUsersByCustomerReference(
+    public function getActiveCompanyUsersByCustomerReference(
         CustomerTransfer $customerTransfer
     ): CompanyUserCollectionTransfer {
         return $this->getFactory()
             ->createZedCompanyUserStub()
-            ->findActiveCompanyUsersByCustomerReference($customerTransfer);
+            ->getActiveCompanyUsersByCustomerReference($customerTransfer);
     }
 }

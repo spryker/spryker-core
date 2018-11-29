@@ -204,7 +204,7 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testFindActiveCompanyUsersByCustomerReferenceShouldReturnTransfer(): void
+    public function testGetActiveCompanyUsersByCustomerReferenceShouldReturnTransfer(): void
     {
         // Assign
         $companyTransfer = $this->tester->haveCompany([CompanyUserTransfer::IS_ACTIVE => true]);
@@ -216,7 +216,7 @@ class CompanyUserFacadeTest extends Test
         ]);
 
         // Act
-        $companyUserCollectionTransfer = $this->getFacade()->findActiveCompanyUsersByCustomerReference($customerTransfer);
+        $companyUserCollectionTransfer = $this->getFacade()->getActiveCompanyUsersByCustomerReference($customerTransfer);
 
         // Assert
         $this->assertInstanceOf(CompanyUserCollectionTransfer::class, $companyUserCollectionTransfer);
@@ -226,7 +226,7 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testFindActiveCompanyUsersByCustomerReferenceShouldNotReturnInactiveCompanyUsers(): void
+    public function testGetActiveCompanyUsersByCustomerReferenceShouldNotReturnInactiveCompanyUsers(): void
     {
         // Assign
         $companyTransfer = $this->tester->haveCompany([CompanyUserTransfer::IS_ACTIVE => true]);
@@ -238,7 +238,7 @@ class CompanyUserFacadeTest extends Test
         ]);
 
         // Act
-        $companyUserCollectionTransfer = $this->getFacade()->findActiveCompanyUsersByCustomerReference($customerTransfer);
+        $companyUserCollectionTransfer = $this->getFacade()->getActiveCompanyUsersByCustomerReference($customerTransfer);
 
         // Assert
         $this->assertCount(0, $companyUserCollectionTransfer->getCompanyUsers());

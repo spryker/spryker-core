@@ -234,11 +234,11 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findActiveCompanyUsersByCustomerReference(
+    public function getActiveCompanyUsersByCustomerReference(
         CustomerTransfer $customerTransfer
     ): CompanyUserCollectionTransfer {
         return $this->getFactory()
             ->createCompanyUser()
-            ->findActiveCompanyUsersByCustomerReference($customerTransfer);
+            ->getActiveCompanyUsersByCustomerReference($customerTransfer);
     }
 }

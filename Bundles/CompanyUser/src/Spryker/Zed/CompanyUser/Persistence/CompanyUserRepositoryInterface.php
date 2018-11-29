@@ -74,7 +74,7 @@ interface CompanyUserRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findActiveCompanyUsersByCustomerReference(
+    public function getActiveCompanyUsersByCustomerReference(
         string $customerReference
     ): CompanyUserCollectionTransfer;
 }

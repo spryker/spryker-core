@@ -85,7 +85,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findActiveCompanyUsersByCustomerReference(string $customerReference): CompanyUserCollectionTransfer
+    public function getActiveCompanyUsersByCustomerReference(string $customerReference): CompanyUserCollectionTransfer
     {
         $queryCompanyUser = $this->getFactory()
             ->createCompanyUserQuery()

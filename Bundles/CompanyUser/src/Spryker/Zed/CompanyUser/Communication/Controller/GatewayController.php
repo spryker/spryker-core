@@ -78,7 +78,7 @@ class GatewayController extends AbstractGatewayController
     public function getActiveCompanyUsersByCustomerReferenceAction(
         CustomerTransfer $customerTransfer
     ): CompanyUserCollectionTransfer {
-        return $this->getFacade()->findActiveCompanyUsersByCustomerReference($customerTransfer);
+        return $this->getFacade()->getActiveCompanyUsersByCustomerReference($customerTransfer);
     }
 
     /**
