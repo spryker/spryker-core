@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Dashboard\Communication\Controller;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepository;
 
 /**
  * @method \Spryker\Zed\Dashboard\Communication\DashboardCommunicationFactory getFactory()
