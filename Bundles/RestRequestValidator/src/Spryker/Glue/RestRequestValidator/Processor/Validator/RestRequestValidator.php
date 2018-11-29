@@ -21,6 +21,9 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class RestRequestValidator implements RestRequestValidatorInterface
 {
+    protected const ERROR_DETAIL_REPLACED_SYMBOLS = ['][', '[', ']'];
+    protected const ERROR_DETAIL_REPLACING_SYMBOLS = ['.', '', ''];
+
     /**
      * @var \Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface
      */
@@ -85,10 +88,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
             return null;
         }
 
-        $violations = $validator->validate(
-            $attributesDataFromRequest,
-            $constraintCollection
-        );
+        $violations = $validator->validate($attributesDataFromRequest, $constraintCollection);
 
         if (!$violations->count()) {
             return null;
@@ -134,7 +134,11 @@ class RestRequestValidator implements RestRequestValidatorInterface
      */
     protected function getFormattedErrorMessage($validationError): string
     {
-        return str_replace(['][', '[', ']'], ['.', '', ''], $validationError->getPropertyPath()) . ' => ' . $validationError->getMessage();
+        return str_replace(
+            static::ERROR_DETAIL_REPLACED_SYMBOLS,
+            static::ERROR_DETAIL_REPLACING_SYMBOLS,
+            $validationError->getPropertyPath()
+        ) . ' => ' . $validationError->getMessage();
     }
 
     /**
@@ -145,13 +149,24 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function getAttributesFromRequest(RestRequestInterface $restRequest): ?array
     {
         $attributesDataFromRequest = $restRequest->getAttributesDataFromRequest();
-
         if (!isset($attributesDataFromRequest)) {
             return null;
         }
 
-        array_walk_recursive($attributesDataFromRequest, 'trim');
+        return array_map($this->getTrimCallback(), $attributesDataFromRequest);
+    }
 
-        return $attributesDataFromRequest;
+    /**
+     * @return callable
+     */
+    protected function getTrimCallback(): callable
+    {
+        return function ($value) {
+            if (is_array($value)) {
+                array_map($this->getTrimCallback(), $value);
+            }
+
+            return trim($value);
+        };
     }
 }
