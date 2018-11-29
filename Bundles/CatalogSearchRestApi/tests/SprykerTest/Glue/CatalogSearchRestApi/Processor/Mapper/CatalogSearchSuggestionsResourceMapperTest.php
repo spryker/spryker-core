@@ -141,7 +141,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     }
 
     /**
-     * @return \SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperTest
+     * @return $this
      */
     public function addCompletionData(): self
     {
@@ -155,7 +155,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     }
 
     /**
-     * @return \SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperTest
+     * @return $this
      */
     public function addProductsAbstractData(): self
     {
@@ -191,7 +191,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     }
 
     /**
-     * @return \SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperTest
+     * @return $this
      */
     public function addCategoriesData(): self
     {
@@ -208,7 +208,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     }
 
     /**
-     * @return \SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperTest
+     * @return $this
      */
     public function addCmsPagesData(): self
     {

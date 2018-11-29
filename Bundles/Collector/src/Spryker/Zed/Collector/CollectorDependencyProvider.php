@@ -12,6 +12,9 @@ use Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Collector\CollectorConfig getConfig()
+ */
 class CollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'locale facade';

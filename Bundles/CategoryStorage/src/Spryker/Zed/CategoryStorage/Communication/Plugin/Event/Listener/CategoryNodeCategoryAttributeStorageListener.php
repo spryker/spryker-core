@@ -17,6 +17,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  */
 class CategoryNodeCategoryAttributeStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

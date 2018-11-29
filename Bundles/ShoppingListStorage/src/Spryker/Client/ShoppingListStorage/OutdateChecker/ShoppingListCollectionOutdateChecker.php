@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\ShoppingListSessionTransfer;
 use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerClientInterface;
 use Spryker\Client\ShoppingListStorage\Storage\ShoppingListCustomerStorageInterface;
 
-/**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
- */
-
 class ShoppingListCollectionOutdateChecker implements ShoppingListCollectionOutdateCheckerInterface
 {
     /**

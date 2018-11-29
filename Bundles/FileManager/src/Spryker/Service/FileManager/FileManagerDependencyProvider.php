@@ -11,6 +11,9 @@ use Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemServic
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
+/**
+ * @method \Spryker\Service\FileManager\FileManagerConfig getConfig()
+ */
 class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_FILE_SYSTEM = 'SERVICE_FILE_SYSTEM';

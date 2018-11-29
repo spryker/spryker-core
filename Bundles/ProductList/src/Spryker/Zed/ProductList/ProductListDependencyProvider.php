@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeBridge;
 use Spryker\Zed\ProductList\Dependency\Service\ProductListToUtilTextServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductList\ProductListConfig getConfig()
+ */
 class ProductListDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_PRODUCT_CATEGORY_QUERY = 'PROPEL_PRODUCT_CATEGORY_QUERY';

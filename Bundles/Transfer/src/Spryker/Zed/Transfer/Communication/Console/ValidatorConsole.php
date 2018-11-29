@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Transfer\Business\TransferFacadeInterface getFacade()
+ * @method \Spryker\Zed\Transfer\Communication\TransferCommunicationFactory getFactory()
  */
 class ValidatorConsole extends Console
 {

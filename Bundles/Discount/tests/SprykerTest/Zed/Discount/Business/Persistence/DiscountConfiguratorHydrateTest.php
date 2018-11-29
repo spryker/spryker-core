@@ -175,7 +175,8 @@ class DiscountConfiguratorHydrateTest extends Unit
             ->setValidTo('2001-01-01')
             ->setIsActive(true)
             ->setFkDiscountVoucherPool(1)
-            ->setIsExclusive(true);
+            ->setIsExclusive(true)
+            ->setMinimumItemAmount(1);
 
         $discountEntity->addSpyDiscountStore(
             (new SpyDiscountStore())
