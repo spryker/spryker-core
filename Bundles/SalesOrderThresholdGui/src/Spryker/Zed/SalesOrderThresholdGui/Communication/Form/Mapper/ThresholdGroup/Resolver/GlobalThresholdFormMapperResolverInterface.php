@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\Threshold
 
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface;
 
-interface GlobalThresholdMapperResolverInterface
+interface GlobalThresholdFormMapperResolverInterface
 {
     /**
      * @param string $salesOrderThresholdTypeGroup
@@ -18,12 +18,12 @@ interface GlobalThresholdMapperResolverInterface
      *
      * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface
      */
-    public function resolveGlobalThresholdMapperByStrategyGroup(string $salesOrderThresholdTypeGroup): GlobalThresholdFormMapperInterface;
+    public function resolveGlobalThresholdFormMapperByStrategyGroup(string $salesOrderThresholdTypeGroup): GlobalThresholdFormMapperInterface;
 
     /**
      * @param string $salesOrderThresholdTypeGroup
      *
      * @return bool
      */
-    public function hasGlobalThresholdMapperByStrategyGroup(string $salesOrderThresholdTypeGroup): bool;
+    public function hasGlobalThresholdFormMapperByStrategyGroup(string $salesOrderThresholdTypeGroup): bool;
 }

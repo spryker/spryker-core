@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 class GlobalController extends AbstractController
 {
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
+    protected const MESSAGE_UPDATE_SUCCESSFUL = 'The Global Thresholds is saved successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -85,9 +86,7 @@ class GlobalController extends AbstractController
             $currencyTransfer
         );
 
-        $this->addSuccessMessage(sprintf(
-            'The Global Thresholds is saved successfully.'
-        ));
+        $this->addSuccessMessage(static::MESSAGE_UPDATE_SUCCESSFUL);
 
         return $this->redirectResponse($request->getRequestUri());
     }
@@ -113,12 +112,12 @@ class GlobalController extends AbstractController
         );
 
         if (isset($thresholdData[AbstractGlobalThresholdType::FIELD_STRATEGY]) &&
-            $this->getFactory()->createGlobalSoftThresholdFormMapperResolver()->hasGlobalThresholdMapperByStrategyGroup(
+            $this->getFactory()->createGlobalThresholdFormMapperResolver()->hasGlobalThresholdFormMapperByStrategyGroup(
                 $strategyGroup
             )) {
             $salesOrderThresholdTransfer = $this->getFactory()
-                ->createGlobalSoftThresholdFormMapperResolver()
-                ->resolveGlobalThresholdMapperByStrategyGroup($strategyGroup)
+                ->createGlobalThresholdFormMapperResolver()
+                ->resolveGlobalThresholdFormMapperByStrategyGroup($strategyGroup)
                 ->mapFormDataToTransfer($thresholdData, $salesOrderThresholdTransfer);
         }
 

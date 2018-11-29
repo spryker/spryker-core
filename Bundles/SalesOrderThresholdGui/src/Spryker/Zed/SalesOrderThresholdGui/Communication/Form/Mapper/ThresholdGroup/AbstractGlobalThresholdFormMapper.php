@@ -20,7 +20,7 @@ abstract class AbstractGlobalThresholdFormMapper
     protected $localeFacade;
 
     /**
-     * @var array|\Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
      */
     protected $formExpanderPlugins;
 

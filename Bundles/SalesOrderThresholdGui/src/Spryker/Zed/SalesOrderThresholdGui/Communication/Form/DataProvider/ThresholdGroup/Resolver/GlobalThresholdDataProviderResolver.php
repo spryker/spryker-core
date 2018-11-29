@@ -19,7 +19,7 @@ class GlobalThresholdDataProviderResolver implements GlobalThresholdDataProvider
     protected $config;
 
     /**
-     * @var array|\Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
      */
     protected $formExpanderPlugins;
 

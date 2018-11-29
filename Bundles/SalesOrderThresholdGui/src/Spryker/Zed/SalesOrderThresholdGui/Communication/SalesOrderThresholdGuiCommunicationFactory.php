@@ -15,8 +15,8 @@ use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\SettingsF
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolver;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolverInterface;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\Resolver\GlobalThresholdMapperResolver;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\Resolver\GlobalThresholdMapperResolverInterface;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\Resolver\GlobalThresholdFormMapperResolver;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\Resolver\GlobalThresholdFormMapperResolverInterface;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\SettingsType;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinder;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface;
@@ -103,11 +103,11 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\Resolver\GlobalThresholdMapperResolverInterface
+     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\Resolver\GlobalThresholdFormMapperResolverInterface
      */
-    public function createGlobalSoftThresholdFormMapperResolver(): GlobalThresholdMapperResolverInterface
+    public function createGlobalThresholdFormMapperResolver(): GlobalThresholdFormMapperResolverInterface
     {
-        return new GlobalThresholdMapperResolver(
+        return new GlobalThresholdFormMapperResolver(
             $this->getLocaleFacade(),
             $this->getConfig(),
             $this->getSalesOrderThresholdFormExpanderPlugins()

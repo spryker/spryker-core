@@ -15,6 +15,9 @@ use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\
 
 class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType::OPTION_CURRENCY_CODE
+     */
     public const OPTION_CURRENCY_CODE = 'option-currency-code';
 
     /**
@@ -72,7 +75,7 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     /**
      * @deprecated Will be removed in the next major.
      *
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface[]
+     * @return array
      */
     public function getStrategyTypeToFormTypeMap(): array
     {
@@ -90,7 +93,7 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     /**
      * @deprecated Will be removed in the next major.
      *
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface[]
+     * @return array
      */
     public function getStrategyTypeToDataProviderMap(): array
     {

@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Persistence\MerchantRelationshipSalesOrderThresholdGuiRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory getFactory()
  */
-class LocalizedForm extends AbstractType
+class LocalizedMessagesType extends AbstractType
 {
     public const FIELD_MESSAGE = 'message';
 

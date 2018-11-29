@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper;
+namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup;
 
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
 
-interface ThresholdFormMapperInterface
+interface ThresholdStrategyDataProviderInterface
 {
     /**
      * @param array $data
      * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
+     * @return array
      */
-    public function map(array $data, MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): MerchantRelationshipSalesOrderThresholdTransfer;
+    public function getData(array $data, MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): array;
 }
