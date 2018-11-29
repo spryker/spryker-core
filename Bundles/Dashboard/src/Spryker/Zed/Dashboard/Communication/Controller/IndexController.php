@@ -21,16 +21,6 @@ class IndexController extends AbstractController
      */
     public function indexAction(): array
     {
-
-
-        $r = new PriceProductMerchantRelationshipStorageRepository();
-        $filter = new FilterTransfer();
-        $filter->setOffset(0);
-        $filter->setLimit(100);
-
-        dump($r->findFilteredPriceProductConcreteMerchantRelationshipStorageEntities($filter));
-        die;
-
         $plugins = $this->getFactory()->getDateFormatterService();
 
         $pluginContents = [];
