@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 class WishlistsWriter implements WishlistsWriterInterface
 {
     protected const WISHLIST_VALIDATION_ERROR_NAME_ALREADY_EXIST = 'wishlist.validation.error.name.already_exists';
+    protected const WISHLIST_VALIDATION_ERROR_NAME_WRONG_FORMAT = 'wishlist.validation.error.name.wrong_format';
 
     /**
      * @var \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface
@@ -182,6 +183,14 @@ class WishlistsWriter implements WishlistsWriterInterface
                     ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS)
                     ->setStatus(Response::HTTP_BAD_REQUEST)
                     ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS);
+
+                return $restResponse->addError($restErrorTransfer);
+            }
+            if ($error === static::WISHLIST_VALIDATION_ERROR_NAME_WRONG_FORMAT) {
+                $restErrorTransfer = (new RestErrorMessageTransfer())
+                    ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NAME_INVALID)
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NAME_INVALID);
 
                 return $restResponse->addError($restErrorTransfer);
             }
