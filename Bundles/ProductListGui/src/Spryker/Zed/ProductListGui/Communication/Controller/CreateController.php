@@ -75,7 +75,7 @@ class CreateController extends ProductListAbstractController
     protected function getEditUrl(int $idProductList): string
     {
         $query = [
-            self::URL_PARAM_ID_PRODUCT_LIST => $idProductList,
+            static::URL_PARAM_ID_PRODUCT_LIST => $idProductList,
         ];
 
         return $this->generateUrl(RoutingConstants::URL_EDIT, $query);
@@ -90,6 +90,6 @@ class CreateController extends ProductListAbstractController
      */
     protected function generateUrl(string $url, array $query = [], array $options = []): string
     {
-        return urldecode(Url::generate($url, $query, $options)->build());
+         return Url::generate($url, $query, $options)->build();
     }
 }
