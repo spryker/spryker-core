@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WishlistsWriter implements WishlistsWriterInterface
 {
+    protected const WISHLIST_VALIDATION_ERROR_NAME_ALREADY_EXIST = 'wishlist.validation.error.name.already_exists';
+
     /**
      * @var \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface
      */
@@ -175,11 +177,11 @@ class WishlistsWriter implements WishlistsWriterInterface
     protected function handleWishlistResponseTransferError(WishlistResponseTransfer $wishlistResponseTransfer, string $errorCode, RestResponseInterface $restResponse): RestResponseInterface
     {
         foreach ($wishlistResponseTransfer->getErrors() as $error) {
-            if ($error === WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS) {
+            if ($error === static::WISHLIST_VALIDATION_ERROR_NAME_ALREADY_EXIST) {
                 $restErrorTransfer = (new RestErrorMessageTransfer())
                     ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS)
                     ->setStatus(Response::HTTP_BAD_REQUEST)
-                    ->setDetail($error);
+                    ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS);
 
                 return $restResponse->addError($restErrorTransfer);
             }
