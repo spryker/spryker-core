@@ -40,7 +40,7 @@ class IdenticalToValidator extends AbstractComparisonValidator
         $comparedValue = $this->getComparedValue($value, $constraint);
 
         if (!$this->compareValues($value, $comparedValue)) {
-            $this->buildViolation($value, $constraint, $comparedValue);
+            $this->buildViolation($value, $constraint);
         }
     }
 
@@ -108,16 +108,14 @@ class IdenticalToValidator extends AbstractComparisonValidator
     /**
      * @param mixed $value
      * @param \Spryker\Glue\RestRequestValidator\Constraints\IdenticalTo $constraint
-     * @param mixed $comparedValue
      *
      * @return void
      */
-    protected function buildViolation($value, IdenticalTo $constraint, $comparedValue): void
+    protected function buildViolation($value, IdenticalTo $constraint): void
     {
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ value }}', $this->formatValue($value, self::OBJECT_TO_STRING | self::PRETTY_DATE))
-            ->setParameter('{{ compared_value }}', $this->formatValue($comparedValue, self::OBJECT_TO_STRING | self::PRETTY_DATE))
-            ->setParameter('{{ compared_value_type }}', $this->formatTypeOf($comparedValue))
+            ->setParameter('{{ property_path }}', $constraint->propertyPath)
             ->setCode($this->getErrorCode())
             ->addViolation();
     }

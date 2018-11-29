@@ -35,7 +35,7 @@ class IdenticalTo extends Constraint
     /**
      * @var string
      */
-    public $message = 'This value should be identical to {{ compared_value_type }} {{ compared_value }}.';
+    public $message = 'This value should be identical to value in the {{ property_path }} field.';
 
     /**
      * @param array|null $options
