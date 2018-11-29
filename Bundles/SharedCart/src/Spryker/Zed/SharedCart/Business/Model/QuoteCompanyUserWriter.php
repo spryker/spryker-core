@@ -53,6 +53,17 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     }
 
     /**
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function deleteShareRelationsForCompanyUserId(int $idCompanyUser): void
+    {
+        $this->sharedCartEntityManager
+            ->deleteShareRelationsForCompanyUserId($idCompanyUser);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

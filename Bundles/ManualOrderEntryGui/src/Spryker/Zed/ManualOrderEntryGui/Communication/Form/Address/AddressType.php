@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiConfig getConfig()
  */
 class AddressType extends AbstractType
 {

@@ -23,6 +23,8 @@ use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductI
 /**
  * @method \Spryker\Zed\ProductImageStorage\Communication\ProductImageStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductImageStorage\ProductImageStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface getQueryContainer()
  */
 class ProductImageStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

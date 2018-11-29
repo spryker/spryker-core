@@ -132,6 +132,10 @@ use Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinder;
 use Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinderInterface;
 use Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinder;
 use Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface;
+use Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcher;
+use Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface;
+use Spryker\Zed\Development\Business\Module\ModuleOverview;
+use Spryker\Zed\Development\Business\Module\ModuleOverviewInterface;
 use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderComposite;
 use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuilder;
@@ -685,12 +689,15 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createModuleFinder(): ModuleFinderInterface
     {
-        return new ModuleFinder([
-            $this->getConfig()->getPathToCore(),
-            $this->getConfig()->getPathToShop(),
-            $this->getConfig()->getPathToSdk(),
-            $this->getConfig()->getPathToEco(),
-        ]);
+        return new ModuleFinder($this->getConfig(), $this->createModuleMatcher());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface
+     */
+    public function createModuleMatcher(): ModuleMatcherInterface
+    {
+        return new ModuleMatcher();
     }
 
     /**
@@ -730,6 +737,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createProjectModuleFinder(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Module\ModuleOverviewInterface
+     */
+    public function createModuleOverview(): ModuleOverviewInterface
+    {
+        return new ModuleOverview($this->createProjectModuleFinder(), $this->createModuleFinder());
     }
 
     /**
@@ -1349,6 +1364,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         $updaterComposite = new ComposerUpdaterComposite();
         $updaterComposite
+            ->addUpdater($this->createComposerJsonTypeUpdater())
             ->addUpdater($this->createComposerJsonDescriptionUpdater())
             ->addUpdater($this->createComposerJsonLicenseUpdater())
             ->addUpdater($this->createComposerJsonRequireUpdater())
@@ -1789,7 +1805,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createProjectModuleFinder(): ProjectModuleFinderInterface
     {
-        return new ProjectModuleFinder($this->getConfig());
+        return new ProjectModuleFinder($this->getConfig(), $this->createModuleMatcher());
     }
 
     /**

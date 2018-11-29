@@ -62,6 +62,7 @@ interface MerchantRelationshipFacadeInterface
      * Specification:
      * - Returns a merchant relationship by merchant relationship id in provided transfer.
      * - Throws an exception in case a record is not found.
+     * - Populates name in transfer.
      *
      * @api
      *
@@ -73,12 +74,38 @@ interface MerchantRelationshipFacadeInterface
 
     /**
      * Specification:
+     * - Returns a merchant relationship by merchant relationship key in provided transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     */
+    public function findMerchantRelationshipByKey(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer;
+
+    /**
+     * Specification:
      * - Returns all merchant relations.
-     * - Hydrate owner company business unit and merchant
+     * - Hydrate owner company business unit and merchant.
+     * - Populates name in transfer.
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
     public function getMerchantRelationshipCollection(): array;
+
+    /**
+     * Specification:
+     * - Finds a merchant relationship by merchant relationship id in provided transfer.
+     * - Returns MerchantRelationshipTransfer if found, NULL otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     */
+    public function findMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer;
 }

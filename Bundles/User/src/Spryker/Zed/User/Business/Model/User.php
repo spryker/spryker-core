@@ -290,6 +290,24 @@ class User implements UserInterface
     /**
      * @param int $id
      *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUserById(int $id): ?UserTransfer
+    {
+        $entity = $this->queryContainer
+            ->queryUserById($id)
+            ->findOne();
+
+        if ($entity === null) {
+            return null;
+        }
+
+        return $this->entityToTransfer($entity);
+    }
+
+    /**
+     * @param int $id
+     *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
      * @return \Generated\Shared\Transfer\UserTransfer

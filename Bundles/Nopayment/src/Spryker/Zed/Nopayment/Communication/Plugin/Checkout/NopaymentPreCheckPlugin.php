@@ -16,6 +16,8 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterfa
 /**
  * @method \Spryker\Zed\Nopayment\Business\NopaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\Nopayment\Communication\NopaymentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Nopayment\NopaymentConfig getConfig()
+ * @method \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface getQueryContainer()
  */
 class NopaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
 {

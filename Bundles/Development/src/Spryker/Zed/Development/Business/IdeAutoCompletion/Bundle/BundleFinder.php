@@ -57,7 +57,6 @@ class BundleFinder implements BundleFinderInterface
                 $bundleTransfer = $this->mergeWithPossibleExistingBundle($bundleTransfer, $bundleTransferCollection);
 
                 $bundleTransferCollection[$bundleTransfer->getName()] = $bundleTransfer;
-                $isInitializedBundleByName[$bundleDirectory->getBasename()] = true;
             }
         }
 

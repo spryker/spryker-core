@@ -503,4 +503,17 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds a Category transfer by id with category nodes and attributes.
+     * - Returns NULL if a Category does not exist.
+     *
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategoryById(int $idCategory): ?CategoryTransfer;
 }

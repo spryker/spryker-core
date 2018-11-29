@@ -13,6 +13,9 @@ use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientBr
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientBridge;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientBridge;
 
+/**
+ * @method \Spryker\Client\PriceProduct\PriceProductConfig getConfig()
+ */
 class PriceProductDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_PRICE = 'CLIENT_PRICE';

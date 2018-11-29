@@ -6,7 +6,7 @@
 ## Installation
 
 ```
-composer require spryker/product-abstract-page-search
+composer require spryker/product-page-search
 ```
 
 ## Documentation

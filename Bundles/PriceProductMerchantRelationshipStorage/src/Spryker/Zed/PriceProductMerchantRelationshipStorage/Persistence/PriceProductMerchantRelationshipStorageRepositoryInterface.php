@@ -7,66 +7,116 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
-use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
-
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStoragePersistenceFactory getFactory()
  */
 interface PriceProductMerchantRelationshipStorageRepositoryInterface
 {
     /**
-     * @param array $priceProductStoreIds
+     * @param int[] $companyBusinessUnitIds
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findPriceProductStoreListByIdsForConcrete(array $priceProductStoreIds): array;
+    public function findMerchantRelationshipProductAbstractPricesDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 
     /**
-     * @param array $priceProductStoreIds
+     * @param int[] $companyBusinessUnitIds
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findPriceProductStoreListByIdsForAbstract(array $priceProductStoreIds): array;
+    public function findMerchantRelationshipProductConcretePricesDataByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 
     /**
-     * @param array $businessUnitProducts
+     * @param int[] $priceProductMerchantRelationshipIds
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findPriceProductStoresByCompanyBusinessUnitAbstractProducts(array $businessUnitProducts): array;
+    public function findMerchantRelationshipProductConcretePricesDataByIds(array $priceProductMerchantRelationshipIds): array;
 
     /**
-     * @param array $businessUnitProducts
+     * @param int[] $productIds
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
      */
-    public function findPriceProductStoresByCompanyBusinessUnitConcreteProducts(array $businessUnitProducts): array;
+    public function findMerchantRelationshipProductConcretePricesDataByProductIds(array $productIds): array;
 
     /**
-     * @param array $concreteProducts
+     * @param int[] $priceProductMerchantRelationshipIds
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     */
+    public function findMerchantRelationshipProductAbstractPricesByIds(array $priceProductMerchantRelationshipIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     */
+    public function findMerchantRelationshipProductAbstractPricesDataByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[]
+     */
+    public function findExistingPriceProductAbstractMerchantRelationshipEntitiesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
+
+    /**
+     * @param string[] $priceKeys
+     *
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[]
+     */
+    public function findExistingPriceProductAbstractMerchantRelationshipEntitiesByPriceKeys(array $priceKeys): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[]
+     */
+    public function findExistingPriceProductAbstractMerchantRelationshipEntitiesByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $companyBusinessUnitIds
      *
      * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
      */
-    public function findExistingPriceProductConcreteMerchantRelationshipStorageEntities(array $concreteProducts): array;
+    public function findExistingPriceProductConcreteMerchantRelationshipEntitiesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 
     /**
-     * @param array $concreteProducts
+     * @param string[] $priceKeys
      *
      * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
      */
-    public function findExistingPriceProductAbstractMerchantRelationshipStorageEntities(array $concreteProducts): array;
+    public function findExistingPriceProductConcreteMerchantRelationshipEntitiesByPriceKeys(array $priceKeys): array;
 
     /**
-     * @param int $idMerchantRelationship
+     * @param int[] $productIds
+     *
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
+     */
+    public function findExistingPriceProductConcreteMerchantRelationshipEntitiesByProductIds(array $productIds): array;
+
+    /**
+     * @return array
+     */
+    public function findAllPriceProductConcreteMerchantRelationshipStorageEntities(): array;
+
+    /**
+     * @param array $priceProductConcreteMerchantRelationshipStorageEntityIds
      *
      * @return array
      */
-    public function findCompanyBusinessUnitIdsByMerchantRelationship(int $idMerchantRelationship): array;
+    public function findPriceProductConcreteMerchantRelationshipStorageEntitiesByIds(array $priceProductConcreteMerchantRelationshipStorageEntityIds): array;
 
     /**
-     * @param string $idPriceProductMerchantRelationship
-     *
-     * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship|null
+     * @return array
      */
-    public function findPriceProductMerchantRelationship(string $idPriceProductMerchantRelationship): ?SpyPriceProductMerchantRelationship;
+    public function findAllPriceProductAbstractMerchantRelationshipStorageEntities(): array;
+
+    /**
+     * @param array $priceProductAbstractMerchantRelationshipStorageEntityIds
+     *
+     * @return array
+     */
+    public function findPriceProductAbstractMerchantRelationshipStorageEntitiesByIds(array $priceProductAbstractMerchantRelationshipStorageEntityIds): array;
 }
