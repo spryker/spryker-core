@@ -39,13 +39,19 @@ class CompanyUnitAddressFacadeTest extends Unit
     protected $companyUnitAddressFacade;
 
     /**
+     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface
+     */
+    protected $companyBusinessUnitFacade;
+
+    /**
      * @return void
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->companyUnitAddressFacade = $this->tester->getLocator()->companyUnitAddress()->facade();
+        $this->companyUnitAddressFacade = $this->tester->getFacade();
+        $this->companyBusinessUnitFacade = $this->tester->getLocator()->companyBusinessUnit()->facade();
     }
 
     /**
@@ -61,16 +67,21 @@ class CompanyUnitAddressFacadeTest extends Unit
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
         $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitTransfer);
 
-        $this->tester->haveCompanyUnitAddress([
+        $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddress([
             CompanyUnitAddressTransfer::KEY => static::COMPANY_ADDRESS_KEY,
             CompanyUnitAddressTransfer::COMPANY_BUSINESS_UNITS => $companyBusinessUnitCollectionTransfer,
         ]);
 
+        $companyBusinessUnitTransfer->setDefaultBillingAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+
         // Act
+        $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
         $companyBusinessUnitTransfer = $this->companyUnitAddressFacade->expandCompanyBusinessUnitWithCompanyUnitAddressCollection($companyBusinessUnitTransfer);
+        $companyUnitAddressCollectionTransfer = $companyBusinessUnitTransfer->getAddressCollection();
 
         // Assert
-        $this->assertInstanceOf(CompanyUnitAddressCollectionTransfer::class, $companyBusinessUnitTransfer->getAddressCollection());
-        $this->assertCount(1, $companyBusinessUnitTransfer->getAddressCollection()->getCompanyUnitAddresses());
+        $this->assertInstanceOf(CompanyUnitAddressCollectionTransfer::class, $companyUnitAddressCollectionTransfer);
+        $this->assertCount(1, $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses());
+        $this->assertEquals($companyBusinessUnitTransfer->getDefaultBillingAddress(), $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()[0]->getIdCompanyUnitAddress());
     }
 }

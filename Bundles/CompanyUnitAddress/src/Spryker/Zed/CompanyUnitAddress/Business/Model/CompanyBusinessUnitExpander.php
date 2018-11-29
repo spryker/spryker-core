@@ -60,11 +60,10 @@ class CompanyBusinessUnitExpander implements CompanyBusinessUnitExpanderInterfac
         CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
     ): void {
         foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
-            if ($companyBusinessUnitTransfer->getDefaultBillingAddress() !== $companyUnitAddressTransfer->getIdCompanyUnitAddress()) {
-                continue;
+            if ($companyBusinessUnitTransfer->getDefaultBillingAddress() === $companyUnitAddressTransfer->getIdCompanyUnitAddress()) {
+                $companyUnitAddressTransfer->setIsDefaultBilling(true);
+                break;
             }
-
-            $companyUnitAddressTransfer->setIsDefaultBilling(true);
         }
     }
 }
