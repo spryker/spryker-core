@@ -5,10 +5,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company-user": "*",
-    "spryker/glue-application": "*",
-    "spryker/glue-application-extension": "*",
-    "spryker/kernel": "*"
+    "spryker/company-user": "^1.3.0 || ^2.0.0",
+    "spryker/glue-application": "^1.0.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.22.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
