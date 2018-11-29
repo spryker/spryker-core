@@ -36,7 +36,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
     /**
      * @return array
      */
-    public function productConcreteRestrictionReaderDataProvider(): array
+    public function getProductConcreteRestrictionReaderData(): array
     {
         return [
             'test product not in product list' => [
@@ -109,7 +109,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
     }
 
     /**
-     * @dataProvider productConcreteRestrictionReaderDataProvider
+     * @dataProvider getProductConcreteRestrictionReaderData
      *
      * @param array $customerData
      * @param array $productData
